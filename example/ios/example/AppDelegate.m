@@ -8,7 +8,7 @@
  */
 
 #import "AppDelegate.h"
-
+#import "RCCManager.h" // <---- NOTICE ME
 #import "RCTRootView.h"
 
 @implementation AppDelegate
@@ -41,16 +41,10 @@
 
 //   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"example"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
-
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
+  self.window.backgroundColor = [UIColor whiteColor];
+  [[RCCManager sharedIntance] initBridgeWithBundleURL:jsCodeLocation]; //<---- NOTICE ME
+  
   return YES;
 }
 

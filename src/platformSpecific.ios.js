@@ -22,6 +22,10 @@ function startTabBasedApp(params) {
         {
           params.tabs.map(function(tab, index) {
             const navigatorID = appID + '_nav' + index;
+            if (!tab.screen) {
+              console.error('startTabBasedApp(params): every tab must include a screen property, take a look at tab#' + (index+1));
+              return;
+            }
             const screenClass = Navigation.getRegisteredScreen(tab.screen);
             if (!screenClass) {
               console.error('Cannot create screen ' + tab.screen + '. Are you it was registered with Navigation.registerScreen?');
@@ -62,6 +66,10 @@ function startSingleScreenApp(params) {
     render: function() {
       const screen = params.screen;
       const navigatorID = appID + '_nav';
+      if (!screen.screen) {
+        console.error('startSingleScreenApp(params): screen must include a screen property');
+        return;
+      }
       const screenClass = Navigation.getRegisteredScreen(screen.screen);
       if (!screenClass) {
         console.error('Cannot create screen ' + screen.screen + '. Are you it was registered with Navigation.registerScreen?');
