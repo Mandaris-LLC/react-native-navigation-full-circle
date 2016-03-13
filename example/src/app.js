@@ -28,8 +28,9 @@ Navigation.startTabBasedApp({
       title: 'Screen Three',
       navigatorStyle: {
         navBarBackgroundColor: '#4dbce9',
-        navBarTextColor: '#f7f7f7',
-        navBarButtonColor: '#ffffff'
+        navBarTextColor: '#ffff00',
+        navBarButtonColor: '#ffffff',
+        statusBarTextColorScheme: 'light'
       }
     }
   ]

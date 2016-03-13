@@ -2,11 +2,17 @@ import React, {
   Text,
   View,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  StyleSheet
 } from 'react-native';
 
 // important imports, the magic is here
 import { Navigation, Screen } from 'react-native-navigation';
+
+// need to import every screen we push
+import './PushedScreen';
+import './StyledScreen';
+import './ModalScreen';
 
 // instead of React.Component, we extend Screen (imported above)
 class ThirdTabScreen extends Screen {
@@ -16,11 +22,51 @@ class ThirdTabScreen extends Screen {
   render() {
     return (
       <View style={{flex: 1, padding: 20}}>
-        <Text>Third Tab Screen</Text>
+
+        <TouchableOpacity onPress={ this.onPushPress.bind(this) }>
+          <Text style={styles.button}>Push Plain Screen</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onPushStyledPress.bind(this) }>
+          <Text style={styles.button}>Push Styled Screen</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onModalPress.bind(this) }>
+          <Text style={styles.button}>Show Modal Screen</Text>
+        </TouchableOpacity>
+
       </View>
     );
   }
+  onPushPress() {
+    this.navigator.push({
+      title: "More",
+      screen: "example.PushedScreen"
+    });
+  }
+  onPushStyledPress() {
+    this.navigator.push({
+      title: "Styled",
+      screen: "example.StyledScreen"
+    });
+  }
+  onModalPress() {
+    this.navigator.showModal({
+      title: "Modal",
+      screen: "example.ModalScreen"
+    });
+  }
 }
+
+const styles = StyleSheet.create({
+  button: {
+    textAlign: 'center',
+    fontSize: 18,
+    marginBottom: 10,
+    marginTop:10,
+    color: 'blue'
+  }
+});
 
 // every screen must be registered with a unique name
 Navigation.registerScreen('example.ThirdTabScreen', () => ThirdTabScreen);

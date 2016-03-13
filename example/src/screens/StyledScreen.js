@@ -18,7 +18,8 @@ import './StyledScreen';
 class StyledScreen extends Screen {
   static navigatorStyle = {
     drawUnderNavBar: true,
-    drawUnderTabBar: true
+    drawUnderTabBar: true,
+    navBarTranslucent: true
   };
   constructor(props) {
     super(props);
