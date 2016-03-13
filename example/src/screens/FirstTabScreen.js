@@ -3,7 +3,8 @@ import React, {
   View,
   ScrollView,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  AlertIOS
 } from 'react-native';
 
 // important imports, the magic is here
@@ -16,8 +17,28 @@ import './ModalScreen';
 
 // instead of React.Component, we extend Screen (imported above)
 class FirstTabScreen extends Screen {
+  static navigatorButtons = {
+    rightButtons: [
+      {
+        title: 'Edit',
+        id: 'edit'
+      },
+      {
+        icon: require('../../img/navicon_add.png'),
+        id: 'add'
+      }
+    ]
+  };
   constructor(props) {
     super(props);
+  }
+  onNavigatorEvent(event) {
+    if (event.id == 'edit') {
+      AlertIOS.alert('NavBar', 'Edit button pressed');
+    }
+    if (event.id == 'add') {
+      AlertIOS.alert('NavBar', 'Add button pressed');
+    }
   }
   render() {
     return (

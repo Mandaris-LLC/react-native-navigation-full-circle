@@ -22,19 +22,30 @@ function startTabBasedApp(params) {
         {
           params.tabs.map(function(tab, index) {
             const navigatorID = controllerID + '_nav' + index;
+            const screenInstanceID = utils.getRandomId();
             if (!tab.screen) {
               console.error('startTabBasedApp(params): every tab must include a screen property, take a look at tab#' + (index+1));
               return;
             }
-            const { navigatorStyle } = _mergeScreenSpecificSettings(tab.screen, tab);
+            const {
+              navigatorStyle,
+              navigatorButtons,
+              navigatorEventID
+            } = _mergeScreenSpecificSettings(tab.screen, screenInstanceID, tab);
             return (
               <TabBarControllerIOS.Item {...tab} title={tab.label}>
                 <NavigationControllerIOS
                   id={navigatorID}
                   title={tab.title}
                   component={tab.screen}
-                  passProps={{navigatorID: navigatorID}}
+                  passProps={{
+                    navigatorID: navigatorID,
+                    screenInstanceID: screenInstanceID,
+                    navigatorEventID: navigatorEventID
+                  }}
                   style={navigatorStyle}
+                  leftButtons={navigatorButtons.leftButtons}
+                  rightButtons={navigatorButtons.rightButtons}
                 />
               </TabBarControllerIOS.Item>
             );
@@ -58,18 +69,29 @@ function startSingleScreenApp(params) {
     render: function() {
       const screen = params.screen;
       const navigatorID = controllerID + '_nav';
+      const screenInstanceID = utils.getRandomId();
       if (!screen.screen) {
         console.error('startSingleScreenApp(params): screen must include a screen property');
         return;
       }
-      const { navigatorStyle } = _mergeScreenSpecificSettings(screen.screen, screen);
+      const {
+        navigatorStyle,
+        navigatorButtons,
+        navigatorEventID
+      } = _mergeScreenSpecificSettings(screen.screen, screenInstanceID, screen);
       return (
         <NavigationControllerIOS
           id={navigatorID}
           title={screen.title}
           component={screen.screen}
-          passProps={{navigatorID: navigatorID}}
+          passProps={{
+            navigatorID: navigatorID,
+            screenInstanceID: screenInstanceID,
+            navigatorEventID: navigatorEventID
+          }}
           style={navigatorStyle}
+          leftButtons={navigatorButtons.leftButtons}
+          rightButtons={navigatorButtons.rightButtons}
         />
       );
     }
@@ -78,7 +100,7 @@ function startSingleScreenApp(params) {
   ControllerRegistry.setRootController(controllerID);
 }
 
-function _mergeScreenSpecificSettings(screenID, params) {
+function _mergeScreenSpecificSettings(screenID, screenInstanceID, params) {
   const screenClass = Navigation.getRegisteredScreen(screenID);
   if (!screenClass) {
     console.error('Cannot create screen ' + screenID + '. Are you it was registered with Navigation.registerScreen?');
@@ -88,7 +110,22 @@ function _mergeScreenSpecificSettings(screenID, params) {
   if (params.navigatorStyle) {
     Object.assign(navigatorStyle, params.navigatorStyle);
   }
-  return { navigatorStyle };
+  let navigatorEventID;
+  const navigatorButtons = Object.assign({}, screenClass.navigatorButtons);
+  if (navigatorButtons.leftButtons) {
+    for (let i = 0 ; i < navigatorButtons.leftButtons.length ; i++) {
+      navigatorEventID = screenInstanceID + '_events';
+      navigatorButtons.leftButtons[i].onPress = navigatorEventID;
+    }
+  }
+  if (navigatorButtons.rightButtons) {
+    navigatorEventID = screenInstanceID + '_events';
+    for (let i = 0 ; i < navigatorButtons.rightButtons.length ; i++) {
+      navigatorEventID = screenInstanceID + '_events';
+      navigatorButtons.rightButtons[i].onPress = navigatorEventID;
+    }
+  }
+  return { navigatorStyle, navigatorButtons, navigatorEventID };
 }
 
 function navigatorPush(navigator, params) {
@@ -96,16 +133,25 @@ function navigatorPush(navigator, params) {
     console.error('Navigator.push(params): params.screen is required');
     return;
   }
-  const { navigatorStyle } = _mergeScreenSpecificSettings(params.screen, params);
-  const passProps = params.passProps || {};
+  const screenInstanceID = utils.getRandomId();
+  const {
+    navigatorStyle,
+    navigatorButtons,
+    navigatorEventID
+  } = _mergeScreenSpecificSettings(params.screen, screenInstanceID, params);
+  const passProps = Object.assign({}, params.passProps);
   passProps.navigatorID = navigator.navigatorID;
+  passProps.screenInstanceID = screenInstanceID;
+  passProps.navigatorEventID = navigatorEventID;
   Controllers.NavigationControllerIOS(navigator.navigatorID).push({
     title: params.title,
     component: params.screen,
     animated: params.animated,
     passProps: passProps,
     style: navigatorStyle,
-    backButtonTitle: params.backButtonTitle
+    backButtonTitle: params.backButtonTitle,
+    leftButtons: navigatorButtons.leftButtons,
+    rightButtons: navigatorButtons.rightButtons
   });
 }
 

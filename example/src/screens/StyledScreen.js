@@ -4,7 +4,8 @@ import React, {
   ScrollView,
   TouchableOpacity,
   Image,
-  StyleSheet
+  StyleSheet,
+  AlertIOS
 } from 'react-native';
 
 // important imports, the magic is here
@@ -20,6 +21,12 @@ class StyledScreen extends Screen {
     drawUnderNavBar: true,
     drawUnderTabBar: true,
     navBarTranslucent: true
+  };
+  static navigatorButtons = {
+    rightButtons: [{
+      icon: require('../../img/navicon_edit.png'),
+      id: 'compose'
+    }]
   };
   constructor(props) {
     super(props);
@@ -48,6 +55,11 @@ class StyledScreen extends Screen {
 
       </ScrollView>
     );
+  }
+  onNavigatorEvent(event) {
+    if (event.id == 'compose') {
+      AlertIOS.alert('NavBar', 'Compose button pressed');
+    }
   }
   onPushPress() {
     this.navigator.push({
