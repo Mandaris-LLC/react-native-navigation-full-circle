@@ -1,6 +1,6 @@
 import utils from './utils';
 import Navigation from './Navigation';
-import Controllers from 'react-native-controllers';
+import Controllers, { Modal } from 'react-native-controllers';
 const React = Controllers.hijackReact();
 const {
   ControllerRegistry,
@@ -14,32 +14,24 @@ function startTabBasedApp(params) {
     console.error('startTabBasedApp(params): params.tabs is required');
     return;
   }
-  const appID = utils.getRandomId();
-  const App = Controllers.createClass({
+  const controllerID = utils.getRandomId();
+  const Controller = Controllers.createClass({
     render: function() {
       return (
-        <TabBarControllerIOS id={appID + '_tabs'}>
+        <TabBarControllerIOS id={controllerID + '_tabs'}>
         {
           params.tabs.map(function(tab, index) {
-            const navigatorID = appID + '_nav' + index;
+            const navigatorID = controllerID + '_nav' + index;
             if (!tab.screen) {
               console.error('startTabBasedApp(params): every tab must include a screen property, take a look at tab#' + (index+1));
               return;
             }
-            const screenClass = Navigation.getRegisteredScreen(tab.screen);
-            if (!screenClass) {
-              console.error('Cannot create screen ' + tab.screen + '. Are you it was registered with Navigation.registerScreen?');
-              return;
-            }
-            const navigatorStyle = Object.assign({}, screenClass.navigatorStyle);
-            if (tab.navigatorStyle) {
-              Object.assign(navigatorStyle, tab.navigatorStyle);
-            }
+            const { navigatorStyle } = _mergeScreenSpecificSettings(tab.screen, tab);
             return (
-              <TabBarControllerIOS.Item {...tab}>
+              <TabBarControllerIOS.Item {...tab} title={tab.label}>
                 <NavigationControllerIOS
                   id={navigatorID}
-                  title={tab.screenTitle}
+                  title={tab.title}
                   component={tab.screen}
                   passProps={{navigatorID: navigatorID}}
                   style={navigatorStyle}
@@ -52,8 +44,8 @@ function startTabBasedApp(params) {
       );
     }
   });
-  ControllerRegistry.registerController(appID, () => App);
-  ControllerRegistry.setRootController(appID);
+  ControllerRegistry.registerController(controllerID, () => Controller);
+  ControllerRegistry.setRootController(controllerID);
 }
 
 function startSingleScreenApp(params) {
@@ -61,28 +53,20 @@ function startSingleScreenApp(params) {
     console.error('startSingleScreenApp(params): params.screen is required');
     return;
   }
-  const appID = utils.getRandomId();
-  const App = Controllers.createClass({
+  const controllerID = utils.getRandomId();
+  const Controller = Controllers.createClass({
     render: function() {
       const screen = params.screen;
-      const navigatorID = appID + '_nav';
+      const navigatorID = controllerID + '_nav';
       if (!screen.screen) {
         console.error('startSingleScreenApp(params): screen must include a screen property');
         return;
       }
-      const screenClass = Navigation.getRegisteredScreen(screen.screen);
-      if (!screenClass) {
-        console.error('Cannot create screen ' + screen.screen + '. Are you it was registered with Navigation.registerScreen?');
-        return;
-      }
-      const navigatorStyle = Object.assign({}, screenClass.navigatorStyle);
-      if (screen.navigatorStyle) {
-        Object.assign(navigatorStyle, screen.navigatorStyle);
-      }
+      const { navigatorStyle } = _mergeScreenSpecificSettings(screen.screen, screen);
       return (
         <NavigationControllerIOS
           id={navigatorID}
-          title={screen.screenTitle}
+          title={screen.title}
           component={screen.screen}
           passProps={{navigatorID: navigatorID}}
           style={navigatorStyle}
@@ -90,8 +74,21 @@ function startSingleScreenApp(params) {
       );
     }
   });
-  ControllerRegistry.registerController(appID, () => App);
-  ControllerRegistry.setRootController(appID);
+  ControllerRegistry.registerController(controllerID, () => Controller);
+  ControllerRegistry.setRootController(controllerID);
+}
+
+function _mergeScreenSpecificSettings(screenID, params) {
+  const screenClass = Navigation.getRegisteredScreen(screenID);
+  if (!screenClass) {
+    console.error('Cannot create screen ' + screenID + '. Are you it was registered with Navigation.registerScreen?');
+    return;
+  }
+  const navigatorStyle = Object.assign({}, screenClass.navigatorStyle);
+  if (params.navigatorStyle) {
+    Object.assign(navigatorStyle, params.navigatorStyle);
+  }
+  return { navigatorStyle };
 }
 
 function navigatorPush(navigator, params) {
@@ -99,16 +96,8 @@ function navigatorPush(navigator, params) {
     console.error('Navigator.push(params): params.screen is required');
     return;
   }
+  const { navigatorStyle } = _mergeScreenSpecificSettings(params.screen, params);
   const passProps = params.passProps || {};
-  const screenClass = Navigation.getRegisteredScreen(params.screen);
-  if (!screenClass) {
-    console.error('Cannot create screen ' + params.screen + '. Are you it was registered with Navigation.registerScreen?');
-    return;
-  }
-  const navigatorStyle = Object.assign({}, screenClass.navigatorStyle);
-  if (params.navigatorStyle) {
-    Object.assign(navigatorStyle, params.navigatorStyle);
-  }
   passProps.navigatorID = navigator.navigatorID;
   Controllers.NavigationControllerIOS(navigator.navigatorID).push({
     title: params.title,
@@ -126,9 +115,41 @@ function navigatorPop(navigator, params) {
   });
 }
 
+function showModal(params) {
+  if (!params.screen) {
+    console.error('showModal(params): params.screen is required');
+    return;
+  }
+  const { navigatorStyle } = _mergeScreenSpecificSettings(params.screen, params);
+  const controllerID = utils.getRandomId();
+  const Controller = Controllers.createClass({
+    render: function() {
+      const navigatorID = controllerID + '_nav';
+      const { navigatorStyle } = _mergeScreenSpecificSettings(params.screen, params);
+      return (
+        <NavigationControllerIOS
+          id={navigatorID}
+          title={params.title}
+          component={params.screen}
+          passProps={{navigatorID: navigatorID}}
+          style={navigatorStyle}
+        />
+      );
+    }
+  });
+  ControllerRegistry.registerController(controllerID, () => Controller);
+  Modal.showController(controllerID, params.animationType);
+}
+
+function dismissModal(params) {
+  Modal.dismissController(params.animationType);
+}
+
 export default platformSpecific = {
   startTabBasedApp,
   startSingleScreenApp,
   navigatorPush,
-  navigatorPop
+  navigatorPop,
+  showModal,
+  dismissModal
 }

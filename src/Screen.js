@@ -1,5 +1,6 @@
 import { Component } from 'react-native';
 import platformSpecific from './platformSpecific';
+import Navigation from './Navigation';
 
 class Navigator {
   constructor(navigatorID) {
@@ -10,6 +11,12 @@ class Navigator {
   }
   pop(params = {}) {
     return platformSpecific.navigatorPop(this, params);
+  }
+  showModal(params = {}) {
+    return Navigation.showModal(params);
+  }
+  dismissModal(params = {}) {
+    return Navigation.dismissModal(params);
   }
 }
 

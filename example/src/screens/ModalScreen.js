@@ -12,10 +12,9 @@ import { Navigation, Screen } from 'react-native-navigation';
 // need to import every screen we push
 import './PushedScreen';
 import './StyledScreen';
-import './ModalScreen';
 
 // instead of React.Component, we extend Screen (imported above)
-class FirstTabScreen extends Screen {
+class ModalScreen extends Screen {
   constructor(props) {
     super(props);
   }
@@ -31,8 +30,8 @@ class FirstTabScreen extends Screen {
           <Text style={styles.button}>Push Styled Screen</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onModalPress.bind(this) }>
-          <Text style={styles.button}>Show Modal Screen</Text>
+        <TouchableOpacity onPress={ this.onClosePress.bind(this) }>
+          <Text style={styles.button}>Close Modal</Text>
         </TouchableOpacity>
 
       </View>
@@ -46,15 +45,12 @@ class FirstTabScreen extends Screen {
   }
   onPushStyledPress() {
     this.navigator.push({
-      title: "Styled",
+      title: "More",
       screen: "example.StyledScreen"
     });
   }
-  onModalPress() {
-    this.navigator.showModal({
-      title: "Modal",
-      screen: "example.ModalScreen"
-    });
+  onClosePress() {
+    this.navigator.dismissModal();
   }
 }
 
@@ -69,4 +65,4 @@ const styles = StyleSheet.create({
 });
 
 // every screen must be registered with a unique name
-Navigation.registerScreen('example.FirstTabScreen', () => FirstTabScreen);
+Navigation.registerScreen('example.ModalScreen', () => ModalScreen);

@@ -17,9 +17,19 @@ function getRegisteredScreen(screenID) {
   return generator();
 }
 
+function showModal(params = {}) {
+  return platformSpecific.showModal(params);
+}
+
+function dismissModal(params = {}) {
+  return platformSpecific.dismissModal(params);
+}
+
 export default Navigation = {
   registerScreen,
   getRegisteredScreen,
+  showModal,
+  dismissModal,
   startTabBasedApp: platformSpecific.startTabBasedApp,
   startSingleScreenApp: platformSpecific.startSingleScreenApp
 }
