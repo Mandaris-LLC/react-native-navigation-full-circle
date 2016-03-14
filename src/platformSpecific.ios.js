@@ -166,19 +166,29 @@ function showModal(params) {
     console.error('showModal(params): params.screen is required');
     return;
   }
-  const { navigatorStyle } = _mergeScreenSpecificSettings(params.screen, params);
   const controllerID = utils.getRandomId();
   const Controller = Controllers.createClass({
     render: function() {
       const navigatorID = controllerID + '_nav';
-      const { navigatorStyle } = _mergeScreenSpecificSettings(params.screen, params);
+      const screenInstanceID = utils.getRandomId();
+      const {
+        navigatorStyle,
+        navigatorButtons,
+        navigatorEventID
+      } = _mergeScreenSpecificSettings(params.screen, screenInstanceID, params);
       return (
         <NavigationControllerIOS
           id={navigatorID}
           title={params.title}
           component={params.screen}
-          passProps={{navigatorID: navigatorID}}
+          passProps={{
+            navigatorID: navigatorID,
+            screenInstanceID: screenInstanceID,
+            navigatorEventID: navigatorEventID
+          }}
           style={navigatorStyle}
+          leftButtons={navigatorButtons.leftButtons}
+          rightButtons={navigatorButtons.rightButtons}
         />
       );
     }

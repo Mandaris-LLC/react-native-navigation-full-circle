@@ -15,6 +15,12 @@ import './StyledScreen';
 
 // instead of React.Component, we extend Screen (imported above)
 class ModalScreen extends Screen {
+  static navigatorButtons = {
+    leftButtons: [{
+      title: 'Close',
+      id: 'close'
+    }]
+  };
   constructor(props) {
     super(props);
   }
@@ -36,6 +42,11 @@ class ModalScreen extends Screen {
 
       </View>
     );
+  }
+  onNavigatorEvent(event) {
+    if (event.id == 'close') {
+      this.navigator.dismissModal();
+    }
   }
   onPushPress() {
     this.navigator.push({
