@@ -1,10 +1,32 @@
 # React Native Navigation
 
-### `Navigation`
+App-wide support for 100% native navigation with potential isolation support. For iOS, this package is a wrapper around [react-native-controllers](https://github.com/wix/react-native-controllers) which provides a simplified more abstract API. This abstract API will be unified with the Android solution which is still work in progress.
 
-App-wide support for 100% native navigation with potential isolation support.
+## Installation - iOS
 
-#### Setup your demo project
+ * In your project folder run `npm install react-native-navigation --save`
+ 
+ * Add the native files of the dependency [react-native-controllers](https://github.com/wix/react-native-controllers) to your Xcode project:
+
+   * In Xcode, in Project Navigator (left pane), right-click on the `Libraries` > `Add files to [project name]`. Add `./node_modules/react-native-controllers/ios/ReactNativeControllers.xcodeproj` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-1))
+ 
+   * In Xcode, in Project Navigator (left pane), click on your project (top) and select the `Build Phases` tab (right pane). In the `Link Binary With Libraries` section add `libReactNativeControllers.a` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-2))
+
+   * In Xcode, in Project Navigator (left pane), click on your project (top) and select the `Build Settings` tab (right pane). In the `Header Search Paths` section add `$(SRCROOT)/../node_modules/react-native-controllers/ios`. Make sure on the right to mark this new path `recursive` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-3))
+
+ * In Xcode, under your project files, modify `AppDelegate.m` according to this [example](https://github.com/wix/react-native-navigation/blob/master/example/ios/example/AppDelegate.m)
+ 
+ * Make sure you are using react-native version >= 0.19.0
+ 
+## Installation - Android
+
+Coming soon, not yet supported
+
+## Usage
+
+If you don't like reading, just jump into the fully working [example project](https://github.com/wix/react-native-navigation/tree/master/example).
+
+#### Step 1 - Change the way your app starts
 
 This would normally go in your `index.ios.js`
 
@@ -17,30 +39,31 @@ import './FirstTabScreen';
 import './SecondTabScreen';
 
 // start the app
-Navigation.startTabBasedApp([
-  {
-    title: 'One', // tab title
-    screen: 'example.FirstTabScreen', // unique ID registered with Navigation.registerScreen
-    icon: require('./img/one.png'), // local asset for tab icon (unselected state)
-    selectedIcon: require('./img/one_selected.png'), // local asset for tab icon (selected state)
-    screenTitle: 'Screen One', // navigation bar title
-    navigatorStyle: {} // style the navigator for this screen (optional)
-  },
-  {
-    title: 'Two',
-    screen: 'example.SecondTabScreen',
-    icon: require('./img/two.png'),
-    selectedIcon: require('./img/two_selected.png'),
-    screenTitle: 'Screen Two'
-  }
-]);
+Navigation.startTabBasedApp({
+  tabs: [
+    {
+      label: 'One',
+      screen: 'example.FirstTabScreen',
+      icon: require('../img/one.png'),
+      selectedIcon: require('../img/one_selected.png'),
+      title: 'Screen One'
+    },
+    {
+      label: 'Two',
+      screen: 'example.SecondTabScreen',
+      icon: require('../img/two.png'),
+      selectedIcon: require('../img/two_selected.png'),
+      title: 'Screen Two'
+    }
+  ]
+});
 ```
 
-#### Slightly modify your screen components
+#### Step 2 - Slightly modify your screen components
 
 Every screen that you want to be able to place in a tab, push to the navigation stack or present modally needs to follow two basic conventions:
 
-1. Normally your React components extend `React.Component`, in order to get access to the `navigator` you need to extend `Screen` instead.
+1. Normally your React components extend `React.Component`, in order to get access to the `navigator` instance you need to extend `Screen` instead.
 
 2. You need to register your component since it's displayed as a separate React root. Register a unique ID with `Navigation.registerScreen`.
 
@@ -65,9 +88,86 @@ class ExampleScreen extends Screen {
 Navigation.registerScreen('example.ScreenOne', () => ExampleScreen);
 ```
 
-#### Navigation API (how to push and pop)
+## Top Level API
 
-This API is available through the `navigator` object. When your screen components extend `Screen`, they have `this.navigator` available and initialized.
+#### `Navigation`
+
+```js
+import { Navigation } from 'react-native-navigation';
+```
+
+ * **registerScreen(screenID, generator)**
+ 
+Every screen used must be registered with a unique name.
+
+```js
+Navigation.registerScreen('example.FirstTabScreen', () => FirstTabScreen);
+```
+
+ * **startTabBasedApp(params)**
+ 
+Change your app root into an app based on several tabs (usually 2-5), a very common pattern in iOS (like Facebook app or the iOS Contacts app). Every tab has its own navigation stack with a native nav bar.
+
+```js
+Navigation.startTabBasedApp({
+  tabs: [
+    {
+      label: 'One',
+      screen: 'example.FirstTabScreen',
+      icon: require('../img/one.png'),
+      selectedIcon: require('../img/one_selected.png'),
+      title: 'Screen One'
+    },
+    {
+      label: 'Two',
+      screen: 'example.SecondTabScreen',
+      icon: require('../img/two.png'),
+      selectedIcon: require('../img/two_selected.png'),
+      title: 'Screen Two'
+    }
+  ]
+});
+```
+
+ * **startSingleScreenApp(params)**
+ 
+Change your app root into an app based on a single screen (like the iOS Calendar or Settings app). The screen will receive its own navigation stack with a native nav bar
+
+```js
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'example.WelcomeScreen',
+    title: 'Welcome'
+  }
+});
+```
+
+ * **showModal(params = {})**
+
+Show a screen as a modal.
+ 
+```js
+Navigation.showModal({
+  title: "Modal",
+  screen: "example.ModalScreen"
+});
+```
+
+ * **dismissModal(params = {})**
+
+Dismiss the current modal.
+
+```js
+Navigation.dismissModal();
+```
+
+## Screen API
+
+This API is relevant when in a screen context - it allows a screen to push other screens, pop screens, change its navigator style, etc. Access to this API is available through the `navigator` object. When your screen components extend `Screen`, they have `this.navigator` available and initialized.
+
+ * **push(params)**
+
+Push a new screen into this screen's navigation stack.
 
 ```js
 this.navigator.push({
@@ -78,51 +178,38 @@ this.navigator.push({
   backButtonTitle: undefined, // override the back button title (optional)
   navigatorStyle: {} // override the navigator style for the pushed screen (optional)
 });
+```
 
+ * **pop(params = {})**
+
+Pop the top screen from this screen's navigation stack.
+
+```js
 this.navigator.pop({
   animated: true // does the pop have transition animation or does it happen immediately (optional)
 });
 ```
 
-#### All types of apps you can create
+ * **showModal(params = {})**
 
-* App based on several tabs (usually 2-5), a very common pattern in iOS (like Facebook app or the iOS Contacts app). Every tab has its own navigation stack with a native nav bar.
-
+Show a screen as a modal.
+ 
 ```js
-Navigation.startTabBasedApp([
-  {
-    title: 'One', // tab title
-    screen: 'example.FirstTabScreen', // unique ID registered with Navigation.registerScreen
-    icon: require('./img/one.png'), // local asset for tab icon (unselected state)
-    selectedIcon: require('./img/one_selected.png'), // local asset for tab icon (selected state)
-    screenTitle: 'Screen One', // navigation bar title
-    navigatorStyle: {} // style the navigator for this screen (optional)
-  },
-  {
-    title: 'Two',
-    screen: 'example.SecondTabScreen',
-    icon: require('./img/two.png'),
-    selectedIcon: require('./img/two_selected.png'),
-    screenTitle: 'Screen Two'
-  }
-]);
-```
-
-* App based on a single screen (like the iOS Calendar or Settings app). The screen will receive its own navigation stack with a native nav bar.
-
-```js
-Navigation.startSingleScreenApp({
-  screen: 'example.WelcomeScreen', // unique ID registered with Navigation.registerScreen
-  screenTitle: 'Welcome', // navigation bar title
-  navigatorStyle: {} // style the navigator for this screen (optional)
+this.navigator.showModal({
+  title: "Modal",
+  screen: "example.ModalScreen"
 });
 ```
 
-It is also possible to switch between types of apps while the app is running. This can be useful for example when switching from a login mode (which has no tabs = `startSingleScreenApp`) to the actual app itself (which has tabs = `startTabBasedApp`). Please note that when switching formats, the entire "old" app will be unmounted and released.
+ * **dismissModal(params = {})**
 
-> Tip: The other pattern of implementing login is having just one app type (like tabs) and showing the login dialog as a modal that hides the tabs when the app is launched. When login is completed, this modal is dismissed.
+Dismiss the current modal.
 
-#### Styling the navigator
+```js
+this.navigator.dismissModal();
+```
+
+## Styling the navigator
 
 You can style the navigator appearance and behavior by passing a `navigatorStyle` object. This object can be passed when the screen is originally created; can be defined per-screen in the `static navigatorStyle = {};` on `Screen`; and can be overridden when a screen is pushed.
 
