@@ -2,6 +2,16 @@
 
 App-wide support for 100% native navigation with potential isolation support. For iOS, this package is a wrapper around [react-native-controllers](https://github.com/wix/react-native-controllers) which provides a simplified more abstract API. This abstract API will be unified with the Android solution which is still work in progress.
 
+## Overview
+
+* [Installation - iOS](#installation---ios)
+* [Installation - Android](#installation---android)
+* [Usage](#usage)
+* [Top Level API](#top-level-api)
+* [Screen API](#screen-api)
+* [Styling the navigator](#styling-the-navigator)
+* [Adding buttons to the navigator](#adding-buttons-to-the-navigator)
+
 ## Installation - iOS
 
  * In your project folder run `npm install react-native-navigation --save`
