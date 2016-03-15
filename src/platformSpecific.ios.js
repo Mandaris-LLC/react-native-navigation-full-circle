@@ -176,16 +176,16 @@ function showModal(params) {
         navigatorButtons,
         navigatorEventID
       } = _mergeScreenSpecificSettings(params.screen, screenInstanceID, params);
+      const passProps = Object.assign({}, params.passProps);
+      passProps.navigatorID = navigatorID;
+      passProps.screenInstanceID = screenInstanceID;
+      passProps.navigatorEventID = navigatorEventID;
       return (
         <NavigationControllerIOS
           id={navigatorID}
           title={params.title}
           component={params.screen}
-          passProps={{
-            navigatorID: navigatorID,
-            screenInstanceID: screenInstanceID,
-            navigatorEventID: navigatorEventID
-          }}
+          passProps={passProps}
           style={navigatorStyle}
           leftButtons={navigatorButtons.leftButtons}
           rightButtons={navigatorButtons.rightButtons}
