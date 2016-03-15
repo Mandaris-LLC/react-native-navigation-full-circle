@@ -252,7 +252,7 @@ All supported styles are defined [here](https://github.com/wix/react-native-cont
 
 #### Screen-specific style example
 
-Define a screen-specific style by adding `static navigatorStyle = {};` to the Screen definition.
+Define a screen-specific style by adding `static navigatorStyle = {...};` to the Screen definition.
 
 ```js
 class StyledScreen extends Screen {
@@ -263,6 +263,53 @@ class StyledScreen extends Screen {
   };
   constructor(props) {
     super(props);
+  }
+  render() {
+    return (
+      <View style={{flex: 1}}>...</View>
+     );
+  }
+```
+
+## Adding buttons to the navigator
+
+Nav bar buttons can be defined per-screen by adding `static navigatorButtons = {...};` on the Screen definition. Handle onPress events for the buttons by overriding the Screen's `onNavigatorEvent(event)` method.
+
+#### Buttons object format
+
+```js
+{
+  rightButtons: [], // buttons for the right side of the nav bar (optional)
+  leftButtons: [] // buttons for the left side of the nav bar (optional)
+}
+```
+
+#### Screen-specific buttons example
+
+```js
+class FirstTabScreen extends Screen {
+  static navigatorButtons = {
+    rightButtons: [
+      {
+        title: 'Edit', // for a textual button, provide the button title (label)
+        id: 'edit' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+      },
+      {
+        icon: require('../../img/navicon_add.png'), // for icon button, provide the local image asset name
+        id: 'add' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+      }
+    ]
+  };
+  constructor(props) {
+    super(props);
+  }
+  onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+    if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
+      AlertIOS.alert('NavBar', 'Edit button pressed');
+    }
+    if (event.id == 'add') {
+      AlertIOS.alert('NavBar', 'Add button pressed');
+    }
   }
   render() {
     return (
