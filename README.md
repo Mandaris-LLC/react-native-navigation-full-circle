@@ -112,11 +112,12 @@ Change your app root into an app based on several tabs (usually 2-5), a very com
 Navigation.startTabBasedApp({
   tabs: [
     {
-      label: 'One',
-      screen: 'example.FirstTabScreen',
-      icon: require('../img/one.png'),
-      selectedIcon: require('../img/one_selected.png'),
-      title: 'Screen One'
+      label: 'One', // tab label as appears under the icon in iOS (optional)
+      screen: 'example.FirstTabScreen', // unique ID registered with Navigation.registerScreen
+      icon: require('../img/one.png'), // local image asset for the tab icon unselected state (optional)
+      selectedIcon: require('../img/one_selected.png'), // local image asset for the tab icon selected state (optional)
+      title: 'Screen One', // title of the screen as appears in the nav bar (optional)
+      navigatorStyle: {} // override the navigator style for the tab screen, see "Styling the navigator" below (optional)
     },
     {
       label: 'Two',
@@ -136,8 +137,9 @@ Change your app root into an app based on a single screen (like the iOS Calendar
 ```js
 Navigation.startSingleScreenApp({
   screen: {
-    screen: 'example.WelcomeScreen',
-    title: 'Welcome'
+    screen: 'example.WelcomeScreen', // unique ID registered with Navigation.registerScreen
+    title: 'Welcome', // title of the screen as appears in the nav bar (optional)
+    navigatorStyle: {} // override the navigator style for the screen, see "Styling the navigator" below (optional)
   }
 });
 ```
@@ -148,8 +150,11 @@ Show a screen as a modal.
  
 ```js
 Navigation.showModal({
-  title: "Modal",
-  screen: "example.ModalScreen"
+  screen: "example.ModalScreen", // unique ID registered with Navigation.registerScreen
+  title: "Modal", // title of the screen as appears in the nav bar (optional)
+  passProps: {}, // simple serializable object that will pass as props to the modal (optional)
+  navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+  animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
 });
 ```
 
@@ -158,7 +163,9 @@ Navigation.showModal({
 Dismiss the current modal.
 
 ```js
-Navigation.dismissModal();
+Navigation.dismissModal({
+  animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+});
 ```
 
 ## Screen API
@@ -173,7 +180,7 @@ Push a new screen into this screen's navigation stack.
 this.navigator.push({
   screen: 'example.ScreenThree', // unique ID registered with Navigation.registerScreen
   title: undefined, // navigation bar title of the pushed screen (optional)
-  passProps: {}, // simple serializable object that will pass as props to the pushed component (optional)
+  passProps: {}, // simple serializable object that will pass as props to the pushed screen (optional)
   animated: true, // does the push have transition animation or does it happen immediately (optional)
   backButtonTitle: undefined, // override the back button title (optional)
   navigatorStyle: {} // override the navigator style for the pushed screen (optional)
@@ -196,8 +203,11 @@ Show a screen as a modal.
  
 ```js
 this.navigator.showModal({
-  title: "Modal",
-  screen: "example.ModalScreen"
+  screen: "example.ModalScreen", // unique ID registered with Navigation.registerScreen
+  title: "Modal", // title of the screen as appears in the nav bar (optional)
+  passProps: {}, // simple serializable object that will pass as props to the modal (optional)
+  navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+  animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
 });
 ```
 
@@ -206,11 +216,57 @@ this.navigator.showModal({
 Dismiss the current modal.
 
 ```js
-this.navigator.dismissModal();
+this.navigator.dismissModal({
+  animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+});
 ```
 
 ## Styling the navigator
 
 You can style the navigator appearance and behavior by passing a `navigatorStyle` object. This object can be passed when the screen is originally created; can be defined per-screen in the `static navigatorStyle = {};` on `Screen`; and can be overridden when a screen is pushed.
 
-All supported styles are defined [here](https://github.com/wix/react-native-controllers#styling-navigation).
+#### Style object format
+
+```js
+{
+  navBarTextColor: '#000000', // change the text color of the title (remembered across pushes)
+  navBarBackgroundColor: '#f7f7f7', // change the background color of the nav bar (remembered across pushes)
+  navBarButtonColor: '#007aff', // change the button colors of the nav bar (eg. the back button) (remembered across pushes)
+  navBarHidden: false, // make the nav bar hidden
+  navBarHideOnScroll: false, // make the nav bar hidden only after the user starts to scroll
+  navBarTranslucent: false, // make the nav bar semi-translucent, works best with drawUnderNavBar:true
+  drawUnderNavBar: false, // draw the screen content under the nav bar, works best with navBarTranslucent:true
+  drawUnderTabBar: false, // draw the screen content under the tab bar (the tab bar is always translucent)
+  statusBarBlur: false, // blur the area under the status bar, works best with navBarHidden:true
+  navBarBlur: false, // blur the entire nav bar, works best with drawUnderNavBar:true
+  tabBarHidden: false, // make the screen content hide the tab bar (remembered across pushes)
+  statusBarHideWithNavBar: false // hide the status bar if the nav bar is also hidden, useful for navBarHidden:true
+  statusBarHidden: false, // make the status bar hidden regardless of nav bar state
+  statusBarTextColorScheme: 'dark' // text color of status bar, 'dark' / 'light' (remembered across pushes)
+}
+```
+
+> Note: If you set any styles related to the Status Bar, make sure that in Xcode > project > Info.plist, the property `View controller-based status bar appearance` is set to `YES`.
+
+All supported styles are defined [here](https://github.com/wix/react-native-controllers#styling-navigation). There's also an example project there showcasing all the different styles.
+
+#### Screen-specific style example
+
+Define a screen-specific style by adding `static navigatorStyle = {};` to the Screen definition.
+
+```js
+class StyledScreen extends Screen {
+  static navigatorStyle = {
+    drawUnderNavBar: true,
+    drawUnderTabBar: true,
+    navBarTranslucent: true
+  };
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <View style={{flex: 1}}>...</View>
+     );
+  }
+```
