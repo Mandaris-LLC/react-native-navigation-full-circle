@@ -1,6 +1,6 @@
 # React Native Navigation
 
-App-wide support for 100% native navigation with potential isolation support. For iOS, this package is a wrapper around [react-native-controllers](https://github.com/wix/react-native-controllers) which provides a simplified more abstract API. This abstract API will be unified with the Android solution which is still work in progress.
+App-wide support for 100% native navigation with an easy cross-platform interface. For iOS, this package is a wrapper around [react-native-controllers](https://github.com/wix/react-native-controllers), but provides a simplified more abstract API over it. This abstract API will be unified with the Android solution which is currently work in progress.
 
 ## Overview
 
