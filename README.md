@@ -136,7 +136,15 @@ Navigation.startTabBasedApp({
       selectedIcon: require('../img/two_selected.png'),
       title: 'Screen Two'
     }
-  ]
+  ],
+  drawer: { // optional, add this if you want a side menu drawer in your app
+    left: { // optional, define if you want a drawer from the left
+      screen: 'example.FirstSideMenu' // unique ID registered with Navigation.registerScreen
+    },
+    right: { // optional, define if you want a drawer from the right
+      screen: 'example.SecondSideMenu' // unique ID registered with Navigation.registerScreen
+    }
+  }
 });
 ```
 
@@ -150,6 +158,14 @@ Navigation.startSingleScreenApp({
     screen: 'example.WelcomeScreen', // unique ID registered with Navigation.registerScreen
     title: 'Welcome', // title of the screen as appears in the nav bar (optional)
     navigatorStyle: {} // override the navigator style for the screen, see "Styling the navigator" below (optional)
+  },
+  drawer: { // optional, add this if you want a side menu drawer in your app
+    left: { // optional, define if you want a drawer from the left
+      screen: 'example.FirstSideMenu' // unique ID registered with Navigation.registerScreen
+    },
+    right: { // optional, define if you want a drawer from the right
+      screen: 'example.SecondSideMenu' // unique ID registered with Navigation.registerScreen
+    }
   }
 });
 ```
@@ -207,6 +223,16 @@ this.navigator.pop({
 });
 ```
 
+ * **popToRoot(params = {})**
+
+Pop all the screens until the root from this screen's navigation stack.
+
+```js
+this.navigator.popToRoot({
+  animated: true // does the pop have transition animation or does it happen immediately (optional)
+});
+```
+
  * **showModal(params = {})**
 
 Show a screen as a modal.
@@ -228,6 +254,39 @@ Dismiss the current modal.
 ```js
 this.navigator.dismissModal({
   animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+});
+```
+
+ * **setButtons(params = {})**
+
+Set buttons dynamically on the navigator. If your buttons don't change during runtime, see "Adding buttons to the navigator" below to add them using `static navigatorButtons = {...};`.
+
+```js
+this.navigator.setButtons({
+  leftButtons: [], // see "Adding buttons to the navigator" below for format (optional)
+  rightButtons: [], // see "Adding buttons to the navigator" below for format (optional)
+  animated: true // does the change have transition animation or does it happen immediately (optional)
+});
+```
+
+ * **setTitle(params = {})**
+
+Set the nav bar title dynamically. If your title doesn't change during runtime, set it when the screen is defined / pushed.
+
+```js
+this.navigator.setTitle({
+  title: "Dynamic Title" // the new title of the screen as appears in the nav bar
+});
+```
+
+ * **toggleDrawer(params = {})**
+
+Toggle the side menu drawer assuming you have one in your app.
+
+```js
+this.navigator.toggleDrawer({
+  side: 'left', // the side of the drawer since you can have two, 'left' / 'right'
+  animated: true // does the toggle have transition animation or does it happen immediately (optional)
 });
 ```
 
@@ -302,7 +361,8 @@ class FirstTabScreen extends Screen {
     rightButtons: [
       {
         title: 'Edit', // for a textual button, provide the button title (label)
-        id: 'edit' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        id: 'edit', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        testID: 'e2e_rules' // optional, used to locate this view in end-to-end tests
       },
       {
         icon: require('../../img/navicon_add.png'), // for icon button, provide the local image asset name
