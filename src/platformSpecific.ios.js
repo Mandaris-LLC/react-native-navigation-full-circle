@@ -41,7 +41,8 @@ function startTabBasedApp(params) {
                   passProps={{
                     navigatorID: navigatorID,
                     screenInstanceID: screenInstanceID,
-                    navigatorEventID: navigatorEventID
+                    navigatorEventID: navigatorEventID,
+                    listenForEvents: !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons)
                   }}
                   style={navigatorStyle}
                   leftButtons={navigatorButtons.leftButtons}
@@ -87,7 +88,8 @@ function startSingleScreenApp(params) {
           passProps={{
             navigatorID: navigatorID,
             screenInstanceID: screenInstanceID,
-            navigatorEventID: navigatorEventID
+            navigatorEventID: navigatorEventID,
+            listenForEvents: !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons)
           }}
           style={navigatorStyle}
           leftButtons={navigatorButtons.leftButtons}
@@ -110,18 +112,16 @@ function _mergeScreenSpecificSettings(screenID, screenInstanceID, params) {
   if (params.navigatorStyle) {
     Object.assign(navigatorStyle, params.navigatorStyle);
   }
-  let navigatorEventID;
+
+  const navigatorEventID = screenInstanceID + '_events';
   const navigatorButtons = Object.assign({}, screenClass.navigatorButtons);
   if (navigatorButtons.leftButtons) {
     for (let i = 0 ; i < navigatorButtons.leftButtons.length ; i++) {
-      navigatorEventID = screenInstanceID + '_events';
       navigatorButtons.leftButtons[i].onPress = navigatorEventID;
     }
   }
   if (navigatorButtons.rightButtons) {
-    navigatorEventID = screenInstanceID + '_events';
     for (let i = 0 ; i < navigatorButtons.rightButtons.length ; i++) {
-      navigatorEventID = screenInstanceID + '_events';
       navigatorButtons.rightButtons[i].onPress = navigatorEventID;
     }
   }
@@ -143,6 +143,7 @@ function navigatorPush(navigator, params) {
   passProps.navigatorID = navigator.navigatorID;
   passProps.screenInstanceID = screenInstanceID;
   passProps.navigatorEventID = navigatorEventID;
+  passProps.listenForEvents = !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons);
   Controllers.NavigationControllerIOS(navigator.navigatorID).push({
     title: params.title,
     component: params.screen,
@@ -159,6 +160,23 @@ function navigatorPop(navigator, params) {
   Controllers.NavigationControllerIOS(navigator.navigatorID).pop({
     animated: params.animated
   });
+}
+
+function navigatorSetButtons(navigator, navigatorEventID, params) {
+  if (params.leftButtons) {
+    const buttons = params.leftButtons.slice(); // clone
+    for (let i = 0 ; i < buttons.length ; i++) {
+      buttons[i].onPress = navigatorEventID;
+    }
+    Controllers.NavigationControllerIOS(navigator.navigatorID).setLeftButtons(buttons, params.animated);
+  }
+  if (params.rightButtons) {
+    const buttons = params.rightButtons.slice(); // clone
+    for (let i = 0 ; i < buttons.length ; i++) {
+      buttons[i].onPress = navigatorEventID;
+    }
+    Controllers.NavigationControllerIOS(navigator.navigatorID).setRightButtons(buttons, params.animated);
+  }
 }
 
 function showModal(params) {
@@ -180,6 +198,7 @@ function showModal(params) {
       passProps.navigatorID = navigatorID;
       passProps.screenInstanceID = screenInstanceID;
       passProps.navigatorEventID = navigatorEventID;
+      passProps.listenForEvents = !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons);
       return (
         <NavigationControllerIOS
           id={navigatorID}
@@ -207,5 +226,6 @@ export default platformSpecific = {
   navigatorPush,
   navigatorPop,
   showModal,
-  dismissModal
+  dismissModal,
+  navigatorSetButtons
 }

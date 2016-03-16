@@ -3,8 +3,9 @@ import platformSpecific from './platformSpecific';
 import Navigation from './Navigation';
 
 class Navigator {
-  constructor(navigatorID) {
+  constructor(navigatorID, screenInstance) {
     this.navigatorID = navigatorID;
+    this.screenInstance = screenInstance;
   }
   push(params = {}) {
     return platformSpecific.navigatorPush(this, params);
@@ -18,6 +19,10 @@ class Navigator {
   dismissModal(params = {}) {
     return Navigation.dismissModal(params);
   }
+  setButtons(params = {}) {
+    const navigatorEventID = this.screenInstance.listenOnNavigatorEvents();
+    return platformSpecific.navigatorSetButtons(this, navigatorEventID, params);
+  }
 }
 
 export default class Screen extends Component {
@@ -26,14 +31,21 @@ export default class Screen extends Component {
   constructor(props) {
     super(props);
     if (props.navigatorID) {
-      this.navigator = new Navigator(props.navigatorID);
+      this.navigator = new Navigator(props.navigatorID, this);
     }
-    if (props.navigatorEventID) {
-      this.navigatorEventSubscription = NativeAppEventEmitter.addListener(props.navigatorEventID, (event) => this.onNavigatorEvent(event));
+    if (props.listenForEvents) {
+      this.listenOnNavigatorEvents();
     }
+  }
+  listenOnNavigatorEvents() {
+    if (!this.navigatorEventSubscription) {
+      this.navigatorEventSubscription = NativeAppEventEmitter.addListener(this.props.navigatorEventID, (event) => this.onNavigatorEvent(event));
+    }
+    return this.props.navigatorEventID;
   }
   onNavigatorEvent(event) {}
   componentWillUnmount() {
+    this.navigator = undefined;
     if (this.navigatorEventSubscription) {
       this.navigatorEventSubscription.remove();
     }
