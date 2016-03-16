@@ -13,6 +13,9 @@ class Navigator {
   pop(params = {}) {
     return platformSpecific.navigatorPop(this, params);
   }
+  popToRoot(params = {}) {
+    return platformSpecific.navigatorPopToRoot(this, params);
+  }
   showModal(params = {}) {
     return Navigation.showModal(params);
   }
@@ -22,6 +25,9 @@ class Navigator {
   setButtons(params = {}) {
     const navigatorEventID = this.screenInstance.listenOnNavigatorEvents();
     return platformSpecific.navigatorSetButtons(this, navigatorEventID, params);
+  }
+  setTitle(params = {}) {
+    return platformSpecific.navigatorSetTitle(this, params);
   }
 }
 

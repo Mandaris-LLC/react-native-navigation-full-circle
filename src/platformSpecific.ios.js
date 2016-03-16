@@ -162,6 +162,18 @@ function navigatorPop(navigator, params) {
   });
 }
 
+function navigatorPopToRoot(navigator, params) {
+  Controllers.NavigationControllerIOS(navigator.navigatorID).popToRoot({
+    animated: params.animated
+  });
+}
+
+function navigatorSetTitle(navigator, params) {
+  Controllers.NavigationControllerIOS(navigator.navigatorID).setTitle({
+    title: params.title
+  });
+}
+
 function navigatorSetButtons(navigator, navigatorEventID, params) {
   if (params.leftButtons) {
     const buttons = params.leftButtons.slice(); // clone
@@ -225,7 +237,9 @@ export default platformSpecific = {
   startSingleScreenApp,
   navigatorPush,
   navigatorPop,
+  navigatorPopToRoot,
   showModal,
   dismissModal,
-  navigatorSetButtons
+  navigatorSetButtons,
+  navigatorSetTitle
 }

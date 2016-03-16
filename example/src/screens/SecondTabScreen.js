@@ -24,8 +24,17 @@ class SecondTabScreen extends Screen {
           <Text style={styles.button}>Change Buttons</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onChangeTitlePress.bind(this) }>
+          <Text style={styles.button}>Change Title</Text>
+        </TouchableOpacity>
+
       </View>
     );
+  }
+  onChangeTitlePress() {
+    this.navigator.setTitle({
+      title: Math.round(Math.random() * 100000).toString()
+    });
   }
   onChangeButtonsPress() {
     let buttons;

@@ -25,7 +25,8 @@ class StyledScreen extends Screen {
   static navigatorButtons = {
     rightButtons: [{
       icon: require('../../img/navicon_edit.png'),
-      id: 'compose'
+      id: 'compose',
+      testID: 'e2e_is_awesome'
     }]
   };
   constructor(props) {
