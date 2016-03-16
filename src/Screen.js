@@ -29,6 +29,9 @@ class Navigator {
   setTitle(params = {}) {
     return platformSpecific.navigatorSetTitle(this, params);
   }
+  toggleDrawer(params = {}) {
+    return platformSpecific.navigatorToggleDrawer(this, params);
+  }
 }
 
 export default class Screen extends Component {

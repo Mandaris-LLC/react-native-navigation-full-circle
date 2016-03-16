@@ -18,6 +18,10 @@ import './ModalScreen';
 // instead of React.Component, we extend Screen (imported above)
 class FirstTabScreen extends Screen {
   static navigatorButtons = {
+    leftButtons: [{
+      icon: require('../../img/navicon_menu.png'),
+      id: 'menu'
+    }],
     rightButtons: [
       {
         title: 'Edit',
@@ -33,6 +37,12 @@ class FirstTabScreen extends Screen {
     super(props);
   }
   onNavigatorEvent(event) {
+    if (event.id == 'menu') {
+      this.navigator.toggleDrawer({
+        side: 'left',
+        animated: true
+      });
+    }
     if (event.id == 'edit') {
       AlertIOS.alert('NavBar', 'Edit button pressed');
     }

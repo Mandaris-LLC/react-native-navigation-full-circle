@@ -17,6 +17,23 @@ function startTabBasedApp(params) {
   const controllerID = utils.getRandomId();
   const Controller = Controllers.createClass({
     render: function() {
+      if (!params.drawer || (!params.drawer.left && !params.drawer.right)) {
+        return this.renderBody();
+      } else {
+        const navigatorID = controllerID + '_drawer';
+        return (
+          <DrawerControllerIOS id={navigatorID}
+            componentLeft={params.drawer.left ? params.drawer.left.screen : undefined}
+            passPropsLeft={{navigatorID: navigatorID}}
+            componentRight={params.drawer.right ? params.drawer.right.screen : undefined}
+            passPropsRight={{navigatorID: navigatorID}}
+          >
+            {this.renderBody()}
+          </DrawerControllerIOS>
+        );
+      }
+    },
+    renderBody: function() {
       return (
         <TabBarControllerIOS id={controllerID + '_tabs'}>
         {
@@ -68,6 +85,23 @@ function startSingleScreenApp(params) {
   const controllerID = utils.getRandomId();
   const Controller = Controllers.createClass({
     render: function() {
+      if (!params.drawer || (!params.drawer.left && !params.drawer.right)) {
+        return this.renderBody();
+      } else {
+        const navigatorID = controllerID + '_drawer';
+        return (
+          <DrawerControllerIOS id={navigatorID}
+            componentLeft={params.drawer.left ? params.drawer.left.screen : undefined}
+            passPropsLeft={{navigatorID: navigatorID}}
+            componentRight={params.drawer.right ? params.drawer.right.screen : undefined}
+            passPropsRight={{navigatorID: navigatorID}}
+          >
+            {this.renderBody()}
+          </DrawerControllerIOS>
+        );
+      }
+    },
+    renderBody: function() {
       const screen = params.screen;
       const navigatorID = controllerID + '_nav';
       const screenInstanceID = utils.getRandomId();
@@ -174,6 +208,14 @@ function navigatorSetTitle(navigator, params) {
   });
 }
 
+function navigatorToggleDrawer(navigator, params) {
+  const controllerID = navigator.navigatorID.split('_')[0];
+  Controllers.DrawerControllerIOS(controllerID + '_drawer').toggle({
+    side: params.side,
+    animated: params.animated
+  });
+}
+
 function navigatorSetButtons(navigator, navigatorEventID, params) {
   if (params.leftButtons) {
     const buttons = params.leftButtons.slice(); // clone
@@ -241,5 +283,6 @@ export default platformSpecific = {
   showModal,
   dismissModal,
   navigatorSetButtons,
-  navigatorSetTitle
+  navigatorSetTitle,
+  navigatorToggleDrawer
 }
