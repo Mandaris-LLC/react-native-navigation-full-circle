@@ -234,6 +234,20 @@ this.navigator.popToRoot({
 });
 ```
 
+ * **resetTo(params)**
+
+Reset the screen's navigation stack to a new screen (the stack root is changed).
+
+```js
+this.navigator.resetTo({
+  screen: 'example.ScreenThree', // unique ID registered with Navigation.registerScreen
+  title: undefined, // navigation bar title of the pushed screen (optional)
+  passProps: {}, // simple serializable object that will pass as props to the pushed screen (optional)
+  animated: true, // does the push have transition animation or does it happen immediately (optional)
+  navigatorStyle: {} // override the navigator style for the pushed screen (optional)
+});
+```
+
  * **showModal(params = {})**
 
 Show a screen as a modal.
