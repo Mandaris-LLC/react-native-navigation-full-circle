@@ -202,6 +202,33 @@ function navigatorPopToRoot(navigator, params) {
   });
 }
 
+function navigatorResetTo(navigator, params) {
+  if (!params.screen) {
+    console.error('Navigator.resetTo(params): params.screen is required');
+    return;
+  }
+  const screenInstanceID = utils.getRandomId();
+  const {
+    navigatorStyle,
+    navigatorButtons,
+    navigatorEventID
+  } = _mergeScreenSpecificSettings(params.screen, screenInstanceID, params);
+  const passProps = Object.assign({}, params.passProps);
+  passProps.navigatorID = navigator.navigatorID;
+  passProps.screenInstanceID = screenInstanceID;
+  passProps.navigatorEventID = navigatorEventID;
+  passProps.listenForEvents = !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons);
+  Controllers.NavigationControllerIOS(navigator.navigatorID).resetTo({
+    title: params.title,
+    component: params.screen,
+    animated: params.animated,
+    passProps: passProps,
+    style: navigatorStyle,
+    leftButtons: navigatorButtons.leftButtons,
+    rightButtons: navigatorButtons.rightButtons
+  });
+}
+
 function navigatorSetTitle(navigator, params) {
   Controllers.NavigationControllerIOS(navigator.navigatorID).setTitle({
     title: params.title
@@ -280,6 +307,7 @@ export default platformSpecific = {
   navigatorPush,
   navigatorPop,
   navigatorPopToRoot,
+  navigatorResetTo,
   showModal,
   dismissModal,
   navigatorSetButtons,

@@ -38,6 +38,10 @@ class PushedScreen extends Screen {
           <Text style={styles.button}>Pop To Root</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onResetToPress.bind(this) }>
+          <Text style={styles.button}>Reset To</Text>
+        </TouchableOpacity>
+
       </View>
     );
   }
@@ -58,6 +62,12 @@ class PushedScreen extends Screen {
   }
   onPopToRootPress() {
     this.navigator.popToRoot();
+  }
+  onResetToPress() {
+    this.navigator.resetTo({
+      title: "New Root",
+      screen: "example.PushedScreen"
+    });
   }
 }
 

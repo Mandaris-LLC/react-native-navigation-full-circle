@@ -16,6 +16,9 @@ class Navigator {
   popToRoot(params = {}) {
     return platformSpecific.navigatorPopToRoot(this, params);
   }
+  resetTo(params = {}) {
+    return platformSpecific.navigatorResetTo(this, params);
+  }
   showModal(params = {}) {
     return Navigation.showModal(params);
   }
