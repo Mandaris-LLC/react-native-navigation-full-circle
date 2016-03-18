@@ -12,6 +12,6 @@ A simple usage example for an app based on redux. If you're not using redux, tak
 
 ## Folder Structure
 
-* `screens/` - all your app screens, every screen is a redux connected ("smart") component
-* `components/` - all react sub-components, they are not aware of redux ("dumb") and get everything by props
-* `reducers/` - all of your redux goodness (reducts and their actions) goes here, all business logic should be here
+* `src/screens/` - all your app screens, every screen is a redux connected ("smart") component
+* `src/components/` - all react sub-components, they are not aware of redux ("dumb") and get everything by props
+* `src/reducers/` - all of your redux goodness (reducts and their actions) goes here, all business logic should be here
