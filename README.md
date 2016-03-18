@@ -40,7 +40,7 @@ Coming soon, not yet supported
 If you don't like reading, just jump into the fully working example projects:
 
 * [example](example) - Example project showing the best practice use of this package. Shows many navigation features.
-* [redux-example](example-redux) - Best practice use of this package in a [redux](https://github.com/reactjs/redux)-based. project
+* [redux-example](example-redux) - Best practice use of this package in a [redux](https://github.com/reactjs/redux)-based project.
 
 #### Step 1 - Change the way your app starts
 
