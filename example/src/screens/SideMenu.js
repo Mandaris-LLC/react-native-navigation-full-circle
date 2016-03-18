@@ -1,4 +1,5 @@
 import React, {
+  Component,
   Text,
   View,
   ScrollView,
@@ -7,11 +8,7 @@ import React, {
   AlertIOS
 } from 'react-native';
 
-// important imports, the magic is here
-import { Navigation, Screen } from 'react-native-navigation';
-
-// instead of React.Component, we extend Screen (imported above)
-class SideMenu extends Screen {
+export default class SideMenu extends Component {
   constructor(props) {
     super(props);
   }
@@ -35,6 +32,3 @@ const styles = StyleSheet.create({
     color: 'blue'
   }
 });
-
-// every screen must be registered with a unique name
-Navigation.registerScreen('example.SideMenu', () => SideMenu);

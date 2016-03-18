@@ -58,8 +58,7 @@ function startTabBasedApp(params) {
                   passProps={{
                     navigatorID: navigatorID,
                     screenInstanceID: screenInstanceID,
-                    navigatorEventID: navigatorEventID,
-                    listenForEvents: !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons)
+                    navigatorEventID: navigatorEventID
                   }}
                   style={navigatorStyle}
                   leftButtons={navigatorButtons.leftButtons}
@@ -122,8 +121,7 @@ function startSingleScreenApp(params) {
           passProps={{
             navigatorID: navigatorID,
             screenInstanceID: screenInstanceID,
-            navigatorEventID: navigatorEventID,
-            listenForEvents: !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons)
+            navigatorEventID: navigatorEventID
           }}
           style={navigatorStyle}
           leftButtons={navigatorButtons.leftButtons}
@@ -177,7 +175,6 @@ function navigatorPush(navigator, params) {
   passProps.navigatorID = navigator.navigatorID;
   passProps.screenInstanceID = screenInstanceID;
   passProps.navigatorEventID = navigatorEventID;
-  passProps.listenForEvents = !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons);
   Controllers.NavigationControllerIOS(navigator.navigatorID).push({
     title: params.title,
     component: params.screen,
@@ -217,7 +214,6 @@ function navigatorResetTo(navigator, params) {
   passProps.navigatorID = navigator.navigatorID;
   passProps.screenInstanceID = screenInstanceID;
   passProps.navigatorEventID = navigatorEventID;
-  passProps.listenForEvents = !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons);
   Controllers.NavigationControllerIOS(navigator.navigatorID).resetTo({
     title: params.title,
     component: params.screen,
@@ -279,7 +275,6 @@ function showModal(params) {
       passProps.navigatorID = navigatorID;
       passProps.screenInstanceID = screenInstanceID;
       passProps.navigatorEventID = navigatorEventID;
-      passProps.listenForEvents = !!(navigatorButtons.leftButtons || navigatorButtons.rightButtons);
       return (
         <NavigationControllerIOS
           id={navigatorID}

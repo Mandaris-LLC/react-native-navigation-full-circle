@@ -1,4 +1,5 @@
 import React, {
+  Component,
   Text,
   View,
   ScrollView,
@@ -8,15 +9,7 @@ import React, {
   AlertIOS
 } from 'react-native';
 
-// important imports, the magic is here
-import { Navigation, Screen } from 'react-native-navigation';
-
-// need to import every screen we push
-import './PushedScreen';
-import './StyledScreen';
-
-// instead of React.Component, we extend Screen (imported above)
-class StyledScreen extends Screen {
+export default class StyledScreen extends Component {
   static navigatorStyle = {
     drawUnderNavBar: true,
     drawUnderTabBar: true,
@@ -31,6 +24,8 @@ class StyledScreen extends Screen {
   };
   constructor(props) {
     super(props);
+    // if you want to listen on navigator events, set this up
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
   render() {
     return (
@@ -63,19 +58,19 @@ class StyledScreen extends Screen {
     }
   }
   onPushPress() {
-    this.navigator.push({
+    this.props.navigator.push({
       title: "More",
       screen: "example.PushedScreen"
     });
   }
   onPushStyledPress() {
-    this.navigator.push({
+    this.props.navigator.push({
       title: "More",
       screen: "example.StyledScreen"
     });
   }
   onPopPress() {
-    this.navigator.pop();
+    this.props.navigator.pop();
   }
 }
 
@@ -88,6 +83,3 @@ const styles = StyleSheet.create({
     color: 'blue'
   }
 });
-
-// every screen must be registered with a unique name
-Navigation.registerScreen('example.StyledScreen', () => StyledScreen);

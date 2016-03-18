@@ -1,4 +1,5 @@
 import React, {
+  Component,
   Text,
   View,
   ScrollView,
@@ -7,14 +8,12 @@ import React, {
   AlertIOS
 } from 'react-native';
 
-// important imports, the magic is here
-import { Navigation, Screen } from 'react-native-navigation';
-
-// instead of React.Component, we extend Screen (imported above)
-class SecondTabScreen extends Screen {
+export default class SecondTabScreen extends Component {
   constructor(props) {
     super(props);
     this.buttonsCounter = 0;
+    // if you want to listen on navigator events, set this up
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
   render() {
     return (
@@ -32,7 +31,7 @@ class SecondTabScreen extends Screen {
     );
   }
   onChangeTitlePress() {
-    this.navigator.setTitle({
+    this.props.navigator.setTitle({
       title: Math.round(Math.random() * 100000).toString()
     });
   }
@@ -59,7 +58,7 @@ class SecondTabScreen extends Screen {
     }
     this.buttonsCounter++;
 
-    this.navigator.setButtons({
+    this.props.navigator.setButtons({
       rightButtons: buttons,
       animated: true
     });
@@ -86,6 +85,3 @@ const styles = StyleSheet.create({
     color: 'blue'
   }
 });
-
-// every screen must be registered with a unique name
-Navigation.registerScreen('example.SecondTabScreen', () => SecondTabScreen);

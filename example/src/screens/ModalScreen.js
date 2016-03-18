@@ -1,4 +1,5 @@
 import React, {
+  Component,
   Text,
   View,
   ScrollView,
@@ -6,15 +7,7 @@ import React, {
   StyleSheet
 } from 'react-native';
 
-// important imports, the magic is here
-import { Navigation, Screen } from 'react-native-navigation';
-
-// need to import every screen we push
-import './PushedScreen';
-import './StyledScreen';
-
-// instead of React.Component, we extend Screen (imported above)
-class ModalScreen extends Screen {
+export default class ModalScreen extends Component {
   static navigatorButtons = {
     leftButtons: [{
       title: 'Close',
@@ -23,6 +16,8 @@ class ModalScreen extends Screen {
   };
   constructor(props) {
     super(props);
+    // if you want to listen on navigator events, set this up
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
   render() {
     return (
@@ -45,23 +40,23 @@ class ModalScreen extends Screen {
   }
   onNavigatorEvent(event) {
     if (event.id == 'close') {
-      this.navigator.dismissModal();
+      this.props.navigator.dismissModal();
     }
   }
   onPushPress() {
-    this.navigator.push({
+    this.props.navigator.push({
       title: "More",
       screen: "example.PushedScreen"
     });
   }
   onPushStyledPress() {
-    this.navigator.push({
+    this.props.navigator.push({
       title: "More",
       screen: "example.StyledScreen"
     });
   }
   onClosePress() {
-    this.navigator.dismissModal();
+    this.props.navigator.dismissModal();
   }
 }
 
@@ -74,6 +69,3 @@ const styles = StyleSheet.create({
     color: 'blue'
   }
 });
-
-// every screen must be registered with a unique name
-Navigation.registerScreen('example.ModalScreen', () => ModalScreen);

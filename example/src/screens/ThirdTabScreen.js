@@ -1,4 +1,5 @@
 import React, {
+  Component,
   Text,
   View,
   ScrollView,
@@ -6,16 +7,7 @@ import React, {
   StyleSheet
 } from 'react-native';
 
-// important imports, the magic is here
-import { Navigation, Screen } from 'react-native-navigation';
-
-// need to import every screen we push
-import './PushedScreen';
-import './StyledScreen';
-import './ModalScreen';
-
-// instead of React.Component, we extend Screen (imported above)
-class ThirdTabScreen extends Screen {
+export default class ThirdTabScreen extends Component {
   constructor(props) {
     super(props);
   }
@@ -39,19 +31,19 @@ class ThirdTabScreen extends Screen {
     );
   }
   onPushPress() {
-    this.navigator.push({
+    this.props.navigator.push({
       title: "More",
       screen: "example.PushedScreen"
     });
   }
   onPushStyledPress() {
-    this.navigator.push({
+    this.props.navigator.push({
       title: "Styled",
       screen: "example.StyledScreen"
     });
   }
   onModalPress() {
-    this.navigator.showModal({
+    this.props.navigator.showModal({
       title: "Modal",
       screen: "example.ModalScreen"
     });
@@ -67,6 +59,3 @@ const styles = StyleSheet.create({
     color: 'blue'
   }
 });
-
-// every screen must be registered with a unique name
-Navigation.registerScreen('example.ThirdTabScreen', () => ThirdTabScreen);

@@ -3,9 +3,11 @@ import platformSpecific from './platformSpecific';
 import Navigation from './Navigation';
 
 class Navigator {
-  constructor(navigatorID, screenInstance) {
+  constructor(navigatorID, navigatorEventID) {
     this.navigatorID = navigatorID;
-    this.screenInstance = screenInstance;
+    this.navigatorEventID = navigatorEventID;
+    this.navigatorEventHandler = null;
+    this.navigatorEventSubscription = null;
   }
   push(params = {}) {
     return platformSpecific.navigatorPush(this, params);
@@ -26,14 +28,29 @@ class Navigator {
     return Navigation.dismissModal(params);
   }
   setButtons(params = {}) {
-    const navigatorEventID = this.screenInstance.listenOnNavigatorEvents();
-    return platformSpecific.navigatorSetButtons(this, navigatorEventID, params);
+    return platformSpecific.navigatorSetButtons(this, this.navigatorEventID, params);
   }
   setTitle(params = {}) {
     return platformSpecific.navigatorSetTitle(this, params);
   }
   toggleDrawer(params = {}) {
     return platformSpecific.navigatorToggleDrawer(this, params);
+  }
+  setOnNavigatorEvent(callback) {
+    this.navigatorEventHandler = callback;
+    if (!this.navigatorEventSubscription) {
+      this.navigatorEventSubscription = NativeAppEventEmitter.addListener(this.navigatorEventID, (event) => this.onNavigatorEvent(event));
+    }
+  }
+  onNavigatorEvent(event) {
+    if (this.navigatorEventHandler) {
+      this.navigatorEventHandler(event);
+    }
+  }
+  cleanup() {
+    if (this.navigatorEventSubscription) {
+      this.navigatorEventSubscription.remove();
+    }
   }
 }
 
@@ -43,23 +60,13 @@ export default class Screen extends Component {
   constructor(props) {
     super(props);
     if (props.navigatorID) {
-      this.navigator = new Navigator(props.navigatorID, this);
-    }
-    if (props.listenForEvents) {
-      this.listenOnNavigatorEvents();
+      this.navigator = new Navigator(props.navigatorID, props.navigatorEventID);
     }
   }
-  listenOnNavigatorEvents() {
-    if (!this.navigatorEventSubscription) {
-      this.navigatorEventSubscription = NativeAppEventEmitter.addListener(this.props.navigatorEventID, (event) => this.onNavigatorEvent(event));
-    }
-    return this.props.navigatorEventID;
-  }
-  onNavigatorEvent(event) {}
   componentWillUnmount() {
-    this.navigator = undefined;
-    if (this.navigatorEventSubscription) {
-      this.navigatorEventSubscription.remove();
+    if (this.navigator) {
+      this.navigator.cleanup();
+      this.navigator = undefined;
     }
   }
 }

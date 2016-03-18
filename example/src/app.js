@@ -1,10 +1,10 @@
 import { Navigation } from 'react-native-navigation';
 
-import './screens/FirstTabScreen';
-import './screens/SecondTabScreen';
-import './screens/ThirdTabScreen';
-import './screens/SideMenu';
+// screen related book keeping
+import { registerScreens } from './screens';
+registerScreens();
 
+// this will start our app
 Navigation.startTabBasedApp({
   tabs: [
     {

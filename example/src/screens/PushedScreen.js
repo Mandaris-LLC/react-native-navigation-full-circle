@@ -1,4 +1,5 @@
 import React, {
+  Component,
   Text,
   View,
   ScrollView,
@@ -6,15 +7,7 @@ import React, {
   StyleSheet
 } from 'react-native';
 
-// important imports, the magic is here
-import { Navigation, Screen } from 'react-native-navigation';
-
-// need to import every screen we push
-import './PushedScreen';
-import './StyledScreen';
-
-// instead of React.Component, we extend Screen (imported above)
-class PushedScreen extends Screen {
+export default class PushedScreen extends Component {
   constructor(props) {
     super(props);
   }
@@ -46,25 +39,25 @@ class PushedScreen extends Screen {
     );
   }
   onPushPress() {
-    this.navigator.push({
+    this.props.navigator.push({
       title: "More",
       screen: "example.PushedScreen"
     });
   }
   onPushStyledPress() {
-    this.navigator.push({
+    this.props.navigator.push({
       title: "More",
       screen: "example.StyledScreen"
     });
   }
   onPopPress() {
-    this.navigator.pop();
+    this.props.navigator.pop();
   }
   onPopToRootPress() {
-    this.navigator.popToRoot();
+    this.props.navigator.popToRoot();
   }
   onResetToPress() {
-    this.navigator.resetTo({
+    this.props.navigator.resetTo({
       title: "New Root",
       screen: "example.PushedScreen"
     });
@@ -80,6 +73,3 @@ const styles = StyleSheet.create({
     color: 'blue'
   }
 });
-
-// every screen must be registered with a unique name
-Navigation.registerScreen('example.PushedScreen', () => PushedScreen);
