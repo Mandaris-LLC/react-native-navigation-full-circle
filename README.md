@@ -11,6 +11,8 @@ App-wide support for 100% native navigation with an easy cross-platform interfac
 * [Screen API](#screen-api)
 * [Styling the navigator](#styling-the-navigator)
 * [Adding buttons to the navigator](#adding-buttons-to-the-navigator)
+* [Release Notes](RELEASES.md)
+* [License](#license)
 
 ## Installation - iOS
 
@@ -35,7 +37,10 @@ Coming soon, not yet supported
 
 ## Usage
 
-If you don't like reading, just jump into the fully working [example project](https://github.com/wix/react-native-navigation/tree/master/example).
+If you don't like reading, just jump into the fully working example projects:
+
+* [example](example) - Example project showing the best practice use of this package. Shows many navigation features.
+* [redux-example](example-redux) - Best practice use of this package in a [redux](https://github.com/reactjs/redux)-based. project
 
 #### Step 1 - Change the way your app starts
 
@@ -44,17 +49,15 @@ This would normally go in your `index.ios.js`
 ```js
 import { Navigation } from 'react-native-navigation';
 
-// import the components for your root screens (or the packager will not bundle them)
-// they all need to be registered with Navigation.registerScreen
-import './FirstTabScreen';
-import './SecondTabScreen';
+import { registerScreens } from './screens';
+registerScreens(); // this is where you register all of your app's screens
 
 // start the app
 Navigation.startTabBasedApp({
   tabs: [
     {
       label: 'One',
-      screen: 'example.FirstTabScreen',
+      screen: 'example.FirstTabScreen', // this is a registered name for a screen
       icon: require('../img/one.png'),
       selectedIcon: require('../img/one_selected.png'),
       title: 'Screen One'
@@ -70,33 +73,25 @@ Navigation.startTabBasedApp({
 });
 ```
 
-#### Step 2 - Slightly modify your screen components
+#### Step 2 - Register all of your screen components
 
-Every screen that you want to be able to place in a tab, push to the navigation stack or present modally needs to follow two basic conventions:
-
-1. Normally your React components extend `React.Component`, in order to get access to the `navigator` instance you need to extend `Screen` instead.
-
-2. You need to register your component since it's displayed as a separate React root. Register a unique ID with `Navigation.registerScreen`.
+Every screen that you want to be able to place in a tab, push to the navigation stack or present modally needs to be registered. We recommend doing this in a central place, like [`screens/index.js`](example/src/screens/index.js). 
 
 > Note: Since your screens will potentially be bundled with other packages, your registered name must be **unique**! Follow a namespacing convention like `packageName.ScreenName`.
 
 ```js
-import { Navigation, Screen } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 
-class ExampleScreen extends Screen {
-  static navigatorStyle = {}; // style the navigator for this screen (optional)
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <View style={styles.container}>...</View>
-    );
-  }
+import FirstTabScreen from './FirstTabScreen';
+import SecondTabScreen from './SecondTabScreen';
+import PushedScreen from './PushedScreen';
+
+// register all screens of the app (including internal ones)
+export function registerScreens() {
+  Navigation.registerComponent('example.FirstTabScreen', () => FirstTabScreen);
+  Navigation.registerComponent('example.SecondTabScreen', () => SecondTabScreen);
+  Navigation.registerComponent('example.PushedScreen', () => PushedScreen);
 }
-
-// register all screens with Navigation.registerScreen
-Navigation.registerScreen('example.ScreenOne', () => ExampleScreen);
 ```
 
 ## Top Level API
@@ -107,12 +102,16 @@ Navigation.registerScreen('example.ScreenOne', () => ExampleScreen);
 import { Navigation } from 'react-native-navigation';
 ```
 
- * **registerScreen(screenID, generator)**
+ * **registerComponent(screenID, generator, store = undefined, Provider = undefined)**
  
-Every screen used must be registered with a unique name.
+Every screen component in your app must be registered with a unique name. The component itself is a traditional React component extending `React.Component`. 
 
 ```js
-Navigation.registerScreen('example.FirstTabScreen', () => FirstTabScreen);
+// not using redux (just ignore the last 2 arguments)
+Navigation.registerComponent('example.FirstTabScreen', () => FirstTabScreen);
+
+// using redux, pass your store and the Provider object from react-redux
+Navigation.registerComponent('example.FirstTabScreen', () => FirstTabScreen, store, Provider);
 ```
 
  * **startTabBasedApp(params)**
@@ -195,16 +194,24 @@ Navigation.dismissModal({
 });
 ```
 
+ * **registerScreen(screenID, generator)**
+ 
+This is an internal function you probably don't want to use directly. If your screen components extend `Screen` directly (`import { Screen } from 'react-native-navigation'`), you can register them directly with `registerScreen` instead of with `registerComponent`. The main benefit of using `registerComponent` is that it wraps your regular screen component with a `Screen` automatically.
+
+```js
+Navigation.registerScreen('example.AdvancedScreen', () => AdvancedScreen);
+```
+
 ## Screen API
 
-This API is relevant when in a screen context - it allows a screen to push other screens, pop screens, change its navigator style, etc. Access to this API is available through the `navigator` object. When your screen components extend `Screen`, they have `this.navigator` available and initialized.
+This API is relevant when in a screen component context - it allows a screen to push other screens, pop screens, change its navigator style, etc. Access to this API is available through the `navigator` object that is passed to your component through `props`.
 
  * **push(params)**
 
 Push a new screen into this screen's navigation stack.
 
 ```js
-this.navigator.push({
+this.props.navigator.push({
   screen: 'example.ScreenThree', // unique ID registered with Navigation.registerScreen
   title: undefined, // navigation bar title of the pushed screen (optional)
   passProps: {}, // simple serializable object that will pass as props to the pushed screen (optional)
@@ -219,7 +226,7 @@ this.navigator.push({
 Pop the top screen from this screen's navigation stack.
 
 ```js
-this.navigator.pop({
+this.props.navigator.pop({
   animated: true // does the pop have transition animation or does it happen immediately (optional)
 });
 ```
@@ -229,7 +236,7 @@ this.navigator.pop({
 Pop all the screens until the root from this screen's navigation stack.
 
 ```js
-this.navigator.popToRoot({
+this.props.navigator.popToRoot({
   animated: true // does the pop have transition animation or does it happen immediately (optional)
 });
 ```
@@ -239,7 +246,7 @@ this.navigator.popToRoot({
 Reset the screen's navigation stack to a new screen (the stack root is changed).
 
 ```js
-this.navigator.resetTo({
+this.props.navigator.resetTo({
   screen: 'example.ScreenThree', // unique ID registered with Navigation.registerScreen
   title: undefined, // navigation bar title of the pushed screen (optional)
   passProps: {}, // simple serializable object that will pass as props to the pushed screen (optional)
@@ -253,7 +260,7 @@ this.navigator.resetTo({
 Show a screen as a modal.
  
 ```js
-this.navigator.showModal({
+this.props.navigator.showModal({
   screen: "example.ModalScreen", // unique ID registered with Navigation.registerScreen
   title: "Modal", // title of the screen as appears in the nav bar (optional)
   passProps: {}, // simple serializable object that will pass as props to the modal (optional)
@@ -267,9 +274,18 @@ this.navigator.showModal({
 Dismiss the current modal.
 
 ```js
-this.navigator.dismissModal({
+this.props.navigator.dismissModal({
   animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 });
+```
+
+ * **setOnNavigatorEvent(callback)**
+
+Set a handler for navigator events (like nav button press). This would normally go in your component constructor.
+
+```js
+// this.onNavigatorEvent will be our handler
+this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 ```
 
  * **setButtons(params = {})**
@@ -277,7 +293,7 @@ this.navigator.dismissModal({
 Set buttons dynamically on the navigator. If your buttons don't change during runtime, see "Adding buttons to the navigator" below to add them using `static navigatorButtons = {...};`.
 
 ```js
-this.navigator.setButtons({
+this.props.navigator.setButtons({
   leftButtons: [], // see "Adding buttons to the navigator" below for format (optional)
   rightButtons: [], // see "Adding buttons to the navigator" below for format (optional)
   animated: true // does the change have transition animation or does it happen immediately (optional)
@@ -289,7 +305,7 @@ this.navigator.setButtons({
 Set the nav bar title dynamically. If your title doesn't change during runtime, set it when the screen is defined / pushed.
 
 ```js
-this.navigator.setTitle({
+this.props.navigator.setTitle({
   title: "Dynamic Title" // the new title of the screen as appears in the nav bar
 });
 ```
@@ -299,7 +315,7 @@ this.navigator.setTitle({
 Toggle the side menu drawer assuming you have one in your app.
 
 ```js
-this.navigator.toggleDrawer({
+this.props.navigator.toggleDrawer({
   side: 'left', // the side of the drawer since you can have two, 'left' / 'right'
   animated: true // does the toggle have transition animation or does it happen immediately (optional)
 });
@@ -307,7 +323,25 @@ this.navigator.toggleDrawer({
 
 ## Styling the navigator
 
-You can style the navigator appearance and behavior by passing a `navigatorStyle` object. This object can be passed when the screen is originally created; can be defined per-screen in the `static navigatorStyle = {};` on `Screen`; and can be overridden when a screen is pushed.
+You can style the navigator appearance and behavior by passing a `navigatorStyle` object. This object can be passed when the screen is originally created; can be defined per-screen by setting `static navigatorStyle = {};` on the screen component; and can be overridden when a screen is pushed.
+
+The easiest way to style your screen is by adding `static navigatorStyle = {};` to your screen React component definition.
+
+```js
+export default class StyledScreen extends Component {
+  static navigatorStyle = {
+    drawUnderNavBar: true,
+    navBarTranslucent: true
+  };
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <View style={{flex: 1}}>...</View>
+     );
+  }
+```
 
 #### Style object format
 
@@ -334,44 +368,12 @@ You can style the navigator appearance and behavior by passing a `navigatorStyle
 
 All supported styles are defined [here](https://github.com/wix/react-native-controllers#styling-navigation). There's also an example project there showcasing all the different styles.
 
-#### Screen-specific style example
-
-Define a screen-specific style by adding `static navigatorStyle = {...};` to the Screen definition.
-
-```js
-class StyledScreen extends Screen {
-  static navigatorStyle = {
-    drawUnderNavBar: true,
-    drawUnderTabBar: true,
-    navBarTranslucent: true
-  };
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <View style={{flex: 1}}>...</View>
-     );
-  }
-```
-
 ## Adding buttons to the navigator
 
-Nav bar buttons can be defined per-screen by adding `static navigatorButtons = {...};` on the Screen definition. Handle onPress events for the buttons by overriding the Screen's `onNavigatorEvent(event)` method.
-
-#### Buttons object format
+Nav bar buttons can be defined per-screen by adding `static navigatorButtons = {...};` on the screen component definition. Handle onPress events for the buttons by setting your handler with `navigator.setOnNavigatorEvent(callback)`.
 
 ```js
-{
-  rightButtons: [], // buttons for the right side of the nav bar (optional)
-  leftButtons: [] // buttons for the left side of the nav bar (optional)
-}
-```
-
-#### Screen-specific buttons example
-
-```js
-class FirstTabScreen extends Screen {
+class FirstTabScreen extends Component {
   static navigatorButtons = {
     rightButtons: [
       {
@@ -387,6 +389,8 @@ class FirstTabScreen extends Screen {
   };
   constructor(props) {
     super(props);
+    // if you want to listen on navigator events, set this up
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
   onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
     if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
@@ -402,3 +406,23 @@ class FirstTabScreen extends Screen {
      );
   }
 ```
+
+#### Buttons object format
+
+```js
+{
+  rightButtons: [{ // buttons for the right side of the nav bar (optional)
+    title: 'Edit', // if you want a textual button
+    icon: require('../../img/navicon_edit.png'), // if you want an image button
+    id: 'compose', // id of the button which will pass to your press event handler
+    testID: 'e2e_is_awesome' // if you have e2e tests, use this to find your button
+  }],
+  leftButtons: [] // buttons for the left side of the nav bar (optional)
+}
+```
+
+## License
+
+The MIT License.
+
+See [LICENSE](LICENSE)
