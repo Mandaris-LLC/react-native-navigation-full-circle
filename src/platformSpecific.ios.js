@@ -233,10 +233,22 @@ function navigatorSetTitle(navigator, params) {
 
 function navigatorToggleDrawer(navigator, params) {
   const controllerID = navigator.navigatorID.split('_')[0];
-  Controllers.DrawerControllerIOS(controllerID + '_drawer').toggle({
-    side: params.side,
-    animated: params.animated
-  });
+  if (params.to == 'open') {
+    Controllers.DrawerControllerIOS(controllerID + '_drawer').open({
+      side: params.side,
+      animated: params.animated
+    });
+  } else if (params.to == 'closed') {
+    Controllers.DrawerControllerIOS(controllerID + '_drawer').close({
+      side: params.side,
+      animated: params.animated
+    });
+  } else {
+    Controllers.DrawerControllerIOS(controllerID + '_drawer').toggle({
+      side: params.side,
+      animated: params.animated
+    });
+  }
 }
 
 function navigatorSetButtons(navigator, navigatorEventID, params) {
