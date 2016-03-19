@@ -11,6 +11,7 @@ App-wide support for 100% native navigation with an easy cross-platform interfac
 * [Screen API](#screen-api)
 * [Styling the navigator](#styling-the-navigator)
 * [Adding buttons to the navigator](#adding-buttons-to-the-navigator)
+* [Deep links](#deep-links)
 * [Release Notes](RELEASES.md)
 * [License](#license)
 
@@ -279,6 +280,16 @@ this.props.navigator.dismissModal({
 });
 ```
 
+ * **handleDeepLink(params = {})**
+
+Trigger a deep link within the app. See [deep links](#deep-links) for more details about how screens can listen for deep link events.
+
+```js
+this.props.navigator.handleDeepLink({
+  link: "chats/2349823023" // the link string (required)
+});
+```
+
  * **setOnNavigatorEvent(callback)**
 
 Set a handler for navigator events (like nav button press). This would normally go in your component constructor.
@@ -317,7 +328,8 @@ Toggle the side menu drawer assuming you have one in your app.
 ```js
 this.props.navigator.toggleDrawer({
   side: 'left', // the side of the drawer since you can have two, 'left' / 'right'
-  animated: true // does the toggle have transition animation or does it happen immediately (optional)
+  animated: true, // does the toggle have transition animation or does it happen immediately (optional)
+  to: 'open' // optional, 'open' = open the drawer, 'closed' = close it, missing = the opposite of current state
 });
 ```
 
@@ -393,11 +405,13 @@ class FirstTabScreen extends Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
   onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
-    if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
-      AlertIOS.alert('NavBar', 'Edit button pressed');
-    }
-    if (event.id == 'add') {
-      AlertIOS.alert('NavBar', 'Add button pressed');
+    if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
+      if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
+        AlertIOS.alert('NavBar', 'Edit button pressed');
+      }
+      if (event.id == 'add') {
+        AlertIOS.alert('NavBar', 'Add button pressed');
+      }
     }
   }
   render() {
@@ -420,6 +434,48 @@ class FirstTabScreen extends Component {
   leftButtons: [] // buttons for the left side of the nav bar (optional)
 }
 ```
+
+## Deep links
+
+Deep links are strings which represent internal app paths/routes. They commonly appear on push notification payloads to control which section of the app should be displayed when the notification is clicked. For example, in a chat app, clicking on the notification should open the relevant conversation on the "chats" tab.
+
+Another use-case for deep links is when one screen wants to control what happens in another sibling screen. Normally, a screen can only push/pop from its own stack, it cannot access the navigation stack of a sibling tab for example. Returning to our chat app example, assume that by clicking on a contact in the "contacts" tab we want to open the relevant conversation in the "chats" tab. Since the tabs are siblings, you can achieve this behavior by triggering a deep link:
+
+```js
+onContactSelected(contactID) {
+  this.props.navigator.handleDeepLink({
+    link: 'chats/' + contactID
+  });
+}
+```
+
+> Tip: Deep links are also the recommended way to handle side drawer actions. Since the side drawer screen is a sibling to the rest of the app, it can control the other screens by triggering deep links.
+
+#### Handling deep links
+
+Every deep link event is broadcasted to all screens. A screen can listen to these events by defining a handler using `setOnNavigatorEvent` (much like listening for button events). Using this handler, the screen can filter links directed to it by parsing the link string and act upon any relevant links found.
+
+```js
+export default class SecondTabScreen extends Component {
+  constructor(props) {
+    super(props);
+    // if you want to listen on navigator events, set this up
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+  onNavigatorEvent(event) {
+    // handle a deep link
+    if (event.type == 'DeepLink') {
+      const parts = event.link.split('/');
+      if (parts[0] == 'tab2') {
+        // handle the link somehow, usually run a this.props.navigator command
+      }
+    }
+  }
+```
+
+#### Deep link string format
+
+There is no specification for the format of deep links. Since you're implementing the parsing logic in your handlers, you can use any format you wish.
 
 ## License
 
