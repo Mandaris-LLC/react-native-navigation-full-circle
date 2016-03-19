@@ -64,14 +64,28 @@ export default class SecondTabScreen extends Component {
     });
   }
   onNavigatorEvent(event) {
-    if (event.id == 'edit') {
-      AlertIOS.alert('NavBar', 'Dynamic Edit button pressed');
+    // handle a deep link
+    if (event.type == 'DeepLink') {
+      const parts = event.link.split('/');
+      if (parts[0] == 'tab2') {
+        this.props.navigator.resetTo({
+          title: "Replaced Root",
+          screen: parts[1],
+          animated: true
+        });
+      }
     }
-    if (event.id == 'add') {
-      AlertIOS.alert('NavBar', 'Dynamic Add button pressed');
-    }
-    if (event.id == 'save') {
-      AlertIOS.alert('NavBar', 'Dynamic Save button pressed');
+    // handle a button press
+    if (event.type == 'NavBarButtonPress') {
+      if (event.id == 'edit') {
+        AlertIOS.alert('NavBar', 'Dynamic Edit button pressed');
+      }
+      if (event.id == 'add') {
+        AlertIOS.alert('NavBar', 'Dynamic Add button pressed');
+      }
+      if (event.id == 'save') {
+        AlertIOS.alert('NavBar', 'Dynamic Save button pressed');
+      }
     }
   }
 }

@@ -2,6 +2,8 @@ import { Component, NativeAppEventEmitter } from 'react-native';
 import platformSpecific from './platformSpecific';
 import Navigation from './Navigation';
 
+const _allNavigatorEventHandlers = {};
+
 class Navigator {
   constructor(navigatorID, navigatorEventID) {
     this.navigatorID = navigatorID;
@@ -40,6 +42,17 @@ class Navigator {
     this.navigatorEventHandler = callback;
     if (!this.navigatorEventSubscription) {
       this.navigatorEventSubscription = NativeAppEventEmitter.addListener(this.navigatorEventID, (event) => this.onNavigatorEvent(event));
+      _allNavigatorEventHandlers[this.navigatorEventID] = (event) => this.onNavigatorEvent(event);
+    }
+  }
+  handleDeepLink(params = {}) {
+    if (!params.link) return;
+    const event = {
+      type: 'DeepLink',
+      link: params.link
+    };
+    for (let i in _allNavigatorEventHandlers) {
+      _allNavigatorEventHandlers[i](event);
     }
   }
   onNavigatorEvent(event) {
@@ -50,6 +63,7 @@ class Navigator {
   cleanup() {
     if (this.navigatorEventSubscription) {
       this.navigatorEventSubscription.remove();
+      delete _allNavigatorEventHandlers[this.navigatorEventID];
     }
   }
 }

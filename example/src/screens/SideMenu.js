@@ -16,14 +16,45 @@ export default class SideMenu extends Component {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
 
-        <Text>Side Menu</Text>
+        <Text style={styles.title}>Side Menu</Text>
+
+        <TouchableOpacity onPress={ this.onReplaceTab2Press.bind(this) }>
+          <Text style={styles.button}>Replace Tab#2 Root</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onModalPress.bind(this) }>
+          <Text style={styles.button}>Show Modal Screen</Text>
+        </TouchableOpacity>
 
       </View>
     );
   }
+  onReplaceTab2Press() {
+    this.props.navigator.toggleDrawer({
+      to: 'closed',
+      side: 'left',
+      animated: true
+    });
+    this.props.navigator.handleDeepLink({
+      link: "tab2/example.PushedScreen"
+    });
+  }
+  onModalPress() {
+    this.props.navigator.showModal({
+      title: "Modal",
+      screen: "example.ModalScreen"
+    });
+  }
 }
 
 const styles = StyleSheet.create({
+  title: {
+    textAlign: 'center',
+    fontSize: 18,
+    marginBottom: 10,
+    marginTop:10,
+    fontWeight: '500'
+  },
   button: {
     textAlign: 'center',
     fontSize: 18,
