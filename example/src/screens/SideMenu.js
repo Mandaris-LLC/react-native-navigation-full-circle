@@ -35,6 +35,9 @@ export default class SideMenu extends Component {
       side: 'left',
       animated: true
     });
+    // push/pop navigator actions affect the navigation stack of the current screen only.
+    // since side menu actions are normally directed at sibling tabs, push/pop will
+    // not help us. the recommended alternative is to use deep links for this purpose
     this.props.navigator.handleDeepLink({
       link: "tab2/example.PushedScreen"
     });
