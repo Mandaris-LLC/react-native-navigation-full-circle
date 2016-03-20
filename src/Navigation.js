@@ -28,6 +28,7 @@ function _registerComponentNoRedux(screenID, generator) {
     };
   }
   registerScreen(screenID, generatorWrapper);
+  return generatorWrapper;
 }
 
 function _registerComponentRedux(screenID, generator, store, Provider) {
@@ -46,6 +47,7 @@ function _registerComponentRedux(screenID, generator, store, Provider) {
     };
   }
   registerScreen(screenID, generatorWrapper);
+  return generatorWrapper;
 }
 
 function getRegisteredScreen(screenID) {
