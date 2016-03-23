@@ -67,7 +67,7 @@ function dismissModal(params = {}) {
   return platformSpecific.dismissModal(params);
 }
 
-export default Navigation = {
+export default {
   registerScreen,
   getRegisteredScreen,
   registerComponent,

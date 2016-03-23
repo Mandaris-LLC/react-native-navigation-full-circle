@@ -308,7 +308,7 @@ function dismissModal(params) {
   Modal.dismissController(params.animationType);
 }
 
-export default platformSpecific = {
+export default {
   startTabBasedApp,
   startSingleScreenApp,
   navigatorPush,
