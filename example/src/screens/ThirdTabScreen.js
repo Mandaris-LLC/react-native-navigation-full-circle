@@ -8,6 +8,9 @@ import React, {
 } from 'react-native';
 
 export default class ThirdTabScreen extends Component {
+  static navigatorStyle = {
+    drawUnderTabBar: true
+  };
   constructor(props) {
     super(props);
   }

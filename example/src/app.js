@@ -35,6 +35,11 @@ Navigation.startTabBasedApp({
       }
     }
   ],
+  // tabsStyle: {
+  //   tabBarButtonColor: '#ffff00',
+  //   tabBarSelectedButtonColor: '#ff9900',
+  //   tabBarBackgroundColor: '#551A8B'
+  // },
   drawer: {
     left: {
       screen: 'example.SideMenu'

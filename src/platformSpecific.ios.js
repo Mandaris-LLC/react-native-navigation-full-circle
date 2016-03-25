@@ -35,7 +35,10 @@ function startTabBasedApp(params) {
     },
     renderBody: function() {
       return (
-        <TabBarControllerIOS id={controllerID + '_tabs'}>
+        <TabBarControllerIOS
+          id={controllerID + '_tabs'}
+          style={params.tabsStyle}
+        >
         {
           params.tabs.map(function(tab, index) {
             const navigatorID = controllerID + '_nav' + index;
@@ -251,6 +254,44 @@ function navigatorToggleDrawer(navigator, params) {
   }
 }
 
+function navigatorToggleTabs(navigator, params) {
+  const controllerID = navigator.navigatorID.split('_')[0];
+  Controllers.TabBarControllerIOS(controllerID + '_tabs').setHidden({
+    hidden: params.to == 'hidden',
+    animated: !(params.animated === false)
+  });
+}
+
+function navigatorSetTabBadge(navigator, params) {
+  const controllerID = navigator.navigatorID.split('_')[0];
+  if (params.tabIndex || params.tabIndex === 0) {
+    Controllers.TabBarControllerIOS(controllerID + '_tabs').setBadge({
+      tabIndex: params.tabIndex,
+      badge: params.badge
+    });
+  } else {
+    Controllers.TabBarControllerIOS(controllerID + '_tabs').setBadge({
+      contentId: navigator.navigatorID,
+      contentType: 'NavigationControllerIOS',
+      badge: params.badge
+    });
+  }
+}
+
+function navigatorSwitchToTab(navigator, params) {
+  const controllerID = navigator.navigatorID.split('_')[0];
+  if (params.tabIndex || params.tabIndex === 0) {
+    Controllers.TabBarControllerIOS(controllerID + '_tabs').switchTo({
+      tabIndex: params.tabIndex
+    });
+  } else {
+    Controllers.TabBarControllerIOS(controllerID + '_tabs').switchTo({
+      contentId: navigator.navigatorID,
+      contentType: 'NavigationControllerIOS'
+    });
+  }
+}
+
 function navigatorSetButtons(navigator, navigatorEventID, params) {
   if (params.leftButtons) {
     const buttons = params.leftButtons.slice(); // clone
@@ -319,5 +360,8 @@ export default {
   dismissModal,
   navigatorSetButtons,
   navigatorSetTitle,
-  navigatorToggleDrawer
+  navigatorToggleDrawer,
+  navigatorToggleTabs,
+  navigatorSetTabBadge,
+  navigatorSwitchToTab
 }

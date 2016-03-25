@@ -38,6 +38,15 @@ class Navigator {
   toggleDrawer(params = {}) {
     return platformSpecific.navigatorToggleDrawer(this, params);
   }
+  toggleTabs(params = {}) {
+    return platformSpecific.navigatorToggleTabs(this, params);
+  }
+  setTabBadge(params = {}) {
+    return platformSpecific.navigatorSetTabBadge(this, params);
+  }
+  switchToTab(params = {}) {
+    return platformSpecific.navigatorSwitchToTab(this, params);
+  }
   setOnNavigatorEvent(callback) {
     this.navigatorEventHandler = callback;
     if (!this.navigatorEventSubscription) {

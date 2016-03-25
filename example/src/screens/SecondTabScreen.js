@@ -9,6 +9,9 @@ import React, {
 } from 'react-native';
 
 export default class SecondTabScreen extends Component {
+  static navigatorStyle = {
+    drawUnderTabBar: true
+  };
   constructor(props) {
     super(props);
     this.buttonsCounter = 0;
@@ -25,6 +28,18 @@ export default class SecondTabScreen extends Component {
 
         <TouchableOpacity onPress={ this.onChangeTitlePress.bind(this) }>
           <Text style={styles.button}>Change Title</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onSwitchTabPress.bind(this) }>
+          <Text style={styles.button}>Switch To Tab#1</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onSetTabBadgePress.bind(this) }>
+          <Text style={styles.button}>Set Tab Badge</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onToggleTabsPress.bind(this) }>
+          <Text style={styles.button}>Toggle Tabs</Text>
         </TouchableOpacity>
 
       </View>
@@ -63,6 +78,22 @@ export default class SecondTabScreen extends Component {
       animated: true
     });
   }
+  onSwitchTabPress() {
+    this.props.navigator.switchToTab({
+      tabIndex: 0
+    });
+  }
+  onSetTabBadgePress() {
+    this.props.navigator.setTabBadge({
+      badge: 12
+    });
+  }
+  onToggleTabsPress() {
+    this.props.navigator.toggleTabs({
+      to: this.tabsHidden ? 'shown' : 'hidden'
+    });
+    this.tabsHidden = !this.tabsHidden;
+  }
   onNavigatorEvent(event) {
     // handle a deep link
     if (event.type == 'DeepLink') {
@@ -73,6 +104,7 @@ export default class SecondTabScreen extends Component {
           screen: parts[1],
           animated: true
         });
+        this.props.navigator.switchToTab();
       }
     }
     // handle a button press
