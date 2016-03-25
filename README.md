@@ -11,6 +11,7 @@ App-wide support for 100% native navigation with an easy cross-platform interfac
 * [Screen API](#screen-api)
 * [Styling the navigator](#styling-the-navigator)
 * [Adding buttons to the navigator](#adding-buttons-to-the-navigator)
+* [Styling the tab bar](#styling-the-tab-bar)
 * [Deep links](#deep-links)
 * [Release Notes](RELEASES.md)
 * [License](#license)
@@ -138,6 +139,11 @@ Navigation.startTabBasedApp({
       title: 'Screen Two'
     }
   ],
+  tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
+    tabBarButtonColor: '#ffff00', // optional, change the color of the tab icons and text (also unselected)
+    tabBarSelectedButtonColor: '#ff9900', // optional, change the color of the selected tab icon and text (only selected)
+    tabBarBackgroundColor: '#551A8B' // optional, change the background color of the tab bar
+  },
   drawer: { // optional, add this if you want a side menu drawer in your app
     left: { // optional, define if you want a drawer from the left
       screen: 'example.FirstSideMenu' // unique ID registered with Navigation.registerScreen
@@ -333,6 +339,38 @@ this.props.navigator.toggleDrawer({
 });
 ```
 
+ * **toggleTabs(params = {})**
+
+Toggle whether the tabs are displayed or not (only in tab-based apps).
+
+```js
+this.props.navigator.toggleDrawer({
+  to: 'hidden', // required, 'hidden' = hide tab bar, 'shown' = show tab bar
+  animated: true // does the toggle have transition animation or does it happen immediately (optional)
+});
+```
+
+ * **setTabBadge(params = {})**
+
+Set the badge on a tab (any string or numeric value).
+
+```js
+this.props.navigator.setTabBadge({
+  tabIndex: 0, // (optional) if missing, the badge will be added to this screen's tab
+  badge: 17 // badge value, null to remove badge
+});
+```
+
+ * **switchToTab(params = {})**
+
+Switch to a tab (sets it as the currently selected tab).
+
+```js
+this.props.navigator.switchToTab({
+  tabIndex: 0 // (optional) if missing, this screen's tab will become selected
+});
+```
+
 ## Styling the navigator
 
 You can style the navigator appearance and behavior by passing a `navigatorStyle` object. This object can be passed when the screen is originally created; can be defined per-screen by setting `static navigatorStyle = {};` on the screen component; and can be overridden when a screen is pushed.
@@ -434,6 +472,31 @@ class FirstTabScreen extends Component {
   leftButtons: [] // buttons for the left side of the nav bar (optional)
 }
 ```
+
+## Styling the tab bar
+
+You can style the tab bar appearance by passing a `tabsStyle` object when the app is originally created (on `startTabBasedApp`).
+
+```js
+Navigation.startTabBasedApp({
+  tabs: [ ... ],
+  tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
+    tabBarButtonColor: '#ff0000'
+  }
+});
+```
+
+#### Style object format
+
+```js
+{
+  tabBarButtonColor: '#ffff00', // change the color of the tab icons and text (also unselected)
+  tabBarSelectedButtonColor: '#ff9900', // change the color of the selected tab icon and text (only selected)
+  tabBarBackgroundColor: '#551A8B' // change the background color of the tab bar
+}
+```
+
+All supported styles are defined [here](https://github.com/wix/react-native-controllers#styling-tab-bar). There's also an example project there showcasing all the different styles.
 
 ## Deep links
 
