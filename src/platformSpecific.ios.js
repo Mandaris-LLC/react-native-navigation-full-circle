@@ -185,6 +185,7 @@ function navigatorPush(navigator, params) {
     passProps: passProps,
     style: navigatorStyle,
     backButtonTitle: params.backButtonTitle,
+    backButtonHidden: params.backButtonHidden,
     leftButtons: navigatorButtons.leftButtons,
     rightButtons: navigatorButtons.rightButtons
   });

@@ -56,7 +56,8 @@ export default class SecondTabScreen extends Component {
       buttons = [
         {
           title: 'Edit',
-          id: 'edit'
+          id: 'edit',
+          disabled: true
         },
         {
           icon: require('../../img/navicon_add.png'),
