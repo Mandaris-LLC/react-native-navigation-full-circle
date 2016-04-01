@@ -67,12 +67,22 @@ function dismissModal(params = {}) {
   return platformSpecific.dismissModal(params);
 }
 
+function showLightBox(params = {}) {
+  return platformSpecific.showLightBox(params);
+}
+
+function dismissLightBox(params = {}) {
+  return platformSpecific.dismissLightBox(params);
+}
+
 export default {
   registerScreen,
   getRegisteredScreen,
   registerComponent,
   showModal,
   dismissModal,
+  showLightBox,
+  dismissLightBox,
   startTabBasedApp: platformSpecific.startTabBasedApp,
   startSingleScreenApp: platformSpecific.startSingleScreenApp
 }

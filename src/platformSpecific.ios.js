@@ -350,6 +350,34 @@ function dismissModal(params) {
   Modal.dismissController(params.animationType);
 }
 
+function showLightBox(params) {
+  if (!params.screen) {
+    console.error('showLightBox(params): params.screen is required');
+    return;
+  }
+  const controllerID = utils.getRandomId();
+  const navigatorID = controllerID + '_nav';
+  const screenInstanceID = utils.getRandomId();
+  const {
+    navigatorStyle,
+    navigatorButtons,
+    navigatorEventID
+  } = _mergeScreenSpecificSettings(params.screen, screenInstanceID, params);
+  const passProps = Object.assign({}, params.passProps);
+  passProps.navigatorID = navigatorID;
+  passProps.screenInstanceID = screenInstanceID;
+  passProps.navigatorEventID = navigatorEventID;
+  Modal.showLightBox({
+    component: params.screen,
+    passProps: passProps,
+    style: params.style
+  });
+}
+
+function dismissLightBox(params) {
+  Modal.dismissLightBox();
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -359,6 +387,8 @@ export default {
   navigatorResetTo,
   showModal,
   dismissModal,
+  showLightBox,
+  dismissLightBox,
   navigatorSetButtons,
   navigatorSetTitle,
   navigatorToggleDrawer,

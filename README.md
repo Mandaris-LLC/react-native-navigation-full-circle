@@ -22,17 +22,17 @@ App-wide support for 100% native navigation with an easy cross-platform interfac
 
  * In your project folder run `npm install react-native-navigation --save`
 > Note: We recommend using npm ver 3+. If you insist on using npm ver 2 please notice that the location for react-native-controllers in node_modules will be under the react-native-navigation folder and you'll need to change the paths in Xcode below accordingly.
- 
+
  * Add the native files of the dependency [react-native-controllers](https://github.com/wix/react-native-controllers) to your Xcode project:
 
    * In Xcode, in Project Navigator (left pane), right-click on the `Libraries` > `Add files to [project name]`. Add `./node_modules/react-native-controllers/ios/ReactNativeControllers.xcodeproj` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-1))
- 
+
    * In Xcode, in Project Navigator (left pane), click on your project (top) and select the `Build Phases` tab (right pane). In the `Link Binary With Libraries` section add `libReactNativeControllers.a` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-2))
 
    * In Xcode, in Project Navigator (left pane), click on your project (top) and select the `Build Settings` tab (right pane). In the `Header Search Paths` section add `$(SRCROOT)/../node_modules/react-native-controllers/ios`. Make sure on the right to mark this new path `recursive` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-3))
 
  * In Xcode, under your project files, modify `AppDelegate.m` according to this [example](https://github.com/wix/react-native-navigation/blob/master/example/ios/example/AppDelegate.m)
- 
+
 ## Installation - Android
 
 Coming soon, not yet supported
@@ -77,7 +77,7 @@ Navigation.startTabBasedApp({
 
 #### Step 2 - Register all of your screen components
 
-Every screen that you want to be able to place in a tab, push to the navigation stack or present modally needs to be registered. We recommend doing this in a central place, like [`screens/index.js`](example/src/screens/index.js). 
+Every screen that you want to be able to place in a tab, push to the navigation stack or present modally needs to be registered. We recommend doing this in a central place, like [`screens/index.js`](example/src/screens/index.js).
 
 > Note: Since your screens will potentially be bundled with other packages, your registered name must be **unique**! Follow a namespacing convention like `packageName.ScreenName`.
 
@@ -105,8 +105,8 @@ import { Navigation } from 'react-native-navigation';
 ```
 
  * **registerComponent(screenID, generator, store = undefined, Provider = undefined)**
- 
-Every screen component in your app must be registered with a unique name. The component itself is a traditional React component extending `React.Component`. 
+
+Every screen component in your app must be registered with a unique name. The component itself is a traditional React component extending `React.Component`.
 
 ```js
 // not using redux (just ignore the last 2 arguments)
@@ -117,7 +117,7 @@ Navigation.registerComponent('example.FirstTabScreen', () => FirstTabScreen, sto
 ```
 
  * **startTabBasedApp(params)**
- 
+
 Change your app root into an app based on several tabs (usually 2-5), a very common pattern in iOS (like Facebook app or the iOS Contacts app). Every tab has its own navigation stack with a native nav bar.
 
 ```js
@@ -156,7 +156,7 @@ Navigation.startTabBasedApp({
 ```
 
  * **startSingleScreenApp(params)**
- 
+
 Change your app root into an app based on a single screen (like the iOS Calendar or Settings app). The screen will receive its own navigation stack with a native nav bar
 
 ```js
@@ -180,7 +180,7 @@ Navigation.startSingleScreenApp({
  * **showModal(params = {})**
 
 Show a screen as a modal.
- 
+
 ```js
 Navigation.showModal({
   screen: "example.ModalScreen", // unique ID registered with Navigation.registerScreen
@@ -201,8 +201,31 @@ Navigation.dismissModal({
 });
 ```
 
+* **showLightBox(params = {})**
+
+Show a screen as a lightbox.
+
+```js
+Navigation.showLightBox({
+  screen: "example.LightBoxScreen", // unique ID registered with Navigation.registerScreen
+  passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
+  style: {
+    backgroundBlur: "dark", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
+    backgroundColor: "#ff000080" // tint color for the background, you can specify alpha here (optional)
+  }
+});
+```
+
+* **dismissLightBox(params = {})**
+
+Dismiss the current lightbox.
+
+```js
+Navigation.dismissLightBox();
+```
+
  * **registerScreen(screenID, generator)**
- 
+
 This is an internal function you probably don't want to use directly. If your screen components extend `Screen` directly (`import { Screen } from 'react-native-navigation'`), you can register them directly with `registerScreen` instead of with `registerComponent`. The main benefit of using `registerComponent` is that it wraps your regular screen component with a `Screen` automatically.
 
 ```js
@@ -224,6 +247,7 @@ this.props.navigator.push({
   passProps: {}, // simple serializable object that will pass as props to the pushed screen (optional)
   animated: true, // does the push have transition animation or does it happen immediately (optional)
   backButtonTitle: undefined, // override the back button title (optional)
+  backButtonHidden: false, // hide the back button altogether (optional)
   navigatorStyle: {} // override the navigator style for the pushed screen (optional)
 });
 ```
@@ -265,7 +289,7 @@ this.props.navigator.resetTo({
  * **showModal(params = {})**
 
 Show a screen as a modal.
- 
+
 ```js
 this.props.navigator.showModal({
   screen: "example.ModalScreen", // unique ID registered with Navigation.registerScreen
@@ -284,6 +308,29 @@ Dismiss the current modal.
 this.props.navigator.dismissModal({
   animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 });
+```
+
+* **showLightBox(params = {})**
+
+Show a screen as a lightbox.
+
+```js
+this.props.navigator.showLightBox({
+ screen: "example.LightBoxScreen", // unique ID registered with Navigation.registerScreen
+ passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
+ style: {
+   backgroundBlur: "dark", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
+   backgroundColor: "#ff000080" // tint color for the background, you can specify alpha here (optional)
+ }
+});
+```
+
+* **dismissLightBox(params = {})**
+
+Dismiss the current lightbox.
+
+```js
+this.props.navigator.dismissLightBox();
 ```
 
  * **handleDeepLink(params = {})**
@@ -429,7 +476,8 @@ class FirstTabScreen extends Component {
       {
         title: 'Edit', // for a textual button, provide the button title (label)
         id: 'edit', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
-        testID: 'e2e_rules' // optional, used to locate this view in end-to-end tests
+        testID: 'e2e_rules', // optional, used to locate this view in end-to-end tests
+        disabled: true // optional, used to disable the button (appears faded and doesn't interact)
       },
       {
         icon: require('../../img/navicon_add.png'), // for icon button, provide the local image asset name
@@ -467,7 +515,8 @@ class FirstTabScreen extends Component {
     title: 'Edit', // if you want a textual button
     icon: require('../../img/navicon_edit.png'), // if you want an image button
     id: 'compose', // id of the button which will pass to your press event handler
-    testID: 'e2e_is_awesome' // if you have e2e tests, use this to find your button
+    testID: 'e2e_is_awesome', // if you have e2e tests, use this to find your button
+    disabled: true // optional, used to disable the button (appears faded and doesn't interact)
   }],
   leftButtons: [] // buttons for the left side of the nav bar (optional)
 }

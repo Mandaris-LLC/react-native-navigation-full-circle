@@ -63,6 +63,10 @@ export default class FirstTabScreen extends Component {
           <Text style={styles.button}>Show Modal Screen</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onLightBoxPress.bind(this) }>
+          <Text style={styles.button}>Show LightBox</Text>
+        </TouchableOpacity>
+
       </View>
     );
   }
@@ -82,6 +86,14 @@ export default class FirstTabScreen extends Component {
     this.props.navigator.showModal({
       title: "Modal",
       screen: "example.ModalScreen"
+    });
+  }
+  onLightBoxPress() {
+    this.props.navigator.showLightBox({
+      screen: "example.LightBoxScreen",
+      style: {
+        backgroundBlur: "dark"
+      }
     });
   }
 }

@@ -29,6 +29,12 @@ class Navigator {
   dismissModal(params = {}) {
     return Navigation.dismissModal(params);
   }
+  showLightBox(params = {}) {
+    return Navigation.showLightBox(params);
+  }
+  dismissLightBox(params = {}) {
+    return Navigation.dismissLightBox(params);
+  }
   setButtons(params = {}) {
     return platformSpecific.navigatorSetButtons(this, this.navigatorEventID, params);
   }
