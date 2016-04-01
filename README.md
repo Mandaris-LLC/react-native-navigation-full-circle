@@ -151,7 +151,8 @@ Navigation.startTabBasedApp({
     right: { // optional, define if you want a drawer from the right
       screen: 'example.SecondSideMenu' // unique ID registered with Navigation.registerScreen
     }
-  }
+  },
+  animationType: 'slide-down' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
 });
 ```
 
@@ -173,7 +174,8 @@ Navigation.startSingleScreenApp({
     right: { // optional, define if you want a drawer from the right
       screen: 'example.SecondSideMenu' // unique ID registered with Navigation.registerScreen
     }
-  }
+  },
+  animationType: 'slide-down' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
 });
 ```
 

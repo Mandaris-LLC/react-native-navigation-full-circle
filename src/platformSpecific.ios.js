@@ -76,7 +76,7 @@ function startTabBasedApp(params) {
     }
   });
   ControllerRegistry.registerController(controllerID, () => Controller);
-  ControllerRegistry.setRootController(controllerID);
+  ControllerRegistry.setRootController(controllerID, params.animationType);
 }
 
 function startSingleScreenApp(params) {
@@ -134,7 +134,7 @@ function startSingleScreenApp(params) {
     }
   });
   ControllerRegistry.registerController(controllerID, () => Controller);
-  ControllerRegistry.setRootController(controllerID);
+  ControllerRegistry.setRootController(controllerID, params.animationType);
 }
 
 function _mergeScreenSpecificSettings(screenID, screenInstanceID, params) {

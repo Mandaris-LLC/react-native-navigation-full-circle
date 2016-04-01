@@ -60,7 +60,8 @@ export default class App {
               title: 'Screen Two',
               navigatorStyle: {}
             }
-          ]
+          ],
+          animationType: 'slide-down'
         });
         return;
       default:
