@@ -152,6 +152,7 @@ Navigation.startTabBasedApp({
       screen: 'example.SecondSideMenu' // unique ID registered with Navigation.registerScreen
     }
   },
+  passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
   animationType: 'slide-down' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
 });
 ```
@@ -175,6 +176,7 @@ Navigation.startSingleScreenApp({
       screen: 'example.SecondSideMenu' // unique ID registered with Navigation.registerScreen
     }
   },
+  passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
   animationType: 'slide-down' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
 });
 ```
