@@ -10,8 +10,11 @@ function registerScreen(screenID, generator) {
 }
 
 function registerComponent(screenID, generator, store = undefined, Provider = undefined) {
-  if (store && Provider) return _registerComponentRedux(screenID, generator, store, Provider);
-  else return _registerComponentNoRedux(screenID, generator);
+  if (store && Provider) {
+    return _registerComponentRedux(screenID, generator, store, Provider);
+  } else {
+    return _registerComponentNoRedux(screenID, generator);
+  }
 }
 
 function _registerComponentNoRedux(screenID, generator) {
@@ -26,7 +29,7 @@ function _registerComponentNoRedux(screenID, generator) {
         );
       }
     };
-  }
+  };
   registerScreen(screenID, generatorWrapper);
   return generatorWrapper;
 }
@@ -45,7 +48,7 @@ function _registerComponentRedux(screenID, generator, store, Provider) {
         );
       }
     };
-  }
+  };
   registerScreen(screenID, generatorWrapper);
   return generatorWrapper;
 }
