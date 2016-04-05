@@ -1,8 +1,27 @@
+import React, {
+  AppRegistry,
+  Component,
+  View
+} from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
 // screen related book keeping
 import { registerScreens } from './screens';
 registerScreens();
+
+AppRegistry.registerComponent('App', () => App);
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <View />
+    );
+  }
+}
 
 // this will start our app
 Navigation.startTabBasedApp({

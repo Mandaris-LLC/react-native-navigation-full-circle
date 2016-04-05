@@ -25,14 +25,12 @@ public class RctActivity extends BaseReactActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.v(TAG, "onCreate");
         if (mComponentName == null) {
             Intent intent = getIntent();
             assert intent != null;
             mComponentName = intent.getStringExtra(EXTRA_COMPONENT_NAME);
             assert mComponentName != null;
         }
-        Log.v(TAG, "mComponentName: " + mComponentName);
 
         super.onCreate(savedInstanceState);
     }

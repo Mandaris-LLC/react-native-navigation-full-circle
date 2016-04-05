@@ -19,7 +19,7 @@ import java.util.List;
  *
  * Created by guyc on 07/03/16.
  */
-public class RCCPackage implements ReactPackage {
+public class RnnPackage implements ReactPackage {
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {

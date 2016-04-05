@@ -20,8 +20,9 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
+import com.reactnativenavigation.BuildConfig;
 import com.reactnativenavigation.core.RctManager;
-import com.reactnativenavigation.packages.RCCPackage;
+import com.reactnativenavigation.packages.RnnPackage;
 import com.reactnativenavigation.utils.ContextProvider;
 
 import java.util.Arrays;
@@ -32,7 +33,7 @@ import javax.annotation.Nullable;
 /**
  * Base Activity for React Native applications.
  */
-public abstract class BaseReactActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
+public class BaseReactActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
 
     private static final String REDBOX_PERMISSION_MESSAGE =
             "Overlay permissions needs to be granted in order for react native apps to run in dev mode";
@@ -88,12 +89,16 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
      * This is used to schedule rendering of the component.
      * e.g. "MoviesApp"
      */
-    protected abstract String getMainComponentName();
+    protected String getMainComponentName() {
+        return "";
+    }
 
     /**
      * Returns whether dev mode should be enabled. This enables e.g. the dev menu.
      */
-    protected abstract boolean getUseDeveloperSupport();
+    protected boolean getUseDeveloperSupport() {
+        return BuildConfig.DEBUG;
+    }
 
     /**
      * Returns a list of {@link ReactPackage} used by the app.
@@ -104,7 +109,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     protected List<ReactPackage> getPackages() {
         return Arrays.asList(
                 new MainReactPackage(),
-                new RCCPackage()
+                new RnnPackage()
         );
     }
 
