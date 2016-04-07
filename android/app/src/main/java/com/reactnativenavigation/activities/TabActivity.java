@@ -5,9 +5,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
 import com.reactnativenavigation.R;
-import com.reactnativenavigation.core.Screen;
 import com.reactnativenavigation.adapters.ViewPagerAdapter;
 import com.reactnativenavigation.core.RctManager;
+import com.reactnativenavigation.core.Screen;
 
 import java.util.ArrayList;
 
@@ -40,9 +40,10 @@ public class TabActivity extends BaseReactActivity {
 
     private void setupViews() {
         ArrayList<Screen> screens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this, screens);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this, mViewPager, screens);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setOnTabSelectedListener(adapter);
         adapter.notifyDataSetChanged();
     }
 }

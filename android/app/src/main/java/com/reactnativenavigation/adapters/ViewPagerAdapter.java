@@ -1,10 +1,14 @@
 package com.reactnativenavigation.adapters;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.Screen;
@@ -15,14 +19,18 @@ import java.util.ArrayList;
 /**
  * Created by guyc on 02/04/16.
  */
-public class ViewPagerAdapter extends PagerAdapter {
+public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSelectedListener {
+
+    private static final String EVENT_ON_TAB_SELECTED = "OnTabSelected";
 
     private BaseReactActivity mContext;
+    private ViewPager mViewPager;
     private final ArrayList<Screen> mScreens;
     private final ReactInstanceManager mReactInstanceManager;
 
-    public ViewPagerAdapter(BaseReactActivity context, ArrayList<Screen> screens) {
+    public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, ArrayList<Screen> screens) {
         mContext = context;
+        mViewPager = viewPager;
         mScreens = screens;
         mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
     }
@@ -53,5 +61,27 @@ public class ViewPagerAdapter extends PagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return mScreens.get(position).title;
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        int position = tab.getPosition();
+        mViewPager.setCurrentItem(position);
+
+        WritableMap params = Arguments.createMap();
+        Screen screen = mScreens.get(position);
+        params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
+
+        RctManager.getInstance().sendEvent(EVENT_ON_TAB_SELECTED, screen.navigatorEventId, params);
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

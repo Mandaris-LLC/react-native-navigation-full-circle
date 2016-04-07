@@ -18,7 +18,6 @@ import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.EventDispatcher;
-import com.reactnativenavigation.events.TabSelectedEvent;
 import com.reactnativenavigation.layouts.ReactTabLayout;
 import com.reactnativenavigation.layouts.ReactTabLayout.InitialState;
 import com.reactnativenavigation.utils.ResourceUtils;
@@ -278,8 +277,8 @@ public class TabLayoutManager extends ViewGroupManager<ReactTabLayout> {
         public void onTabSelected(Tab tab) {
             super.onTabSelected(tab);
             int position = mTabLayout.indexOf(tab);
-            mTabLayoutManager.mDispatcher.dispatchEvent(new TabSelectedEvent(mTabLayout.getId(position), position));
-            mTabLayoutManager.mDispatcher.dispatchEvent(new TabSelectedEvent(mTabLayout.getId(), position));
+//            mTabLayoutManager.mDispatcher.dispatchEvent(new TabSelectedEvent(mTabLayout.getId(position), position));
+//            mTabLayoutManager.mDispatcher.dispatchEvent(new TabSelectedEvent(mTabLayout.getId(), position));
         }
 
         @Override

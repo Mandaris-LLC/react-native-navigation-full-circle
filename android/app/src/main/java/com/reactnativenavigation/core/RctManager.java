@@ -2,11 +2,11 @@ package com.reactnativenavigation.core;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class RctManager {
     private static final String TAG = "RctManager";
+    private static final String KEY_EVENT_ID = "id";
     private static RctManager sInstance;
 
     private ReactInstanceManager mReactManager;
@@ -35,16 +36,11 @@ public class RctManager {
         return mReactManager;
     }
 
-    public void useLocalDevServer(boolean useLocalDevServer) {
-        mUseLocalDevServer = useLocalDevServer;
-    }
-
     public boolean isInitialized() {
         return mReactManager != null;
     }
 
     public void init(Context context, String componentName, List<ReactPackage> packages) {
-        Log.i(TAG, "Initializing RctManager");
         createReactInstanceManager(context, componentName, packages);
     }
 
@@ -81,5 +77,12 @@ public class RctManager {
         mReactManager = builder.build();
         return mReactManager;
     }
-}
 
+    public <T extends ReactContextBaseJavaModule> T getNativeModule(Class<T> nativeModuleClass) {
+        if (mReactManager == null || mReactManager.getCurrentReactContext() == null) {
+            return null;
+        }
+
+        return mReactManager.getCurrentReactContext().getNativeModule(nativeModuleClass);
+    }
+}
