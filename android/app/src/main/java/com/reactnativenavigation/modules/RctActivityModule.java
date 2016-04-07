@@ -65,6 +65,11 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void startSingleScreenApp(ReadableMap screen) {
+        navigatorPush(screen);
+    }
+
+    @ReactMethod
     public void navigatorPush(ReadableMap screen) {
         Activity context = ContextProvider.getActivityContext();
         if (context != null && !context.isFinishing()) {

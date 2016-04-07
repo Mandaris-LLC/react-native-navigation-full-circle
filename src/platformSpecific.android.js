@@ -3,19 +3,18 @@ import utils from './utils';
 
 import {
   RctActivity
-} from 'react-native-controllers';
+} from 'react-native-navigation';
 
 function startSingleScreenApp(params) {
-  const screen = params.screen;
+  let screen = params.screen;
   if (!screen.screen) {
     console.error('startSingleScreenApp(params): screen must include a screen property');
     return;
   }
 
-  console.warn('startSingleScreenApp not implemented yet');
-  // RctActivity.startSingleScreenApp(params);
-  // add screenInstanceID using random
-
+  console.log(RctActivity);
+  addNavigationParams(screen);
+  RctActivity.startSingleScreenApp(screen);
 }
 
 function startTabBasedApp(params) {
@@ -24,20 +23,23 @@ function startTabBasedApp(params) {
     return;
   }
 
-  // Add stackID for each tab
-  // TODO: Add propper documentation + switch to UUID? -guy
   params.tabs.forEach(function (tab, idx) {
-    tab.stackID = utils.getRandomId();
-    tab.navigatorID = utils.getRandomId() + '_nav' + idx;
-    tab.screenInstanceID = utils.getRandomId();
-    tab.navigatorEventID = tab.screenInstanceID + '_events';
+    addNavigationParams(tab, idx)
   });
 
   RctActivity.startTabBasedApp(params.tabs);
 }
 
 function navigatorPush(navigator, params) {
+  addNavigationParams(params)
   RctActivity.navigatorPush(params);
+}
+
+function addNavigationParams(screen, idx = '') {
+  screen.stackID = utils.getRandomId();
+  screen.navigatorID = utils.getRandomId() + '_nav' + idx;
+  screen.screenInstanceID = utils.getRandomId();
+  screen.navigatorEventID = screen.screenInstanceID + '_events';
 }
 
 export default {

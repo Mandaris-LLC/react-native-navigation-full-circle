@@ -2,7 +2,6 @@ package com.reactnativenavigation.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
@@ -67,16 +66,5 @@ public class RctActivity extends BaseReactActivity {
             rctManager.init(this, mComponentName, getPackages());
         }
         return rctManager.getReactInstanceManager();
-    }
-
-    @Override
-    protected void onResume() {
-        Log.v(TAG, "onResume component: " + mComponentName);
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 }
