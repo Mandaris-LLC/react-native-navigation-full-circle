@@ -31,14 +31,14 @@ public class TabActivity extends BaseReactActivity {
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
 
         setupToolbar();
-        setupViews();
+        setupViewPager();
     }
 
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
     }
 
-    private void setupViews() {
+    private void setupViewPager() {
         ArrayList<Screen> screens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this, mViewPager, screens);
         mViewPager.setAdapter(adapter);

@@ -6,9 +6,13 @@ import android.content.Context;
 import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.WritableMap;
 
 import java.util.List;
+
+import static com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
 /**
  * Created by guyc on 22/02/16.
@@ -85,4 +89,34 @@ public class RctManager {
 
         return mReactManager.getCurrentReactContext().getNativeModule(nativeModuleClass);
     }
+
+    /**
+     * Sends an event to JavaScript using <a href="https://facebook.github.io/react-native/docs/native-modules-android.html#sending-events-to-javascript">RCTDeviceEventEmitter</a>
+     * @param eventName Name of the event
+     * @param params Event params
+     * @param navigatorEventId Id of the navigator
+     */
+    public void sendEvent(String eventName, String navigatorEventId, WritableMap params) {
+        RCTDeviceEventEmitter eventEmitter = getEventEmitter();
+        if (eventEmitter == null) {
+            return;
+        }
+
+        params.putString(KEY_EVENT_ID, eventName);
+        eventEmitter.emit(navigatorEventId, params);
+    }
+
+    private RCTDeviceEventEmitter getEventEmitter() {
+        if (mReactManager == null) {
+            return null;
+        }
+
+        ReactContext currentReactContext = mReactManager.getCurrentReactContext();
+        if (currentReactContext == null) {
+            return null;
+        }
+
+        return currentReactContext.getJSModule(RCTDeviceEventEmitter.class);
+    }
 }
+

@@ -30,6 +30,7 @@ import static android.support.design.widget.TabLayout.Tab;
  *
  * Created by guyc on 06/03/16.
  */
+@Deprecated
 public class TabLayoutManager extends ViewGroupManager<ReactTabLayout> {
     private static final String REACT_CLASS = "TabLayout";
     public static final int COMMAND_SET_VIEW_PAGER_TYPE = 1;

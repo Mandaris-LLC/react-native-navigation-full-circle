@@ -11,6 +11,7 @@ import java.util.UUID;
  *
  * Created by guyc on 06/03/16.
  */
+@Deprecated
 public class ReactTabLayout extends TabLayout {
 
     public enum InitialState {

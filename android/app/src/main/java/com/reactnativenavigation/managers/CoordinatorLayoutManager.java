@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * Created by guyc on 19/03/16.
  */
+@Deprecated
 public class CoordinatorLayoutManager extends ViewGroupManager<CoordinatorLayout> {
     private static final String REACT_CLASS = "CoordinatorLayout";
     private static final String COMMAND_CHILD_FLAGS = "setChildFlags";

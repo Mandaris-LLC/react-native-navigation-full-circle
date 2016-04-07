@@ -17,6 +17,7 @@ import java.util.Map;
 /**
  * Created by guyc on 08/03/16.
  */
+@Deprecated
 public class AppBarLayoutManager extends ViewGroupManager<AppBarLayout> {
     private static final String REACT_CLASS = "AppbarLayout";
     private static final int COMMAND_SET_CHILDREN_SCROLL_FLAGS = 1;

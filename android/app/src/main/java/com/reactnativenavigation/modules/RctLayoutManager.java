@@ -12,6 +12,7 @@ import com.reactnativenavigation.utils.ContextProvider;
 /**
  * Created by guyc on 20/03/16.
  */
+@Deprecated
 public class RctLayoutManager extends ReactContextBaseJavaModule {
     public static final String REACT_CLASS = "RctLayoutManager";
 

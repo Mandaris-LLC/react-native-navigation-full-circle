@@ -13,6 +13,7 @@ import com.reactnativenavigation.R;
  *
  * Created by guyc on 19/03/16.
  */
+@Deprecated
 public class ToolbarManager extends ViewGroupManager<Toolbar> {
     private static final String REACT_CLASS = "Toolbar";
 
