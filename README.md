@@ -205,6 +205,16 @@ Navigation.dismissModal({
 });
 ```
 
+ * **dismissAllModals(params = {})**
+
+Dismiss all the current modals at the same time.
+
+```js
+Navigation.dismissAllModals({
+  animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+});
+```
+
 * **showLightBox(params = {})**
 
 Show a screen as a lightbox.
@@ -310,6 +320,16 @@ Dismiss the current modal.
 
 ```js
 this.props.navigator.dismissModal({
+  animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+});
+```
+
+ * **dismissAllModals(params = {})**
+
+Dismiss all the current modals at the same time.
+
+```js
+this.props.navigator.dismissAllModals({
   animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 });
 ```
