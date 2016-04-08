@@ -96,6 +96,18 @@ export function registerScreens() {
 }
 ```
 
+#### Step 3 - That's it
+
+If you want to do a navigation action like push a new screen over an existing one, take a look at the [Screen API](#screen-api). It would look something like this:
+
+```js
+// this would go inside the Component implementation of one of your screens, like FirstTabScreen.js
+this.props.navigator.push({
+  screen: 'example.PushedScreen',
+  title: 'Pushed Screen'
+});
+```
+
 ## Top Level API
 
 #### `Navigation`
