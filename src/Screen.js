@@ -29,6 +29,9 @@ class Navigator {
   dismissModal(params = {}) {
     return Navigation.dismissModal(params);
   }
+  dismissAllModals(params = {}) {
+    return Navigation.dismissAllModals(params);
+  }
   showLightBox(params = {}) {
     return Navigation.showLightBox(params);
   }

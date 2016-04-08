@@ -67,6 +67,10 @@ function dismissModal(params = {}) {
   return platformSpecific.dismissModal(params);
 }
 
+function dismissAllModals(params = {}) {
+  return platformSpecific.dismissAllModals(params);
+}
+
 function showLightBox(params = {}) {
   return platformSpecific.showLightBox(params);
 }
@@ -81,6 +85,7 @@ export default {
   registerComponent,
   showModal,
   dismissModal,
+  dismissAllModals,
   showLightBox,
   dismissLightBox,
   startTabBasedApp: platformSpecific.startTabBasedApp,

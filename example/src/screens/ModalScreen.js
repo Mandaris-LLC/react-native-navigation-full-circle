@@ -35,6 +35,10 @@ export default class ModalScreen extends Component {
           <Text style={styles.button}>Close Modal</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onCloseAllPress.bind(this) }>
+          <Text style={styles.button}>Close All Modals</Text>
+        </TouchableOpacity>
+
       </View>
     );
   }
@@ -57,6 +61,9 @@ export default class ModalScreen extends Component {
   }
   onClosePress() {
     this.props.navigator.dismissModal();
+  }
+  onCloseAllPress() {
+    this.props.navigator.dismissAllModals();
   }
 }
 

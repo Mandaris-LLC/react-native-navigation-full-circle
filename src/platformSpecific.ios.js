@@ -76,7 +76,7 @@ function startTabBasedApp(params) {
     }
   });
   ControllerRegistry.registerController(controllerID, () => Controller);
-  ControllerRegistry.setRootController(controllerID, params.animationType, params.passProps || {});
+  ControllerRegistry.setRootController(controllerID);
 }
 
 function startSingleScreenApp(params) {
@@ -134,7 +134,7 @@ function startSingleScreenApp(params) {
     }
   });
   ControllerRegistry.registerController(controllerID, () => Controller);
-  ControllerRegistry.setRootController(controllerID, params.animationType, params.passProps || {});
+  ControllerRegistry.setRootController(controllerID);
 }
 
 function _mergeScreenSpecificSettings(screenID, screenInstanceID, params) {
@@ -350,6 +350,10 @@ function dismissModal(params) {
   Modal.dismissController(params.animationType);
 }
 
+function dismissAllModals(params) {
+  Modal.dismissAllControllers(params.animationType);
+}
+
 function showLightBox(params) {
   if (!params.screen) {
     console.error('showLightBox(params): params.screen is required');
@@ -387,6 +391,7 @@ export default {
   navigatorResetTo,
   showModal,
   dismissModal,
+  dismissAllModals,
   showLightBox,
   dismissLightBox,
   navigatorSetButtons,
