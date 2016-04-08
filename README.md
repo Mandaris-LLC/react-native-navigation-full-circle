@@ -4,6 +4,7 @@ App-wide support for 100% native navigation with an easy cross-platform interfac
 
 ## Overview
 
+* [Why use this package](#why-use-this-package)
 * [Installation - iOS](#installation---ios)
 * [Installation - Android](#installation---android)
 * [Usage](#usage)
@@ -15,6 +16,14 @@ App-wide support for 100% native navigation with an easy cross-platform interfac
 * [Deep links](#deep-links)
 * [Release Notes](RELEASES.md)
 * [License](#license)
+
+## Why use this package
+
+One of the major things missing from React Native core is fully featured native navigation. Navigation includes the entire skeleton of your app with critical components like nav bars, tab bars and side menu drawers.
+
+If you're trying to deliver a user experience that's on par with the best native apps out there, you simply can't compromise on JS-based components trying to fake the real thing.
+
+For example, this package replaces the native [NavigatorIOS](https://facebook.github.io/react-native/docs/navigatorios.html) that has been [abandoned](https://facebook.github.io/react-native/docs/navigator-comparison.html) in favor of JS-based solutions that are easier to maintain.
 
 ## Installation - iOS
 
