@@ -150,7 +150,8 @@ Navigation.startTabBasedApp({
       icon: require('../img/one.png'), // local image asset for the tab icon unselected state (optional)
       selectedIcon: require('../img/one_selected.png'), // local image asset for the tab icon selected state (optional)
       title: 'Screen One', // title of the screen as appears in the nav bar (optional)
-      navigatorStyle: {} // override the navigator style for the tab screen, see "Styling the navigator" below (optional)
+      navigatorStyle: {}, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
+      navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
     },
     {
       label: 'Two',
@@ -187,7 +188,8 @@ Navigation.startSingleScreenApp({
   screen: {
     screen: 'example.WelcomeScreen', // unique ID registered with Navigation.registerScreen
     title: 'Welcome', // title of the screen as appears in the nav bar (optional)
-    navigatorStyle: {} // override the navigator style for the screen, see "Styling the navigator" below (optional)
+    navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+    navigatorButtons: {} // override the nav buttons for the screen, see "Adding buttons to the navigator" below (optional)
   },
   drawer: { // optional, add this if you want a side menu drawer in your app
     left: { // optional, define if you want a drawer from the left
@@ -212,6 +214,7 @@ Navigation.showModal({
   title: "Modal", // title of the screen as appears in the nav bar (optional)
   passProps: {}, // simple serializable object that will pass as props to the modal (optional)
   navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+  navigatorButtons: {}, // override the nav buttons for the screen, see "Adding buttons to the navigator" below (optional)
   animationType: 'slide-up' // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
 });
 ```
@@ -283,7 +286,8 @@ this.props.navigator.push({
   animated: true, // does the push have transition animation or does it happen immediately (optional)
   backButtonTitle: undefined, // override the back button title (optional)
   backButtonHidden: false, // hide the back button altogether (optional)
-  navigatorStyle: {} // override the navigator style for the pushed screen (optional)
+  navigatorStyle: {}, // override the navigator style for the pushed screen (optional)
+  navigatorButtons: {} // override the nav buttons for the pushed screen (optional)
 });
 ```
 
@@ -317,7 +321,8 @@ this.props.navigator.resetTo({
   title: undefined, // navigation bar title of the pushed screen (optional)
   passProps: {}, // simple serializable object that will pass as props to the pushed screen (optional)
   animated: true, // does the push have transition animation or does it happen immediately (optional)
-  navigatorStyle: {} // override the navigator style for the pushed screen (optional)
+  navigatorStyle: {}, // override the navigator style for the pushed screen (optional)
+  navigatorButtons: {} // override the nav buttons for the pushed screen (optional)
 });
 ```
 
@@ -512,7 +517,7 @@ All supported styles are defined [here](https://github.com/wix/react-native-cont
 
 ## Adding buttons to the navigator
 
-Nav bar buttons can be defined per-screen by adding `static navigatorButtons = {...};` on the screen component definition. Handle onPress events for the buttons by setting your handler with `navigator.setOnNavigatorEvent(callback)`.
+Nav bar buttons can be defined per-screen by adding `static navigatorButtons = {...};` on the screen component definition. This object can also be passed when the screen is originally created; and can be overridden when a screen is pushed. Handle onPress events for the buttons by setting your handler with `navigator.setOnNavigatorEvent(callback)`.
 
 ```js
 class FirstTabScreen extends Component {
