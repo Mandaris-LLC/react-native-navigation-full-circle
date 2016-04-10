@@ -172,7 +172,8 @@ Navigation.startTabBasedApp({
     },
     right: { // optional, define if you want a drawer from the right
       screen: 'example.SecondSideMenu' // unique ID registered with Navigation.registerScreen
-    }
+    },
+    disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
   },
   passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
   animationType: 'slide-down' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
@@ -197,7 +198,8 @@ Navigation.startSingleScreenApp({
     },
     right: { // optional, define if you want a drawer from the right
       screen: 'example.SecondSideMenu' // unique ID registered with Navigation.registerScreen
-    }
+    },
+    disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
   },
   passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
   animationType: 'slide-down' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'

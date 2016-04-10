@@ -27,6 +27,7 @@ function startTabBasedApp(params) {
             passPropsLeft={{navigatorID: navigatorID}}
             componentRight={params.drawer.right ? params.drawer.right.screen : undefined}
             passPropsRight={{navigatorID: navigatorID}}
+            disableOpenGesture={params.drawer.disableOpenGesture}
           >
             {this.renderBody()}
           </DrawerControllerIOS>
@@ -97,6 +98,7 @@ function startSingleScreenApp(params) {
             passPropsLeft={{navigatorID: navigatorID}}
             componentRight={params.drawer.right ? params.drawer.right.screen : undefined}
             passPropsRight={{navigatorID: navigatorID}}
+            disableOpenGesture={params.drawer.disableOpenGesture}
           >
             {this.renderBody()}
           </DrawerControllerIOS>
