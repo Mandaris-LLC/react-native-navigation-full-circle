@@ -5,6 +5,8 @@ import {
   RctActivity
 } from 'react-native-navigation';
 
+var resolveAssetSource = require('resolveAssetSource');
+
 function startSingleScreenApp(params) {
   let screen = params.screen;
   if (!screen.screen) {
@@ -13,7 +15,8 @@ function startSingleScreenApp(params) {
   }
 
   console.log(RctActivity);
-  addNavigationParams(screen);
+  addNavigatorParams(screen);
+  addNavigatorButtons(screen);
   RctActivity.startSingleScreenApp(screen);
 }
 
@@ -24,22 +27,43 @@ function startTabBasedApp(params) {
   }
 
   params.tabs.forEach(function (tab, idx) {
-    addNavigationParams(tab, idx)
+    addNavigatorParams(tab, idx)
+    addNavigatorButtons(tab);
   });
 
   RctActivity.startTabBasedApp(params.tabs);
 }
 
 function navigatorPush(navigator, params) {
-  addNavigationParams(params)
+  addNavigatorParams(params)
+  addNavigatorButtons(params);
   RctActivity.navigatorPush(params);
 }
 
-function addNavigationParams(screen, idx = '') {
+function addNavigatorParams(screen, idx = '') {
   screen.stackID = utils.getRandomId();
   screen.navigatorID = utils.getRandomId() + '_nav' + idx;
   screen.screenInstanceID = utils.getRandomId();
   screen.navigatorEventID = screen.screenInstanceID + '_events';
+}
+
+function addNavigatorButtons(screen) {
+  const Screen = Navigation.getRegisteredScreen(screen.screen);
+  Object.assign(screen, Screen.navigatorButtons);
+
+  // Get image uri from image id
+  if (screen.rightButtons) {
+    screen.rightButtons.forEach(function(button) {
+      if (button.icon) {
+        const icon = resolveAssetSource(button.icon);
+        console.log('This is an icon:\n' + JSON.stringify(icon));
+        if (icon) {
+          button.icon = icon.uri;
+        }
+        console.log('final icon: ' + button.icon);
+      }
+    });
+  }
 }
 
 export default {

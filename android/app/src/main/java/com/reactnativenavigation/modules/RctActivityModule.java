@@ -12,7 +12,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.activities.RctActivity;
 import com.reactnativenavigation.activities.SingleScreenActivity;
 import com.reactnativenavigation.activities.TabActivity;
-import com.reactnativenavigation.core.Screen;
+import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.ContextProvider;
 
 import java.util.ArrayList;

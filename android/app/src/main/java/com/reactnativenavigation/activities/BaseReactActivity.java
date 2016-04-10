@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class BaseReactActivity extends AppCompatActivity implements DefaultHardw
     protected  @Nullable ReactInstanceManager mReactInstanceManager;
     private LifecycleState mLifecycleState = LifecycleState.BEFORE_RESUME;
     private boolean mDoRefresh = false;
+    private Menu mMenu;
 
     /**
      * Returns the name of the bundle in assets. If this is null, and no file path is specified for
@@ -195,6 +197,16 @@ public class BaseReactActivity extends AppCompatActivity implements DefaultHardw
         } else {
             Log.d(TAG, "Not destroying ReactInstanceManager");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public Menu getMenu() {
+        return mMenu;
     }
 
     @Override

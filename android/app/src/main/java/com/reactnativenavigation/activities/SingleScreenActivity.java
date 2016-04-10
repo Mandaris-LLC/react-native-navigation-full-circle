@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
-import com.reactnativenavigation.core.Screen;
+import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.views.RctView;
 
 /**

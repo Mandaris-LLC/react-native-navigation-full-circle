@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.activities.BaseReactActivity;
-import com.reactnativenavigation.core.Screen;
+import com.reactnativenavigation.core.objects.Screen;
 
 /**
  * Created by guyc on 10/03/16.

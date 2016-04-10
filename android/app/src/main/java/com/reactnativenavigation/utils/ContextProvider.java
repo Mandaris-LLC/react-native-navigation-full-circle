@@ -1,6 +1,7 @@
 package com.reactnativenavigation.utils;
 
 import android.app.Activity;
+import android.support.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 
@@ -17,7 +18,7 @@ public class ContextProvider {
         }
     }
 
-    public static Activity getActivityContext() {
+    public static @Nullable Activity getActivityContext() {
         return sActivityWR != null ? sActivityWR.get() : null;
     }
 

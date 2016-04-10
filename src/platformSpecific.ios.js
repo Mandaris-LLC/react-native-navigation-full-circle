@@ -37,9 +37,8 @@ function startTabBasedApp(params) {
       return (
         <TabBarControllerIOS
           id={controllerID + '_tabs'}
-          style={params.tabsStyle}
-        >
-        {
+          style={params.tabsStyle}>
+          {
           params.tabs.map(function(tab, index) {
             const navigatorID = controllerID + '_nav' + index;
             const screenInstanceID = utils.getRandomId();
@@ -96,8 +95,7 @@ function startSingleScreenApp(params) {
             componentLeft={params.drawer.left ? params.drawer.left.screen : undefined}
             passPropsLeft={{navigatorID: navigatorID}}
             componentRight={params.drawer.right ? params.drawer.right.screen : undefined}
-            passPropsRight={{navigatorID: navigatorID}}
-          >
+            passPropsRight={{navigatorID: navigatorID}}>
             {this.renderBody()}
           </DrawerControllerIOS>
         );
