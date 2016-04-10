@@ -6,7 +6,7 @@ import React, {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  AlertIOS
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';

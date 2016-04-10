@@ -1,3 +1,8 @@
+import React, {
+  AppRegistry,
+  Component,
+  View
+} from 'react-native';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { Navigation } from 'react-native-navigation';
@@ -14,13 +19,23 @@ const store = createStoreWithMiddleware(reducer);
 import { registerScreens } from './screens';
 registerScreens(store, Provider);
 
+AppRegistry.registerComponent('ExampleRedux', () => App);
+
 // notice that this is just a simple class, it's not a React component
-export default class App {
-  constructor() {
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
     // since react-redux only works on components, we need to subscribe this class manually
     store.subscribe(this.onStoreUpdate.bind(this));
     store.dispatch(appActions.appInitialized());
   }
+
+  render() {
+    return (
+      <View />
+    );
+  }
+
   onStoreUpdate() {
     const { root } = store.getState().app;
     // handle a root change
@@ -30,6 +45,7 @@ export default class App {
       this.startApp(root);
     }
   }
+
   startApp(root) {
     switch (root) {
       case 'login':
