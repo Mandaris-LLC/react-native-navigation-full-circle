@@ -13,6 +13,8 @@ import com.reactnativenavigation.core.objects.Button;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.ContextProvider;
 
+import java.lang.ref.WeakReference;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,7 @@ import java.util.Map;
 public class RnnToolBar extends Toolbar {
 
     private List<Screen> mScreens;
-    private static boolean sIsSettingUpToolbar = false;
+    private AsyncTask mSetupToolbarTask;
 
     public RnnToolBar(Context context) {
         super(context);
@@ -42,21 +44,26 @@ public class RnnToolBar extends Toolbar {
     }
 
     public void handleOnCreateOptionsMenuAsync() {
-        if (!sIsSettingUpToolbar) {
-            new SetupToolbarButtons().execute(mScreens.get(0));
+        setupToolbarButtonsAsync(mScreens.get(0));
+    }
+
+    public void setupToolbarButtonsAsync(Screen screen) {
+        if (mSetupToolbarTask == null) {
+            mSetupToolbarTask = new SetupToolbarButtonsTask(this, screen).execute();
         }
     }
 
-    private static class SetupToolbarButtons extends AsyncTask<Screen, Void, Map<String, Drawable>> {
-        private List<Button> mButtons;
+    private static class SetupToolbarButtonsTask extends AsyncTask<Void, Void, Map<String, Drawable>> {
+        private final List<Button> mButtons;
+        private final WeakReference<RnnToolBar> mToolbarWR;
 
-        public SetupToolbarButtons() {
-            sIsSettingUpToolbar = true;
+        public SetupToolbarButtonsTask(RnnToolBar toolBar, Screen newScreen) {
+            mToolbarWR = new WeakReference<>(toolBar);
+            mButtons = newScreen.buttons == null ? Collections.EMPTY_LIST : newScreen.buttons;
         }
 
         @Override
-        protected Map<String, Drawable> doInBackground(Screen... screen) {
-            mButtons = screen[0].buttons;
+        protected Map<String, Drawable> doInBackground(Void... params) {
             Context context = ContextProvider.getActivityContext();
             if (context == null) {
                 return null;
@@ -80,16 +87,27 @@ public class RnnToolBar extends Toolbar {
 
             Menu menu = ((BaseReactActivity) context).getMenu();
 
-            for (Button button : mButtons) {
-                MenuItem item = menu.add(Menu.NONE, button.getItemId(), Menu.NONE, button.title);
+            // Add new screen buttons
+            int i;
+            for (i = 0; i < mButtons.size(); i++) {
+                Button button = mButtons.get(i);
+                MenuItem item = menu.add(Menu.NONE, button.getItemId(), i, button.title);
                 if (icons.containsKey(button.id)) {
                     Drawable icon = icons.get(button.id);
-
                     item.setIcon(icon).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
                 }
             }
 
-            sIsSettingUpToolbar = false;
+            // Remove prev screen buttons
+            for (int j = i; j < menu.size(); j++) {
+                menu.removeItem(j);
+            }
+
+            RnnToolBar toolBar = mToolbarWR.get();
+            if (toolBar != null) {
+                toolBar.mSetupToolbarTask = null;
+                mToolbarWR.clear();
+            }
         }
     }
 }

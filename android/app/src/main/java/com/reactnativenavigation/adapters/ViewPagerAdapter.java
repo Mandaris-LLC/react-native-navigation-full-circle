@@ -3,7 +3,6 @@ package com.reactnativenavigation.adapters;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,6 +13,7 @@ import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.views.RctView;
+import com.reactnativenavigation.views.RnnToolBar;
 
 import java.util.ArrayList;
 
@@ -26,11 +26,12 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     private BaseReactActivity mContext;
     private ViewPager mViewPager;
-    private Toolbar mToolbar;
+    private RnnToolBar mToolbar;
     private final ArrayList<Screen> mScreens;
     private final ReactInstanceManager mReactInstanceManager;
 
-    public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, Toolbar toolbar, ArrayList<Screen> screens) {
+    public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, RnnToolBar toolbar,
+                            ArrayList<Screen> screens) {
         mContext = context;
         mViewPager = viewPager;
         mToolbar = toolbar;
@@ -76,6 +77,8 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         WritableMap params = Arguments.createMap();
         Screen screen = mScreens.get(position);
         params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
+
+        mToolbar.setupToolbarButtonsAsync(mScreens.get(position));
 
         RctManager.getInstance().sendEvent(EVENT_ON_TAB_SELECTED, screen.navigatorEventId, params);
     }

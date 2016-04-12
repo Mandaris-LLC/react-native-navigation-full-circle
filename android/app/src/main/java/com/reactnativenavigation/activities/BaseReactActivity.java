@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -36,9 +37,9 @@ import javax.annotation.Nullable;
  */
 public class BaseReactActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
 
+    private static final String TAG = "BaseReactActivity";
     private static final String REDBOX_PERMISSION_MESSAGE =
             "Overlay permissions needs to be granted in order for react native apps to run in dev mode";
-    private static final String TAG = "ReactActivity";
 
     protected  @Nullable ReactInstanceManager mReactInstanceManager;
     private LifecycleState mLifecycleState = LifecycleState.BEFORE_RESUME;

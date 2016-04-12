@@ -18,7 +18,6 @@ import static com.facebook.react.modules.core.DeviceEventManagerModule.RCTDevice
  * Created by guyc on 22/02/16.
  */
 public class RctManager {
-    private static final String TAG = "RctManager";
     private static final String KEY_EVENT_ID = "id";
     private static RctManager sInstance;
 
