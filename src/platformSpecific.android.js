@@ -56,6 +56,10 @@ function navigatorPush(navigator, params) {
   RctActivity.navigatorPush(params);
 }
 
+function navigatorPop(navigator, params) {
+  RctActivity.navigatorPop(navigator);
+}
+
 function addNavigatorParams(screen, navigator = null, idx = '') {
   screen.navigatorID = navigator ? navigator.navigatorID : utils.getRandomId() + '_nav' + idx;
   screen.screenInstanceID = utils.getRandomId();
@@ -83,5 +87,6 @@ function addNavigatorButtons(screen) {
 export default {
   startSingleScreenApp,
   startTabBasedApp,
-  navigatorPush
+  navigatorPush,
+  navigatorPop
 }

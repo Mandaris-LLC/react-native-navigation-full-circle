@@ -1,6 +1,7 @@
 package com.reactnativenavigation.views;
 
 import android.animation.LayoutTransition;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
@@ -35,14 +36,24 @@ public class ScreenStack extends FrameLayout {
     }
 
     public void push(Screen screen){
+        View oldView = null;
+        if(!stack.isEmpty())
+            oldView = stack.peek().view;
         RctView view = new RctView(reactActivity, mReactInstanceManager, screen);
         addView(view, MATCH_PARENT, MATCH_PARENT);
+        if(oldView!=null)
+            removeView(oldView);
         stack.push(new ScreenView(screen, view));
     }
 
     public Screen pop(){
+        //TODO maybe return null if size is 1?
+        if(stack.isEmpty())
+            return null;
         ScreenView popped = stack.pop();
         removeView(popped.view);
+        if(!stack.isEmpty());
+        addView(stack.peek().view);
         return popped.screen;
     }
 

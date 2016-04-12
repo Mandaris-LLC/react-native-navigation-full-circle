@@ -59,4 +59,10 @@ public class RootActivity extends BaseReactActivity {
     public void push(Screen screen) {
         //TODO
     }
+
+    @Override
+    public Screen pop(String navID) {
+        return null;
+        //TODO
+    }
 }

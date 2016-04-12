@@ -43,4 +43,9 @@ public class SingleScreenActivity extends BaseReactActivity {
     public void push(Screen screen) {
         screenStack.push(screen);
     }
+
+    @Override
+    public Screen pop(String navID) {
+        return screenStack.pop();
+    }
 }

@@ -3,6 +3,7 @@ package com.reactnativenavigation.adapters;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,7 +34,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
     private final Map<String, ScreenStack> stacksByNavId;
 
 
-    public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, RnnToolBar toolbar,
+    public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, Toolbar toolbar,
                             ArrayList<Screen> screens) {
         mContext = context;
         mViewPager = viewPager;
@@ -52,6 +53,13 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
     public void pushScreen(Screen screen){
         ScreenStack stack = stacksByNavId.get(screen.navigatorId);
         stack.push(screen);
+    }
+
+    public Screen pop(String navID){
+        ScreenStack stack = stacksByNavId.get(navID);
+        if(stack != null)
+            return stack.pop();
+        return null;
     }
 
     @Override
@@ -92,7 +100,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         Screen screen = screenStacks.get(position).peek();
         params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
 
-        mToolbar.setupToolbarButtonsAsync(mScreens.get(position));
+//        mToolbar.setupToolbarButtonsAsync(mScreens.get(position));
 
         RctManager.getInstance().sendEvent(EVENT_ON_TAB_SELECTED, screen.navigatorEventId, params);
     }

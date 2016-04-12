@@ -202,6 +202,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     public abstract void push(Screen screen);
 
+    public abstract Screen pop(String navID);
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
@@ -250,11 +252,11 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     @Override
     public void onBackPressed() {
-        if (mReactInstanceManager != null) {
+        if (mReactInstanceManager != null)
             mReactInstanceManager.onBackPressed();
-        } else {
+        //TODO uncomment and add current navID
+         else //if(pop() == null)
             super.onBackPressed();
-        }
     }
 
     @Override

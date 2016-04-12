@@ -65,10 +65,29 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void navigatorPush(ReadableMap screen) {
-        BaseReactActivity context = ContextProvider.getActivityContext();
+    public void navigatorPush(final ReadableMap screen) {
+        final BaseReactActivity context = ContextProvider.getActivityContext();
          if (context != null && !context.isFinishing()) {
-             context.push(new Screen(screen));
+             context.runOnUiThread(new Runnable() {
+                 @Override
+                 public void run() {
+                     context.push(new Screen(screen));
+                 }
+             });
+        }
+    }
+
+    @ReactMethod
+    public void navigatorPop(final ReadableMap navigator) {
+        final String navID = navigator.getString("navigatorID");
+        final BaseReactActivity context = ContextProvider.getActivityContext();
+        if (context != null && !context.isFinishing()) {
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    context.pop(navID);
+                }
+            });
         }
     }
 }

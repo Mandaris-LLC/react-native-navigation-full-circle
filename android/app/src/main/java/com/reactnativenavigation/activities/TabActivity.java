@@ -45,6 +45,11 @@ public class TabActivity extends BaseReactActivity {
         adapter.pushScreen(screen);
     }
 
+    @Override
+    public Screen pop(String navID) {
+        return adapter.pop(navID);
+    }
+
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
         mToolbar.setScreens(mScreens);
