@@ -17,7 +17,6 @@ const store = createStoreWithMiddleware(reducer);
 // screen related book keeping
 import { registerScreens } from './screens';
 registerScreens(store, Provider);
-let unsubscribe;
 
 AppRegistry.registerComponent('ExampleRedux', () => App);
 
@@ -25,10 +24,14 @@ AppRegistry.registerComponent('ExampleRedux', () => App);
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    console.log('constructor');
-    // since react-redux only works on components, we need to subscribe this class manually
-    unsubscribe = store.subscribe(this.onStoreUpdate.bind(this));
-    store.dispatch(appActions.appInitialized());
+    console.log('constructor ' + App.created);
+    if (!App.created) {
+      console.log('store.subscribe');
+      // since react-redux only works on components, we need to subscribe this class manually
+      store.subscribe(this.onStoreUpdate.bind(this));
+      store.dispatch(appActions.appInitialized());
+    }
+    App.created = true;
   }
 
   render() {
@@ -43,11 +46,6 @@ export default class App extends React.Component {
     if (this.currentRoot != root) {
       this.currentRoot = root;
       this.startApp(root);
-    } else {
-      if (unsubscribe && this.currentRoot) {
-        console.log('unsubscribing ' + this.currentRoot);
-        unsubscribe();
-      }
     }
   }
 
