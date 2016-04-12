@@ -23,7 +23,6 @@ public class RctView extends FrameLayout {
         String componentName = screen.screenId;
         Bundle passProps = new Bundle();
         passProps.putString(Screen.KEY_SCREEN_INSTANCE_ID, screen.screenInstanceId);
-        passProps.putString(Screen.KEY_STACK_ID, screen.stackId);
         passProps.putString(Screen.KEY_NAVIGATOR_ID, screen.navigatorId);
         passProps.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
 

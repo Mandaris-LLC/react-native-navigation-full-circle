@@ -14,7 +14,6 @@ function startSingleScreenApp(params) {
     return;
   }
 
-  console.log(RctActivity);
   addNavigatorParams(screen);
   addNavigatorButtons(screen);
   RctActivity.startSingleScreenApp(screen);
@@ -27,7 +26,7 @@ function startTabBasedApp(params) {
   }
 
   params.tabs.forEach(function (tab, idx) {
-    addNavigatorParams(tab, idx)
+    addNavigatorParams(tab, null, idx)
     addNavigatorButtons(tab);
   });
 
@@ -35,16 +34,15 @@ function startTabBasedApp(params) {
 }
 
 function navigatorPush(navigator, params) {
-  addNavigatorParams(params)
+  addNavigatorParams(params, navigator)
   addNavigatorButtons(params);
   RctActivity.navigatorPush(params);
 }
 
-function addNavigatorParams(screen, idx = '') {
-  screen.stackID = utils.getRandomId();
-  screen.navigatorID = utils.getRandomId() + '_nav' + idx;
+function addNavigatorParams(screen, navigator = null, idx = '') {
+  screen.navigatorID = navigator ? navigator.navigatorID : utils.getRandomId() + '_nav' + idx;
   screen.screenInstanceID = utils.getRandomId();
-  screen.navigatorEventID = screen.screenInstanceID + '_events';
+  screen.navigatorEventID = navigator ? navigator.navigatorEventID : screen.screenInstanceID + '_events';
 }
 
 function addNavigatorButtons(screen) {
