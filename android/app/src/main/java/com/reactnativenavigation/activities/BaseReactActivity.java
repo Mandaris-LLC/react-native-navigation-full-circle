@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -140,7 +139,7 @@ public class BaseReactActivity extends AppCompatActivity implements DefaultHardw
     protected ReactInstanceManager getReactInstanceManager() {
         RctManager rctManager = RctManager.getInstance();
         if (!rctManager.isInitialized()) {
-            rctManager.init(this, getMainComponentName(), getPackages());
+            rctManager.init(getApplicationContext(), getMainComponentName(), getPackages());
         }
         return rctManager.getReactInstanceManager();
     }

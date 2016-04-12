@@ -54,7 +54,6 @@ function addNavigatorButtons(screen) {
     screen.rightButtons.forEach(function(button) {
       if (button.icon) {
         const icon = resolveAssetSource(button.icon);
-        console.log('This is an icon:\n' + JSON.stringify(icon));
         if (icon) {
           button.icon = icon.uri;
         }

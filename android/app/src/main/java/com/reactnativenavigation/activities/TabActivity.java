@@ -1,7 +1,9 @@
 package com.reactnativenavigation.activities;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 
 import com.reactnativenavigation.R;
@@ -23,6 +25,12 @@ public class TabActivity extends BaseReactActivity {
     private ViewPager mViewPager;
 
     private ArrayList<Screen> mScreens;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d("GUY", "onCreate TabActivity");
+    }
 
     @Override
     protected void handleOnCreate() {
@@ -50,6 +58,12 @@ public class TabActivity extends BaseReactActivity {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setOnTabSelectedListener(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("GUY", "onResume TabActivity");
     }
 
     @Override

@@ -1,7 +1,6 @@
 import React, {
   AppRegistry,
-  Component,
-  View
+  Component
 } from 'react-native';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
@@ -18,6 +17,7 @@ const store = createStoreWithMiddleware(reducer);
 // screen related book keeping
 import { registerScreens } from './screens';
 registerScreens(store, Provider);
+let unsubscribe;
 
 AppRegistry.registerComponent('ExampleRedux', () => App);
 
@@ -25,28 +25,34 @@ AppRegistry.registerComponent('ExampleRedux', () => App);
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    console.log('constructor');
     // since react-redux only works on components, we need to subscribe this class manually
-    store.subscribe(this.onStoreUpdate.bind(this));
+    unsubscribe = store.subscribe(this.onStoreUpdate.bind(this));
     store.dispatch(appActions.appInitialized());
   }
 
   render() {
-    return (
-      <View />
-    );
+    return null;
   }
 
   onStoreUpdate() {
     const { root } = store.getState().app;
+    console.log('onStoreUpdate ' + root + ' currentRoot ' + this.currentRoot);
     // handle a root change
     // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
-    if (this.currentRoot !== root) {
+    if (this.currentRoot != root) {
       this.currentRoot = root;
       this.startApp(root);
+    } else {
+      if (unsubscribe && this.currentRoot) {
+        console.log('unsubscribing ' + this.currentRoot);
+        unsubscribe();
+      }
     }
   }
 
   startApp(root) {
+    console.log('startApp ' + root);
     switch (root) {
       case 'login':
         Navigation.startSingleScreenApp({
@@ -77,7 +83,8 @@ export default class App extends React.Component {
               navigatorStyle: {}
             }
           ],
-          animationType: 'slide-down'
+          animationType: 'slide-down',
+          title: 'Redux Example'
         });
         return;
       default:

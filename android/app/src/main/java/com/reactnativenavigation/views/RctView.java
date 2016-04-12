@@ -29,8 +29,6 @@ public class RctView extends FrameLayout {
         root.startReactApplication(rctInstanceManager, componentName, passProps);
 
         addView(root);
-
-        rctInstanceManager.onResume(ctx, ctx);
     }
 }
 
