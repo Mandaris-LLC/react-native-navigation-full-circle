@@ -51,9 +51,9 @@ public class ScreenStack extends FrameLayout {
         if(stack.isEmpty())
             return null;
         ScreenView popped = stack.pop();
-        removeView(popped.view);
         if(!stack.isEmpty());
-        addView(stack.peek().view);
+            addView(stack.peek().view, 0);
+        removeView(popped.view);
         return popped.screen;
     }
 
