@@ -191,8 +191,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         super.onDestroy();
 
         // Destroy react instance manager only if there are no resumed react activities
-        Activity activity = ContextProvider.getActivityContext();
-        if (mReactInstanceManager != null && !(activity instanceof BaseReactActivity)) {
+        BaseReactActivity activity = ContextProvider.getActivityContext();
+        if (mReactInstanceManager != null ) {
             Log.i(TAG, "Destroying ReactInstanceManager");
             mReactInstanceManager.onDestroy();
         } else {
@@ -203,6 +203,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     public abstract void push(Screen screen);
 
     public abstract Screen pop(String navID);
+
+    public abstract String getActiveNavigatorID();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -252,11 +254,13 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     @Override
     public void onBackPressed() {
-        if (mReactInstanceManager != null)
-            mReactInstanceManager.onBackPressed();
-        //TODO uncomment and add current navID
-         else //if(pop() == null)
-            super.onBackPressed();
+
+        if(pop(getActiveNavigatorID()) == null) {
+            if (mReactInstanceManager != null)
+                mReactInstanceManager.onBackPressed();
+            else
+                super.onBackPressed();
+        }
     }
 
     @Override

@@ -69,4 +69,9 @@ public class TabActivity extends BaseReactActivity {
         mToolbar.handleOnCreateOptionsMenuAsync();
         return ret;
     }
+
+    @Override
+    public String getActiveNavigatorID() {
+        return adapter.getNavID(mViewPager.getCurrentItem());
+    }
 }

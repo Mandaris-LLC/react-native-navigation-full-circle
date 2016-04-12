@@ -65,4 +65,10 @@ public class RootActivity extends BaseReactActivity {
         return null;
         //TODO
     }
+
+    @Override
+    public String getActiveNavigatorID() {
+        return null;
+        //TODO
+    }
 }

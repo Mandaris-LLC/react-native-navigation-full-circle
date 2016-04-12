@@ -13,6 +13,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
 
 import java.util.ArrayList;
@@ -28,23 +29,26 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     private BaseReactActivity mContext;
     private ViewPager mViewPager;
-    private Toolbar mToolbar;
+    private RnnToolBar mToolbar;
     private final ReactInstanceManager mReactInstanceManager;
     private final ArrayList<ScreenStack> screenStacks;
+    private final ArrayList<String> navIDs;
     private final Map<String, ScreenStack> stacksByNavId;
 
 
-    public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, Toolbar toolbar,
+    public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, RnnToolBar toolbar,
                             ArrayList<Screen> screens) {
         mContext = context;
         mViewPager = viewPager;
         mToolbar = toolbar;
         screenStacks = new ArrayList<>();
+        navIDs = new ArrayList<>();
         stacksByNavId  = new HashMap<>();
         for(Screen screen: screens){
             ScreenStack stack = new ScreenStack(context);
             stack.push(screen);
             screenStacks.add(stack);
+            navIDs.add(screen.navigatorId);
             stacksByNavId.put(screen.navigatorId, stack);
         }
         mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
@@ -100,7 +104,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         Screen screen = screenStacks.get(position).peek();
         params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
 
-//        mToolbar.setupToolbarButtonsAsync(mScreens.get(position));
+        mToolbar.setupToolbarButtonsAsync(screenStacks.get(position).peek());
 
         RctManager.getInstance().sendEvent(EVENT_ON_TAB_SELECTED, screen.navigatorEventId, params);
     }
@@ -113,5 +117,9 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    public String getNavID(int position) {
+        return navIDs.get(position);
     }
 }

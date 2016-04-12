@@ -11,7 +11,7 @@ import com.reactnativenavigation.core.objects.Screen;
 
 import java.util.Stack;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.*;
 
 public class ScreenStack extends FrameLayout {
 
@@ -37,22 +37,26 @@ public class ScreenStack extends FrameLayout {
 
     public void push(Screen screen){
         View oldView = null;
-        if(!stack.isEmpty())
+        if(!stack.isEmpty()) {
             oldView = stack.peek().view;
+        }
         RctView view = new RctView(reactActivity, mReactInstanceManager, screen);
         addView(view, MATCH_PARENT, MATCH_PARENT);
-        if(oldView!=null)
+        if(oldView!=null) {
             removeView(oldView);
+        }
         stack.push(new ScreenView(screen, view));
     }
 
     public Screen pop(){
         //TODO maybe return null if size is 1?
-        if(stack.isEmpty())
+        if(stack.isEmpty()) {
             return null;
+        }
         ScreenView popped = stack.pop();
-        if(!stack.isEmpty());
+        if(!stack.isEmpty()) {
             addView(stack.peek().view, 0);
+        }
         removeView(popped.view);
         return popped.screen;
     }

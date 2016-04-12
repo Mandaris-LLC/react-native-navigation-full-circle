@@ -18,6 +18,7 @@ public class SingleScreenActivity extends BaseReactActivity {
     private Toolbar mToolbar;
     private FrameLayout mContentFrame;
     private ScreenStack screenStack;
+    private String navID;
 
     @Override
     protected void handleOnCreate() {
@@ -28,6 +29,7 @@ public class SingleScreenActivity extends BaseReactActivity {
         mContentFrame = (FrameLayout) findViewById(R.id.contentFrame);
 
         Screen screen = (Screen) getIntent().getSerializableExtra(EXTRA_SCREEN);
+        navID = screen.navigatorId;
         setupToolbar(screen.title);
 
         screenStack = new ScreenStack(this);
@@ -47,5 +49,10 @@ public class SingleScreenActivity extends BaseReactActivity {
     @Override
     public Screen pop(String navID) {
         return screenStack.pop();
+    }
+
+    @Override
+    public String getActiveNavigatorID() {
+        return navID;
     }
 }
