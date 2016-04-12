@@ -1,13 +1,12 @@
 package com.reactnativenavigation.activities;
 
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
-import com.reactnativenavigation.views.RctView;
+import com.reactnativenavigation.views.ScreenStack;
 
 /**
  * Created by guyc on 05/04/16.
@@ -18,6 +17,7 @@ public class SingleScreenActivity extends BaseReactActivity {
 
     private Toolbar mToolbar;
     private FrameLayout mContentFrame;
+    private ScreenStack screenStack;
 
     @Override
     protected void handleOnCreate() {
@@ -29,15 +29,18 @@ public class SingleScreenActivity extends BaseReactActivity {
 
         Screen screen = (Screen) getIntent().getSerializableExtra(EXTRA_SCREEN);
         setupToolbar(screen.title);
-        setupReactView(screen);
+
+        screenStack = new ScreenStack(this);
+        mContentFrame.addView(screenStack);
+        screenStack.push(screen);
     }
 
     private void setupToolbar(String title) {
         mToolbar.setTitle(title);
     }
-
-    private void setupReactView(Screen screen) {
-        View view = new RctView(this, mReactInstanceManager, screen);
-        mContentFrame.addView(view);
+    
+    @Override
+    public void push(Screen screen) {
+        screenStack.push(screen);
     }
 }

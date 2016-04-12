@@ -23,6 +23,7 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.BuildConfig;
 import com.reactnativenavigation.core.RctManager;
+import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.packages.RnnPackage;
 import com.reactnativenavigation.utils.ContextProvider;
 
@@ -34,7 +35,7 @@ import javax.annotation.Nullable;
 /**
  * Base Activity for React Native applications.
  */
-public class BaseReactActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
+public abstract class BaseReactActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
 
     private static final String TAG = "BaseReactActivity";
     private static final String REDBOX_PERMISSION_MESSAGE =
@@ -198,6 +199,8 @@ public class BaseReactActivity extends AppCompatActivity implements DefaultHardw
             Log.d(TAG, "Not destroying ReactInstanceManager");
         }
     }
+
+    public abstract void push(Screen screen);
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

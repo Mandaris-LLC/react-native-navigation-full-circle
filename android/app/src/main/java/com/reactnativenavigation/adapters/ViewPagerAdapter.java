@@ -12,10 +12,11 @@ import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
-import com.reactnativenavigation.views.RctView;
-import com.reactnativenavigation.views.RnnToolBar;
+import com.reactnativenavigation.views.ScreenStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by guyc on 02/04/16.
@@ -26,23 +27,36 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     private BaseReactActivity mContext;
     private ViewPager mViewPager;
-    private RnnToolBar mToolbar;
-    private final ArrayList<Screen> mScreens;
+    private Toolbar mToolbar;
     private final ReactInstanceManager mReactInstanceManager;
+    private final ArrayList<ScreenStack> screenStacks;
+    private final Map<String, ScreenStack> stacksByNavId;
+
 
     public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, RnnToolBar toolbar,
                             ArrayList<Screen> screens) {
         mContext = context;
         mViewPager = viewPager;
         mToolbar = toolbar;
-        mScreens = screens;
+        screenStacks = new ArrayList<>();
+        stacksByNavId  = new HashMap<>();
+        for(Screen screen: screens){
+            ScreenStack stack = new ScreenStack(context);
+            stack.push(screen);
+            screenStacks.add(stack);
+            stacksByNavId.put(screen.navigatorId, stack);
+        }
         mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
+    }
+
+    public void pushScreen(Screen screen){
+        ScreenStack stack = stacksByNavId.get(screen.navigatorId);
+        stack.push(screen);
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        Screen screen = mScreens.get(position);
-        View view = new RctView(mContext, mReactInstanceManager, screen);
+        ScreenStack view = screenStacks.get(position);
         container.addView(view);
         return view;
     }
@@ -54,7 +68,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     @Override
     public int getCount() {
-        return mScreens.size();
+        return screenStacks.size();
     }
 
     @Override
@@ -64,7 +78,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mScreens.get(position).title;
+        return screenStacks.get(position).peek().title;
     }
 
     @Override
@@ -75,7 +89,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
         // Send tab selected event
         WritableMap params = Arguments.createMap();
-        Screen screen = mScreens.get(position);
+        Screen screen = screenStacks.get(position).peek();
         params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
 
         mToolbar.setupToolbarButtonsAsync(mScreens.get(position));

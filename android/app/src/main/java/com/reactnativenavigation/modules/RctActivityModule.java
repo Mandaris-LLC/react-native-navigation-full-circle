@@ -9,6 +9,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.activities.SingleScreenActivity;
 import com.reactnativenavigation.activities.TabActivity;
 import com.reactnativenavigation.core.objects.Screen;
@@ -36,11 +37,9 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
         Activity context = ContextProvider.getActivityContext();
         if (context != null && !context.isFinishing()) {
             Intent intent = new Intent(context, TabActivity.class);
-
             Bundle extras = new Bundle();
             extras.putSerializable(TabActivity.EXTRA_SCREENS, createScreens(screens));
             intent.putExtras(extras);
-
             context.startActivity(intent);
         }
     }
@@ -55,20 +54,21 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startSingleScreenApp(ReadableMap screen) {
-        navigatorPush(screen);
+        BaseReactActivity context = ContextProvider.getActivityContext();
+        if (context != null && !context.isFinishing()) {
+            Intent intent = new Intent(context, SingleScreenActivity.class);
+            Bundle extras = new Bundle();
+            extras.putSerializable(SingleScreenActivity.EXTRA_SCREEN, new Screen(screen));
+            intent.putExtras(extras);
+            context.startActivity(intent);
+        }
     }
 
     @ReactMethod
     public void navigatorPush(ReadableMap screen) {
-        Activity context = ContextProvider.getActivityContext();
-        if (context != null && !context.isFinishing()) {
-            Intent intent = new Intent(context, SingleScreenActivity.class);
-
-            Bundle extras = new Bundle();
-            extras.putSerializable(SingleScreenActivity.EXTRA_SCREEN, new Screen(screen));
-            intent.putExtras(extras);
-
-            context.startActivity(intent);
+        BaseReactActivity context = ContextProvider.getActivityContext();
+         if (context != null && !context.isFinishing()) {
+             context.push(new Screen(screen));
         }
     }
 }

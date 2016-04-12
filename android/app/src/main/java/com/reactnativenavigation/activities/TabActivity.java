@@ -23,6 +23,7 @@ public class TabActivity extends BaseReactActivity {
     private ViewPager mViewPager;
 
     private ArrayList<Screen> mScreens;
+    private ViewPagerAdapter adapter;
 
     @Override
     protected void handleOnCreate() {
@@ -39,13 +40,18 @@ public class TabActivity extends BaseReactActivity {
         setupViewPager();
     }
 
+    @Override
+    public void push(Screen screen) {
+        adapter.pushScreen(screen);
+    }
+
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
         mToolbar.setScreens(mScreens);
     }
 
     private void setupViewPager() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this, mViewPager, mToolbar, mScreens);
+        adapter = new ViewPagerAdapter(this, mViewPager, mToolbar, mScreens);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setOnTabSelectedListener(adapter);

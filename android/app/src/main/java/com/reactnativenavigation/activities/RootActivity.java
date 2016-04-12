@@ -5,6 +5,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
+import com.reactnativenavigation.core.objects.Screen;
 
 /**
  * Created by guyc on 13/04/16.
@@ -53,5 +54,9 @@ public class RootActivity extends BaseReactActivity {
     protected void onPause() {
         super.onPause();
         finish();
+    }
+
+    public void push(Screen screen) {
+        //TODO
     }
 }
