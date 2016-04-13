@@ -1,8 +1,6 @@
 package com.reactnativenavigation.activities;
 
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -20,12 +18,6 @@ public class SingleScreenActivity extends BaseReactActivity {
 
     private Toolbar mToolbar;
     private FrameLayout mContentFrame;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i("GUY", "onCreate SingleScreenActivity");
-    }
 
     @Override
     protected void handleOnCreate() {
@@ -47,11 +39,5 @@ public class SingleScreenActivity extends BaseReactActivity {
     private void setupReactView(Screen screen) {
         View view = new RctView(this, mReactInstanceManager, screen);
         mContentFrame.addView(view);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("GUY", "onResume SingleScreenActivity");
     }
 }

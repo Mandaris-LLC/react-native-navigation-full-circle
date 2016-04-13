@@ -1,42 +1,23 @@
 package com.reactnativenavigation.activities;
 
-import android.content.Intent;
-import android.os.Bundle;
-
+import com.facebook.react.BuildConfig;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
 
 /**
- *
- * Created by guyc on 10/03/16.
+ * Created by guyc on 13/04/16.
  */
-public class RctActivity extends BaseReactActivity {
-    public static final String EXTRA_COMPONENT_NAME = "componentName";
-    private static final String TAG = "RctActivity";
+public class RootActivity extends BaseReactActivity {
 
-    private String mComponentName = "";
-
-    public void setComponentName(String componentName) {
-        mComponentName = componentName;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        if (mComponentName == null) {
-            Intent intent = getIntent();
-            assert intent != null;
-            mComponentName = intent.getStringExtra(EXTRA_COMPONENT_NAME);
-            assert mComponentName != null;
-        }
-
-        super.onCreate(savedInstanceState);
-    }
-
+    /**
+     * Returns the name of the main component registered from JavaScript.
+     * This is used to schedule rendering of the component.
+     */
     @Override
     protected String getMainComponentName() {
-        return mComponentName;
+        return "RootComponent";
     }
 
     @Override
@@ -52,7 +33,7 @@ public class RctActivity extends BaseReactActivity {
      */
     @Override
     protected boolean getUseDeveloperSupport() {
-        return false;
+        return BuildConfig.DEBUG;
     }
 
     @Override
@@ -63,8 +44,14 @@ public class RctActivity extends BaseReactActivity {
     protected ReactInstanceManager getReactInstanceManager() {
         RctManager rctManager = RctManager.getInstance();
         if (!rctManager.isInitialized()) {
-            rctManager.init(this, mComponentName, getPackages());
+            rctManager.init(this, getMainComponentName(), getPackages());
         }
         return rctManager.getReactInstanceManager();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
     }
 }

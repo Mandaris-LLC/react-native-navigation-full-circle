@@ -9,7 +9,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-import com.reactnativenavigation.activities.RctActivity;
 import com.reactnativenavigation.activities.SingleScreenActivity;
 import com.reactnativenavigation.activities.TabActivity;
 import com.reactnativenavigation.core.objects.Screen;
@@ -30,16 +29,6 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
     @Override
     public String getName() {
         return REACT_CLASS;
-    }
-
-    @ReactMethod
-    public void startActivity(String componentName) {
-        Activity context = ContextProvider.getActivityContext();
-        if (context != null && !context.isFinishing()) {
-            Intent rctActivityIntent = new Intent(context, RctActivity.class);
-            rctActivityIntent.putExtra(RctActivity.EXTRA_COMPONENT_NAME, componentName);
-            context.startActivity(rctActivityIntent);
-        }
     }
 
     @ReactMethod
