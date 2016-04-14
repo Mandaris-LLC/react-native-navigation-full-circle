@@ -74,4 +74,9 @@ public class TabActivity extends BaseReactActivity {
     public String getActiveNavigatorID() {
         return adapter.getNavID(mViewPager.getCurrentItem());
     }
+
+    @Override
+    public int getScreenStackSize() {
+        return adapter.getStackSizeForNavigatorId(getActiveNavigatorID());
+    }
 }

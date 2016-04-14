@@ -71,4 +71,10 @@ public class RootActivity extends BaseReactActivity {
         return null;
         //TODO
     }
+
+    @Override
+    public int getScreenStackSize() {
+        return 0;
+        //TODO
+    }
 }
