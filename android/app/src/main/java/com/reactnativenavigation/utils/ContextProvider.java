@@ -7,7 +7,6 @@ import com.reactnativenavigation.activities.BaseReactActivity;
 import java.lang.ref.WeakReference;
 
 /**
- *
  * Created by guyc on 10/03/16.
  */
 public class ContextProvider {
@@ -19,7 +18,8 @@ public class ContextProvider {
         }
     }
 
-    public static @Nullable BaseReactActivity getActivityContext() {
+    @Nullable
+    public static BaseReactActivity getActivityContext() {
         return sActivityWR != null ? sActivityWR.get() : null;
     }
 

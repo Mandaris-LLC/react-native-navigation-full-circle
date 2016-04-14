@@ -40,7 +40,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     private static final String REDBOX_PERMISSION_MESSAGE =
             "Overlay permissions needs to be granted in order for react native apps to run in dev mode";
 
-    protected  @Nullable ReactInstanceManager mReactInstanceManager;
+    @Nullable
+    protected ReactInstanceManager mReactInstanceManager;
     private LifecycleState mLifecycleState = LifecycleState.BEFORE_RESUME;
     private boolean mDoRefresh = false;
     private Menu mMenu;
@@ -51,9 +52,10 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
      * always try to load the JS bundle from the packager server.
      * e.g. "index.android.bundle"
      */
-    protected @Nullable String getBundleAssetName() {
+    @Nullable
+    protected String getBundleAssetName() {
         return "index.android.bundle";
-    };
+    }
 
     /**
      * Returns a custom path of the bundle file. This is used in cases the bundle should be loaded
@@ -61,7 +63,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
      * by {getBundleAssetName}.
      * e.g. "file://sdcard/myapp_cache/index.android.bundle"
      */
-    protected @Nullable String getJSBundleFile() {
+    @Nullable
+    protected String getJSBundleFile() {
         return null;
     }
 
@@ -82,7 +85,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
      * If your React Native application requires props set outside of JS, override
      * this method to return the Android.os.Bundle of your desired initial props.
      */
-    protected @Nullable Bundle getLaunchOptions() {
+    @Nullable
+    protected Bundle getLaunchOptions() {
         return null;
     }
 
@@ -191,7 +195,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
         // Destroy react instance manager only if there are no resumed react activities
         BaseReactActivity activity = ContextProvider.getActivityContext();
-        if (mReactInstanceManager != null && activity!=null && activity.isFinishing()) {
+        if (mReactInstanceManager != null && activity != null && activity.isFinishing()) {
             Log.i(TAG, "Destroying ReactInstanceManager");
             mReactInstanceManager.onDestroy();
         } else {
@@ -255,14 +259,14 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     @Override
     public void onBackPressed() {
-        if(getScreenStackSize() > 1){
+        if (getScreenStackSize() > 1) {
             pop(getActiveNavigatorID());
-        }
-        else{
-            if (mReactInstanceManager != null)
+        } else {
+            if (mReactInstanceManager != null) {
                 mReactInstanceManager.onBackPressed();
-            else
+            } else {
                 super.onBackPressed();
+            }
         }
     }
 

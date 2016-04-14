@@ -1,7 +1,6 @@
 package com.reactnativenavigation.views;
 
 import android.animation.LayoutTransition;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
@@ -17,7 +16,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class ScreenStack extends FrameLayout {
 
-    private class ScreenView{
+    private class ScreenView {
         Screen screen;
         RctView view;
 
@@ -28,36 +27,37 @@ public class ScreenStack extends FrameLayout {
     }
 
     private final Stack<ScreenView> stack = new Stack<>();
-    private final ReactInstanceManager mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
+    private final ReactInstanceManager mReactInstanceManager =
+            RctManager.getInstance().getReactInstanceManager();
     private final BaseReactActivity reactActivity;
 
-    public ScreenStack(BaseReactActivity context){
+    public ScreenStack(BaseReactActivity context) {
         super(context);
         reactActivity = context;
         setLayoutTransition(new LayoutTransition());
     }
 
-    public void push(Screen screen){
-        View oldView = null;
-        if(!stack.isEmpty()) {
+    public void push(Screen screen) {
+        RctView oldView = null;
+        if (!stack.isEmpty()) {
             oldView = stack.peek().view;
         }
         RctView view = new RctView(reactActivity, mReactInstanceManager, screen);
         addView(view, MATCH_PARENT, MATCH_PARENT);
-        if(oldView != null) {
-            ReactRootView reactRootView = ((RctView) oldView).getReactRootView();
+        if (oldView != null) {
+            ReactRootView reactRootView = oldView.getReactRootView();
             ReflectionUtils.setBooleanField(reactRootView, "mAttachScheduled", true);
             removeView(oldView);
         }
         stack.push(new ScreenView(screen, view));
     }
 
-    public Screen pop(){
-        if(stack.isEmpty()) {
+    public Screen pop() {
+        if (stack.isEmpty()) {
             return null;
         }
         ScreenView popped = stack.pop();
-        if(!stack.isEmpty()) {
+        if (!stack.isEmpty()) {
             addView(stack.peek().view, 0);
         }
 
@@ -66,15 +66,15 @@ public class ScreenStack extends FrameLayout {
         return popped.screen;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return stack.isEmpty();
     }
 
-    public int getStackSize(){
+    public int getStackSize() {
         return stack.size();
     }
 
-    public Screen peek(){
+    public Screen peek() {
         return stack.peek().screen;
     }
 }

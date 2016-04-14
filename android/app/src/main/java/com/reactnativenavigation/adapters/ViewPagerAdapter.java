@@ -3,11 +3,9 @@ package com.reactnativenavigation.adapters;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.activities.BaseReactActivity;
@@ -27,10 +25,8 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     private static final String EVENT_ON_TAB_SELECTED = "OnTabSelected";
 
-    private BaseReactActivity mContext;
     private ViewPager mViewPager;
     private RnnToolBar mToolbar;
-    private final ReactInstanceManager mReactInstanceManager;
     private final ArrayList<ScreenStack> screenStacks;
     private final ArrayList<String> navIDs;
     private final Map<String, ScreenStack> stacksByNavId;
@@ -38,31 +34,30 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, RnnToolBar toolbar,
                             ArrayList<Screen> screens) {
-        mContext = context;
         mViewPager = viewPager;
         mToolbar = toolbar;
         screenStacks = new ArrayList<>();
         navIDs = new ArrayList<>();
-        stacksByNavId  = new HashMap<>();
-        for(Screen screen: screens){
+        stacksByNavId = new HashMap<>();
+        for (Screen screen : screens) {
             ScreenStack stack = new ScreenStack(context);
             stack.push(screen);
             screenStacks.add(stack);
             navIDs.add(screen.navigatorId);
             stacksByNavId.put(screen.navigatorId, stack);
         }
-        mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
     }
 
-    public void pushScreen(Screen screen){
+    public void pushScreen(Screen screen) {
         ScreenStack stack = stacksByNavId.get(screen.navigatorId);
         stack.push(screen);
     }
 
-    public Screen pop(String navID){
+    public Screen pop(String navID) {
         ScreenStack stack = stacksByNavId.get(navID);
-        if(stack != null)
+        if (stack != null) {
             return stack.pop();
+        }
         return null;
     }
 
