@@ -34,7 +34,6 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startTabBasedApp(ReadableArray screens) {
-        Log.e("START", "NEW_TAB");
         Activity context = ContextProvider.getActivityContext();
         if (context != null && !context.isFinishing()) {
             Intent intent = new Intent(context, TabActivity.class);
@@ -55,7 +54,6 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startSingleScreenApp(ReadableMap screen) {
-        Log.e("START", "NEW_SINGLE");
         BaseReactActivity context = ContextProvider.getActivityContext();
         if (context != null && !context.isFinishing()) {
             Intent intent = new Intent(context, SingleScreenActivity.class);
