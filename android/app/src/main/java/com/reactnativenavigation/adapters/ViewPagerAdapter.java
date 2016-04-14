@@ -122,4 +122,8 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
     public String getNavID(int position) {
         return navIDs.get(position);
     }
+
+    public int getStackSizeForNavigatorId(String activeNavigatorID) {
+        return stacksByNavId.get(activeNavigatorID).getStackSize();
+    }
 }

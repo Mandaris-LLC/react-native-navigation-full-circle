@@ -43,19 +43,23 @@ public class ScreenStack extends FrameLayout {
         RctView view = new RctView(reactActivity, mReactInstanceManager, screen);
         addView(view, MATCH_PARENT, MATCH_PARENT);
         if(oldView!=null) {
-            removeView(oldView);
+            oldView.setVisibility(GONE);
         }
         stack.push(new ScreenView(screen, view));
     }
 
     public Screen pop(){
-        //TODO maybe return null if size is 1?
         if(stack.isEmpty()) {
             return null;
         }
         ScreenView popped = stack.pop();
         if(!stack.isEmpty()) {
-            addView(stack.peek().view, 0);
+            View view = stack.peek().view;
+            if(view.getParent() == null)
+                addView(stack.peek().view, 0);
+            else {
+                view.setVisibility(VISIBLE);
+            }
         }
         removeView(popped.view);
         return popped.screen;

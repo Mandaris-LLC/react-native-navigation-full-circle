@@ -55,4 +55,9 @@ public class SingleScreenActivity extends BaseReactActivity {
     public String getActiveNavigatorID() {
         return navID;
     }
+
+    @Override
+    public int getScreenStackSize() {
+        return screenStack.getStackSize();
+    }
 }

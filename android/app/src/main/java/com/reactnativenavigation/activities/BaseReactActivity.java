@@ -205,6 +205,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     public abstract String getActiveNavigatorID();
 
+    public abstract int getScreenStackSize();
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
@@ -253,8 +255,10 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     @Override
     public void onBackPressed() {
-
-        if(pop(getActiveNavigatorID()) == null) {
+        if(getScreenStackSize() > 1){
+            pop(getActiveNavigatorID());
+        }
+        else{
             if (mReactInstanceManager != null)
                 mReactInstanceManager.onBackPressed();
             else
