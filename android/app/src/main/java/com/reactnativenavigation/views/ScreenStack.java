@@ -60,6 +60,8 @@ public class ScreenStack extends FrameLayout {
         if(!stack.isEmpty()) {
             addView(stack.peek().view, 0);
         }
+
+        ReflectionUtils.setBooleanField(popped.view.getReactRootView(), "mAttachScheduled", false);
         removeView(popped.view);
         return popped.screen;
     }
