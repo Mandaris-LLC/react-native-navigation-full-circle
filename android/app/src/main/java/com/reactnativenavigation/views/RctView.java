@@ -13,12 +13,18 @@ import com.reactnativenavigation.core.objects.Screen;
  */
 public class RctView extends FrameLayout {
 
+    private ReactRootView mReactRootView;
+
+    public ReactRootView getReactRootView() {
+        return mReactRootView;
+    }
+
     public RctView(BaseReactActivity ctx, ReactInstanceManager rctInstanceManager, Screen screen) {
         super(ctx);
         setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        ReactRootView root = new ReactRootView(ctx);
-        root.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        mReactRootView = new ReactRootView(ctx);
+        mReactRootView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         String componentName = screen.screenId;
         Bundle passProps = new Bundle();
@@ -26,9 +32,9 @@ public class RctView extends FrameLayout {
         passProps.putString(Screen.KEY_NAVIGATOR_ID, screen.navigatorId);
         passProps.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
 
-        root.startReactApplication(rctInstanceManager, componentName, passProps);
+        mReactRootView.startReactApplication(rctInstanceManager, componentName, passProps);
 
-        addView(root);
+        addView(mReactRootView);
     }
 }
 

@@ -5,13 +5,15 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.utils.ReflectionUtils;
 
 import java.util.Stack;
 
-import static android.view.ViewGroup.LayoutParams.*;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class ScreenStack extends FrameLayout {
 
@@ -42,8 +44,10 @@ public class ScreenStack extends FrameLayout {
         }
         RctView view = new RctView(reactActivity, mReactInstanceManager, screen);
         addView(view, MATCH_PARENT, MATCH_PARENT);
-        if(oldView!=null) {
-            oldView.setVisibility(GONE);
+        if(oldView != null) {
+            ReactRootView reactRootView = ((RctView) oldView).getReactRootView();
+            ReflectionUtils.setBooleanField(reactRootView, "mAttachScheduled", true);
+            removeView(oldView);
         }
         stack.push(new ScreenView(screen, view));
     }
@@ -54,12 +58,7 @@ public class ScreenStack extends FrameLayout {
         }
         ScreenView popped = stack.pop();
         if(!stack.isEmpty()) {
-            View view = stack.peek().view;
-            if(view.getParent() == null)
-                addView(stack.peek().view, 0);
-            else {
-                view.setVisibility(VISIBLE);
-            }
+            addView(stack.peek().view, 0);
         }
         removeView(popped.view);
         return popped.screen;
