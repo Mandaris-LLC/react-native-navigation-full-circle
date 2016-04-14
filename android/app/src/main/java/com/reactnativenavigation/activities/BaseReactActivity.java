@@ -195,7 +195,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
         // Destroy react instance manager only if there are no resumed react activities
         BaseReactActivity activity = ContextProvider.getActivityContext();
-        if (mReactInstanceManager != null && activity != null && activity.isFinishing()) {
+        if (mReactInstanceManager != null && (activity == null || activity.isFinishing())) {
             Log.i(TAG, "Destroying ReactInstanceManager");
             mReactInstanceManager.onDestroy();
         } else {
