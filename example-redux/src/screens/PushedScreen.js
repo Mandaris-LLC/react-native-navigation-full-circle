@@ -4,7 +4,8 @@ import React, {
   View,
   ScrollView,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  TextInput
 } from 'react-native';
 import { connect } from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
@@ -13,10 +14,22 @@ import * as counterActions from '../reducers/counter/actions';
 class PushedScreen extends Component {
   constructor(props) {
     super(props);
+    this.bgColor = this.getRandomColor();
+    console.log('constructor');
   }
+
+  getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
   render() {
     return (
-      <View style={{flex: 1, padding: 20}}>
+      <View style={{flex: 1, padding: 20, backgroundColor: this.bgColor}}>
 
         <Text style={styles.text}>
           <Text style={{fontWeight: '500'}}>Counter: </Text> {this.props.counter.count}
@@ -33,6 +46,8 @@ class PushedScreen extends Component {
         <TouchableOpacity onPress={ this.onPopPress.bind(this) }>
           <Text style={styles.button}>Pop Screen</Text>
         </TouchableOpacity>
+
+        <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
 
       </View>
     );
