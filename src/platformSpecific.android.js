@@ -12,18 +12,6 @@ import {
 
 var resolveAssetSource = require('resolveAssetSource');
 
-AppRegistry.registerComponent('RootComponent', () => RootComponent);
-
-export default class RootComponent extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return null;
-  }
-}
-
 function startSingleScreenApp(params) {
   let screen = params.screen;
   if (!screen.screen) {

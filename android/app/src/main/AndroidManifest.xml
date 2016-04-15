@@ -2,8 +2,8 @@
     package="com.reactnativenavigation">
 
     <application>
-      <activity android:name="com.reactnativenavigation.activities.TabActivity" />
-      <activity android:name="com.reactnativenavigation.activities.SingleScreenActivity" />
+        <activity android:name="com.reactnativenavigation.activities.TabActivity" />
+        <activity android:name="com.reactnativenavigation.activities.SingleScreenActivity" />
     </application>
 
 </manifest>
