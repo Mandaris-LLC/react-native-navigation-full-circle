@@ -27,43 +27,40 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     private ViewPager mViewPager;
     private RnnToolBar mToolbar;
-    private final ArrayList<ScreenStack> screenStacks;
-    private final ArrayList<String> navIDs;
-    private final Map<String, ScreenStack> stacksByNavId;
+    private final ArrayList<ScreenStack> mScreenStacks;
+    private final ArrayList<String> mNavigatorIds;
+    private final Map<String, ScreenStack> mStackByNavigatorId;
 
 
     public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, RnnToolBar toolbar,
                             ArrayList<Screen> screens) {
         mViewPager = viewPager;
         mToolbar = toolbar;
-        screenStacks = new ArrayList<>();
-        navIDs = new ArrayList<>();
-        stacksByNavId = new HashMap<>();
+        mScreenStacks = new ArrayList<>();
+        mNavigatorIds = new ArrayList<>();
+        mStackByNavigatorId = new HashMap<>();
         for (Screen screen : screens) {
             ScreenStack stack = new ScreenStack(context);
             stack.push(screen);
-            screenStacks.add(stack);
-            navIDs.add(screen.navigatorId);
-            stacksByNavId.put(screen.navigatorId, stack);
+            mScreenStacks.add(stack);
+            mNavigatorIds.add(screen.navigatorId);
+            mStackByNavigatorId.put(screen.navigatorId, stack);
         }
     }
 
-    public void pushScreen(Screen screen) {
-        ScreenStack stack = stacksByNavId.get(screen.navigatorId);
+    public void push(Screen screen) {
+        ScreenStack stack = mStackByNavigatorId.get(screen.navigatorId);
         stack.push(screen);
     }
 
-    public Screen pop(String navID) {
-        ScreenStack stack = stacksByNavId.get(navID);
-        if (stack != null) {
-            return stack.pop();
-        }
-        return null;
+    public Screen pop(String navigatorId) {
+        ScreenStack stack = mStackByNavigatorId.get(navigatorId);
+        return stack != null ? stack.pop() : null;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ScreenStack view = screenStacks.get(position);
+        ScreenStack view = mScreenStacks.get(position);
         container.addView(view);
         return view;
     }
@@ -75,7 +72,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     @Override
     public int getCount() {
-        return screenStacks.size();
+        return mScreenStacks.size();
     }
 
     @Override
@@ -85,7 +82,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return screenStacks.get(position).peek().title;
+        return mScreenStacks.get(position).peek().title;
     }
 
     @Override
@@ -94,13 +91,12 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         int position = tab.getPosition();
         mViewPager.setCurrentItem(position);
 
+        mToolbar.setupToolbarButtonsAsync(mScreenStacks.get(position).peek());
+
         // Send tab selected event
         WritableMap params = Arguments.createMap();
-        Screen screen = screenStacks.get(position).peek();
+        Screen screen = mScreenStacks.get(position).peek();
         params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
-
-        mToolbar.setupToolbarButtonsAsync(screenStacks.get(position).peek());
-
         RctManager.getInstance().sendEvent(EVENT_ON_TAB_SELECTED, screen.navigatorEventId, params);
     }
 
@@ -114,11 +110,11 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     }
 
-    public String getNavID(int position) {
-        return navIDs.get(position);
+    public String getNavigatorId(int position) {
+        return mNavigatorIds.get(position);
     }
 
     public int getStackSizeForNavigatorId(String activeNavigatorID) {
-        return stacksByNavId.get(activeNavigatorID).getStackSize();
+        return mStackByNavigatorId.get(activeNavigatorID).getStackSize();
     }
 }

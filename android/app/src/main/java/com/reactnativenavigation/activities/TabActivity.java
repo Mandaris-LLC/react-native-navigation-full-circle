@@ -18,12 +18,11 @@ import java.util.ArrayList;
 public class TabActivity extends BaseReactActivity {
     public static final String EXTRA_SCREENS = "extraScreens";
 
-    private RnnToolBar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
     private ArrayList<Screen> mScreens;
-    private ViewPagerAdapter adapter;
+    private ViewPagerAdapter mAdapter;
 
     @Override
     protected void handleOnCreate() {
@@ -40,27 +39,17 @@ public class TabActivity extends BaseReactActivity {
         setupViewPager();
     }
 
-    @Override
-    public void push(Screen screen) {
-        adapter.pushScreen(screen);
-    }
-
-    @Override
-    public Screen pop(String navID) {
-        return adapter.pop(navID);
-    }
-
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
         mToolbar.setScreens(mScreens);
     }
 
     private void setupViewPager() {
-        adapter = new ViewPagerAdapter(this, mViewPager, mToolbar, mScreens);
-        mViewPager.setAdapter(adapter);
+        mAdapter = new ViewPagerAdapter(this, mViewPager, mToolbar, mScreens);
+        mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setOnTabSelectedListener(adapter);
-        adapter.notifyDataSetChanged();
+        mTabLayout.setOnTabSelectedListener(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -71,12 +60,24 @@ public class TabActivity extends BaseReactActivity {
     }
 
     @Override
-    public String getActiveNavigatorID() {
-        return adapter.getNavID(mViewPager.getCurrentItem());
+    public void push(Screen screen) {
+        super.push(screen);
+        mAdapter.push(screen);
+    }
+
+    @Override
+    public Screen pop(String navigatorId) {
+        super.pop(navigatorId);
+        return mAdapter.pop(navigatorId);
+    }
+
+    @Override
+    public String getCurrentNavigatorId() {
+        return mAdapter.getNavigatorId(mViewPager.getCurrentItem());
     }
 
     @Override
     public int getScreenStackSize() {
-        return adapter.getStackSizeForNavigatorId(getActiveNavigatorID());
+        return mAdapter.getStackSizeForNavigatorId(getCurrentNavigatorId());
     }
 }

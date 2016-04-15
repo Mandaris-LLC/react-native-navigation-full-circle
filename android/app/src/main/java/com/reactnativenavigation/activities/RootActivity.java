@@ -32,12 +32,12 @@ public class RootActivity extends BaseReactActivity {
     }
 
     @Override
-    public Screen pop(String navID) {
+    public Screen pop(String navigatorId) {
         return null;
     }
 
     @Override
-    public String getActiveNavigatorID() {
+    public String getCurrentNavigatorId() {
         return null;
     }
 

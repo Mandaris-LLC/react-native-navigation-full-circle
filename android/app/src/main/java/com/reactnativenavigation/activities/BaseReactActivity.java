@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.annotation.CallSuper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,6 +26,7 @@ import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.packages.RnnPackage;
 import com.reactnativenavigation.utils.ContextProvider;
+import com.reactnativenavigation.views.RnnToolBar;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +47,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     private LifecycleState mLifecycleState = LifecycleState.BEFORE_RESUME;
     private boolean mDoRefresh = false;
     private Menu mMenu;
+    protected RnnToolBar mToolbar;
 
     /**
      * Returns the name of the bundle in assets. If this is null, and no file path is specified for
@@ -203,11 +206,26 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         }
     }
 
-    public abstract void push(Screen screen);
+    @CallSuper
+    public void push(Screen screen) {
+        if (mToolbar != null &&
+            getCurrentNavigatorId().equals(screen.navigatorId) &&
+            getScreenStackSize() >= 1) {
+            mToolbar.showBackButton();
+        }
+    }
 
-    public abstract Screen pop(String navID);
+    @CallSuper
+    public Screen pop(String navigatorId) {
+        if (mToolbar != null &&
+            getCurrentNavigatorId().equals(navigatorId) &&
+            getScreenStackSize() <= 2) {
+            mToolbar.hideBackButton();
+        }
+        return null;
+    }
 
-    public abstract String getActiveNavigatorID();
+    public abstract String getCurrentNavigatorId();
 
     public abstract int getScreenStackSize();
 
@@ -260,7 +278,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @Override
     public void onBackPressed() {
         if (getScreenStackSize() > 1) {
-            pop(getActiveNavigatorID());
+            pop(getCurrentNavigatorId());
         } else {
             if (mReactInstanceManager != null) {
                 mReactInstanceManager.onBackPressed();

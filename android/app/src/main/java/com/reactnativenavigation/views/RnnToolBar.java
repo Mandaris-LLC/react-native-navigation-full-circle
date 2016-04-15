@@ -53,6 +53,16 @@ public class RnnToolBar extends Toolbar {
         }
     }
 
+    @SuppressWarnings({"ConstantConditions"})
+    public void showBackButton() {
+        ContextProvider.getActivityContext().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @SuppressWarnings({"ConstantConditions"})
+    public void hideBackButton() {
+        ContextProvider.getActivityContext().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
     private static class SetupToolbarButtonsTask extends AsyncTask<Void, Void, Map<String, Drawable>> {
         private final List<Button> mButtons;
         private final WeakReference<RnnToolBar> mToolbarWR;

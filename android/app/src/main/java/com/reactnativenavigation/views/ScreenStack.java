@@ -16,7 +16,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class ScreenStack extends FrameLayout {
 
-    private class ScreenView {
+    private static class ScreenView {
         Screen screen;
         RctView view;
 
@@ -26,39 +26,39 @@ public class ScreenStack extends FrameLayout {
         }
     }
 
-    private final Stack<ScreenView> stack = new Stack<>();
+    private final Stack<ScreenView> mStack = new Stack<>();
     private final ReactInstanceManager mReactInstanceManager =
             RctManager.getInstance().getReactInstanceManager();
-    private final BaseReactActivity reactActivity;
+    private final BaseReactActivity mReactActivity;
 
     public ScreenStack(BaseReactActivity context) {
         super(context);
-        reactActivity = context;
+        mReactActivity = context;
         setLayoutTransition(new LayoutTransition());
     }
 
     public void push(Screen screen) {
         RctView oldView = null;
-        if (!stack.isEmpty()) {
-            oldView = stack.peek().view;
+        if (!mStack.isEmpty()) {
+            oldView = mStack.peek().view;
         }
-        RctView view = new RctView(reactActivity, mReactInstanceManager, screen);
+        RctView view = new RctView(mReactActivity, mReactInstanceManager, screen);
         addView(view, MATCH_PARENT, MATCH_PARENT);
         if (oldView != null) {
             ReactRootView reactRootView = oldView.getReactRootView();
             ReflectionUtils.setBooleanField(reactRootView, "mAttachScheduled", true);
             removeView(oldView);
         }
-        stack.push(new ScreenView(screen, view));
+        mStack.push(new ScreenView(screen, view));
     }
 
     public Screen pop() {
-        if (stack.isEmpty()) {
+        if (mStack.isEmpty()) {
             return null;
         }
-        ScreenView popped = stack.pop();
-        if (!stack.isEmpty()) {
-            addView(stack.peek().view, 0);
+        ScreenView popped = mStack.pop();
+        if (!mStack.isEmpty()) {
+            addView(mStack.peek().view, 0);
         }
 
         ReflectionUtils.setBooleanField(popped.view.getReactRootView(), "mAttachScheduled", false);
@@ -67,14 +67,14 @@ public class ScreenStack extends FrameLayout {
     }
 
     public boolean isEmpty() {
-        return stack.isEmpty();
+        return mStack.isEmpty();
     }
 
     public int getStackSize() {
-        return stack.size();
+        return mStack.size();
     }
 
     public Screen peek() {
-        return stack.peek().screen;
+        return mStack.peek().screen;
     }
 }
