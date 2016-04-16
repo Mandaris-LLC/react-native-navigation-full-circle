@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.view.MenuItem;
 
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.BuildConfig;
@@ -91,5 +92,21 @@ public class Button extends JsonObject implements Serializable {
         int itemId = sAtomicIdGenerator.addAndGet(1);
         sStringToNumericId.put(id, itemId);
         return itemId;
+    }
+
+    /**
+     * Each button has a string id, defined in JS, which is used to identify the button when
+     * handling events.
+     * @param item Toolbar button
+     * @return Returns the event id associated with the given menu item
+     */
+    public static String getButtonEventId(MenuItem item) {
+        for (Map.Entry<String, Integer> entry : sStringToNumericId.entrySet()) {
+            if (entry.getValue() == item.getItemId()) {
+                return entry.getKey();
+            }
+        }
+
+        return null;
     }
 }

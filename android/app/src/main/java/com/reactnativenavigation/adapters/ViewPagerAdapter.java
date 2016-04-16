@@ -58,6 +58,11 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         return stack != null ? stack.pop() : null;
     }
 
+    public Screen peek(String navigatorId) {
+        ScreenStack stack = mStackByNavigatorId.get(navigatorId);
+        return stack != null ? stack.peek() : null;
+    }
+
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ScreenStack view = mScreenStacks.get(position);
@@ -96,8 +101,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         // Send tab selected event
         WritableMap params = Arguments.createMap();
         Screen screen = mScreenStacks.get(position).peek();
-        params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
-        RctManager.getInstance().sendEvent(EVENT_ON_TAB_SELECTED, screen.navigatorEventId, params);
+        RctManager.getInstance().sendEvent(EVENT_ON_TAB_SELECTED, screen, params);
     }
 
     @Override

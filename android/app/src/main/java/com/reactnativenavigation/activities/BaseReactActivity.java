@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,11 +19,14 @@ import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.ReactRootView;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.BuildConfig;
 import com.reactnativenavigation.core.RctManager;
+import com.reactnativenavigation.core.objects.Button;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.packages.RnnPackage;
 import com.reactnativenavigation.utils.ContextProvider;
@@ -41,6 +45,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     private static final String TAG = "BaseReactActivity";
     private static final String REDBOX_PERMISSION_MESSAGE =
             "Overlay permissions needs to be granted in order for react native apps to run in dev mode";
+    private static final String EVENT_TOOLBAR_BUTTON_CLICKED = "OnToolbarButtonClicked";
 
     @Nullable
     protected ReactInstanceManager mReactInstanceManager;
@@ -225,7 +230,9 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         return null;
     }
 
-    public abstract String getCurrentNavigatorId();
+    protected abstract String getCurrentNavigatorId();
+
+    protected abstract Screen getCurrentScreen();
 
     public abstract int getScreenStackSize();
 
@@ -233,6 +240,20 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        } else {
+            String eventId = Button.getButtonEventId(item);
+            assert eventId != null;
+
+            WritableMap params = Arguments.createMap();
+            RctManager.getInstance().sendEvent(eventId, getCurrentScreen(), params);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public Menu getMenu() {

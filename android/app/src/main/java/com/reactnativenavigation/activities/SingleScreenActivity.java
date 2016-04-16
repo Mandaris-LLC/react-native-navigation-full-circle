@@ -59,6 +59,11 @@ public class SingleScreenActivity extends BaseReactActivity {
     }
 
     @Override
+    protected Screen getCurrentScreen() {
+        return mScreenStack.peek();
+    }
+
+    @Override
     public int getScreenStackSize() {
         return mScreenStack.getStackSize();
     }

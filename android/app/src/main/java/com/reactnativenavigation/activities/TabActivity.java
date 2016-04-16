@@ -20,8 +20,6 @@ public class TabActivity extends BaseReactActivity {
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-
-    private ArrayList<Screen> mScreens;
     private ViewPagerAdapter mAdapter;
 
     @Override
@@ -33,19 +31,19 @@ public class TabActivity extends BaseReactActivity {
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        mScreens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
+        ArrayList<Screen> screens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
 
-        setupToolbar();
-        setupViewPager();
+        setupToolbar(screens);
+        setupViewPager(screens);
     }
 
-    private void setupToolbar() {
+    private void setupToolbar(ArrayList<Screen> screens) {
         setSupportActionBar(mToolbar);
-        mToolbar.setScreens(mScreens);
+        mToolbar.setScreens(screens);
     }
 
-    private void setupViewPager() {
-        mAdapter = new ViewPagerAdapter(this, mViewPager, mToolbar, mScreens);
+    private void setupViewPager(ArrayList<Screen> screens) {
+        mAdapter = new ViewPagerAdapter(this, mViewPager, mToolbar, screens);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setOnTabSelectedListener(mAdapter);
@@ -72,7 +70,12 @@ public class TabActivity extends BaseReactActivity {
     }
 
     @Override
-    public String getCurrentNavigatorId() {
+    protected Screen getCurrentScreen() {
+        return mAdapter.peek(getCurrentNavigatorId());
+    }
+
+    @Override
+    protected String getCurrentNavigatorId() {
         return mAdapter.getNavigatorId(mViewPager.getCurrentItem());
     }
 

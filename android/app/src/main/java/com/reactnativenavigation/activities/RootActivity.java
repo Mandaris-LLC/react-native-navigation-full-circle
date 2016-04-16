@@ -28,11 +28,7 @@ public class RootActivity extends BaseReactActivity {
      // No need to implement stack interface since this activity is only used to start other
     // activities such as TabActivity or SingleScreenActivity.
     @Override
-    public void push(Screen screen) {
-    }
-
-    @Override
-    public Screen pop(String navigatorId) {
+    protected Screen getCurrentScreen() {
         return null;
     }
 

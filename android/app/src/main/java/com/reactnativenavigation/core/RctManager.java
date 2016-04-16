@@ -9,6 +9,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.WritableMap;
+import com.reactnativenavigation.core.objects.Screen;
 
 import java.util.List;
 
@@ -93,16 +94,17 @@ public class RctManager {
      * Sends an event to JavaScript using <a href="https://facebook.github.io/react-native/docs/native-modules-android.html#sending-events-to-javascript">RCTDeviceEventEmitter</a>
      * @param eventName Name of the event
      * @param params Event params
-     * @param navigatorEventId Id of the navigator
+     * @param screen screen which should receive the event
      */
-    public void sendEvent(String eventName, String navigatorEventId, WritableMap params) {
+    public void sendEvent(String eventName, Screen screen, WritableMap params) {
         RCTDeviceEventEmitter eventEmitter = getEventEmitter();
         if (eventEmitter == null) {
             return;
         }
 
         params.putString(KEY_EVENT_ID, eventName);
-        eventEmitter.emit(navigatorEventId, params);
+        params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
+        eventEmitter.emit(screen.navigatorEventId, params);
     }
 
     private RCTDeviceEventEmitter getEventEmitter() {
