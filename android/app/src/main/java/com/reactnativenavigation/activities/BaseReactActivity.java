@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.common.logging.FLog;
-import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.ReactRootView;
@@ -45,11 +44,9 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     private static final String TAG = "BaseReactActivity";
     private static final String REDBOX_PERMISSION_MESSAGE =
             "Overlay permissions needs to be granted in order for react native apps to run in dev mode";
-    private static final String EVENT_TOOLBAR_BUTTON_CLICKED = "OnToolbarButtonClicked";
 
     @Nullable
     protected ReactInstanceManager mReactInstanceManager;
-    private LifecycleState mLifecycleState = LifecycleState.BEFORE_RESUME;
     private boolean mDoRefresh = false;
     private Menu mMenu;
     protected RnnToolBar mToolbar;
@@ -177,8 +174,6 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         super.onResume();
         ContextProvider.setActivityContext(this);
 
-        mLifecycleState = LifecycleState.RESUMED;
-
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onResume(this, this);
         }
@@ -187,8 +182,6 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @Override
     protected void onPause() {
         super.onPause();
-
-        mLifecycleState = LifecycleState.BEFORE_RESUME;
 
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onPause();
