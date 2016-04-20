@@ -58,7 +58,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
      * e.g. "index.android.bundle"
      */
     @Nullable
-    protected String getBundleAssetName() {
+    public String getBundleAssetName() {
         return "index.android.bundle";
     }
 
@@ -69,7 +69,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
      * e.g. "file://sdcard/myapp_cache/index.android.bundle"
      */
     @Nullable
-    protected String getJSBundleFile() {
+    public String getJSBundleFile() {
         return null;
     }
 
@@ -79,7 +79,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
      * This is the first file to be executed once the {@link ReactInstanceManager} is created.
      * e.g. "index.android"
      */
-    protected String getJSMainModuleName() {
+    public String getJSMainModuleName() {
         return "index.android";
     }
 
@@ -107,7 +107,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     /**
      * Returns whether dev mode should be enabled. This enables e.g. the dev menu.
      */
-    protected boolean getUseDeveloperSupport() {
+    public boolean getUseDeveloperSupport() {
         return BuildConfig.DEBUG;
     }
 
@@ -117,7 +117,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
      * If your app uses additional views or modules besides the default ones,
      * you'll want to include more packages here.
      */
-    protected List<ReactPackage> getPackages() {
+    public List<ReactPackage> getPackages() {
         return Arrays.asList(
                 new MainReactPackage(),
                 new RnnPackage()
@@ -148,7 +148,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     protected ReactInstanceManager getReactInstanceManager() {
         RctManager rctManager = RctManager.getInstance();
         if (!rctManager.isInitialized()) {
-            rctManager.init(getApplicationContext(), getMainComponentName(), getPackages());
+            rctManager.init(this);
         }
         return rctManager.getReactInstanceManager();
     }

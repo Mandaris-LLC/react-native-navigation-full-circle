@@ -24,11 +24,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Button extends JsonObject implements Serializable {
     private static final long serialVersionUID = -570145217281069067L;
 
-    private static ResourceDrawableIdHelper sResDrawableIdHelper = new ResourceDrawableIdHelper();
-
+    public static final String LOCAL_RESOURCE_URI_SCHEME = "res";
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_ICON = "icon";
+
+    private static ResourceDrawableIdHelper sResDrawableIdHelper = new ResourceDrawableIdHelper();
 
     public String id;
     public String title;
@@ -53,10 +54,17 @@ public class Button extends JsonObject implements Serializable {
         }
 
         try {
-            Uri icon = getIconUri(ctx);
-            URL url = new URL(icon.toString());
-            Bitmap bitmap = BitmapFactory.decodeStream(url.openStream());
-            return new BitmapDrawable(bitmap);
+            Drawable icon;
+            Uri iconUri = getIconUri(ctx);
+
+            if (LOCAL_RESOURCE_URI_SCHEME.equals(iconUri.getScheme())) {
+                icon = sResDrawableIdHelper.getResourceDrawable(ctx, mIconSource);
+            } else {
+                URL url = new URL(iconUri.toString());
+                Bitmap bitmap = BitmapFactory.decodeStream(url.openStream());
+                icon = new BitmapDrawable(bitmap);
+            }
+            return icon;
         } catch (Exception e) {
             if (BuildConfig.DEBUG) {
                 e.printStackTrace();
@@ -75,7 +83,7 @@ public class Button extends JsonObject implements Serializable {
                     ret = null;
                 }
             } catch (Exception e) {
-                // ignore malformed uri, then attempt to extract resource ID.
+                // Ignore malformed uri, then attempt to extract resource ID.
             }
             if (ret == null) {
                 ret = sResDrawableIdHelper.getResourceDrawableUri(context, mIconSource);

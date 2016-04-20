@@ -1,7 +1,5 @@
 package com.reactnativenavigation.utils;
 
-import android.support.annotation.Nullable;
-
 import com.reactnativenavigation.activities.BaseReactActivity;
 
 import java.lang.ref.WeakReference;
@@ -18,7 +16,9 @@ public class ContextProvider {
         }
     }
 
-    @Nullable
+    /**
+     * Returns the currently resumed activity or {@code null} if there is none.
+     */
     public static BaseReactActivity getActivityContext() {
         return sActivityWR != null ? sActivityWR.get() : null;
     }

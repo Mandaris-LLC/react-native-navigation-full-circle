@@ -37,9 +37,12 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
         Activity context = ContextProvider.getActivityContext();
         if (context != null && !context.isFinishing()) {
             Intent intent = new Intent(context, TabActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
             Bundle extras = new Bundle();
             extras.putSerializable(TabActivity.EXTRA_SCREENS, createScreens(screens));
             intent.putExtras(extras);
+            
             context.startActivity(intent);
         }
     }
@@ -57,9 +60,12 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
         BaseReactActivity context = ContextProvider.getActivityContext();
         if (context != null && !context.isFinishing()) {
             Intent intent = new Intent(context, SingleScreenActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
             Bundle extras = new Bundle();
             extras.putSerializable(SingleScreenActivity.EXTRA_SCREEN, new Screen(screen));
             intent.putExtras(extras);
+
             context.startActivity(intent);
         }
     }
