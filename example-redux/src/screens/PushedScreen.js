@@ -15,7 +15,6 @@ class PushedScreen extends Component {
   constructor(props) {
     super(props);
     this.bgColor = this.getRandomColor();
-    console.log('constructor');
   }
 
   getRandomColor() {

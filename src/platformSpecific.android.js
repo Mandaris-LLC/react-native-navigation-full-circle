@@ -66,7 +66,6 @@ function addNavigatorButtons(screen) {
         if (icon) {
           button.icon = icon.uri;
         }
-        console.log('final icon: ' + button.icon);
       }
     });
   }
