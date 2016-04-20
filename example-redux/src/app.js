@@ -21,15 +21,17 @@ export default class App {
     store.subscribe(this.onStoreUpdate.bind(this));
     store.dispatch(appActions.appInitialized());
   }
+
   onStoreUpdate() {
     const { root } = store.getState().app;
     // handle a root change
     // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
-    if (this.currentRoot !== root) {
+    if (this.currentRoot != root) {
       this.currentRoot = root;
       this.startApp(root);
     }
   }
+
   startApp(root) {
     switch (root) {
       case 'login':
@@ -61,7 +63,8 @@ export default class App {
               navigatorStyle: {}
             }
           ],
-          animationType: 'slide-down'
+          animationType: 'slide-down',
+          title: 'Redux Example'
         });
         return;
       default:

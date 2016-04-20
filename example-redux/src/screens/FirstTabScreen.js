@@ -5,7 +5,7 @@ import React, {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  AlertIOS
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
@@ -20,6 +20,7 @@ class FirstTabScreen extends Component {
       },
       {
         icon: require('../../img/navicon_add.png'),
+        title: 'Add',
         id: 'add'
       }
     ]
@@ -30,11 +31,18 @@ class FirstTabScreen extends Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
   onNavigatorEvent(event) {
-    if (event.id == 'edit') {
-      AlertIOS.alert('NavBar', 'Edit button pressed');
-    }
-    if (event.id == 'add') {
-      AlertIOS.alert('NavBar', 'Add button pressed');
+    switch (event.id) {
+      case 'edit':
+        Alert.alert('NavBar', 'Edit button pressed');
+        break;
+
+      case 'add':
+        Alert.alert('NavBar', 'Add button pressed');
+        break;
+
+      default:
+        console.log('Unhandled event ' + event.id);
+        break;
     }
   }
   render() {
@@ -72,7 +80,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10,
+    marginTop:10
   },
   button: {
     textAlign: 'center',

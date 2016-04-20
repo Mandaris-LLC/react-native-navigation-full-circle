@@ -38,9 +38,8 @@ function startTabBasedApp(params) {
       return (
         <TabBarControllerIOS
           id={controllerID + '_tabs'}
-          style={params.tabsStyle}
-        >
-        {
+          style={params.tabsStyle}>
+          {
           params.tabs.map(function(tab, index) {
             const navigatorID = controllerID + '_nav' + index;
             const screenInstanceID = utils.getRandomId();
@@ -98,8 +97,7 @@ function startSingleScreenApp(params) {
             passPropsLeft={{navigatorID: navigatorID}}
             componentRight={params.drawer.right ? params.drawer.right.screen : undefined}
             passPropsRight={{navigatorID: navigatorID}}
-            disableOpenGesture={params.drawer.disableOpenGesture}
-          >
+            disableOpenGesture={params.drawer.disableOpenGesture}>
             {this.renderBody()}
           </DrawerControllerIOS>
         );
