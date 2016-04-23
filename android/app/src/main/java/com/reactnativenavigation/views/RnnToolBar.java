@@ -1,17 +1,23 @@
 package com.reactnativenavigation.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.reactnativenavigation.R;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.objects.Button;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.ContextProvider;
+import com.reactnativenavigation.utils.ImageUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Collections;
@@ -44,18 +50,34 @@ public class RnnToolBar extends Toolbar {
     }
 
     public void handleOnCreateOptionsMenuAsync() {
-        setupToolbarButtonsAsync(mScreens.get(0));
+        setupToolbarButtonsAsync(null, mScreens.get(0));
     }
 
-    public void setupToolbarButtonsAsync(Screen screen) {
+    public void setupToolbarButtonsAsync(Screen oldScreen, Screen newScreen) {
         if (mSetupToolbarTask == null) {
-            mSetupToolbarTask = new SetupToolbarButtonsTask(this, screen).execute();
+            mSetupToolbarTask = new SetupToolbarButtonsTask(this, oldScreen, newScreen).execute();
         }
     }
 
     @SuppressWarnings({"ConstantConditions"})
-    public void showBackButton() {
-        ContextProvider.getActivityContext().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    @SuppressLint("PrivateResource")
+    public void showBackButton(Screen screen) {
+        ActionBar actionBar = ContextProvider.getActivityContext().getSupportActionBar();
+
+        Resources resources = getResources();
+        final Drawable backButton;
+        if (screen.buttonsTintColor != null) {
+            backButton = ResourcesCompat.getDrawable(resources,
+                    R.drawable.abc_ic_ab_back_mtrl_am_alpha,
+                    null);
+            ImageUtils.tint(backButton, screen.buttonsTintColor);
+        } else {
+            backButton = ResourcesCompat.getDrawable(resources,
+                    R.drawable.abc_ic_ab_back_mtrl_am_alpha,
+                    ContextProvider.getActivityContext().getTheme());
+        }
+        actionBar.setHomeAsUpIndicator(backButton);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @SuppressWarnings({"ConstantConditions"})
@@ -64,12 +86,16 @@ public class RnnToolBar extends Toolbar {
     }
 
     private static class SetupToolbarButtonsTask extends AsyncTask<Void, Void, Map<String, Drawable>> {
-        private final List<Button> mButtons;
+        private final List<Button> mOldButtons;
+        private final List<Button> mNewButtons;
         private final WeakReference<RnnToolBar> mToolbarWR;
+        private final Integer mTintColor;
 
-        public SetupToolbarButtonsTask(RnnToolBar toolBar, Screen newScreen) {
+        public SetupToolbarButtonsTask(RnnToolBar toolBar, Screen oldScreen, Screen newScreen) {
             mToolbarWR = new WeakReference<>(toolBar);
-            mButtons = newScreen.buttons == null ? Collections.EMPTY_LIST : newScreen.buttons;
+            mOldButtons = oldScreen == null ? Collections.EMPTY_LIST : oldScreen.getButtons();
+            mNewButtons = newScreen.getButtons();
+            mTintColor = newScreen.buttonsTintColor;
         }
 
         @Override
@@ -80,7 +106,7 @@ public class RnnToolBar extends Toolbar {
             }
 
             Map<String, Drawable> icons = new HashMap<>();
-            for (Button button : mButtons) {
+            for (Button button : mNewButtons) {
                 if (button.hasIcon()) {
                     icons.put(button.id, button.getIcon(context));
                 }
@@ -97,24 +123,31 @@ public class RnnToolBar extends Toolbar {
 
             Menu menu = ((BaseReactActivity) context).getMenu();
 
+            // Remove prev screen buttons
+            for (Button btn : mOldButtons) {
+                menu.removeItem(btn.getItemId());
+            }
+
             // Add new screen buttons
             int i;
-            for (i = 0; i < mButtons.size(); i++) {
-                Button button = mButtons.get(i);
+            for (i = 0; i < mNewButtons.size(); i++) {
+                Button button = mNewButtons.get(i);
                 MenuItem item = menu.add(Menu.NONE, button.getItemId(), i, button.title);
                 if (icons.containsKey(button.id)) {
                     Drawable icon = icons.get(button.id);
+                    if (mTintColor != null) {
+                        ImageUtils.tint(icon, mTintColor);
+                    }
                     item.setIcon(icon).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
                 }
             }
 
-            // Remove prev screen buttons
-            for (int j = i; j < menu.size(); j++) {
-                menu.removeItem(j);
-            }
-
             RnnToolBar toolBar = mToolbarWR.get();
             if (toolBar != null) {
+                if (mTintColor != null) {
+                    ImageUtils.tint(toolBar.getOverflowIcon(), mTintColor);
+                }
+
                 toolBar.mSetupToolbarTask = null;
                 mToolbarWR.clear();
             }

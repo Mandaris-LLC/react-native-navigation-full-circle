@@ -12,6 +12,17 @@ import * as counterActions from '../reducers/counter/actions';
 
 // this is a traditional React component connected to the redux store
 class PushedScreen extends Component {
+  static navigatorStyle = {
+    statusBarColor: '#303F9F',
+    toolBarColor: '#3F51B5',
+    navigationBarColor: '#303F9F',
+    buttonsTint: '#FFFFFF',
+    titleColor: '#FFFFFF',
+    tabSelectedTextColor: '#FFA000',
+    tabNormalTextColor: '#FFC107',
+    tabIndicatorColor: '#FF4081'
+  };
+
   constructor(props) {
     super(props);
     this.bgColor = this.getRandomColor();
@@ -70,7 +81,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10,
+    marginTop:10
   },
   button: {
     textAlign: 'center',

@@ -1,5 +1,7 @@
 package com.reactnativenavigation.core.objects;
 
+import android.graphics.Color;
+
 import com.facebook.react.bridge.ReadableMap;
 
 /**
@@ -17,5 +19,13 @@ public class JsonObject {
 
     protected int getInt(ReadableMap map, String key) {
         return map.hasKey(key) ? map.getInt(key) : -1;
+    }
+
+    protected ReadableMap getMap(ReadableMap map, String key) {
+        return map.hasKey(key) ? map.getMap(key) : null;
+    }
+
+    protected Integer getColor(ReadableMap map, String key) {
+        return map.hasKey(key) ? Color.parseColor(map.getString(key)) : null;
     }
 }
