@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by guyc on 02/04/16.
  */
-public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSelectedListener {
+public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
 
     private static final String EVENT_ON_TAB_SELECTED = "OnTabSelected";
 
@@ -30,7 +30,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
     private final ArrayList<ScreenStack> mScreenStacks;
     private final ArrayList<String> mNavigatorIds;
     private final Map<String, ScreenStack> mStackByNavigatorId;
-
+    private int mCurrentPage = 0;
 
     public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, RnnToolBar toolbar,
                             ArrayList<Screen> screens) {
@@ -50,12 +50,17 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     public void push(Screen screen) {
         ScreenStack stack = mStackByNavigatorId.get(screen.navigatorId);
+        Screen prevScreen = mScreenStacks.get(mCurrentPage).peek();
+        mToolbar.setupToolbarButtonsAsync(prevScreen, screen);
         stack.push(screen);
     }
 
     public Screen pop(String navigatorId) {
         ScreenStack stack = mStackByNavigatorId.get(navigatorId);
-        return stack != null ? stack.pop() : null;
+        Screen oldScreen =  stack != null ? stack.pop() : null;
+        Screen newScreen = stack.peek();
+        mToolbar.setupToolbarButtonsAsync(oldScreen, newScreen);
+        return oldScreen;
     }
 
     public Screen peek(String navigatorId) {
@@ -87,7 +92,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mScreenStacks.get(position).peek().title;
+        return mScreenStacks.get(position).peek().label;
     }
 
     @Override
@@ -96,7 +101,13 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         int position = tab.getPosition();
         mViewPager.setCurrentItem(position);
 
-        mToolbar.setupToolbarButtonsAsync(mScreenStacks.get(position).peek());
+        // Set screen buttons
+        Screen prevScreen = mScreenStacks.get(mCurrentPage).peek();
+        Screen newScreen = mScreenStacks.get(position).peek();
+        mToolbar.setupToolbarButtonsAsync(prevScreen, newScreen);
+
+        // Set title
+        mToolbar.setTitle(newScreen.title == null ? "" : newScreen.title);
 
         // Send tab selected event
         WritableMap params = Arguments.createMap();
@@ -120,5 +131,20 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     public int getStackSizeForNavigatorId(String activeNavigatorID) {
         return mStackByNavigatorId.get(activeNavigatorID).getStackSize();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mCurrentPage = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

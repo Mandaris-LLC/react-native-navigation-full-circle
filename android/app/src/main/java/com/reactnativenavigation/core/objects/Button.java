@@ -35,8 +35,8 @@ public class Button extends JsonObject implements Serializable {
     public String title;
     private String mIconSource;
 
-    private static AtomicInteger sAtomicIdGenerator = new AtomicInteger();
-    private static Map<String, Integer> sStringToNumericId = new HashMap<>();
+    private static final AtomicInteger sAtomicIdGenerator = new AtomicInteger();
+    private static final Map<String, Integer> sStringToNumericId = new HashMap<>();
 
     public Button(ReadableMap button) {
         id = getString(button, KEY_ID);

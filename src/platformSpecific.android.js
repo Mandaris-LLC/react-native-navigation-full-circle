@@ -21,6 +21,7 @@ function startSingleScreenApp(params) {
 
   addNavigatorParams(screen);
   addNavigatorButtons(screen);
+  addToolbarStyleParams(screen);
   RctActivity.startSingleScreenApp(screen);
 }
 
@@ -33,6 +34,7 @@ function startTabBasedApp(params) {
   params.tabs.forEach(function (tab, idx) {
     addNavigatorParams(tab, null, idx)
     addNavigatorButtons(tab);
+    addToolbarStyleParams(tab);
   });
 
   RctActivity.startTabBasedApp(params.tabs);
@@ -41,6 +43,7 @@ function startTabBasedApp(params) {
 function navigatorPush(navigator, params) {
   addNavigatorParams(params, navigator)
   addNavigatorButtons(params);
+  addToolbarStyleParams(params);
   RctActivity.navigatorPush(params);
 }
 
@@ -69,6 +72,11 @@ function addNavigatorButtons(screen) {
       }
     });
   }
+}
+
+function addToolbarStyleParams(screen) {
+  const Screen = Navigation.getRegisteredScreen(screen.screen);
+  screen.navigatorStyle = Screen.navigatorStyle;
 }
 
 export default {

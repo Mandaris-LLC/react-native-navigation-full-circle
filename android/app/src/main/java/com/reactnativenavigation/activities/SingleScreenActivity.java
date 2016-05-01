@@ -1,11 +1,11 @@
 package com.reactnativenavigation.activities;
 
-import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
 
 /**
@@ -15,7 +15,6 @@ public class SingleScreenActivity extends BaseReactActivity {
 
     public static final String EXTRA_SCREEN = "extraScreen";
 
-    private Toolbar mToolbar;
     private ScreenStack mScreenStack;
     private String mNavigatorId;
 
@@ -24,11 +23,11 @@ public class SingleScreenActivity extends BaseReactActivity {
         mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
 
         setContentView(R.layout.single_screen_activity);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (RnnToolBar) findViewById(R.id.toolbar);
 
         Screen screen = (Screen) getIntent().getSerializableExtra(EXTRA_SCREEN);
         mNavigatorId = screen.navigatorId;
-        setupToolbar(screen.title);
+        setupToolbar(screen);
 
         mScreenStack = new ScreenStack(this);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.contentFrame);
@@ -36,8 +35,9 @@ public class SingleScreenActivity extends BaseReactActivity {
         mScreenStack.push(screen);
     }
 
-    private void setupToolbar(String title) {
-        mToolbar.setTitle(title);
+    protected void setupToolbar(Screen screen) {
+        setNavigationColors(screen);
+        mToolbar.setTitle(screen.title);
         setSupportActionBar(mToolbar);
     }
     

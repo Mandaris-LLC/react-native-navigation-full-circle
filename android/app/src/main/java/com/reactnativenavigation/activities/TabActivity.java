@@ -38,8 +38,27 @@ public class TabActivity extends BaseReactActivity {
     }
 
     private void setupToolbar(ArrayList<Screen> screens) {
-        setSupportActionBar(mToolbar);
+        Screen initialScreen = screens.get(0);
+        setNavigationColors(initialScreen);
         mToolbar.setScreens(screens);
+        mToolbar.setTitle(initialScreen.title == null ? "" : initialScreen.title);
+        setSupportActionBar(mToolbar);
+    }
+
+    @Override
+    public void setNavigationColors(Screen screen) {
+        super.setNavigationColors(screen);
+        if (screen.toolBarColor != null) {
+            mTabLayout.setBackgroundColor(screen.toolBarColor);
+        }
+
+        if (screen.tabNormalTextColor != null && screen.tabSelectedTextColor != null) {
+            mTabLayout.setTabTextColors(screen.tabNormalTextColor, screen.tabSelectedTextColor);
+        }
+
+        if (screen.tabIndicatorColor != null) {
+            mTabLayout.setSelectedTabIndicatorColor(screen.tabIndicatorColor);
+        }
     }
 
     private void setupViewPager(ArrayList<Screen> screens) {
