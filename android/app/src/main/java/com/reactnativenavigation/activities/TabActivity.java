@@ -38,8 +38,10 @@ public class TabActivity extends BaseReactActivity {
     }
 
     private void setupToolbar(ArrayList<Screen> screens) {
-        setNavigationColors(screens.get(0));
+        Screen initialScreen = screens.get(0);
+        setNavigationColors(initialScreen);
         mToolbar.setScreens(screens);
+        mToolbar.setTitle(initialScreen.title == null ? "" : initialScreen.title);
         setSupportActionBar(mToolbar);
     }
 

@@ -92,7 +92,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mScreenStacks.get(position).peek().title;
+        return mScreenStacks.get(position).peek().label;
     }
 
     @Override
@@ -101,9 +101,13 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         int position = tab.getPosition();
         mViewPager.setCurrentItem(position);
 
+        // Set screen buttons
         Screen prevScreen = mScreenStacks.get(mCurrentPage).peek();
         Screen newScreen = mScreenStacks.get(position).peek();
         mToolbar.setupToolbarButtonsAsync(prevScreen, newScreen);
+
+        // Set title
+        mToolbar.setTitle(newScreen.title == null ? "" : newScreen.title);
 
         // Send tab selected event
         WritableMap params = Arguments.createMap();

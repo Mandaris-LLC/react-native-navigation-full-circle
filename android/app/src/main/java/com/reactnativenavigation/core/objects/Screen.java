@@ -20,6 +20,7 @@ public class Screen extends JsonObject implements Serializable {
 
     private static final String KEY_TITLE = "title";
     private static final String KEY_SCREEN = "screen";
+    private static final String KEY_LABEL = "label";
     public static final String KEY_SCREEN_INSTANCE_ID = "screenInstanceID";
     public static final String KEY_NAVIGATOR_ID = "navigatorID";
     public static final String KEY_NAVIGATOR_EVENT_ID = "navigatorEventID";
@@ -36,6 +37,7 @@ public class Screen extends JsonObject implements Serializable {
     private static final String KEY_TAB_INDICATOR_COLOR = "tabIndicatorColor";
 
     public String title;
+    public String label;
     public String screenId;
     public String screenInstanceId;
     public String navigatorId;
@@ -60,6 +62,7 @@ public class Screen extends JsonObject implements Serializable {
 
     public Screen(ReadableMap screen) {
         title = getString(screen, KEY_TITLE);
+        label = getString(screen, KEY_LABEL);
         screenId = getString(screen, KEY_SCREEN);
         screenInstanceId = getString(screen, KEY_SCREEN_INSTANCE_ID);
         navigatorId = getString(screen, KEY_NAVIGATOR_ID);
