@@ -57,6 +57,7 @@ function startTabBasedApp(params) {
                 <NavigationControllerIOS
                   id={navigatorID}
                   title={tab.title}
+                  titleImage={tab.titleImage}
                   component={tab.screen}
                   passProps={{
                     navigatorID: navigatorID,
@@ -120,6 +121,7 @@ function startSingleScreenApp(params) {
         <NavigationControllerIOS
           id={navigatorID}
           title={screen.title}
+          titleImage={screen.titleImage}
           component={screen.screen}
           passProps={{
             navigatorID: navigatorID,
@@ -345,6 +347,7 @@ function showModal(params) {
         <NavigationControllerIOS
           id={navigatorID}
           title={params.title}
+          titleImage={params.titleImage}
           component={params.screen}
           passProps={passProps}
           style={navigatorStyle}
