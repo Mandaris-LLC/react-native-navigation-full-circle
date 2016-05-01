@@ -26,6 +26,10 @@ export default class ThirdTabScreen extends Component {
           <Text style={styles.button}>Push Styled Screen</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onPushStyled2Press.bind(this) }>
+          <Text style={styles.button}>Push Styled Screen 2</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={ this.onModalPress.bind(this) }>
           <Text style={styles.button}>Show Modal Screen</Text>
         </TouchableOpacity>
@@ -42,6 +46,13 @@ export default class ThirdTabScreen extends Component {
   onPushStyledPress() {
     this.props.navigator.push({
       title: "Styled",
+      screen: "example.StyledScreen"
+    });
+  }
+  onPushStyled2Press () {
+    this.props.navigator.push({
+      title: "Styled",
+      titleImage: require('../../img/two.png'),
       screen: "example.StyledScreen"
     });
   }

@@ -61,6 +61,10 @@ class Navigator {
     return platformSpecific.navigatorSetTitle(this, params);
   }
 
+  setTitleImage(params = {}) {
+    return platformSpecific.navigatorSetTitleImage(this, params);
+  }
+
   toggleDrawer(params = {}) {
     return platformSpecific.navigatorToggleDrawer(this, params);
   }

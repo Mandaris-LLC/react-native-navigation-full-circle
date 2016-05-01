@@ -183,6 +183,7 @@ function navigatorPush(navigator, params) {
   passProps.navigatorEventID = navigatorEventID;
   Controllers.NavigationControllerIOS(navigator.navigatorID).push({
     title: params.title,
+    titleImage: params.titleImage,
     component: params.screen,
     animated: params.animated,
     passProps: passProps,
@@ -223,6 +224,7 @@ function navigatorResetTo(navigator, params) {
   passProps.navigatorEventID = navigatorEventID;
   Controllers.NavigationControllerIOS(navigator.navigatorID).resetTo({
     title: params.title,
+    titleImage: params.titleImage,
     component: params.screen,
     animated: params.animated,
     passProps: passProps,
@@ -235,6 +237,13 @@ function navigatorResetTo(navigator, params) {
 function navigatorSetTitle(navigator, params) {
   Controllers.NavigationControllerIOS(navigator.navigatorID).setTitle({
     title: params.title
+  });
+}
+
+function navigatorSetTitleImage
+(navigator, params) {
+  Controllers.NavigationControllerIOS(navigator.navigatorID).setTitleImage({
+    titleImage: params.titleImage
   });
 }
 
@@ -399,6 +408,7 @@ export default {
   dismissLightBox,
   navigatorSetButtons,
   navigatorSetTitle,
+  navigatorSetTitleImage,
   navigatorToggleDrawer,
   navigatorToggleTabs,
   navigatorSetTabBadge,
