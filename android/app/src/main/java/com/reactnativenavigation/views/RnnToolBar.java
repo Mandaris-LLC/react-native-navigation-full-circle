@@ -60,10 +60,17 @@ public class RnnToolBar extends Toolbar {
     }
 
     @SuppressWarnings({"ConstantConditions"})
-    @SuppressLint("PrivateResource")
     public void showBackButton(Screen screen) {
         ActionBar actionBar = ContextProvider.getActivityContext().getSupportActionBar();
 
+        Drawable backButton = setupBackButton(screen);
+        actionBar.setHomeAsUpIndicator(backButton);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @SuppressLint("PrivateResource")
+    @SuppressWarnings({"ConstantConditions"})
+    private Drawable setupBackButton(Screen screen) {
         Resources resources = getResources();
         final Drawable backButton;
         if (screen.buttonsTintColor != null) {
@@ -76,8 +83,7 @@ public class RnnToolBar extends Toolbar {
                     R.drawable.abc_ic_ab_back_mtrl_am_alpha,
                     ContextProvider.getActivityContext().getTheme());
         }
-        actionBar.setHomeAsUpIndicator(backButton);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        return backButton;
     }
 
     @SuppressWarnings({"ConstantConditions"})

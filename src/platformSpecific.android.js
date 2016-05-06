@@ -51,6 +51,11 @@ function navigatorPop(navigator, params) {
   RctActivity.navigatorPop(navigator);
 }
 
+function showModal(params) {
+  addNavigatorParams(params)
+  RctActivity.showModal(params);
+}
+
 function addNavigatorParams(screen, navigator = null, idx = '') {
   screen.navigatorID = navigator ? navigator.navigatorID : utils.getRandomId() + '_nav' + idx;
   screen.screenInstanceID = utils.getRandomId();
@@ -80,8 +85,9 @@ function addToolbarStyleParams(screen) {
 }
 
 export default {
-  startSingleScreenApp,
   startTabBasedApp,
+  startSingleScreenApp,
   navigatorPush,
-  navigatorPop
+  navigatorPop,
+  showModal
 }
