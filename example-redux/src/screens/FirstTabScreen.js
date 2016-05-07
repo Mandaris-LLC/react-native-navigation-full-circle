@@ -72,15 +72,27 @@ class FirstTabScreen extends Component {
           <Text style={styles.button}>Push Screen</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
+          <Text style={styles.button}>Modal Screen</Text>
+        </TouchableOpacity>
       </View>
     );
   }
+
   onIncrementPress() {
     this.props.dispatch(counterActions.increment());
   }
+
   onPushPress() {
     this.props.navigator.push({
       title: "More",
+      screen: "example.PushedScreen"
+    });
+  }
+
+  onShowModalPress() {
+    this.props.navigator.showModal({
+      title: "Modal Screen",
       screen: "example.PushedScreen"
     });
   }

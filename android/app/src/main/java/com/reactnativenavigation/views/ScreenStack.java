@@ -1,6 +1,8 @@
 package com.reactnativenavigation.views;
 
 import android.animation.LayoutTransition;
+import android.content.Context;
+import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
@@ -29,20 +31,33 @@ public class ScreenStack extends FrameLayout {
     private final Stack<ScreenView> mStack = new Stack<>();
     private final ReactInstanceManager mReactInstanceManager =
             RctManager.getInstance().getReactInstanceManager();
-    private final BaseReactActivity mReactActivity;
+    private BaseReactActivity mReactActivity;
 
     public ScreenStack(BaseReactActivity context) {
         super(context);
-        mReactActivity = context;
+        init(context);
+    }
+
+    public ScreenStack(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    private void init(Context context) {
+        mReactActivity = (BaseReactActivity) context;
         setLayoutTransition(new LayoutTransition());
     }
 
     public void push(Screen screen) {
+        push(screen, null);
+    }
+
+    public void push(Screen screen, RctView.OnDisplayedListener onDisplayed) {
         RctView oldView = null;
         if (!mStack.isEmpty()) {
             oldView = mStack.peek().view;
         }
-        RctView view = new RctView(mReactActivity, mReactInstanceManager, screen);
+        RctView view = new RctView(mReactActivity, mReactInstanceManager, screen, onDisplayed);
         addView(view, MATCH_PARENT, MATCH_PARENT);
         if (oldView != null) {
             ReactRootView reactRootView = oldView.getReactRootView();

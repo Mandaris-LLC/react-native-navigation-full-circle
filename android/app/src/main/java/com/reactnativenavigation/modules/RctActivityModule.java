@@ -12,7 +12,9 @@ import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.activities.SingleScreenActivity;
 import com.reactnativenavigation.activities.TabActivity;
+import com.reactnativenavigation.controllers.ModalController;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.modal.RnnModal;
 import com.reactnativenavigation.utils.ContextProvider;
 
 import java.util.ArrayList;
@@ -71,29 +73,94 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void navigatorPush(final ReadableMap screen) {
+    public void navigatorPush(final ReadableMap skreen) {
+        final Screen screen = new Screen(skreen);
         final BaseReactActivity context = ContextProvider.getActivityContext();
-         if (context != null && !context.isFinishing()) {
-             context.runOnUiThread(new Runnable() {
+        if (context == null || context.isFinishing()) {
+            return;
+        }
+
+        // First, check is the screen should be displayed in a Modal
+        ModalController modalController = ModalController.getInstance();
+        if (modalController.isModalDisplayed(screen.navigatorId)) {
+            final RnnModal modal = modalController.get(screen.navigatorId);
+            if (modal != null) {
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        modal.push(screen);
+                    }
+                });
+            }
+            return;
+        }
+
+        // No Modal is displayed, Push to activity
+         context.runOnUiThread(new Runnable() {
                  @Override
                  public void run() {
-                     context.push(new Screen(screen));
+                     context.push(screen);
                  }
              });
-        }
     }
 
     @ReactMethod
     public void navigatorPop(final ReadableMap navigator) {
-        final String navID = navigator.getString("navigatorID");
+        final String navigatorId = navigator.getString("navigatorID");
+        final BaseReactActivity context = ContextProvider.getActivityContext();
+        if (context == null || context.isFinishing()) {
+            return;
+        }
+
+        // First, check if the screen should be popped from a Modal
+        ModalController modalController = ModalController.getInstance();
+        if (modalController.isModalDisplayed(navigatorId)) {
+            final RnnModal modal = modalController.get(navigatorId);
+            if (modal != null) {
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        modal.pop();
+                    }
+                });
+            }
+            return;
+        }
+
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                context.pop(navigatorId);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void showModal(final ReadableMap screen) {
         final BaseReactActivity context = ContextProvider.getActivityContext();
         if (context != null && !context.isFinishing()) {
             context.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    context.pop(navID);
+                    new RnnModal(context, new Screen(screen)).show();
                 }
             });
+        }
+    }
+
+    @ReactMethod
+    public void dismissAllModals(final ReadableMap params) {
+        final BaseReactActivity context = ContextProvider.getActivityContext();
+        if (context != null && !context.isFinishing()) {
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ModalController modalController = ModalController.getInstance();
+                if (modalController.isModalDisplayed()) {
+                    modalController.dismissAllModals();
+                }
+            }
+        });
         }
     }
 }

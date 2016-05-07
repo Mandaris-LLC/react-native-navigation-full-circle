@@ -29,7 +29,7 @@ import com.reactnativenavigation.core.objects.Button;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.packages.RnnPackage;
 import com.reactnativenavigation.utils.ContextProvider;
-import com.reactnativenavigation.utils.SdkSupports;
+import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
 
 import java.util.Arrays;
@@ -170,24 +170,12 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         setContentView(mReactRootView);
     }
 
-    public void setNavigationColors(Screen screen) {
-        if (screen.toolBarColor != null) {
-            mToolbar.setBackgroundColor(screen.toolBarColor);
+    public void setNavigationStyle(Screen screen) {
+        if (mToolbar != null) {
+            mToolbar.setStyle(screen);
         }
 
-        if (screen.titleColor != null) {
-            mToolbar.setTitleTextColor(screen.titleColor);
-        }
-
-        if (SdkSupports.lollipop()) {
-            if (screen.statusBarColor != null) {
-                getWindow().setStatusBarColor(screen.statusBarColor);
-            }
-
-            if (screen.navigationBarColor != null) {
-                getWindow().setNavigationBarColor(screen.navigationBarColor);
-            }
-        }
+        StyleHelper.setWindowStyle(getWindow(), this, screen);
     }
 
     @Override
@@ -227,6 +215,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     @CallSuper
     public void push(Screen screen) {
+        setNavigationStyle(screen);
         if (mToolbar != null &&
             getCurrentNavigatorId().equals(screen.navigatorId) &&
             getScreenStackSize() >= 1) {

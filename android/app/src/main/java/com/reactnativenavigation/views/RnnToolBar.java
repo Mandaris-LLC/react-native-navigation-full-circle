@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -32,26 +33,61 @@ public class RnnToolBar extends Toolbar {
 
     private List<Screen> mScreens;
     private AsyncTask mSetupToolbarTask;
+    private Drawable mBackground;
 
     public RnnToolBar(Context context) {
         super(context);
+        init();
     }
 
     public RnnToolBar(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public RnnToolBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
+        mBackground = getBackground();
     }
 
     public void setScreens(List<Screen> screens) {
         mScreens = screens;
     }
 
+    public void setStyle(Screen screen) {
+        if (screen.toolBarColor != null) {
+            setBackgroundColor(screen.toolBarColor);
+        } else {
+            resetBackground();
+        }
+
+        if (screen.titleColor != null) {
+            setTitleTextColor(screen.titleColor);
+        } else {
+            resetTitleTextColor();
+        }
+    }
+
+    private void resetBackground() {
+        setBackground(mBackground);
+    }
+
+    private void resetTitleTextColor() {
+        setTitleTextColor(ContextCompat.getColor(getContext(), android.R.color.primary_text_light));
+    }
+
     public void handleOnCreateOptionsMenuAsync() {
         setupToolbarButtonsAsync(null, mScreens.get(0));
     }
+
+    public void setupToolbarButtonsAsync(Screen newScreen) {
+        this.setupToolbarButtonsAsync(null, newScreen);
+    }
+
 
     public void setupToolbarButtonsAsync(Screen oldScreen, Screen newScreen) {
         if (mSetupToolbarTask == null) {
@@ -60,10 +96,16 @@ public class RnnToolBar extends Toolbar {
     }
 
     @SuppressWarnings({"ConstantConditions"})
-    @SuppressLint("PrivateResource")
     public void showBackButton(Screen screen) {
         ActionBar actionBar = ContextProvider.getActivityContext().getSupportActionBar();
+        Drawable backButton = setupBackButton(screen);
+        actionBar.setHomeAsUpIndicator(backButton);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
+    @SuppressLint("PrivateResource")
+    @SuppressWarnings({"ConstantConditions"})
+    private Drawable setupBackButton(Screen screen) {
         Resources resources = getResources();
         final Drawable backButton;
         if (screen.buttonsTintColor != null) {
@@ -76,8 +118,7 @@ public class RnnToolBar extends Toolbar {
                     R.drawable.abc_ic_ab_back_mtrl_am_alpha,
                     ContextProvider.getActivityContext().getTheme());
         }
-        actionBar.setHomeAsUpIndicator(backButton);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        return backButton;
     }
 
     @SuppressWarnings({"ConstantConditions"})
