@@ -147,4 +147,20 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
             });
         }
     }
+
+    @ReactMethod
+    public void dismissAllModals(final ReadableMap params) {
+        final BaseReactActivity context = ContextProvider.getActivityContext();
+        if (context != null && !context.isFinishing()) {
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ModalController modalController = ModalController.getInstance();
+                if (modalController.isModalDisplayed()) {
+                    modalController.dismissAllModals();
+                }
+            }
+        });
+        }
+    }
 }

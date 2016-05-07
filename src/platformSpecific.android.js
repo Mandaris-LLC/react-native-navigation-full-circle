@@ -58,6 +58,10 @@ function showModal(params) {
   RctActivity.showModal(params);
 }
 
+function dismissAllModals(params) {
+  RctActivity.dismissAllModals(params.animationType);
+}
+
 function addNavigatorParams(screen, navigator = null, idx = '') {
   screen.navigatorID = navigator ? navigator.navigatorID : utils.getRandomId() + '_nav' + idx;
   screen.screenInstanceID = utils.getRandomId();
@@ -91,5 +95,6 @@ export default {
   startSingleScreenApp,
   navigatorPush,
   navigatorPop,
-  showModal
+  showModal,
+  dismissAllModals
 }

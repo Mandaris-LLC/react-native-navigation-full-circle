@@ -7,6 +7,7 @@ import com.reactnativenavigation.utils.RefUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -33,6 +34,10 @@ public class ModalController {
         mModals.put(navigatorId, new WeakReference<>(modal));
     }
 
+    public boolean isModalDisplayed() {
+        return mModals.size() != 0;
+    }
+
     public boolean isModalDisplayed(String navigatorId) {
         return mModals.size() != 0 && mModals.containsKey(navigatorId);
     }
@@ -49,6 +54,17 @@ public class ModalController {
     public void remove(String navigatorId) {
         if (mModals.containsKey(navigatorId)) {
             mModals.remove(navigatorId);
+        }
+    }
+
+    public void dismissAllModals() {
+        Iterator<String> iterator = mModals.keySet().iterator();
+        while (iterator.hasNext()) {
+            WeakReference<RnnModal> ref = mModals.get(iterator.next());
+            RnnModal modal = RefUtils.get(ref);
+            if (modal != null) {
+                modal.dismiss();
+            }
         }
     }
 }
