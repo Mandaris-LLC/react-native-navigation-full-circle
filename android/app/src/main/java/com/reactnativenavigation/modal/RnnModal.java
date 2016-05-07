@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -14,7 +15,10 @@ import com.reactnativenavigation.R;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.controllers.ModalController;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.utils.SdkSupports;
+import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RctView;
+import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
 
 /**
@@ -23,8 +27,8 @@ import com.reactnativenavigation.views.ScreenStack;
 public class RnnModal extends Dialog implements DialogInterface.OnDismissListener {
 
     private ScreenStack mScreenStack;
-    private Screen mScreen;
     private View mContentView;
+    private Screen mScreen;
 
     public RnnModal(BaseReactActivity context, Screen screen) {
         super(context, R.style.Modal);
@@ -37,8 +41,13 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
     private void init(final Context context) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         mContentView = LayoutInflater.from(context).inflate(R.layout.modal_layout, null, false);
+        RnnToolBar toolBar = (RnnToolBar) mContentView.findViewById(R.id.toolbar);
         mScreenStack = (ScreenStack) mContentView.findViewById(R.id.screenStack);
+
         setContentView(mContentView);
+        toolBar.setStyle(mScreen);
+        toolBar.setTitle(mScreen.title);
+        toolBar.setupToolbarButtonsAsync(mScreen);
         mScreenStack.push(mScreen, new RctView.OnDisplayedListener() {
             @Override
             public void onDisplayed() {
@@ -47,6 +56,13 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
                 mContentView.animate();
             }
         });
+
+        // Set navigation colors
+        if (SdkSupports.lollipop()) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            StyleHelper.setWindowStyle(window, context.getApplicationContext(), mScreen);
+        }
     }
 
     public void push(Screen screen) {

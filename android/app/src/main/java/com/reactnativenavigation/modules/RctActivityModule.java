@@ -133,7 +133,6 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
                 context.pop(navigatorId);
             }
         });
-
     }
 
     @ReactMethod

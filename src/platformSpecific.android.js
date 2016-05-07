@@ -21,7 +21,7 @@ function startSingleScreenApp(params) {
 
   addNavigatorParams(screen);
   addNavigatorButtons(screen);
-  addToolbarStyleParams(screen);
+  addNavigationStyleParams(screen);
   RctActivity.startSingleScreenApp(screen);
 }
 
@@ -34,7 +34,7 @@ function startTabBasedApp(params) {
   params.tabs.forEach(function (tab, idx) {
     addNavigatorParams(tab, null, idx)
     addNavigatorButtons(tab);
-    addToolbarStyleParams(tab);
+    addNavigationStyleParams(tab);
   });
 
   RctActivity.startTabBasedApp(params.tabs);
@@ -43,7 +43,7 @@ function startTabBasedApp(params) {
 function navigatorPush(navigator, params) {
   addNavigatorParams(params, navigator)
   addNavigatorButtons(params);
-  addToolbarStyleParams(params);
+  addNavigationStyleParams(params);
   RctActivity.navigatorPush(params);
 }
 
@@ -52,7 +52,9 @@ function navigatorPop(navigator, params) {
 }
 
 function showModal(params) {
-  addNavigatorParams(params)
+  addNavigatorParams(params);
+  addNavigatorButtons(params);
+  addNavigationStyleParams(params);
   RctActivity.showModal(params);
 }
 
@@ -79,7 +81,7 @@ function addNavigatorButtons(screen) {
   }
 }
 
-function addToolbarStyleParams(screen) {
+function addNavigationStyleParams(screen) {
   const Screen = Navigation.getRegisteredScreen(screen.screen);
   screen.navigatorStyle = Screen.navigatorStyle;
 }

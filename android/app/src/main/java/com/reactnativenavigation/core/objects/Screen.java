@@ -36,14 +36,14 @@ public class Screen extends JsonObject implements Serializable {
     private static final String KEY_TAB_SELECTED_TEXT_COLOR = "tabSelectedTextColor";
     private static final String KEY_TAB_INDICATOR_COLOR = "tabIndicatorColor";
 
-    public String title;
-    public String label;
-    public String screenId;
-    public String screenInstanceId;
-    public String navigatorId;
-    public String navigatorEventId;
-    public int icon;
-    public ArrayList<Button> buttons;
+    public final String title;
+    public final String label;
+    public final String screenId;
+    public final String screenInstanceId;
+    public final String navigatorId;
+    public final String navigatorEventId;
+    public final int icon;
+    public final ArrayList<Button> buttons;
 
     // Navigation styling
     @Nullable @ColorInt public Integer toolBarColor;
@@ -69,18 +69,20 @@ public class Screen extends JsonObject implements Serializable {
         navigatorEventId = getString(screen, KEY_NAVIGATOR_EVENT_ID);
         icon = getInt(screen, KEY_ICON);
 
-        setButtons(screen);
+        buttons = getButtons(screen);
         setToolbarStyle(screen);
     }
 
-    private void setButtons(ReadableMap screen) {
+    private ArrayList<Button> getButtons(ReadableMap screen) {
+        ArrayList<Button> ret = null;
         if (screen.hasKey(KEY_RIGHT_BUTTONS)) {
-            buttons = new ArrayList<>();
+            ret = new ArrayList<>();
             ReadableArray rightButtons = screen.getArray(KEY_RIGHT_BUTTONS);
             for (int i = 0; i < rightButtons.size(); i++) {
-                buttons.add(new Button(rightButtons.getMap(i)));
+                ret.add(new Button(rightButtons.getMap(i)));
             }
         }
+        return ret;
     }
 
     public void setToolbarStyle(ReadableMap screen) {

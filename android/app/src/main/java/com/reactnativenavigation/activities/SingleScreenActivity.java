@@ -36,7 +36,7 @@ public class SingleScreenActivity extends BaseReactActivity {
     }
 
     protected void setupToolbar(Screen screen) {
-        setNavigationColors(screen);
+        setNavigationStyle(screen);
         mToolbar.setTitle(screen.title);
         setSupportActionBar(mToolbar);
     }
@@ -44,13 +44,16 @@ public class SingleScreenActivity extends BaseReactActivity {
     @Override
     public void push(Screen screen) {
         super.push(screen);
+        setNavigationStyle(screen);
         mScreenStack.push(screen);
     }
 
     @Override
     public Screen pop(String navigatorId) {
         super.pop(navigatorId);
-        return mScreenStack.pop();
+        Screen screen = mScreenStack.pop();
+        setNavigationStyle(screen);
+        return screen;
     }
 
     @Override
