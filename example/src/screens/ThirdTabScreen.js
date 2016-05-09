@@ -13,6 +13,9 @@ export default class ThirdTabScreen extends Component {
   };
   constructor(props) {
     super(props);
+    this.state = {
+      navBarVisability: 'shown'
+    }
   }
   render() {
     return (
@@ -32,6 +35,10 @@ export default class ThirdTabScreen extends Component {
 
         <TouchableOpacity onPress={ this.onModalPress.bind(this) }>
           <Text style={styles.button}>Show Modal Screen</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onToggleNavBarPressed.bind(this) }>
+          <Text style={styles.button}>Toggle Navigation Bar</Text>
         </TouchableOpacity>
 
       </View>
@@ -62,6 +69,20 @@ export default class ThirdTabScreen extends Component {
       screen: "example.ModalScreen"
     });
   }
+
+  onToggleNavBarPressed() {
+    this.state.navBarVisability = (this.state.navBarVisability === 'shown') ? 'hidden' : 'shown';
+    this.props.navigator.toggleNavBar({
+      to: this.state.navBarVisability,
+      animated: true  // true is default
+    });
+  }
+
+  componentDidUpdate() {
+    console.error('this is an error: ' + Math.random());
+    this.state.navBarState = 'shown';
+  }
+
 }
 
 const styles = StyleSheet.create({

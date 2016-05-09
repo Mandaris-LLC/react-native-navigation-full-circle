@@ -73,6 +73,10 @@ class Navigator {
     return platformSpecific.navigatorToggleTabs(this, params);
   }
 
+  toggleNavBar(params = {}) {
+    return platformSpecific.navigatorToggleNavBar(this, params);
+  }
+
   setTabBadge(params = {}) {
     return platformSpecific.navigatorSetTabBadge(this, params);
   }

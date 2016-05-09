@@ -470,6 +470,17 @@ this.props.navigator.switchToTab({
 });
 ```
 
+* **toggleNavBar(params = {})**
+
+Toggle whether the navigation bar is displayed or not.
+
+```js
+this.props.navigator.toggleNavBar({
+  to: 'hidden', // required, 'hidden' = hide navigation bar, 'shown' = show navigation bar
+  animated: true // does the toggle have transition animation or does it happen immediately (optional). By default animated: true
+});
+```
+
 ## Styling the navigator
 
 You can style the navigator appearance and behavior by passing a `navigatorStyle` object. This object can be passed when the screen is originally created; can be defined per-screen by setting `static navigatorStyle = {};` on the screen component; and can be overridden when a screen is pushed.

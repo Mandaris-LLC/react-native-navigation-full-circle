@@ -242,10 +242,16 @@ function navigatorSetTitle(navigator, params) {
   });
 }
 
-function navigatorSetTitleImage
-(navigator, params) {
+function navigatorSetTitleImage(navigator, params) {
   Controllers.NavigationControllerIOS(navigator.navigatorID).setTitleImage({
     titleImage: params.titleImage
+  });
+}
+
+function navigatorToggleNavBar(navigator, params) {
+  Controllers.NavigationControllerIOS(navigator.navigatorID).setHidden({
+    hidden: ((params.to === 'hidden') ? true : false),
+    animated: params.animated
   });
 }
 
@@ -415,5 +421,6 @@ export default {
   navigatorToggleDrawer,
   navigatorToggleTabs,
   navigatorSetTabBadge,
-  navigatorSwitchToTab
+  navigatorSwitchToTab,
+  navigatorToggleNavBar
 }
