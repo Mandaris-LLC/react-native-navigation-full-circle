@@ -513,6 +513,7 @@ export default class StyledScreen extends Component {
   navBarHidden: false, // make the nav bar hidden
   navBarHideOnScroll: false, // make the nav bar hidden only after the user starts to scroll
   navBarTranslucent: false, // make the nav bar semi-translucent, works best with drawUnderNavBar:true
+  navBarNoBorder: false, // hide the navigation bar bottom border (hair line). Default false
   drawUnderNavBar: false, // draw the screen content under the nav bar, works best with navBarTranslucent:true
   drawUnderTabBar: false, // draw the screen content under the tab bar (the tab bar is always translucent)
   statusBarBlur: false, // blur the area under the status bar, works best with navBarHidden:true
