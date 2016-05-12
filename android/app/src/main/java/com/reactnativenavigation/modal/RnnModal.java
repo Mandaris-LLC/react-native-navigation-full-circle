@@ -33,7 +33,7 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
     public RnnModal(BaseReactActivity context, Screen screen) {
         super(context, R.style.Modal);
         mScreen = screen;
-        ModalController.getInstance().add(this, screen.navigatorId);
+        ModalController.getInstance().add(this);
         init(context);
     }
 
@@ -78,13 +78,13 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
         if (mScreenStack.getStackSize() > 1) {
             mScreenStack.pop();
         } else {
-            ModalController.getInstance().remove(mScreen.navigatorId);
+            ModalController.getInstance().remove();
             super.onBackPressed();
         }
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        ModalController.getInstance().remove(mScreen.navigatorId);
+        ModalController.getInstance().remove();
     }
 }

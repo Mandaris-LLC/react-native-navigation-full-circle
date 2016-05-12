@@ -358,8 +358,7 @@ function showModal(params) {
           passProps={passProps}
           style={navigatorStyle}
           leftButtons={navigatorButtons.leftButtons}
-          rightButtons={navigatorButtons.rightButtons}
-        />
+          rightButtons={navigatorButtons.rightButtons}/>
       );
     }
   });

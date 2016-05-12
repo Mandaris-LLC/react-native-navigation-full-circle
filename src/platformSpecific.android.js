@@ -58,6 +58,10 @@ function showModal(params) {
   RctActivity.showModal(params);
 }
 
+function dismissModal() {
+  RctActivity.dismissModal();
+}
+
 function dismissAllModals(params) {
   RctActivity.dismissAllModals(params.animationType);
 }
@@ -96,5 +100,6 @@ export default {
   navigatorPush,
   navigatorPop,
   showModal,
+  dismissModal,
   dismissAllModals
 }

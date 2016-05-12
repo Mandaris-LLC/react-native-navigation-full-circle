@@ -57,22 +57,53 @@ class PushedScreen extends Component {
           <Text style={styles.button}>Pop Screen</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
+          <Text style={styles.button}>Modal Screen</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onDismissModal.bind(this) }>
+          <Text style={styles.button}>Dismiss modal</Text>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity onPress={ this.onDismissAllModalsPress.bind(this) }>
+          <Text style={styles.button}>Dismiss all modals</Text>
+        </TouchableOpacity>
+
         <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
 
       </View>
     );
   }
+
   onIncrementPress() {
     this.props.dispatch(counterActions.increment());
   }
+
   onPushPress() {
     this.props.navigator.push({
       title: "More",
       screen: "example.PushedScreen"
     });
   }
+
   onPopPress() {
     this.props.navigator.pop();
+  }
+
+  onShowModalPress() {
+    this.props.navigator.showModal({
+      title: "Modal Screen",
+      screen: "example.PushedScreen"
+    });
+  }
+
+  onDismissAllModalsPress() {
+    this.props.navigator.dismissAllModals();
+  }
+
+  onDismissModal() {
+    this.props.navigator.dismissModal();
   }
 }
 

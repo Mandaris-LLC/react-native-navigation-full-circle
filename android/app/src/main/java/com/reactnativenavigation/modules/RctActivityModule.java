@@ -80,10 +80,10 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
             return;
         }
 
-        // First, check is the screen should be displayed in a Modal
+        // First, check if the screen should be pushed to a Modal
         ModalController modalController = ModalController.getInstance();
-        if (modalController.isModalDisplayed(screen.navigatorId)) {
-            final RnnModal modal = modalController.get(screen.navigatorId);
+        if (modalController.isModalDisplayed()) {
+            final RnnModal modal = modalController.get();
             if (modal != null) {
                 context.runOnUiThread(new Runnable() {
                     @Override
@@ -114,8 +114,8 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
 
         // First, check if the screen should be popped from a Modal
         ModalController modalController = ModalController.getInstance();
-        if (modalController.isModalDisplayed(navigatorId)) {
-            final RnnModal modal = modalController.get(navigatorId);
+        if (modalController.isModalDisplayed()) {
+            final RnnModal modal = modalController.get();
             if (modal != null) {
                 context.runOnUiThread(new Runnable() {
                     @Override
@@ -161,6 +161,18 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
                 }
             }
         });
+        }
+    }
+
+
+    /**
+     * Dismisses the top modal (the last modal pushed).
+     */
+    @ReactMethod
+    public void dismissModal() {
+        ModalController modalController = ModalController.getInstance();
+        if (modalController.isModalDisplayed()) {
+            modalController.dismissModal();
         }
     }
 }

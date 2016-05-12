@@ -6,9 +6,7 @@ import com.reactnativenavigation.modal.RnnModal;
 import com.reactnativenavigation.utils.RefUtils;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Stack;
 
 /**
  * Created by guyc on 06/05/16.
@@ -16,10 +14,10 @@ import java.util.Map;
 public class ModalController {
     private static ModalController sInstance;
 
-    private final Map<String, WeakReference<RnnModal>> mModals;
+    private final Stack<WeakReference<RnnModal>> mModals;
 
     private ModalController() {
-        mModals = new HashMap<>();
+        mModals = new Stack<>();
     }
 
     public static synchronized ModalController getInstance() {
@@ -30,41 +28,36 @@ public class ModalController {
         return sInstance;
     }
 
-    public void add(RnnModal modal, String navigatorId) {
-        mModals.put(navigatorId, new WeakReference<>(modal));
+    public void add(RnnModal modal) {
+        mModals.add(new WeakReference<>(modal));
     }
 
     public boolean isModalDisplayed() {
         return mModals.size() != 0;
     }
 
-    public boolean isModalDisplayed(String navigatorId) {
-        return mModals.size() != 0 && mModals.containsKey(navigatorId);
-    }
-
     @Nullable
-    public RnnModal get(String navigatorId) {
-        if (mModals.containsKey(navigatorId)) {
-            return RefUtils.get(mModals.get(navigatorId));
-        }
-
-        return null;
+    public RnnModal get() {
+        return isModalDisplayed() ? RefUtils.get(mModals.peek()) : null;
     }
 
-    public void remove(String navigatorId) {
-        if (mModals.containsKey(navigatorId)) {
-            mModals.remove(navigatorId);
+    public void remove() {
+        if (isModalDisplayed()) {
+            mModals.pop();
         }
     }
 
     public void dismissAllModals() {
-        Iterator<String> iterator = mModals.keySet().iterator();
-        while (iterator.hasNext()) {
-            WeakReference<RnnModal> ref = mModals.get(iterator.next());
-            RnnModal modal = RefUtils.get(ref);
-            if (modal != null) {
-                modal.dismiss();
-            }
+        while (isModalDisplayed()) {
+            dismissModal();
+        }
+    }
+
+    public void dismissModal() {
+        WeakReference<RnnModal> ref = mModals.pop();
+        RnnModal modal = RefUtils.get(ref);
+        if (modal != null) {
+            modal.dismiss();
         }
     }
 }
