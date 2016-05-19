@@ -1,5 +1,5 @@
 {
-  "name": "example-redux",
+  "name": "exampleRedux",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,13 +9,13 @@
     "_fix_npm2_step2": "cd node_modules; find . -name .babelrc | grep -v packager | xargs rm"
   },
   "dependencies": {
-    "react-native": "^0.26.0",
-    "react": "^15.0.2",
+    "react-native": "^0.25.1",
+    "react": "0.14.5",
     "fbjs": "^0.6.1",
     "react-redux": "^4.0.6",
     "redux": "^3.0.5",
     "redux-thunk": "^1.0.3",
     "seamless-immutable": "^5.0.1",
-    "react-native-navigation": "github:wix/react-native-navigation#rn26"
+    "react-native-navigation": "github:wix/react-native-navigation#upgradeRN25"
   }
 }
