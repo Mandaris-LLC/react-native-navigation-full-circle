@@ -21,7 +21,7 @@
     "react-native": ">=0.26.0"
   },
   "dependencies": {
-    "react-native-controllers": "^1.3.5"
+    "react-native-controllers": "github:wix/react-native-controllers#rn26"
   },
   "optionalDependencies": {
     "react-redux": "*"
