@@ -9,7 +9,7 @@
     "_fix_npm2_step2": "cd node_modules; find . -name .babelrc | grep -v packager | xargs rm"
   },
   "dependencies": {
-    "react-native": "^0.21.0",
+    "react-native": "^0.26.0",
     "fbjs": "^0.6.1",
     "react-redux": "^4.0.6",
     "redux": "^3.0.5",
