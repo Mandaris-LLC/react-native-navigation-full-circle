@@ -10,7 +10,7 @@ import {
   RctActivity
 } from 'react-native-navigation';
 
-var resolveAssetSource = require('resolveAssetSource');
+const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
 function startSingleScreenApp(params) {
   let screen = params.screen;
@@ -31,8 +31,8 @@ function startTabBasedApp(params) {
     return;
   }
 
-  params.tabs.forEach(function (tab, idx) {
-    addNavigatorParams(tab, null, idx)
+  params.tabs.forEach(function(tab, idx) {
+    addNavigatorParams(tab, null, idx);
     addNavigatorButtons(tab);
     addNavigationStyleParams(tab);
   });
@@ -41,7 +41,7 @@ function startTabBasedApp(params) {
 }
 
 function navigatorPush(navigator, params) {
-  addNavigatorParams(params, navigator)
+  addNavigatorParams(params, navigator);
   addNavigatorButtons(params);
   addNavigationStyleParams(params);
   RctActivity.navigatorPush(params);

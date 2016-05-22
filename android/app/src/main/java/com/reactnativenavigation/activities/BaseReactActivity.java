@@ -184,7 +184,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         ContextProvider.setActivityContext(this);
 
         if (mReactInstanceManager != null) {
-            mReactInstanceManager.onResume(this, this);
+            mReactInstanceManager.onHostResume(this, this);
         }
     }
 
@@ -193,7 +193,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         super.onPause();
 
         if (mReactInstanceManager != null) {
-            mReactInstanceManager.onPause();
+            mReactInstanceManager.onHostPause();
         }
 
         ContextProvider.clearActivityContext();
@@ -207,7 +207,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         BaseReactActivity activity = ContextProvider.getActivityContext();
         if (mReactInstanceManager != null && (activity == null || activity.isFinishing())) {
             Log.i(TAG, "Destroying ReactInstanceManager");
-            mReactInstanceManager.onDestroy();
+            mReactInstanceManager.onHostDestroy();
         } else {
             Log.d(TAG, "Not destroying ReactInstanceManager");
         }
