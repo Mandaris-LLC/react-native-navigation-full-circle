@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
   Text,
   View,
@@ -36,11 +36,17 @@ class FirstTabScreen extends Component {
       }
     ]
   };
+
+  static propTypes = {
+    passed: PropTypes.string.isRequired
+  };
+
   constructor(props) {
     super(props);
     // if you want to listen on navigator events, set this up
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
+
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'edit':
@@ -75,6 +81,8 @@ class FirstTabScreen extends Component {
         <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
           <Text style={styles.button}>Modal Screen</Text>
         </TouchableOpacity>
+
+        <Text style={{fontWeight: '500'}}>{this.props.passed}</Text>
       </View>
     );
   }
@@ -86,14 +94,20 @@ class FirstTabScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "example.PushedScreen"
+      screen: "example.PushedScreen",
+      passProps: {
+        passed: 'This is a prop passed in \'navigator.push()\'!'
+      }
     });
   }
 
   onShowModalPress() {
     this.props.navigator.showModal({
       title: "Modal Screen",
-      screen: "example.PushedScreen"
+      screen: "example.PushedScreen",
+      passProps: {
+        passed: 'This is a prop passed in \'navigator.showModal()\'!'
+      }
     });
   }
 }

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
   Text,
   View,
@@ -21,6 +21,10 @@ class PushedScreen extends Component {
     tabSelectedTextColor: '#FFA000',
     tabNormalTextColor: '#FFC107',
     tabIndicatorColor: '#FF4081'
+  };
+
+  static propTypes = {
+    passed: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -71,6 +75,8 @@ class PushedScreen extends Component {
         </TouchableOpacity>
 
         <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
+
+        <Text style={{fontWeight: '500'}}>{this.props.passed}</Text>
 
       </View>
     );

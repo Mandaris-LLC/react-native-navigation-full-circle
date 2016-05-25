@@ -9,6 +9,8 @@ import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.objects.Screen;
 
+import java.util.HashMap;
+
 /**
  * Created by guyc on 10/03/16.
  */
@@ -47,6 +49,9 @@ public class RctView extends FrameLayout {
         passProps.putString(Screen.KEY_SCREEN_INSTANCE_ID, screen.screenInstanceId);
         passProps.putString(Screen.KEY_NAVIGATOR_ID, screen.navigatorId);
         passProps.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
+        if (screen.passedProps != null) {
+            spreadHashMap(screen.passedProps, passProps);
+        }
 
         mReactRootView.startReactApplication(rctInstanceManager, componentName, passProps);
 
@@ -61,6 +66,25 @@ public class RctView extends FrameLayout {
         }
 
         addView(mReactRootView);
+    }
+
+    private Bundle spreadHashMap(HashMap<String, Object> map, Bundle bundle) {
+        for (String key : map.keySet()) {
+            Object value = map.get(key);
+            if (value instanceof String) {
+                bundle.putString(key, (String) value);
+            } else if (value instanceof Integer) {
+                bundle.putInt(key, (Integer) value);
+            } else if (value instanceof Double) {
+                bundle.putDouble(key, ((Double) value).doubleValue());
+            } else if (value instanceof Boolean) {
+                bundle.putBoolean(key, (Boolean) value);
+            } else if (value instanceof HashMap) {
+                bundle.putBundle(key, spreadHashMap((HashMap<String, Object>) value, new Bundle()));
+                //TODO nulls and Arrays needed
+            }
+        }
+        return bundle;
     }
 }
 

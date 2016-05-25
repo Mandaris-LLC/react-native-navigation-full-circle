@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
   Text,
   Image,
@@ -18,6 +18,11 @@ class SecondTabScreen extends Component {
     drawUnderTabBar: true,
     navBarTranslucent: true
   };
+
+  static propTypes = {
+    passed: PropTypes.string.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.buttonsCounter = 0;
@@ -37,6 +42,8 @@ class SecondTabScreen extends Component {
           <TouchableOpacity onPress={ this.onIncrementPress.bind(this) }>
             <Text style={styles.button}>Increment Counter</Text>
           </TouchableOpacity>
+
+          <Text style={{fontWeight: '500'}}>{this.props.passed}</Text>
 
         </View>
 

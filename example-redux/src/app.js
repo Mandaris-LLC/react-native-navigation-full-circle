@@ -39,7 +39,16 @@ export default class App {
           screen: {
             screen: 'example.LoginScreen',
             title: 'Login',
-            navigatorStyle: {}
+            navigatorStyle: {},
+            passProps: {
+              passed: 'This is a prop passed in \'startSingleScreenApp\'!',
+              deep: {
+                deepProp: 123,
+                deeper: {
+                  deeperProp: 'Deep!'
+                }
+              }
+            }
           }
         });
         return;
@@ -52,7 +61,10 @@ export default class App {
               icon: require('../img/one.png'),
               selectedIcon: require('../img/one_selected.png'),
               title: 'Screen One',
-              navigatorStyle: {}
+              navigatorStyle: {},
+              passProps: {
+                passed: 'This is a prop passed in \'startTabBasedApp\'!'
+  }
             },
             {
               label: 'Two',
@@ -60,7 +72,10 @@ export default class App {
               icon: require('../img/two.png'),
               selectedIcon: require('../img/two_selected.png'),
               title: 'Screen Two',
-              navigatorStyle: {}
+              navigatorStyle: {},
+              passProps: {
+                passed: 'This is a prop passed in \'startTabBasedApp\'!'
+              }
             }
           ],
           animationType: 'slide-down',

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
   Text,
   View,
@@ -12,9 +12,15 @@ import * as appActions from '../reducers/app/actions';
 
 // this is a traditional React component connected to the redux store
 class LoginScreen extends Component {
+
+  static propTypes = {
+    passed: PropTypes.string.isRequired
+  };
+
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <View style={{flex: 1, padding: 20}}>
@@ -30,6 +36,9 @@ class LoginScreen extends Component {
         <TouchableOpacity onPress={ this.onLoginPress.bind(this) }>
           <Text style={styles.button}>Login</Text>
         </TouchableOpacity>
+
+
+        <Text style={{fontWeight: '500'}}>{this.props.passed}</Text>
 
       </View>
     );
