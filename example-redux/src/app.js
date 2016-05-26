@@ -41,13 +41,25 @@ export default class App {
             title: 'Login',
             navigatorStyle: {},
             passProps: {
-              passed: 'This is a prop passed in \'startSingleScreenApp\'!',
-              deep: {
-                deepProp: 123,
-                deeper: {
-                  deeperProp: 'Deep!'
-                }
-              }
+              str: 'This is a prop passed in \'startSingleScreenApp()\'!',
+              obj: {
+                str: 'This is a prop passed in an object!',
+                arr: [
+                  {
+                    str: 'This is a prop in an object in an array in an object!'
+                  }
+                ],
+                arr2: [
+                    [
+                        'array of strings',
+                        'with two strings'
+                    ],
+                    [
+                        1, 2, 3
+                    ]
+                ]
+              },
+              num: 1234
             }
           }
         });
@@ -63,8 +75,17 @@ export default class App {
               title: 'Screen One',
               navigatorStyle: {},
               passProps: {
-                passed: 'This is a prop passed in \'startTabBasedApp\'!'
-  }
+                str: 'This is a prop passed in \'startTabBasedApp\'!',
+                obj: {
+                  str: 'This is a prop passed in an object!',
+                  arr: [
+                    {
+                      str: 'This is a prop in an object in an array in an object!'
+                    }
+                  ]
+                },
+                num: 1234
+              }
             },
             {
               label: 'Two',
@@ -74,7 +95,16 @@ export default class App {
               title: 'Screen Two',
               navigatorStyle: {},
               passProps: {
-                passed: 'This is a prop passed in \'startTabBasedApp\'!'
+                str: 'This is a prop passed in \'startTabBasedApp\'!',
+                obj: {
+                  str: 'This is a prop passed in an object!',
+                  arr: [
+                    {
+                      str: 'This is a prop in an object in an array in an object!'
+                    }
+                  ]
+                },
+                num: 1234
               }
             }
           ],

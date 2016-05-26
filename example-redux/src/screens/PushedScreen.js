@@ -24,7 +24,9 @@ class PushedScreen extends Component {
   };
 
   static propTypes = {
-    passed: PropTypes.string.isRequired
+    str: PropTypes.string.isRequired,
+    obj: PropTypes.object.isRequired,
+    num: PropTypes.number.isRequired
   };
 
   constructor(props) {
@@ -76,7 +78,10 @@ class PushedScreen extends Component {
 
         <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
 
-        <Text style={{fontWeight: '500'}}>{this.props.passed}</Text>
+        <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
+        <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
+        <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
+        <Text style={{fontWeight: '500'}}>Array prop: {this.props.obj.arr[0].str}</Text>
 
       </View>
     );
@@ -89,7 +94,19 @@ class PushedScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "example.PushedScreen"
+      screen: "example.PushedScreen",
+      passProps: {
+        passed: 'This is a prop passed in \'navigator.push()\'!',
+        obj: {
+          str: 'This is a prop passed in an object!',
+          arr: [
+            {
+              str: 'This is a prop in an object in an array in an object!'
+            }
+          ]
+        },
+        num: 1234
+      }
     });
   }
 
@@ -100,7 +117,19 @@ class PushedScreen extends Component {
   onShowModalPress() {
     this.props.navigator.showModal({
       title: "Modal Screen",
-      screen: "example.PushedScreen"
+      screen: "example.PushedScreen",
+      passProps: {
+        passed: 'This is a prop passed in \'navigator.showModal()\'!',
+        obj: {
+          str: 'This is a prop passed in an object!',
+          arr: [
+            {
+              str: 'This is a prop in an object in an array in an object!'
+            }
+          ]
+        },
+        num: 1234
+      }
     });
   }
 

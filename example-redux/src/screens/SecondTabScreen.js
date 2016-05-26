@@ -20,7 +20,9 @@ class SecondTabScreen extends Component {
   };
 
   static propTypes = {
-    passed: PropTypes.string.isRequired
+    str: PropTypes.string.isRequired,
+    obj: PropTypes.object.isRequired,
+    num: PropTypes.number.isRequired
   };
 
   constructor(props) {
@@ -43,7 +45,10 @@ class SecondTabScreen extends Component {
             <Text style={styles.button}>Increment Counter</Text>
           </TouchableOpacity>
 
-          <Text style={{fontWeight: '500'}}>{this.props.passed}</Text>
+          <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
+          <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
+          <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
+          <Text style={{fontWeight: '500'}}>Array prop: {this.props.obj.arr[0].str}</Text>
 
         </View>
 
