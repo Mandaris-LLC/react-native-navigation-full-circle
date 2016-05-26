@@ -145,3 +145,6 @@ xcuserdata
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
 # ...none. Everything is now explained.:
+android/gradlew
+android/gradlew.bat
+android/local.properties
