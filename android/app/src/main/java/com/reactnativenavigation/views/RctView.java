@@ -8,6 +8,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.utils.BridgeUtils;
 
 /**
  * Created by guyc on 10/03/16.
@@ -34,6 +35,7 @@ public class RctView extends FrameLayout {
         this(ctx, rctInstanceManager, screen, null);
     }
 
+    @SuppressWarnings("unchecked")
     public RctView(BaseReactActivity ctx, ReactInstanceManager rctInstanceManager, Screen screen,
                    final OnDisplayedListener onDisplayedListener) {
         super(ctx);
@@ -47,6 +49,9 @@ public class RctView extends FrameLayout {
         passProps.putString(Screen.KEY_SCREEN_INSTANCE_ID, screen.screenInstanceId);
         passProps.putString(Screen.KEY_NAVIGATOR_ID, screen.navigatorId);
         passProps.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
+        if (screen.passedProps != null) {
+            BridgeUtils.addMapToBundle(screen.passedProps, passProps);
+        }
 
         mReactRootView.startReactApplication(rctInstanceManager, componentName, passProps);
 

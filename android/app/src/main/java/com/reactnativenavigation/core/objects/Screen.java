@@ -6,10 +6,12 @@ import android.support.annotation.Nullable;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableNativeMap;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -35,6 +37,7 @@ public class Screen extends JsonObject implements Serializable {
     private static final String KEY_TAB_NORMAL_TEXT_COLOR = "tabNormalTextColor";
     private static final String KEY_TAB_SELECTED_TEXT_COLOR = "tabSelectedTextColor";
     private static final String KEY_TAB_INDICATOR_COLOR = "tabIndicatorColor";
+    public static final String KEY_PROPS = "passProps";
 
     public final String title;
     public final String label;
@@ -44,6 +47,7 @@ public class Screen extends JsonObject implements Serializable {
     public final String navigatorEventId;
     public final int icon;
     public final ArrayList<Button> buttons;
+    public HashMap<String, Object> passedProps = new HashMap<>();
 
     // Navigation styling
     @Nullable @ColorInt public Integer toolBarColor;
@@ -57,7 +61,7 @@ public class Screen extends JsonObject implements Serializable {
 
     @NonNull
     public List<Button> getButtons() {
-        return buttons == null ? Collections.EMPTY_LIST : buttons;
+        return buttons == null ? Collections.<Button>emptyList() : buttons;
     }
 
     public Screen(ReadableMap screen) {
@@ -68,15 +72,16 @@ public class Screen extends JsonObject implements Serializable {
         navigatorId = getString(screen, KEY_NAVIGATOR_ID);
         navigatorEventId = getString(screen, KEY_NAVIGATOR_EVENT_ID);
         icon = getInt(screen, KEY_ICON);
-
+        if(screen.hasKey(KEY_PROPS)) {
+            passedProps = ((ReadableNativeMap) screen.getMap(KEY_PROPS)).toHashMap();
+        }
         buttons = getButtons(screen);
         setToolbarStyle(screen);
     }
 
     private ArrayList<Button> getButtons(ReadableMap screen) {
-        ArrayList<Button> ret = null;
+        ArrayList<Button> ret = new ArrayList<>();
         if (screen.hasKey(KEY_RIGHT_BUTTONS)) {
-            ret = new ArrayList<>();
             ReadableArray rightButtons = screen.getArray(KEY_RIGHT_BUTTONS);
             for (int i = 0; i < rightButtons.size(); i++) {
                 ret.add(new Button(rightButtons.getMap(i)));

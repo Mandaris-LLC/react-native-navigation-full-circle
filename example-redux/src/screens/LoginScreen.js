@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
   Text,
   View,
@@ -12,9 +12,18 @@ import * as appActions from '../reducers/app/actions';
 
 // this is a traditional React component connected to the redux store
 class LoginScreen extends Component {
+
+  static propTypes = {
+    str: PropTypes.string.isRequired,
+    obj: PropTypes.object.isRequired,
+    num: PropTypes.number.isRequired
+  };
+
   constructor(props) {
     super(props);
+    console.log(props);
   }
+
   render() {
     return (
       <View style={{flex: 1, padding: 20}}>
@@ -30,6 +39,12 @@ class LoginScreen extends Component {
         <TouchableOpacity onPress={ this.onLoginPress.bind(this) }>
           <Text style={styles.button}>Login</Text>
         </TouchableOpacity>
+
+        <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
+        <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
+        <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
+        <Text style={{fontWeight: '500'}}>Array prop: {this.props.obj.arr[0].str}</Text>
+        <Text style={{fontWeight: '500'}}>Array of arrays prop: {JSON.stringify(this.props.obj.arr2)}</Text>
 
       </View>
     );

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
   Text,
   View,
@@ -36,11 +36,19 @@ class FirstTabScreen extends Component {
       }
     ]
   };
+
+  static propTypes = {
+    str: PropTypes.string.isRequired,
+    obj: PropTypes.object.isRequired,
+    num: PropTypes.number.isRequired
+  };
+
   constructor(props) {
     super(props);
     // if you want to listen on navigator events, set this up
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
+
   onNavigatorEvent(event) {
     switch (event.id) {
       case 'edit':
@@ -75,6 +83,11 @@ class FirstTabScreen extends Component {
         <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
           <Text style={styles.button}>Modal Screen</Text>
         </TouchableOpacity>
+
+        <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
+        <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
+        <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
+        <Text style={{fontWeight: '500'}}>Array prop: {this.props.obj.arr[0].str}</Text>
       </View>
     );
   }
@@ -86,14 +99,38 @@ class FirstTabScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "example.PushedScreen"
+      screen: "example.PushedScreen",
+      passProps: {
+        passed: 'This is a prop passed in \'navigator.push()\'!',
+        obj: {
+          str: 'This is a prop passed in an object!',
+          arr: [
+            {
+              str: 'This is a prop in an object in an array in an object!'
+            }
+          ]
+        },
+        num: 1234
+      }
     });
   }
 
   onShowModalPress() {
     this.props.navigator.showModal({
       title: "Modal Screen",
-      screen: "example.PushedScreen"
+      screen: "example.PushedScreen",
+      passProps: {
+        passed: 'This is a prop passed in \'navigator.showModal()\'!',
+        obj: {
+          str: 'This is a prop passed in an object!',
+          arr: [
+            {
+              str: 'This is a prop in an object in an array in an object!'
+            }
+          ]
+        },
+        num: 1234
+      }
     });
   }
 }
