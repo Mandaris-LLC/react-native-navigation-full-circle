@@ -72,8 +72,9 @@ public class BridgeUtils {
     @SuppressWarnings("unchecked")
     private static Bundle[] toBundleArray(ArrayList<HashMap> arrayList) {
         Bundle[] ret = new Bundle[arrayList.size()];
-        for (int i=0; i < ret.length; i++)
+        for (int i=0; i < ret.length; i++) {
             ret[i] = addMapToBundle(arrayList.get(i), new Bundle());
+        }
         return ret;
     }
 
