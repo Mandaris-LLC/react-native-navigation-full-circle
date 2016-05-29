@@ -1,6 +1,5 @@
 package com.reactnativenavigation.core.objects;
 
-import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -48,7 +47,7 @@ public class Screen extends JsonObject implements Serializable {
     public final String navigatorEventId;
     public final int icon;
     public final ArrayList<Button> buttons;
-    public final HashMap passedProps;
+    public HashMap<String, Object> passedProps = new HashMap<>();
 
     // Navigation styling
     @Nullable @ColorInt public Integer toolBarColor;
@@ -62,7 +61,7 @@ public class Screen extends JsonObject implements Serializable {
 
     @NonNull
     public List<Button> getButtons() {
-        return buttons == null ? Collections.EMPTY_LIST : buttons;
+        return buttons == null ? Collections.<Button>emptyList() : buttons;
     }
 
     public Screen(ReadableMap screen) {
@@ -73,17 +72,15 @@ public class Screen extends JsonObject implements Serializable {
         navigatorId = getString(screen, KEY_NAVIGATOR_ID);
         navigatorEventId = getString(screen, KEY_NAVIGATOR_EVENT_ID);
         icon = getInt(screen, KEY_ICON);
-        if(screen.hasKey(KEY_PROPS))
-            passedProps = ((ReadableNativeMap)screen.getMap(KEY_PROPS)).toHashMap();
-        else
-            passedProps = null;
-
+        if(screen.hasKey(KEY_PROPS)) {
+            passedProps = ((ReadableNativeMap) screen.getMap(KEY_PROPS)).toHashMap();
+        }
         buttons = getButtons(screen);
         setToolbarStyle(screen);
     }
 
     private ArrayList<Button> getButtons(ReadableMap screen) {
-        ArrayList<Button> ret = new ArrayList();
+        ArrayList<Button> ret = new ArrayList<>();
         if (screen.hasKey(KEY_RIGHT_BUTTONS)) {
             ReadableArray rightButtons = screen.getArray(KEY_RIGHT_BUTTONS);
             for (int i = 0; i < rightButtons.size(); i++) {
@@ -92,7 +89,6 @@ public class Screen extends JsonObject implements Serializable {
         }
         return ret;
     }
-
 
     public void setToolbarStyle(ReadableMap screen) {
         ReadableMap style = getMap(screen, KEY_TOOL_BAR_STYLE);

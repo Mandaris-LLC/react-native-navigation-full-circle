@@ -51,7 +51,7 @@ public class BridgeUtils {
             } else if (arrayList.get(0) instanceof HashMap) {
                 bundle.putParcelableArray(key, toBundleArray((ArrayList<HashMap>) arrayList));
             } else if (arrayList.get(0) instanceof ArrayList) {
-                Log.w("RNNNavigation", "Arrays of arrays passed in props are converted to dictionaries with indexes as keys");
+                Log.w("RNNavigation", "Arrays of arrays passed in props are converted to dictionaries with indexes as keys");
                 Bundle innerArray = new Bundle();
                 for (int i = 0; i < arrayList.size(); i++) {
                     putArray(String.valueOf(i), (ArrayList) arrayList.get(i), innerArray);
@@ -62,11 +62,10 @@ public class BridgeUtils {
     }
 
     private static void verifyArrayListIsSingleType(ArrayList arrayList) {
-        int i = 1;
-        while (i < arrayList.size()) {
-            if (!arrayList.get(i - 1).getClass().isInstance(arrayList.get(i)))
+        for (int i = 1; i < arrayList.size(); i++) {
+            if (!arrayList.get(i - 1).getClass().isInstance(arrayList.get(i))) {
                 throw new IllegalArgumentException("Cannot pass array of multiple types via props");
-            i++;
+            }
         }
     }
 
@@ -80,36 +79,41 @@ public class BridgeUtils {
 
     private static int[] toIntArray(ArrayList<Integer> arrayList) {
         int[] ret = new int[arrayList.size()];
-        for (int i=0; i < ret.length; i++)
+        for (int i=0; i < ret.length; i++) {
             ret[i] = arrayList.get(i);
+        }
         return ret;
     }
 
     private static float[] toFloatArray(ArrayList<Float> arrayList) {
         float[] ret = new float[arrayList.size()];
-        for (int i=0; i < ret.length; i++)
+        for (int i=0; i < ret.length; i++) {
             ret[i] = arrayList.get(i);
+        }
         return ret;
     }
 
     private static double[] toDoubleArray(ArrayList<Double> arrayList) {
         double[] ret = new double[arrayList.size()];
-        for (int i=0; i < ret.length; i++)
+        for (int i=0; i < ret.length; i++) {
             ret[i] = arrayList.get(i);
+        }
         return ret;
     }
 
     private static boolean[] toBooleanArray(ArrayList<Boolean> arrayList) {
         boolean[] ret = new boolean[arrayList.size()];
-        for (int i=0; i < ret.length; i++)
+        for (int i=0; i < ret.length; i++) {
             ret[i] = arrayList.get(i);
+        }
         return ret;
     }
 
     private static String[] toStringArray(ArrayList<String> arrayList) {
         String[] ret = new String[arrayList.size()];
-        for (int i=0; i < ret.length; i++)
+        for (int i=0; i < ret.length; i++) {
             ret[i] = arrayList.get(i);
+        }
         return ret;
     }
 
