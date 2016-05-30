@@ -108,5 +108,10 @@ public class RctManager {
 
         return currentReactContext.getJSModule(RCTDeviceEventEmitter.class);
     }
+
+    public void onDestroy() {
+        mReactManager = null;
+        sInstance = null;
+    }
 }
 

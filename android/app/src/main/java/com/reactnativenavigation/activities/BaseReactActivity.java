@@ -208,6 +208,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         if (mReactInstanceManager != null && (activity == null || activity.isFinishing())) {
             Log.i(TAG, "Destroying ReactInstanceManager");
             mReactInstanceManager.onHostDestroy();
+            RctManager.getInstance().onDestroy();
         } else {
             Log.d(TAG, "Not destroying ReactInstanceManager");
         }
