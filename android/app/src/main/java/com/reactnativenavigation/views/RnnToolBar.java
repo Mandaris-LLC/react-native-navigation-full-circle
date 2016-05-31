@@ -164,6 +164,15 @@ public class RnnToolBar extends Toolbar {
 
             Menu menu = ((BaseReactActivity) context).getMenu();
 
+            if (menu == null) {
+                RnnToolBar toolBar = mToolbarWR.get();
+                if (toolBar != null) {
+                    toolBar.mSetupToolbarTask = null;
+                }
+                mToolbarWR.clear();
+                return;
+            }
+
             // Remove prev screen buttons
             for (Button btn : mOldButtons) {
                 menu.removeItem(btn.getItemId());

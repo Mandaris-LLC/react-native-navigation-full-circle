@@ -42,6 +42,7 @@ public class TabActivity extends BaseReactActivity {
         setNavigationStyle(initialScreen);
         mToolbar.setScreens(screens);
         mToolbar.setTitle(initialScreen.title);
+        mToolbar.setupToolbarButtonsAsync(initialScreen);
         setSupportActionBar(mToolbar);
     }
 
