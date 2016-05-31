@@ -13,7 +13,6 @@ import com.facebook.react.bridge.ReadableNativeMap;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.activities.BottomTabActivity;
 import com.reactnativenavigation.activities.SingleScreenActivity;
-import com.reactnativenavigation.activities.TabActivity;
 import com.reactnativenavigation.controllers.ModalController;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.modal.RnnModal;

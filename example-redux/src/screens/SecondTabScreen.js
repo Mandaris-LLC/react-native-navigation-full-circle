@@ -19,12 +19,6 @@ class SecondTabScreen extends Component {
     navBarTranslucent: true
   };
 
-  static propTypes = {
-    str: PropTypes.string.isRequired,
-    obj: PropTypes.object.isRequired,
-    num: PropTypes.number.isRequired
-  };
-
   constructor(props) {
     super(props);
     this.buttonsCounter = 0;

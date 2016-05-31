@@ -94,7 +94,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean ret = super.onCreateOptionsMenu(menu);
@@ -142,23 +141,21 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         setNavigationStyle(mScreenStacks.get(mCurrentStackPosition).peek());
     }
 
-
     private static class SetupTabsTask extends AsyncTask<Void, Void, Map<Screen, Drawable>> {
-
-        private BottomTabActivity activity;
-        private ArrayList<Screen> screens;
+        private BottomTabActivity mActivity;
+        private ArrayList<Screen> mScreens;
 
         public SetupTabsTask(BottomTabActivity context, ArrayList<Screen> screens) {
-            this.activity = context;
-            this.screens = screens;
+            mActivity = context;
+            mScreens = screens;
         }
 
         @Override
         protected Map<Screen, Drawable> doInBackground(Void... params) {
             Map<Screen, Drawable> icons = new HashMap<>();
-            for (Screen screen : this.screens) {
+            for (Screen screen : mScreens) {
                 if (screen.icon != null) {
-                    icons.put(screen, screen.getIcon(this.activity));
+                    icons.put(screen, screen.getIcon(this.mActivity));
                 }
             }
             return icons;
@@ -166,7 +163,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
 
         @Override
         protected void onPostExecute(Map<Screen, Drawable> icons) {
-            activity.setTabsWithIcons(this.screens, icons);
+            mActivity.setTabsWithIcons(mScreens, icons);
         }
     }
 

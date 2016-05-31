@@ -15,8 +15,6 @@ import java.net.URL;
  * Created by yedidyak on 29/05/2016.
  */
 public class IconUtils {
-
-
     public static final String LOCAL_RESOURCE_URI_SCHEME = "res";
     private static ResourceDrawableIdHelper sResDrawableIdHelper = new ResourceDrawableIdHelper();
 
