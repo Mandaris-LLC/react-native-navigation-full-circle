@@ -95,7 +95,7 @@ class FirstTabScreen extends Component {
       title: "More",
       screen: "example.PushedScreen",
       passProps: {
-        passed: 'This is a prop passed in \'navigator.push()\'!',
+        str: 'This is a prop passed in \'navigator.push()\'!',
         obj: {
           str: 'This is a prop passed in an object!',
           arr: [
@@ -114,7 +114,7 @@ class FirstTabScreen extends Component {
       title: "Modal Screen",
       screen: "example.PushedScreen",
       passProps: {
-        passed: 'This is a prop passed in \'navigator.showModal()\'!',
+        str: 'This is a prop passed in \'navigator.showModal()\'!',
         obj: {
           str: 'This is a prop passed in an object!',
           arr: [

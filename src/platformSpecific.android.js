@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
-import {
-  AppRegistry
-} from 'react-native';
+import {AppRegistry} from 'react-native';
 
 import Navigation from './Navigation';
 import utils from './utils';
 
-import {
-  RctActivity
-} from 'react-native-navigation';
+import {RctActivity} from 'react-native-navigation';
 
 const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
@@ -22,6 +18,7 @@ function startSingleScreenApp(params) {
   addNavigatorParams(screen);
   addNavigatorButtons(screen);
   addNavigationStyleParams(screen);
+  screen.passProps = params.passProps;
   RctActivity.startSingleScreenApp(screen);
 }
 
@@ -41,6 +38,7 @@ function startTabBasedApp(params) {
         tab.icon = icon.uri;
       }
     }
+    tab.passProps = params.passProps;
   });
 
   RctActivity.startTabBasedApp(params.tabs, params.tabsStyle);
