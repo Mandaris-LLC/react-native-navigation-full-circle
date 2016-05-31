@@ -9,12 +9,15 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableNativeMap;
 import com.reactnativenavigation.activities.BaseReactActivity;
+import com.reactnativenavigation.activities.BottomTabActivity;
 import com.reactnativenavigation.activities.SingleScreenActivity;
 import com.reactnativenavigation.activities.TabActivity;
 import com.reactnativenavigation.controllers.ModalController;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.modal.RnnModal;
+import com.reactnativenavigation.utils.BridgeUtils;
 import com.reactnativenavigation.utils.ContextProvider;
 
 import java.util.ArrayList;
@@ -35,14 +38,17 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startTabBasedApp(ReadableArray screens) {
+    public void startTabBasedApp(ReadableArray screens, ReadableMap style) {
         Activity context = ContextProvider.getActivityContext();
         if (context != null && !context.isFinishing()) {
-            Intent intent = new Intent(context, TabActivity.class);
+            Intent intent = new Intent(context, BottomTabActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
             Bundle extras = new Bundle();
-            extras.putSerializable(TabActivity.EXTRA_SCREENS, createScreens(screens));
+            extras.putSerializable(BottomTabActivity.EXTRA_SCREENS, createScreens(screens));
+            if (style != null) {
+                BridgeUtils.addMapToBundle(((ReadableNativeMap) style).toHashMap(), extras);
+            }
             intent.putExtras(extras);
             
             context.startActivity(intent);

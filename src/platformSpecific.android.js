@@ -35,9 +35,15 @@ function startTabBasedApp(params) {
     addNavigatorParams(tab, null, idx);
     addNavigatorButtons(tab);
     addNavigationStyleParams(tab);
+    if (tab.icon) {
+      const icon = resolveAssetSource(tab.icon);
+      if (icon) {
+        tab.icon = icon.uri;
+      }
+    }
   });
 
-  RctActivity.startTabBasedApp(params.tabs);
+  RctActivity.startTabBasedApp(params.tabs, params.tabsStyle);
 }
 
 function navigatorPush(navigator, params) {

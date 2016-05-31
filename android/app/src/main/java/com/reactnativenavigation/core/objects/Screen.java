@@ -1,5 +1,7 @@
 package com.reactnativenavigation.core.objects;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +9,7 @@ import android.support.annotation.Nullable;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeMap;
+import com.reactnativenavigation.utils.IconUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ public class Screen extends JsonObject implements Serializable {
     private static final String KEY_TAB_NORMAL_TEXT_COLOR = "tabNormalTextColor";
     private static final String KEY_TAB_SELECTED_TEXT_COLOR = "tabSelectedTextColor";
     private static final String KEY_TAB_INDICATOR_COLOR = "tabIndicatorColor";
-    public static final String KEY_PROPS = "passProps";
+    private static final String KEY_PROPS = "passProps";
 
     public final String title;
     public final String label;
@@ -45,7 +48,7 @@ public class Screen extends JsonObject implements Serializable {
     public final String screenInstanceId;
     public final String navigatorId;
     public final String navigatorEventId;
-    public final int icon;
+    public final String icon;
     public final ArrayList<Button> buttons;
     public HashMap<String, Object> passedProps = new HashMap<>();
 
@@ -71,7 +74,7 @@ public class Screen extends JsonObject implements Serializable {
         screenInstanceId = getString(screen, KEY_SCREEN_INSTANCE_ID);
         navigatorId = getString(screen, KEY_NAVIGATOR_ID);
         navigatorEventId = getString(screen, KEY_NAVIGATOR_EVENT_ID);
-        icon = getInt(screen, KEY_ICON);
+        icon = getString(screen, KEY_ICON);
         if(screen.hasKey(KEY_PROPS)) {
             passedProps = ((ReadableNativeMap) screen.getMap(KEY_PROPS)).toHashMap();
         }
@@ -88,6 +91,10 @@ public class Screen extends JsonObject implements Serializable {
             }
         }
         return ret;
+    }
+
+    public Drawable getIcon(Context ctx) {
+        return IconUtils.getIcon(ctx, icon);
     }
 
     public void setToolbarStyle(ReadableMap screen) {

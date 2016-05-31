@@ -3,6 +3,7 @@
 
     <application>
         <activity android:name="com.reactnativenavigation.activities.TabActivity" />
+        <activity android:name="com.reactnativenavigation.activities.BottomTabActivity" />
         <activity android:name="com.reactnativenavigation.activities.SingleScreenActivity" />
     </application>
 

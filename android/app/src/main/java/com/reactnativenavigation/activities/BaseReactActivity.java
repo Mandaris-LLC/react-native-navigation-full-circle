@@ -135,6 +135,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ContextProvider.setActivityContext(this);
         mReactInstanceManager = createReactInstanceManager();
         handleOnCreate();
     }

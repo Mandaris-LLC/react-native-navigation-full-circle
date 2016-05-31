@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.BuildConfig;
+import com.reactnativenavigation.utils.IconUtils;
 import com.reactnativenavigation.utils.ResourceDrawableIdHelper;
 
 import java.io.Serializable;
@@ -24,12 +25,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Button extends JsonObject implements Serializable {
     private static final long serialVersionUID = -570145217281069067L;
 
-    public static final String LOCAL_RESOURCE_URI_SCHEME = "res";
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_ICON = "icon";
-
-    private static ResourceDrawableIdHelper sResDrawableIdHelper = new ResourceDrawableIdHelper();
 
     public String id;
     public String title;
@@ -49,47 +47,7 @@ public class Button extends JsonObject implements Serializable {
     }
 
     public Drawable getIcon(Context ctx) {
-        if (mIconSource == null) {
-            return null;
-        }
-
-        try {
-            Drawable icon;
-            Uri iconUri = getIconUri(ctx);
-
-            if (LOCAL_RESOURCE_URI_SCHEME.equals(iconUri.getScheme())) {
-                icon = sResDrawableIdHelper.getResourceDrawable(ctx, mIconSource);
-            } else {
-                URL url = new URL(iconUri.toString());
-                Bitmap bitmap = BitmapFactory.decodeStream(url.openStream());
-                icon = new BitmapDrawable(bitmap);
-            }
-            return icon;
-        } catch (Exception e) {
-            if (BuildConfig.DEBUG) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    private Uri getIconUri(Context context) {
-        Uri ret = null;
-        if (mIconSource != null) {
-            try {
-                ret = Uri.parse(mIconSource);
-                // Verify scheme is set, so that relative uri (used by static resources) are not handled.
-                if (ret.getScheme() == null) {
-                    ret = null;
-                }
-            } catch (Exception e) {
-                // Ignore malformed uri, then attempt to extract resource ID.
-            }
-            if (ret == null) {
-                ret = sResDrawableIdHelper.getResourceDrawableUri(context, mIconSource);
-            }
-        }
-        return ret;
+       return IconUtils.getIcon(ctx, mIconSource);
     }
 
     public int getItemId() {
