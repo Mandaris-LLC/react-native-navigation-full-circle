@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.Menu;
@@ -70,6 +72,12 @@ public class RnnToolBar extends Toolbar {
         } else {
             resetTitleTextColor();
         }
+        
+        if (screen.toolBarHidden != null && screen.toolBarHidden) {
+            hideToolbar();
+        } else {
+            showToolbar();
+        }
     }
 
     private void resetBackground() {
@@ -92,6 +100,20 @@ public class RnnToolBar extends Toolbar {
     public void setupToolbarButtonsAsync(Screen oldScreen, Screen newScreen) {
         if (mSetupToolbarTask == null) {
             mSetupToolbarTask = new SetupToolbarButtonsTask(this, oldScreen, newScreen).execute();
+        }
+    }
+
+    private void showToolbar() {
+        ActionBar actionBar = ContextProvider.getActivityContext().getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.show();
+        }
+    }
+
+    private void hideToolbar() {
+        ActionBar actionBar = ContextProvider.getActivityContext().getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
         }
     }
 
@@ -124,6 +146,18 @@ public class RnnToolBar extends Toolbar {
     @SuppressWarnings({"ConstantConditions"})
     public void hideBackButton() {
         ContextProvider.getActivityContext().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    @UiThread
+    public void updateToolbar(Screen screen) {
+        setSupportActionBar();
+        setTitle(screen.title);
+        setStyle(screen);
+        setupToolbarButtonsAsync(screen);
+    }
+
+    private void setSupportActionBar() {
+        ((AppCompatActivity) getContext()).setSupportActionBar(this);
     }
 
     private static class SetupToolbarButtonsTask extends AsyncTask<Void, Void, Map<String, Drawable>> {
