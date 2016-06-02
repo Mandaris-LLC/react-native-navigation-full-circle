@@ -134,7 +134,7 @@ public class RnnToolBar extends Toolbar {
 
         public SetupToolbarButtonsTask(RnnToolBar toolBar, Screen oldScreen, Screen newScreen) {
             mToolbarWR = new WeakReference<>(toolBar);
-            mOldButtons = oldScreen == null ? Collections.EMPTY_LIST : oldScreen.getButtons();
+            mOldButtons = oldScreen == null ? null : oldScreen.getButtons();
             mNewButtons = newScreen.getButtons();
             mTintColor = newScreen.buttonsTintColor;
         }
@@ -174,8 +174,13 @@ public class RnnToolBar extends Toolbar {
             }
 
             // Remove prev screen buttons
-            for (Button btn : mOldButtons) {
-                menu.removeItem(btn.getItemId());
+            if(mOldButtons == null) {
+                menu.clear();
+            }
+            else {
+                for (Button btn : mOldButtons) {
+                    menu.removeItem(btn.getItemId());
+                }
             }
 
             // Add new screen buttons

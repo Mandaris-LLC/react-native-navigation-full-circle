@@ -49,7 +49,7 @@ public class Screen extends JsonObject implements Serializable {
     public final String navigatorId;
     public final String navigatorEventId;
     public final String icon;
-    public final ArrayList<Button> buttons;
+    public ArrayList<Button> buttons;
     public HashMap<String, Object> passedProps = new HashMap<>();
 
     // Navigation styling
@@ -80,6 +80,10 @@ public class Screen extends JsonObject implements Serializable {
         }
         buttons = getButtons(screen);
         setToolbarStyle(screen);
+    }
+
+    public void setButtons(ReadableMap params) {
+        this.buttons = getButtons(params);
     }
 
     private ArrayList<Button> getButtons(ReadableMap screen) {
