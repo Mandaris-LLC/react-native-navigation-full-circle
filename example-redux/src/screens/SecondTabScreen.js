@@ -23,6 +23,7 @@ class SecondTabScreen extends Component {
     super(props);
     this.buttonsCounter = 0;
   }
+
   render() {
     return (
       <ScrollView style={{flex: 1}}>
@@ -44,13 +45,49 @@ class SecondTabScreen extends Component {
           <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
           <Text style={{fontWeight: '500'}}>Array prop: {this.props.obj.arr[0].str}</Text>
 
+          <TouchableOpacity onPress={ this.onSetButton.bind(this) }>
+            <Text style={styles.button}>Set a button</Text>
+          </TouchableOpacity>
+
         </View>
 
       </ScrollView>
     );
   }
+
   onIncrementPress() {
     this.props.dispatch(counterActions.increment());
+  }
+
+  onSetButton() {
+    this.props.navigator.setButtons({
+      rightButtons: [
+        {
+          title: 'Right',
+          icon: require('../../img/navicon_add.png'),
+          id: 'right'
+        }
+      ],
+      leftButtons: [
+        {
+          title: 'Left',
+          icon: require('../../img/navicon_add.png'),
+          id: 'left'
+        }
+      ]
+    });
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  onNavigatorEvent(event) {
+    switch (event.id) {
+      case 'left':
+        Alert.alert('NavBar', 'Left button pressed');
+        break;
+      case 'right':
+        Alert.alert('NavBar', 'Right button pressed');
+        break;
+    }
   }
 }
 

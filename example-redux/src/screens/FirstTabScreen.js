@@ -58,6 +58,7 @@ class FirstTabScreen extends Component {
         break;
     }
   }
+
   render() {
     return (
       <View style={{flex: 1, padding: 20}}>
