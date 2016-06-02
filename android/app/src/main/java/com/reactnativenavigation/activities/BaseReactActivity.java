@@ -19,6 +19,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
@@ -317,5 +318,13 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @Override
     public void invokeDefaultOnBackPressed() {
         super.onBackPressed();
+    }
+
+    public void setNavigationButtons(ReadableMap buttons){
+        if (mToolbar == null) {
+            return;
+        }
+        getCurrentScreen().setButtons(buttons);
+        mToolbar.setupToolbarButtonsAsync(getCurrentScreen());
     }
 }

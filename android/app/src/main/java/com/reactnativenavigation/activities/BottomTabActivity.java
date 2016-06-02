@@ -138,7 +138,8 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         mContentFrame.removeAllViews();
         mContentFrame.addView(mScreenStacks.get(position), new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         mCurrentStackPosition = position;
-        setNavigationStyle(mScreenStacks.get(mCurrentStackPosition).peek());
+        mToolbar.setupToolbarButtonsAsync(getCurrentScreen());
+        setNavigationStyle(getCurrentScreen());
     }
 
     private static class SetupTabsTask extends AsyncTask<Void, Void, Map<Screen, Drawable>> {

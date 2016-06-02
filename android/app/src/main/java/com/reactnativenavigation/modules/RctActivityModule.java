@@ -78,6 +78,20 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void setNavigatorButtons(final ReadableMap buttons) {
+        final BaseReactActivity context = ContextProvider.getActivityContext();
+        if (context == null || context.isFinishing()) {
+            return;
+        }
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                context.setNavigationButtons(buttons);
+            }
+        });
+    }
+
+    @ReactMethod
     public void navigatorPush(final ReadableMap skreen) {
         final Screen screen = new Screen(skreen);
         final BaseReactActivity context = ContextProvider.getActivityContext();
@@ -101,12 +115,12 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
         }
 
         // No Modal is displayed, Push to activity
-         context.runOnUiThread(new Runnable() {
-                 @Override
-                 public void run() {
-                     context.push(screen);
-                 }
-             });
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                context.push(screen);
+            }
+        });
     }
 
     @ReactMethod

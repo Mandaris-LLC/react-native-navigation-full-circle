@@ -51,6 +51,20 @@ function navigatorPush(navigator, params) {
   RctActivity.navigatorPush(params);
 }
 
+function navigatorSetButtons(navigator, navigatorEventID, params) {
+  if (params.rightButtons) {
+    params.rightButtons.forEach(function(button) {
+      if (button.icon) {
+        const icon = resolveAssetSource(button.icon);
+        if (icon) {
+          button.icon = icon.uri;
+        }
+      }
+    });
+  }
+  RctActivity.setNavigatorButtons(params);
+}
+
 function navigatorPop(navigator, params) {
   RctActivity.navigatorPop(navigator);
 }
@@ -105,5 +119,6 @@ export default {
   navigatorPop,
   showModal,
   dismissModal,
-  dismissAllModals
+  dismissAllModals,
+  navigatorSetButtons
 }
