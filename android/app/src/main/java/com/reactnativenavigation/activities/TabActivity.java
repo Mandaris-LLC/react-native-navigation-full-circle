@@ -39,11 +39,9 @@ public class TabActivity extends BaseReactActivity {
 
     private void setupToolbar(ArrayList<Screen> screens) {
         Screen initialScreen = screens.get(0);
-        setNavigationStyle(initialScreen);
         mToolbar.setScreens(screens);
-        mToolbar.setTitle(initialScreen.title);
-        mToolbar.setupToolbarButtonsAsync(initialScreen);
-        setSupportActionBar(mToolbar);
+        mToolbar.updateToolbar(initialScreen);
+        setNavigationStyle(initialScreen);
     }
 
     @Override
@@ -70,6 +68,7 @@ public class TabActivity extends BaseReactActivity {
     @Override
     public void push(Screen screen) {
         super.push(screen);
+        setNavigationStyle(screen);
         mAdapter.push(screen);
     }
 
@@ -77,7 +76,7 @@ public class TabActivity extends BaseReactActivity {
     public Screen pop(String navigatorId) {
         super.pop(navigatorId);
         Screen screen = mAdapter.pop(navigatorId);
-        setNavigationStyle(screen);
+        setNavigationStyle(getCurrentScreen());
         return screen;
     }
 

@@ -29,6 +29,7 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
     private ScreenStack mScreenStack;
     private View mContentView;
     private Screen mScreen;
+    private RnnToolBar mToolBar;
 
     public RnnModal(BaseReactActivity context, Screen screen) {
         super(context, R.style.Modal);
@@ -41,13 +42,10 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
     private void init(final Context context) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         mContentView = LayoutInflater.from(context).inflate(R.layout.modal_layout, null, false);
-        RnnToolBar toolBar = (RnnToolBar) mContentView.findViewById(R.id.toolbar);
+        mToolBar = (RnnToolBar) mContentView.findViewById(R.id.toolbar);
         mScreenStack = (ScreenStack) mContentView.findViewById(R.id.screenStack);
-
         setContentView(mContentView);
-        toolBar.setStyle(mScreen);
-        toolBar.setTitle(mScreen.title);
-        toolBar.setupToolbarButtonsAsync(mScreen);
+        mToolBar.updateToolbar(mScreen);
         mScreenStack.push(mScreen, new RctView.OnDisplayedListener() {
             @Override
             public void onDisplayed() {
@@ -67,10 +65,17 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
 
     public void push(Screen screen) {
         mScreenStack.push(screen);
+        mToolBar.updateToolbar(mScreen);
     }
 
     public Screen pop() {
-        return mScreenStack.pop();
+        if (mScreenStack.getStackSize() > 1) {
+            return mScreenStack.pop();
+        } else {
+            ModalController.getInstance().remove();
+            super.onBackPressed();
+            return null;
+        }
     }
 
     @Override
