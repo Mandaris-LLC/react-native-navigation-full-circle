@@ -63,16 +63,10 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     }
 
     private void setupToolbar(ArrayList<Screen> screens) {
-        Screen initialScreen = screens.get(0);
         mToolbar.setScreens(screens);
-        mToolbar.updateToolbar(initialScreen);
+        Screen initialScreen = screens.get(0);
+        mToolbar.update(initialScreen);
         setNavigationStyle(initialScreen);
-    }
-
-    @Override
-    public void setNavigationStyle(Screen screen) {
-        super.setNavigationStyle(screen);
-        mToolbar.setTitle(screen.title);
     }
 
     private void setupTabs(Bundle style) {
@@ -103,7 +97,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     @Override
     public void push(Screen screen) {
         super.push(screen);
-        setNavigationStyle(screen);
         mScreenStacks.get(mCurrentStackPosition).push(screen);
     }
 
@@ -111,7 +104,9 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     public Screen pop(String navigatorId) {
         super.pop(navigatorId);
         Screen screen = mScreenStacks.get(mCurrentStackPosition).pop();
-        setNavigationStyle(getCurrentScreen());
+        Screen currentScreen = getCurrentScreen();
+        setNavigationStyle(currentScreen);
+        mToolbar.update(currentScreen);
         return screen;
     }
 

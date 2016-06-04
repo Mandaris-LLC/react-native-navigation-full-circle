@@ -23,7 +23,6 @@ import com.reactnativenavigation.utils.ContextProvider;
 import com.reactnativenavigation.utils.ImageUtils;
 
 import java.lang.ref.WeakReference;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,16 +147,17 @@ public class RnnToolBar extends Toolbar {
         ContextProvider.getActivityContext().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
+    /**
+     * Update the ToolBar from screen. This function sets any properties that are defined
+     * in the screen.
+     * @param screen The currently displayed screen
+     */
     @UiThread
-    public void updateToolbar(Screen screen) {
-        setSupportActionBar();
+    public void update(Screen screen) {
+        ((AppCompatActivity) getContext()).setSupportActionBar(this);
         setTitle(screen.title);
         setStyle(screen);
         setupToolbarButtonsAsync(screen);
-    }
-
-    private void setSupportActionBar() {
-        ((AppCompatActivity) getContext()).setSupportActionBar(this);
     }
 
     private static class SetupToolbarButtonsTask extends AsyncTask<Void, Void, Map<String, Drawable>> {
