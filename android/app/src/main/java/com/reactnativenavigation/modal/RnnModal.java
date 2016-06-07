@@ -67,13 +67,12 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
     }
 
     public Screen pop() {
+        Screen popped = mScreenStack.pop();
         if (mScreenStack.isEmpty()) {
             ModalController.getInstance().remove();
-            super.onBackPressed();
-            return null;
-        } else {
-            return mScreenStack.pop();
+            dismiss();
         }
+        return popped;
     }
 
     @Override

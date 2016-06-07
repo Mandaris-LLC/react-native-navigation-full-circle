@@ -144,14 +144,15 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
                 });
             }
             return;
+        } else {
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    context.pop(navigatorId);
+                }
+            });
         }
 
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                context.pop(navigatorId);
-            }
-        });
     }
 
     @ReactMethod
