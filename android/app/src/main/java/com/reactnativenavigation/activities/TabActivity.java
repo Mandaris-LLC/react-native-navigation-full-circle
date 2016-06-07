@@ -13,8 +13,10 @@ import com.reactnativenavigation.views.RnnToolBar;
 import java.util.ArrayList;
 
 /**
+ * This class is currently not supported and will be removed in future release.
  * Created by guyc on 02/04/16.
  */
+@Deprecated
 public class TabActivity extends BaseReactActivity {
     public static final String EXTRA_SCREENS = "extraScreens";
 
@@ -39,11 +41,9 @@ public class TabActivity extends BaseReactActivity {
 
     private void setupToolbar(ArrayList<Screen> screens) {
         Screen initialScreen = screens.get(0);
-        setNavigationStyle(initialScreen);
         mToolbar.setScreens(screens);
-        mToolbar.setTitle(initialScreen.title);
-        mToolbar.setupToolbarButtonsAsync(initialScreen);
-        setSupportActionBar(mToolbar);
+        mToolbar.update(initialScreen);
+        setNavigationStyle(initialScreen);
     }
 
     @Override
@@ -70,6 +70,7 @@ public class TabActivity extends BaseReactActivity {
     @Override
     public void push(Screen screen) {
         super.push(screen);
+        setNavigationStyle(screen);
         mAdapter.push(screen);
     }
 
@@ -77,7 +78,7 @@ public class TabActivity extends BaseReactActivity {
     public Screen pop(String navigatorId) {
         super.pop(navigatorId);
         Screen screen = mAdapter.pop(navigatorId);
-        setNavigationStyle(screen);
+        setNavigationStyle(getCurrentScreen());
         return screen;
     }
 

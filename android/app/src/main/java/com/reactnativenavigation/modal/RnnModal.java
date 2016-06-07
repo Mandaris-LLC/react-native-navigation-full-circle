@@ -28,27 +28,23 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
 
     private ScreenStack mScreenStack;
     private View mContentView;
-    private Screen mScreen;
+    private RnnToolBar mToolBar;
 
     public RnnModal(BaseReactActivity context, Screen screen) {
         super(context, R.style.Modal);
-        mScreen = screen;
         ModalController.getInstance().add(this);
-        init(context);
+        init(context, screen);
     }
 
     @SuppressLint("InflateParams")
-    private void init(final Context context) {
+    private void init(final Context context, Screen screen) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         mContentView = LayoutInflater.from(context).inflate(R.layout.modal_layout, null, false);
-        RnnToolBar toolBar = (RnnToolBar) mContentView.findViewById(R.id.toolbar);
+        mToolBar = (RnnToolBar) mContentView.findViewById(R.id.toolbar);
         mScreenStack = (ScreenStack) mContentView.findViewById(R.id.screenStack);
-
         setContentView(mContentView);
-        toolBar.setStyle(mScreen);
-        toolBar.setTitle(mScreen.title);
-        toolBar.setupToolbarButtonsAsync(mScreen);
-        mScreenStack.push(mScreen, new RctView.OnDisplayedListener() {
+        mToolBar.update(screen);
+        mScreenStack.push(screen, new RctView.OnDisplayedListener() {
             @Override
             public void onDisplayed() {
                 Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_up);
@@ -61,25 +57,32 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
         if (SdkSupports.lollipop()) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            StyleHelper.setWindowStyle(window, context.getApplicationContext(), mScreen);
+            StyleHelper.setWindowStyle(window, context.getApplicationContext(), screen);
         }
     }
 
     public void push(Screen screen) {
         mScreenStack.push(screen);
+        mToolBar.update(screen);
     }
 
     public Screen pop() {
-        return mScreenStack.pop();
+        if (mScreenStack.isEmpty()) {
+            ModalController.getInstance().remove();
+            super.onBackPressed();
+            return null;
+        } else {
+            return mScreenStack.pop();
+        }
     }
 
     @Override
     public void onBackPressed() {
-        if (mScreenStack.getStackSize() > 1) {
-            mScreenStack.pop();
-        } else {
+        if (mScreenStack.isEmpty()) {
             ModalController.getInstance().remove();
             super.onBackPressed();
+        } else {
+            mScreenStack.pop();
         }
     }
 

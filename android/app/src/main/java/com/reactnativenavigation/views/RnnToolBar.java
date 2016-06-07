@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.Menu;
@@ -21,7 +23,6 @@ import com.reactnativenavigation.utils.ContextProvider;
 import com.reactnativenavigation.utils.ImageUtils;
 
 import java.lang.ref.WeakReference;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,12 @@ public class RnnToolBar extends Toolbar {
         } else {
             resetTitleTextColor();
         }
+        
+        if (screen.toolBarHidden != null && screen.toolBarHidden) {
+            hideToolbar();
+        } else {
+            showToolbar();
+        }
     }
 
     private void resetBackground() {
@@ -92,6 +99,20 @@ public class RnnToolBar extends Toolbar {
     public void setupToolbarButtonsAsync(Screen oldScreen, Screen newScreen) {
         if (mSetupToolbarTask == null) {
             mSetupToolbarTask = new SetupToolbarButtonsTask(this, oldScreen, newScreen).execute();
+        }
+    }
+
+    private void showToolbar() {
+        ActionBar actionBar = ContextProvider.getActivityContext().getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.show();
+        }
+    }
+
+    private void hideToolbar() {
+        ActionBar actionBar = ContextProvider.getActivityContext().getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
         }
     }
 
@@ -124,6 +145,19 @@ public class RnnToolBar extends Toolbar {
     @SuppressWarnings({"ConstantConditions"})
     public void hideBackButton() {
         ContextProvider.getActivityContext().getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    /**
+     * Update the ToolBar from screen. This function sets any properties that are defined
+     * in the screen.
+     * @param screen The currently displayed screen
+     */
+    @UiThread
+    public void update(Screen screen) {
+        ((AppCompatActivity) getContext()).setSupportActionBar(this);
+        setTitle(screen.title);
+        setStyle(screen);
+        setupToolbarButtonsAsync(screen);
     }
 
     private static class SetupToolbarButtonsTask extends AsyncTask<Void, Void, Map<String, Drawable>> {

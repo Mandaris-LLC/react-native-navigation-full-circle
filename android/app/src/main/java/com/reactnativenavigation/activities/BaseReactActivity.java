@@ -219,10 +219,13 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @CallSuper
     public void push(Screen screen) {
         setNavigationStyle(screen);
-        if (mToolbar != null &&
-            getCurrentNavigatorId().equals(screen.navigatorId) &&
-            getScreenStackSize() >= 1) {
-            mToolbar.showBackButton(screen);
+        if (mToolbar != null) {
+            mToolbar.update(screen);
+
+            if (getCurrentNavigatorId().equals(screen.navigatorId) &&
+                getScreenStackSize() >= 1) {
+                mToolbar.showBackButton(screen);
+            }
         }
     }
 
