@@ -40,6 +40,8 @@ import java.util.Map;
  */
 public class RnnToolBar extends Toolbar {
 
+    private static final int ANIMATE_DURATION = 180;
+
     private List<Screen> mScreens;
     private AsyncTask mSetupToolbarTask;
     private Drawable mBackground;
@@ -81,7 +83,7 @@ public class RnnToolBar extends Toolbar {
         } else {
             resetTitleTextColor();
         }
-        
+
         if (screen.toolBarHidden != null && screen.toolBarHidden) {
             hideToolbar();
         } else {
@@ -112,18 +114,28 @@ public class RnnToolBar extends Toolbar {
         }
     }
 
-    private void showToolbar() {
+    public void showToolbar(boolean animated) {
         ActionBar actionBar = ((AppCompatActivity) getContext()).getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setShowHideAnimationEnabled(animated);
             actionBar.show();
         }
     }
 
-    private void hideToolbar() {
+    public void hideToolbar(boolean animated) {
         ActionBar actionBar = ((AppCompatActivity) getContext()).getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setShowHideAnimationEnabled(animated);
             actionBar.hide();
         }
+    }
+
+    private void showToolbar() {
+        showToolbar(false);
+    }
+
+    private void hideToolbar() {
+        hideToolbar(false);
     }
 
     @SuppressWarnings({"ConstantConditions"})

@@ -382,4 +382,18 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     public void toggleTabs(ReadableMap params) {
         return;
     }
+
+    public void toggleNavigationBar(ReadableMap params) {
+        if (mToolbar == null) {
+            return;
+        }
+
+        boolean hide = params.getBoolean(KEY_HIDDEN);
+        boolean animated = params.getBoolean(KEY_ANIMATED);
+        if (hide) {
+            mToolbar.hideToolbar(animated);
+        } else {
+            mToolbar.showToolbar(animated);
+        }
+    }
 }
