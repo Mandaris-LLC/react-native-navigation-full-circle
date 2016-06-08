@@ -84,6 +84,13 @@ function navigatorResetTo(navigator, params) {
   RctActivity.navigatorResetTo(params);
 }
 
+function navigatorSetTabBadge(navigator, params) {
+  RctActivity.setTabBadge({
+    tabIndex: params.tabIndex,
+    badge: params.badge
+  });
+}
+
 function navigatorSetTitle(navigator, params) {
   RctActivity.setNavigatorTitle(params);
 }
@@ -157,6 +164,7 @@ export default {
   dismissModal,
   dismissAllModals,
   navigatorSetButtons,
+  navigatorSetTabBadge,
   navigatorSetTitle,
   navigatorSwitchToTab,
   navigatorToggleTabs
