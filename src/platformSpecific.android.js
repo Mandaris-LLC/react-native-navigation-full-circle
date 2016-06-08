@@ -88,6 +88,19 @@ function navigatorSetTitle(navigator, params) {
   RctActivity.setNavigatorTitle(params);
 }
 
+function navigatorSwitchToTab(navigator, params) {
+  RctActivity.switchToTab({
+    tabIndex: params.tabIndex
+  });
+}
+
+function navigatorToggleTabs(navigator, params) {
+  RctActivity.toggleNavigatorTabs({
+    hidden: params.to == 'hidden',
+    animated: !(params.animated === false)
+  });
+}
+
 function showModal(params) {
   addNavigatorParams(params);
   addNavigatorButtons(params);
@@ -144,5 +157,7 @@ export default {
   dismissModal,
   dismissAllModals,
   navigatorSetButtons,
-  navigatorSetTitle
+  navigatorSetTitle,
+  navigatorSwitchToTab,
+  navigatorToggleTabs
 }
