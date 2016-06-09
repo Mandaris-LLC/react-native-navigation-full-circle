@@ -69,6 +69,13 @@ function navigatorPop(navigator, params) {
   RctActivity.navigatorPop(navigator);
 }
 
+function navigatorPopToRoot(navigator, params) {
+  RctActivity.navigatorPopToRoot({
+    navigatorID: navigator.navigatorID,
+    animated: !(params.animated !== false)
+  });
+}
+
 function showModal(params) {
   addNavigatorParams(params);
   addNavigatorButtons(params);
@@ -117,6 +124,7 @@ export default {
   startSingleScreenApp,
   navigatorPush,
   navigatorPop,
+  navigatorPopToRoot,
   showModal,
   dismissModal,
   dismissAllModals,
