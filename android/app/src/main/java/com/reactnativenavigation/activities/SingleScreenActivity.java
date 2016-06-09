@@ -44,15 +44,14 @@ public class SingleScreenActivity extends BaseReactActivity {
     public void push(Screen screen) {
         super.push(screen);
         mScreenStack.push(screen);
+        updateStyles();
     }
 
     @Override
     public Screen pop(String navigatorId) {
         super.pop(navigatorId);
         Screen screen = mScreenStack.pop();
-        Screen currentScreen = getCurrentScreen();
-        setNavigationStyle(currentScreen);
-        mToolbar.update(currentScreen);
+        updateStyles();
         return screen;
     }
 
