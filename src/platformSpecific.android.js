@@ -77,6 +77,13 @@ function navigatorPopToRoot(navigator, params) {
   });
 }
 
+function navigatorResetTo(navigator, params) {
+  addNavigatorParams(params, navigator);
+  addNavigatorButtons(params);
+  addNavigationStyleParams(params);
+  RctActivity.navigatorResetTo(params);
+}
+
 function showModal(params) {
   addNavigatorParams(params);
   addNavigatorButtons(params);
@@ -126,6 +133,7 @@ export default {
   navigatorPush,
   navigatorPop,
   navigatorPopToRoot,
+  navigatorResetTo,
   showModal,
   dismissModal,
   dismissAllModals,

@@ -242,6 +242,16 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         return null;
     }
 
+    @CallSuper
+    public Screen resetTo(Screen screen) {
+        StyleHelper.updateStyles(mToolbar, screen);
+        if (mToolbar != null) {
+            mToolbar.hideBackButton();
+        }
+
+        return null;
+    }
+
     protected abstract String getCurrentNavigatorId();
 
     @CallSuper
