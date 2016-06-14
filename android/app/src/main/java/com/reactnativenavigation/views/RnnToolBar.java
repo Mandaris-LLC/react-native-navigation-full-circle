@@ -234,6 +234,10 @@ public class RnnToolBar extends Toolbar {
                     }
                     item.setIcon(icon);
                 }
+
+                if (button.disabled) {
+                    item.setEnabled(false);
+                }
             }
 
             RnnToolBar toolBar = mToolbarWR.get();
