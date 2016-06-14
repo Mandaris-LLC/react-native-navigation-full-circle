@@ -169,12 +169,14 @@ public class RnnToolBar extends Toolbar {
         private final List<Button> mNewButtons;
         private final WeakReference<RnnToolBar> mToolbarWR;
         private final Integer mTintColor;
+        private final int mIconDimensions;
 
         public SetupToolbarButtonsTask(RnnToolBar toolBar, Screen oldScreen, Screen newScreen) {
             mToolbarWR = new WeakReference<>(toolBar);
             mOldButtons = oldScreen == null ? null : oldScreen.getButtons();
             mNewButtons = newScreen.getButtons();
             mTintColor = newScreen.buttonsTintColor;
+            mIconDimensions = (int) (toolBar.getHeight() * 0.4f);
         }
 
         @Override
@@ -187,7 +189,7 @@ public class RnnToolBar extends Toolbar {
             Map<String, Drawable> icons = new HashMap<>();
             for (Button button : mNewButtons) {
                 if (button.hasIcon()) {
-                    icons.put(button.id, button.getIcon(context));
+                    icons.put(button.id, button.getIcon(context, mIconDimensions));
                 }
             }
             return icons;
@@ -221,8 +223,7 @@ public class RnnToolBar extends Toolbar {
             }
 
             // Add new screen buttons
-            int i;
-            for (i = 0; i < mNewButtons.size(); i++) {
+            for (int i = 0; i < mNewButtons.size(); i++) {
                 Button button = mNewButtons.get(i);
                 MenuItem item = menu.add(Menu.NONE, button.getItemId(), i, button.title);
                 item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);

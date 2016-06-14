@@ -42,8 +42,11 @@ public class Button extends JsonObject implements Serializable {
         return mIconSource != null;
     }
 
-    public Drawable getIcon(Context ctx) {
-       return IconUtils.getIcon(ctx, mIconSource);
+    /**
+     * @param dimensions The requested icon dimensions
+     */
+    public Drawable getIcon(Context ctx, int dimensions) {
+       return IconUtils.getIcon(ctx, mIconSource, dimensions);
     }
 
     public int getItemId() {
