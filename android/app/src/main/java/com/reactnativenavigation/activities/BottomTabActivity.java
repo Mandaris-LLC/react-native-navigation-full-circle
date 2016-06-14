@@ -12,6 +12,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
 
@@ -59,21 +60,21 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     }
 
     private void setupPages(ArrayList<Screen> screens) {
-        new SetupTabsTask(this, screens).execute();
+        new SetupTabsTask(this, mToolbar, screens).execute();
     }
 
     private void setupToolbar(ArrayList<Screen> screens) {
         mToolbar.setScreens(screens);
         Screen initialScreen = screens.get(0);
         mToolbar.update(initialScreen);
-        setNavigationStyle(initialScreen);
+        StyleHelper.updateStyles(mToolbar, initialScreen);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if(mScreenStacks != null) {
-            updateStyles();
+            StyleHelper.updateStyles(mToolbar, getCurrentScreen());
         }
     }
 
@@ -109,7 +110,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
                 stack.push(screen);
             }
         }
-        updateStyles();
+        StyleHelper.updateStyles(mToolbar, getCurrentScreen());
     }
 
     @Override
@@ -118,7 +119,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         for (ScreenStack stack: mScreenStacks) {
             if (stack.peek().navigatorId.equals(navigatorId)) {
                 Screen popped = stack.pop();
-                updateStyles();
+                StyleHelper.updateStyles(mToolbar, getCurrentScreen());
                 return popped;
             }
         }
@@ -127,7 +128,12 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
 
     @Override
     protected Screen getCurrentScreen() {
-        return mScreenStacks.get(mCurrentStackPosition).peek();
+        Screen currentScreen = super.getCurrentScreen();
+        if (currentScreen != null) {
+            return currentScreen;
+        }
+
+        return mScreenStacks != null ? mScreenStacks.get(mCurrentStackPosition).peek() : null;
     }
 
     @Override
@@ -148,15 +154,17 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         mContentFrame.removeAllViews();
         mContentFrame.addView(mScreenStacks.get(position), new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         mCurrentStackPosition = position;
-        updateStyles();
+        StyleHelper.updateStyles(mToolbar, getCurrentScreen());
     }
 
     private static class SetupTabsTask extends AsyncTask<Void, Void, Map<Screen, Drawable>> {
         private BottomTabActivity mActivity;
+        private RnnToolBar mToolBar;
         private ArrayList<Screen> mScreens;
 
-        public SetupTabsTask(BottomTabActivity context, ArrayList<Screen> screens) {
+        public SetupTabsTask(BottomTabActivity context, RnnToolBar toolBar, ArrayList<Screen> screens) {
             mActivity = context;
+            mToolBar = toolBar;
             mScreens = screens;
         }
 
@@ -174,7 +182,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         @Override
         protected void onPostExecute(Map<Screen, Drawable> icons) {
             mActivity.setTabsWithIcons(mScreens, icons);
-            mActivity.updateStyles();
+            StyleHelper.updateStyles(mToolBar, mActivity.getCurrentScreen());
         }
     }
 

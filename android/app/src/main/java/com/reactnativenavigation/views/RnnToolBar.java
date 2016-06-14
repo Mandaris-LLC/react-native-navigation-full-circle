@@ -157,6 +157,10 @@ public class RnnToolBar extends Toolbar {
         ((AppCompatActivity) getContext()).setSupportActionBar(this);
         setTitle(screen.title);
         setStyle(screen);
+    }
+
+    public void updateAndSetButtons(Screen screen) {
+        update(screen);
         setupToolbarButtonsAsync(screen);
     }
 
@@ -210,8 +214,7 @@ public class RnnToolBar extends Toolbar {
             // Remove prev screen buttons
             if(mOldButtons == null) {
                 menu.clear();
-            }
-            else {
+            } else {
                 for (Button btn : mOldButtons) {
                     menu.removeItem(btn.getItemId());
                 }
@@ -222,12 +225,14 @@ public class RnnToolBar extends Toolbar {
             for (i = 0; i < mNewButtons.size(); i++) {
                 Button button = mNewButtons.get(i);
                 MenuItem item = menu.add(Menu.NONE, button.getItemId(), i, button.title);
+                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
                 if (icons.containsKey(button.id)) {
                     Drawable icon = icons.get(button.id);
                     if (mTintColor != null) {
                         ImageUtils.tint(icon, mTintColor);
                     }
-                    item.setIcon(icon).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                    item.setIcon(icon);
                 }
             }
 

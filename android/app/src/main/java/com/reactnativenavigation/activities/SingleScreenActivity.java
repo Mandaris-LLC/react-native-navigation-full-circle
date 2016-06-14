@@ -5,6 +5,7 @@ import android.widget.FrameLayout;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
 
@@ -31,27 +32,28 @@ public class SingleScreenActivity extends BaseReactActivity {
 
         mScreenStack = new ScreenStack(this);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.contentFrame);
+        assert contentFrame != null;
         contentFrame.addView(mScreenStack);
         mScreenStack.push(screen);
     }
 
     protected void setupToolbar(Screen screen) {
         mToolbar.update(screen);
-        setNavigationStyle(screen);
+        StyleHelper.updateStyles(mToolbar, screen);
     }
     
     @Override
     public void push(Screen screen) {
         super.push(screen);
         mScreenStack.push(screen);
-        updateStyles();
+        StyleHelper.updateStyles(mToolbar, screen);
     }
 
     @Override
     public Screen pop(String navigatorId) {
         super.pop(navigatorId);
         Screen screen = mScreenStack.pop();
-        updateStyles();
+        StyleHelper.updateStyles(mToolbar, screen);
         return screen;
     }
 
@@ -62,6 +64,11 @@ public class SingleScreenActivity extends BaseReactActivity {
 
     @Override
     protected Screen getCurrentScreen() {
+        Screen currentScreen = super.getCurrentScreen();
+        if (currentScreen != null) {
+            return currentScreen;
+        }
+
         return mScreenStack.peek();
     }
 

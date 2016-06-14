@@ -46,9 +46,7 @@ public class TabActivity extends BaseReactActivity {
         setNavigationStyle(initialScreen);
     }
 
-    @Override
     public void setNavigationStyle(Screen screen) {
-        super.setNavigationStyle(screen);
         mTabLayout.setStyle(screen);
     }
 

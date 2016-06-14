@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -15,7 +16,6 @@ import com.reactnativenavigation.R;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.controllers.ModalController;
 import com.reactnativenavigation.core.objects.Screen;
-import com.reactnativenavigation.utils.ContextProvider;
 import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RctView;
@@ -73,7 +73,13 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
         if (mScreenStack.isEmpty()) {
             dismiss();
         }
+        mToolBar.update(popped);
         return popped;
+    }
+
+    @Nullable
+    public Screen getCurrentScreen() {
+        return mScreenStack.isEmpty() ? null : mScreenStack.peek();
     }
 
     @Override
@@ -84,6 +90,6 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
     @Override
     public void onDismiss(DialogInterface dialog) {
         ModalController.getInstance().remove();
-        ContextProvider.getActivityContext().updateStyles();
+        StyleHelper.updateStyles(mToolBar, getCurrentScreen());
     }
 }

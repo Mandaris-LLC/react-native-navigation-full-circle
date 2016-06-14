@@ -25,9 +25,11 @@ import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.BuildConfig;
+import com.reactnativenavigation.controllers.ModalController;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Button;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.modal.RnnModal;
 import com.reactnativenavigation.packages.RnnPackage;
 import com.reactnativenavigation.utils.ContextProvider;
 import com.reactnativenavigation.utils.StyleHelper;
@@ -172,14 +174,6 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         setContentView(mReactRootView);
     }
 
-    public void setNavigationStyle(Screen screen) {
-        if (mToolbar != null) {
-            mToolbar.setStyle(screen);
-        }
-
-        StyleHelper.setWindowStyle(getWindow(), this, screen);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -187,16 +181,6 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onHostResume(this, this);
-        }
-    }
-
-    public void updateStyles() {
-        try {
-            mToolbar.update(getCurrentScreen());
-            setNavigationStyle(getCurrentScreen());
-            mToolbar.setupToolbarButtonsAsync(getCurrentScreen());
-        } catch (Exception e) {
-            Log.w("RNNavigation", "Tried to update styles with no screen!");
         }
     }
 
@@ -228,7 +212,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     @CallSuper
     public void push(Screen screen) {
-        setNavigationStyle(screen);
+        StyleHelper.updateStyles(mToolbar, screen);
         if (mToolbar != null) {
             mToolbar.update(screen);
 
@@ -251,15 +235,26 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     protected abstract String getCurrentNavigatorId();
 
-    protected abstract Screen getCurrentScreen();
+    @CallSuper
+    protected Screen getCurrentScreen() {
+        ModalController modalController = ModalController.getInstance();
+        if (modalController.isModalDisplayed()) {
+            RnnModal modal = modalController.get();
+            assert modal != null;
+            return modal.getCurrentScreen();
+        }
+
+        return null;
+    }
 
     public abstract int getScreenStackSize();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
-        if (mToolbar != null) {
-            mToolbar.setupToolbarButtonsAsync(getCurrentScreen());
+        Screen currentScreen = getCurrentScreen();
+        if (mToolbar != null && currentScreen != null) {
+            mToolbar.setupToolbarButtonsAsync(currentScreen);
         }
         return super.onCreateOptionsMenu(menu);
     }
