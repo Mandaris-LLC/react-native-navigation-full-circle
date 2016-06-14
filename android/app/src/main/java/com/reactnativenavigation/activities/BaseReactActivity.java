@@ -258,6 +258,9 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
+        if (mToolbar != null) {
+            mToolbar.setupToolbarButtonsAsync(getCurrentScreen());
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
