@@ -28,13 +28,20 @@ public class SingleScreenActivity extends BaseReactActivity {
 
         Screen screen = (Screen) getIntent().getSerializableExtra(EXTRA_SCREEN);
         mNavigatorId = screen.navigatorId;
-        setupToolbar(screen);
 
         mScreenStack = new ScreenStack(this);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.contentFrame);
         assert contentFrame != null;
         contentFrame.addView(mScreenStack);
         mScreenStack.push(screen);
+
+        // Setup Toolbar after it's measured since icon height is dependent on Toolbar height
+        contentFrame.post(new Runnable() {
+            @Override
+            public void run() {
+                setupToolbar(getCurrentScreen());
+            }
+        });
     }
 
     protected void setupToolbar(Screen screen) {

@@ -52,11 +52,18 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         mBottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_tab_bar);
         mContentFrame = (FrameLayout) findViewById(R.id.contentFrame);
 
-        ArrayList<Screen> screens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
+        final ArrayList<Screen> screens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
         mBottomNavigation.setForceTint(true);
-        setupToolbar(screens);
         setupTabs(getIntent().getExtras());
         setupPages(screens);
+
+        // Setup Toolbar after it's measured since icon height is dependent on Toolbar height
+        mContentFrame.post(new Runnable() {
+            @Override
+            public void run() {
+                setupToolbar(screens);
+            }
+        });
     }
 
     private void setupPages(ArrayList<Screen> screens) {
