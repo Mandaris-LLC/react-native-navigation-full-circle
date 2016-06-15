@@ -52,9 +52,9 @@ public class SingleScreenActivity extends BaseReactActivity {
     @Override
     public Screen pop(String navigatorId) {
         super.pop(navigatorId);
-        Screen screen = mScreenStack.pop();
-        StyleHelper.updateStyles(mToolbar, screen);
-        return screen;
+        Screen popped = mScreenStack.pop();
+        StyleHelper.updateStyles(mToolbar, getCurrentScreen());
+        return popped;
     }
 
     @Override
