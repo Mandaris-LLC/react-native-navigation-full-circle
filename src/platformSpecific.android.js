@@ -87,7 +87,7 @@ function dismissAllModals(params) {
 function addNavigatorParams(screen, navigator = null, idx = '') {
   screen.navigatorID = navigator ? navigator.navigatorID : utils.getRandomId() + '_nav' + idx;
   screen.screenInstanceID = utils.getRandomId();
-  screen.navigatorEventID = navigator ? navigator.navigatorEventID : screen.screenInstanceID + '_events';
+  screen.navigatorEventID = screen.screenInstanceID + '_events';
 }
 
 function addNavigatorButtons(screen) {
