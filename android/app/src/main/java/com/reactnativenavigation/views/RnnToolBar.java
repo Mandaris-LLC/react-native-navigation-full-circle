@@ -1,10 +1,12 @@
 package com.reactnativenavigation.views;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.annotation.ColorInt;
 import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -14,6 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.activities.BaseReactActivity;
@@ -23,6 +28,7 @@ import com.reactnativenavigation.utils.ContextProvider;
 import com.reactnativenavigation.utils.ImageUtils;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +41,7 @@ public class RnnToolBar extends Toolbar {
     private List<Screen> mScreens;
     private AsyncTask mSetupToolbarTask;
     private Drawable mBackground;
+    private ArrayList<View> mMenuItems;
 
     public RnnToolBar(Context context) {
         super(context);
@@ -52,6 +59,7 @@ public class RnnToolBar extends Toolbar {
     }
 
     private void init() {
+        mMenuItems = new ArrayList<>();
         mBackground = getBackground();
     }
 
@@ -168,7 +176,7 @@ public class RnnToolBar extends Toolbar {
         private final List<Button> mOldButtons;
         private final List<Button> mNewButtons;
         private final WeakReference<RnnToolBar> mToolbarWR;
-        private final Integer mTintColor;
+        @ColorInt private final Integer mTintColor;
         private final int mIconDimensions;
 
         public SetupToolbarButtonsTask(RnnToolBar toolBar, Screen oldScreen, Screen newScreen) {
@@ -197,13 +205,12 @@ public class RnnToolBar extends Toolbar {
 
         @Override
         protected void onPostExecute(Map<String, Drawable> icons) {
-            Context context = ContextProvider.getActivityContext();
+            final Context context = ContextProvider.getActivityContext();
             if (context == null) {
                 return;
             }
 
             Menu menu = ((BaseReactActivity) context).getMenu();
-
             if (menu == null) {
                 RnnToolBar toolBar = mToolbarWR.get();
                 if (toolBar != null) {
@@ -223,28 +230,58 @@ public class RnnToolBar extends Toolbar {
             }
 
             // Add new screen buttons
+            final List<String> textButtons = new ArrayList<>();
+
             for (int i = 0; i < mNewButtons.size(); i++) {
                 Button button = mNewButtons.get(i);
                 MenuItem item = menu.add(Menu.NONE, button.getItemId(), i, button.title);
                 item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-                if (icons.containsKey(button.id)) {
+                // Set button icon
+                if (button.hasIcon()) {
                     Drawable icon = icons.get(button.id);
                     if (mTintColor != null) {
                         ImageUtils.tint(icon, mTintColor);
                     }
                     item.setIcon(icon);
+                } else {
+                    textButtons.add(button.title);
                 }
 
+                // Disable button if needed
                 if (button.disabled) {
                     item.setEnabled(false);
                 }
             }
 
-            RnnToolBar toolBar = mToolbarWR.get();
+            final RnnToolBar toolBar = mToolbarWR.get();
             if (toolBar != null) {
+                // Tint overflow icon which appears when there's not enough space in Toolbar for icons
                 if (mTintColor != null) {
                     ImageUtils.tint(toolBar.getOverflowIcon(), mTintColor);
+                }
+
+                // Tint text buttons
+                if (textButtons.size() > 0 && mTintColor != null) {
+                    final View decorView = ((Activity) context).getWindow().getDecorView();
+                    decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            decorView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                            // Find TextViews
+                            for (String text : textButtons) {
+                                decorView.findViewsWithText(toolBar.mMenuItems, text, View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION);
+                            }
+
+                            // Set text color
+                            for (View button : toolBar.mMenuItems) {
+                                ((TextView) button).setTextColor(mTintColor);
+                            }
+
+                            toolBar.mMenuItems.clear();
+                        }
+                    });
                 }
 
                 toolBar.mSetupToolbarTask = null;
