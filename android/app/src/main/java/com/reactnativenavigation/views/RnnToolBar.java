@@ -231,10 +231,10 @@ public class RnnToolBar extends Toolbar {
 
             // Add new screen buttons
             final List<String> textButtons = new ArrayList<>();
-
-            for (int i = 0; i < mNewButtons.size(); i++) {
+            final int size = mNewButtons.size();
+            for (int i = 0; i < size; i++) {
                 Button button = mNewButtons.get(i);
-                MenuItem item = menu.add(Menu.NONE, button.getItemId(), i, button.title);
+                MenuItem item = menu.add(Menu.NONE, button.getItemId(), size - i - 1, button.title);
                 item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
                 // Set button icon
