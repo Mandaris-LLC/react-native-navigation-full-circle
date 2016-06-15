@@ -76,6 +76,10 @@ class PushedScreen extends Component {
           <Text style={styles.button}>Dismiss all modals</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onPopToRootPress.bind(this) }>
+          <Text style={styles.button}>Pop to root</Text>
+        </TouchableOpacity>
+
         <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
 
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
@@ -139,6 +143,10 @@ class PushedScreen extends Component {
 
   onDismissModal() {
     this.props.navigator.dismissModal();
+  }
+
+  onPopToRootPress() {
+    this.props.navigator.popToRoot();
   }
 }
 
