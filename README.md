@@ -543,7 +543,8 @@ class FirstTabScreen extends Component {
         title: 'Edit', // for a textual button, provide the button title (label)
         id: 'edit', // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
         testID: 'e2e_rules', // optional, used to locate this view in end-to-end tests
-        disabled: true // optional, used to disable the button (appears faded and doesn't interact)
+        disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
+        disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
       },
       {
         icon: require('../../img/navicon_add.png'), // for icon button, provide the local image asset name
@@ -582,7 +583,8 @@ class FirstTabScreen extends Component {
     icon: require('../../img/navicon_edit.png'), // if you want an image button
     id: 'compose', // id of the button which will pass to your press event handler
     testID: 'e2e_is_awesome', // if you have e2e tests, use this to find your button
-    disabled: true // optional, used to disable the button (appears faded and doesn't interact)
+    disabled: true, // optional, used to disable the button (appears faded and doesn't interact)
+    disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
   }],
   leftButtons: [] // buttons for the left side of the nav bar (optional)
 }
