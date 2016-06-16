@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -111,14 +112,14 @@ public class RnnToolBar extends Toolbar {
     }
 
     private void showToolbar() {
-        ActionBar actionBar = ContextProvider.getActivityContext().getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) getContext()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.show();
         }
     }
 
     private void hideToolbar() {
-        ActionBar actionBar = ContextProvider.getActivityContext().getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) getContext()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
@@ -161,7 +162,7 @@ public class RnnToolBar extends Toolbar {
      * @param screen The currently displayed screen
      */
     @UiThread
-    public void update(Screen screen) {
+    public void update(@NonNull Screen screen) {
         ((AppCompatActivity) getContext()).setSupportActionBar(this);
         setTitle(screen.title);
         setStyle(screen);

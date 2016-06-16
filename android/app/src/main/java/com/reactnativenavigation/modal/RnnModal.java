@@ -73,7 +73,10 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
         if (mScreenStack.isEmpty()) {
             dismiss();
         }
-        mToolBar.update(popped);
+        Screen currentScreen = getCurrentScreen();
+        if (currentScreen != null) {
+            mToolBar.update(currentScreen);
+        }
         return popped;
     }
 
