@@ -66,7 +66,8 @@ function navigatorSetButtons(navigator, navigatorEventID, params) {
 }
 
 function navigatorPop(navigator, params) {
-  RctActivity.navigatorPop(navigator);
+  addNavigatorParams(params, navigator);
+  RctActivity.navigatorPop(params);
 }
 
 function navigatorPopToRoot(navigator, params) {
