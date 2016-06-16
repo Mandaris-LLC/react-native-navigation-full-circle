@@ -16,6 +16,7 @@ import com.reactnativenavigation.R;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.controllers.ModalController;
 import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.utils.ContextProvider;
 import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RctView;
@@ -93,6 +94,11 @@ public class RnnModal extends Dialog implements DialogInterface.OnDismissListene
     @Override
     public void onDismiss(DialogInterface dialog) {
         ModalController.getInstance().remove();
-        StyleHelper.updateStyles(mToolBar, getCurrentScreen());
+        // After modal is dismissed, update Toolbar with screen from parent activity or previously displayed modal
+        BaseReactActivity context = ContextProvider.getActivityContext();
+        if (context != null) {
+            Screen currentScreen = context.getCurrentScreen();
+            StyleHelper.updateStyles(mToolBar, currentScreen);
+        }
     }
 }

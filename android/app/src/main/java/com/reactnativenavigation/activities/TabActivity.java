@@ -81,7 +81,7 @@ public class TabActivity extends BaseReactActivity {
     }
 
     @Override
-    protected Screen getCurrentScreen() {
+    public Screen getCurrentScreen() {
         return mAdapter.peek(getCurrentNavigatorId());
     }
 

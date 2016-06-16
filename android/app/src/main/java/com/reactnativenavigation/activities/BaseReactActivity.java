@@ -245,7 +245,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     protected abstract String getCurrentNavigatorId();
 
     @CallSuper
-    protected Screen getCurrentScreen() {
+    public Screen getCurrentScreen() {
         ModalController modalController = ModalController.getInstance();
         if (modalController.isModalDisplayed()) {
             RnnModal modal = modalController.get();

@@ -78,7 +78,7 @@ public class SingleScreenActivity extends BaseReactActivity {
     }
 
     @Override
-    protected Screen getCurrentScreen() {
+    public Screen getCurrentScreen() {
         Screen currentScreen = super.getCurrentScreen();
         if (currentScreen != null) {
             return currentScreen;

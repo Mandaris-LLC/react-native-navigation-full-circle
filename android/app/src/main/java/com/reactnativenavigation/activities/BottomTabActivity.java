@@ -147,7 +147,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     }
 
     @Override
-    protected Screen getCurrentScreen() {
+    public Screen getCurrentScreen() {
         Screen currentScreen = super.getCurrentScreen();
         if (currentScreen != null) {
             return currentScreen;
