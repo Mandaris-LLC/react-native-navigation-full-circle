@@ -16,8 +16,6 @@ class PushedScreen extends Component {
     statusBarColor: '#303F9F',
     toolBarColor: '#3F51B5',
     navigationBarColor: '#303F9F',
-    buttonsTint: '#FFFFFF',
-    titleColor: '#FFFFFF',
     tabSelectedTextColor: '#FFA000',
     tabNormalTextColor: '#FFC107',
     tabIndicatorColor: '#FF4081'

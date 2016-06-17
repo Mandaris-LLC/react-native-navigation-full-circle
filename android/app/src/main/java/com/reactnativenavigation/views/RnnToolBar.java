@@ -75,8 +75,8 @@ public class RnnToolBar extends Toolbar {
             resetBackground();
         }
 
-        if (screen.titleColor != null) {
-            setTitleTextColor(screen.titleColor);
+        if (screen.navBarTextColor != null) {
+            setTitleTextColor(screen.navBarTextColor);
         } else {
             resetTitleTextColor();
         }
@@ -138,11 +138,11 @@ public class RnnToolBar extends Toolbar {
     private Drawable setupBackButton(Screen screen) {
         Resources resources = getResources();
         final Drawable backButton;
-        if (screen.buttonsTintColor != null) {
+        if (screen.navBarButtonColor != null) {
             backButton = ResourcesCompat.getDrawable(resources,
                     R.drawable.abc_ic_ab_back_mtrl_am_alpha,
                     null);
-            ImageUtils.tint(backButton, screen.buttonsTintColor);
+            ImageUtils.tint(backButton, screen.navBarButtonColor);
         } else {
             backButton = ResourcesCompat.getDrawable(resources,
                     R.drawable.abc_ic_ab_back_mtrl_am_alpha,
@@ -184,7 +184,7 @@ public class RnnToolBar extends Toolbar {
             mToolbarWR = new WeakReference<>(toolBar);
             mOldButtons = oldScreen == null ? null : oldScreen.getButtons();
             mNewButtons = newScreen.getButtons();
-            mTintColor = newScreen.buttonsTintColor;
+            mTintColor = newScreen.navBarButtonColor;
             mIconDimensions = (int) (toolBar.getHeight() * 0.4f);
         }
 

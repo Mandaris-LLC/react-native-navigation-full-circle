@@ -36,8 +36,8 @@ public class Screen extends JsonObject implements Serializable {
     private static final String KEY_TOOL_BAR_COLOR = "toolBarColor";
     private static final String KEY_TOOL_BAR_HIDDEN = "navBarHidden";
     private static final String KEY_NAVIGATION_BAR_COLOR = "navigationBarColor";
-    private static final String KEY_BUTTONS_TINT_COLOR = "buttonsTint";
-    private static final String KEY_TITLE_COLOR = "titleColor";
+    private static final String KEY_NAV_BAR_BUTTON_COLOR = "navBarButtonColor";
+    private static final String KEY_NAV_BAR_TEXT_COLOR = "navBarTextColor";
     private static final String KEY_TAB_NORMAL_TEXT_COLOR = "tabNormalTextColor";
     private static final String KEY_TAB_SELECTED_TEXT_COLOR = "tabSelectedTextColor";
     private static final String KEY_TAB_INDICATOR_COLOR = "tabIndicatorColor";
@@ -58,8 +58,8 @@ public class Screen extends JsonObject implements Serializable {
     @Nullable public Boolean toolBarHidden;
     @Nullable @ColorInt public Integer statusBarColor;
     @Nullable @ColorInt public Integer navigationBarColor;
-    @Nullable @ColorInt public Integer buttonsTintColor;
-    @Nullable @ColorInt public Integer titleColor;
+    @Nullable @ColorInt public Integer navBarButtonColor;
+    @Nullable @ColorInt public Integer navBarTextColor;
     @Nullable @ColorInt public Integer tabNormalTextColor;
     @Nullable @ColorInt public Integer tabSelectedTextColor;
     @Nullable @ColorInt public Integer tabIndicatorColor;
@@ -110,8 +110,8 @@ public class Screen extends JsonObject implements Serializable {
             toolBarHidden = getBoolean(style, KEY_TOOL_BAR_HIDDEN);
             statusBarColor = getColor(style, KEY_STATUS_BAR_COLOR);
             navigationBarColor = getColor(style, KEY_NAVIGATION_BAR_COLOR);
-            buttonsTintColor = getColor(style, KEY_BUTTONS_TINT_COLOR);
-            titleColor = getColor(style, KEY_TITLE_COLOR);
+            navBarButtonColor = getColor(style, KEY_NAV_BAR_BUTTON_COLOR);
+            navBarTextColor = getColor(style, KEY_NAV_BAR_TEXT_COLOR);
             tabNormalTextColor = getColor(style, KEY_TAB_NORMAL_TEXT_COLOR);
             tabSelectedTextColor = getColor(style, KEY_TAB_SELECTED_TEXT_COLOR);
             tabIndicatorColor = getColor(style, KEY_TAB_INDICATOR_COLOR);
