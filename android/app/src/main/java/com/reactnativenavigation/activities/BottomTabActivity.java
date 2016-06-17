@@ -175,6 +175,13 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         mContentFrame.addView(mScreenStacks.get(position), new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         mCurrentStackPosition = position;
         StyleHelper.updateStyles(mToolbar, getCurrentScreen());
+
+        // Hide or show back button if needed
+        if (getScreenStackSize() > 1) {
+            mToolbar.showBackButton(getCurrentScreen());
+        } else {
+            mToolbar.hideBackButton();
+        }
     }
 
     private static class SetupTabsTask extends AsyncTask<Void, Void, Map<Screen, Drawable>> {
