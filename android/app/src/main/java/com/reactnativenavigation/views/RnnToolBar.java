@@ -118,7 +118,8 @@ public class RnnToolBar extends Toolbar {
         ActionBar actionBar = ((AppCompatActivity) getContext()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setShowHideAnimationEnabled(animated);
-            actionBar.show();
+            // We hide the ToolBar's parent (AppBarLayout) since this animates the shadow added by AppBar as well
+            ((View) getParent()).setVisibility(VISIBLE);
         }
     }
 
@@ -126,7 +127,8 @@ public class RnnToolBar extends Toolbar {
         ActionBar actionBar = ((AppCompatActivity) getContext()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setShowHideAnimationEnabled(animated);
-            actionBar.hide();
+            // We hide the ToolBar's parent (AppBarLayout) since this animates the shadow added by AppBar as well
+            ((View) getParent()).setVisibility(GONE);
         }
     }
 
