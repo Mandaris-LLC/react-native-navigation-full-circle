@@ -57,6 +57,9 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
             if(ContextProvider.getActivityContext() instanceof RootActivity) {
                 context.overridePendingTransition(0, 0);
             }
+
+            // Dismiss modals associated with previous activity
+            ModalController.getInstance().dismissAllModals();
         }
     }
 
@@ -83,6 +86,9 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
             if(ContextProvider.getActivityContext() instanceof RootActivity) {
                 context.overridePendingTransition(0, 0);
             }
+
+            // Dismiss modals associated with previous activity
+            ModalController.getInstance().dismissAllModals();
         }
     }
 
