@@ -110,8 +110,10 @@ function addNavigatorButtons(screen) {
   Object.assign(screen, Screen.navigatorButtons);
 
   // Get image uri from image id
-  if (screen.rightButtons) {
-    screen.rightButtons.forEach(function(button) {
+  const rightButtons = screen.rightButtons ? screen.rightButtons : screen.navigatorButtons ?
+    screen.navigatorButtons.rightButtons : null;
+  if (rightButtons) {
+    rightButtons.forEach(function(button) {
       if (button.icon) {
         const icon = resolveAssetSource(button.icon);
         if (icon) {
