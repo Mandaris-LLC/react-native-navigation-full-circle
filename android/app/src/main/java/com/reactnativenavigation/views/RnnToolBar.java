@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.ColorInt;
@@ -137,17 +138,11 @@ public class RnnToolBar extends Toolbar {
     @SuppressWarnings({"ConstantConditions"})
     private Drawable setupBackButton(Screen screen) {
         Resources resources = getResources();
-        final Drawable backButton;
-        if (screen.navBarButtonColor != null) {
-            backButton = ResourcesCompat.getDrawable(resources,
-                    R.drawable.abc_ic_ab_back_mtrl_am_alpha,
-                    null);
-            ImageUtils.tint(backButton, screen.navBarButtonColor);
-        } else {
-            backButton = ResourcesCompat.getDrawable(resources,
-                    R.drawable.abc_ic_ab_back_mtrl_am_alpha,
-                    ContextProvider.getActivityContext().getTheme());
-        }
+        final Drawable backButton = ResourcesCompat.getDrawable(resources,
+                R.drawable.abc_ic_ab_back_mtrl_am_alpha,
+                ContextProvider.getActivityContext().getTheme());
+        int tintColor = screen.navBarButtonColor != null ? screen.navBarButtonColor : Color.BLACK;
+        ImageUtils.tint(backButton, tintColor);
         return backButton;
     }
 
