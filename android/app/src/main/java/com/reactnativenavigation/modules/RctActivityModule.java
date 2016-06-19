@@ -129,7 +129,7 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                context.setTabBadge(params);
+                ((BottomTabActivity) context).setTabBadge(params);
             }
         });
     }
@@ -143,7 +143,7 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                context.switchToTab(params);
+                ((BottomTabActivity) context).switchToTab(params);
             }
         });
     }
@@ -171,7 +171,7 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                context.toggleTabs(params);
+                ((BottomTabActivity) context).toggleTabs(params);
             }
         });
     }

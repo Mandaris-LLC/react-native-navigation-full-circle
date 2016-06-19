@@ -190,7 +190,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         }
     }
 
-    @Override
     public void setTabBadge(ReadableMap params) {
         // Badge comes across as int, but if it's 0 clear the notification
         int badgeCount = params.getInt(KEY_BADGE);
@@ -205,13 +204,11 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         mBottomNavigation.setNotification(badge, tabIndex);
     }
 
-    @Override
     public void switchToTab(ReadableMap params) {
         int tabIndex = params.getInt(KEY_TAB_INDEX);
         mBottomNavigation.setCurrentItem(tabIndex);
     }
 
-    @Override
     public void toggleTabs(ReadableMap params) {
         boolean hide = params.getBoolean(KEY_HIDDEN);
         boolean animated = params.getBoolean(KEY_ANIMATED);

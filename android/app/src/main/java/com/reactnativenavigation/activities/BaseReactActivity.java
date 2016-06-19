@@ -371,18 +371,6 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         mToolbar.setTitle(title.getString(KEY_TITLE));
     }
 
-    public void setTabBadge(ReadableMap params) {
-        return;
-    }
-
-    public void switchToTab(ReadableMap params) {
-        return;
-    }
-
-    public void toggleTabs(ReadableMap params) {
-        return;
-    }
-
     public void toggleNavigationBar(ReadableMap params) {
         if (mToolbar == null) {
             return;
