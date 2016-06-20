@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
-import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
@@ -17,6 +16,8 @@ import java.util.Stack;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class ScreenStack extends FrameLayout {
+
+    private static final int DISAPPEAR_ANIMATION_DELAY = 200;
 
     private static class ScreenView {
         Screen screen;
@@ -53,16 +54,17 @@ public class ScreenStack extends FrameLayout {
     }
 
     public void push(Screen screen, RctView.OnDisplayedListener onDisplayed) {
-        RctView oldView = null;
-        if (!mStack.isEmpty()) {
-            oldView = mStack.peek().view;
-        }
+        RctView oldView = mStack.isEmpty() ? null : mStack.peek().view;
         RctView view = new RctView(mReactActivity, mReactInstanceManager, screen, onDisplayed);
-        addView(view, MATCH_PARENT, MATCH_PARENT);
         if (oldView != null) {
-            ReactRootView reactRootView = oldView.getReactRootView();
-            ReflectionUtils.setBooleanField(reactRootView, "mAttachScheduled", true);
+            addView(view, MATCH_PARENT, MATCH_PARENT);
+
+            ReflectionUtils.setBooleanField(oldView.getReactRootView(), "mAttachScheduled", true);
+            getLayoutTransition().setStartDelay(LayoutTransition.DISAPPEARING, DISAPPEAR_ANIMATION_DELAY);
             removeView(oldView);
+            getLayoutTransition().setStartDelay(LayoutTransition.DISAPPEARING, 0);
+        } else {
+            addView(view, MATCH_PARENT, MATCH_PARENT);
         }
         mStack.push(new ScreenView(screen, view));
     }
@@ -99,7 +101,7 @@ public class ScreenStack extends FrameLayout {
             addView(mStack.peek().view, 0);
         }
 
-        return oldScreenView.screen;
+        return oldScreenView != null ? oldScreenView.screen : null;
     }
 
     public Screen resetTo(Screen screen) {
