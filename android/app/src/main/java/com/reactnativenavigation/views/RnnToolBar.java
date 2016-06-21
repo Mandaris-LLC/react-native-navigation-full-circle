@@ -100,11 +100,15 @@ public class RnnToolBar extends Toolbar {
     }
 
     public void handleOnCreateOptionsMenuAsync() {
-        setupToolbarButtonsAsync(null, mScreens.get(0));
+        if (mScreens != null) {
+            setupToolbarButtonsAsync(null, mScreens.get(0));
+        }
     }
 
     public void setupToolbarButtonsAsync(Screen newScreen) {
-        this.setupToolbarButtonsAsync(null, newScreen);
+        if (newScreen != null) {
+            this.setupToolbarButtonsAsync(null, newScreen);
+        }
     }
 
 
