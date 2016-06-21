@@ -44,7 +44,32 @@ For example, this package replaces the native [NavigatorIOS](https://facebook.gi
 
 ## Installation - Android
 
-Coming soon, not yet supported
+ >Note: Android adaptation is still under active development therfore the API might break from time to time. 
+ 
+1.  Add the following to your `settings.gradle` file located in the `android` folder:
+
+	```groovy
+	include ':react-native-navigation'
+	project(':react-native-navigation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-navigation/android/app/')
+	```
+	
+2. Update project dependencies in `build.gradle`
+
+	```groovy
+	dependencies {
+	    compile fileTree(dir: "libs", include: ["*.jar"])
+	    compile "com.android.support:appcompat-v7:23.0.1"
+	    compile "com.facebook.react:react-native:+"
+	    debugCompile project(path: ':react-native-navigation', configuration: 'libraryDebug')
+	    releaseCompile project(path: ':react-native-navigation', configuration: 'libraryRelease')
+}
+```
+
+3. Have your `MainActivity.java` extend `com.reactnativenavigation.activities.RootActivity`. 
+`RootActivity` is used as a proxy activity to start your actuall app.
+
+	The only method you might need to override is `getPackages()`, make sure you add `RnnPackage` as well.
+
 
 ## Usage
 
