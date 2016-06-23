@@ -682,6 +682,12 @@ export default class SecondTabScreen extends Component {
 
 There is no specification for the format of deep links. Since you're implementing the parsing logic in your handlers, you can use any format you wish.
 
+## Third party libraries support
+
+### react-native-vector-icons
+
+If you would like to use [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) for your Toolbar icons, you can follow [this example](https://github.com/wix/react-native-navigation/issues/43#issuecomment-223907515) or [this](https://gist.github.com/dropfen/4a2209d7274788027f782e8655be198f) gist.
+
 ## License
 
 The MIT License.
