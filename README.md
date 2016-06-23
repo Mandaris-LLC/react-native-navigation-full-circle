@@ -54,7 +54,7 @@ For example, this package replaces the native [NavigatorIOS](https://facebook.gi
 	project(':react-native-navigation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-navigation/android/app/')
 	```
 	
-2. Update project dependencies in `build.gradle`
+2. Update project dependencies in `build.gradle` under `app` folder.
 
 	```groovy
 	dependencies {
