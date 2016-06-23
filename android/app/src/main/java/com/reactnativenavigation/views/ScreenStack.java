@@ -3,9 +3,11 @@ package com.reactnativenavigation.views;
 import android.animation.LayoutTransition;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
@@ -30,8 +32,7 @@ public class ScreenStack extends FrameLayout {
     }
 
     private final Stack<ScreenView> mStack = new Stack<>();
-    private final ReactInstanceManager mReactInstanceManager =
-            RctManager.getInstance().getReactInstanceManager();
+    private final ReactInstanceManager mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
     private BaseReactActivity mReactActivity;
 
     public ScreenStack(BaseReactActivity context) {
@@ -144,5 +145,25 @@ public class ScreenStack extends FrameLayout {
 
     public Screen peek() {
         return mStack.peek().screen;
+    }
+
+    /**
+     * Remove the ScreenStack from {@code parent} while preventing all child react views from getting unmounted
+     */
+    public void removeFromScreen(ViewGroup parent) {
+        ReactRootView view = mStack.peek().view.getReactRootView();
+        ReflectionUtils.setBooleanField(view, "mAttachScheduled", true);
+
+        parent.removeView(this);
+    }
+
+    /**
+     * Add ScreenStack to {@code parent}
+     */
+    public void addToScreen(ViewGroup parent) {
+        ReactRootView view = mStack.peek().view.getReactRootView();
+        ReflectionUtils.setBooleanField(view, "mAttachScheduled", false);
+
+        parent.addView(this, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 }

@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 /**
  * Created by guyc on 02/04/16.
  */
@@ -42,7 +40,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     private AHBottomNavigation mBottomNavigation;
     private FrameLayout mContentFrame;
     private ArrayList<ScreenStack> mScreenStacks;
-    private int mCurrentStackPosition = 0;
+    private int mCurrentStackPosition = -1;
 
     @Override
     protected void handleOnCreate() {
@@ -177,8 +175,15 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         if (wasSelected) {
             return;
         }
-        mContentFrame.removeAllViews();
-        mContentFrame.addView(mScreenStacks.get(position), new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+
+        // Remove current ScreenStack
+        if (mCurrentStackPosition >= 0) {
+            mScreenStacks.get(mCurrentStackPosition).removeFromScreen(mContentFrame);
+        }
+
+        // Add new ScreenStack
+        mScreenStacks.get(position).addToScreen(mContentFrame);
+
         mCurrentStackPosition = position;
         StyleHelper.updateStyles(mToolbar, getCurrentScreen());
 
