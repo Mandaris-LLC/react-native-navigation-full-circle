@@ -1,9 +1,11 @@
 package com.reactnativenavigation.activities;
 
+import android.support.v4.widget.DrawerLayout;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
+import com.reactnativenavigation.core.objects.Drawer;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
@@ -14,10 +16,13 @@ import com.reactnativenavigation.views.ScreenStack;
  */
 public class SingleScreenActivity extends BaseReactActivity {
 
+    public static final String DRAWER_PARAMS = "drawerParams";
     public static final String EXTRA_SCREEN = "extraScreen";
 
     private ScreenStack mScreenStack;
     private String mNavigatorId;
+    private ScreenStack mDrawerStack;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void handleOnCreate() {
@@ -27,7 +32,11 @@ public class SingleScreenActivity extends BaseReactActivity {
         mToolbar = (RnnToolBar) findViewById(R.id.toolbar);
 
         final Screen screen = (Screen) getIntent().getSerializableExtra(EXTRA_SCREEN);
+        final Drawer drawer = (Drawer) getIntent().getSerializableExtra(DRAWER_PARAMS);
+
         mNavigatorId = screen.navigatorId;
+        setupToolbar(screen);
+        setupDrawer(drawer, screen);
 
         mScreenStack = new ScreenStack(this);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.contentFrame);
@@ -42,6 +51,20 @@ public class SingleScreenActivity extends BaseReactActivity {
                 setupToolbar(screen);
             }
         });
+    }
+
+    protected void setupDrawer(Drawer drawer, Screen screen) {
+        if (drawer == null || drawer.left == null) {
+            return;
+        }
+
+        mDrawerStack = new ScreenStack(this);
+        FrameLayout drawerFrame = (FrameLayout) findViewById(R.id.drawerFrame);
+        drawerFrame.addView(mDrawerStack);
+        mDrawerStack.push(drawer.left);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        mDrawerToggle = mToolbar.setupDrawer(mDrawerLayout, drawer.left, screen);
     }
 
     protected void setupToolbar(Screen screen) {
