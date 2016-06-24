@@ -76,6 +76,7 @@ public class SingleScreenActivity extends BaseReactActivity {
     public Screen resetTo(Screen screen) {
         super.resetTo(screen);
         Screen popped = mScreenStack.resetTo(screen);
+        StyleHelper.updateStyles(mToolbar, screen);
         return popped;
     }
 

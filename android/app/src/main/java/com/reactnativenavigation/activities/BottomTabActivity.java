@@ -157,6 +157,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
 
     public Screen resetTo(Screen screen) {
         super.resetTo(screen);
+        StyleHelper.updateStyles(mToolbar, screen);
         return mScreenStacks.get(mCurrentStackPosition).resetTo(screen);
     }
 

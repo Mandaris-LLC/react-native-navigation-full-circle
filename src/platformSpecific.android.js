@@ -73,7 +73,7 @@ function navigatorPop(navigator, params) {
 function navigatorPopToRoot(navigator, params) {
   RctActivity.navigatorPopToRoot({
     navigatorID: navigator.navigatorID,
-    animated: !(params.animated !== false)
+    animated: !(params.animated === false)
   });
 }
 
@@ -157,7 +157,7 @@ function addNavigatorButtons(screen) {
 
 function addNavigationStyleParams(screen) {
   const Screen = Navigation.getRegisteredScreen(screen.screen);
-  screen.navigatorStyle = Screen.navigatorStyle;
+  screen.navigatorStyle = Object.assign({}, screen.navigatorStyle, Screen.navigatorStyle);
 }
 
 export default {
