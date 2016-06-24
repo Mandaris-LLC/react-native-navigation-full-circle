@@ -241,7 +241,7 @@ public class RnnToolBar extends Toolbar {
 
         if (navArrow != null) {
             navArrow.setProgress(isBack ? 1.0f : 0.0f);
-            if (screen.navBarButtonColor != null) {
+            if (screen != null && screen.navBarButtonColor != null) {
                 navArrow.setColor(screen.navBarButtonColor);
             } else {
                 navArrow.setColor(Color.BLACK);
