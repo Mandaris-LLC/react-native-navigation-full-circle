@@ -12,6 +12,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
+import com.reactnativenavigation.core.objects.Drawer;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
@@ -25,6 +26,7 @@ import java.util.Map;
  * Created by guyc on 02/04/16.
  */
 public class BottomTabActivity extends BaseReactActivity implements AHBottomNavigation.OnTabSelectedListener {
+    public static final String DRAWER_PARAMS = "drawerParams";
     public static final String EXTRA_SCREENS = "extraScreens";
 
     private static final String TAB_STYLE_BUTTON_COLOR = "tabBarButtonColor";
@@ -52,7 +54,9 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         mContentFrame = (FrameLayout) findViewById(R.id.contentFrame);
 
         final ArrayList<Screen> screens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
+        final Drawer drawer = (Drawer) getIntent().getSerializableExtra(DRAWER_PARAMS);
         mBottomNavigation.setForceTint(true);
+        setupDrawer(screens.get(0), drawer, R.id.drawerFrame, R.id.drawerLayout);
         setupTabs(getIntent().getExtras());
         setupPages(screens);
 
@@ -190,9 +194,9 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
 
         // Hide or show back button if needed
         if (getScreenStackSize() > 1) {
-            mToolbar.showBackButton(getCurrentScreen());
+            mToolbar.setNavUpButton(getCurrentScreen());
         } else {
-            mToolbar.hideBackButton();
+            mToolbar.setNavUpButton();
         }
     }
 

@@ -4,6 +4,7 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
+import com.reactnativenavigation.core.objects.Drawer;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
@@ -14,6 +15,7 @@ import com.reactnativenavigation.views.ScreenStack;
  */
 public class SingleScreenActivity extends BaseReactActivity {
 
+    public static final String DRAWER_PARAMS = "drawerParams";
     public static final String EXTRA_SCREEN = "extraScreen";
 
     private ScreenStack mScreenStack;
@@ -27,7 +29,11 @@ public class SingleScreenActivity extends BaseReactActivity {
         mToolbar = (RnnToolBar) findViewById(R.id.toolbar);
 
         final Screen screen = (Screen) getIntent().getSerializableExtra(EXTRA_SCREEN);
+        final Drawer drawer = (Drawer) getIntent().getSerializableExtra(DRAWER_PARAMS);
+
         mNavigatorId = screen.navigatorId;
+        setupToolbar(screen);
+        setupDrawer(screen, drawer, R.id.drawerFrame, R.id.drawerLayout);
 
         mScreenStack = new ScreenStack(this);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.contentFrame);
@@ -48,7 +54,7 @@ public class SingleScreenActivity extends BaseReactActivity {
         mToolbar.update(screen);
         StyleHelper.updateStyles(mToolbar, screen);
     }
-    
+
     @Override
     public void push(Screen screen) {
         super.push(screen);
