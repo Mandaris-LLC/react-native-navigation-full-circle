@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.CallSuper;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.facebook.common.logging.FLog;
@@ -30,12 +32,14 @@ import com.reactnativenavigation.BuildConfig;
 import com.reactnativenavigation.controllers.ModalController;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Button;
+import com.reactnativenavigation.core.objects.Drawer;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.modal.RnnModal;
 import com.reactnativenavigation.packages.RnnPackage;
 import com.reactnativenavigation.utils.ContextProvider;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
+import com.reactnativenavigation.views.ScreenStack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +68,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     private Menu mMenu;
     protected RnnToolBar mToolbar;
     protected ActionBarDrawerToggle mDrawerToggle;
+    protected DrawerLayout mDrawerLayout;
+    protected ScreenStack mDrawerStack;
 
     /**
      * Returns the name of the bundle in assets. If this is null, and no file path is specified for
@@ -381,6 +387,20 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @Override
     public void invokeDefaultOnBackPressed() {
         super.onBackPressed();
+    }
+
+    protected void setupDrawer(Screen screen, Drawer drawer, int drawerFrameId, int drawerLayoutId) {
+        if (drawer == null || drawer.left == null) {
+            return;
+        }
+
+        mDrawerStack = new ScreenStack(this);
+        FrameLayout drawerFrame = (FrameLayout) findViewById(drawerFrameId);
+        drawerFrame.addView(mDrawerStack);
+        mDrawerStack.push(drawer.left);
+
+        mDrawerLayout = (DrawerLayout) findViewById(drawerLayoutId);
+        mDrawerToggle = mToolbar.setupDrawer(mDrawerLayout, drawer.left, screen);
     }
 
     public void setNavigationButtons(ReadableMap buttons){

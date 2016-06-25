@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.widget.FrameLayout;
 
@@ -43,8 +42,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     private AHBottomNavigation mBottomNavigation;
     private FrameLayout mContentFrame;
     private ArrayList<ScreenStack> mScreenStacks;
-    private ScreenStack mDrawerStack;
-    private DrawerLayout mDrawerLayout;
     private int mCurrentStackPosition = -1;
 
     @Override
@@ -59,7 +56,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         final ArrayList<Screen> screens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
         final Drawer drawer = (Drawer) getIntent().getSerializableExtra(DRAWER_PARAMS);
         mBottomNavigation.setForceTint(true);
-        setupDrawer(drawer, screens.get(0));
+        setupDrawer(screens.get(0), drawer, R.id.drawerFrame, R.id.drawerLayout);
         setupTabs(getIntent().getExtras());
         setupPages(screens);
 
@@ -70,20 +67,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
                 setupToolbar(screens);
             }
         });
-    }
-
-    protected void setupDrawer(Drawer drawer, Screen screen) {
-        if (drawer == null || drawer.left == null) {
-            return;
-        }
-
-        mDrawerStack = new ScreenStack(this);
-        FrameLayout drawerFrame = (FrameLayout) findViewById(R.id.drawerFrame);
-        drawerFrame.addView(mDrawerStack);
-        mDrawerStack.push(drawer.left);
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mDrawerToggle = mToolbar.setupDrawer(mDrawerLayout, drawer.left, screen);
     }
 
     private void setupPages(ArrayList<Screen> screens) {

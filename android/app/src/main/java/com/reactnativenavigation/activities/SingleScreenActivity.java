@@ -1,6 +1,5 @@
 package com.reactnativenavigation.activities;
 
-import android.support.v4.widget.DrawerLayout;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.R;
@@ -21,8 +20,6 @@ public class SingleScreenActivity extends BaseReactActivity {
 
     private ScreenStack mScreenStack;
     private String mNavigatorId;
-    private ScreenStack mDrawerStack;
-    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void handleOnCreate() {
@@ -36,7 +33,7 @@ public class SingleScreenActivity extends BaseReactActivity {
 
         mNavigatorId = screen.navigatorId;
         setupToolbar(screen);
-        setupDrawer(drawer, screen);
+        setupDrawer(screen, drawer, R.id.drawerFrame, R.id.drawerLayout);
 
         mScreenStack = new ScreenStack(this);
         FrameLayout contentFrame = (FrameLayout) findViewById(R.id.contentFrame);
@@ -53,25 +50,11 @@ public class SingleScreenActivity extends BaseReactActivity {
         });
     }
 
-    protected void setupDrawer(Drawer drawer, Screen screen) {
-        if (drawer == null || drawer.left == null) {
-            return;
-        }
-
-        mDrawerStack = new ScreenStack(this);
-        FrameLayout drawerFrame = (FrameLayout) findViewById(R.id.drawerFrame);
-        drawerFrame.addView(mDrawerStack);
-        mDrawerStack.push(drawer.left);
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mDrawerToggle = mToolbar.setupDrawer(mDrawerLayout, drawer.left, screen);
-    }
-
     protected void setupToolbar(Screen screen) {
         mToolbar.update(screen);
         StyleHelper.updateStyles(mToolbar, screen);
     }
-    
+
     @Override
     public void push(Screen screen) {
         super.push(screen);
