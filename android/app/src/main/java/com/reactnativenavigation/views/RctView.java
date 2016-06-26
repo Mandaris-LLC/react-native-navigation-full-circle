@@ -2,6 +2,7 @@ package com.reactnativenavigation.views;
 
 import android.os.Bundle;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
@@ -9,6 +10,9 @@ import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.BridgeUtils;
+import com.reactnativenavigation.utils.ReflectionUtils;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by guyc on 10/03/16.
@@ -25,14 +29,6 @@ public class RctView extends FrameLayout {
          * This method will be invoked when the {@link ReactRootView} is visible.
          */
         public void onDisplayed();
-    }
-
-    public ReactRootView getReactRootView() {
-        return mReactRootView;
-    }
-
-    public RctView(BaseReactActivity ctx, ReactInstanceManager rctInstanceManager, Screen screen) {
-        this(ctx, rctInstanceManager, screen, null);
     }
 
     @SuppressWarnings("unchecked")
@@ -66,6 +62,38 @@ public class RctView extends FrameLayout {
         }
 
         addView(mReactRootView);
+    }
+
+    /**
+     * Must be called before view is removed from screen, but will be added again later. Setting mAttachScheduled
+     * to true will prevent the component from getting unmounted once view is detached from screen.
+     */
+    public void onTemporallyRemovedFromScreen() {
+        // Hack in order to prevent the react view from getting unmounted
+        ReflectionUtils.setBooleanField(this, "mAttachScheduled", true);
+        dismissSoftKeyBoard();
+    }
+
+    /**
+     * Must be called before view is removed from screen inorder to ensure onDetachedFromScreen is properly
+     * executed and componentWillUnmount is called
+     */
+    public void onRemovedFromScreen() {
+        ReflectionUtils.setBooleanField(this, "mAttachScheduled", false);
+        dismissSoftKeyBoard();
+    }
+
+    private void dismissSoftKeyBoard() {
+        InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    /**
+     * Must be called before view is added again to screen inorder to ensure onDetachedFromScreen is properly
+     * executed and componentWillUnmount is called
+     */
+    public void onReaddedToScreen() {
+        ReflectionUtils.setBooleanField(this, "mAttachScheduled", false);
     }
 }
 
