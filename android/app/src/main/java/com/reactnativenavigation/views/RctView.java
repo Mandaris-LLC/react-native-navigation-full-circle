@@ -2,7 +2,6 @@ package com.reactnativenavigation.views;
 
 import android.os.Bundle;
 import android.view.ViewTreeObserver;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
@@ -11,8 +10,6 @@ import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.BridgeUtils;
 import com.reactnativenavigation.utils.ReflectionUtils;
-
-import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by guyc on 10/03/16.
@@ -28,7 +25,7 @@ public class RctView extends FrameLayout {
         /**
          * This method will be invoked when the {@link ReactRootView} is visible.
          */
-        public void onDisplayed();
+        void onDisplayed();
     }
 
     @SuppressWarnings("unchecked")
@@ -70,30 +67,23 @@ public class RctView extends FrameLayout {
      */
     public void onTemporallyRemovedFromScreen() {
         // Hack in order to prevent the react view from getting unmounted
-        ReflectionUtils.setBooleanField(this, "mAttachScheduled", true);
-        dismissSoftKeyBoard();
+        ReflectionUtils.setBooleanField(mReactRootView, "mAttachScheduled", true);
     }
 
     /**
      * Must be called before view is removed from screen inorder to ensure onDetachedFromScreen is properly
      * executed and componentWillUnmount is called
      */
-    public void onRemovedFromScreen() {
-        ReflectionUtils.setBooleanField(this, "mAttachScheduled", false);
-        dismissSoftKeyBoard();
-    }
-
-    private void dismissSoftKeyBoard() {
-        InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    public void onRemoveFromScreen() {
+        ReflectionUtils.setBooleanField(mReactRootView, "mAttachScheduled", false);
     }
 
     /**
-     * Must be called before view is added again to screen inorder to ensure onDetachedFromScreen is properly
+     * Must be called when view is added again to screen inorder to ensure onDetachedFromScreen is properly
      * executed and componentWillUnmount is called
      */
-    public void onReaddedToScreen() {
-        ReflectionUtils.setBooleanField(this, "mAttachScheduled", false);
+    public void onReAddToScreen() {
+        ReflectionUtils.setBooleanField(mReactRootView, "mAttachScheduled", false);
     }
 }
 

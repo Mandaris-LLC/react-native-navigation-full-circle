@@ -74,9 +74,12 @@ public class ScreenStack extends FrameLayout {
         }
 
         ScreenView popped = mStack.pop();
-        addView(mStack.peek().view, 0);
 
-        popped.view.onRemovedFromScreen();
+        RctView newView = mStack.peek().view;
+        addView(newView);
+        newView.onReAddToScreen();
+
+        popped.view.onRemoveFromScreen();
         removeView(popped.view);
         return popped.screen;
     }
@@ -89,7 +92,7 @@ public class ScreenStack extends FrameLayout {
         ScreenView oldScreenView = null;
         while (getStackSize() > 1) {
             ScreenView popped = mStack.pop();
-            popped.view.onRemovedFromScreen();
+            popped.view.onRemoveFromScreen();
             removeView(popped.view);
             if (oldScreenView == null) {
                 oldScreenView = popped;
@@ -115,7 +118,7 @@ public class ScreenStack extends FrameLayout {
         if (!mStack.isEmpty()) {
             while (getStackSize() > 0) {
                 ScreenView popped = mStack.pop();
-                popped.view.onRemovedFromScreen();
+                popped.view.onRemoveFromScreen();
                 removeView(popped.view);
                 if (oldScreenView == null) {
                     oldScreenView = popped;
@@ -158,7 +161,7 @@ public class ScreenStack extends FrameLayout {
      * Add ScreenStack to {@code parent}
      */
     public void addToScreen(ViewGroup parent) {
-        mStack.peek().view.onReaddedToScreen();
+        mStack.peek().view.onReAddToScreen();
 
         parent.addView(this, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
