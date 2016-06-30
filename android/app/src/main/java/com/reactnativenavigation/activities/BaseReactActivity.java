@@ -46,9 +46,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-/**
- * Base Activity for React Native applications.
- */
 public abstract class BaseReactActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
 
     protected static final String KEY_ANIMATED = "animated";
@@ -157,6 +154,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         ContextProvider.setActivityContext(this);
         mReactInstanceManager = createReactInstanceManager();
         handleOnCreate();
+
     }
 
     /**
@@ -176,14 +174,15 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 
     @CallSuper
     protected void handleOnCreate() {
-        if (getUseDeveloperSupport() && Build.VERSION.SDK_INT >= 23) {
-            // Get permission to show redbox in dev builds.
-            if (!Settings.canDrawOverlays(this)) {
-                Intent serviceIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                startActivity(serviceIntent);
-                FLog.w(ReactConstants.TAG, REDBOX_PERMISSION_MESSAGE);
-                Toast.makeText(this, REDBOX_PERMISSION_MESSAGE, Toast.LENGTH_LONG).show();
-            }
+        permissionToShowRedboxIfNeeded();
+    }
+
+    private void permissionToShowRedboxIfNeeded() {
+        if (getUseDeveloperSupport() && Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(this)) {
+            Intent serviceIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+            startActivity(serviceIntent);
+            FLog.w(ReactConstants.TAG, REDBOX_PERMISSION_MESSAGE);
+            Toast.makeText(this, REDBOX_PERMISSION_MESSAGE, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -230,7 +229,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
             mToolbar.update(screen);
 
             if (getCurrentNavigatorId().equals(screen.navigatorId) &&
-                getScreenStackSize() >= 1) {
+                    getScreenStackSize() >= 1) {
                 mToolbar.setNavUpButton(screen);
             }
         }
@@ -239,8 +238,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @CallSuper
     public Screen pop(String navigatorId) {
         if (mToolbar != null &&
-            getCurrentNavigatorId().equals(navigatorId) &&
-            getScreenStackSize() <= 2) {
+                getCurrentNavigatorId().equals(navigatorId) &&
+                getScreenStackSize() <= 2) {
             mToolbar.setNavUpButton();
         }
 
@@ -303,8 +302,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle != null &&
-            getScreenStackSize() == 1 &&
-            mDrawerToggle.onOptionsItemSelected(item)) {
+                getScreenStackSize() == 1 &&
+                mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -342,7 +341,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (mReactInstanceManager != null &&
-            mReactInstanceManager.getDevSupportManager().getDevSupportEnabled()) {
+                mReactInstanceManager.getDevSupportManager().getDevSupportEnabled()) {
             if (keyCode == KeyEvent.KEYCODE_MENU) {
                 mReactInstanceManager.showDevOptionsDialog();
                 return true;
@@ -400,7 +399,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         mDrawerToggle = mToolbar.setupDrawer(mDrawerLayout, drawer.left, screen);
     }
 
-    public void setNavigationButtons(ReadableMap buttons){
+    public void setNavigationButtons(ReadableMap buttons) {
         if (mToolbar == null) {
             return;
         }

@@ -1,5 +1,7 @@
 package com.reactnativenavigation.activities;
 
+import android.view.ViewGroup;
+
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.core.objects.Screen;
 
@@ -26,7 +28,7 @@ public class RootActivity extends BaseReactActivity {
         finish();
     }
 
-     // No need to implement stack interface since this activity is only used to start other
+    // No need to implement stack interface since this activity is only used to start other
     // activities such as TabActivity or SingleScreenActivity.
     @Override
     public Screen getCurrentScreen() {
@@ -42,4 +44,5 @@ public class RootActivity extends BaseReactActivity {
     public int getScreenStackSize() {
         return 0;
     }
+
 }

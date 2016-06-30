@@ -1,7 +1,9 @@
 package com.reactnativenavigation.activities;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.ViewGroup;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.adapters.ViewPagerAdapter;
