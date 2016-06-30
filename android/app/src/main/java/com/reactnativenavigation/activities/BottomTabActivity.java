@@ -46,6 +46,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
 
     @Override
     protected void handleOnCreate() {
+        super.handleOnCreate();
         mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
 
         setContentView(R.layout.bottom_tab_activity);

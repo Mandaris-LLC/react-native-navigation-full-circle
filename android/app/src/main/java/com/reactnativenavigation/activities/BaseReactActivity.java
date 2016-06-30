@@ -174,6 +174,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
         return rctManager.getReactInstanceManager();
     }
 
+    @CallSuper
     protected void handleOnCreate() {
         if (getUseDeveloperSupport() && Build.VERSION.SDK_INT >= 23) {
             // Get permission to show redbox in dev builds.
@@ -184,10 +185,6 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
                 Toast.makeText(this, REDBOX_PERMISSION_MESSAGE, Toast.LENGTH_LONG).show();
             }
         }
-
-        ReactRootView mReactRootView = createRootView();
-        mReactRootView.startReactApplication(mReactInstanceManager, getMainComponentName(), getLaunchOptions());
-        setContentView(mReactRootView);
     }
 
     @Override

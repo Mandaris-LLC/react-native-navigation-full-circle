@@ -27,6 +27,7 @@ public class TabActivity extends BaseReactActivity {
 
     @Override
     protected void handleOnCreate() {
+        super.handleOnCreate();
         mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
 
         setContentView(R.layout.tab_activity);

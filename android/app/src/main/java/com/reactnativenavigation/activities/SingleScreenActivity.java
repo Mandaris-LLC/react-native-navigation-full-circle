@@ -23,6 +23,7 @@ public class SingleScreenActivity extends BaseReactActivity {
 
     @Override
     protected void handleOnCreate() {
+        super.handleOnCreate();
         mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
 
         setContentView(R.layout.single_screen_activity);
