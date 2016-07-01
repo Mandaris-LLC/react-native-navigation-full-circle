@@ -1,9 +1,7 @@
 package com.reactnativenavigation.views;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -11,7 +9,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -45,14 +42,11 @@ import java.util.Map;
  */
 public class RnnToolBar extends Toolbar {
 
-    private static final int ANIMATE_DURATION = 180;
-
     private List<Screen> mScreens;
     private AsyncTask mDrawerIconTask;
     private AsyncTask mSetupToolbarTask;
     private Drawable mBackground;
     private Drawable mDrawerIcon;
-    private Screen mDrawerScreen;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ArrayList<View> mMenuItems;
@@ -121,7 +115,6 @@ public class RnnToolBar extends Toolbar {
         }
 
         mDrawerLayout = drawerLayout;
-        mDrawerScreen = drawerScreen;
         mDrawerToggle = new ActionBarDrawerToggle(
             ContextProvider.getActivityContext(),
             mDrawerLayout,
