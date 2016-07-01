@@ -39,6 +39,7 @@ public class Screen extends JsonObject implements Serializable {
     private static final String KEY_NAVIGATION_BAR_COLOR = "navigationBarColor";
     private static final String KEY_NAV_BAR_BUTTON_COLOR = "navBarButtonColor";
     private static final String KEY_NAV_BAR_TEXT_COLOR = "navBarTextColor";
+    private static final String KEY_BACK_BUTTON_HIDDEN = "backButtonHidden";
     private static final String KEY_TAB_NORMAL_TEXT_COLOR = "tabNormalTextColor";
     private static final String KEY_TAB_SELECTED_TEXT_COLOR = "tabSelectedTextColor";
     private static final String KEY_TAB_INDICATOR_COLOR = "tabIndicatorColor";
@@ -52,6 +53,7 @@ public class Screen extends JsonObject implements Serializable {
     public final String navigatorEventId;
     public final String icon;
     public ArrayList<Button> buttons;
+    public final boolean backButtonHidden;
     public HashMap<String, Object> passedProps = new HashMap<>();
 
     // Navigation styling
@@ -82,6 +84,7 @@ public class Screen extends JsonObject implements Serializable {
             passedProps = ((ReadableNativeMap) screen.getMap(KEY_PROPS)).toHashMap();
         }
         buttons = getButtons(screen);
+        backButtonHidden = getBoolean(screen, KEY_BACK_BUTTON_HIDDEN);
         setToolbarStyle(screen);
     }
 

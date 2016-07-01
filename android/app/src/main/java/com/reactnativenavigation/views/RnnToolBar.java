@@ -232,7 +232,7 @@ public class RnnToolBar extends Toolbar {
         if (hasDrawer && mDrawerIcon == null) {
             navArrow = (DrawerArrowDrawable) this.getNavigationIcon();
         } else {
-            if (isBack) {
+            if (isBack && !screen.backButtonHidden) {
                 navArrow = new DrawerArrowDrawable(ContextProvider.getActivityContext());
             } else if (hasDrawer) {
                 navIcon = mDrawerIcon;
