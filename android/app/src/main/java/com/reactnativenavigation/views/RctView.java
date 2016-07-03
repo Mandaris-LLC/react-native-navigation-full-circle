@@ -67,7 +67,7 @@ public class RctView extends FrameLayout {
      */
     public void onTemporallyRemovedFromScreen() {
         // Hack in order to prevent the react view from getting unmounted
-        ReflectionUtils.setBooleanField(mReactRootView, "mAttachScheduled", true);
+        ReflectionUtils.setField(mReactRootView, "mAttachScheduled", true);
     }
 
     /**
@@ -75,7 +75,7 @@ public class RctView extends FrameLayout {
      * executed and componentWillUnmount is called
      */
     public void onRemoveFromScreen() {
-        ReflectionUtils.setBooleanField(mReactRootView, "mAttachScheduled", false);
+        ReflectionUtils.setField(mReactRootView, "mAttachScheduled", false);
     }
 
     /**
@@ -83,7 +83,11 @@ public class RctView extends FrameLayout {
      * executed and componentWillUnmount is called
      */
     public void onReAddToScreen() {
-        ReflectionUtils.setBooleanField(mReactRootView, "mAttachScheduled", false);
+        ReflectionUtils.setField(mReactRootView, "mAttachScheduled", false);
+    }
+
+    public void detachFromScreen() {
+        ReflectionUtils.invoke(mReactRootView, "onDetachedFromWindow");
     }
 }
 

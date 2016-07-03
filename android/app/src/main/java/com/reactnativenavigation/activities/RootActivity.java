@@ -45,4 +45,8 @@ public class RootActivity extends BaseReactActivity {
         return 0;
     }
 
+    @Override
+    public void removeAllReactViews() {
+
+    }
 }

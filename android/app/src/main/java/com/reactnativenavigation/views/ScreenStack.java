@@ -165,4 +165,15 @@ public class ScreenStack extends FrameLayout {
 
         parent.addView(this, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
+
+    public void removeAllReactViews() {
+        while (!mStack.empty()) {
+            RctView view = mStack.pop().view;
+            // Ensure view will be properly detached and unmounted
+            view.onRemoveFromScreen();
+            // Unmount the view
+            view.detachFromScreen();
+        }
+        removeAllViews();
+    }
 }

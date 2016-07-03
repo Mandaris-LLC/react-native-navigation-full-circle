@@ -267,4 +267,11 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         }
         this.onTabSelected(0, false);
     }
+
+    @Override
+    protected void removeAllReactViews() {
+        for (ScreenStack screenStack : mScreenStacks) {
+            screenStack.removeAllReactViews();
+        }
+    }
 }

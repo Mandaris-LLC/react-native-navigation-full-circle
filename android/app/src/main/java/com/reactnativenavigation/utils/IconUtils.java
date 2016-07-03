@@ -1,13 +1,11 @@
 package com.reactnativenavigation.utils;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.util.DisplayMetrics;
 
 import com.reactnativenavigation.BuildConfig;
 
