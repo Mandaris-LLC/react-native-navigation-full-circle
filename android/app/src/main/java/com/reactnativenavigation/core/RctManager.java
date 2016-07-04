@@ -89,18 +89,30 @@ public class RctManager {
         final ReactInstanceDevCommandsHandler devInterface = (ReactInstanceDevCommandsHandler)
                 ReflectionUtils.getDeclaredField(reactInstanceManager, "mDevInterface");
         if (devInterface == null) {
-            Log.e(TAG, "Could not get field: mDevInterface");
+            Log.e(TAG, "Could not get field mDevInterface");
             return;
         }
 
         // Create customDevCommandsHandler
         CustomDevCommandsHandler customDevCommandsHandler = new CustomDevCommandsHandler(devInterface);
-        ReflectionUtils.setField(reactInstanceManager, "mDevInterface", customDevCommandsHandler);
+        boolean success = ReflectionUtils.setField(reactInstanceManager, "mDevInterface", customDevCommandsHandler);
+        if (!success) {
+            Log.e(TAG, "Could not set field mDevInterface");
+            return;
+        }
 
         // Set customDevCommandsHandler in devSupportManager. Fun =).
         DevSupportManager devSupportManager = (DevSupportManager)
                 ReflectionUtils.getDeclaredField(reactInstanceManager, "mDevSupportManager");
-        ReflectionUtils.setField(devSupportManager, "mReactInstanceCommandsHandler", customDevCommandsHandler);
+        if (devSupportManager == null) {
+            Log.e(TAG, "Could not get field mDevSupportManager");
+            return;
+        }
+
+        success = ReflectionUtils.setField(devSupportManager, "mReactInstanceCommandsHandler", customDevCommandsHandler);
+        if (!success) {
+            Log.e(TAG, "Could not set field mReactInstanceCommandsHandler");
+        }
     }
 
     public <T extends ReactContextBaseJavaModule> T getNativeModule(Class<T> nativeModuleClass) {

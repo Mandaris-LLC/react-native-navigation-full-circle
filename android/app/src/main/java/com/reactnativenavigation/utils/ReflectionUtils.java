@@ -25,7 +25,7 @@ public class ReflectionUtils {
         try {
             Field f = obj.getClass().getDeclaredField(fieldName);
             f.setAccessible(true);
-            return f.get(obj); //IllegalAccessException
+            return f.get(obj);
         } catch (Exception e) {
             e.printStackTrace();
         }
