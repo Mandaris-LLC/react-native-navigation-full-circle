@@ -362,7 +362,7 @@ public class RnnToolBar extends Toolbar {
             for (int i = 0; i < size; i++) {
                 Button button = mNewButtons.get(i);
                 MenuItem item = menu.add(Menu.NONE, button.getItemId(), size - i - 1, button.title);
-                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                item.setShowAsAction(getMenuItemShowAction(button.showAsAction));
 
                 // Set button icon
                 if (button.hasIcon()) {
@@ -413,6 +413,19 @@ public class RnnToolBar extends Toolbar {
 
                 toolBar.mSetupToolbarTask = null;
                 mToolbarWR.clear();
+            }
+        }
+
+        private int getMenuItemShowAction(String action) {
+            switch (action) {
+                case "never":
+                    return MenuItem.SHOW_AS_ACTION_NEVER;
+                case "always":
+                    return MenuItem.SHOW_AS_ACTION_ALWAYS;
+                case "withText":
+                    return MenuItem.SHOW_AS_ACTION_WITH_TEXT;
+                default:
+                    return MenuItem.SHOW_AS_ACTION_IF_ROOM;
             }
         }
     }
