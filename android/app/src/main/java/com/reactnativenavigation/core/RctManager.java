@@ -75,8 +75,9 @@ public class RctManager {
         }
 
         mReactManager = builder.build();
-        setupDevSupportHandler(mReactManager);
-
+        if (reactActivity.getUseDeveloperSupport()) {
+            setupDevSupportHandler(mReactManager);
+        }
         return mReactManager;
     }
 
