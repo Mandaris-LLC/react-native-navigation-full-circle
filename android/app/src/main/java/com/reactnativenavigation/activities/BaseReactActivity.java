@@ -59,6 +59,8 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     protected static final String KEY_TAB_INDEX = "tabIndex";
     protected static final String KEY_TITLE = "title";
     protected static final String KEY_TO = "to";
+    protected static final String KEY_NAVIGATOR_ID = "navigatorID";
+
     private static final String TAG = "BaseReactActivity";
     private static final String REDBOX_PERMISSION_MESSAGE =
             "Overlay permissions needs to be granted in order for react native apps to run in dev mode";
