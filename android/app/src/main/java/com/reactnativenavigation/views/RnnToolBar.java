@@ -311,7 +311,7 @@ public class RnnToolBar extends Toolbar {
             mOldButtons = oldScreen == null ? null : oldScreen.getButtons();
             mNewButtons = newScreen.getButtons();
             mTintColor = newScreen.navBarButtonColor;
-            mIconDimensions = (int) (toolBar.getHeight() * 0.4f);
+            mIconDimensions = (int) ImageUtils.convertDpToPixel(48, toolBar.getContext());
         }
 
         @Override
