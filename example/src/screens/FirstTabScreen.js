@@ -67,6 +67,10 @@ export default class FirstTabScreen extends Component {
           <Text style={styles.button}>Show LightBox</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onInAppNotificationPress.bind(this) }>
+          <Text style={styles.button}>Show In-App Notification</Text>
+        </TouchableOpacity>
+
       </View>
     );
   }
@@ -94,6 +98,11 @@ export default class FirstTabScreen extends Component {
       style: {
         backgroundBlur: "dark"
       }
+    });
+  }
+  onInAppNotificationPress() {
+    this.props.navigator.showInAppNotification({
+      screen: "example.NotificationScreen"
     });
   }
 }

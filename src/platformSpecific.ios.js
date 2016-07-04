@@ -1,6 +1,6 @@
 import utils from './utils';
 import Navigation from './Navigation';
-import Controllers, { Modal } from 'react-native-controllers';
+import Controllers, { Modal, Notification } from 'react-native-controllers';
 const React = Controllers.hijackReact();
 const {
   ControllerRegistry,
@@ -404,6 +404,41 @@ function dismissLightBox(params) {
   Modal.dismissLightBox();
 }
 
+function showInAppNotification(params) {
+  if (!params.screen) {
+    console.error('showInAppNotification(params): params.screen is required');
+    return;
+  }
+
+  const controllerID = utils.getRandomId();
+  const navigatorID = controllerID + '_nav';
+  const screenInstanceID = utils.getRandomId();
+  const {
+    navigatorStyle,
+    navigatorButtons,
+    navigatorEventID
+  } = _mergeScreenSpecificSettings(params.screen, screenInstanceID, params);
+  const passProps = Object.assign({}, params.passProps);
+  passProps.navigatorID = navigatorID;
+  passProps.screenInstanceID = screenInstanceID;
+  passProps.navigatorEventID = navigatorEventID;
+
+  Notification.show({
+    component: params.screen,
+    passProps: passProps,
+    style: params.style,
+    animation: params.animation || Notification.AnimationPresets.default,
+    position: params.position,
+    shadowRadius: params.shadowRadius,
+    dismissWithSwipe: params.dismissWithSwipe || true,
+    autoDismissTimerSec: params.autoDismissTimerSec || 5
+  });
+}
+
+function dismissInAppNotification(params) {
+  Notification.dismiss(params);
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -416,6 +451,8 @@ export default {
   dismissAllModals,
   showLightBox,
   dismissLightBox,
+  showInAppNotification,
+  dismissInAppNotification,
   navigatorSetButtons,
   navigatorSetTitle,
   navigatorSetTitleImage,

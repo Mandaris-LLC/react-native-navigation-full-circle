@@ -7,6 +7,7 @@ import PushedScreen from './PushedScreen';
 import StyledScreen from './StyledScreen';
 import ModalScreen from './ModalScreen';
 import LightBoxScreen from './LightBoxScreen';
+import NotificationScreen from './NotificationScreen'
 import SideMenu from './SideMenu';
 
 // register all screens of the app (including internal ones)
@@ -18,5 +19,6 @@ export function registerScreens() {
   Navigation.registerComponent('example.StyledScreen', () => StyledScreen);
   Navigation.registerComponent('example.ModalScreen', () => ModalScreen);
   Navigation.registerComponent('example.LightBoxScreen', () => LightBoxScreen);
+  Navigation.registerComponent('example.NotificationScreen', () => NotificationScreen);
   Navigation.registerComponent('example.SideMenu', () => SideMenu);
 }

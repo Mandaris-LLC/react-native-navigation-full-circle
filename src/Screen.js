@@ -53,6 +53,14 @@ class Navigator {
     return Navigation.dismissLightBox(params);
   }
 
+  showInAppNotification(params = {}) {
+    return Navigation.showInAppNotification(params);
+  }
+
+  dismissInAppNotification(params = {}) {
+    return Navigation.dismissInAppNotification(params);
+  }
+
   setButtons(params = {}) {
     return platformSpecific.navigatorSetButtons(this, this.navigatorEventID, params);
   }

@@ -83,6 +83,14 @@ function dismissLightBox(params = {}) {
   return platformSpecific.dismissLightBox(params);
 }
 
+function showInAppNotification(params = {}) {
+  return platformSpecific.showInAppNotification(params);
+}
+
+function dismissInAppNotification(params = {}) {
+  return platformSpecific.dismissInAppNotification(params);
+}
+
 export default {
   registerScreen,
   getRegisteredScreen,
@@ -92,6 +100,8 @@ export default {
   dismissAllModals,
   showLightBox,
   dismissLightBox,
+  showInAppNotification,
+  dismissInAppNotification,
   startTabBasedApp: platformSpecific.startTabBasedApp,
   startSingleScreenApp: platformSpecific.startSingleScreenApp
 }
