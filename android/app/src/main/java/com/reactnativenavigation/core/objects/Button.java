@@ -22,11 +22,13 @@ public class Button extends JsonObject implements Serializable {
     private static final String KEY_TITLE = "title";
     private static final String KEY_ICON = "icon";
     private static final String KEY_DISABLED = "disabled";
+    private static final String KEY_SHOW_AS_ACTION = "showAsAction";
 
     public String id;
     public String title;
     private String mIconSource;
     public boolean disabled;
+    public String showAsAction;
 
     private static final AtomicInteger sAtomicIdGenerator = new AtomicInteger();
     private static final Map<String, Integer> sStringToNumericId = new HashMap<>();
@@ -36,6 +38,7 @@ public class Button extends JsonObject implements Serializable {
         title = getString(button, KEY_TITLE, "");
         mIconSource = getString(button, KEY_ICON);
         disabled = getBoolean(button, KEY_DISABLED);
+        showAsAction = getString(button, KEY_SHOW_AS_ACTION, "");
     }
 
     public boolean hasIcon() {
