@@ -1,6 +1,5 @@
 package com.reactnativenavigation.activities;
 
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.ViewGroup;
@@ -67,6 +66,11 @@ public class TabActivity extends BaseReactActivity {
         boolean ret = super.onCreateOptionsMenu(menu);
         mToolbar.handleOnCreateOptionsMenuAsync();
         return ret;
+    }
+
+    @Override
+    public void removeAllReactViews() {
+
     }
 
     @Override
