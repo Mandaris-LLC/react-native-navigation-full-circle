@@ -153,6 +153,7 @@ fastlane/screenshots
 android/bin/
 android/gen/
 android/out/
+android/app/build/
 
 # Gradle files
 android/.gradle/
