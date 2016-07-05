@@ -1,9 +1,6 @@
 package com.reactnativenavigation.activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +26,6 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
-import com.facebook.react.devsupport.DevServerHelper;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.BuildConfig;
@@ -299,7 +295,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
         Screen currentScreen = getCurrentScreen();
-        if (mToolbar != null && currentScreen != null) {
+        if (mToolbar != null && currentScreen != null && !isFinishing()) {
             mToolbar.setupToolbarButtonsAsync(currentScreen);
         }
         return super.onCreateOptionsMenu(menu);
