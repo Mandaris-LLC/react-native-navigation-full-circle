@@ -150,7 +150,13 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         for (ScreenStack stack : mScreenStacks) {
             if (stack.peek().navigatorId.equals(navigatorId)) {
                 Screen popped = stack.popToRoot();
-                StyleHelper.updateStyles(mToolbar, getCurrentScreen());
+                Screen currentScreen = getCurrentScreen();
+                StyleHelper.updateStyles(mToolbar, currentScreen);
+
+                if (shouldToggleTabs(currentScreen)) {
+                    toggleTabs(currentScreen.bottomTabsHidden, false);
+                }
+
                 return popped;
             }
         }
