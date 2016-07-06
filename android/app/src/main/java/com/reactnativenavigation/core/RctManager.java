@@ -25,6 +25,8 @@ import static com.facebook.react.modules.core.DeviceEventManagerModule.RCTDevice
 public class RctManager {
     private static final String TAG = "RctManager";
     private static final String KEY_EVENT_ID = "id";
+    private static final String KEY_EVENT_TYPE = "type";
+    private static final String EVENT_TYPE = "NavBarButtonPress";
     private static RctManager sInstance;
 
     private ReactInstanceManager mReactManager;
@@ -136,6 +138,7 @@ public class RctManager {
             return;
         }
 
+        params.putString(KEY_EVENT_TYPE, EVENT_TYPE);
         params.putString(KEY_EVENT_ID, eventName);
         params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
         eventEmitter.emit(screen.navigatorEventId, params);
