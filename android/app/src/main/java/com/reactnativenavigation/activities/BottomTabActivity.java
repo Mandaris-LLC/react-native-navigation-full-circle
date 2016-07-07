@@ -104,13 +104,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        boolean ret = super.onCreateOptionsMenu(menu);
-        mToolbar.handleOnCreateOptionsMenuAsync();
-        return ret;
-    }
-
-    @Override
     public void push(Screen screen) {
         super.push(screen);
         for (ScreenStack stack : mScreenStacks) {
