@@ -173,7 +173,7 @@ Navigation.startTabBasedApp({
     {
       label: 'One', // tab label as appears under the icon in iOS (optional)
       screen: 'example.FirstTabScreen', // unique ID registered with Navigation.registerScreen
-      icon: require('../img/one.png'), // local image asset for the tab icon unselected state (optional)
+      icon: require('../img/one.png'), // local image asset for the tab icon unselected state (optional on iOS)
       selectedIcon: require('../img/one_selected.png'), // local image asset for the tab icon selected state (optional)
       title: 'Screen One', // title of the screen as appears in the nav bar (optional)
       navigatorStyle: {}, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
