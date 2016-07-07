@@ -33,17 +33,25 @@ function startTabBasedApp(params) {
     addNavigatorParams(tab, null, idx);
     addNavigatorButtons(tab);
     addNavigationStyleParams(tab);
-    if (tab.icon) {
-      const icon = resolveAssetSource(tab.icon);
-      if (icon) {
-        tab.icon = icon.uri;
-      }
-    }
+    addTabIcon(tab);
     tab.passProps = params.passProps;
   });
 
   const drawer = setupDrawer(params.drawer);
   RctActivity.startTabBasedApp(params.tabs, params.tabsStyle, drawer);
+}
+
+function addTabIcon(tab) {
+  if (tab.icon) {
+    const icon = resolveAssetSource(tab.icon);
+    if (icon) {
+      tab.icon = icon.uri;
+    }
+  }
+
+  if (!tab.icon) {
+    throw new Error("No icon defined for tab " + tab.screen);
+  }
 }
 
 function navigatorPush(navigator, params) {
