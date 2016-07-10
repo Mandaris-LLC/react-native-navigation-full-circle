@@ -93,6 +93,10 @@ class Navigator {
     return platformSpecific.navigatorSwitchToTab(this, params);
   }
 
+  showFAB(params = {}) {
+    return platformSpecific.showFAB(params);
+  }
+
   setOnNavigatorEvent(callback) {
     this.navigatorEventHandler = callback;
     if (!this.navigatorEventSubscription) {
@@ -101,6 +105,7 @@ class Navigator {
       _allNavigatorEventHandlers[this.navigatorEventID] = (event) => this.onNavigatorEvent(event);
     }
   }
+
   handleDeepLink(params = {}) {
     if (!params.link) return;
     const event = {
@@ -129,7 +134,7 @@ class Navigator {
 export default class Screen extends Component {
   static navigatorStyle = {};
   static navigatorButtons = {};
-  
+
   constructor(props) {
     super(props);
     if (props.navigatorID) {

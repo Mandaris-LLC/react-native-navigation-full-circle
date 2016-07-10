@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
 import * as appActions from '../reducers/app/actions';
 
@@ -21,6 +21,10 @@ class LoginScreen extends Component {
 
   constructor(props) {
     super(props);
+    this.props.navigator.showFAB({
+      icon: require('../../img/navicon_edit@2x.png'),
+      backgroundColor: 'blue'
+    });
   }
 
   render() {
@@ -48,9 +52,11 @@ class LoginScreen extends Component {
       </View>
     );
   }
+
   onIncrementPress() {
     this.props.dispatch(counterActions.increment());
   }
+
   onLoginPress() {
     this.props.dispatch(appActions.login());
   }
@@ -61,13 +67,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10,
+    marginTop: 10,
   },
   button: {
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10,
+    marginTop: 10,
     color: 'blue'
   }
 });

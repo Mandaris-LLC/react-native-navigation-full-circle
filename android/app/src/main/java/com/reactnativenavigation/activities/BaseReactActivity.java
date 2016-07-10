@@ -464,4 +464,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
                 break;
         }
     }
+
+    public void showFAB(ReadableMap params) {
+    }
 }

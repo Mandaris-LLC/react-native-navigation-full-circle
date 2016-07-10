@@ -197,6 +197,11 @@ function setupDrawer(drawerParams) {
   return drawer;
 }
 
+function showFAB(params) {
+  params.icon = resolveAssetSource(params.icon).uri;
+  RctActivity.showFAB(params);
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -207,6 +212,7 @@ export default {
   showModal,
   dismissModal,
   dismissAllModals,
+  showFAB,
   navigatorSetButtons,
   navigatorSetTabBadge,
   navigatorSetTitle,

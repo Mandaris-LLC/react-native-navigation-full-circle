@@ -2,6 +2,7 @@ package com.reactnativenavigation.activities;
 
 import android.support.design.widget.CoordinatorLayout;
 
+import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Drawer;
@@ -106,5 +107,19 @@ public class SingleScreenActivity extends BaseReactActivity {
     @Override
     protected void removeAllReactViews() {
         mScreenStack.removeAllReactViews();
+    }
+
+    @Override
+    public void showFAB(ReadableMap params) {
+//        FloatingActionButton fab = new FloatingActionButton(this);
+//        fab.setImageDrawable(IconUtils.getIcon(this, params.getString("icon")));
+//        fab.setBackgroundColor(Color.parseColor(params.getString("backgroundColor")));
+//        fab.setImageResource(R.drawable.notification_background);
+//        CoordinatorLayout content = (CoordinatorLayout) findViewById(R.id.contentFrame);
+//        CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+//        layoutParams.gravity = Gravity.BOTTOM | Gravity.END;
+//        int m = (int) ImageUtils.convertDpToPixel(16, this);
+//        layoutParams.setMargins(m, m, m, m);
+//        content.addView(fab, layoutParams);
     }
 }
