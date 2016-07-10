@@ -1,6 +1,6 @@
 package com.reactnativenavigation.activities;
 
-import android.widget.FrameLayout;
+import android.support.design.widget.CoordinatorLayout;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.RctManager;
@@ -34,7 +34,7 @@ public class SingleScreenActivity extends BaseReactActivity {
         setupDrawer(screen, drawer, R.id.drawerFrame, R.id.drawerLayout);
 
         mScreenStack = new ScreenStack(this);
-        FrameLayout contentFrame = (FrameLayout) findViewById(R.id.contentFrame);
+        CoordinatorLayout contentFrame = (CoordinatorLayout) findViewById(R.id.contentFrame);
         assert contentFrame != null;
         contentFrame.addView(mScreenStack);
         mScreenStack.push(screen);

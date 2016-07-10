@@ -2,9 +2,9 @@ package com.reactnativenavigation.views;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.activities.BaseReactActivity;
@@ -15,7 +15,7 @@ import java.util.Stack;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
-public class ScreenStack extends FrameLayout {
+public class ScreenStack extends android.support.design.widget.CoordinatorLayout {
 
     private static final int DISAPPEAR_ANIMATION_DELAY = 200;
 
@@ -163,7 +163,7 @@ public class ScreenStack extends FrameLayout {
     public void addToScreen(ViewGroup parent) {
         mStack.peek().view.onReAddToScreen();
 
-        parent.addView(this, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        parent.addView(this, new CoordinatorLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
     public void removeAllReactViews() {

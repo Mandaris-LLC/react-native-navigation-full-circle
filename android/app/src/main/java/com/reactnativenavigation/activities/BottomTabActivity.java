@@ -4,9 +4,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -38,7 +37,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     private static boolean DEFAULT_TAB_INACTIVE_TITLES = true;
 
     private AHBottomNavigation mBottomNavigation;
-    private FrameLayout mContentFrame;
+    private CoordinatorLayout mContentFrame;
     private ArrayList<ScreenStack> mScreenStacks;
     private int mCurrentStackPosition = -1;
 
@@ -50,7 +49,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         setContentView(R.layout.bottom_tab_activity);
         mToolbar = (RnnToolBar) findViewById(R.id.toolbar);
         mBottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_tab_bar);
-        mContentFrame = (FrameLayout) findViewById(R.id.contentFrame);
+        mContentFrame = (CoordinatorLayout) findViewById(R.id.contentFrame);
 
         final ArrayList<Screen> screens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
         final Drawer drawer = (Drawer) getIntent().getSerializableExtra(DRAWER_PARAMS);
