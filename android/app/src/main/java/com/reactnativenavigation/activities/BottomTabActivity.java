@@ -78,6 +78,12 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         StyleHelper.updateStyles(mToolbar, initialScreen);
     }
 
+    private void setupBottomTabs(Screen initialScreen) {
+        if (initialScreen.bottomTabsHiddenOnScroll) {
+
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

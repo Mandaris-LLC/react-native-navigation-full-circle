@@ -27,11 +27,20 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/contentFrame"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent">
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/contentFrame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.reactnativenavigation.views.BottomNavigation
+                android:id="@+id/bottom_tab_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
 
         <FrameLayout
             android:id="@+id/drawerFrame"
@@ -39,10 +48,5 @@
             android:layout_height="match_parent"
             android:layout_gravity="start" />
     </android.support.v4.widget.DrawerLayout>
-
-    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-        android:id="@+id/bottom_tab_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

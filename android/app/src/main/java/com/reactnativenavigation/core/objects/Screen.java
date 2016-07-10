@@ -44,6 +44,7 @@ public class Screen extends JsonObject implements Serializable {
     private static final String KEY_TAB_SELECTED_TEXT_COLOR = "tabSelectedTextColor";
     private static final String KEY_TAB_INDICATOR_COLOR = "tabIndicatorColor";
     private static final String KEY_BOTTOM_TABS_HIDDEN = "tabBarHidden";
+    private static final String KEY_BOTTOM_TABS_HIDDEN_ON_SCROLL = "bottomTabsHiddenOnScroll";
     private static final String KEY_PROPS = "passProps";
 
     public String title;
@@ -55,6 +56,7 @@ public class Screen extends JsonObject implements Serializable {
     public final String icon;
     public ArrayList<Button> buttons;
     public final boolean backButtonHidden;
+    public final boolean bottomTabsHiddenOnScroll;
     public HashMap<String, Object> passedProps = new HashMap<>();
 
     // Navigation styling
@@ -87,6 +89,7 @@ public class Screen extends JsonObject implements Serializable {
         }
         buttons = getButtons(screen);
         backButtonHidden = getBoolean(screen, KEY_BACK_BUTTON_HIDDEN);
+        bottomTabsHiddenOnScroll = getBoolean(screen, KEY_BOTTOM_TABS_HIDDEN_ON_SCROLL);
         setToolbarStyle(screen);
     }
 
