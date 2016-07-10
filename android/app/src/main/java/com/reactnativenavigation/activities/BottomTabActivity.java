@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -103,13 +104,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        boolean ret = super.onCreateOptionsMenu(menu);
-        mToolbar.handleOnCreateOptionsMenuAsync();
-        return ret;
-    }
-
-    @Override
     public void push(Screen screen) {
         super.push(screen);
         for (ScreenStack stack : mScreenStacks) {
@@ -118,6 +112,10 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
             }
         }
         StyleHelper.updateStyles(mToolbar, getCurrentScreen());
+
+        if (shouldToggleTabs(screen)) {
+            toggleTabs(screen.bottomTabsHidden, false);
+        }
     }
 
     @Override
@@ -126,7 +124,13 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         for (ScreenStack stack : mScreenStacks) {
             if (stack.peek().navigatorId.equals(navigatorId)) {
                 Screen popped = stack.pop();
-                StyleHelper.updateStyles(mToolbar, getCurrentScreen());
+                Screen currentScreen = getCurrentScreen();
+                StyleHelper.updateStyles(mToolbar, currentScreen);
+
+                if (shouldToggleTabs(currentScreen)) {
+                    toggleTabs(currentScreen.bottomTabsHidden, false);
+                }
+
                 return popped;
             }
         }
@@ -139,7 +143,13 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         for (ScreenStack stack : mScreenStacks) {
             if (stack.peek().navigatorId.equals(navigatorId)) {
                 Screen popped = stack.popToRoot();
-                StyleHelper.updateStyles(mToolbar, getCurrentScreen());
+                Screen currentScreen = getCurrentScreen();
+                StyleHelper.updateStyles(mToolbar, currentScreen);
+
+                if (shouldToggleTabs(currentScreen)) {
+                    toggleTabs(currentScreen.bottomTabsHidden, false);
+                }
+
                 return popped;
             }
         }
@@ -225,11 +235,22 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     public void toggleTabs(ReadableMap params) {
         boolean hide = params.getBoolean(KEY_HIDDEN);
         boolean animated = params.getBoolean(KEY_ANIMATED);
+        toggleTabs(hide, animated);
+    }
+
+    // TODO: support animated = false -guyca
+    private void toggleTabs(boolean hide, boolean animated) {
         if (hide) {
-            mBottomNavigation.hideBottomNavigation(animated);
+//            mBottomNavigation.hideBottomNavigation(animated);
+            mBottomNavigation.setVisibility(View.GONE);
         } else {
-            mBottomNavigation.restoreBottomNavigation(animated);
+            mBottomNavigation.setVisibility(View.VISIBLE);
+//            mBottomNavigation.restoreBottomNavigation(animated);
         }
+    }
+
+    private boolean shouldToggleTabs(Screen newScreen) {
+        return mBottomNavigation.isShown() == newScreen.bottomTabsHidden;
     }
 
     private static class SetupTabsTask extends AsyncTask<Void, Void, Map<Screen, Drawable>> {

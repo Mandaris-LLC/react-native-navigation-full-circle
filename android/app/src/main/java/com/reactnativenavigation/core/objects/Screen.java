@@ -43,6 +43,7 @@ public class Screen extends JsonObject implements Serializable {
     private static final String KEY_TAB_NORMAL_TEXT_COLOR = "tabNormalTextColor";
     private static final String KEY_TAB_SELECTED_TEXT_COLOR = "tabSelectedTextColor";
     private static final String KEY_TAB_INDICATOR_COLOR = "tabIndicatorColor";
+    private static final String KEY_BOTTOM_TABS_HIDDEN = "tabBarHidden";
     private static final String KEY_PROPS = "passProps";
 
     public String title;
@@ -66,6 +67,7 @@ public class Screen extends JsonObject implements Serializable {
     @Nullable @ColorInt public Integer tabNormalTextColor;
     @Nullable @ColorInt public Integer tabSelectedTextColor;
     @Nullable @ColorInt public Integer tabIndicatorColor;
+    public Boolean bottomTabsHidden;
 
     @NonNull
     public List<Button> getButtons() {
@@ -132,6 +134,7 @@ public class Screen extends JsonObject implements Serializable {
             tabNormalTextColor = getColor(style, KEY_TAB_NORMAL_TEXT_COLOR);
             tabSelectedTextColor = getColor(style, KEY_TAB_SELECTED_TEXT_COLOR);
             tabIndicatorColor = getColor(style, KEY_TAB_INDICATOR_COLOR);
+            bottomTabsHidden = getBoolean(style, KEY_BOTTOM_TABS_HIDDEN);
         }
     }
 }

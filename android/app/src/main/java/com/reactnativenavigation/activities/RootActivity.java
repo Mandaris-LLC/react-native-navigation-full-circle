@@ -18,8 +18,10 @@ public class RootActivity extends BaseReactActivity {
     @Override
     protected void handleOnCreate() {
         super.handleOnCreate();
-        // Trigger react context initialization, global javascript code will now execute
-        getReactInstanceManager().createReactContextInBackground();
+        if (!getReactInstanceManager().hasStartedCreatingInitialContext()) {
+            // Trigger react context initialization, global javascript code will now execute
+            getReactInstanceManager().createReactContextInBackground();
+        }
     }
 
     @Override
