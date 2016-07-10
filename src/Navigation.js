@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppRegistry } from 'react-native';
+import {AppRegistry} from 'react-native';
 import platformSpecific from './platformSpecific';
 import Screen from './Screen';
 
@@ -24,6 +24,7 @@ function _registerComponentNoRedux(screenID, generator) {
     return class extends Screen {
       static navigatorStyle = InternalComponent.navigatorStyle || {};
       static navigatorButtons = InternalComponent.navigatorButtons || {};
+
       render() {
         return (
           <InternalComponent navigator={this.navigator} {...this.props} />
@@ -41,6 +42,7 @@ function _registerComponentRedux(screenID, generator, store, Provider) {
     return class extends Screen {
       static navigatorStyle = InternalComponent.navigatorStyle || {};
       static navigatorButtons = InternalComponent.navigatorButtons || {};
+
       render() {
         return (
           <Provider store={store}>
@@ -57,7 +59,7 @@ function _registerComponentRedux(screenID, generator, store, Provider) {
 function getRegisteredScreen(screenID) {
   const generator = registeredScreens[screenID];
   if (!generator) {
-    console.error('Navigation.getRegisteredScreen: ' + screenID + ' used but not yet registered');
+    console.error(`Navigation.getRegisteredScreen: ${screenID} used but not yet registered`);
     return;
   }
   return generator();
@@ -91,7 +93,7 @@ function dismissInAppNotification(params = {}) {
   return platformSpecific.dismissInAppNotification(params);
 }
 
-export default {
+module.exports = {
   registerScreen,
   getRegisteredScreen,
   registerComponent,
@@ -104,4 +106,4 @@ export default {
   dismissInAppNotification,
   startTabBasedApp: platformSpecific.startTabBasedApp,
   startSingleScreenApp: platformSpecific.startSingleScreenApp
-}
+};
