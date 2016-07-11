@@ -5,11 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ScrollView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -20,7 +16,6 @@ import com.reactnativenavigation.core.objects.Drawer;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.BottomNavigation;
-import com.reactnativenavigation.views.RctView;
 import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
 
@@ -48,33 +43,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     private ArrayList<ScreenStack> mScreenStacks;
     private int mCurrentStackPosition = -1;
 
-    private ScrollView mScrollView;
-    private ViewTreeObserver.OnScrollChangedListener mScrollChangedListener;
-    private final View.OnAttachStateChangeListener mScrollViewStateChangeListener =
-            new View.OnAttachStateChangeListener() {
-                @Override
-                public void onViewAttachedToWindow(View v) {
-
-                }
-
-                @Override
-                public void onViewDetachedFromWindow(View detachedScrollView) {
-                    detachedScrollView.getViewTreeObserver().removeOnScrollChangedListener(mScrollChangedListener);
-                    detachedScrollView.removeOnAttachStateChangeListener(this);
-
-                    mContentFrame.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mScrollView = getScrollView(mContentFrame);
-                            if (mScrollView != null) {
-                                mScrollView.addOnAttachStateChangeListener(mScrollViewStateChangeListener);
-                                addScrollListener(mScrollView);
-                            }
-                        }
-                    });
-                }
-            };
-
     @Override
     protected void handleOnCreate() {
         super.handleOnCreate();
@@ -99,18 +67,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
                 setupToolbar(screens);
             }
         });
-
-        mContentFrame.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
-            @Override
-            public void onChildViewAdded(View parent, View child) {
-                Log.i(TAG, "onChildViewAdded: " + child.getClass());
-            }
-
-            @Override
-            public void onChildViewRemoved(View parent, View child) {
-                Log.d(TAG, "onChildViewRemoved: " + child.getClass());
-            }
-        });
     }
 
     private void setupPages(ArrayList<Screen> screens) {
@@ -122,48 +78,6 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         Screen initialScreen = screens.get(0);
         mToolbar.update(initialScreen);
         StyleHelper.updateStyles(mToolbar, initialScreen);
-    }
-
-    private void setupBottomTabs(Screen initialScreen) {
-        if (initialScreen.bottomTabsHiddenOnScroll) {
-            mScrollView = getScrollView(mContentFrame);
-            if (mScrollView != null) {
-                attachStateChangeListener(mScrollView);
-                addScrollListener(mScrollView);
-            }
-        }
-    }
-
-    private void attachStateChangeListener(ScrollView scrollView) {
-        scrollView.addOnAttachStateChangeListener(mScrollViewStateChangeListener);
-    }
-
-    private void addScrollListener(final ScrollView scrollView) {
-        mScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                if (scrollView.getViewTreeObserver().isAlive()) {
-                    Log.i(TAG, "onScrollChanged: " + scrollView.getScrollY());
-                }
-            }
-        };
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(mScrollChangedListener);
-    }
-
-    private ScrollView getScrollView(ViewGroup parent) {
-        for (int i = 0; i < parent.getChildCount(); i++) {
-            View child = parent.getChildAt(i);
-
-            if (child instanceof ScrollView) {
-                return (ScrollView) child;
-            }
-
-            if (child instanceof ViewGroup) {
-                return getScrollView((ViewGroup) child);
-            }
-        }
-
-        return null;
     }
 
     @Override
@@ -385,18 +299,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         for (int i = 0; i < screens.size(); i++) {
             final Screen screen = screens.get(i);
             ScreenStack stack = new ScreenStack(this);
-
-            if (i == 0) {
-                stack.push(screen, new RctView.OnDisplayedListener() {
-                    @Override
-                    public void onDisplayed() {
-                        setupBottomTabs(screen);
-                    }
-                });
-            } else {
-                stack.push(screen);
-            }
-
+            stack.push(screen);
             mScreenStacks.add(stack);
             AHBottomNavigationItem item = new AHBottomNavigationItem(screen.label, icons.get(screen), Color.GRAY);
             mBottomNavigation.addItem(item);
