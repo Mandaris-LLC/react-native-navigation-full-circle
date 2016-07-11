@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -56,7 +57,7 @@ public class Screen extends JsonObject implements Serializable {
     public final String icon;
     public ArrayList<Button> buttons;
     public final boolean backButtonHidden;
-    public final boolean bottomTabsHiddenOnScroll;
+    public boolean bottomTabsHiddenOnScroll;
     public HashMap<String, Object> passedProps = new HashMap<>();
 
     // Navigation styling
@@ -89,7 +90,6 @@ public class Screen extends JsonObject implements Serializable {
         }
         buttons = getButtons(screen);
         backButtonHidden = getBoolean(screen, KEY_BACK_BUTTON_HIDDEN);
-        bottomTabsHiddenOnScroll = getBoolean(screen, KEY_BOTTOM_TABS_HIDDEN_ON_SCROLL);
         setToolbarStyle(screen);
     }
 
@@ -138,6 +138,7 @@ public class Screen extends JsonObject implements Serializable {
             tabSelectedTextColor = getColor(style, KEY_TAB_SELECTED_TEXT_COLOR);
             tabIndicatorColor = getColor(style, KEY_TAB_INDICATOR_COLOR);
             bottomTabsHidden = getBoolean(style, KEY_BOTTOM_TABS_HIDDEN);
+            bottomTabsHiddenOnScroll = getBoolean(style, KEY_BOTTOM_TABS_HIDDEN_ON_SCROLL);
         }
     }
 }

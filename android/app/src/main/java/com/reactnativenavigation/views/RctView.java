@@ -1,7 +1,6 @@
 package com.reactnativenavigation.views;
 
 import android.os.Bundle;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
@@ -34,7 +33,7 @@ public class RctView extends FrameLayout {
         super(ctx);
         setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        mReactRootView = new ReactRootView(ctx);
+        mReactRootView = new RnnReactRootView(ctx, onDisplayedListener);
         mReactRootView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         String componentName = screen.screenId;
@@ -47,16 +46,6 @@ public class RctView extends FrameLayout {
         }
 
         mReactRootView.startReactApplication(rctInstanceManager, componentName, passProps);
-
-        if (onDisplayedListener != null) {
-            mReactRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    onDisplayedListener.onDisplayed();
-                    mReactRootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-            });
-        }
 
         addView(mReactRootView);
     }
