@@ -21,10 +21,6 @@ class LoginScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.props.navigator.showFAB({
-      icon: require('../../img/navicon_edit@2x.png'),
-      backgroundColor: 'blue'
-    });
   }
 
   render() {
