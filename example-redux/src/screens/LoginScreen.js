@@ -23,6 +23,10 @@ class LoginScreen extends Component {
     super(props);
   }
 
+  componentWillUnmount() {
+    console.log('Component-Lifecycle', 'componentWillUnmount', 'LoginScreen');
+  }
+
   render() {
     return (
       <View style={{flex: 1, padding: 20}}>
@@ -37,6 +41,10 @@ class LoginScreen extends Component {
 
         <TouchableOpacity onPress={ this.onLoginPress.bind(this) }>
           <Text style={styles.button}>Login</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
+          <Text style={styles.button}>Show another login as modal</Text>
         </TouchableOpacity>
 
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
@@ -55,6 +63,34 @@ class LoginScreen extends Component {
 
   onLoginPress() {
     this.props.dispatch(appActions.login());
+  }
+
+  onShowModalPress() {
+    this.props.navigator.showModal({
+      screen: 'example.LoginScreen',
+      title: 'Login',
+      passProps: {
+        str: 'This is a prop passed in \'startSingleScreenApp()\'!',
+        obj: {
+          str: 'This is a prop passed in an object!',
+          arr: [
+            {
+              str: 'This is a prop in an object in an array in an object!'
+            }
+          ],
+          arr2: [
+            [
+              'array of strings',
+              'with two strings'
+            ],
+            [
+              1, 2, 3
+            ]
+          ]
+        },
+        num: 1234
+      }
+    });
   }
 }
 
