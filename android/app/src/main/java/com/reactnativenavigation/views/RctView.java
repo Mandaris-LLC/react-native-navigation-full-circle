@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.activities.BaseReactActivity;
+import com.reactnativenavigation.activities.BottomTabActivity;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.BridgeUtils;
 import com.reactnativenavigation.utils.ReflectionUtils;
@@ -20,13 +21,24 @@ import com.reactnativenavigation.utils.ReflectionUtils;
  */
 public class RctView extends FrameLayout {
     private static final String TAG = "RctView";
+
+    private BottomTabActivity mContext;
     private ReactRootView mReactRootView;
     private ScrollView mScrollView;
+    private int mLastScrollY = -1;
     private final ViewTreeObserver.OnScrollChangedListener mScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
         @Override
         public void onScrollChanged() {
             if (mScrollView.getViewTreeObserver().isAlive()) {
-                Log.i(TAG, "onScrollChanged: " + mScrollView.getScrollY());
+                if (mScrollView.getScrollY() != mLastScrollY) {
+                    int currentScrollY = mScrollView.getScrollY();
+                    mContext.notifyScroll(currentScrollY > mLastScrollY ?
+                            BottomNavigation.SCROLL_DIRECTION_DOWN :
+                            BottomNavigation.SCROLL_DIRECTION_UP);
+
+                    mLastScrollY = currentScrollY;
+                }
+                Log.i(TAG, "onScrollChanged: " + mLastScrollY);
             }
         }
     };
@@ -119,6 +131,7 @@ public class RctView extends FrameLayout {
     private void setupScrollViewWithBottomTabs() {
         mScrollView = getScrollView((ViewGroup) getParent());
         if (mScrollView != null) {
+            mContext = (BottomTabActivity) getContext();
             attachStateChangeListener(mScrollView);
             addScrollListener();
         }
