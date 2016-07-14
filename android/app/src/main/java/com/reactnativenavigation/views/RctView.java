@@ -47,7 +47,6 @@ public class RctView extends FrameLayout {
     };
     private boolean mIsScrollEventListenerRegistered = false;
 
-
     private final View.OnAttachStateChangeListener mStateChangeListener =
             new View.OnAttachStateChangeListener() {
                 @Override
@@ -100,9 +99,8 @@ public class RctView extends FrameLayout {
         super(ctx);
         setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        OnDisplayedListener onDisplayedListenerInternal = onDisplayedListener;
-        if (screen.bottomTabsHiddenOnScroll) {
-            onDisplayedListenerInternal = new OnDisplayedListener() {
+        final OnDisplayedListener onDisplayedListenerInternal = screen.bottomTabsHiddenOnScroll ?
+            new OnDisplayedListener() {
                 @Override
                 public void onDisplayed() {
                     if (onDisplayedListener != null) {
@@ -111,13 +109,18 @@ public class RctView extends FrameLayout {
 
                     setupScrollViewWithBottomTabs();
                 }
-            };
-        }
+            } : onDisplayedListener;
 
         mReactRootView = new RnnReactRootView(ctx, onDisplayedListenerInternal);
         mReactRootView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
+        Bundle passProps = createPassProps(screen);
         String componentName = screen.screenId;
+        mReactRootView.startReactApplication(rctInstanceManager, componentName, passProps);
+
+        addView(mReactRootView);
+    }
+
+    private Bundle createPassProps(Screen screen) {
         Bundle passProps = new Bundle();
         passProps.putString(Screen.KEY_SCREEN_INSTANCE_ID, screen.screenInstanceId);
         passProps.putString(Screen.KEY_NAVIGATOR_ID, screen.navigatorId);
@@ -125,10 +128,7 @@ public class RctView extends FrameLayout {
         if (screen.passedProps != null) {
             BridgeUtils.addMapToBundle(screen.passedProps, passProps);
         }
-
-        mReactRootView.startReactApplication(rctInstanceManager, componentName, passProps);
-
-        addView(mReactRootView);
+        return passProps;
     }
 
     private void setupScrollViewWithBottomTabs() {
