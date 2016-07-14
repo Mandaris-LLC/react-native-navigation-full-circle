@@ -57,7 +57,7 @@ public class Screen extends JsonObject implements Serializable {
     public final boolean backButtonHidden;
     public HashMap<String, Object> passedProps = new HashMap<>();
 
-    // Navigation styling
+    // NavigationReactModule styling
     @Nullable @ColorInt public Integer toolBarColor;
     @Nullable public Boolean toolBarHidden;
     @Nullable @ColorInt public Integer statusBarColor;

@@ -35,7 +35,7 @@ import com.reactnativenavigation.core.objects.Button;
 import com.reactnativenavigation.core.objects.Drawer;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.modal.RnnModal;
-import com.reactnativenavigation.packages.RnnPackage;
+import com.reactnativenavigation.bridge.NavigationReactPackage;
 import com.reactnativenavigation.utils.ContextProvider;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
@@ -139,7 +139,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
     public List<ReactPackage> getPackages() {
         return Arrays.asList(
                 new MainReactPackage(),
-                new RnnPackage()
+                new NavigationReactPackage()
         );
     }
 
