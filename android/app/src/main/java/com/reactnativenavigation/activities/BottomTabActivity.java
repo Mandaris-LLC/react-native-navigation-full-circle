@@ -242,7 +242,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         return mBottomNavigation.isShown() == newScreen.bottomTabsHidden;
     }
 
-    public void notifyScroll(int direction) {
+    public void onScrollChanged(int direction) {
         mBottomNavigation.onScroll(direction);
     }
 

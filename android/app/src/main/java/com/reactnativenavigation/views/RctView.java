@@ -29,16 +29,19 @@ public class RctView extends FrameLayout {
     private final ViewTreeObserver.OnScrollChangedListener mScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
         @Override
         public void onScrollChanged() {
-            if (mScrollView.getViewTreeObserver().isAlive()) {
-                if (mScrollView.getScrollY() != mLastScrollY) {
-                    int currentScrollY = mScrollView.getScrollY();
-                    mContext.notifyScroll(currentScrollY > mLastScrollY ?
-                            BottomNavigation.SCROLL_DIRECTION_DOWN :
-                            BottomNavigation.SCROLL_DIRECTION_UP);
+            if (!mScrollView.getViewTreeObserver().isAlive()) {
+                return;
+            }
 
-                    mLastScrollY = currentScrollY;
-                }
-                Log.i(TAG, "onScrollChanged: " + mLastScrollY);
+            final int scrollY = mScrollView.getScrollY();
+            if (scrollY != mLastScrollY && // Scroll position changed
+                scrollY > 0 && // Ignore top overscroll
+                scrollY < (mScrollView.getChildAt(0).getHeight() - mScrollView.getHeight())) { // Ignore bottom overscroll
+                int direction = scrollY > mLastScrollY ?
+                        BottomNavigation.SCROLL_DIRECTION_DOWN :
+                        BottomNavigation.SCROLL_DIRECTION_UP;
+                mLastScrollY = scrollY;
+                mContext.onScrollChanged(direction);
             }
         }
     };
