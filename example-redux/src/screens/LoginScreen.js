@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
 import * as appActions from '../reducers/app/actions';
 
@@ -21,6 +21,10 @@ class LoginScreen extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentWillUnmount() {
+    console.log('Component-Lifecycle', 'componentWillUnmount', 'LoginScreen');
   }
 
   render() {
@@ -39,6 +43,10 @@ class LoginScreen extends Component {
           <Text style={styles.button}>Login</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
+          <Text style={styles.button}>Show another login as modal</Text>
+        </TouchableOpacity>
+
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
         <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
         <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
@@ -48,11 +56,41 @@ class LoginScreen extends Component {
       </View>
     );
   }
+
   onIncrementPress() {
     this.props.dispatch(counterActions.increment());
   }
+
   onLoginPress() {
     this.props.dispatch(appActions.login());
+  }
+
+  onShowModalPress() {
+    this.props.navigator.showModal({
+      screen: 'example.LoginScreen',
+      title: 'Login',
+      passProps: {
+        str: 'This is a prop passed in \'startSingleScreenApp()\'!',
+        obj: {
+          str: 'This is a prop passed in an object!',
+          arr: [
+            {
+              str: 'This is a prop in an object in an array in an object!'
+            }
+          ],
+          arr2: [
+            [
+              'array of strings',
+              'with two strings'
+            ],
+            [
+              1, 2, 3
+            ]
+          ]
+        },
+        num: 1234
+      }
+    });
   }
 }
 
@@ -61,13 +99,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10,
+    marginTop: 10,
   },
   button: {
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10,
+    marginTop: 10,
     color: 'blue'
   }
 });

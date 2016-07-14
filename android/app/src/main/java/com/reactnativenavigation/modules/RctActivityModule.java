@@ -55,7 +55,7 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
 
             context.startActivity(intent);
             //TODO add abstract isRoot() instead of instanceof?
-            if(ContextProvider.getActivityContext() instanceof RootActivity) {
+            if (ContextProvider.getActivityContext() instanceof RootActivity) {
                 context.overridePendingTransition(0, 0);
             }
 
@@ -66,7 +66,7 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
 
     private ArrayList<Screen> createScreens(ReadableArray screens) {
         ArrayList<Screen> ret = new ArrayList<>();
-        for(int i = 0; i < screens.size(); i++) {
+        for (int i = 0; i < screens.size(); i++) {
             ret.add(new Screen(screens.getMap(i)));
         }
         return ret;
@@ -87,7 +87,7 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
             intent.putExtras(extras);
 
             context.startActivity(intent);
-            if(ContextProvider.getActivityContext() instanceof RootActivity) {
+            if (ContextProvider.getActivityContext() instanceof RootActivity) {
                 context.overridePendingTransition(0, 0);
             }
 
@@ -306,15 +306,15 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
     public void dismissAllModals(final ReadableMap params) {
         final BaseReactActivity context = ContextProvider.getActivityContext();
         if (context != null && !context.isFinishing()) {
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ModalController modalController = ModalController.getInstance();
-                if (modalController.isModalDisplayed()) {
-                    modalController.dismissAllModals();
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ModalController modalController = ModalController.getInstance();
+                    if (modalController.isModalDisplayed()) {
+                        modalController.dismissAllModals();
+                    }
                 }
-            }
-        });
+            });
         }
     }
 
@@ -328,4 +328,19 @@ public class RctActivityModule extends ReactContextBaseJavaModule {
             modalController.dismissModal();
         }
     }
+
+    @ReactMethod
+    public void showFAB(final ReadableMap params) {
+        final BaseReactActivity context = ContextProvider.getActivityContext();
+        if (context == null || context.isFinishing()) {
+            return;
+        }
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                context.showFAB(params);
+            }
+        });
+    }
+
 }
