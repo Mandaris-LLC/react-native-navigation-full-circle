@@ -1,7 +1,6 @@
 package com.reactnativenavigation.views;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -20,63 +19,54 @@ import com.reactnativenavigation.utils.ReflectionUtils;
  * Created by guyc on 10/03/16.
  */
 public class RctView extends FrameLayout {
-    private static final String TAG = "RctView";
 
-    private BottomTabActivity mContext;
-    private ReactRootView mReactRootView;
-    private ScrollView mScrollView;
-    private int mLastScrollY = -1;
-    private final ViewTreeObserver.OnScrollChangedListener mScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
+    private BottomTabActivity context;
+    private ReactRootView reactRootView;
+    private ScrollView scrollView;
+    private int lastScrollY = -1;
+    private final ViewTreeObserver.OnScrollChangedListener scrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
         @Override
         public void onScrollChanged() {
-            if (!mScrollView.getViewTreeObserver().isAlive()) {
+            if (!scrollView.getViewTreeObserver().isAlive()) {
                 return;
             }
 
-            final int scrollY = mScrollView.getScrollY();
-            if (scrollY != mLastScrollY && // Scroll position changed
+            final int scrollY = scrollView.getScrollY();
+            if (scrollY != lastScrollY && // Scroll position changed
                 scrollY > 0 && // Ignore top overscroll
-                scrollY < (mScrollView.getChildAt(0).getHeight() - mScrollView.getHeight())) { // Ignore bottom overscroll
-                int direction = scrollY > mLastScrollY ?
+                scrollY < (scrollView.getChildAt(0).getHeight() - scrollView.getHeight())) { // Ignore bottom overscroll
+                int direction = scrollY > lastScrollY ?
                         BottomNavigation.SCROLL_DIRECTION_DOWN :
                         BottomNavigation.SCROLL_DIRECTION_UP;
-                mLastScrollY = scrollY;
-                mContext.onScrollChanged(direction);
+                lastScrollY = scrollY;
+                context.onScrollChanged(direction);
             }
         }
     };
-    private boolean mIsScrollEventListenerRegistered = false;
+    private boolean isScrollEventListenerRegistered = false;
 
-    private final View.OnAttachStateChangeListener mStateChangeListener =
+    private final View.OnAttachStateChangeListener stateChangeListener =
             new View.OnAttachStateChangeListener() {
                 @Override
                 public void onViewAttachedToWindow(View v) {
-                    Log.d(TAG, "onViewAttachedToWindow " + v.getClass());
-                    mScrollView = getScrollView((ViewGroup) getParent());
+                    scrollView = getScrollView((ViewGroup) getParent());
 
-                    if (mScrollView != null && !mIsScrollEventListenerRegistered) {
-                        Log.i(TAG, "setting scroll listener");
+                    if (scrollView != null && !isScrollEventListenerRegistered) {
                         addScrollListener();
-                    } else {
-                        Log.v(TAG, "doing nothing");
                     }
                 }
 
                 @Override
                 public void onViewDetachedFromWindow(final View detachedView) {
-                    Log.d(TAG, "onViewDetachedFromWindow. Removing scrollChangedListener");
                     removeScrollListener();
 
                     post(new Runnable() {
                         @Override
                         public void run() {
-                            mScrollView = getScrollView((ViewGroup) getParent());
-                            if (mScrollView != null && !mIsScrollEventListenerRegistered) {
-                                Log.i(TAG, "run: setting scroll listener");
-                                mIsScrollEventListenerRegistered = true;
+                            scrollView = getScrollView((ViewGroup) getParent());
+                            if (scrollView != null && !isScrollEventListenerRegistered) {
+                                isScrollEventListenerRegistered = true;
                                 addScrollListener();
-                            } else {
-                                Log.v(TAG, "doing nothing");
                             }
                         }
                     });
@@ -111,13 +101,13 @@ public class RctView extends FrameLayout {
                 }
             } : onDisplayedListener;
 
-        mReactRootView = new RnnReactRootView(ctx, onDisplayedListenerInternal);
-        mReactRootView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        reactRootView = new RnnReactRootView(ctx, onDisplayedListenerInternal);
+        reactRootView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         Bundle passProps = createPassProps(screen);
         String componentName = screen.screenId;
-        mReactRootView.startReactApplication(rctInstanceManager, componentName, passProps);
+        reactRootView.startReactApplication(rctInstanceManager, componentName, passProps);
 
-        addView(mReactRootView);
+        addView(reactRootView);
     }
 
     private Bundle createPassProps(Screen screen) {
@@ -132,10 +122,10 @@ public class RctView extends FrameLayout {
     }
 
     private void setupScrollViewWithBottomTabs() {
-        mScrollView = getScrollView((ViewGroup) getParent());
-        if (mScrollView != null) {
-            mContext = (BottomTabActivity) getContext();
-            attachStateChangeListener(mScrollView);
+        scrollView = getScrollView((ViewGroup) getParent());
+        if (scrollView != null) {
+            context = (BottomTabActivity) getContext();
+            attachStateChangeListener(scrollView);
             addScrollListener();
         }
     }
@@ -157,15 +147,15 @@ public class RctView extends FrameLayout {
     }
 
     private void attachStateChangeListener(ScrollView scrollView) {
-        scrollView.addOnAttachStateChangeListener(mStateChangeListener);
+        scrollView.addOnAttachStateChangeListener(stateChangeListener);
     }
 
     private void addScrollListener() {
-        mScrollView.getViewTreeObserver().addOnScrollChangedListener(mScrollChangedListener);
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(scrollChangedListener);
     }
 
     private void removeScrollListener() {
-        mScrollView.getViewTreeObserver().removeOnScrollChangedListener(mScrollChangedListener);
+        scrollView.getViewTreeObserver().removeOnScrollChangedListener(scrollChangedListener);
     }
 
     /**
@@ -175,7 +165,7 @@ public class RctView extends FrameLayout {
     public void onTemporallyRemovedFromScreen() {
         // Hack in order to prevent the react view from getting unmounted
 
-        ReflectionUtils.setField(mReactRootView, "mAttachScheduled", true);
+        ReflectionUtils.setField(reactRootView, "mAttachScheduled", true);
     }
 
     /**
@@ -183,7 +173,7 @@ public class RctView extends FrameLayout {
      * executed and componentWillUnmount is called
      */
     public void onRemoveFromScreen() {
-        ReflectionUtils.setField(mReactRootView, "mAttachScheduled", false);
+        ReflectionUtils.setField(reactRootView, "mAttachScheduled", false);
     }
 
     /**
@@ -191,11 +181,11 @@ public class RctView extends FrameLayout {
      * executed and componentWillUnmount is called
      */
     public void onReAddToScreen() {
-        ReflectionUtils.setField(mReactRootView, "mAttachScheduled", false);
+        ReflectionUtils.setField(reactRootView, "mAttachScheduled", false);
     }
 
     public void detachFromScreen() {
-        ReflectionUtils.invoke(mReactRootView, "onDetachedFromWindow");
+        ReflectionUtils.invoke(reactRootView, "onDetachedFromWindow");
     }
 }
 
