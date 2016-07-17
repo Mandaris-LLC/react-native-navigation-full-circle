@@ -11,7 +11,6 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.R;
-import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Drawer;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.StyleHelper;
@@ -44,10 +43,10 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     @Override
     protected void handleOnCreate() {
         super.handleOnCreate();
-        mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
+        reactInstanceManager = RctManager.getInstance().getReactInstanceManager();
 
         setContentView(R.layout.bottom_tab_activity);
-        mToolbar = (RnnToolBar) findViewById(R.id.toolbar);
+        toolbar = (RnnToolBar) findViewById(R.id.toolbar);
         mBottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_tab_bar);
         mContentFrame = (CoordinatorLayout) findViewById(R.id.contentFrame);
 
@@ -68,21 +67,21 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
     }
 
     private void setupPages(ArrayList<Screen> screens) {
-        new SetupTabsTask(this, mToolbar, screens).execute();
+        new SetupTabsTask(this, toolbar, screens).execute();
     }
 
     private void setupToolbar(ArrayList<Screen> screens) {
-        mToolbar.setScreens(screens);
+        toolbar.setScreens(screens);
         Screen initialScreen = screens.get(0);
-        mToolbar.update(initialScreen);
-        StyleHelper.updateStyles(mToolbar, initialScreen);
+        toolbar.update(initialScreen);
+        StyleHelper.updateStyles(toolbar, initialScreen);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (mScreenStacks != null) {
-            StyleHelper.updateStyles(mToolbar, getCurrentScreen());
+            StyleHelper.updateStyles(toolbar, getCurrentScreen());
         }
     }
 
@@ -110,7 +109,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
                 stack.push(screen);
             }
         }
-        StyleHelper.updateStyles(mToolbar, getCurrentScreen());
+        StyleHelper.updateStyles(toolbar, getCurrentScreen());
 
         if (shouldToggleTabs(screen)) {
             toggleTabs(screen.bottomTabsHidden, false);
@@ -124,7 +123,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
             if (stack.peek().navigatorId.equals(navigatorId)) {
                 Screen popped = stack.pop();
                 Screen currentScreen = getCurrentScreen();
-                StyleHelper.updateStyles(mToolbar, currentScreen);
+                StyleHelper.updateStyles(toolbar, currentScreen);
 
                 if (shouldToggleTabs(currentScreen)) {
                     toggleTabs(currentScreen.bottomTabsHidden, false);
@@ -143,7 +142,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
             if (stack.peek().navigatorId.equals(navigatorId)) {
                 Screen popped = stack.popToRoot();
                 Screen currentScreen = getCurrentScreen();
-                StyleHelper.updateStyles(mToolbar, currentScreen);
+                StyleHelper.updateStyles(toolbar, currentScreen);
 
                 if (shouldToggleTabs(currentScreen)) {
                     toggleTabs(currentScreen.bottomTabsHidden, false);
@@ -167,7 +166,7 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
 
     public Screen resetTo(Screen screen) {
         super.resetTo(screen);
-        StyleHelper.updateStyles(mToolbar, screen);
+        StyleHelper.updateStyles(toolbar, screen);
         return mScreenStacks.get(mCurrentStackPosition).resetTo(screen);
     }
 
@@ -196,13 +195,13 @@ public class BottomTabActivity extends BaseReactActivity implements AHBottomNavi
         mScreenStacks.get(position).addToScreen(mContentFrame);
 
         mCurrentStackPosition = position;
-        StyleHelper.updateStyles(mToolbar, getCurrentScreen());
+        StyleHelper.updateStyles(toolbar, getCurrentScreen());
 
         // Hide or show back button if needed
         if (getScreenStackSize() > 1) {
-            mToolbar.setNavUpButton(getCurrentScreen());
+            toolbar.setNavUpButton(getCurrentScreen());
         } else {
-            mToolbar.setNavUpButton();
+            toolbar.setNavUpButton();
         }
     }
 

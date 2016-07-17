@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.activities.BaseReactActivity;
-import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
 
 import java.util.Stack;

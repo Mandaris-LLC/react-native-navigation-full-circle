@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.activities.BaseReactActivity;
-import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;

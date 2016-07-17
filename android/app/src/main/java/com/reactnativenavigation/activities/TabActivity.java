@@ -2,11 +2,9 @@ package com.reactnativenavigation.activities;
 
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
-import android.view.ViewGroup;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.adapters.ViewPagerAdapter;
-import com.reactnativenavigation.core.RctManager;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnTabLayout;
@@ -29,10 +27,10 @@ public class TabActivity extends BaseReactActivity {
     @Override
     protected void handleOnCreate() {
         super.handleOnCreate();
-        mReactInstanceManager = RctManager.getInstance().getReactInstanceManager();
+        reactInstanceManager = RctManager.getInstance().getReactInstanceManager();
 
         setContentView(R.layout.tab_activity);
-        mToolbar = (RnnToolBar) findViewById(R.id.toolbar);
+        toolbar = (RnnToolBar) findViewById(R.id.toolbar);
         mTabLayout = (RnnTabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
 
@@ -44,8 +42,8 @@ public class TabActivity extends BaseReactActivity {
 
     private void setupToolbar(ArrayList<Screen> screens) {
         Screen initialScreen = screens.get(0);
-        mToolbar.setScreens(screens);
-        mToolbar.update(initialScreen);
+        toolbar.setScreens(screens);
+        toolbar.update(initialScreen);
         setNavigationStyle(initialScreen);
     }
 
@@ -54,7 +52,7 @@ public class TabActivity extends BaseReactActivity {
     }
 
     private void setupViewPager(ArrayList<Screen> screens) {
-        mAdapter = new ViewPagerAdapter(this, mViewPager, mToolbar, screens);
+        mAdapter = new ViewPagerAdapter(this, mViewPager, toolbar, screens);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setOnTabSelectedListener(mAdapter);
@@ -64,7 +62,7 @@ public class TabActivity extends BaseReactActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean ret = super.onCreateOptionsMenu(menu);
-        mToolbar.handleOnCreateOptionsMenuAsync();
+        toolbar.handleOnCreateOptionsMenuAsync();
         return ret;
     }
 
@@ -76,7 +74,7 @@ public class TabActivity extends BaseReactActivity {
     @Override
     public void push(Screen screen) {
         super.push(screen);
-        StyleHelper.updateStyles(mToolbar, screen);
+        StyleHelper.updateStyles(toolbar, screen);
         mAdapter.push(screen);
     }
 
