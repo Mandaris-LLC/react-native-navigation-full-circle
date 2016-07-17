@@ -8,10 +8,9 @@ import java.util.Stack;
 
 public class ModalController {
 
-    private final Stack<RnnModal> modals;
+    private final Stack<RnnModal> modals = new Stack<>();
 
     public ModalController() {
-        modals = new Stack<>();
     }
 
     public void add(RnnModal modal) {

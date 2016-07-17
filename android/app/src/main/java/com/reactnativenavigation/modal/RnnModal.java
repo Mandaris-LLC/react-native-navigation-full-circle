@@ -23,9 +23,6 @@ import com.reactnativenavigation.views.RctView;
 import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
 
-/**
- * Created by guyc on 02/05/16.
- */
 public class RnnModal extends Dialog implements DialogInterface.OnDismissListener {
 
     private ScreenStack mScreenStack;
