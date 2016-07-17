@@ -7,13 +7,13 @@ import com.facebook.react.bridge.ReadableMap;
 
 /**
  * The basic abstract components we will expose:
- * BottomTabs
- * TopBar
+ * BottomTabs (app) - boolean
+ * TopBar (per screen)
  * - TitleBar
  * - TopTabs (segmented control / view pager)
- * DeviceStatusBar
- * AndroidNavigationBar
- * SideMenu
+ * DeviceStatusBar (app) (colors are per screen)
+ * AndroidNavigationBar (app) (colors are per screen)
+ * SideMenu (app) - boolean
  */
 public class NavigationReactModule extends ReactContextBaseJavaModule {
     public static final String NAME = "NavigationReactModule";
