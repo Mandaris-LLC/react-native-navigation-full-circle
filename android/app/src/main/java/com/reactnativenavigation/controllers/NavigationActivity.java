@@ -2,23 +2,18 @@ package com.reactnativenavigation.controllers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 import com.facebook.react.ReactPackage;
-import com.facebook.react.common.ReactConstants;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
-import com.reactnativenavigation.BuildConfig;
 import com.reactnativenavigation.bridge.NavigationReactPackage;
-import com.reactnativenavigation.controllers.ModalController;
+import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.NavigationReactInstance;
+import com.reactnativenavigation.react.RedboxPermission;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +21,6 @@ import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity implements NavigationReactInstance.ReactContextCreator, DefaultHardwareBackBtnHandler {
 
-    private NavigationReactInstance navigationReactInstance;
     /**
      * Although we start multiple activities, we make sure to pass Intent.CLEAR_TASK | Intent.NEW_TASK
      * So that we actually have only 1 instance of the activity running at one time.
@@ -34,8 +28,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
      * This is somewhat weird, and in the future either fully support multiple activities, OR a single activity with changing contentView ala ReactNative impl.
      */
     private static Activity currentActivity;
+    private NavigationReactInstance navigationReactInstance;
     private ModalController modalController;
-
+    private Layout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +38,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
         modalController = new ModalController();
         navigationReactInstance = new NavigationReactInstance(this);
         navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
-        permissionToShowRedboxIfNeeded();
+        RedboxPermission.permissionToShowRedboxIfNeeded(this);
     }
 
     @Override
@@ -70,15 +65,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
         }
     }
 
-    private void permissionToShowRedboxIfNeeded() {
-        if (BuildConfig.DEBUG && Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(this)) {
-            Intent serviceIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-            startActivity(serviceIntent);
-            String msg = "Overlay permissions needs to be granted in order for react native apps to run in dev mode";
-            Log.w(ReactConstants.TAG, msg);
-            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-        }
-    }
 
     private NavigationReactInstance getNavigationReactInstance() {
         return navigationReactInstance;
@@ -101,7 +87,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
     public void invokeDefaultOnBackPressed() {
         super.onBackPressed();
     }
-
 
     @Override
     public void onBackPressed() {
