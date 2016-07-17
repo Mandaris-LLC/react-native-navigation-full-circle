@@ -1,7 +1,6 @@
 package com.reactnativenavigation.layouts;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.widget.FrameLayout;
@@ -43,7 +42,6 @@ public class LayoutFactory {
         return null;
     }
 
-    @NonNull
     private static AHBottomNavigation createBottomTabs(Activity activity) {
         return new AHBottomNavigation(activity);
     }
