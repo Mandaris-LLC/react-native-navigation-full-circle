@@ -1,7 +1,7 @@
 package com.reactnativenavigation.bridge;
 
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactnativenavigation.core.objects.Screen;
 
 public class NavigationReactEventEmitter {
@@ -10,8 +10,7 @@ public class NavigationReactEventEmitter {
     private static final String KEY_EVENT_TYPE = "type";
     private static final String EVENT_TYPE = "NavBarButtonPress";
 
-    public void sendEvent(String eventName, String navigatorEventId, WritableMap params) {
-        DeviceEventManagerModule.RCTDeviceEventEmitter eventEmitter = getEventEmitter();
+    public void sendEvent(RCTDeviceEventEmitter eventEmitter, String eventName, String navigatorEventId, WritableMap params) {
         if (eventEmitter == null) {
             return;
         }

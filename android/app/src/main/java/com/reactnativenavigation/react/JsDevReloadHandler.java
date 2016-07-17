@@ -1,0 +1,43 @@
+package com.reactnativenavigation.react;
+
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.EditText;
+
+import com.facebook.react.ReactInstanceManager;
+import com.reactnativenavigation.NavigationApplication;
+
+public class JsDevReloadHandler {
+
+    private static boolean shouldRefreshOnRR = false;
+
+    //TODO yuck.
+    public static boolean onKeyUp(ReactInstanceManager reactInstanceManager, View currentFocus, int keyCode) {
+        if (reactInstanceManager != null &&
+                reactInstanceManager.getDevSupportManager().getDevSupportEnabled()) {
+            if (keyCode == KeyEvent.KEYCODE_MENU) {
+                reactInstanceManager.showDevOptionsDialog();
+                return true;
+            }
+            if (keyCode == KeyEvent.KEYCODE_R && !(currentFocus instanceof EditText)) {
+                // Enable double-tap-R-to-reload
+                if (shouldRefreshOnRR) {
+                    reactInstanceManager.getDevSupportManager().handleReloadJS();
+                    shouldRefreshOnRR = false;
+                    return true;
+                } else {
+                    shouldRefreshOnRR = true;
+                    NavigationApplication.instance.getMainHandler().postDelayed(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    shouldRefreshOnRR = false;
+                                }
+                            },
+                            200);
+                }
+            }
+        }
+        return false;
+    }
+}
