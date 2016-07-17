@@ -1,4 +1,4 @@
-package com.reactnativenavigation.activities;
+package com.reactnativenavigation.controllers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,10 +34,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
      * This is somewhat weird, and in the future either fully support multiple activities, OR a single activity with changing contentView ala ReactNative impl.
      */
     private static Activity currentActivity;
+    private ModalController modalController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        modalController = new ModalController();
         navigationReactInstance = new NavigationReactInstance(this);
         navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
         permissionToShowRedboxIfNeeded();
@@ -59,6 +62,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
 
     @Override
     protected void onDestroy() {
+        modalController.onDestroy();
+        layout.onDestroy();
         super.onDestroy();
         if (currentActivity == null || currentActivity.isFinishing()) {
             navigationReactInstance.onHostDestroy();
