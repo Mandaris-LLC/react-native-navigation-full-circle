@@ -17,24 +17,7 @@ public class ContentView extends ReactRootView {
         startReactApplication(reactInstanceManager, moduleName, passProps);
     }
 
-    @Nullable
-    public ScrollView findScrollView() {
-        return findScrollView(this);
-    }
 
-    private ScrollView findScrollView(ViewGroup parent) {
-        for (int i = 0; i < parent.getChildCount(); i++) {
-            View child = parent.getChildAt(i);
-
-            if (child instanceof ScrollView) {
-                return (ScrollView) child;
-            } else if (child instanceof ViewGroup) {
-                return findScrollView((ViewGroup) child);
-            }
-        }
-
-        return null;
-    }
 
     @Override
     protected void onDetachedFromWindow() {

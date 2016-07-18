@@ -22,36 +22,6 @@ public class RctView extends FrameLayout {
 
     private BottomTabActivity context;
     private ReactRootView reactRootView;
-    private ScrollView scrollView;
-    private boolean isScrollEventListenerRegistered = false;
-
-    private final View.OnAttachStateChangeListener stateChangeListener =
-            new View.OnAttachStateChangeListener() {
-                @Override
-                public void onViewAttachedToWindow(View v) {
-                    scrollView = getScrollView((ViewGroup) getParent());
-
-                    if (scrollView != null && !isScrollEventListenerRegistered) {
-                        addScrollListener();
-                    }
-                }
-
-                @Override
-                public void onViewDetachedFromWindow(final View detachedView) {
-                    removeScrollListener();
-
-                    post(new Runnable() {
-                        @Override
-                        public void run() {
-                            scrollView = getScrollView((ViewGroup) getParent());
-                            if (scrollView != null && !isScrollEventListenerRegistered) {
-                                isScrollEventListenerRegistered = true;
-                                addScrollListener();
-                            }
-                        }
-                    });
-                }
-            };
 
     /**
      * Interface used to run some code when the {@link ReactRootView} is visible.
@@ -99,28 +69,6 @@ public class RctView extends FrameLayout {
             BridgeUtils.addMapToBundle(screen.passedProps, passProps);
         }
         return passProps;
-    }
-
-    private void setupScrollViewWithBottomTabs() {
-        scrollView = getScrollView((ViewGroup) getParent());
-        if (scrollView != null) {
-            context = (BottomTabActivity) getContext();
-            attachStateChangeListener(scrollView);
-            addScrollListener();
-        }
-    }
-
-
-    private void attachStateChangeListener(ScrollView scrollView) {
-        scrollView.addOnAttachStateChangeListener(stateChangeListener);
-    }
-
-    private void addScrollListener() {
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(scrollChangedListener);
-    }
-
-    private void removeScrollListener() {
-        scrollView.getViewTreeObserver().removeOnScrollChangedListener(scrollChangedListener);
     }
 
     /**
