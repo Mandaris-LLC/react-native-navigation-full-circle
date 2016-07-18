@@ -9,7 +9,7 @@ public class ScrollDirectionListener implements ViewTreeObserver.OnScrollChanged
     }
 
     public interface OnChanged {
-        void onChanged(Direction direction);
+        void onScrollChanged(Direction direction);
     }
 
     private final ViewGroup view;
@@ -30,7 +30,7 @@ public class ScrollDirectionListener implements ViewTreeObserver.OnScrollChanged
         final int scrollY = view.getScrollY();
         if (isScrollPositionChanged(scrollY) && !isTopOverscroll(scrollY) && !isBottomOverscroll(scrollY)) {
             lastScrollY = scrollY;
-            onChanged.onChanged(getDirection(scrollY));
+            onChanged.onScrollChanged(getDirection(scrollY));
         }
     }
 
