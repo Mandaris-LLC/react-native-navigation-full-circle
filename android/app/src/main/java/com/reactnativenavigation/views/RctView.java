@@ -23,26 +23,6 @@ public class RctView extends FrameLayout {
     private BottomTabActivity context;
     private ReactRootView reactRootView;
     private ScrollView scrollView;
-    private int lastScrollY = -1;
-    private final ViewTreeObserver.OnScrollChangedListener scrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
-        @Override
-        public void onScrollChanged() {
-            if (!scrollView.getViewTreeObserver().isAlive()) {
-                return;
-            }
-
-            final int scrollY = scrollView.getScrollY();
-            if (scrollY != lastScrollY && // Scroll position changed
-                scrollY > 0 && // Ignore top overscroll
-                scrollY < (scrollView.getChildAt(0).getHeight() - scrollView.getHeight())) { // Ignore bottom overscroll
-                int direction = scrollY > lastScrollY ?
-                        BottomNavigation.SCROLL_DIRECTION_DOWN :
-                        BottomNavigation.SCROLL_DIRECTION_UP;
-                lastScrollY = scrollY;
-                context.onScrollChanged(direction);
-            }
-        }
-    };
     private boolean isScrollEventListenerRegistered = false;
 
     private final View.OnAttachStateChangeListener stateChangeListener =
@@ -90,16 +70,16 @@ public class RctView extends FrameLayout {
         setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         final OnDisplayedListener onDisplayedListenerInternal = screen.bottomTabsHiddenOnScroll ?
-            new OnDisplayedListener() {
-                @Override
-                public void onDisplayed() {
-                    if (onDisplayedListener != null) {
-                        onDisplayedListener.onDisplayed();
-                    }
+                new OnDisplayedListener() {
+                    @Override
+                    public void onDisplayed() {
+                        if (onDisplayedListener != null) {
+                            onDisplayedListener.onDisplayed();
+                        }
 
-                    setupScrollViewWithBottomTabs();
-                }
-            } : onDisplayedListener;
+                        setupScrollViewWithBottomTabs();
+                    }
+                } : onDisplayedListener;
 
         reactRootView = new RnnReactRootView(ctx, onDisplayedListenerInternal);
         reactRootView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -130,21 +110,6 @@ public class RctView extends FrameLayout {
         }
     }
 
-    private ScrollView getScrollView(ViewGroup parent) {
-        for (int i = 0; i < parent.getChildCount(); i++) {
-            View child = parent.getChildAt(i);
-
-            if (child instanceof ScrollView) {
-                return (ScrollView) child;
-            }
-
-            if (child instanceof ViewGroup) {
-                return getScrollView((ViewGroup) child);
-            }
-        }
-
-        return null;
-    }
 
     private void attachStateChangeListener(ScrollView scrollView) {
         scrollView.addOnAttachStateChangeListener(stateChangeListener);
