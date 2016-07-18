@@ -9,11 +9,11 @@ import com.reactnativenavigation.utils.ViewUtils;
 public class ScrollViewAttacher implements View.OnAttachStateChangeListener {
 
     private final ContentView view;
-    private final ScrollDirectionListener.OnChanged onChanged;
+    private final ScrollDirectionListener.OnScrollChanged onChanged;
     private ScrollView scrollView;
     private ScrollDirectionListener scrollDirectionListener;
 
-    public ScrollViewAttacher(ContentView view, ScrollDirectionListener.OnChanged onChanged) {
+    public ScrollViewAttacher(ContentView view, ScrollDirectionListener.OnScrollChanged onChanged) {
         this.view = view;
         this.onChanged = onChanged;
     }

@@ -8,19 +8,24 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.react.ReactViewHacks;
 
-public class ContentView extends ReactRootView implements ScrollDirectionListener.OnChanged {
+public class ContentView extends ReactRootView {
 
-    private final ScrollViewAttacher scrollViewAttacher;
+    private final ReactInstanceManager reactInstanceManager;
+    private final String moduleName;
+    private final Bundle passProps;
+    private final ScrollDirectionListener.OnScrollChanged scrollListener;
 
-    public ContentView(Context context, ReactInstanceManager reactInstanceManager, String moduleName, Bundle passProps) {
+    public ContentView(Context context, ReactInstanceManager reactInstanceManager, String moduleName, Bundle passProps, ScrollDirectionListener.OnScrollChanged scrollListener) {
         super(context);
-        startReactApplication(reactInstanceManager, moduleName, passProps);
-        scrollViewAttacher = new ScrollViewAttacher(this, this);
+        this.reactInstanceManager = reactInstanceManager;
+        this.moduleName = moduleName;
+        this.passProps = passProps;
+        this.scrollListener = scrollListener;
     }
 
-    @Override
-    public void onScrollChanged(ScrollDirectionListener.Direction direction) {
-
+    public void init() {
+        startReactApplication(reactInstanceManager, moduleName, passProps);
+        new ScrollViewAttacher(this, scrollListener).attach();
     }
 
     public void removeFromParentWithoutUnmount() {
@@ -33,5 +38,4 @@ public class ContentView extends ReactRootView implements ScrollDirectionListene
         ReactViewHacks.ensureUnmountOnDetachedFromWindow(this);
         ((ViewGroup) getParent()).removeView(this);
     }
-
 }
