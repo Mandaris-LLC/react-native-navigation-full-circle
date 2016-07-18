@@ -5,12 +5,11 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeMap;
-import com.reactnativenavigation.utils.IconUtils;
+import com.reactnativenavigation.react.ImageLoader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -122,7 +121,7 @@ public class Screen extends JsonObject implements Serializable {
     }
 
     public Drawable getIcon(Context ctx) {
-        return IconUtils.getIcon(ctx, icon);
+        return ImageLoader.getIcon(ctx, icon);
     }
 
     public void setToolbarStyle(ReadableMap screen) {

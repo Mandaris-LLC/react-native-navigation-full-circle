@@ -9,7 +9,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
-import com.reactnativenavigation.BuildConfig;
 import com.reactnativenavigation.NavigationApplication;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class NavigationReactInstance {
     public NavigationReactInstance(final ReactContextCreator reactContextCreator) {
         reactInstanceManager = createReactInstanceManager(reactContextCreator);
 
-        if (BuildConfig.DEBUG) {
+        if (NavigationApplication.instance.isDebug()) {
             replaceJsDevReloadListener(reactContextCreator);
         }
     }
@@ -85,7 +84,7 @@ public class NavigationReactInstance {
                 .setApplication(NavigationApplication.instance)
                 .setJSMainModuleName("index.android")
                 .setBundleAssetName("index.android.bundle")
-                .setUseDeveloperSupport(BuildConfig.DEBUG)
+                .setUseDeveloperSupport(NavigationApplication.instance.isDebug())
                 .setInitialLifecycleState(LifecycleState.BEFORE_RESUME);
 
         for (ReactPackage reactPackage : reactContextCreator.createReactPackages()) {

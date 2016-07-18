@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.MenuItem;
 
 import com.facebook.react.bridge.ReadableMap;
-import com.reactnativenavigation.utils.IconUtils;
+import com.reactnativenavigation.react.ImageLoader;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class Button extends JsonObject implements Serializable {
      * @param dimensions The requested icon dimensions
      */
     public Drawable getIcon(Context ctx, int dimensions) {
-       return IconUtils.getIcon(ctx, mIconSource, dimensions);
+       return ImageLoader.getIcon(ctx, mIconSource, dimensions);
     }
 
     public int getItemId() {

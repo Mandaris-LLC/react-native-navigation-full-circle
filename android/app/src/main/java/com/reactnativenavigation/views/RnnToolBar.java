@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,7 +27,7 @@ import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.core.objects.Button;
 import com.reactnativenavigation.core.objects.Screen;
 import com.reactnativenavigation.utils.ContextProvider;
-import com.reactnativenavigation.utils.IconUtils;
+import com.reactnativenavigation.react.ImageLoader;
 import com.reactnativenavigation.utils.ImageUtils;
 
 import java.lang.ref.WeakReference;
@@ -56,16 +55,6 @@ public class RnnToolBar extends Toolbar {
         init();
     }
 
-    public RnnToolBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    public RnnToolBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
-
     private void init() {
         mMenuItems = new ArrayList<>();
         mBackground = getBackground();
@@ -76,9 +65,9 @@ public class RnnToolBar extends Toolbar {
     }
 
     public void handleOnCreateOptionsMenuAsync() {
-        if (mScreens != null) {
-            setupToolbarButtonsAsync(null, mScreens.get(0));
-        }
+//        if (mScreens != null) {
+//            setupToolbarButtonsAsync(null, mScreens.get(0));
+//        }
     }
 
     public ActionBarDrawerToggle setupDrawer(DrawerLayout drawerLayout, Screen drawerScreen, Screen screen) {
@@ -258,7 +247,7 @@ public class RnnToolBar extends Toolbar {
                 return null;
             }
 
-            return IconUtils.getIcon(context, mDrawerIconSource);
+            return ImageLoader.loadImage(mDrawerIconSource);
         }
 
         @Override

@@ -1,4 +1,4 @@
-package com.reactnativenavigation.utils;// Copyright 2004-present Facebook. All Rights Reserved.
+package com.reactnativenavigation.react;// Copyright 2004-present Facebook. All Rights Reserved.
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
  * Helper class for obtaining information about local images.
  */
 public class ResourceDrawableIdHelper {
+    public static final ResourceDrawableIdHelper instance = new ResourceDrawableIdHelper();
 
     private Map<String, Integer> mResourceDrawableIdMap;
 
