@@ -75,34 +75,6 @@ public class RnnToolBar extends Toolbar {
         mScreens = screens;
     }
 
-    public void setStyle(Screen screen) {
-        if (screen.toolBarColor != null) {
-            setBackgroundColor(screen.toolBarColor);
-        } else {
-            resetBackground();
-        }
-
-        if (screen.navBarTextColor != null) {
-            setTitleTextColor(screen.navBarTextColor);
-        } else {
-            resetTitleTextColor();
-        }
-
-        if (screen.toolBarHidden != null && screen.toolBarHidden) {
-            hideToolbar();
-        } else {
-            showToolbar();
-        }
-    }
-
-    private void resetBackground() {
-        setBackground(mBackground);
-    }
-
-    private void resetTitleTextColor() {
-        setTitleTextColor(ContextCompat.getColor(getContext(), android.R.color.primary_text_light));
-    }
-
     public void handleOnCreateOptionsMenuAsync() {
         if (mScreens != null) {
             setupToolbarButtonsAsync(null, mScreens.get(0));
