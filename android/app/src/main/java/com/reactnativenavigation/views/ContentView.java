@@ -2,9 +2,11 @@ package com.reactnativenavigation.views;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.ViewGroup;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
+import com.reactnativenavigation.react.ReactViewHacks;
 
 public class ContentView extends ReactRootView implements ScrollDirectionListener.OnChanged {
 
@@ -20,4 +22,16 @@ public class ContentView extends ReactRootView implements ScrollDirectionListene
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
 
     }
+
+    public void removeFromParentWithoutUnmount() {
+        // Hack in order to prevent the react view from getting unmounted
+        ReactViewHacks.preventUnmountOnDetachedFromWindow(this);
+        ((ViewGroup) getParent()).removeView(this);
+    }
+
+    public void removeFromParentAndUnmount() {
+        ReactViewHacks.ensureUnmountOnDetachedFromWindow(this);
+        ((ViewGroup) getParent()).removeView(this);
+    }
+
 }

@@ -121,56 +121,26 @@ public class RctView extends FrameLayout {
         return passProps;
     }
 
-    private void setupScrollViewWithBottomTabs() {
-        scrollView = getScrollView((ViewGroup) getParent());
-        if (scrollView != null) {
-            context = (BottomTabActivity) getContext();
-            attachStateChangeListener(scrollView);
-            addScrollListener();
-        }
-    }
+//    private void setupScrollViewWithBottomTabs() {
+//        scrollView = getScrollView((ViewGroup) getParent());
+//        if (scrollView != null) {
+//            context = (BottomTabActivity) getContext();
+//            attachStateChangeListener(scrollView);
+//            addScrollListener();
+//        }
+//    }
 
 
-    private void attachStateChangeListener(ScrollView scrollView) {
-        scrollView.addOnAttachStateChangeListener(stateChangeListener);
-    }
-
-    private void addScrollListener() {
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(scrollChangedListener);
-    }
-
-    private void removeScrollListener() {
-        scrollView.getViewTreeObserver().removeOnScrollChangedListener(scrollChangedListener);
-    }
-
-    /**
-     * Must be called before view is removed from screen, but will be added again later. Setting mAttachScheduled
-     * to true will prevent the component from getting unmounted once view is detached from screen.
-     */
-    public void onTemporallyRemovedFromScreen() {
-        // Hack in order to prevent the react view from getting unmounted
-
-        ReflectionUtils.setField(reactRootView, "mAttachScheduled", true);
-    }
-
-    /**
-     * Must be called before view is removed from screen inorder to ensure onDetachedFromScreen is properly
-     * executed and componentWillUnmount is called
-     */
-    public void onRemoveFromScreen() {
-        ReflectionUtils.setField(reactRootView, "mAttachScheduled", false);
-    }
-
-    /**
-     * Must be called when view is added again to screen inorder to ensure onDetachedFromScreen is properly
-     * executed and componentWillUnmount is called
-     */
-    public void onReAddToScreen() {
-        ReflectionUtils.setField(reactRootView, "mAttachScheduled", false);
-    }
-
-    public void detachFromScreen() {
-        ReflectionUtils.invoke(reactRootView, "onDetachedFromWindow");
-    }
+//    private void attachStateChangeListener(ScrollView scrollView) {
+//        scrollView.addOnAttachStateChangeListener(stateChangeListener);
+//    }
+//
+//    private void addScrollListener() {
+//        scrollView.getViewTreeObserver().addOnScrollChangedListener(scrollChangedListener);
+//    }
+//
+//    private void removeScrollListener() {
+//        scrollView.getViewTreeObserver().removeOnScrollChangedListener(scrollChangedListener);
+//    }
 }
 
