@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.facebook.react.ReactInstanceManager;
+import com.reactnativenavigation.controllers.ScreenParams;
 import com.reactnativenavigation.views.TitleBarButton;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.ScrollDirectionListener;
@@ -17,18 +18,6 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged {
 
-    public static class Params {
-        private final String moduleName;
-        private final Bundle passProps;
-        private final List<TitleBarButton.Params> buttons;
-
-        public Params(String moduleName, Bundle passProps, List<TitleBarButton.Params> buttons) {
-            this.moduleName = moduleName;
-            this.passProps = passProps;
-            this.buttons = buttons;
-        }
-    }
-
     private final ReactInstanceManager reactInstanceManager;
     private final String moduleName;
     private final Bundle passProps;
@@ -36,7 +25,7 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     private ContentView contentView;
     private TopBar topBar;
 
-    public ScreenLayout(Context context, ReactInstanceManager reactInstanceManager, Params screenParams) {
+    public ScreenLayout(Context context, ReactInstanceManager reactInstanceManager, ScreenParams screenParams) {
         super(context);
         this.reactInstanceManager = reactInstanceManager;
         moduleName = screenParams.moduleName;
