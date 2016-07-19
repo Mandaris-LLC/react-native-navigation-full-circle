@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.controllers.ScreenParams;
+import com.reactnativenavigation.controllers.ScreenStyleParams;
 import com.reactnativenavigation.views.TitleBarButton;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.ScrollDirectionListener;
@@ -34,6 +35,7 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
         setOrientation(VERTICAL);
 
         createViews();
+        setStyle(screenParams.styleParams);
     }
 
     private void createViews() {
@@ -57,6 +59,17 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
         contentView = new ContentView(getContext(), reactInstanceManager, moduleName, passProps, this);
         addView(contentView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
+
+    private void setStyle(ScreenStyleParams styleParams) {
+        setStatusBarColor(styleParams.statusBarColor);
+
+    }
+
+    private void setStatusBarColor(int statusBarColor) {
+
+    }
+
+    private void
 
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
