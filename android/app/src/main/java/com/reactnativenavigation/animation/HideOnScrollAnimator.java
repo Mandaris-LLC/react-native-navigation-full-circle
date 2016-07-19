@@ -3,7 +3,6 @@ package com.reactnativenavigation.animation;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.support.annotation.NonNull;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.View;
 
@@ -82,7 +81,6 @@ public class HideOnScrollAnimator {
         return state == State.Hidden || state == State.AnimateHide;
     }
 
-    @NonNull
     private ObjectAnimator createAnimator(final boolean show) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, show ? shownEndValue : hiddenEndValue);
         animator.setDuration(DURATION);

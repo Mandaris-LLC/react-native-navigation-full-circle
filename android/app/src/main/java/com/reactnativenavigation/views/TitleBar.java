@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.reactnativenavigation.R;
+import com.reactnativenavigation.animation.HideOnScrollAnimator;
 import com.reactnativenavigation.core.Button;
 
 import java.util.List;
@@ -17,10 +18,12 @@ public class TitleBar extends Toolbar {
     private Menu menu;
     private ActionMenuView actionMenuView;
     private boolean hideOnScroll = false;
+    private HideOnScrollAnimator hideOnScrollAnimator;
 
     public TitleBar(Context context) {
         super(context);
         createMenu();
+
     }
 
     private void createMenu() {
@@ -49,7 +52,14 @@ public class TitleBar extends Toolbar {
 
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
         if (hideOnScroll) {
-            //TODO animate hide/show
+            if (hideOnScrollAnimator == null) {
+                createScrollAnimator();
+            }
+            hideOnScrollAnimator.onScrollChanged(direction);
         }
+    }
+
+    private void createScrollAnimator() {
+        hideOnScrollAnimator = new HideOnScrollAnimator(this, HideOnScrollAnimator.HideDirection.Up, getHeight());
     }
 }
