@@ -12,7 +12,8 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 /**
- * Helper class for obtaining information about local images.
+ * Direct copy paste from react-native, because they made that class package scope. -_-"
+ * Can be deleted in react-native ^0.29
  */
 public class ResourceDrawableIdHelper {
     public static final ResourceDrawableIdHelper instance = new ResourceDrawableIdHelper();

@@ -9,9 +9,11 @@ public class ReactViewHacks {
         ReflectionUtils.setField(view, "mAttachScheduled", true);
     }
 
+    /**
+     * Must be called before view is removed from screen inorder to ensure onDetachedFromScreen is properly
+     * executed and componentWillUnmount is called
+     */
     public static void ensureUnmountOnDetachedFromWindow(ReactRootView view) {
-        // Must be called before view is removed from screen inorder to ensure onDetachedFromScreen is properly
-        // executed and componentWillUnmount is called
         ReflectionUtils.setField(view, "mAttachScheduled", false);
     }
 
