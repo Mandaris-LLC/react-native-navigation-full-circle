@@ -1,6 +1,5 @@
 package com.reactnativenavigation.core;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -24,6 +23,7 @@ public class Button {
             WithText(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
             int action;
+
             ShowAsAction(int action) {
                 this.action = action;
             }
@@ -35,15 +35,14 @@ public class Button {
         @ColorInt
         int color;
         ShowAsAction showAsAction;
+        boolean enabled = true;
     }
 
-    private final Activity activity;
     private final Menu menu;
     private final ActionMenuView parent;
     private Params buttonParams;
 
-    public Button(Activity activity, Menu menu, ActionMenuView parent, Params buttonParams) {
-        this.activity = activity;
+    public Button(Menu menu, ActionMenuView parent, Params buttonParams) {
         this.menu = menu;
         this.parent = parent;
         this.buttonParams = buttonParams;
@@ -52,10 +51,12 @@ public class Button {
     public MenuItem addToMenu(int index) {
         MenuItem item = menu.add(Menu.NONE, Menu.NONE, index, buttonParams.label);
         item.setShowAsAction(buttonParams.showAsAction.action);
+        item.setEnabled(buttonParams.enabled);
         setIcon(item);
         setColor();
         return item;
     }
+
 
     private void setIcon(MenuItem item) {
         if (hasIcon()) {
@@ -84,7 +85,7 @@ public class Button {
             @Override
             public void run() {
                 ArrayList<View> outViews = findActualTextViewInMenuByLabel();
-                setTextColorInternal(outViews);
+                setTextColorForFoundButtonViews(outViews);
             }
         });
     }
@@ -96,7 +97,7 @@ public class Button {
         return outViews;
     }
 
-    private void setTextColorInternal(ArrayList<View> outViews) {
+    private void setTextColorForFoundButtonViews(ArrayList<View> outViews) {
         for (View button : outViews) {
             ((TextView) button).setTextColor(buttonParams.color);
         }

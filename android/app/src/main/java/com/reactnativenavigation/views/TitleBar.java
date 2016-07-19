@@ -16,6 +16,7 @@ public class TitleBar extends Toolbar {
 
     private Menu menu;
     private ActionMenuView actionMenuView;
+    private boolean hideOnScroll = false;
 
     public TitleBar(Context context) {
         super(context);
@@ -34,12 +35,21 @@ public class TitleBar extends Toolbar {
     public void setButtons(List<Button.Params> buttons) {
         menu.clear();
 
-        Activity context = (Activity) getContext();
         for (int i = 0; i < buttons.size(); i++) {
-            final Button button = new Button(context, buttons.get(i));
-            // Add button in reverse order because in iOS, index 0 starts at right
+            final Button button = new Button(menu, actionMenuView, buttons.get(i));
+            // Add button in reverse order because in iOS index 0 starts at right
             final int index = buttons.size() - i - 1;
-            button.addToMenu(context, menu, index);
+            button.addToMenu(index);
+        }
+    }
+
+    public void setHideOnScroll(boolean hideOnScroll) {
+        this.hideOnScroll = hideOnScroll;
+    }
+
+    public void onScrollChanged(ScrollDirectionListener.Direction direction) {
+        if (hideOnScroll) {
+            //TODO animate hide/show
         }
     }
 }
