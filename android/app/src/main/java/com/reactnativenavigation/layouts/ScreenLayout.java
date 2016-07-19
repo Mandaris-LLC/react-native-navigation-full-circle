@@ -16,7 +16,6 @@ import com.reactnativenavigation.controllers.ScreenStyleParams;
 import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.ScrollDirectionListener;
-import com.reactnativenavigation.views.TitleBar;
 import com.reactnativenavigation.views.TitleBarButton;
 
 import java.util.List;
@@ -47,14 +46,8 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
 
     private void createViews() {
         addTopBar();
-        addTitleBarAndSetButtons();
+        topBar.addTitleBarAndSetButtons(buttons);
         addContentView();
-    }
-
-    private void addTitleBarAndSetButtons() {
-        TitleBar titleBar = new TitleBar(getContext());
-        titleBar.setButtons(buttons);
-        topBar.addView(titleBar);
     }
 
     private void addTopBar() {
@@ -71,7 +64,9 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
         setStatusBarColor(styleParams.statusBarColor);
         setTopBarColor(styleParams.topBarColor);
         setNavigationBarColor(styleParams.navigationBarColor);
-        setTitleBarHidden(styleParams.titleBarHidden);
+        topBar.setTitleBarVisibility(styleParams.titleBarHidden);
+        topBar.setVisibility(styleParams.topBarHidden ? GONE : VISIBLE);
+
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -107,12 +102,6 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
             window.setNavigationBarColor(navigationBarColor);
         } else {
             window.setNavigationBarColor(Color.BLACK);
-        }
-    }
-
-    private void setTitleBarHidden(boolean titleBarHidden) {
-        if (titleBarHidden) {
-            
         }
     }
 
