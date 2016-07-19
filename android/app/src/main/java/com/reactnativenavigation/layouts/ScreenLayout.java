@@ -1,16 +1,23 @@
 package com.reactnativenavigation.layouts;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.view.Window;
 import android.widget.LinearLayout;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.controllers.ScreenParams;
 import com.reactnativenavigation.controllers.ScreenStyleParams;
-import com.reactnativenavigation.views.TitleBarButton;
+import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.ScrollDirectionListener;
 import com.reactnativenavigation.views.TitleBar;
+import com.reactnativenavigation.views.TitleBarButton;
 
 import java.util.List;
 
@@ -62,16 +69,55 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
 
     private void setStyle(ScreenStyleParams styleParams) {
         setStatusBarColor(styleParams.statusBarColor);
-
+        setTopBarColor(styleParams.topBarColor);
+        setNavigationBarColor(styleParams.navigationBarColor);
+        setTitleBarHidden(styleParams.titleBarHidden);
     }
 
-    private void setStatusBarColor(int statusBarColor) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setStatusBarColor(@ColorInt int statusBarColor) {
+        if (!SdkSupports.lollipop()) {
+            return;
+        }
 
+        final Activity context = (Activity) getContext();
+        final Window window = context.getWindow();
+        if (statusBarColor > 0) {
+            window.setStatusBarColor(statusBarColor);
+        } else {
+            window.setStatusBarColor(Color.BLACK);
+        }
     }
 
-    private void
+    private void setTopBarColor(@ColorInt int topBarColor) {
+        if (topBarColor > 0) {
+            topBar.setBackgroundColor(topBarColor);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void setNavigationBarColor(int navigationBarColor) {
+        if (!SdkSupports.lollipop()) {
+            return;
+        }
+
+        final Activity context = (Activity) getContext();
+        final Window window = context.getWindow();
+        if (navigationBarColor > 0) {
+            window.setNavigationBarColor(navigationBarColor);
+        } else {
+            window.setNavigationBarColor(Color.BLACK);
+        }
+    }
+
+    private void setTitleBarHidden(boolean titleBarHidden) {
+        if (titleBarHidden) {
+            
+        }
+    }
 
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
+
     }
 }
