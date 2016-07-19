@@ -1,8 +1,6 @@
 package com.reactnativenavigation.views;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -14,16 +12,10 @@ import java.util.List;
 
 public class TitleBar extends Toolbar {
 
-    public static class Button {
-        public enum ShowAsAction {
-            IfRoom, Always, Never, WithText
-        }
+    private Menu menu;
+    private ActionMenuView actionMenuView;
 
-        String label;
-        Drawable icon;
-        @ColorInt int color;
-        ShowAsAction showAsAction;
-    }
+
 
     public TitleBar(Activity context) {
         super(context);
@@ -32,14 +24,22 @@ public class TitleBar extends Toolbar {
 
     private void createMenu() {
         MenuInflater menuInflater = ((Activity) getContext()).getMenuInflater();
-        ActionMenuView actionMenuView = new ActionMenuView(getContext());
-        Menu menu = actionMenuView.getMenu();
+        actionMenuView = new ActionMenuView(getContext());
+        menu = actionMenuView.getMenu();
         menuInflater.inflate(R.menu.stub, menu);
         addView(actionMenuView);
         // TODO: Maybe setSupportActionBar
     }
 
     public void setButtons(List<Button> buttons) {
-        Menu menu = new
+        removeView(actionMenuView);
+        createMenu();
+
+        Activity context = (Activity) getContext();
+        for (int i = 0; i < buttons.size(); i++) {
+            final Button button = buttons.get(i);
+            final int index = buttons.size() - i - 1;
+            button.addToMenu(context, menu, index);
+        }
     }
 }
