@@ -2,7 +2,6 @@ package com.reactnativenavigation.controllers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -16,7 +15,6 @@ import com.reactnativenavigation.layouts.ScreenLayout;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.NavigationReactInstance;
 import com.reactnativenavigation.react.RedboxPermission;
-import com.reactnativenavigation.views.TitleBarButton;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,8 +59,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
     }
 
     private void createLayout() {
-        List<TitleBarButton.Params> btns = Arrays.asList(new TitleBarButton.Params("btn1", getResources().getDrawable(android.R.drawable.ic_media_play), Color.RED, TitleBarButton.Params.ShowAsAction.Always));
-        ScreenLayout.Params screenParams = new ScreenLayout.Params("v2.0", new Bundle(), btns);
+        ScreenParams screenParams = new ScreenParams();
         ScreenLayout screenLayout = new ScreenLayout(this, navigationReactInstance.getReactInstanceManager(), screenParams);
         setContentView(screenLayout);
     }
