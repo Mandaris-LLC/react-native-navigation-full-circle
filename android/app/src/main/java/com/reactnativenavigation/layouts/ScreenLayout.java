@@ -5,25 +5,37 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.facebook.react.ReactInstanceManager;
+import com.reactnativenavigation.core.Button;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.ScrollDirectionListener;
+import com.reactnativenavigation.views.TitleBar;
+
+import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged {
 
+    public static class Params {
+        String moduleName;
+        Bundle passProps;
+        List<Button> buttons;
+    }
+
     private final ReactInstanceManager reactInstanceManager;
     private final String moduleName;
     private final Bundle passProps;
+    private final List<Button> buttons;
     private ContentView contentView;
     private TopBar topBar;
 
-    public ScreenLayout(Context context, ReactInstanceManager reactInstanceManager, String moduleName, Bundle passProps) {
+    public ScreenLayout(Context context, ReactInstanceManager reactInstanceManager, Params screenParams) {
         super(context);
         this.reactInstanceManager = reactInstanceManager;
-        this.moduleName = moduleName;
-        this.passProps = passProps;
+        moduleName = screenParams.moduleName;
+        passProps = screenParams.passProps;
+        buttons = screenParams.buttons;
         setOrientation(VERTICAL);
 
         createViews();
@@ -31,7 +43,14 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
 
     private void createViews() {
         addTopBar();
+        addTitleBarAndSetButtons();
         addContentView();
+    }
+
+    private void addTitleBarAndSetButtons() {
+        TitleBar titleBar = new TitleBar(getContext());
+        titleBar.setButtons(buttons);
+        topBar.addView(titleBar);
     }
 
     private void addTopBar() {

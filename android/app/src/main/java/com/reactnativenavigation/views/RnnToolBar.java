@@ -14,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,8 +23,8 @@ import android.widget.TextView;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.activities.BaseReactActivity;
-import com.reactnativenavigation.core.objects.Button;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Button;
+import com.reactnativenavigation.core.objects._Screen;
 import com.reactnativenavigation.utils.ContextProvider;
 import com.reactnativenavigation.react.ImageLoader;
 import com.reactnativenavigation.utils.ImageUtils;
@@ -41,7 +40,7 @@ import java.util.Map;
  */
 public class RnnToolBar extends Toolbar {
 
-    private List<Screen> mScreens;
+    private List<_Screen> mScreens;
     private AsyncTask mDrawerIconTask;
     private AsyncTask mSetupToolbarTask;
     private Drawable mBackground;
@@ -60,7 +59,7 @@ public class RnnToolBar extends Toolbar {
         mBackground = getBackground();
     }
 
-    public void setScreens(List<Screen> screens) {
+    public void setScreens(List<_Screen> screens) {
         mScreens = screens;
     }
 
@@ -70,7 +69,7 @@ public class RnnToolBar extends Toolbar {
 //        }
     }
 
-    public ActionBarDrawerToggle setupDrawer(DrawerLayout drawerLayout, Screen drawerScreen, Screen screen) {
+    public ActionBarDrawerToggle setupDrawer(DrawerLayout drawerLayout, _Screen drawerScreen, _Screen screen) {
         if (drawerLayout == null || drawerScreen == null) {
             return null;
         }
@@ -122,20 +121,20 @@ public class RnnToolBar extends Toolbar {
         }
     }
 
-    public void setupDrawerIconAsync(String drawerIconSource, Screen screen) {
+    public void setupDrawerIconAsync(String drawerIconSource, _Screen screen) {
         if (mDrawerIconTask == null) {
             mDrawerIconTask = new SetupDrawerIconTask(this, drawerIconSource, screen).execute();
         }
     }
 
-    public void setupToolbarButtonsAsync(Screen newScreen) {
+    public void setupToolbarButtonsAsync(_Screen newScreen) {
         if (newScreen != null) {
             this.setupToolbarButtonsAsync(null, newScreen);
         }
     }
 
 
-    public void setupToolbarButtonsAsync(Screen oldScreen, Screen newScreen) {
+    public void setupToolbarButtonsAsync(_Screen oldScreen, _Screen newScreen) {
         if (mSetupToolbarTask == null) {
             mSetupToolbarTask = new SetupToolbarButtonsTask(this, oldScreen, newScreen).execute();
         }
@@ -172,7 +171,7 @@ public class RnnToolBar extends Toolbar {
     }
 
     @SuppressWarnings({"ConstantConditions"})
-    public void setNavUpButton(Screen screen) {
+    public void setNavUpButton(_Screen screen) {
         BaseReactActivity context = ContextProvider.getActivityContext();
         if (context == null) {
             return;
@@ -218,13 +217,13 @@ public class RnnToolBar extends Toolbar {
      * @param screen The currently displayed screen
      */
     @UiThread
-    public void update(@NonNull Screen screen) {
+    public void update(@NonNull _Screen screen) {
         ((AppCompatActivity) getContext()).setSupportActionBar(this);
         setTitle(screen.title);
         setStyle(screen);
     }
 
-    public void updateAndSetButtons(Screen screen) {
+    public void updateAndSetButtons(_Screen screen) {
         update(screen);
         setupToolbarButtonsAsync(screen);
     }
@@ -234,7 +233,7 @@ public class RnnToolBar extends Toolbar {
         private final String mDrawerIconSource;
         private final Integer mTintColor;
 
-        public SetupDrawerIconTask(RnnToolBar toolBar, String drawerIconSource, Screen screen) {
+        public SetupDrawerIconTask(RnnToolBar toolBar, String drawerIconSource, _Screen screen) {
             mToolbarWR = new WeakReference<>(toolBar);
             mDrawerIconSource = drawerIconSource;
             mTintColor = screen.navBarButtonColor;
@@ -266,13 +265,13 @@ public class RnnToolBar extends Toolbar {
     }
 
     private static class SetupToolbarButtonsTask extends AsyncTask<Void, Void, Map<String, Drawable>> {
-        private final List<Button> mOldButtons;
-        private final List<Button> mNewButtons;
+        private final List<_Button> mOldButtons;
+        private final List<_Button> mNewButtons;
         private final WeakReference<RnnToolBar> mToolbarWR;
         @ColorInt private final Integer mTintColor;
         private final int mIconDimensions;
 
-        public SetupToolbarButtonsTask(RnnToolBar toolBar, Screen oldScreen, Screen newScreen) {
+        public SetupToolbarButtonsTask(RnnToolBar toolBar, _Screen oldScreen, _Screen newScreen) {
             mToolbarWR = new WeakReference<>(toolBar);
             mOldButtons = oldScreen == null ? null : oldScreen.getButtons();
             mNewButtons = newScreen.getButtons();
@@ -288,7 +287,7 @@ public class RnnToolBar extends Toolbar {
             }
 
             Map<String, Drawable> icons = new HashMap<>();
-            for (Button button : mNewButtons) {
+            for (_Button button : mNewButtons) {
                 if (button.hasIcon()) {
                     icons.put(button.id, button.getIcon(context, mIconDimensions));
                 }
@@ -317,7 +316,7 @@ public class RnnToolBar extends Toolbar {
             if(mOldButtons == null) {
                 menu.clear();
             } else {
-                for (Button btn : mOldButtons) {
+                for (_Button btn : mOldButtons) {
                     menu.removeItem(btn.getItemId());
                 }
             }
@@ -326,7 +325,7 @@ public class RnnToolBar extends Toolbar {
             final List<String> textButtons = new ArrayList<>();
             final int size = mNewButtons.size();
             for (int i = 0; i < size; i++) {
-                Button button = mNewButtons.get(i);
+                _Button button = mNewButtons.get(i);
                 MenuItem item = menu.add(Menu.NONE, button.getItemId(), size - i - 1, button.title);
                 item.setShowAsAction(getMenuItemShowAction(button.showAsAction));
 

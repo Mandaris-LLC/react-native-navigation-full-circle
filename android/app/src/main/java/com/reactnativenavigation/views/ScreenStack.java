@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.activities.BaseReactActivity;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 
 import java.util.Stack;
 
@@ -19,10 +19,10 @@ public class ScreenStack extends android.support.design.widget.CoordinatorLayout
     private static final int DISAPPEAR_ANIMATION_DELAY = 200;
 
     private static class ScreenView {
-        Screen screen;
+        _Screen screen;
         RctView view;
 
-        public ScreenView(Screen screen, RctView view) {
+        public ScreenView(_Screen screen, RctView view) {
             this.screen = screen;
             this.view = view;
         }
@@ -47,11 +47,11 @@ public class ScreenStack extends android.support.design.widget.CoordinatorLayout
         setLayoutTransition(new LayoutTransition());
     }
 
-    public void push(Screen screen) {
+    public void push(_Screen screen) {
         push(screen, null);
     }
 
-    public void push(Screen screen, RctView.OnDisplayedListener onDisplayed) {
+    public void push(_Screen screen, RctView.OnDisplayedListener onDisplayed) {
         RctView oldView = mStack.isEmpty() ? null : mStack.peek().view;
         RctView view = new RctView(mReactActivity, mReactInstanceManager, screen, onDisplayed);
         if (oldView != null) {
@@ -67,7 +67,7 @@ public class ScreenStack extends android.support.design.widget.CoordinatorLayout
         mStack.push(new ScreenView(screen, view));
     }
 
-    public Screen pop() {
+    public _Screen pop() {
         if (mStack.isEmpty() || getStackSize() == 1) {
             return null;
         }
@@ -83,7 +83,7 @@ public class ScreenStack extends android.support.design.widget.CoordinatorLayout
         return popped.screen;
     }
 
-    public Screen popToRoot() {
+    public _Screen popToRoot() {
         if (mStack.isEmpty() || getStackSize() <= 1) {
             return null;
         }
@@ -105,11 +105,11 @@ public class ScreenStack extends android.support.design.widget.CoordinatorLayout
         return oldScreenView != null ? oldScreenView.screen : null;
     }
 
-    public Screen resetTo(Screen screen) {
+    public _Screen resetTo(_Screen screen) {
         return resetTo(screen, null);
     }
 
-    public Screen resetTo(Screen screen, RctView.OnDisplayedListener onDisplayed) {
+    public _Screen resetTo(_Screen screen, RctView.OnDisplayedListener onDisplayed) {
         RctView view = new RctView(mReactActivity, mReactInstanceManager, screen, onDisplayed);
         addView(view, MATCH_PARENT, MATCH_PARENT);
 
@@ -143,7 +143,7 @@ public class ScreenStack extends android.support.design.widget.CoordinatorLayout
         return mStack.size();
     }
 
-    public Screen peek() {
+    public _Screen peek() {
         return mStack.peek().screen;
     }
 

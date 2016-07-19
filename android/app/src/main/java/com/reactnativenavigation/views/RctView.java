@@ -11,9 +11,8 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.activities.BaseReactActivity;
 import com.reactnativenavigation.activities.BottomTabActivity;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 import com.reactnativenavigation.utils.BridgeUtils;
-import com.reactnativenavigation.utils.ReflectionUtils;
 
 /**
  * Created by guyc on 10/03/16.
@@ -84,7 +83,7 @@ public class RctView extends FrameLayout {
     }
 
     @SuppressWarnings("unchecked")
-    public RctView(BaseReactActivity ctx, ReactInstanceManager rctInstanceManager, final Screen screen,
+    public RctView(BaseReactActivity ctx, ReactInstanceManager rctInstanceManager, final _Screen screen,
                    final OnDisplayedListener onDisplayedListener) {
         super(ctx);
         setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -110,11 +109,11 @@ public class RctView extends FrameLayout {
         addView(reactRootView);
     }
 
-    private Bundle createPassProps(Screen screen) {
+    private Bundle createPassProps(_Screen screen) {
         Bundle passProps = new Bundle();
-        passProps.putString(Screen.KEY_SCREEN_INSTANCE_ID, screen.screenInstanceId);
-        passProps.putString(Screen.KEY_NAVIGATOR_ID, screen.navigatorId);
-        passProps.putString(Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
+        passProps.putString(_Screen.KEY_SCREEN_INSTANCE_ID, screen.screenInstanceId);
+        passProps.putString(_Screen.KEY_NAVIGATOR_ID, screen.navigatorId);
+        passProps.putString(_Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
         if (screen.passedProps != null) {
             BridgeUtils.addMapToBundle(screen.passedProps, passProps);
         }

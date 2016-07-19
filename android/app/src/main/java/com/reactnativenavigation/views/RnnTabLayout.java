@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 
 import com.reactnativenavigation.R;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 
 /**
  * Created by guyc on 07/05/16.
@@ -43,7 +43,7 @@ public class RnnTabLayout extends TabLayout {
         a.recycle();
     }
 
-    public void setStyle(Screen screen) {
+    public void setStyle(_Screen screen) {
         if (screen.toolBarColor != null) {
             setBackgroundColor(screen.toolBarColor);
         } else {

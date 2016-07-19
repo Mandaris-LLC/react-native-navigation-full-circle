@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by guyc on 08/04/16.
  */
-public class Button extends JsonObject implements Serializable {
+public class _Button extends JsonObject implements Serializable {
     private static final long serialVersionUID = -570145217281069067L;
 
     private static final String KEY_ID = "id";
@@ -33,7 +33,7 @@ public class Button extends JsonObject implements Serializable {
     private static final AtomicInteger sAtomicIdGenerator = new AtomicInteger();
     private static final Map<String, Integer> sStringToNumericId = new HashMap<>();
 
-    public Button(ReadableMap button) {
+    public _Button(ReadableMap button) {
         id = getString(button, KEY_ID);
         title = getString(button, KEY_TITLE, "");
         mIconSource = getString(button, KEY_ICON);

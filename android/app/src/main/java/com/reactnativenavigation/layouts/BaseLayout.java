@@ -6,7 +6,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.R;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 import com.reactnativenavigation.views.RctView;
 import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
@@ -18,7 +18,7 @@ public abstract class BaseLayout extends FrameLayout implements Layout {
     private RnnToolBar toolBar;
     private ScreenStack screenStack;
 
-    public BaseLayout(Context context, Screen initialScreen) {
+    public BaseLayout(Context context, _Screen initialScreen) {
         super(context);
         toolBar = (RnnToolBar) findViewById(R.id.toolbar);
         screenStack = (ScreenStack) findViewById(R.id.screenStack);
@@ -27,7 +27,7 @@ public abstract class BaseLayout extends FrameLayout implements Layout {
         addInitialScreen(initialScreen);
     }
 
-    private void addInitialScreen(Screen screen) {
+    private void addInitialScreen(_Screen screen) {
         screenStack.push(screen, new RctView.OnDisplayedListener() {
             @Override
             public void onDisplayed() {
@@ -39,13 +39,13 @@ public abstract class BaseLayout extends FrameLayout implements Layout {
     }
 
     @Override
-    public void push(Screen screen) {
+    public void push(_Screen screen) {
         screenStack.push(screen);
     }
 
     @Override
-    public Screen pop() {
-        Screen popped = screenStack.pop();
+    public _Screen pop() {
+        _Screen popped = screenStack.pop();
         if (onScreenPoppedListener != null) {
             onScreenPoppedListener.onScreenPopped(popped);
         }

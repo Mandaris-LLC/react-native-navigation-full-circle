@@ -5,7 +5,7 @@ import android.view.Menu;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.adapters.ViewPagerAdapter;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnTabLayout;
 import com.reactnativenavigation.views.RnnToolBar;
@@ -34,24 +34,24 @@ public class TabActivity extends BaseReactActivity {
         mTabLayout = (RnnTabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        ArrayList<Screen> screens = (ArrayList<Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
+        ArrayList<_Screen> screens = (ArrayList<_Screen>) getIntent().getSerializableExtra(EXTRA_SCREENS);
 
         setupToolbar(screens);
         setupViewPager(screens);
     }
 
-    private void setupToolbar(ArrayList<Screen> screens) {
-        Screen initialScreen = screens.get(0);
+    private void setupToolbar(ArrayList<_Screen> screens) {
+        _Screen initialScreen = screens.get(0);
         toolbar.setScreens(screens);
         toolbar.update(initialScreen);
         setNavigationStyle(initialScreen);
     }
 
-    public void setNavigationStyle(Screen screen) {
+    public void setNavigationStyle(_Screen screen) {
         mTabLayout.setStyle(screen);
     }
 
-    private void setupViewPager(ArrayList<Screen> screens) {
+    private void setupViewPager(ArrayList<_Screen> screens) {
         mAdapter = new ViewPagerAdapter(this, mViewPager, toolbar, screens);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -72,22 +72,22 @@ public class TabActivity extends BaseReactActivity {
     }
 
     @Override
-    public void push(Screen screen) {
+    public void push(_Screen screen) {
         super.push(screen);
         StyleHelper.updateStyles(toolbar, screen);
         mAdapter.push(screen);
     }
 
     @Override
-    public Screen pop(String navigatorId) {
+    public _Screen pop(String navigatorId) {
         super.pop(navigatorId);
-        Screen popped = mAdapter.pop(navigatorId);
+        _Screen popped = mAdapter.pop(navigatorId);
         setNavigationStyle(getCurrentScreen());
         return popped;
     }
 
     @Override
-    public Screen getCurrentScreen() {
+    public _Screen getCurrentScreen() {
         return mAdapter.peek(getCurrentNavigatorId());
     }
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.activities.BaseReactActivity;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
@@ -33,13 +33,13 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
     private int mCurrentPage = 0;
 
     public ViewPagerAdapter(BaseReactActivity context, ViewPager viewPager, RnnToolBar toolbar,
-                            ArrayList<Screen> screens) {
+                            ArrayList<_Screen> screens) {
         mViewPager = viewPager;
         mToolbar = toolbar;
         mScreenStacks = new ArrayList<>();
         mNavigatorIds = new ArrayList<>();
         mStackByNavigatorId = new HashMap<>();
-        for (Screen screen : screens) {
+        for (_Screen screen : screens) {
             ScreenStack stack = new ScreenStack(context);
             stack.push(screen);
             mScreenStacks.add(stack);
@@ -48,22 +48,22 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         }
     }
 
-    public void push(Screen screen) {
+    public void push(_Screen screen) {
         ScreenStack stack = mStackByNavigatorId.get(screen.navigatorId);
-        Screen prevScreen = mScreenStacks.get(mCurrentPage).peek();
+        _Screen prevScreen = mScreenStacks.get(mCurrentPage).peek();
         mToolbar.setupToolbarButtonsAsync(prevScreen, screen);
         stack.push(screen);
     }
 
-    public Screen pop(String navigatorId) {
+    public _Screen pop(String navigatorId) {
         ScreenStack stack = mStackByNavigatorId.get(navigatorId);
-        Screen oldScreen =  stack != null ? stack.pop() : null;
-        Screen newScreen = stack.peek();
+        _Screen oldScreen = stack != null ? stack.pop() : null;
+        _Screen newScreen = stack.peek();
         mToolbar.setupToolbarButtonsAsync(oldScreen, newScreen);
         return oldScreen;
     }
 
-    public Screen peek(String navigatorId) {
+    public _Screen peek(String navigatorId) {
         ScreenStack stack = mStackByNavigatorId.get(navigatorId);
         return stack != null ? stack.peek() : null;
     }
@@ -102,8 +102,8 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
         mViewPager.setCurrentItem(position);
 
         // Set screen buttons
-        Screen prevScreen = mScreenStacks.get(mCurrentPage).peek();
-        Screen newScreen = mScreenStacks.get(position).peek();
+        _Screen prevScreen = mScreenStacks.get(mCurrentPage).peek();
+        _Screen newScreen = mScreenStacks.get(position).peek();
         mToolbar.setupToolbarButtonsAsync(prevScreen, newScreen);
 
         // Set title
@@ -114,7 +114,7 @@ public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSel
 
         // Send tab selected event
         WritableMap params = Arguments.createMap();
-        Screen screen = mScreenStacks.get(position).peek();
+        _Screen screen = mScreenStacks.get(position).peek();
         RctManager.getInstance().sendEvent(EVENT_ON_TAB_SELECTED, screen, params);
     }
 

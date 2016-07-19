@@ -1,8 +1,8 @@
 package com.reactnativenavigation.layouts;
 
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 
 public interface OnScreenPoppedListener {
 
-    void onScreenPopped(Screen popped);
+    void onScreenPopped(_Screen popped);
 }

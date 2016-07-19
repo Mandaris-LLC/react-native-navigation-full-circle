@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.Window;
 
 import com.reactnativenavigation.activities.BaseReactActivity;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 import com.reactnativenavigation.views.RnnToolBar;
 
 /**
@@ -14,7 +14,7 @@ import com.reactnativenavigation.views.RnnToolBar;
  */
 public class StyleHelper {
 
-    public static void updateStyles(RnnToolBar toolBar, Screen screen) {
+    public static void updateStyles(RnnToolBar toolBar, _Screen screen) {
         try {
             toolBar.updateAndSetButtons(screen);
             setWindowStyle(screen);
@@ -23,14 +23,14 @@ public class StyleHelper {
         }
     }
 
-    private static void setWindowStyle(Screen screen) {
+    private static void setWindowStyle(_Screen screen) {
         BaseReactActivity context = ContextProvider.getActivityContext();
         if (context != null) {
             StyleHelper.setWindowStyle(context.getWindow(), context, screen);
         }
     }
 
-    public static void setWindowStyle(Window window, Context context, Screen screen) {
+    public static void setWindowStyle(Window window, Context context, _Screen screen) {
         if (SdkSupports.lollipop()) {
             final int black = ContextCompat.getColor(context, android.R.color.black);
             if (screen.statusBarColor != null) {

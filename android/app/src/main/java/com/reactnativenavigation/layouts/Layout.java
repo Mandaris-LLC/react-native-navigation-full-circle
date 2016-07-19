@@ -1,6 +1,6 @@
 package com.reactnativenavigation.layouts;
 
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 
 public interface Layout {
     boolean onBackPressed();
@@ -9,9 +9,9 @@ public interface Layout {
 
     void removeAllReactViews();
 
-    void push(Screen screen);
+    void push(_Screen screen);
 
-    Screen pop();
+    _Screen pop();
 
     int getScreenCount();
 }

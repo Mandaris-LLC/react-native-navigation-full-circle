@@ -5,7 +5,7 @@ import android.support.design.widget.CoordinatorLayout;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.core.objects.Drawer;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 import com.reactnativenavigation.utils.StyleHelper;
 import com.reactnativenavigation.views.RnnToolBar;
 import com.reactnativenavigation.views.ScreenStack;
@@ -26,7 +26,7 @@ public class SingleScreenActivity extends BaseReactActivity {
         setContentView(R.layout.single_screen_activity);
         toolbar = (RnnToolBar) findViewById(R.id.toolbar);
 
-        final Screen screen = (Screen) getIntent().getSerializableExtra(EXTRA_SCREEN);
+        final _Screen screen = (_Screen) getIntent().getSerializableExtra(EXTRA_SCREEN);
         final Drawer drawer = (Drawer) getIntent().getSerializableExtra(DRAWER_PARAMS);
 
         mNavigatorId = screen.navigatorId;
@@ -48,37 +48,37 @@ public class SingleScreenActivity extends BaseReactActivity {
         });
     }
 
-    protected void setupToolbar(Screen screen) {
+    protected void setupToolbar(_Screen screen) {
         StyleHelper.updateStyles(toolbar, screen);
     }
 
     @Override
-    public void push(Screen screen) {
+    public void push(_Screen screen) {
         super.push(screen);
         mScreenStack.push(screen);
         StyleHelper.updateStyles(toolbar, screen);
     }
 
     @Override
-    public Screen pop(String navigatorId) {
+    public _Screen pop(String navigatorId) {
         super.pop(navigatorId);
-        Screen popped = mScreenStack.pop();
+        _Screen popped = mScreenStack.pop();
         StyleHelper.updateStyles(toolbar, getCurrentScreen());
         return popped;
     }
 
     @Override
-    public Screen popToRoot(String navigatorId) {
+    public _Screen popToRoot(String navigatorId) {
         super.popToRoot(navigatorId);
-        Screen screen = mScreenStack.popToRoot();
+        _Screen screen = mScreenStack.popToRoot();
         StyleHelper.updateStyles(toolbar, getCurrentScreen());
         return screen;
     }
 
     @Override
-    public Screen resetTo(Screen screen) {
+    public _Screen resetTo(_Screen screen) {
         super.resetTo(screen);
-        Screen popped = mScreenStack.resetTo(screen);
+        _Screen popped = mScreenStack.resetTo(screen);
         StyleHelper.updateStyles(toolbar, screen);
         return popped;
     }
@@ -89,8 +89,8 @@ public class SingleScreenActivity extends BaseReactActivity {
     }
 
     @Override
-    public Screen getCurrentScreen() {
-        Screen currentScreen = super.getCurrentScreen();
+    public _Screen getCurrentScreen() {
+        _Screen currentScreen = super.getCurrentScreen();
         if (currentScreen != null) {
             return currentScreen;
         }

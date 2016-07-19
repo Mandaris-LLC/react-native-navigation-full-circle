@@ -2,7 +2,7 @@ package com.reactnativenavigation.bridge;
 
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
-import com.reactnativenavigation.core.objects.Screen;
+import com.reactnativenavigation.core.objects._Screen;
 
 public class NavigationReactEventEmitter {
 
@@ -17,7 +17,7 @@ public class NavigationReactEventEmitter {
 
         params.putString(KEY_EVENT_TYPE, EVENT_TYPE);
         params.putString(KEY_EVENT_ID, eventName);
-        params.putString(Screen.KEY_NAVIGATOR_EVENT_ID, navigatorEventId);
+        params.putString(_Screen.KEY_NAVIGATOR_EVENT_ID, navigatorEventId);
         eventEmitter.emit(navigatorEventId, params);
     }
 }

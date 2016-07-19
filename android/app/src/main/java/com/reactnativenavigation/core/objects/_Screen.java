@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by guyc on 02/04/16.
  */
-public class Screen extends JsonObject implements Serializable {
+public class _Screen extends JsonObject implements Serializable {
     private static final long serialVersionUID = -1033475305421107791L;
 
     private static final String KEY_TITLE = "title";
@@ -54,7 +54,7 @@ public class Screen extends JsonObject implements Serializable {
     public final String navigatorId;
     public final String navigatorEventId;
     public final String icon;
-    public ArrayList<Button> buttons;
+    public ArrayList<_Button> buttons;
     public final boolean backButtonHidden;
     public boolean bottomTabsHiddenOnScroll;
     public HashMap<String, Object> passedProps = new HashMap<>();
@@ -72,11 +72,11 @@ public class Screen extends JsonObject implements Serializable {
     public Boolean bottomTabsHidden;
 
     @NonNull
-    public List<Button> getButtons() {
-        return buttons == null ? Collections.<Button>emptyList() : buttons;
+    public List<_Button> getButtons() {
+        return buttons == null ? Collections.<_Button>emptyList() : buttons;
     }
 
-    public Screen(ReadableMap screen) {
+    public _Screen(ReadableMap screen) {
         title = getString(screen, KEY_TITLE);
         label = getString(screen, KEY_LABEL);
         screenId = getString(screen, KEY_SCREEN);
@@ -100,12 +100,12 @@ public class Screen extends JsonObject implements Serializable {
         this.buttons = getButtons(params);
     }
 
-    private ArrayList<Button> getButtons(ReadableMap screen) {
-        ArrayList<Button> ret = new ArrayList<>();
+    private ArrayList<_Button> getButtons(ReadableMap screen) {
+        ArrayList<_Button> ret = new ArrayList<>();
         if (hasButtons(screen)) {
             ReadableArray rightButtons = getRightButtons(screen);
             for (int i = 0; i < rightButtons.size(); i++) {
-                ret.add(new Button(rightButtons.getMap(i)));
+                ret.add(new _Button(rightButtons.getMap(i)));
             }
         }
         return ret;
