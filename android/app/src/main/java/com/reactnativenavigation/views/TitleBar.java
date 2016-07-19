@@ -36,6 +36,7 @@ public class TitleBar extends Toolbar {
     }
 
     public void setupMenuButton() {
+
     }
 
     private void createMenu() {

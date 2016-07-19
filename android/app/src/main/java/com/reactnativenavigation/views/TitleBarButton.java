@@ -30,12 +30,19 @@ public class TitleBarButton {
         }
 
         // Todo: add id for click listener
-        String label;
-        Drawable icon;
+        private final String label;
+        private final Drawable icon;
         @ColorInt
-        int color;
-        ShowAsAction showAsAction;
-        boolean enabled = true;
+        private final int color;
+        private final ShowAsAction showAsAction;
+        private final boolean enabled = true;
+
+        public Params(String label, Drawable icon, int color, ShowAsAction showAsAction) {
+            this.label = label;
+            this.icon = icon;
+            this.color = color;
+            this.showAsAction = showAsAction;
+        }
     }
 
     private final Menu menu;

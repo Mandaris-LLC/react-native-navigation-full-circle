@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import {AppRegistry} from 'react-native';
+import {AppRegistry, NativeModules} from 'react-native';
 
 import Navigation from './Navigation';
 import utils from './utils';
-
-import {RctActivity} from 'react-native-navigation';
 
 const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
@@ -20,7 +18,7 @@ function startSingleScreenApp(params) {
   addNavigationStyleParams(screen);
   screen.passProps = params.passProps;
   const drawer = setupDrawer(params.drawer);
-  RctActivity.startSingleScreenApp(screen, drawer);
+  //NativeModules.NavigationReactModule.startApp(screen, drawer);
 }
 
 function startTabBasedApp(params) {
@@ -38,7 +36,7 @@ function startTabBasedApp(params) {
   });
 
   const drawer = setupDrawer(params.drawer);
-  RctActivity.startTabBasedApp(params.tabs, params.tabsStyle, drawer);
+  //RctActivity.startTabBasedApp(params.tabs, params.tabsStyle, drawer);
 }
 
 function addTabIcon(tab) {
@@ -58,7 +56,7 @@ function navigatorPush(navigator, params) {
   addNavigatorParams(params, navigator);
   addNavigatorButtons(params);
   addNavigationStyleParams(params);
-  RctActivity.navigatorPush(params);
+  //RctActivity.navigatorPush(params);
 }
 
 function navigatorSetButtons(navigator, navigatorEventID, params) {
@@ -72,81 +70,81 @@ function navigatorSetButtons(navigator, navigatorEventID, params) {
       }
     });
   }
-  RctActivity.setNavigatorButtons(params);
+  //RctActivity.setNavigatorButtons(params);
 }
 
 function navigatorPop(navigator, params) {
   addNavigatorParams(params, navigator);
-  RctActivity.navigatorPop(params);
+  //RctActivity.navigatorPop(params);
 }
 
 function navigatorPopToRoot(navigator, params) {
-  RctActivity.navigatorPopToRoot({
-    navigatorID: navigator.navigatorID,
-    animated: !(params.animated === false)
-  });
+  //RctActivity.navigatorPopToRoot({
+  //  navigatorID: navigator.navigatorID,
+  //  animated: !(params.animated === false)
+  //});
 }
 
 function navigatorResetTo(navigator, params) {
   addNavigatorParams(params, navigator);
   addNavigatorButtons(params);
   addNavigationStyleParams(params);
-  RctActivity.navigatorResetTo(params);
+  //RctActivity.navigatorResetTo(params);
 }
 
 function navigatorSetTabBadge(navigator, params) {
-  RctActivity.setTabBadge({
-    tabIndex: params.tabIndex,
-    badge: params.badge
-  });
+  //RctActivity.setTabBadge({
+  //  tabIndex: params.tabIndex,
+  //  badge: params.badge
+  //});
 }
 
 function navigatorSetTitle(navigator, params) {
-  RctActivity.setNavigatorTitle(params);
+  //RctActivity.setNavigatorTitle(params);
 }
 
 function navigatorSwitchToTab(navigator, params) {
-  RctActivity.switchToTab({
-    navigatorID: navigator.navigatorID,
-    tabIndex: params.tabIndex
-  });
+  //RctActivity.switchToTab({
+  //  navigatorID: navigator.navigatorID,
+  //  tabIndex: params.tabIndex
+  //});
 }
 
 function navigatorToggleDrawer(navigator, params) {
-  RctActivity.toggleDrawer({
-    side: params.side,
-    animated: !(params.animated === false),
-    to: params.to || ''
-  });
+  //RctActivity.toggleDrawer({
+  //  side: params.side,
+  //  animated: !(params.animated === false),
+  //  to: params.to || ''
+  //});
 }
 
 function navigatorToggleNavBar(navigator, params) {
-  RctActivity.toggleNavigationBar({
-    hidden: params.to === 'hidden',
-    animated: !(params.animated === false)
-  });
+  //RctActivity.toggleNavigationBar({
+  //  hidden: params.to === 'hidden',
+  //  animated: !(params.animated === false)
+  //});
 }
 
 function navigatorToggleTabs(navigator, params) {
-  RctActivity.toggleNavigatorTabs({
-    hidden: params.to === 'hidden',
-    animated: !(params.animated === false)
-  });
+  //RctActivity.toggleNavigatorTabs({
+  //  hidden: params.to === 'hidden',
+  //  animated: !(params.animated === false)
+  //});
 }
 
 function showModal(params) {
   addNavigatorParams(params);
   addNavigatorButtons(params);
   addNavigationStyleParams(params);
-  RctActivity.showModal(params);
+  //RctActivity.showModal(params);
 }
 
 function dismissModal() {
-  RctActivity.dismissModal();
+  //RctActivity.dismissModal();
 }
 
 function dismissAllModals(params) {
-  RctActivity.dismissAllModals(params.animationType);
+  //RctActivity.dismissAllModals(params.animationType);
 }
 
 function addNavigatorParams(screen, navigator = null, idx = '') {
@@ -161,7 +159,7 @@ function addNavigatorButtons(screen) {
 
   // Get image uri from image id
   const rightButtons = screen.rightButtons ? screen.rightButtons : screen.navigatorButtons ?
-    screen.navigatorButtons.rightButtons : null;
+                                                                   screen.navigatorButtons.rightButtons : null;
   if (rightButtons) {
     rightButtons.forEach(function(button) {
       if (button.icon) {
@@ -192,14 +190,15 @@ function setupDrawer(drawerParams) {
   });
   if (drawer.disableOpenGesture === undefined) {
     drawer.disableOpenGesture = false;
-  };
+  }
+  ;
 
   return drawer;
 }
 
 function showFAB(params) {
   params.icon = resolveAssetSource(params.icon).uri;
-  RctActivity.showFAB(params);
+  //RctActivity.showFAB(params);
 }
 
 export default {

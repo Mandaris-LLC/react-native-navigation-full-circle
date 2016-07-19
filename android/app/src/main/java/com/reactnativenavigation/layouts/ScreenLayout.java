@@ -18,15 +18,21 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged {
 
     public static class Params {
-        String moduleName;
-        Bundle passProps;
-        List<TitleBarButton> buttons;
+        private final String moduleName;
+        private final Bundle passProps;
+        private final List<TitleBarButton.Params> buttons;
+
+        public Params(String moduleName, Bundle passProps, List<TitleBarButton.Params> buttons) {
+            this.moduleName = moduleName;
+            this.passProps = passProps;
+            this.buttons = buttons;
+        }
     }
 
     private final ReactInstanceManager reactInstanceManager;
     private final String moduleName;
     private final Bundle passProps;
-    private final List<TitleBarButton> buttons;
+    private final List<TitleBarButton.Params> buttons;
     private ContentView contentView;
     private TopBar topBar;
 
@@ -65,6 +71,5 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
 
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
-
     }
 }

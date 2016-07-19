@@ -2,6 +2,7 @@ package com.reactnativenavigation.controllers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -11,9 +12,11 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.bridge.NavigationReactPackage;
 import com.reactnativenavigation.layouts.Layout;
+import com.reactnativenavigation.layouts.ScreenLayout;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.NavigationReactInstance;
 import com.reactnativenavigation.react.RedboxPermission;
+import com.reactnativenavigation.views.TitleBarButton;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +33,22 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
     private static Activity currentActivity;
     private NavigationReactInstance navigationReactInstance;
     private ModalController modalController;
-    private Layout layout;
+    private Layout layout = new Layout() {
+        @Override
+        public boolean onBackPressed() {
+            return false;
+        }
+
+        @Override
+        public void onDestroy() {
+
+        }
+
+        @Override
+        public void removeAllReactViews() {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +57,14 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
         navigationReactInstance = new NavigationReactInstance(this);
         navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
         RedboxPermission.permissionToShowRedboxIfNeeded(this);
+        createLayout();
+    }
+
+    private void createLayout() {
+        List<TitleBarButton.Params> btns = Arrays.asList(new TitleBarButton.Params("btn1", getResources().getDrawable(android.R.drawable.ic_media_play), Color.RED, TitleBarButton.Params.ShowAsAction.Always));
+        ScreenLayout.Params screenParams = new ScreenLayout.Params("v2.0", new Bundle(), btns);
+        ScreenLayout screenLayout = new ScreenLayout(this, navigationReactInstance.getReactInstanceManager(), screenParams);
+        setContentView(screenLayout);
     }
 
     @Override
@@ -57,7 +83,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
 
     @Override
     protected void onDestroy() {
-        modalController.onDestroy();
+//        modalController.onDestroy();
         layout.onDestroy();
         super.onDestroy();
         if (currentActivity == null || currentActivity.isFinishing()) {
@@ -90,9 +116,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
 
     @Override
     public void onBackPressed() {
-        if (modalController.onBackPressed()) {
-            return;
-        }
+//        if (modalController.onBackPressed()) {
+//            return;
+//        }
         if (layout.onBackPressed()) {
             return;
         }

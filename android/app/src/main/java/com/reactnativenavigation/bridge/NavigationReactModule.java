@@ -1,5 +1,7 @@
 package com.reactnativenavigation.bridge;
 
+import android.util.Log;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -29,6 +31,7 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startApp(final ReadableMap params) {
+        Log.d(NAME, "startApp: " + params);
     }
 
     @ReactMethod
