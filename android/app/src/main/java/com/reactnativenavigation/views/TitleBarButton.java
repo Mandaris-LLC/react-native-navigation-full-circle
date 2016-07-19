@@ -1,4 +1,4 @@
-package com.reactnativenavigation.core;
+package com.reactnativenavigation.views;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
@@ -14,7 +14,7 @@ import com.reactnativenavigation.utils.ViewUtils;
 
 import java.util.ArrayList;
 
-public class Button {
+public class TitleBarButton {
     public static class Params {
         public enum ShowAsAction {
             IfRoom(MenuItem.SHOW_AS_ACTION_IF_ROOM),
@@ -42,7 +42,7 @@ public class Button {
     private final ActionMenuView parent;
     private Params buttonParams;
 
-    public Button(Menu menu, ActionMenuView parent, Params buttonParams) {
+    public TitleBarButton(Menu menu, ActionMenuView parent, Params buttonParams) {
         this.menu = menu;
         this.parent = parent;
         this.buttonParams = buttonParams;

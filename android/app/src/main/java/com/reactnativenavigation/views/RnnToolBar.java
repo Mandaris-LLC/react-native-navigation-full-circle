@@ -76,11 +76,11 @@ public class RnnToolBar extends Toolbar {
 
         mDrawerLayout = drawerLayout;
         mDrawerToggle = new ActionBarDrawerToggle(
-            ContextProvider.getActivityContext(),
-            mDrawerLayout,
-            this,
-            R.string.drawer_open,
-            R.string.drawer_close
+                ContextProvider.getActivityContext(),
+                mDrawerLayout,
+                this,
+                R.string.drawer_open,
+                R.string.drawer_close
         );
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         setupDrawerIconAsync(drawerScreen.icon, screen);
@@ -214,6 +214,7 @@ public class RnnToolBar extends Toolbar {
     /**
      * Update the ToolBar from screen. This function sets any properties that are defined
      * in the screen.
+     *
      * @param screen The currently displayed screen
      */
     @UiThread
@@ -268,7 +269,8 @@ public class RnnToolBar extends Toolbar {
         private final List<_Button> mOldButtons;
         private final List<_Button> mNewButtons;
         private final WeakReference<RnnToolBar> mToolbarWR;
-        @ColorInt private final Integer mTintColor;
+        @ColorInt
+        private final Integer mTintColor;
         private final int mIconDimensions;
 
         public SetupToolbarButtonsTask(RnnToolBar toolBar, _Screen oldScreen, _Screen newScreen) {
@@ -313,7 +315,7 @@ public class RnnToolBar extends Toolbar {
             }
 
             // Remove prev screen buttons
-            if(mOldButtons == null) {
+            if (mOldButtons == null) {
                 menu.clear();
             } else {
                 for (_Button btn : mOldButtons) {

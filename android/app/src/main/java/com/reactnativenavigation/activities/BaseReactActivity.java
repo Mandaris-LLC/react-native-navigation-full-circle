@@ -119,7 +119,7 @@ public abstract class BaseReactActivity extends AppCompatActivity implements Def
 //        if (item.getItemId() == android.R.id.home) {
 //            onBackPressed();
 //        } else {
-//            String eventId = Button.getButtonEventId(item);
+//            String eventId = TitleBarButton.getButtonEventId(item);
 //            assert eventId != null;
 //
 //            WritableMap params = Arguments.createMap();

@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.animation.HideOnScrollAnimator;
-import com.reactnativenavigation.core.Button;
 
 import java.util.List;
 
@@ -23,7 +22,20 @@ public class TitleBar extends Toolbar {
     public TitleBar(Context context) {
         super(context);
         createMenu();
+    }
 
+    public void setButtons(List<TitleBarButton.Params> buttons) {
+        menu.clear();
+
+        for (int i = 0; i < buttons.size(); i++) {
+            final TitleBarButton button = new TitleBarButton(menu, actionMenuView, buttons.get(i));
+            // Add button in reverse order because in iOS index 0 starts at right
+            final int index = buttons.size() - i - 1;
+            button.addToMenu(index);
+        }
+    }
+
+    public void setupMenuButton() {
     }
 
     private void createMenu() {
@@ -33,17 +45,6 @@ public class TitleBar extends Toolbar {
         menuInflater.inflate(R.menu.stub, menu);
         addView(actionMenuView);
         // TODO: Maybe setSupportActionBar
-    }
-
-    public void setButtons(List<Button.Params> buttons) {
-        menu.clear();
-
-        for (int i = 0; i < buttons.size(); i++) {
-            final Button button = new Button(menu, actionMenuView, buttons.get(i));
-            // Add button in reverse order because in iOS index 0 starts at right
-            final int index = buttons.size() - i - 1;
-            button.addToMenu(index);
-        }
     }
 
     public void setHideOnScroll(boolean hideOnScroll) {
