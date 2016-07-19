@@ -93,7 +93,7 @@ function dismissInAppNotification(params = {}) {
   return platformSpecific.dismissInAppNotification(params);
 }
 
-module.exports = {
+export default {
   registerScreen,
   getRegisteredScreen,
   registerComponent,

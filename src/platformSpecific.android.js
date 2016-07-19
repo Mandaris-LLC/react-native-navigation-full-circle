@@ -7,18 +7,18 @@ import utils from './utils';
 const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
 function startSingleScreenApp(params) {
-  let screen = params.screen;
+  const screen = params.screen;
   if (!screen.screen) {
     console.error('startSingleScreenApp(params): screen must include a screen property');
     return;
   }
-
   addNavigatorParams(screen);
   addNavigatorButtons(screen);
   addNavigationStyleParams(screen);
   screen.passProps = params.passProps;
-  const drawer = setupDrawer(params.drawer);
-  //NativeModules.NavigationReactModule.startApp(screen, drawer);
+  //const drawer = setupDrawer(params.drawer);
+
+  NativeModules.NavigationReactModule.startApp(screen);
 }
 
 function startTabBasedApp(params) {

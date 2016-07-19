@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import { Navigation } from 'react-native-navigation';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import {Navigation} from 'react-native-navigation';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
 import * as appActions from './reducers/app/actions';
@@ -11,7 +11,7 @@ const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
 
 // screen related book keeping
-import { registerScreens } from './screens';
+import {registerScreens} from './screens';
 registerScreens(store, Provider);
 
 // notice that this is just a simple class, it's not a React component
@@ -23,7 +23,7 @@ export default class App {
   }
 
   onStoreUpdate() {
-    const { root } = store.getState().app;
+    const {root} = store.getState().app;
     // handle a root change
     // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
     if (this.currentRoot != root) {
