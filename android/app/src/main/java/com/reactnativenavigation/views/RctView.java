@@ -101,7 +101,7 @@ public class RctView {
 //        passProps.putString(_Screen.KEY_NAVIGATOR_ID, screen.navigatorId);
 //        passProps.putString(_Screen.KEY_NAVIGATOR_EVENT_ID, screen.navigatorEventId);
 //        if (screen.passedProps != null) {
-//            BridgeUtils.addMapToBundle(screen.passedProps, passProps);
+//            BundleConverter.addMapToBundle(screen.passedProps, passProps);
 //        }
 //        return passProps;
 //    }

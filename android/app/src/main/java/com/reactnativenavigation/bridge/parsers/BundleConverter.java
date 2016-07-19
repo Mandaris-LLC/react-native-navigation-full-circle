@@ -1,4 +1,4 @@
-package com.reactnativenavigation.bridge;
+package com.reactnativenavigation.bridge.parsers;
 
 import android.os.Bundle;
 
@@ -6,7 +6,7 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 
-public class BridgeUtils {
+public class BundleConverter {
     public static Bundle toBundle(ReadableMap map) {
         Bundle bundle = new Bundle();
         ReadableMapKeySetIterator it = map.keySetIterator();
