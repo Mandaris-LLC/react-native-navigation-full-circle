@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {AppRegistry, NativeModules} from 'react-native';
 import _ from 'lodash';
+import utils from './utils';
 
 import Navigation from './Navigation';
 
@@ -20,7 +21,7 @@ function startSingleScreenApp(params) {
   screen.passProps = params.passProps;
   //const drawer = setupDrawer(params.drawer);
 
-  params.screenId = screen.screen;
+  screen.screenId = screen.screen;
   newPlatformSpecific.startApp(params);
 }
 

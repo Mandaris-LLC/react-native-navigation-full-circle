@@ -1,7 +1,6 @@
 package com.exampleredux;
 
-import com.reactnativenavigation.controllers.NavigationActivity;
+import com.reactnativenavigation.controllers.SplashActivity;
 
-public class MainActivity extends NavigationActivity {
-
+public class MainActivity extends SplashActivity {
 }
