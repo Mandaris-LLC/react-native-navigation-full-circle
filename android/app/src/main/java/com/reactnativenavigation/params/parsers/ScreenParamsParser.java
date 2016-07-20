@@ -12,15 +12,14 @@ public class ScreenParamsParser {
     private static final String KEY_BUTTONS = "titleBarButtons";
     private static final String STYLE_PARAMS = "styleParams";
 
-    public ScreenParams parse(Bundle params) {
+    public static ScreenParams parse(Bundle params) {
         ScreenParams result = new ScreenParams();
         result.screenId = params.getString(KEY_SCREEN_ID);
         result.screenInstanceId = params.getString(KEY_SCREEN_INSTANCE_ID);
         result.passProps = params.getBundle(KEY_PROPS);
-        result.buttons = new TitleBarButtonParamsParser().parse(params.getBundle(KEY_BUTTONS));
+        result.buttons = TitleBarButtonParamsParser.parse(params.getBundle(KEY_BUTTONS));
         result.title = params.getString(KEY_TITLE);
-        result.styleParams = new ScreenStyleParamsParser().parse(params.getBundle(STYLE_PARAMS));
+        result.styleParams = ScreenStyleParamsParser.parse(params.getBundle(STYLE_PARAMS));
         return result;
     }
-
 }

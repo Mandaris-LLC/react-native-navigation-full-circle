@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TitleBarButtonParamsParser {
-    public List<TitleBarButtonParams> parse(Bundle params) {
+    public static List<TitleBarButtonParams> parse(Bundle params) {
         List<TitleBarButtonParams> result = new ArrayList<>();
         for (String key : params.keySet()) {
             result.add(parseItem(params.getBundle(key)));
@@ -17,7 +17,7 @@ public class TitleBarButtonParamsParser {
         return result;
     }
 
-    private TitleBarButtonParams parseItem(Bundle bundle) {
+    private static TitleBarButtonParams parseItem(Bundle bundle) {
         TitleBarButtonParams result = new TitleBarButtonParams();
         result.label = bundle.getString("label");
         result.icon = ImageLoader.loadImage(bundle.getString("icon"));
@@ -27,15 +27,15 @@ public class TitleBarButtonParamsParser {
         return result;
     }
 
-    private TitleBarButtonParams.ShowAsAction parseShowAsAction(String showAsAction) {
+    private static TitleBarButtonParams.ShowAsAction parseShowAsAction(String showAsAction) {
         switch (showAsAction) {
-            case "Always":
+            case "always":
                 return TitleBarButtonParams.ShowAsAction.Always;
-            case "Never":
+            case "never":
                 return TitleBarButtonParams.ShowAsAction.Never;
-            case "WithText":
+            case "withText":
                 return TitleBarButtonParams.ShowAsAction.WithText;
-            case "IfRoom":
+            case "ifRoom":
             default:
                 return TitleBarButtonParams.ShowAsAction.IfRoom;
         }

@@ -5,9 +5,9 @@ import android.os.Bundle;
 import com.reactnativenavigation.params.ActivityParams;
 
 public class ActivityParamsParser {
-    public ActivityParams parse(Bundle params) {
+    public static ActivityParams parse(Bundle params) {
         ActivityParams result = new ActivityParams();
-        result.screenParams = new ScreenParamsParser().parse(params);
+        result.screenParams = ScreenParamsParser.parse(params);
         return result;
     }
 }

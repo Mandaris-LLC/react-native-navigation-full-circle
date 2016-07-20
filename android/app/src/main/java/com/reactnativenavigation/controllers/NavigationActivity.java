@@ -56,7 +56,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityParams params = new ActivityParamsParser().parse(getIntent().getBundleExtra(PARAMS_BUNDLE));
+        ActivityParams params = ActivityParamsParser.parse(getIntent().getBundleExtra(PARAMS_BUNDLE));
 
         modalController = new ModalController();
         navigationReactInstance = new NavigationReactInstance(this);

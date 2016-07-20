@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.reactnativenavigation.params.ScreenStyleParams;
 
 public class ScreenStyleParamsParser {
-    public ScreenStyleParams parse(Bundle params) {
+    public static ScreenStyleParams parse(Bundle params) {
         ScreenStyleParams result = new ScreenStyleParams();
         result.statusBarColor = params.getInt("statusBarColor");
         result.topBarColor = params.getInt("topBarColor");
