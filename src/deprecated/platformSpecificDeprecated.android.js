@@ -164,8 +164,7 @@ function addNavigatorButtons(screen) {
   // Get image uri from image id
   const rightButtons = screen.rightButtons ? screen.rightButtons : screen.navigatorButtons ?
                                                                    screen.navigatorButtons.rightButtons : null;
-  screen.titleBarButtons = rightButtons;
-  
+
   if (rightButtons) {
     rightButtons.forEach(function(button) {
       if (button.icon) {
@@ -176,6 +175,8 @@ function addNavigatorButtons(screen) {
       }
     });
   }
+
+  screen.titleBarButtons = rightButtons;
 }
 
 function addNavigationStyleParams(screen) {
