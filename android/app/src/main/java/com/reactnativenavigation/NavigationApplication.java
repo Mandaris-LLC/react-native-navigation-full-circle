@@ -12,7 +12,7 @@ import com.reactnativenavigation.react.NavigationReactInstance;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class NavigationApplication extends Application implements NavigationReactInstance.ReactContextCreator {
+public abstract class NavigationApplication extends Application {
 
     public static NavigationApplication instance;
     private NavigationReactInstance navigationReactInstance;
@@ -23,7 +23,7 @@ public abstract class NavigationApplication extends Application implements Navig
         super.onCreate();
         instance = this;
         handler = new Handler(getMainLooper());
-        navigationReactInstance = new NavigationReactInstance(this);
+        navigationReactInstance = new NavigationReactInstance();
         navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
     }
 
@@ -35,7 +35,6 @@ public abstract class NavigationApplication extends Application implements Navig
         return navigationReactInstance;
     }
 
-    @Override
     public final List<ReactPackage> createReactPackages() {
         List<ReactPackage> list = Arrays.asList(
                 new MainReactPackage(),

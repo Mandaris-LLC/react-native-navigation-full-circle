@@ -11,26 +11,20 @@ import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEm
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.controllers.NavigationActivity;
 
-import java.util.List;
-
 public class NavigationReactInstance {
 
     private final ReactInstanceManager reactInstanceManager;
     private OnJsDevReloadListener onJsDevReloadListener;
 
-    public interface ReactContextCreator {
-        List<ReactPackage> createReactPackages();
-    }
-
     public interface OnJsDevReloadListener {
         void onJsDevReload();
     }
 
-    public NavigationReactInstance(final ReactContextCreator reactContextCreator) {
-        reactInstanceManager = createReactInstanceManager(reactContextCreator);
+    public NavigationReactInstance() {
+        reactInstanceManager = createReactInstanceManager();
 
         if (NavigationApplication.instance.isDebug()) {
-            replaceJsDevReloadListener(reactContextCreator);
+            replaceJsDevReloadListener();
         }
     }
 
@@ -75,7 +69,7 @@ public class NavigationReactInstance {
         reactInstanceManager.onHostDestroy();
     }
 
-    private void replaceJsDevReloadListener(final ReactContextCreator reactContextCreator) {
+    private void replaceJsDevReloadListener() {
         new JsDevReloadListenerReplacer(reactInstanceManager, new JsDevReloadListenerReplacer.Listener() {
             @Override
             public void onJsDevReload() {
@@ -85,7 +79,7 @@ public class NavigationReactInstance {
         }).replace();
     }
 
-    private ReactInstanceManager createReactInstanceManager(final ReactContextCreator reactContextCreator) {
+    private ReactInstanceManager createReactInstanceManager() {
         ReactInstanceManager.Builder builder = ReactInstanceManager.builder()
                 .setApplication(NavigationApplication.instance)
                 .setJSMainModuleName(NavigationApplication.instance.getJsEntryFileName())
@@ -93,7 +87,7 @@ public class NavigationReactInstance {
                 .setUseDeveloperSupport(NavigationApplication.instance.isDebug())
                 .setInitialLifecycleState(LifecycleState.BEFORE_RESUME);
 
-        for (ReactPackage reactPackage : reactContextCreator.createReactPackages()) {
+        for (ReactPackage reactPackage : NavigationApplication.instance.createReactPackages()) {
             builder.addPackage(reactPackage);
         }
 
