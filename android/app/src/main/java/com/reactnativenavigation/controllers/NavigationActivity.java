@@ -14,7 +14,6 @@ import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.parsers.ActivityParamsParser;
 import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.ScreenLayout;
-import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.NavigationReactInstance;
 import com.reactnativenavigation.react.RedboxPermission;
@@ -51,12 +50,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
 
         }
     };
+    private ActivityParams activityParams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityParams params = ActivityParamsParser.parse(getIntent().getBundleExtra(PARAMS_BUNDLE));
+        activityParams = ActivityParamsParser.parse(getIntent().getBundleExtra(PARAMS_BUNDLE));
 
         modalController = new ModalController();
         navigationReactInstance = new NavigationReactInstance(this);
@@ -66,8 +66,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
     }
 
     private void createLayout() {
-        ScreenParams screenParams = new ScreenParams();
-        ScreenLayout screenLayout = new ScreenLayout(this, navigationReactInstance.getReactInstanceManager(), screenParams);
+        ScreenLayout screenLayout = new ScreenLayout(this, navigationReactInstance.getReactInstanceManager(), activityParams.screenParams);
         setContentView(screenLayout);
     }
 
