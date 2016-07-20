@@ -74,7 +74,7 @@ public class ViewPagerAdapter {
 //
 //    @Override
 //    public CharSequence getPageTitle(int position) {
-//        return mScreenStacks.get(position).peek().label;
+//        return mScreenStacks.get(position).peek().tabLabel;
 //    }
 //
 //    @Override

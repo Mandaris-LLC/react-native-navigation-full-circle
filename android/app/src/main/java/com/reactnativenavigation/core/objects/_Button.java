@@ -8,7 +8,7 @@ public class _Button  {
 //
 //    private static final String KEY_ID = "id";
 //    private static final String KEY_TITLE = "title";
-//    private static final String KEY_ICON = "icon";
+//    private static final String KEY_ICON = "tabIcon";
 //    private static final String KEY_DISABLED = "disabled";
 //    private static final String KEY_SHOW_AS_ACTION = "showAsAction";
 //
@@ -34,7 +34,7 @@ public class _Button  {
 //    }
 //
 //    /**
-//     * @param dimensions The requested icon dimensions
+//     * @param dimensions The requested tabIcon dimensions
 //     */
 //    public Drawable getIcon(Context ctx, int dimensions) {
 //       return ImageLoader.getIcon(ctx, mIconSource, dimensions);

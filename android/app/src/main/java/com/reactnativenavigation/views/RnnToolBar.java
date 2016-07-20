@@ -45,13 +45,13 @@ public class RnnToolBar {
 //                R.string.drawer_close
 //        );
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
-//        setupDrawerIconAsync(drawerScreen.icon, screen);
+//        setupDrawerIconAsync(drawerScreen.tabIcon, screen);
 //
 //        return mDrawerToggle;
 //    }
 //
-//    public void setDrawerIcon(Drawable icon) {
-//        mDrawerIcon = icon;
+//    public void setDrawerIcon(Drawable tabIcon) {
+//        mDrawerIcon = tabIcon;
 //    }
 //
 //    public void showDrawer(boolean animated) {
@@ -293,13 +293,13 @@ public class RnnToolBar {
 //                MenuItem item = menu.add(Menu.NONE, button.getItemId(), size - i - 1, button.title);
 //                item.setShowAsAction(getMenuItemShowAction(button.showAsAction));
 //
-//                // Set button icon
+//                // Set button tabIcon
 //                if (button.hasIcon()) {
-//                    Drawable icon = icons.get(button.id);
+//                    Drawable tabIcon = icons.get(button.id);
 //                    if (mTintColor != null) {
-//                        ImageUtils.tint(icon, mTintColor);
+//                        ImageUtils.tint(tabIcon, mTintColor);
 //                    }
-//                    item.setIcon(icon);
+//                    item.setIcon(tabIcon);
 //                } else {
 //                    textButtons.add(button.title);
 //                }
@@ -312,7 +312,7 @@ public class RnnToolBar {
 //
 //            final RnnToolBar toolBar = mToolbarWR.get();
 //            if (toolBar != null) {
-//                // Tint overflow icon which appears when there's not enough space in Toolbar for icons
+//                // Tint overflow tabIcon which appears when there's not enough space in Toolbar for icons
 //                if (mTintColor != null) {
 //                    ImageUtils.tint(toolBar.getOverflowIcon(), mTintColor);
 //                }

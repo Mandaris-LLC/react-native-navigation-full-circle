@@ -37,7 +37,7 @@ public class BottomTabActivity  {
 //        setupTabs(getIntent().getExtras());
 //        setupPages(screens);
 //
-//        // Setup Toolbar after it's measured since icon height is dependent on Toolbar height
+//        // Setup Toolbar after it's measured since tabIcon height is dependent on Toolbar height
 //        mContentFrame.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -239,7 +239,7 @@ public class BottomTabActivity  {
 //        protected Map<_Screen, Drawable> doInBackground(Void... params) {
 //            Map<_Screen, Drawable> icons = new HashMap<>();
 //            for (_Screen screen : mScreens) {
-//                if (screen.icon != null) {
+//                if (screen.tabIcon != null) {
 //                    icons.put(screen, screen.getIcon(this.mActivity));
 //                }
 //            }
@@ -271,7 +271,7 @@ public class BottomTabActivity  {
 //            ScreenStack stack = new ScreenStack(this);
 //            stack.push(screen);
 //            mScreenStacks.add(stack);
-//            AHBottomNavigationItem item = new AHBottomNavigationItem(screen.label, icons.get(screen), Color.GRAY);
+//            AHBottomNavigationItem item = new AHBottomNavigationItem(screen.tabLabel, icons.get(screen), Color.GRAY);
 //            mBottomNavigation.addItem(item);
 //            mBottomNavigation.setOnTabSelectedListener(this);
 //        }

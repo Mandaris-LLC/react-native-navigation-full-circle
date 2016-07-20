@@ -8,15 +8,12 @@ import com.reactnativenavigation.views.TitleBarButton;
 import java.util.ArrayList;
 
 public class ScreenParams {
-    public String screenRegisteredId;
+    public String screenId;
+    public String screenInstanceId;
     public Bundle passProps;
     public ArrayList<TitleBarButton.Params> buttons;
     public String title;
-    public String label;
-    public String screenId;
-    public String screenInstanceId;
-    public String navigatorId;
-    public String navigatorEventId;
-    public Drawable icon;
+    public String tabLabel;
+    public Drawable tabIcon;
     public ScreenStyleParams styleParams;
 }

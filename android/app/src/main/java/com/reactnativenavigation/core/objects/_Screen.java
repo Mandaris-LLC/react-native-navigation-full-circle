@@ -8,11 +8,11 @@ public class _Screen {
 //
 //    private static final String KEY_TITLE = "title";
 //    private static final String KEY_SCREEN = "screen";
-//    private static final String KEY_LABEL = "label";
+//    private static final String KEY_LABEL = "tabLabel";
 //    public static final String KEY_SCREEN_INSTANCE_ID = "screenInstanceID";
 //    public static final String KEY_NAVIGATOR_ID = "navigatorID";
 //    public static final String KEY_NAVIGATOR_EVENT_ID = "navigatorEventID";
-//    private static final String KEY_ICON = "icon";
+//    private static final String KEY_ICON = "tabIcon";
 //    private static final String KEY_NAVIGATOR_BUTTONS = "navigatorButtons";
 //    private static final String KEY_RIGHT_BUTTONS = "rightButtons";
 //    private static final String KEY_TOOL_BAR_STYLE = "navigatorStyle";
@@ -31,12 +31,12 @@ public class _Screen {
 //    private static final String KEY_PROPS = "passProps";
 //
 //    public String title;
-//    public final String label;
+//    public final String tabLabel;
 //    public final String screenId;
 //    public final String screenInstanceId;
 //    public final String navigatorId;
 //    public final String navigatorEventId;
-//    public final String icon;
+//    public final String tabIcon;
 //    public ArrayList<_Button> buttons;
 //    public final boolean backButtonHidden;
 //    public boolean bottomTabsHiddenOnScroll;
@@ -61,12 +61,12 @@ public class _Screen {
 //
 //    public _Screen(ReadableMap screen) {
 //        title = getString(screen, KEY_TITLE);
-//        label = getString(screen, KEY_LABEL);
+//        tabLabel = getString(screen, KEY_LABEL);
 //        screenId = getString(screen, KEY_SCREEN);
 //        screenInstanceId = getString(screen, KEY_SCREEN_INSTANCE_ID);
 //        navigatorId = getString(screen, KEY_NAVIGATOR_ID);
 //        navigatorEventId = getString(screen, KEY_NAVIGATOR_EVENT_ID);
-//        icon = getString(screen, KEY_ICON);
+//        tabIcon = getString(screen, KEY_ICON);
 //        if(screen.hasKey(KEY_PROPS)) {
 //            passedProps = ((ReadableNativeMap) screen.getMap(KEY_PROPS)).toHashMap();
 //        }
@@ -104,7 +104,7 @@ public class _Screen {
 //    }
 //
 //    public Drawable getIcon(Context ctx) {
-//        return ImageLoader.getIcon(ctx, icon);
+//        return ImageLoader.getIcon(ctx, tabIcon);
 //    }
 //
 //    public void setToolbarStyle(ReadableMap screen) {

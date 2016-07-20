@@ -29,7 +29,7 @@ public class SingleScreenActivity {
 //        contentFrame.addView(mScreenStack);
 //        mScreenStack.push(screen);
 //
-//        // Setup Toolbar after it's measured since icon height is dependent on Toolbar height
+//        // Setup Toolbar after it's measured since tabIcon height is dependent on Toolbar height
 //        contentFrame.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -101,7 +101,7 @@ public class SingleScreenActivity {
 //    @Override
 //    public void showFAB(ReadableMap params) {
 ////        FloatingActionButton fab = new FloatingActionButton(this);
-////        fab.setImageDrawable(IconUtils.getIcon(this, params.getString("icon")));
+////        fab.setImageDrawable(IconUtils.getIcon(this, params.getString("tabIcon")));
 ////        fab.setBackgroundColor(Color.parseColor(params.getString("backgroundColor")));
 ////        fab.setImageResource(R.drawable.notification_background);
 ////        CoordinatorLayout content = (CoordinatorLayout) findViewById(R.id.contentFrame);
