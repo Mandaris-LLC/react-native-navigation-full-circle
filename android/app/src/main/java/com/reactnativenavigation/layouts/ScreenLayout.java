@@ -5,36 +5,28 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.view.Window;
 import android.widget.LinearLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.ScreenStyleParams;
-import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.ScrollDirectionListener;
-
-import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged {
 
-    private final String screenId;
-    private final Bundle passProps;
-    private final List<TitleBarButtonParams> buttons;
+    private final ScreenParams screenParams;
     private ContentView contentView;
     private TopBar topBar;
 
     public ScreenLayout(Context context, ScreenParams screenParams) {
         super(context);
-        screenId = screenParams.screenId;
-        passProps = screenParams.passProps;
-        buttons = screenParams.buttons;
+        this.screenParams = screenParams;
         setOrientation(VERTICAL);
 
         createViews();
@@ -43,7 +35,8 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
 
     private void createViews() {
         addTopBar();
-        topBar.addTitleBarAndSetButtons(buttons);
+        topBar.addTitleBarAndSetButtons(screenParams.buttons);
+        topBar.setTitle(screenParams.title);
         addContentView();
     }
 
@@ -53,7 +46,7 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     }
 
     private void addContentView() {
-        contentView = new ContentView(getContext(), screenId, passProps, this);
+        contentView = new ContentView(getContext(), screenParams.screenId, screenParams.passProps, this);
         addView(contentView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
         contentView.init();
     }

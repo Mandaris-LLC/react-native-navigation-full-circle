@@ -19,10 +19,15 @@ public class TopBar extends AppBarLayout {
 
     public void addTitleBarAndSetButtons(List<TitleBarButtonParams> buttons) {
         titleBar = new TitleBar(getContext());
+        addView(titleBar);
         titleBar.setButtons(buttons);
     }
 
     public void setTitleBarVisibility(boolean isHidden) {
         titleBar.setVisibility(isHidden ? GONE : VISIBLE);
+    }
+
+    public void setTitle(String title) {
+        titleBar.setTitle(title);
     }
 }
