@@ -10,7 +10,6 @@ import android.support.annotation.ColorInt;
 import android.view.Window;
 import android.widget.LinearLayout;
 
-import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -25,16 +24,14 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged {
 
-    private final ReactInstanceManager reactInstanceManager;
     private final String screenId;
     private final Bundle passProps;
     private final List<TitleBarButtonParams> buttons;
     private ContentView contentView;
     private TopBar topBar;
 
-    public ScreenLayout(Context context, ReactInstanceManager reactInstanceManager, ScreenParams screenParams) {
+    public ScreenLayout(Context context, ScreenParams screenParams) {
         super(context);
-        this.reactInstanceManager = reactInstanceManager;
         screenId = screenParams.screenId;
         passProps = screenParams.passProps;
         buttons = screenParams.buttons;
@@ -56,7 +53,7 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     }
 
     private void addContentView() {
-        contentView = new ContentView(getContext(), reactInstanceManager, screenId, passProps, this);
+        contentView = new ContentView(getContext(), screenId, passProps, this);
         addView(contentView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 

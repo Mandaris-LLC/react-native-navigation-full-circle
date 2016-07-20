@@ -26,7 +26,6 @@ public abstract class NavigationApplication extends Application implements Navig
         navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
     }
 
-
     public Handler getMainHandler() {
         return handler;
     }

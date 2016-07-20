@@ -1,6 +1,13 @@
 package com.reactnativenavigation.controllers;
 
 public class ModalController {
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    public void onDestroy() {
+
+    }
 
 //    private final Stack<RnnModal> modals = new Stack<>();
 //
