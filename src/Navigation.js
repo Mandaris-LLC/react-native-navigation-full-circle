@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppRegistry} from 'react-native';
-import platformSpecific from './platformSpecificDeprecated';
+import platformSpecific from './deprecated/platformSpecificDeprecated';
 import Screen from './Screen';
 
 const registeredScreens = {};
