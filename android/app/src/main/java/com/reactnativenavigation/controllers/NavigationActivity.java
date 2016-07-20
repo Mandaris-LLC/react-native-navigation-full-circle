@@ -10,6 +10,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.bridge.NavigationReactPackage;
+import com.reactnativenavigation.bridge.parsers.ActivityParamsParser;
 import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.ScreenLayout;
 import com.reactnativenavigation.react.JsDevReloadHandler;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity implements NavigationReactInstance.ReactContextCreator, DefaultHardwareBackBtnHandler {
 
+    public static final String PARAMS_BUNDLE = "PARAMS_BUNDLE";
     /**
      * Although we start multiple activities, we make sure to pass Intent.CLEAR_TASK | Intent.NEW_TASK
      * So that we actually have only 1 instance of the activity running at one time.
@@ -51,6 +53,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActivityParams params = new ActivityParamsParser().parse(getIntent().getBundleExtra(PARAMS_BUNDLE));
+
         modalController = new ModalController();
         navigationReactInstance = new NavigationReactInstance(this);
         navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();

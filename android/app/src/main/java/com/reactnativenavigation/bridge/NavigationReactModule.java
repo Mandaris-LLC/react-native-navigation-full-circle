@@ -8,6 +8,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.bridge.parsers.BundleConverter;
 import com.reactnativenavigation.controllers.NavigationActivity;
 
 /**
@@ -38,9 +39,9 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
         Intent intent = new Intent(context, NavigationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        Bundle extras = new Bundle();
+        Bundle paramsBundle = BundleConverter.toBundle(params);
 
-        intent.putExtras(extras);
+        intent.putExtra(NavigationActivity.PARAMS_BUNDLE, paramsBundle);
         context.startActivity(intent);
     }
 

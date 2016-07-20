@@ -1,6 +1,5 @@
 package com.reactnativenavigation.controllers;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.reactnativenavigation.views.TitleBarButton;
@@ -13,7 +12,7 @@ public class ScreenParams {
     public Bundle passProps;
     public ArrayList<TitleBarButton.Params> buttons;
     public String title;
-    public String tabLabel;
-    public Drawable tabIcon;
     public ScreenStyleParams styleParams;
+    //    public String tabLabel; TODO when tabs are supported move to TabParams
+    //    public Drawable tabIcon;
 }

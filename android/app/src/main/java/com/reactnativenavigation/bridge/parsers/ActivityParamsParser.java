@@ -1,11 +1,13 @@
 package com.reactnativenavigation.bridge.parsers;
 
-import com.facebook.react.bridge.ReadableMap;
+import android.os.Bundle;
+
 import com.reactnativenavigation.controllers.ActivityParams;
 
-public class ActivityParamsParser implements ParamsParser<ActivityParams> {
-    @Override
-    public ActivityParams parse(ReadableMap params) {
-        return null;
+public class ActivityParamsParser {
+    public ActivityParams parse(Bundle params) {
+        ActivityParams result = new ActivityParams();
+        result.screenParams = new ScreenParamsParser().parse(params);
+        return result;
     }
 }

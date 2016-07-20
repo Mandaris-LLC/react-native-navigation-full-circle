@@ -1,16 +1,15 @@
 package com.reactnativenavigation.bridge.parsers;
 
-import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.ReadableNativeMap;
+import android.os.Bundle;
+
 import com.reactnativenavigation.controllers.ScreenParams;
 
-public class ScreenParamsParser implements ParamsParser<ScreenParams> {
+public class ScreenParamsParser {
     private static final String KEY_TITLE = "title";
-    private static final String KEY_SCREEN = "screen";
-    private static final String KEY_LABEL = "tabLabel";
+    private static final String KEY_SCREEN_ID = "screenId";
     private static final String KEY_SCREEN_INSTANCE_ID = "screenInstanceID";
-    private static final String KEY_NAVIGATOR_ID = "navigatorID";
-    private static final String KEY_NAVIGATOR_EVENT_ID = "navigatorEventID";
+    private static final String KEY_PROPS = "passProps";
+    private static final String KEY_LABEL = "tabLabel";
     private static final String KEY_ICON = "tabIcon";
     private static final String KEY_NAVIGATOR_BUTTONS = "navigatorButtons";
     private static final String KEY_RIGHT_BUTTONS = "rightButtons";
@@ -27,23 +26,15 @@ public class ScreenParamsParser implements ParamsParser<ScreenParams> {
     private static final String KEY_TAB_INDICATOR_COLOR = "tabIndicatorColor";
     private static final String KEY_BOTTOM_TABS_HIDDEN = "tabBarHidden";
     private static final String KEY_BOTTOM_TABS_HIDDEN_ON_SCROLL = "bottomTabsHiddenOnScroll";
-    private static final String KEY_PROPS = "passProps";
 
-    @Override
-    public ScreenParams parse(ReadableMap params) {
+    public ScreenParams parse(Bundle params) {
         ScreenParams result = new ScreenParams();
-        result.title = params.getString(KEY_TITLE);
-        result.tabLabel = params.getString(KEY_LABEL);
-        result.screenId = params.getString(KEY_SCREEN);
+        result.screenId = params.getString(KEY_SCREEN_ID);
         result.screenInstanceId = params.getString(KEY_SCREEN_INSTANCE_ID);
-        result.navigatorId = params.getString(KEY_NAVIGATOR_ID);
-        result.navigatorEventId = params.getString(KEY_NAVIGATOR_EVENT_ID);
-        result.tabIcon = getString(KEY_ICON);
-        if (screen.hasKey(KEY_PROPS)) {
-            passedProps = ((ReadableNativeMap) screen.getMap(KEY_PROPS)).toHashMap();
-        }
-        result.buttons = getButtons(screen);
-        result.backButtonHidden = getBoolean(screen, KEY_BACK_BUTTON_HIDDEN);
+        result.passProps = params.getBundle(KEY_PROPS);
+        result.buttons = null;
+        result.title = params.getString(KEY_TITLE);
+        result.styleParams = null;
         return result;
     }
 
