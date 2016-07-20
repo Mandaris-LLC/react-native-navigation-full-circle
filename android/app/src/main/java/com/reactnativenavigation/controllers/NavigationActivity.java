@@ -23,7 +23,8 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
      * Although we start multiple activities, we make sure to pass Intent.CLEAR_TASK | Intent.NEW_TASK
      * So that we actually have only 1 instance of the activity running at one time.
      * We hold the currentActivity (resume->pause) so we know when we need to destroy the javascript context.
-     * This is somewhat weird, and in the future either fully support multiple activities, OR a single activity with changing contentView ala ReactNative impl.
+     * This is somewhat weird, and in the future either fully support multiple activities,
+     * OR a single activity with changing contentView similar to ReactNative impl.
      */
     private static Activity currentActivity;
     private ActivityParams activityParams;
