@@ -55,6 +55,7 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     private void addContentView() {
         contentView = new ContentView(getContext(), screenId, passProps, this);
         addView(contentView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        contentView.init();
     }
 
     private void setStyle(ScreenStyleParams styleParams) {

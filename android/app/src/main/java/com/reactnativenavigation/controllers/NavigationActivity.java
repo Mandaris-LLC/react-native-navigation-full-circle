@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.NavigationApplication;
-import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.ScreenLayout;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.parsers.ActivityParamsParser;
@@ -28,22 +27,6 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     private static Activity currentActivity;
     private ActivityParams activityParams;
     private ModalController modalController;
-    private Layout layout = new Layout() {
-        @Override
-        public boolean onBackPressed() {
-            return false;
-        }
-
-        @Override
-        public void onDestroy() {
-
-        }
-
-        @Override
-        public void removeAllReactViews() {
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +62,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     protected void onDestroy() {
         modalController.onDestroy();
-        layout.onDestroy();
+//        layout.onDestroy();
         super.onDestroy();
         if (currentActivity == null || currentActivity.isFinishing()) {
             getNavigationReactInstance().onHostDestroy();
@@ -88,7 +71,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     @Override
     public void onJsDevReload() {
-        layout.removeAllReactViews();
+//        layout.removeAllReactViews();
     }
 
     @Override
@@ -101,9 +84,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         if (modalController.onBackPressed()) {
             return;
         }
-        if (layout.onBackPressed()) {
-            return;
-        }
+//        if (layout.onBackPressed()) {
+//            return;
+//        }
         getNavigationReactInstance().onBackPressed();
     }
 
