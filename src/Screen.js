@@ -4,7 +4,7 @@ import {
   DeviceEventEmitter,
   Platform
 } from 'react-native';
-import platformSpecific from './platformSpecific';
+import platformSpecific from './platformSpecificDeprecated';
 import Navigation from './Navigation';
 
 const _allNavigatorEventHandlers = {};
