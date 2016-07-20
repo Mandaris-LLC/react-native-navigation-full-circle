@@ -8,7 +8,7 @@ import com.reactnativenavigation.views.TitleBarButton;
 import java.util.ArrayList;
 
 public class ScreenParams {
-    public String moduleName;
+    public String screenRegisteredId;
     public Bundle passProps;
     public ArrayList<TitleBarButton.Params> buttons;
     public String title;
