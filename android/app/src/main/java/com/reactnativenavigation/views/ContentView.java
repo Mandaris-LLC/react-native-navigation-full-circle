@@ -11,20 +11,20 @@ import com.reactnativenavigation.react.ReactViewHacks;
 public class ContentView extends ReactRootView {
 
     private final ReactInstanceManager reactInstanceManager;
-    private final String moduleName;
+    private final String screenId;
     private final Bundle passProps;
     private final ScrollDirectionListener.OnScrollChanged scrollListener;
 
-    public ContentView(Context context, ReactInstanceManager reactInstanceManager, String moduleName, Bundle passProps, ScrollDirectionListener.OnScrollChanged scrollListener) {
+    public ContentView(Context context, ReactInstanceManager reactInstanceManager, String screenId, Bundle passProps, ScrollDirectionListener.OnScrollChanged scrollListener) {
         super(context);
         this.reactInstanceManager = reactInstanceManager;
-        this.moduleName = moduleName;
+        this.screenId = screenId;
         this.passProps = passProps;
         this.scrollListener = scrollListener;
     }
 
     public void init() {
-        startReactApplication(reactInstanceManager, moduleName, passProps);
+        startReactApplication(reactInstanceManager, screenId, passProps);
         new ScrollViewAttacher(this, scrollListener).attach();
     }
 

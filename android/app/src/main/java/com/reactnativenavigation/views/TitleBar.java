@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.animation.HideOnScrollAnimator;
+import com.reactnativenavigation.params.TitleBarButtonParams;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class TitleBar extends Toolbar {
         createMenu();
     }
 
-    public void setButtons(List<TitleBarButton.Params> buttons) {
+    public void setButtons(List<TitleBarButtonParams> buttons) {
         menu.clear();
 
         for (int i = 0; i < buttons.size(); i++) {
