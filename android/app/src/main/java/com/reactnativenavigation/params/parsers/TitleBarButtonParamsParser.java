@@ -21,7 +21,7 @@ public class TitleBarButtonParamsParser {
         TitleBarButtonParams result = new TitleBarButtonParams();
         result.label = bundle.getString("label");
         result.icon = ImageLoader.loadImage(bundle.getString("icon"));
-        result.color = bundle.getInt("color");
+        result.color = ColorParser.parse(bundle.getString("color"));
         result.showAsAction = parseShowAsAction(bundle.getString("showAsAction"));
         result.enabled = bundle.getBoolean("enabled");
         return result;
