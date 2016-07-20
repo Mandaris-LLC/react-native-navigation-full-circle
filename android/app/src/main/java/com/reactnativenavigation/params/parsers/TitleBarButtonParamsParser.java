@@ -11,6 +11,10 @@ import java.util.List;
 public class TitleBarButtonParamsParser {
     public static List<TitleBarButtonParams> parse(Bundle params) {
         List<TitleBarButtonParams> result = new ArrayList<>();
+        if (params == null) {
+            return result;
+        }
+
         for (String key : params.keySet()) {
             result.add(parseItem(params.getBundle(key)));
         }

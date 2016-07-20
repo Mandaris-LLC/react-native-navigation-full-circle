@@ -7,6 +7,9 @@ import android.support.annotation.ColorInt;
 public class ColorParser {
     @ColorInt
     public static int parse(String str) {
+        if (str == null) {
+            return -1;
+        }
         return Color.parseColor(str);
     }
 }
