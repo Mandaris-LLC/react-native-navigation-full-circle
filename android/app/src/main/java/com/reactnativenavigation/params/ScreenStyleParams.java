@@ -1,4 +1,4 @@
-package com.reactnativenavigation.controllers;
+package com.reactnativenavigation.params;
 
 import android.support.annotation.ColorInt;
 

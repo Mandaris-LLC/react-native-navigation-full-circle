@@ -8,7 +8,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationApplication;
-import com.reactnativenavigation.bridge.parsers.BundleConverter;
 import com.reactnativenavigation.controllers.NavigationActivity;
 
 /**

@@ -1,8 +1,8 @@
-package com.reactnativenavigation.bridge.parsers;
+package com.reactnativenavigation.params.parsers;
 
 import android.os.Bundle;
 
-import com.reactnativenavigation.controllers.ActivityParams;
+import com.reactnativenavigation.params.ActivityParams;
 
 public class ActivityParamsParser {
     public ActivityParams parse(Bundle params) {

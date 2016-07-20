@@ -1,16 +1,14 @@
-package com.reactnativenavigation.controllers;
+package com.reactnativenavigation.params;
 
 import android.os.Bundle;
 
-import com.reactnativenavigation.views.TitleBarButton;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class ScreenParams {
     public String screenId;
     public String screenInstanceId;
     public Bundle passProps;
-    public ArrayList<TitleBarButton.Params> buttons;
+    public List<TitleBarButtonParams> buttons;
     public String title;
     public ScreenStyleParams styleParams;
     //    public String tabLabel; TODO when tabs are supported move to TabParams

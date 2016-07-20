@@ -1,4 +1,4 @@
-package com.reactnativenavigation.bridge.parsers;
+package com.reactnativenavigation.bridge;
 
 import android.os.Bundle;
 

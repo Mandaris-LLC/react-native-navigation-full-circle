@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.controllers.ScreenParams;
-import com.reactnativenavigation.controllers.ScreenStyleParams;
+import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.ScrollDirectionListener;
