@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import platformSpecific from './deprecated/platformSpecificDeprecated';
 import Navigation from './Navigation';
+import _ from 'lodash';
 
 const _allNavigatorEventHandlers = {};
 
@@ -137,9 +138,11 @@ export default class Screen extends Component {
 
   constructor(props) {
     super(props);
-    if (props.navigatorID) {
-      this.navigator = new Navigator(props.navigatorID, props.navigatorEventID);
+    // TODO: remove this shit
+    if (!props.navigatorID) {
+      props.navigatorID = _.uniqueId('navigatorId');
     }
+    this.navigator = new Navigator(props.navigatorID, props.navigatorEventID);
   }
 
   componentWillUnmount() {

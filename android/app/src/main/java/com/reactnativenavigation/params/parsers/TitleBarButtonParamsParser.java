@@ -8,7 +8,7 @@ import com.reactnativenavigation.react.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TitleBarButtonParamsParser {
+public class TitleBarButtonParamsParser extends Parser {
     public static List<TitleBarButtonParams> parse(Bundle params) {
         List<TitleBarButtonParams> result = new ArrayList<>();
         if (params == null) {
@@ -23,15 +23,21 @@ public class TitleBarButtonParamsParser {
 
     private static TitleBarButtonParams parseItem(Bundle bundle) {
         TitleBarButtonParams result = new TitleBarButtonParams();
-        result.label = bundle.getString("label");
-        result.icon = ImageLoader.loadImage(bundle.getString("icon"));
+        result.label = bundle.getString("title");
+        if (hasKey(bundle,"icon")) {
+            result.icon = ImageLoader.loadImage(bundle.getString("icon"));
+        }
         result.color = ColorParser.parse(bundle.getString("color"));
         result.showAsAction = parseShowAsAction(bundle.getString("showAsAction"));
-        result.enabled = bundle.getBoolean("enabled");
+        result.enabled = bundle.getBoolean("enabled", true);
         return result;
     }
 
     private static TitleBarButtonParams.ShowAsAction parseShowAsAction(String showAsAction) {
+        if (showAsAction == null) {
+            return TitleBarButtonParams.ShowAsAction.IfRoom;
+        }
+
         switch (showAsAction) {
             case "always":
                 return TitleBarButtonParams.ShowAsAction.Always;
