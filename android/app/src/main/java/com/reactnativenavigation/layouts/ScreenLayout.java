@@ -64,7 +64,6 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
         setNavigationBarColor(styleParams.navigationBarColor);
         topBar.setTitleBarVisibility(styleParams.titleBarHidden);
         topBar.setVisibility(styleParams.topBarHidden ? GONE : VISIBLE);
-
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

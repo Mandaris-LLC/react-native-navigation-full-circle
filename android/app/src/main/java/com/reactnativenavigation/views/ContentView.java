@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.ReactViewHacks;
@@ -22,7 +23,8 @@ public class ContentView extends ReactRootView {
     }
 
     public void init() {
-        startReactApplication(NavigationApplication.instance.getNavigationReactInstance().getReactInstanceManager(), screenId, passProps);
+        ReactInstanceManager react = NavigationApplication.instance.getNavigationReactInstance().getReactInstanceManager();
+        startReactApplication(react, screenId, passProps);
         new ScrollViewAttacher(this, scrollListener).attach();
     }
 

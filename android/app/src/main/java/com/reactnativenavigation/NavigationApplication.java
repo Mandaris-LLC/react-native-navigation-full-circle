@@ -2,6 +2,7 @@ package com.reactnativenavigation;
 
 import android.app.Application;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -39,11 +40,34 @@ public abstract class NavigationApplication extends Application implements Navig
         List<ReactPackage> list = Arrays.asList(
                 new MainReactPackage(),
                 new NavigationReactPackage());
-        list.addAll(createAdditionalReactPackages());
+        addAdditionalReactPackagesIfNeeded(list);
         return list;
+    }
+
+    private void addAdditionalReactPackagesIfNeeded(List<ReactPackage> list) {
+        List<ReactPackage> additionalReactPackages = createAdditionalReactPackages();
+
+        for (ReactPackage reactPackage : additionalReactPackages) {
+            if (reactPackage instanceof MainReactPackage)
+                throw new RuntimeException("Do not create a new MainReactPackage. This is created for you.");
+            if (reactPackage instanceof NavigationReactPackage)
+                throw new RuntimeException("Do not create a new NavigationReactPackage. This is created for you.");
+        }
+
+        list.addAll(additionalReactPackages);
+    }
+
+    public String getJsEntryFileName() {
+        return "index.android";
+    }
+
+    public String getBundleAssetName() {
+        return "index.android.bundle";
     }
 
     public abstract boolean isDebug();
 
+    @NonNull
     public abstract List<ReactPackage> createAdditionalReactPackages();
+
 }

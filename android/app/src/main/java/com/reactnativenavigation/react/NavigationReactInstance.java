@@ -88,8 +88,8 @@ public class NavigationReactInstance {
     private ReactInstanceManager createReactInstanceManager(final ReactContextCreator reactContextCreator) {
         ReactInstanceManager.Builder builder = ReactInstanceManager.builder()
                 .setApplication(NavigationApplication.instance)
-                .setJSMainModuleName("index.android")
-                .setBundleAssetName("index.android.bundle")
+                .setJSMainModuleName(NavigationApplication.instance.getJsEntryFileName())
+                .setBundleAssetName(NavigationApplication.instance.getBundleAssetName())
                 .setUseDeveloperSupport(NavigationApplication.instance.isDebug())
                 .setInitialLifecycleState(LifecycleState.BEFORE_RESUME);
 
