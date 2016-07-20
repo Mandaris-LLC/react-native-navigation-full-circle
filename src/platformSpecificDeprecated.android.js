@@ -1,3 +1,11 @@
+import React, {Component} from 'react';
+import {AppRegistry, NativeModules} from 'react-native';
+import _ from 'lodash';
+
+import Navigation from './Navigation';
+
+const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
+
 import * as newPlatformSpecific from './platformSpecific';
 
 function startSingleScreenApp(params) {
