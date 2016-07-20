@@ -1,6 +1,5 @@
 package com.reactnativenavigation.react;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import com.facebook.react.LifecycleState;
@@ -10,16 +9,20 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.controllers.NavigationActivity;
 
 import java.util.List;
 
 public class NavigationReactInstance {
 
     private final ReactInstanceManager reactInstanceManager;
+    private OnJsDevReloadListener onJsDevReloadListener;
 
     public interface ReactContextCreator {
         List<ReactPackage> createReactPackages();
+    }
 
+    public interface OnJsDevReloadListener {
         void onJsDevReload();
     }
 
@@ -58,11 +61,13 @@ public class NavigationReactInstance {
         reactInstanceManager.onBackPressed();
     }
 
-    public void onResume(Activity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler) {
+    public void onResume(NavigationActivity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler, OnJsDevReloadListener onJsDevReloadListener) {
+        this.onJsDevReloadListener = onJsDevReloadListener;
         reactInstanceManager.onHostResume(activity, defaultHardwareBackBtnHandler);
     }
 
     public void onPause() {
+        this.onJsDevReloadListener = null;
         reactInstanceManager.onHostPause();
     }
 
@@ -74,7 +79,8 @@ public class NavigationReactInstance {
         new JsDevReloadListenerReplacer(reactInstanceManager, new JsDevReloadListenerReplacer.Listener() {
             @Override
             public void onJsDevReload() {
-                reactContextCreator.onJsDevReload();
+                if (onJsDevReloadListener != null)
+                    onJsDevReloadListener.onJsDevReload();
             }
         }).replace();
     }

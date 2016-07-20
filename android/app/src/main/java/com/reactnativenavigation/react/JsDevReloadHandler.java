@@ -12,7 +12,12 @@ public class JsDevReloadHandler {
     private static boolean shouldRefreshOnRR = false;
 
     //TODO yuck.
-    public static boolean onKeyUp(ReactInstanceManager reactInstanceManager, View currentFocus, int keyCode) {
+    public static boolean onKeyUp(View currentFocus, int keyCode) {
+        ReactInstanceManager reactInstanceManager = NavigationApplication
+                .instance
+                .getNavigationReactInstance()
+                .getReactInstanceManager();
+
         if (reactInstanceManager != null &&
                 reactInstanceManager.getDevSupportManager().getDevSupportEnabled()) {
             if (keyCode == KeyEvent.KEYCODE_MENU) {
