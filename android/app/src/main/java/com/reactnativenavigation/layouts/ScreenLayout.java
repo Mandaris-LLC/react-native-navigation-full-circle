@@ -17,7 +17,7 @@ import com.reactnativenavigation.views.ScrollDirectionListener;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged {
+public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged, Layout {
 
     private final ScreenParams screenParams;
     private ContentView contentView;
@@ -101,5 +101,20 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
 
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
+    public void onDestroy() {
+
+    }
+
+    @Override
+    public void removeAllReactViews() {
+        contentView.removeFromParentAndUnmount();
     }
 }

@@ -29,6 +29,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     private static Activity currentActivity;
     private ActivityParams activityParams;
     private ModalController modalController;
+    private SingleScreenLayout singleScreenLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     private void createLayout() {
-        SingleScreenLayout singleScreenLayout = new SingleScreenLayout(this, activityParams.screenParams);
+        singleScreenLayout = new SingleScreenLayout(this, activityParams.screenParams);
         singleScreenLayout.createLayout();
         setContentView(singleScreenLayout);
     }
@@ -74,7 +75,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     @Override
     public void onJsDevReload() {
-//        layout.removeAllReactViews();
+        singleScreenLayout.removeAllReactViews();
     }
 
     @Override
