@@ -1,7 +1,6 @@
 package com.reactnativenavigation.params;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
 import android.view.MenuItem;
 
 public class TitleBarButtonParams {
@@ -21,8 +20,7 @@ public class TitleBarButtonParams {
     // Todo: add id for click listener
     public String label;
     public Drawable icon;
-    @ColorInt
-    public int color;
+    public ScreenStyleParams.Color color;
     public ShowAsAction showAsAction;
     public boolean enabled = true;
 }

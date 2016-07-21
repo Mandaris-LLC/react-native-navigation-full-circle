@@ -53,7 +53,7 @@ public class TitleBarButton {
     }
 
     private void setIconColor() {
-        ImageUtils.tint(buttonParams.icon, buttonParams.color);
+        ImageUtils.tint(buttonParams.icon, buttonParams.color.getColor());
     }
 
     private void setTextColor() {
@@ -75,7 +75,7 @@ public class TitleBarButton {
 
     private void setTextColorForFoundButtonViews(ArrayList<View> outViews) {
         for (View button : outViews) {
-            ((TextView) button).setTextColor(buttonParams.color);
+            ((TextView) button).setTextColor(buttonParams.color.getColor());
         }
     }
 
@@ -84,7 +84,6 @@ public class TitleBarButton {
     }
 
     private boolean hasColor() {
-        return buttonParams.color > 0;
+        return buttonParams.color.hasColor();
     }
-
 }

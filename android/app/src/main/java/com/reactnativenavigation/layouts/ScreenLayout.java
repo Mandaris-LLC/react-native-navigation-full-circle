@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.view.Window;
 import android.widget.LinearLayout;
 
@@ -64,36 +63,36 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setStatusBarColor(@ColorInt int statusBarColor) {
+    private void setStatusBarColor(ScreenStyleParams.Color statusBarColor) {
         if (!SdkSupports.lollipop()) {
             return;
         }
 
         final Activity context = (Activity) getContext();
         final Window window = context.getWindow();
-        if (statusBarColor > 0) {
-            window.setStatusBarColor(statusBarColor);
+        if (statusBarColor.hasColor()) {
+            window.setStatusBarColor(statusBarColor.getColor());
         } else {
             window.setStatusBarColor(Color.BLACK);
         }
     }
 
-    private void setTopBarColor(@ColorInt int topBarColor) {
-        if (topBarColor > 0) {
-            topBar.setBackgroundColor(topBarColor);
+    private void setTopBarColor(ScreenStyleParams.Color topBarColor) {
+        if (topBarColor.hasColor()) {
+            topBar.setBackgroundColor(topBarColor.getColor());
         }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setNavigationBarColor(int navigationBarColor) {
+    public void setNavigationBarColor(ScreenStyleParams.Color navigationBarColor) {
         if (!SdkSupports.lollipop()) {
             return;
         }
 
         final Activity context = (Activity) getContext();
         final Window window = context.getWindow();
-        if (navigationBarColor > 0) {
-            window.setNavigationBarColor(navigationBarColor);
+        if (navigationBarColor.hasColor()) {
+            window.setNavigationBarColor(navigationBarColor.getColor());
         } else {
             window.setNavigationBarColor(Color.BLACK);
         }
