@@ -3,6 +3,7 @@ package com.reactnativenavigation.views;
 import android.content.Context;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.reactnativenavigation.animation.HideOnScrollAnimator;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -18,12 +19,12 @@ public class TitleBar extends Toolbar {
         super(context);
     }
 
-    public void setButtons(List<TitleBarButtonParams> buttons) {
+    public void setButtons(List<TitleBarButtonParams> buttons, MenuItem.OnMenuItemClickListener onTitleBarButtonClickListener) {
         Menu menu = getMenu();
         menu.clear();
 
         for (int i = 0; i < buttons.size(); i++) {
-            final TitleBarButton button = new TitleBarButton(menu, this, buttons.get(i));
+            final TitleBarButton button = new TitleBarButton(menu, this, buttons.get(i), onTitleBarButtonClickListener);
             // Add button in reverse order because in iOS index 0 starts at right
             final int index = buttons.size() - i - 1;
             button.addToMenu(index);

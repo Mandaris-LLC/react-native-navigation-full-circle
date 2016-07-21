@@ -17,11 +17,13 @@ public class TitleBarButton {
     private final Menu menu;
     private final View parent;
     private TitleBarButtonParams buttonParams;
+    private MenuItem.OnMenuItemClickListener onMenuItemClickListener;
 
-    public TitleBarButton(Menu menu, View parent, TitleBarButtonParams buttonParams) {
+    public TitleBarButton(Menu menu, View parent, TitleBarButtonParams buttonParams, MenuItem.OnMenuItemClickListener onMenuItemClickListener) {
         this.menu = menu;
         this.parent = parent;
         this.buttonParams = buttonParams;
+        this.onMenuItemClickListener = onMenuItemClickListener;
     }
 
     public MenuItem addToMenu(int index) {
@@ -30,6 +32,7 @@ public class TitleBarButton {
         item.setEnabled(buttonParams.enabled);
         setIcon(item);
         setColor();
+        item.setOnMenuItemClickListener(onMenuItemClickListener);
         return item;
     }
 
