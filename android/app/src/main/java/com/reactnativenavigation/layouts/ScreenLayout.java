@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.view.MenuItem;
 import android.view.Window;
 import android.widget.LinearLayout;
 
@@ -18,7 +17,7 @@ import com.reactnativenavigation.views.ScrollDirectionListener;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged, MenuItem.OnMenuItemClickListener {
+public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged {
 
     private final ScreenParams screenParams;
     private ContentView contentView;
@@ -102,11 +101,5 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
 
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        
-        return false;
     }
 }
