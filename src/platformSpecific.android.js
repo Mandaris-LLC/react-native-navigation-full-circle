@@ -13,7 +13,6 @@ function startApp(params) {
     return;
   }
 
-  screen.screenInstanceId = _.uniqueId('screenInstanceId');
   params.screen = convertNavigationStyleToScreenStyle(screen);
 
   NativeModules.NavigationReactModule.startApp(params);

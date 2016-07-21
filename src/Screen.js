@@ -11,9 +11,10 @@ import _ from 'lodash';
 const _allNavigatorEventHandlers = {};
 
 class Navigator {
-  constructor(navigatorID, navigatorEventID) {
+  constructor(navigatorID, navigatorEventID, screenInstanceId) {
     this.navigatorID = navigatorID;
     this.navigatorEventID = navigatorEventID;
+    this.screenInstanceId = screenInstanceId;
     this.navigatorEventHandler = null;
     this.navigatorEventSubscription = null;
   }
@@ -101,9 +102,15 @@ class Navigator {
   setOnNavigatorEvent(callback) {
     this.navigatorEventHandler = callback;
     if (!this.navigatorEventSubscription) {
-      let Emitter = Platform.OS === 'android' ? DeviceEventEmitter : NativeAppEventEmitter;
-      this.navigatorEventSubscription = Emitter.addListener(this.navigatorEventID, (event) => this.onNavigatorEvent(event));
-      _allNavigatorEventHandlers[this.navigatorEventID] = (event) => this.onNavigatorEvent(event);
+      if (Platform.OS === 'android') {
+        let Emitter = DeviceEventEmitter;
+        this.navigatorEventSubscription = Emitter.addListener(this.screenInstanceId, (event) => this.onNavigatorEvent(event));
+        _allNavigatorEventHandlers[this.screenInstanceId] = (event) => this.onNavigatorEvent(event);
+      } else {
+        let Emitter = NativeAppEventEmitter;
+        this.navigatorEventSubscription = Emitter.addListener(this.navigatorEventID, (event) => this.onNavigatorEvent(event));
+        _allNavigatorEventHandlers[this.navigatorEventID] = (event) => this.onNavigatorEvent(event);
+      }
     }
   }
 
@@ -142,7 +149,11 @@ export default class Screen extends Component {
     if (!props.navigatorID) {
       props.navigatorID = _.uniqueId('navigatorId');
     }
-    this.navigator = new Navigator(props.navigatorID, props.navigatorEventID);
+    // TODO: keep this shit?
+    if (!props.screenInstanceId) {
+      props.screenInstanceId = _.uniqueId('screenInstanceId');
+    }
+    this.navigator = new Navigator(props.navigatorID, props.navigatorEventID, props.screenInstanceId);
   }
 
   componentWillUnmount() {
