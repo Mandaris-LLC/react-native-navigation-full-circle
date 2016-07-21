@@ -1,7 +1,6 @@
 package com.reactnativenavigation.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
