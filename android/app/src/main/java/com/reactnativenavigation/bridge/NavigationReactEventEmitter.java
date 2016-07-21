@@ -16,11 +16,11 @@ public class NavigationReactEventEmitter {
         this.eventEmitter = reactContext.getJSModule(RCTDeviceEventEmitter.class);
     }
 
-    public void sendEvent(String eventId, String screenInstanceId) {
+    public void sendEvent(String eventId, String navigatorEventId) {
         WritableMap params = Arguments.createMap();
         params.putString(KEY_EVENT_TYPE, EVENT_TYPE);
         params.putString(KEY_EVENT_ID, eventId);
-        params.putString("navigatorEventID", screenInstanceId);
-        eventEmitter.emit(screenInstanceId, params);
+        params.putString("navigatorEventID", navigatorEventId);
+        eventEmitter.emit(navigatorEventId, params);
     }
 }

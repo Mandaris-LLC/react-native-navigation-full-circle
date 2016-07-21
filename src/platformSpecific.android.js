@@ -14,6 +14,7 @@ function startApp(params) {
   }
 
   params.screen = convertNavigationStyleToScreenStyle(screen);
+  params.screen = createNavigationParams(screen);
 
   NativeModules.NavigationReactModule.startApp(params);
 }
@@ -36,6 +37,16 @@ function convertNavigationStyleToScreenStyle(screen) {
   };
 
   screen = _.omit(screen, ['navigatorStyle']);
+  return screen;
+}
+
+function createNavigationParams(screen) {
+  screen.navigationParams = {
+    screenInstanceID: screen.screenInstanceID,
+    navigatorID: screen.navigatorID,
+    navigatorEventID: screen.navigatorEventID
+  };
+  screen = _.omit(screen, ['screenInstanceID', 'navigatorID', 'navigatorEventID']);
   return screen;
 }
 

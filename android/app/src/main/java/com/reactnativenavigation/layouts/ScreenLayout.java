@@ -40,7 +40,7 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     }
 
     private void addTitleBar() {
-        topBar.addTitleBarAndSetButtons(screenParams.buttons, screenParams.screenInstanceId);
+        topBar.addTitleBarAndSetButtons(screenParams.buttons, screenParams.navigatorEventId);
         topBar.setTitle(screenParams.title);
     }
 
@@ -50,7 +50,7 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     }
 
     private void addContentView() {
-        contentView = new ContentView(getContext(), screenParams.screenId, screenParams.passProps, this);
+        contentView = new ContentView(getContext(), screenParams, this);
         addView(contentView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
         contentView.init();
     }

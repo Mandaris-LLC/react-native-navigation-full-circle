@@ -18,13 +18,13 @@ public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
     private final Menu menu;
     private final View parent;
     private TitleBarButtonParams buttonParams;
-    private String screenInstanceId;
+    private String navigatorEventId;
 
-    public TitleBarButton(Menu menu, View parent, TitleBarButtonParams buttonParams, String screenInstanceId) {
+    public TitleBarButton(Menu menu, View parent, TitleBarButtonParams buttonParams, String navigatorEventId) {
         this.menu = menu;
         this.parent = parent;
         this.buttonParams = buttonParams;
-        this.screenInstanceId = screenInstanceId;
+        this.navigatorEventId = navigatorEventId;
     }
 
     public MenuItem addToMenu(int index) {
@@ -93,7 +93,7 @@ public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        NavigationApplication.instance.getReactEventEmitter().sendEvent(buttonParams.eventId, screenInstanceId);
+        NavigationApplication.instance.getReactEventEmitter().sendEvent(buttonParams.eventId, navigatorEventId);
         return true;
     }
 }

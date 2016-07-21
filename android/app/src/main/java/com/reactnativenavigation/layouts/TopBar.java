@@ -17,10 +17,10 @@ public class TopBar extends AppBarLayout {
         setFitsSystemWindows(true);
     }
 
-    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> buttons, String screenInstanceId) {
+    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> buttons, String navigatorEventId) {
         titleBar = new TitleBar(getContext());
         addView(titleBar);
-        titleBar.setButtons(buttons, screenInstanceId);
+        titleBar.setButtons(buttons, navigatorEventId);
     }
 
     public void setTitleBarVisibility(boolean isHidden) {

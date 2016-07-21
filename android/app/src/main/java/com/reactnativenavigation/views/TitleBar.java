@@ -18,12 +18,12 @@ public class TitleBar extends Toolbar {
         super(context);
     }
 
-    public void setButtons(List<TitleBarButtonParams> buttons, String screenInstanceId) {
+    public void setButtons(List<TitleBarButtonParams> buttons, String navigatorEventId) {
         Menu menu = getMenu();
         menu.clear();
 
         for (int i = 0; i < buttons.size(); i++) {
-            final TitleBarButton button = new TitleBarButton(menu, this, buttons.get(i), screenInstanceId);
+            final TitleBarButton button = new TitleBarButton(menu, this, buttons.get(i), navigatorEventId);
             // Add button in reverse order because in iOS index 0 starts at right
             final int index = buttons.size() - i - 1;
             button.addToMenu(index);
