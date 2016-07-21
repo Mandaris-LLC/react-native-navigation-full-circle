@@ -6,24 +6,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.utils.ImageUtils;
 import com.reactnativenavigation.utils.ViewUtils;
 
 import java.util.ArrayList;
 
-public class TitleBarButton {
+public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
 
     private final Menu menu;
     private final View parent;
     private TitleBarButtonParams buttonParams;
-    private MenuItem.OnMenuItemClickListener onMenuItemClickListener;
+    private String screenInstanceId;
 
-    public TitleBarButton(Menu menu, View parent, TitleBarButtonParams buttonParams, MenuItem.OnMenuItemClickListener onMenuItemClickListener) {
+    public TitleBarButton(Menu menu, View parent, TitleBarButtonParams buttonParams, String screenInstanceId) {
         this.menu = menu;
         this.parent = parent;
         this.buttonParams = buttonParams;
-        this.onMenuItemClickListener = onMenuItemClickListener;
+        this.screenInstanceId = screenInstanceId;
     }
 
     public MenuItem addToMenu(int index) {
@@ -32,7 +33,7 @@ public class TitleBarButton {
         item.setEnabled(buttonParams.enabled);
         setIcon(item);
         setColor();
-        item.setOnMenuItemClickListener(onMenuItemClickListener);
+        item.setOnMenuItemClickListener(this);
         return item;
     }
 
@@ -88,5 +89,11 @@ public class TitleBarButton {
 
     private boolean hasColor() {
         return buttonParams.color.hasColor();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        NavigationApplication.instance.getReactEventEmitter().sendEvent(buttonParams.eventId, screenInstanceId);
+        return true;
     }
 }

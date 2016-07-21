@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.shell.MainReactPackage;
+import com.reactnativenavigation.bridge.NavigationReactEventEmitter;
 import com.reactnativenavigation.bridge.NavigationReactPackage;
 import com.reactnativenavigation.react.NavigationReactInstance;
 
@@ -16,6 +18,7 @@ public abstract class NavigationApplication extends Application {
 
     public static NavigationApplication instance;
     private NavigationReactInstance navigationReactInstance;
+    private NavigationReactEventEmitter reactEventEmitter;
     private Handler handler;
 
     @Override
@@ -25,6 +28,18 @@ public abstract class NavigationApplication extends Application {
         handler = new Handler(getMainLooper());
         navigationReactInstance = new NavigationReactInstance();
         navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
+    }
+
+    public NavigationReactEventEmitter getReactEventEmitter() {
+        if (reactEventEmitter == null) {
+            reactEventEmitter = new NavigationReactEventEmitter(getCurrentReactContext());
+        }
+
+        return reactEventEmitter;
+    }
+
+    private ReactContext getCurrentReactContext() {
+        return navigationReactInstance.getReactInstanceManager().getCurrentReactContext();
     }
 
     public Handler getMainHandler() {

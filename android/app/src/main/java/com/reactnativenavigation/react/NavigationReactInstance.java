@@ -5,9 +5,7 @@ import android.content.Intent;
 import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
-import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.controllers.NavigationActivity;
 
@@ -36,15 +34,6 @@ public class NavigationReactInstance {
         if (!reactInstanceManager.hasStartedCreatingInitialContext()) {
             reactInstanceManager.createReactContextInBackground();
         }
-    }
-
-    public RCTDeviceEventEmitter getEventEmitter() {
-        ReactContext currentReactContext = reactInstanceManager.getCurrentReactContext();
-        if (currentReactContext == null) {
-            return null;
-        }
-
-        return currentReactContext.getJSModule(RCTDeviceEventEmitter.class);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

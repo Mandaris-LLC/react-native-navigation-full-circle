@@ -17,7 +17,7 @@ public class TitleBarButtonParams {
         }
     }
 
-    // Todo: add id for click listener
+    public String eventId;
     public String label;
     public Drawable icon;
     public ScreenStyleParams.Color color;

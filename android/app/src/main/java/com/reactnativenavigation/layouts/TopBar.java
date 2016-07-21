@@ -2,7 +2,6 @@ package com.reactnativenavigation.layouts;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
-import android.view.MenuItem;
 
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.views.TitleBar;
@@ -18,10 +17,10 @@ public class TopBar extends AppBarLayout {
         setFitsSystemWindows(true);
     }
 
-    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> buttons, MenuItem.OnMenuItemClickListener onTitleBarButtonClickListener) {
+    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> buttons, String screenInstanceId) {
         titleBar = new TitleBar(getContext());
         addView(titleBar);
-        titleBar.setButtons(buttons, onTitleBarButtonClickListener);
+        titleBar.setButtons(buttons, screenInstanceId);
     }
 
     public void setTitleBarVisibility(boolean isHidden) {

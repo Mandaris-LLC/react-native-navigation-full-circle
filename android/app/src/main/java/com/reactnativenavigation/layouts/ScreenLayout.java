@@ -40,7 +40,7 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
     }
 
     private void addTitleBar() {
-        topBar.addTitleBarAndSetButtons(screenParams.buttons, this);
+        topBar.addTitleBarAndSetButtons(screenParams.buttons, screenParams.screenInstanceId);
         topBar.setTitle(screenParams.title);
     }
 
