@@ -1,7 +1,6 @@
 package com.reactnativenavigation.views;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.ActionMenuView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +15,10 @@ import java.util.ArrayList;
 public class TitleBarButton {
 
     private final Menu menu;
-    private final ActionMenuView parent;
+    private final View parent;
     private TitleBarButtonParams buttonParams;
 
-    public TitleBarButton(Menu menu, ActionMenuView parent, TitleBarButtonParams buttonParams) {
+    public TitleBarButton(Menu menu, View parent, TitleBarButtonParams buttonParams) {
         this.menu = menu;
         this.parent = parent;
         this.buttonParams = buttonParams;
