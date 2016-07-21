@@ -93,7 +93,11 @@ public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        NavigationApplication.instance.getReactEventEmitter().sendEvent(buttonParams.eventId, navigatorEventId);
+        NavigationApplication.
+                instance.
+                getNavigationReactInstance().
+                getReactEventEmitter().
+                sendEvent(buttonParams.eventId, navigatorEventId);
         return true;
     }
 }

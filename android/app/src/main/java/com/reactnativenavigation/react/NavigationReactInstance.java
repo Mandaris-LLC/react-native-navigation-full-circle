@@ -7,11 +7,12 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.bridge.NavigationReactEventEmitter;
 import com.reactnativenavigation.controllers.NavigationActivity;
 
 public class NavigationReactInstance {
-
     private final ReactInstanceManager reactInstanceManager;
+    private NavigationReactEventEmitter reactEventEmitter;
     private OnJsDevReloadListener onJsDevReloadListener;
 
     public interface OnJsDevReloadListener {
@@ -50,7 +51,8 @@ public class NavigationReactInstance {
     }
 
     public void onPause() {
-        this.onJsDevReloadListener = null;
+        onJsDevReloadListener = null;
+        reactEventEmitter = null;
         reactInstanceManager.onHostPause();
     }
 
@@ -81,5 +83,13 @@ public class NavigationReactInstance {
         }
 
         return builder.build();
+    }
+
+    public NavigationReactEventEmitter getReactEventEmitter() {
+        if (reactEventEmitter == null) {
+            reactEventEmitter = new NavigationReactEventEmitter(reactInstanceManager.getCurrentReactContext());
+        }
+
+        return reactEventEmitter;
     }
 }
