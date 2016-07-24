@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.TitleBarButtonParams;
-import com.reactnativenavigation.utils.ImageUtils;
 import com.reactnativenavigation.utils.ViewUtils;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
     }
 
     private void setIconColor() {
-        ImageUtils.tint(buttonParams.icon, buttonParams.color.getColor());
+        ViewUtils.tintDrawable(buttonParams.icon, buttonParams.color.getColor());
     }
 
     private void setTextColor() {
@@ -93,11 +92,7 @@ public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        NavigationApplication.
-                instance.
-                getNavigationReactInstance().
-                getReactEventEmitter().
-                sendEvent(buttonParams.eventId, navigatorEventId);
+        NavigationApplication.instance.sendEvent(buttonParams.eventId, navigatorEventId);
         return true;
     }
 }

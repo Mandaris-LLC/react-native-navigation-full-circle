@@ -5,6 +5,8 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 public class SingleScreenLayout extends FrameLayout implements Layout {
 
     private final ScreenParams screenParams;
@@ -13,11 +15,12 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     public SingleScreenLayout(Context context, ScreenParams screenParams) {
         super(context);
         this.screenParams = screenParams;
+        createLayout();
     }
 
-    public void createLayout() {
+    private void createLayout() {
         screenLayout = new ScreenLayout(getContext(), screenParams);
-        addView(screenLayout);
+        addView(screenLayout, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
     @Override

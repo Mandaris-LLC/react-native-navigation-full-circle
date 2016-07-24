@@ -48,6 +48,7 @@ public class NavigationReactInstance {
     public void onResume(NavigationActivity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler, OnJsDevReloadListener onJsDevReloadListener) {
         this.onJsDevReloadListener = onJsDevReloadListener;
         reactInstanceManager.onHostResume(activity, defaultHardwareBackBtnHandler);
+        reactEventEmitter = new NavigationReactEventEmitter(reactInstanceManager.getCurrentReactContext());
     }
 
     public void onPause() {
@@ -86,10 +87,6 @@ public class NavigationReactInstance {
     }
 
     public NavigationReactEventEmitter getReactEventEmitter() {
-        if (reactEventEmitter == null) {
-            reactEventEmitter = new NavigationReactEventEmitter(reactInstanceManager.getCurrentReactContext());
-        }
-
         return reactEventEmitter;
     }
 }

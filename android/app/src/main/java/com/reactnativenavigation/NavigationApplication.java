@@ -69,4 +69,7 @@ public abstract class NavigationApplication extends Application {
     @NonNull
     public abstract List<ReactPackage> createAdditionalReactPackages();
 
+    public void sendEvent(String eventId, String navigatorEventId) {
+        navigationReactInstance.getReactEventEmitter().sendEvent(eventId, navigatorEventId);
+    }
 }
