@@ -2,7 +2,6 @@ package com.reactnativenavigation.layouts;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
@@ -23,14 +22,14 @@ public class ScreenStack extends FrameLayout {
 
     public void push(ScreenParams screenParams) {
         Screen screen = new ScreenImpl(getContext(), screenParams);
-        addView((View) screen, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        addView(screen.asView(), new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         stack.push(screen);
     }
 
     public Screen pop() {
         Screen popped = stack.pop();
         popped.ensureUnmountOnDetachedFromWindow();
-        removeView((View) popped);
+        removeView(popped.asView());
         return popped;
     }
 

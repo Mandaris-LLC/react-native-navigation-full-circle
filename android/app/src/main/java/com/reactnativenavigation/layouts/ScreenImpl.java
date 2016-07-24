@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 
@@ -102,6 +103,11 @@ public class ScreenImpl extends LinearLayout implements Screen, ScrollDirectionL
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
         // TODO handle if needed
+    }
+
+    @Override
+    public View asView() {
+        return this;
     }
 
     @Override

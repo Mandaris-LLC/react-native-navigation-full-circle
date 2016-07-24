@@ -83,6 +83,10 @@ class PushedScreen extends Component {
           <Text style={styles.button}>Pop to root</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onNewStackPress.bind(this) }>
+          <Text style={styles.button}>New Stack</Text>
+        </TouchableOpacity>
+
         <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
 
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
@@ -150,6 +154,25 @@ class PushedScreen extends Component {
 
   onPopToRootPress() {
     this.props.navigator.popToRoot();
+  }
+
+  onNewStackPress() {
+    this.props.navigator.resetTo({
+      title: "NEW STACK",
+      screen: "example.PushedScreen",
+      passProps: {
+        passed: 'This is a prop passed in \'navigator.push()\'!',
+        obj: {
+          str: 'This is a prop passed in an object!',
+          arr: [
+            {
+              str: 'This is a prop in an object in an array in an object!'
+            }
+          ]
+        },
+        num: 1234
+      }
+    });
   }
 }
 

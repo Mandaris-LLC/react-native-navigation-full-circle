@@ -21,6 +21,7 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     private void createStack(Context context) {
         if (stack != null) {
             stack.destroy();
+            removeView(stack);
         }
         stack = new ScreenStack(context, screenParams);
         addView(stack, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
@@ -63,6 +64,6 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
 
     @Override
     public void newStack(ScreenParams params) {
-        stack.destroy();
+        createStack(getContext());
     }
 }

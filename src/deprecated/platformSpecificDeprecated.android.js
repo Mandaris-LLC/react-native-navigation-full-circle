@@ -64,6 +64,18 @@ function navigatorPopToRoot(navigator, params) {
   newPlatformSpecific.popToRoot(adapted);
 }
 
+function navigatorResetTo(navigator, params) {
+  addNavigatorParams(params, navigator);
+  addNavigatorButtons(params);
+  addNavigationStyleParams(params);
+
+  params.screenId = params.screen;
+  let adapted = adaptNavigationStyleToScreenStyle(params);
+  adapted = adaptNavigationParams(adapted);
+
+  newPlatformSpecific.newStack(adapted);
+}
+
 function adaptNavigationStyleToScreenStyle(screen) {
   const navigatorStyle = screen.navigatorStyle;
   if (!navigatorStyle) {
@@ -136,13 +148,6 @@ function navigatorSetButtons(navigator, navigatorEventID, params) {
   //  });
   //}
   //RctActivity.setNavigatorButtons(params);
-}
-
-function navigatorResetTo(navigator, params) {
-  //addNavigatorParams(params, navigator);
-  //addNavigatorButtons(params);
-  //addNavigationStyleParams(params);
-  //RctActivity.navigatorResetTo(params);
 }
 
 function navigatorSetTabBadge(navigator, params) {

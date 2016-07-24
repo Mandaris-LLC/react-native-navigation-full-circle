@@ -1,8 +1,9 @@
 package com.reactnativenavigation.layouts;
 
-/**
- * Must extend View
- */
+import android.view.View;
+
 public interface Screen {
+    View asView();
+
     void ensureUnmountOnDetachedFromWindow();
 }
