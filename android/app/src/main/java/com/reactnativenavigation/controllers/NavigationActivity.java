@@ -117,4 +117,8 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     void popToRoot(ScreenParams params) {
         layout.popToRoot(params);
     }
+
+    void newStack(ScreenParams params) {
+        layout.newStack(params);
+    }
 }

@@ -14,4 +14,6 @@ public interface Layout {
     void pop(ScreenParams params);
 
     void popToRoot(ScreenParams params);
+
+    void newStack(ScreenParams params);
 }

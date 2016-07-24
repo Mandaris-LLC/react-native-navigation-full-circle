@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TextInput
 } from 'react-native';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
 
 // this is a traditional React component connected to the redux store
@@ -30,12 +30,17 @@ class PushedScreen extends Component {
   constructor(props) {
     super(props);
     this.bgColor = this.getRandomColor();
+    console.log(`constructor ${this.bgColor}`);
+  }
+
+  componentWillUnmount() {
+    console.log(`componentWillUnmount ${this.bgColor}`);
   }
 
   getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';
-    for (var i = 0; i < 6; i++ ) {
+    for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
@@ -153,13 +158,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10
+    marginTop: 10
   },
   button: {
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10,
+    marginTop: 10,
     color: 'blue'
   }
 });

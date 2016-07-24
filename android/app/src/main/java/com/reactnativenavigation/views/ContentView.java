@@ -2,7 +2,6 @@ package com.reactnativenavigation.views;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.ViewGroup;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
@@ -38,14 +37,11 @@ public class ContentView extends ReactRootView {
         return navigationParams;
     }
 
-    public void removeFromParentWithoutUnmount() {
-        // Hack in order to prevent the react view from getting unmounted
+    public void preventUnmountOnDetachedFromWindow() {
         ReactViewHacks.preventUnmountOnDetachedFromWindow(this);
-        ((ViewGroup) getParent()).removeView(this);
     }
 
-    public void removeFromParentAndUnmount() {
+    public void ensureUnmountOnDetachedFromWindow() {
         ReactViewHacks.ensureUnmountOnDetachedFromWindow(this);
-        ((ViewGroup) getParent()).removeView(this);
     }
 }

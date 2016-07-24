@@ -105,7 +105,7 @@ public class ScreenImpl extends LinearLayout implements Screen, ScrollDirectionL
     }
 
     @Override
-    public void removeAllReactViews() {
-        contentView.removeFromParentAndUnmount();
+    public void ensureUnmountOnDetachedFromWindow() {
+        contentView.ensureUnmountOnDetachedFromWindow();
     }
 }

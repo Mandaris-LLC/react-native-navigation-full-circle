@@ -29,6 +29,7 @@ public class ScreenStack extends FrameLayout {
 
     public Screen pop() {
         Screen popped = stack.pop();
+        popped.ensureUnmountOnDetachedFromWindow();
         removeView((View) popped);
         return popped;
     }
@@ -41,10 +42,8 @@ public class ScreenStack extends FrameLayout {
 
     public void destroy() {
         while (!isEmpty()) {
-            Screen screen = pop();
-            screen.removeAllReactViews();
+            pop();
         }
-        removeAllViews();
     }
 
     public boolean isEmpty() {

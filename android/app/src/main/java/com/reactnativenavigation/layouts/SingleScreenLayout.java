@@ -60,4 +60,9 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     public void popToRoot(ScreenParams params) {
         stack.popToRoot();
     }
+
+    @Override
+    public void newStack(ScreenParams params) {
+        stack.destroy();
+    }
 }

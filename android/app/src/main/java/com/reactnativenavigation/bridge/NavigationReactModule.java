@@ -86,6 +86,7 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void newStack(final ReadableMap params) {
+        NavigationCommandsHandler.newStack(BundleConverter.toBundle(params));
     }
 
     @ReactMethod
