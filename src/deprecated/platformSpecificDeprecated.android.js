@@ -22,24 +22,60 @@ function startSingleScreenApp(params) {
   //const drawer = setupDrawer(params.drawer);
 
   screen.screenId = screen.screen;
+
+  /*
+   * adapt to new API
+   */
+  params.screen = adaptNavigationStyleToScreenStyle(screen);
+  params.screen = adaptNavigationParams(screen);
+
   newPlatformSpecific.startApp(params);
 }
 
-function startTabBasedApp(params) {
-  if (!params.tabs) {
-    console.error('startTabBasedApp(params): params.tabs is required');
-    return;
+function adaptNavigationStyleToScreenStyle(screen) {
+  const navigatorStyle = screen.navigatorStyle;
+  if (!navigatorStyle) {
+    return screen;
   }
 
-  params.tabs.forEach(function(tab, idx) {
-    addNavigatorParams(tab, null, idx);
-    addNavigatorButtons(tab);
-    addNavigationStyleParams(tab);
-    addTabIcon(tab);
-    tab.passProps = params.passProps;
-  });
+  screen.styleParams = {
+    statusBarColor: navigatorStyle.statusBarColor,
+    topBarColor: navigatorStyle.toolBarColor,
+    navigationBarColor: navigatorStyle.navigationBarColor,
+    titleBarHidden: navigatorStyle.navBarHidden,
+    backButtonHidden: navigatorStyle.backButtonHidden,
+    topTabsHidden: navigatorStyle.topTabsHidden,
+    bottomTabsHidden: navigatorStyle.tabBarHidden,
+    bottomTabsHiddenOnScroll: navigatorStyle.bottomTabsHiddenOnScroll
+  };
 
-  const drawer = setupDrawer(params.drawer);
+  return _.omit(screen, ['navigatorStyle']);
+}
+
+function adaptNavigationParams(screen) {
+  screen.navigationParams = {
+    screenInstanceID: screen.screenInstanceID,
+    navigatorID: screen.navigatorID,
+    navigatorEventID: screen.navigatorEventID
+  };
+  return _.omit(screen, ['screenInstanceID', 'navigatorID', 'navigatorEventID']);
+}
+
+function startTabBasedApp(params) {
+  //if (!params.tabs) {
+  //  console.error('startTabBasedApp(params): params.tabs is required');
+  //  return;
+  //}
+  //
+  //params.tabs.forEach(function(tab, idx) {
+  //  addNavigatorParams(tab, null, idx);
+  //  addNavigatorButtons(tab);
+  //  addNavigationStyleParams(tab);
+  //  addTabIcon(tab);
+  //  tab.passProps = params.passProps;
+  //});
+  //
+  //const drawer = setupDrawer(params.drawer);
   //RctActivity.startTabBasedApp(params.tabs, params.tabsStyle, drawer);
 }
 
@@ -57,28 +93,28 @@ function addTabIcon(tab) {
 }
 
 function navigatorPush(navigator, params) {
-  addNavigatorParams(params, navigator);
-  addNavigatorButtons(params);
-  addNavigationStyleParams(params);
+  //addNavigatorParams(params, navigator);
+  //addNavigatorButtons(params);
+  //addNavigationStyleParams(params);
   //RctActivity.navigatorPush(params);
 }
 
 function navigatorSetButtons(navigator, navigatorEventID, params) {
-  if (params.rightButtons) {
-    params.rightButtons.forEach(function(button) {
-      if (button.icon) {
-        const icon = resolveAssetSource(button.icon);
-        if (icon) {
-          button.icon = icon.uri;
-        }
-      }
-    });
-  }
+  //if (params.rightButtons) {
+  //  params.rightButtons.forEach(function(button) {
+  //    if (button.icon) {
+  //      const icon = resolveAssetSource(button.icon);
+  //      if (icon) {
+  //        button.icon = icon.uri;
+  //      }
+  //    }
+  //  });
+  //}
   //RctActivity.setNavigatorButtons(params);
 }
 
 function navigatorPop(navigator, params) {
-  addNavigatorParams(params, navigator);
+  //addNavigatorParams(params, navigator);
   //RctActivity.navigatorPop(params);
 }
 
@@ -90,9 +126,9 @@ function navigatorPopToRoot(navigator, params) {
 }
 
 function navigatorResetTo(navigator, params) {
-  addNavigatorParams(params, navigator);
-  addNavigatorButtons(params);
-  addNavigationStyleParams(params);
+  //addNavigatorParams(params, navigator);
+  //addNavigatorButtons(params);
+  //addNavigationStyleParams(params);
   //RctActivity.navigatorResetTo(params);
 }
 
@@ -137,9 +173,9 @@ function navigatorToggleTabs(navigator, params) {
 }
 
 function showModal(params) {
-  addNavigatorParams(params);
-  addNavigatorButtons(params);
-  addNavigationStyleParams(params);
+  //addNavigatorParams(params);
+  //addNavigatorButtons(params);
+  //addNavigationStyleParams(params);
   //RctActivity.showModal(params);
 }
 
@@ -162,8 +198,7 @@ function addNavigatorButtons(screen) {
   Object.assign(screen, Screen.navigatorButtons);
 
   // Get image uri from image id
-  const rightButtons = screen.rightButtons ? screen.rightButtons : screen.navigatorButtons ?
-                                                                   screen.navigatorButtons.rightButtons : null;
+  const rightButtons = screen.navigatorButtons ? screen.navigatorButtons.rightButtons : null;
 
   if (rightButtons) {
     rightButtons.forEach(function(button) {
@@ -198,13 +233,12 @@ function setupDrawer(drawerParams) {
   if (drawer.disableOpenGesture === undefined) {
     drawer.disableOpenGesture = false;
   }
-  ;
 
   return drawer;
 }
 
 function showFAB(params) {
-  params.icon = resolveAssetSource(params.icon).uri;
+  //params.icon = resolveAssetSource(params.icon).uri;
   //RctActivity.showFAB(params);
 }
 
@@ -226,4 +260,4 @@ export default {
   navigatorToggleDrawer,
   navigatorToggleTabs,
   navigatorToggleNavBar
-}
+};
