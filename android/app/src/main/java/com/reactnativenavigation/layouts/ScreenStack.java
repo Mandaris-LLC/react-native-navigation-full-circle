@@ -11,6 +11,7 @@ import java.util.Stack;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
+// TODO there's really no reason for ScreenStack to extend FrameLayout. All screens can be added to parent.
 public class ScreenStack extends FrameLayout {
     private Stack<Screen> stack = new Stack<>();
 
