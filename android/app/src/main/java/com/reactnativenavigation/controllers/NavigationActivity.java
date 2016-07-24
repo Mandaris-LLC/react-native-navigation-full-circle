@@ -10,7 +10,7 @@ import android.view.View;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.layouts.Layout;
-import com.reactnativenavigation.layouts.SingleScreenLayout;
+import com.reactnativenavigation.layouts.LayoutFactory;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.parsers.ActivityParamsParser;
 import com.reactnativenavigation.react.JsDevReloadHandler;
@@ -45,8 +45,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     private void createLayout() {
-        //TODO layout factory (tabsLayout etc)
-        layout = new SingleScreenLayout(this, activityParams.screenParams);
+        layout = LayoutFactory.create(this, activityParams);
         setContentView((View) layout);
     }
 
