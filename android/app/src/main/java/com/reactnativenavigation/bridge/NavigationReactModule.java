@@ -1,14 +1,10 @@
 package com.reactnativenavigation.bridge;
 
-import android.content.Intent;
-import android.os.Bundle;
-
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-import com.reactnativenavigation.NavigationApplication;
-import com.reactnativenavigation.controllers.NavigationActivity;
+import com.reactnativenavigation.controllers.NavigationCommandsHandler;
 
 /**
  * The basic abstract components we will expose:
@@ -34,14 +30,7 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startApp(final ReadableMap params) {
-        NavigationApplication context = NavigationApplication.instance;
-        Intent intent = new Intent(context, NavigationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        Bundle paramsBundle = BundleConverter.toBundle(params);
-
-        intent.putExtra(NavigationActivity.PARAMS_BUNDLE, paramsBundle);
-        context.startActivity(intent);
+        NavigationCommandsHandler.startApp(BundleConverter.toBundle(params));
     }
 
     @ReactMethod
@@ -82,6 +71,7 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void push(final ReadableMap params) {
+        NavigationCommandsHandler.push(BundleConverter.toBundle(params));
     }
 
     @ReactMethod

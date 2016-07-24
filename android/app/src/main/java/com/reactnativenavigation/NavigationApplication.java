@@ -27,8 +27,8 @@ public abstract class NavigationApplication extends Application {
         navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
     }
 
-    public Handler getMainHandler() {
-        return handler;
+    public void runOnMainThread(Runnable runnable) {
+        handler.post(runnable);
     }
 
     public NavigationReactInstance getNavigationReactInstance() {

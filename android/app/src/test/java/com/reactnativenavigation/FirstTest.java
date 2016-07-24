@@ -7,13 +7,11 @@ import org.robolectric.RobolectricTestRunner;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+//TODO test the shit out of this project
 @RunWith(RobolectricTestRunner.class)
 public class FirstTest {
-
     @Test
     public void woohoo() {
-        assertThat(1+2, is(3));
+        assertThat(1 + 2, is(3));
     }
-
-
 }

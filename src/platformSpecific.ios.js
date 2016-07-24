@@ -1,3 +1,7 @@
+/**
+ * copy paste from deprecated - for now
+ */
+
 import utils from './utils';
 import Navigation from './../Navigation';
 import Controllers, {Modal, Notification} from 'react-native-controllers';

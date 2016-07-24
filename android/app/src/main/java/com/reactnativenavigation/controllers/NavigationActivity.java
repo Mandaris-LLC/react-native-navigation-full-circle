@@ -1,6 +1,5 @@
 package com.reactnativenavigation.controllers;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,35 +11,34 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.LayoutFactory;
 import com.reactnativenavigation.params.ActivityParams;
-import com.reactnativenavigation.params.parsers.ActivityParamsParser;
+import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.NavigationReactInstance;
 import com.reactnativenavigation.react.RedboxPermission;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, NavigationReactInstance.OnJsDevReloadListener {
 
-    public static final String PARAMS_BUNDLE = "PARAMS_BUNDLE";
     /**
      * Although we start multiple activities, we make sure to pass Intent.CLEAR_TASK | Intent.NEW_TASK
      * So that we actually have only 1 instance of the activity running at one time.
-     * We hold the currentActivity (resume->pause) so we know when we need to destroy the javascript context.
-     * This is somewhat weird, and in the future either fully support multiple activities,
-     * OR a single activity with changing contentView similar to ReactNative impl.
+     * We hold the currentActivity (resume->pause) so we know when we need to destroy the javascript context
+     * (when currentActivity is null, ie pause and destroy was called without resume).
+     * This is somewhat weird, and in the future we better use a single activity with changing contentView similar to ReactNative impl.
+     * Along with that, we should handle commands from the bridge using onNewIntent
      */
-    private static Activity currentActivity;
+    static NavigationActivity currentActivity;
+
+    private final ModalController modalController = new ModalController();
     private ActivityParams activityParams;
-    private ModalController modalController;
     private Layout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        activityParams = ActivityParamsParser.parse(getIntent().getBundleExtra(PARAMS_BUNDLE));
-
-        modalController = new ModalController();
-
         RedboxPermission.permissionToShowRedboxIfNeeded(this);
+
+        activityParams = NavigationCommandsHandler.getActivityParams(getIntent());
+
         createLayout();
     }
 
@@ -106,5 +104,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     private NavigationReactInstance getNavigationReactInstance() {
         return NavigationApplication.instance.getNavigationReactInstance();
+    }
+
+    void push(ScreenParams params) {
+        layout.push(params);
     }
 }
