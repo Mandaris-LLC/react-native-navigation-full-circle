@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.SingleScreenLayout;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.parsers.ActivityParamsParser;
@@ -28,7 +30,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     private static Activity currentActivity;
     private ActivityParams activityParams;
     private ModalController modalController;
-    private SingleScreenLayout singleScreenLayout;
+    private Layout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     private void createLayout() {
-        singleScreenLayout = new SingleScreenLayout(this, activityParams.screenParams);
-        setContentView(singleScreenLayout);
+        //TODO layout factory (tabsLayout etc)
+        layout = new SingleScreenLayout(this, activityParams.screenParams);
+        setContentView((View) layout);
     }
 
     @Override
@@ -64,7 +67,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     protected void onDestroy() {
         modalController.onDestroy();
-//        layout.onDestroy();
+        layout.onDestroy();
         super.onDestroy();
         if (currentActivity == null || currentActivity.isFinishing()) {
             getNavigationReactInstance().onHostDestroy();
@@ -73,7 +76,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     @Override
     public void onJsDevReload() {
-        singleScreenLayout.removeAllReactViews();
+        layout.removeAllReactViews();
     }
 
     @Override
@@ -86,9 +89,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         if (modalController.onBackPressed()) {
             return;
         }
-//        if (layout.onBackPressed()) {
-//            return;
-//        }
+        if (layout.onBackPressed()) {
+            return;
+        }
         getNavigationReactInstance().onBackPressed();
     }
 

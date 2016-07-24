@@ -10,31 +10,39 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 public class SingleScreenLayout extends FrameLayout implements Layout {
 
     private final ScreenParams screenParams;
-    private ScreenLayout screenLayout;
+    private ScreenStack stack;
 
     public SingleScreenLayout(Context context, ScreenParams screenParams) {
         super(context);
         this.screenParams = screenParams;
-        createLayout();
+        createStack(context);
     }
 
-    private void createLayout() {
-        screenLayout = new ScreenLayout(getContext(), screenParams);
-        addView(screenLayout, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+    private void createStack(Context context) {
+        if (stack != null) {
+            stack.destroy();
+        }
+        stack = new ScreenStack(context, screenParams);
+        addView(stack, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
     @Override
     public boolean onBackPressed() {
-        return false;
+        if (stack.isEmpty()) {
+            return false;
+        } else {
+            stack.pop();
+            return true;
+        }
     }
 
     @Override
     public void onDestroy() {
-
+        stack.destroy();
     }
 
     @Override
     public void removeAllReactViews() {
-        screenLayout.removeAllReactViews();
+        stack.destroy();
     }
 }

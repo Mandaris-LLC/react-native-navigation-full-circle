@@ -13,17 +13,18 @@ import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.ScrollDirectionListener;
+import com.reactnativenavigation.views.TopBar;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class ScreenLayout extends LinearLayout implements ScrollDirectionListener.OnScrollChanged, Layout {
+public class ScreenImpl extends LinearLayout implements Screen, ScrollDirectionListener.OnScrollChanged {
 
     private final ScreenParams screenParams;
     private ContentView contentView;
     private TopBar topBar;
 
-    public ScreenLayout(Context context, ScreenParams screenParams) {
+    public ScreenImpl(Context context, ScreenParams screenParams) {
         super(context);
         this.screenParams = screenParams;
         setOrientation(VERTICAL);
@@ -100,17 +101,7 @@ public class ScreenLayout extends LinearLayout implements ScrollDirectionListene
 
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
-
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        return false;
-    }
-
-    @Override
-    public void onDestroy() {
-
+        // TODO handle if needed
     }
 
     @Override

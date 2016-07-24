@@ -1,10 +1,9 @@
-package com.reactnativenavigation.layouts;
+package com.reactnativenavigation.views;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 
 import com.reactnativenavigation.params.TitleBarButtonParams;
-import com.reactnativenavigation.views.TitleBar;
 
 import java.util.List;
 
