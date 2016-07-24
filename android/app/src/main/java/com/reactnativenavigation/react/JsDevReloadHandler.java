@@ -33,7 +33,7 @@ public class JsDevReloadHandler {
                     return true;
                 } else {
                     shouldRefreshOnRR = true;
-                    NavigationApplication.instance.getMainHandler().postDelayed(
+                    NavigationApplication.instance.runOnMainThread(
                             new Runnable() {
                                 @Override
                                 public void run() {

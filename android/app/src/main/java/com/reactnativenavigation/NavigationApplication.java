@@ -31,6 +31,10 @@ public abstract class NavigationApplication extends Application {
         handler.post(runnable);
     }
 
+    public void runOnMainThread(Runnable runnable, long delay) {
+        handler.postDelayed(runnable, delay);
+    }
+
     public NavigationReactInstance getNavigationReactInstance() {
         return navigationReactInstance;
     }

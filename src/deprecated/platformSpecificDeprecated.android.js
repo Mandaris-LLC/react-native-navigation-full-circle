@@ -32,6 +32,18 @@ function startSingleScreenApp(params) {
   newPlatformSpecific.startApp(params);
 }
 
+function navigatorPush(navigator, params) {
+  debugger;
+  addNavigatorParams(params, navigator);
+  addNavigatorButtons(params);
+  addNavigationStyleParams(params);
+
+  params = adaptNavigationStyleToScreenStyle(params);
+  params = adaptNavigationParams(params);
+
+  newPlatformSpecific.push(params);
+}
+
 function adaptNavigationStyleToScreenStyle(screen) {
   const navigatorStyle = screen.navigatorStyle;
   if (!navigatorStyle) {
@@ -90,13 +102,6 @@ function addTabIcon(tab) {
   if (!tab.icon) {
     throw new Error("No icon defined for tab " + tab.screen);
   }
-}
-
-function navigatorPush(navigator, params) {
-  //addNavigatorParams(params, navigator);
-  //addNavigatorButtons(params);
-  //addNavigationStyleParams(params);
-  //RctActivity.navigatorPush(params);
 }
 
 function navigatorSetButtons(navigator, navigatorEventID, params) {
