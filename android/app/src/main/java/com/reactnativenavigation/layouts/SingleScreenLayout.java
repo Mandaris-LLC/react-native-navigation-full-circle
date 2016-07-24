@@ -28,11 +28,11 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
 
     @Override
     public boolean onBackPressed() {
-        if (stack.isEmpty()) {
-            return false;
-        } else {
+        if (stack.canPop()) {
             stack.pop();
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -54,5 +54,10 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     @Override
     public void pop(ScreenParams params) {
         stack.pop();
+    }
+
+    @Override
+    public void popToRoot(ScreenParams params) {
+        stack.popToRoot();
     }
 }

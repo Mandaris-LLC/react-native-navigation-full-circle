@@ -34,7 +34,7 @@ public class ScreenStack extends FrameLayout {
     }
 
     public void popToRoot() {
-        while (getStackSize() > 1) {
+        while (canPop()) {
             pop();
         }
     }
@@ -57,6 +57,10 @@ public class ScreenStack extends FrameLayout {
 
     public Screen peek() {
         return stack.peek();
+    }
+
+    public boolean canPop() {
+        return getStackSize() > 1;
     }
 
 

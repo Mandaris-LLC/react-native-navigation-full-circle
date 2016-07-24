@@ -58,4 +58,19 @@ public class NavigationCommandsHandler {
             }
         });
     }
+
+    public static void popToRoot(Bundle screenParams) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        final ScreenParams params = ScreenParamsParser.parse(screenParams);
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.popToRoot(params);
+            }
+        });
+    }
 }

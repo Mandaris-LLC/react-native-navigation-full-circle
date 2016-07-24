@@ -12,4 +12,6 @@ public interface Layout {
     void push(ScreenParams params);
 
     void pop(ScreenParams params);
+
+    void popToRoot(ScreenParams params);
 }

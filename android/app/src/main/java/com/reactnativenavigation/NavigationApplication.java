@@ -23,8 +23,6 @@ public abstract class NavigationApplication extends Application {
         super.onCreate();
         instance = this;
         handler = new Handler(getMainLooper());
-        navigationReactInstance = new NavigationReactInstance();
-        navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
     }
 
     public void runOnMainThread(Runnable runnable) {
@@ -75,5 +73,10 @@ public abstract class NavigationApplication extends Application {
 
     public void sendEvent(String eventId, String navigatorEventId) {
         navigationReactInstance.getReactEventEmitter().sendEvent(eventId, navigatorEventId);
+    }
+
+    public void startReactContext() {
+        navigationReactInstance = new NavigationReactInstance();
+        navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
     }
 }

@@ -24,8 +24,13 @@ function pop(screenParams) {
   NativeModules.NavigationReactModule.pop(screenParams);
 }
 
+function popToRoot(screenParams) {
+  NativeModules.NavigationReactModule.pop(screenParams);
+}
+
 module.exports = {
   startApp,
   push,
-  pop
+  pop,
+  popToRoot
 };

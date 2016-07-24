@@ -54,6 +54,16 @@ function navigatorPop(navigator, params) {
   newPlatformSpecific.pop(adapted);
 }
 
+function navigatorPopToRoot(navigator, params) {
+  addNavigatorParams(params, navigator);
+
+  params.screenId = params.screen;
+  let adapted = adaptNavigationStyleToScreenStyle(params);
+  adapted = adaptNavigationParams(adapted);
+
+  newPlatformSpecific.popToRoot(adapted);
+}
+
 function adaptNavigationStyleToScreenStyle(screen) {
   const navigatorStyle = screen.navigatorStyle;
   if (!navigatorStyle) {
@@ -126,13 +136,6 @@ function navigatorSetButtons(navigator, navigatorEventID, params) {
   //  });
   //}
   //RctActivity.setNavigatorButtons(params);
-}
-
-function navigatorPopToRoot(navigator, params) {
-  //RctActivity.navigatorPopToRoot({
-  //  navigatorID: navigator.navigatorID,
-  //  animated: !(params.animated === false)
-  //});
 }
 
 function navigatorResetTo(navigator, params) {
