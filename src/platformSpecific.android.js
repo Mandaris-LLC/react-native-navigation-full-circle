@@ -20,7 +20,12 @@ function push(screenParams) {
   NativeModules.NavigationReactModule.push(screenParams);
 }
 
+function pop(screenParams) {
+  NativeModules.NavigationReactModule.pop(screenParams);
+}
+
 module.exports = {
   startApp,
-  push
+  push,
+  pop
 };

@@ -28,7 +28,9 @@ public class ScreenStack extends FrameLayout {
     }
 
     public Screen pop() {
-        return stack.pop();
+        Screen popped = stack.pop();
+        removeView((View) popped);
+        return popped;
     }
 
     public void popToRoot() {

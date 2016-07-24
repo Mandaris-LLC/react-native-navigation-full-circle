@@ -43,4 +43,19 @@ public class NavigationCommandsHandler {
     static ActivityParams getActivityParams(Intent intent) {
         return ActivityParamsParser.parse(intent.getBundleExtra(NavigationCommandsHandler.ACTIVITY_PARAMS_BUNDLE));
     }
+
+    public static void pop(Bundle screenParams) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        final ScreenParams params = ScreenParamsParser.parse(screenParams);
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.pop(params);
+            }
+        });
+    }
 }

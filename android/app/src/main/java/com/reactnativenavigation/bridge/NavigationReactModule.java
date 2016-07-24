@@ -76,6 +76,7 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void pop(final ReadableMap params) {
+        NavigationCommandsHandler.pop(BundleConverter.toBundle(params));
     }
 
     @ReactMethod

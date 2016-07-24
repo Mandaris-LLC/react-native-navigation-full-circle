@@ -39,9 +39,19 @@ function navigatorPush(navigator, params) {
 
   params.screenId = params.screen;
   let adapted = adaptNavigationStyleToScreenStyle(params);
-  adapted = adaptNavigationParams(params);
+  adapted = adaptNavigationParams(adapted);
 
   newPlatformSpecific.push(adapted);
+}
+
+function navigatorPop(navigator, params) {
+  addNavigatorParams(params, navigator);
+
+  params.screenId = params.screen;
+  let adapted = adaptNavigationStyleToScreenStyle(params);
+  adapted = adaptNavigationParams(adapted);
+
+  newPlatformSpecific.pop(adapted);
 }
 
 function adaptNavigationStyleToScreenStyle(screen) {
@@ -116,11 +126,6 @@ function navigatorSetButtons(navigator, navigatorEventID, params) {
   //  });
   //}
   //RctActivity.setNavigatorButtons(params);
-}
-
-function navigatorPop(navigator, params) {
-  //addNavigatorParams(params, navigator);
-  //RctActivity.navigatorPop(params);
 }
 
 function navigatorPopToRoot(navigator, params) {

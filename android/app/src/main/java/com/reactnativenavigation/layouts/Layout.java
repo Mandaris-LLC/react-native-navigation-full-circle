@@ -10,4 +10,6 @@ public interface Layout {
     void removeAllReactViews();
 
     void push(ScreenParams params);
+
+    void pop(ScreenParams params);
 }

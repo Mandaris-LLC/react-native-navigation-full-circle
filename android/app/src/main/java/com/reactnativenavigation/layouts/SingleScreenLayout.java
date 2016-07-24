@@ -50,4 +50,9 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     public void push(ScreenParams params) {
         stack.push(params);
     }
+
+    @Override
+    public void pop(ScreenParams params) {
+        stack.pop();
+    }
 }
