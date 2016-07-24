@@ -33,15 +33,15 @@ function startSingleScreenApp(params) {
 }
 
 function navigatorPush(navigator, params) {
-  debugger;
   addNavigatorParams(params, navigator);
   addNavigatorButtons(params);
   addNavigationStyleParams(params);
 
-  params = adaptNavigationStyleToScreenStyle(params);
-  params = adaptNavigationParams(params);
+  params.screenId = params.screen;
+  let adapted = adaptNavigationStyleToScreenStyle(params);
+  adapted = adaptNavigationParams(params);
 
-  newPlatformSpecific.push(params);
+  newPlatformSpecific.push(adapted);
 }
 
 function adaptNavigationStyleToScreenStyle(screen) {

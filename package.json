@@ -31,7 +31,8 @@
   },
   "dependencies": {
     "react-native-controllers": "^2.0.0",
-    "lodash": "^4.13.0"
+    "lodash": "^4.13.0",
+    "babel-preset-react-native-stage-0": "^1.0.0"
   },
   "optionalDependencies": {
     "react-redux": "*"
