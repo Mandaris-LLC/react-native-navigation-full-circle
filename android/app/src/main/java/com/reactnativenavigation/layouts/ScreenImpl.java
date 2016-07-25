@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.RelativeLayout;
@@ -108,7 +107,6 @@ public class ScreenImpl extends RelativeLayout implements Screen, ScrollDirectio
 
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
-        Log.d("TAG", "onScrollChanged: ");
         if (scrollAnimator == null) {
             scrollAnimator = new OnScrollAnimator(topBar, OnScrollAnimator.HideDirection.Up, topBar.getHeight());
         }

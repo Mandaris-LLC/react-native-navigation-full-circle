@@ -21,9 +21,13 @@ public class ScreenStack extends FrameLayout {
     }
 
     public void push(ScreenParams screenParams) {
-        Screen previous = stack.peek();
-        addScreen(screenParams);
-        removePreviousWithoutUnmount(previous);
+        if (isEmpty()) {
+            addScreen(screenParams);
+        } else {
+            Screen previous = stack.peek();
+            addScreen(screenParams);
+            removePreviousWithoutUnmount(previous);
+        }
     }
 
     private void addScreen(ScreenParams screenParams) {
