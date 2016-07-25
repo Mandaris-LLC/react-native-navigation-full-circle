@@ -33,7 +33,7 @@ public class HideOnScrollAnimator {
 
     public void onScrollChanged(ScrollDirectionListener.Direction scrollDirection) {
         if (hideDirection == HideDirection.Down) {
-            handleDownHidingViews(scrollDirection); //TODO better name
+            handleDownHidingViews(scrollDirection);
         } else {
             handleUpHidingViews(scrollDirection);
         }

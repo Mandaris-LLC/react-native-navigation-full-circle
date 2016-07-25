@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 
+import com.reactnativenavigation.animation.HideOnScrollAnimator;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.utils.SdkSupports;
@@ -24,6 +26,7 @@ public class ScreenImpl extends LinearLayout implements Screen, ScrollDirectionL
     private final ScreenParams screenParams;
     private ContentView contentView;
     private TopBar topBar;
+    private HideOnScrollAnimator scrollAnimator;
 
     public ScreenImpl(Context context, ScreenParams screenParams) {
         super(context);
@@ -102,7 +105,11 @@ public class ScreenImpl extends LinearLayout implements Screen, ScrollDirectionL
 
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
-        // TODO handle if needed
+        Log.d("TAG", "onScrollChanged: ");
+        if (scrollAnimator == null) {
+            scrollAnimator = new HideOnScrollAnimator(topBar, HideOnScrollAnimator.HideDirection.Up, topBar.getHeight());
+        }
+        scrollAnimator.onScrollChanged(direction);
     }
 
     @Override

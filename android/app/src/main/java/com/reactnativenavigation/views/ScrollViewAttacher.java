@@ -1,5 +1,6 @@
 package com.reactnativenavigation.views;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
@@ -38,6 +39,7 @@ public class ScrollViewAttacher implements View.OnAttachStateChangeListener {
 
     private void findScrollAndStartListening() {
         scrollView = findScrollView(view);
+        Log.d("LOG", "ScrollViewAttacher.findScrollAndStartListening " + scrollView);
         if (scrollView != null) {
             scrollDirectionListener = new ScrollDirectionListener(scrollView, onChanged);
             scrollView.getViewTreeObserver().addOnScrollChangedListener(scrollDirectionListener);

@@ -50,4 +50,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile 'com.android.support:design:23.1.1'
     compile "com.facebook.react:react-native:+"  // From node_modules
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.robolectric:robolectric:3.1.1"
 }
