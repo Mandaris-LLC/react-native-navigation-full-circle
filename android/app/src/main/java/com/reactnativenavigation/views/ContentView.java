@@ -2,6 +2,7 @@ package com.reactnativenavigation.views;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
@@ -14,20 +15,25 @@ public class ContentView extends ReactRootView {
     private final String screenId;
     private final Bundle passProps;
     private Bundle navigationParams;
-    private final ScrollDirectionListener.OnScrollChanged scrollListener;
+    private ScrollViewAttacher scrollViewAttacher;
 
     public ContentView(Context context, ScreenParams screenParams, ScrollDirectionListener.OnScrollChanged scrollListener) {
         super(context);
         this.screenId = screenParams.screenId;
         this.passProps = screenParams.passProps;
         this.navigationParams = screenParams.navigationParams;
-        this.scrollListener = scrollListener;
+        scrollViewAttacher = new ScrollViewAttacher(scrollListener);
     }
 
     public void init() {
         ReactInstanceManager react = NavigationApplication.instance.getNavigationReactInstance().getReactInstanceManager();
         startReactApplication(react, screenId, mergePropsAndNavigationParams());
-        new ScrollViewAttacher(this, scrollListener).attach();
+    }
+
+    @Override
+    public void onViewAdded(View child) {
+        super.onViewAdded(child);
+        scrollViewAttacher.onViewAdded(child);
     }
 
     private Bundle mergePropsAndNavigationParams() {
