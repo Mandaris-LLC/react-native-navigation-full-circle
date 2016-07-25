@@ -24,7 +24,8 @@ class ListScreen extends Component {
   static navigatorStyle = {
     statusBarColor: '#7CB342',
     toolBarColor: '#8BC34A',
-    navigationBarColor: '#8BC34A'
+    navigationBarColor: '#8BC34A',
+    drawUnderNavBar: true
   };
 
   constructor(props) {
