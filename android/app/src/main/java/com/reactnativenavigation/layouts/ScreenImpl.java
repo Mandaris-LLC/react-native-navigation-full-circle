@@ -122,4 +122,9 @@ public class ScreenImpl extends RelativeLayout implements Screen, ScrollDirectio
     public void ensureUnmountOnDetachedFromWindow() {
         contentView.ensureUnmountOnDetachedFromWindow();
     }
+
+    @Override
+    public void preventUnmountOnDetachedFromWindow() {
+        contentView.preventUnmountOnDetachedFromWindow();
+    }
 }

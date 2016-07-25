@@ -21,16 +21,38 @@ public class ScreenStack extends FrameLayout {
     }
 
     public void push(ScreenParams screenParams) {
+        Screen previous = stack.peek();
+        addScreen(screenParams);
+        removePreviousWithoutUnmount(previous);
+    }
+
+    private void addScreen(ScreenParams screenParams) {
         Screen screen = new ScreenImpl(getContext(), screenParams);
         addView(screen.asView(), new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         stack.push(screen);
     }
 
-    public Screen pop() {
-        Screen popped = stack.pop();
-        popped.ensureUnmountOnDetachedFromWindow();
-        removeView(popped.asView());
-        return popped;
+    private void removePreviousWithoutUnmount(Screen previous) {
+        previous.preventUnmountOnDetachedFromWindow();
+        removeView(previous.asView());
+    }
+
+    public void pop() {
+        if (!canPop()) {
+            throw new RuntimeException("Can't pop ScreenStack of size " + getStackSize());
+        }
+
+        Screen toRemove = stack.pop();
+        Screen previous = stack.peek();
+
+        readdPrevious(previous);
+
+        toRemove.ensureUnmountOnDetachedFromWindow();
+        removeView(toRemove.asView());
+    }
+
+    private void readdPrevious(Screen previous) {
+        addView(previous.asView(), new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
     public void popToRoot() {
@@ -40,9 +62,11 @@ public class ScreenStack extends FrameLayout {
     }
 
     public void destroy() {
-        while (!isEmpty()) {
-            pop();
+        for (Screen screen : stack) {
+            screen.ensureUnmountOnDetachedFromWindow();
+            removeView(screen.asView());
         }
+        stack.clear();
     }
 
     public boolean isEmpty() {
@@ -51,10 +75,6 @@ public class ScreenStack extends FrameLayout {
 
     public int getStackSize() {
         return stack.size();
-    }
-
-    public Screen peek() {
-        return stack.peek();
     }
 
     public boolean canPop() {

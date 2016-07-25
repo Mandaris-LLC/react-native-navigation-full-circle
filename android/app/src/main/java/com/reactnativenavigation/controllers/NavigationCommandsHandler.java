@@ -13,6 +13,10 @@ public class NavigationCommandsHandler {
 
     private static final String ACTIVITY_PARAMS_BUNDLE = "ACTIVITY_PARAMS_BUNDLE";
 
+    static ActivityParams getActivityParams(Intent intent) {
+        return ActivityParamsParser.parse(intent.getBundleExtra(NavigationCommandsHandler.ACTIVITY_PARAMS_BUNDLE));
+    }
+
     /**
      * start a new activity with CLEAR_TASK | NEW_TASK
      *
@@ -40,9 +44,6 @@ public class NavigationCommandsHandler {
         });
     }
 
-    static ActivityParams getActivityParams(Intent intent) {
-        return ActivityParamsParser.parse(intent.getBundleExtra(NavigationCommandsHandler.ACTIVITY_PARAMS_BUNDLE));
-    }
 
     public static void pop(Bundle screenParams) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
