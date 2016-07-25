@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.reactnativenavigation.views.ScrollDirectionListener;
 
-public class HideOnScrollAnimator {
+public class OnScrollAnimator {
 
     public enum HideDirection {
         Up, Down
@@ -25,7 +25,7 @@ public class HideOnScrollAnimator {
     private final int shownEndValue = 0;
     private State state = State.Shown;
 
-    public HideOnScrollAnimator(View view, HideDirection hideDirection, int height) {
+    public OnScrollAnimator(View view, HideDirection hideDirection, int height) {
         this.view = view;
         this.hideDirection = hideDirection;
         this.hiddenEndValue = hideDirection == HideDirection.Up ? -height : height;
@@ -50,10 +50,10 @@ public class HideOnScrollAnimator {
     }
 
     private void handleUpHidingViews(ScrollDirectionListener.Direction scrollDirection) {
-        if (scrollUp(scrollDirection) && !hiding()) {
-            hide();
-        } else if (scrollDown(scrollDirection) && !showing()) {
+        if (scrollUp(scrollDirection) && !showing()) {
             show();
+        } else if (scrollDown(scrollDirection) && !hiding()) {
+            hide();
         }
     }
 
