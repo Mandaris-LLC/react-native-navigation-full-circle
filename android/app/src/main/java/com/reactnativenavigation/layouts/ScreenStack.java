@@ -31,14 +31,14 @@ public class ScreenStack extends FrameLayout {
     }
 
     private void addScreen(ScreenParams screenParams) {
-        Screen screen = new ScreenImpl(getContext(), screenParams);
-        addView(screen.asView(), new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        Screen screen = new SingleScreen(getContext(), screenParams);
+        addView(screen, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         stack.push(screen);
     }
 
     private void removePreviousWithoutUnmount(Screen previous) {
         previous.preventUnmountOnDetachedFromWindow();
-        removeView(previous.asView());
+        removeView(previous);
     }
 
     public void pop() {
@@ -52,11 +52,11 @@ public class ScreenStack extends FrameLayout {
         readdPrevious(previous);
 
         toRemove.ensureUnmountOnDetachedFromWindow();
-        removeView(toRemove.asView());
+        removeView(toRemove);
     }
 
     private void readdPrevious(Screen previous) {
-        addView(previous.asView(), new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        addView(previous, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
     public void popToRoot() {
@@ -68,7 +68,7 @@ public class ScreenStack extends FrameLayout {
     public void destroy() {
         for (Screen screen : stack) {
             screen.ensureUnmountOnDetachedFromWindow();
-            removeView(screen.asView());
+            removeView(screen);
         }
         stack.clear();
     }

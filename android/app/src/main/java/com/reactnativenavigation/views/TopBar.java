@@ -3,6 +3,7 @@ package com.reactnativenavigation.views;
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 
+import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.utils.ViewUtils;
 
@@ -24,11 +25,15 @@ public class TopBar extends AppBarLayout {
         titleBar.setButtons(buttons, navigatorEventId);
     }
 
-    public void setTitleBarVisibility(boolean isHidden) {
-        titleBar.setVisibility(isHidden ? GONE : VISIBLE);
-    }
-
     public void setTitle(String title) {
         titleBar.setTitle(title);
+    }
+
+    public void setStyle(ScreenStyleParams styleParams) {
+        if (styleParams.topBarColor.hasColor()) {
+            setBackgroundColor(styleParams.topBarColor.getColor());
+        }
+        setVisibility(styleParams.topBarHidden ? GONE : VISIBLE);
+        titleBar.setVisibility(styleParams.titleBarHidden ? GONE : VISIBLE);
     }
 }
