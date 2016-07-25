@@ -15,7 +15,7 @@
     "redux": "^3.0.5",
     "redux-thunk": "^1.0.3",
     "seamless-immutable": "^5.0.1",
-    "react-native-navigation": "file:../",
+    "react-native-navigation": "latest",
     "babel-preset-react-native-stage-0": "*"
   }
 }
