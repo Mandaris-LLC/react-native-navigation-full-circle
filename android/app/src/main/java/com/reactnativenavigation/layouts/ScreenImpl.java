@@ -8,7 +8,7 @@ import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.animation.OnScrollAnimator;
 import com.reactnativenavigation.params.ScreenParams;
@@ -21,7 +21,7 @@ import com.reactnativenavigation.views.TopBar;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class ScreenImpl extends LinearLayout implements Screen, ScrollDirectionListener.OnScrollChanged {
+public class ScreenImpl extends RelativeLayout implements Screen, ScrollDirectionListener.OnScrollChanged {
 
     private final ScreenParams screenParams;
     private ContentView contentView;
@@ -31,7 +31,6 @@ public class ScreenImpl extends LinearLayout implements Screen, ScrollDirectionL
     public ScreenImpl(Context context, ScreenParams screenParams) {
         super(context);
         this.screenParams = screenParams;
-        setOrientation(VERTICAL);
 
         createViews();
         setStyle(screenParams.styleParams);
@@ -50,12 +49,14 @@ public class ScreenImpl extends LinearLayout implements Screen, ScrollDirectionL
 
     private void addTopBar() {
         topBar = new TopBar(getContext());
-        addView(topBar, new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+        addView(topBar, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
     }
 
     private void addContentView() {
         contentView = new ContentView(getContext(), screenParams, this);
-        addView(contentView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        params.addRule(RelativeLayout.BELOW, topBar.getId());
+        addView(contentView, params);
         contentView.init();
     }
 

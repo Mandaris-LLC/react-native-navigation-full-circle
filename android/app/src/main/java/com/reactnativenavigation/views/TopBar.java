@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.utils.ViewUtils;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class TopBar extends AppBarLayout {
     public TopBar(Context context) {
         super(context);
         setFitsSystemWindows(true);
+        setId(ViewUtils.generateViewId());
     }
 
     public void addTitleBarAndSetButtons(List<TitleBarButtonParams> buttons, String navigatorEventId) {

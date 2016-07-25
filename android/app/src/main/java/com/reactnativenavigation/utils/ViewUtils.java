@@ -8,7 +8,11 @@ import android.view.ViewTreeObserver;
 
 import com.reactnativenavigation.NavigationApplication;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class ViewUtils {
+    private static final AtomicInteger viewId = new AtomicInteger();
+
     public static void runOnPreDraw(final View view, final Runnable task) {
         view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -30,6 +34,10 @@ public class ViewUtils {
     public static float convertDpToPixel(float dp) {
         float scale = NavigationApplication.instance.getResources().getDisplayMetrics().density;
         return dp * scale + 0.5f;
+    }
+
+    public static int generateViewId() {
+        return viewId.incrementAndGet();
     }
 }
 
