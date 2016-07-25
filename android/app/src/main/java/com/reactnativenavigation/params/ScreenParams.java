@@ -13,6 +13,11 @@ public class ScreenParams {
     public String title;
     public ScreenStyleParams styleParams;
     public Bundle navigationParams;
+    public List<TopTabParams> topTabParams;
     //    public String tabLabel; TODO when tabs are supported move to TabParams
     //    public Drawable tabIcon;
+
+    public boolean hasTopTabs() {
+        return topTabParams != null && !topTabParams.isEmpty();
+    }
 }

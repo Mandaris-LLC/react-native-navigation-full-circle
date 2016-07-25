@@ -31,7 +31,7 @@ public class ScreenStack extends FrameLayout {
     }
 
     private void addScreen(ScreenParams screenParams) {
-        Screen screen = new SingleScreen(getContext(), screenParams);
+        Screen screen = ScreenFactory.create(getContext(), screenParams);
         addView(screen, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         stack.push(screen);
     }

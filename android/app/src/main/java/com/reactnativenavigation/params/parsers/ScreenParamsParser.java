@@ -13,6 +13,7 @@ public class ScreenParamsParser extends Parser {
     private static final String KEY_NAVIGATION_PARAMS = "navigationParams";
     private static final String KEY_BUTTONS = "titleBarButtons";
     private static final String STYLE_PARAMS = "styleParams";
+    public static final String TOP_TABS = "topTabs";
 
     @SuppressWarnings("ConstantConditions")
     public static ScreenParams parse(Bundle params) {
@@ -26,6 +27,9 @@ public class ScreenParamsParser extends Parser {
         result.buttons = TitleBarButtonParamsParser.parse(params.getBundle(KEY_BUTTONS));
         result.title = params.getString(KEY_TITLE);
         result.styleParams = ScreenStyleParamsParser.parse(params.getBundle(STYLE_PARAMS));
+        if (hasKey(params, TOP_TABS)) {
+            result.topTabParams = TopTabParamsParser.parse(params.getBundle(TOP_TABS));
+        }
         return result;
     }
 }
