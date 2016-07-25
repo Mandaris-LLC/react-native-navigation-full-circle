@@ -32,4 +32,5 @@ public class ScreenStyleParams {
     public boolean topTabsHidden;
     public boolean bottomTabsHidden;
     public boolean bottomTabsHiddenOnScroll;
+    public boolean drawUnderTopBar;
 }

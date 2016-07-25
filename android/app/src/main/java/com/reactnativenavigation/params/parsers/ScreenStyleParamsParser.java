@@ -19,6 +19,7 @@ public class ScreenStyleParamsParser {
         result.topTabsHidden = params.getBoolean("topTabsHidden");
         result.bottomTabsHidden = params.getBoolean("bottomTabsHidden");
         result.bottomTabsHiddenOnScroll = params.getBoolean("bottomTabsHiddenOnScroll");
+        result.drawUnderTopBar = params.getBoolean("drawUnderTopBar", false);
         return result;
     }
 }

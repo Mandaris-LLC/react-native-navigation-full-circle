@@ -55,7 +55,9 @@ public class ScreenImpl extends RelativeLayout implements Screen, ScrollDirectio
     private void addContentView() {
         contentView = new ContentView(getContext(), screenParams, this);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        params.addRule(RelativeLayout.BELOW, topBar.getId());
+        if (!screenParams.styleParams.drawUnderTopBar) {
+            params.addRule(RelativeLayout.BELOW, topBar.getId());
+        }
         addView(contentView, params);
         contentView.init();
     }

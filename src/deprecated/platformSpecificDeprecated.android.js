@@ -90,7 +90,8 @@ function adaptNavigationStyleToScreenStyle(screen) {
     backButtonHidden: navigatorStyle.backButtonHidden,
     topTabsHidden: navigatorStyle.topTabsHidden,
     bottomTabsHidden: navigatorStyle.tabBarHidden,
-    bottomTabsHiddenOnScroll: navigatorStyle.bottomTabsHiddenOnScroll
+    bottomTabsHiddenOnScroll: navigatorStyle.bottomTabsHiddenOnScroll,
+    drawUnderTopBar: navigatorStyle.drawUnderNavBar
   };
 
   return _.omit(screen, ['navigatorStyle']);
