@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 
+import java.util.Iterator;
 import java.util.Stack;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -85,8 +86,31 @@ public class ScreenStack extends FrameLayout {
         return getStackSize() > 1;
     }
 
+    public void setTopBarVisible(String screenInstanceID, boolean visible, boolean animate) {
+        Screen screen = findScreenByScreenInstanceId(screenInstanceID);
+        if (screen != null) {
+            screen.setTopBarVisible(visible, animate);
+        }
+    }
 
-//    /**
+    private Screen findScreenByScreenInstanceId(String screenInstanceId) {
+        if (stack.isEmpty()) {
+            return null;
+        }
+
+        Iterator<Screen> iterator = stack.iterator();
+        while (iterator.hasNext()) {
+            Screen next = iterator.next();
+            if (next.getScreenInstanceId().equals(screenInstanceId)) {
+                return next;
+            }
+        }
+
+        return null;
+    }
+
+
+    //    /**
 //     * Remove the ScreenStack from {@code parent} while preventing all child react views from getting unmounted
 //        -= USE WHEN SWITCHING TABS =-
 //     */

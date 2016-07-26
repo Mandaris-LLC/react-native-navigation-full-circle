@@ -32,10 +32,15 @@ function newStack(screenParams) {
   NativeModules.NavigationReactModule.newStack(screenParams);
 }
 
+function toggleTopBarVisible(screenInstanceID, visible, animated) {
+  NativeModules.NavigationReactModule.setTopBarVisible(screenInstanceID, visible, animated);
+}
+
 module.exports = {
   startApp,
   push,
   pop,
   popToRoot,
-  newStack
+  newStack,
+  toggleTopBarVisible
 };

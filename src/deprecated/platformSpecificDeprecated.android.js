@@ -178,10 +178,15 @@ function navigatorToggleDrawer(navigator, params) {
 }
 
 function navigatorToggleNavBar(navigator, params) {
-  //RctActivity.toggleNavigationBar({
-  //  hidden: params.to === 'hidden',
-  //  animated: !(params.animated === false)
-  //});
+  const screenInstanceID = navigator.screenInstanceID;
+  const visible = params.to === 'shown';
+  const animated = !(params.animated === false);
+
+  newPlatformSpecific.toggleTopBarVisible(
+    screenInstanceID,
+    visible,
+    animated
+  );
 }
 
 function navigatorToggleTabs(navigator, params) {

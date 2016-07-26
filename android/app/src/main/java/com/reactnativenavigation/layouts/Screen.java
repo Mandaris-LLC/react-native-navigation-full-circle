@@ -8,10 +8,11 @@ import android.os.Build;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
-import com.reactnativenavigation.animation.OnScrollAnimator;
+import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.utils.SdkSupports;
+import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.ScrollDirectionListener;
 import com.reactnativenavigation.views.TopBar;
 
@@ -22,7 +23,7 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
 
     protected final ScreenParams screenParams;
     protected TopBar topBar;
-    private OnScrollAnimator scrollAnimator;
+    private VisibilityAnimator topBarVisibilityAnimator;
 
     public Screen(Context context, ScreenParams screenParams) {
         super(context);
@@ -47,7 +48,19 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
 
     private void createTopBar() {
         topBar = new TopBar(getContext());
+        createTopBarVisibilityAnimator();
         addView(topBar, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+    }
+
+    private void createTopBarVisibilityAnimator() {
+        ViewUtils.runOnPreDraw(topBar, new Runnable() {
+            @Override
+            public void run() {
+                if (topBarVisibilityAnimator == null) {
+                    topBarVisibilityAnimator = new VisibilityAnimator(topBar, VisibilityAnimator.HideDirection.Up, topBar.getHeight());
+                }
+            }
+        });
     }
 
     private void setStyle(ScreenStyleParams styleParams) {
@@ -88,13 +101,18 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
 
     @Override
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
-        if (scrollAnimator == null) {
-            scrollAnimator = new OnScrollAnimator(topBar, OnScrollAnimator.HideDirection.Up, topBar.getHeight());
-        }
-        scrollAnimator.onScrollChanged(direction);
+        topBarVisibilityAnimator.onScrollChanged(direction);
     }
 
     public abstract void ensureUnmountOnDetachedFromWindow();
 
     public abstract void preventUnmountOnDetachedFromWindow();
+
+    public String getScreenInstanceId() {
+        return screenParams.screenInstanceId;
+    }
+
+    public void setTopBarVisible(boolean visible, boolean animate) {
+        topBarVisibilityAnimator.setVisible(visible, animate);
+    }
 }

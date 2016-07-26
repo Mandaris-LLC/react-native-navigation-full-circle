@@ -16,4 +16,6 @@ public interface Layout {
     void popToRoot(ScreenParams params);
 
     void newStack(ScreenParams params);
+
+    void setTopBarVisible(String screenInstanceID, boolean hidden, boolean animated);
 }

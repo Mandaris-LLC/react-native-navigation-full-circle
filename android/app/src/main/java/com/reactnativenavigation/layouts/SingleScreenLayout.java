@@ -66,4 +66,9 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     public void newStack(ScreenParams params) {
         createStack(getContext());
     }
+
+    @Override
+    public void setTopBarVisible(String screenInstanceID, boolean visible, boolean animate) {
+        stack.setTopBarVisible(screenInstanceID, visible, animate);
+    }
 }

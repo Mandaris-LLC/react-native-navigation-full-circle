@@ -8,24 +8,26 @@ import android.view.View;
 
 import com.reactnativenavigation.views.ScrollDirectionListener;
 
-public class OnScrollAnimator {
+// TODO find a better name for this class
+public class VisibilityAnimator {
 
     public enum HideDirection {
         Up, Down
     }
 
-    private enum State {
+    private enum VisibilityState {
         Hidden, AnimateHide, Shown, AnimateShow
     }
 
+    private static final int SHOW_END_VALUE = 0;
     private static final int DURATION = 300;
+
     private final View view;
     private final HideDirection hideDirection;
     private final int hiddenEndValue;
-    private final int shownEndValue = 0;
-    private State state = State.Shown;
+    private VisibilityState visibilityState = VisibilityState.Shown;
 
-    public OnScrollAnimator(View view, HideDirection hideDirection, int height) {
+    public VisibilityAnimator(View view, HideDirection hideDirection, int height) {
         this.view = view;
         this.hideDirection = hideDirection;
         this.hiddenEndValue = hideDirection == HideDirection.Up ? -height : height;
@@ -39,29 +41,47 @@ public class OnScrollAnimator {
         }
     }
 
-    public void show() {
-        ObjectAnimator animator = createAnimator(true);
-        animator.start();
-    }
-
-    public void hide() {
-        ObjectAnimator animator = createAnimator(false);
-        animator.start();
+    public void setVisible(boolean visible, boolean animate) {
+        if (isShowing() && !visible) {
+            hide(animate);
+        } else if (isHiding() && visible) {
+            show(animate);
+        }
     }
 
     private void handleUpHidingViews(ScrollDirectionListener.Direction scrollDirection) {
-        if (scrollUp(scrollDirection) && !showing()) {
-            show();
-        } else if (scrollDown(scrollDirection) && !hiding()) {
-            hide();
+        if (scrollUp(scrollDirection) && !isShowing()) {
+            show(true);
+        } else if (scrollDown(scrollDirection) && !isHiding()) {
+            hide(true);
         }
     }
 
     private void handleDownHidingViews(ScrollDirectionListener.Direction scrollDirection) {
-        if (scrollDown(scrollDirection) && !hiding()) {
-            hide();
-        } else if (scrollUp(scrollDirection) && !showing()) {
-            show();
+        if (scrollDown(scrollDirection) && !isHiding()) {
+            hide(true);
+        } else if (scrollUp(scrollDirection) && !isShowing()) {
+            show(true);
+        }
+    }
+
+    private void show(boolean animate) {
+        if (animate) {
+            ObjectAnimator animator = createAnimator(true);
+            animator.start();
+        } else {
+            visibilityState = VisibilityState.Shown;
+            view.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hide(boolean animate) {
+        if (animate) {
+            ObjectAnimator animator = createAnimator(false);
+            animator.start();
+        } else {
+            visibilityState = VisibilityState.Hidden;
+            view.setVisibility(View.GONE);
         }
     }
 
@@ -73,30 +93,29 @@ public class OnScrollAnimator {
         return scrollDirection == ScrollDirectionListener.Direction.Down;
     }
 
-    private boolean showing() {
-        return state == State.Shown || state == State.AnimateShow;
+    private boolean isShowing() {
+        return visibilityState == VisibilityState.Shown || visibilityState == VisibilityState.AnimateShow;
     }
 
-    private boolean hiding() {
-        return state == State.Hidden || state == State.AnimateHide;
+    private boolean isHiding() {
+        return visibilityState == VisibilityState.Hidden || visibilityState == VisibilityState.AnimateHide;
     }
 
     private ObjectAnimator createAnimator(final boolean show) {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, show ? shownEndValue : hiddenEndValue);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, show ? SHOW_END_VALUE : hiddenEndValue);
         animator.setDuration(DURATION);
         animator.setInterpolator(new LinearOutSlowInInterpolator());
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
-                state = show ? State.AnimateShow : State.AnimateHide;
+                visibilityState = show ? VisibilityState.AnimateShow : VisibilityState.AnimateHide;
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                state = show ? State.Shown : State.Hidden;
+                visibilityState = show ? VisibilityState.Shown : VisibilityState.Hidden;
             }
         });
         return animator;
     }
-
 }

@@ -11,8 +11,9 @@ import _ from 'lodash';
 const _allNavigatorEventHandlers = {};
 
 class Navigator {
-  constructor(navigatorID, navigatorEventID) {
+  constructor(navigatorID, navigatorEventID, screenInstanceID) {
     this.navigatorID = navigatorID;
+    this.screenInstanceID = screenInstanceID;
     this.navigatorEventID = navigatorEventID;
     this.navigatorEventHandler = null;
     this.navigatorEventSubscription = null;
@@ -139,7 +140,7 @@ export default class Screen extends Component {
   constructor(props) {
     super(props);
     if (props.navigatorID) {
-      this.navigator = new Navigator(props.navigatorID, props.navigatorEventID);
+      this.navigator = new Navigator(props.navigatorID, props.navigatorEventID, props.screenInstanceID);
     }
   }
 

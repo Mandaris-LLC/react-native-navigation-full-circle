@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
-import com.reactnativenavigation.animation.OnScrollAnimator;
+import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 public class TitleBar extends Toolbar {
 
     private boolean hideOnScroll = false;
-    private OnScrollAnimator onScrollAnimator;
+    private VisibilityAnimator visibilityAnimator;
 
     public TitleBar(Context context) {
         super(context);
@@ -36,14 +36,14 @@ public class TitleBar extends Toolbar {
 
     public void onScrollChanged(ScrollDirectionListener.Direction direction) {
         if (hideOnScroll) {
-            if (onScrollAnimator == null) {
+            if (visibilityAnimator == null) {
                 createScrollAnimator();
             }
-            onScrollAnimator.onScrollChanged(direction);
+            visibilityAnimator.onScrollChanged(direction);
         }
     }
 
     private void createScrollAnimator() {
-        onScrollAnimator = new OnScrollAnimator(this, OnScrollAnimator.HideDirection.Up, getHeight());
+        visibilityAnimator = new VisibilityAnimator(this, VisibilityAnimator.HideDirection.Up, getHeight());
     }
 }

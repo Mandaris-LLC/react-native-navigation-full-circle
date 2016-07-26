@@ -24,6 +24,7 @@ public class ScreenParamsParser extends Parser {
         assertKeyExists(params, KEY_NAVIGATION_PARAMS);
         result.navigationParams = params.getBundle(KEY_NAVIGATION_PARAMS);
         result.navigatorEventId = result.navigationParams.getString(KEY_NAVIGATOR_EVENT_ID);
+        result.screenInstanceId = result.navigationParams.getString(KEY_SCREEN_INSTANCE_ID);
         result.buttons = TitleBarButtonParamsParser.parse(params.getBundle(KEY_BUTTONS));
         result.title = params.getString(KEY_TITLE);
         result.styleParams = ScreenStyleParamsParser.parse(params.getBundle(STYLE_PARAMS));
