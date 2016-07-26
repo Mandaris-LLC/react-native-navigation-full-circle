@@ -1,6 +1,7 @@
 package com.reactnativenavigation.layouts;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
@@ -78,6 +79,11 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     @Override
     public void setTitleBarTitle(String screenInstanceId, String title) {
         stack.setTitleBarTitle(screenInstanceId, title);
+    }
+
+    @Override
+    public View asView() {
+        return this;
     }
 
     @Override

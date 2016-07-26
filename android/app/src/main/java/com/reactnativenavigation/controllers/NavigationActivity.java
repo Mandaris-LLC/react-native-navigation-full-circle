@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.View;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.NavigationApplication;
@@ -52,7 +51,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     private void createLayout() {
         layout = LayoutFactory.create(this, activityParams);
-        setContentView((View) layout);
+        setContentView(layout.asView());
     }
 
     @Override
@@ -115,7 +114,11 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     void push(ScreenParams params) {
-        layout.push(params);
+        if (modalController.isShowing()) {
+            modalController.push(params);
+        } else {
+            layout.push(params);
+        }
     }
 
     void pop(ScreenParams params) {

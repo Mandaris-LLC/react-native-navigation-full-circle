@@ -14,11 +14,14 @@ public class ModalController {
         this.activity = activity;
     }
 
-
     public void showModal(ScreenParams screenParams) {
-        Modal modal = new Modal(activity, screenParams);
+        Modal modal = new Modal(activity, this, screenParams);
         modal.show();
         stack.add(modal);
+    }
+
+    public void dismissModal() {
+
     }
 
     public boolean onBackPressed() {
@@ -28,42 +31,16 @@ public class ModalController {
     public void onDestroy() {
 
     }
-    //    public void add(RnnModal modal) {
-//        modals.add(modal);
-//    }
-//
-//    public boolean isModalDisplayed() {
-//        return !modals.isEmpty();
-//    }
-//
-//    @Nullable
-//    public RnnModal get() {
-//        return isModalDisplayed() ? modals.peek() : null;
-//    }
-//
-//    public void remove() {
-//        if (isModalDisplayed()) {
-//            modals.pop();
-//        }
-//    }
-//
-//    public void dismissAllModals() {
-//        while (isModalDisplayed()) {
-//            dismissModal();
-//        }
-//    }
-//
-//    public void dismissModal() {
-//        if (isModalDisplayed()) {
-//            modals.pop().dismiss();
-//        }
-//    }
-//
-//    public void onDestroy() {
-//
-//    }
-//
-//    public boolean onBackPressed() {
-//        return false;
-//    }
+
+    public boolean isShowing() {
+        return !stack.empty();
+    }
+
+    public void modalDismissed(Modal modal) {
+        stack.remove(modal);
+    }
+
+    public void push(ScreenParams params) {
+        stack.peek().push(params);
+    }
 }

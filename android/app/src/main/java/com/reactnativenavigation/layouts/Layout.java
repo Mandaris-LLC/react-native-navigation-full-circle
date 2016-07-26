@@ -1,11 +1,15 @@
 package com.reactnativenavigation.layouts;
 
+import android.view.View;
+
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 
 import java.util.List;
 
 public interface Layout {
+    View asView();
+
     boolean onBackPressed();
 
     void onDestroy();
