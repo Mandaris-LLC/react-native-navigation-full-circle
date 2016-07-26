@@ -36,11 +36,16 @@ function toggleTopBarVisible(screenInstanceID, visible, animated) {
   NativeModules.NavigationReactModule.setTopBarVisible(screenInstanceID, visible, animated);
 }
 
+function setScreenTitleBarTitle(screenInstanceID, title) {
+  NativeModules.NavigationReactModule.setScreenTitleBarTitle(screenInstanceID, title);
+}
+
 module.exports = {
   startApp,
   push,
   pop,
   popToRoot,
   newStack,
-  toggleTopBarVisible
+  toggleTopBarVisible,
+  setScreenTitleBarTitle
 };

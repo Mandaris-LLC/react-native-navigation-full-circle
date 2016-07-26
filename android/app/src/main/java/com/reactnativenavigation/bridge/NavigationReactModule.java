@@ -34,7 +34,8 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setScreenTitleBarTitle(final ReadableMap params) {
+    public void setScreenTitleBarTitle(String screenInstanceId, String title) {
+        NavigationCommandsHandler.setScreenTitleBarTitle(screenInstanceId, title);
     }
 
     @ReactMethod

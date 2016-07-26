@@ -127,8 +127,12 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         layout.newStack(params);
     }
 
-    void setTopBarVisible(String screenInstanceID, boolean hidden, boolean animated) {
-        layout.setTopBarVisible(screenInstanceID, hidden, animated);
+    void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
+        layout.setTopBarVisible(screenInstanceId, hidden, animated);
+    }
+
+    void setTitleBarTitle(String screenInstanceId, String title) {
+        layout.setTitleBarTitle(screenInstanceId, title);
     }
 
     void showModal(ScreenParams screenParams) {

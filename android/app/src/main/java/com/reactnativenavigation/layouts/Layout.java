@@ -17,5 +17,7 @@ public interface Layout {
 
     void newStack(ScreenParams params);
 
-    void setTopBarVisible(String screenInstanceID, boolean hidden, boolean animated);
+    void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated);
+
+    void setTitleBarTitle(String screenInstanceId, String title);
 }

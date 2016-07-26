@@ -159,7 +159,7 @@ function navigatorSetTabBadge(navigator, params) {
 }
 
 function navigatorSetTitle(navigator, params) {
-  //RctActivity.setNavigatorTitle(params);
+  newPlatformSpecific.setScreenTitleBarTitle(navigator.screenInstanceID, params);
 }
 
 function navigatorSwitchToTab(navigator, params) {

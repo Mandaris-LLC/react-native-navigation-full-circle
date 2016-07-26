@@ -71,4 +71,9 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     public void setTopBarVisible(String screenInstanceID, boolean visible, boolean animate) {
         stack.setTopBarVisible(screenInstanceID, visible, animate);
     }
+
+    @Override
+    public void setTitleBarTitle(String screenInstanceId, String title) {
+        stack.setTitleBarTitle(screenInstanceId, title);
+    }
 }
