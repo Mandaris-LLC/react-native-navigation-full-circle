@@ -88,6 +88,14 @@ class FirstTabScreen extends Component {
           <Text style={styles.button}>Set Title</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onSetOneButtonsPress.bind(this) }>
+          <Text style={styles.button}>Set One Buttons</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onSetTwoButtonsPress.bind(this) }>
+          <Text style={styles.button}>Set Two Buttons</Text>
+        </TouchableOpacity>
+
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
         <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
         <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
@@ -148,6 +156,38 @@ class FirstTabScreen extends Component {
 
   onSetTitlePress() {
     this.props.navigator.setTitle(_.random(0, 100).toString());
+  }
+
+  onSetOneButtonsPress() {
+    this.props.navigator.setButtons({
+      rightButtons: [
+        {
+          title: 'Account Box',
+          icon: require('../../img/ic_account_box_.png'),
+          id: 'accountBox'
+        }
+      ]
+    });
+  }
+
+  onSetTwoButtonsPress() {
+    this.props.navigator.setButtons({
+      rightButtons: [
+        {
+          title: 'Add Alert',
+          icon: require('../../img/ic_add_alert.png'),
+          id: 'addAlert',
+          color: '#F44336',
+          enabled: false
+        },
+        {
+          title: 'Home',
+          icon: require('../../img/ic_home.png'),
+          id: 'home',
+          color: '#9CCC65'
+        }
+      ]
+    })
   }
 }
 
