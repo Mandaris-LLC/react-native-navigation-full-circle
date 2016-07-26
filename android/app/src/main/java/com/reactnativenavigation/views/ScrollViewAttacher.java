@@ -22,7 +22,7 @@ public class ScrollViewAttacher {
         }
     }
 
-    public void detach() {
+    private void detach() {
         if (scrollView != null) {
             scrollView.getViewTreeObserver().removeOnScrollChangedListener(scrollDirectionListener);
             scrollDirectionListener = null;

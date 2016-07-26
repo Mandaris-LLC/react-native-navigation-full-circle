@@ -59,7 +59,7 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setTopBarVisible(String screenInstanceID, boolean hidden, boolean animated) {
-        NavigationCommandsHandler.toggleTopBarVisible(screenInstanceID, hidden, animated);
+        NavigationCommandsHandler.setTopBarVisible(screenInstanceID, hidden, animated);
     }
 
     @ReactMethod

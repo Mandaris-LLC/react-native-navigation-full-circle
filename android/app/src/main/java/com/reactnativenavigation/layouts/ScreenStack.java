@@ -6,7 +6,6 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 
-import java.util.Iterator;
 import java.util.Stack;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -98,11 +97,9 @@ public class ScreenStack extends FrameLayout {
             return null;
         }
 
-        Iterator<Screen> iterator = stack.iterator();
-        while (iterator.hasNext()) {
-            Screen next = iterator.next();
-            if (next.getScreenInstanceId().equals(screenInstanceId)) {
-                return next;
+        for (Screen screen : stack) {
+            if (screen.getScreenInstanceId().equals(screenInstanceId)) {
+                return screen;
             }
         }
 

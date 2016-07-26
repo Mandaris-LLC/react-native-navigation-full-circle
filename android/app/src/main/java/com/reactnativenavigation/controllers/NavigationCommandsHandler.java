@@ -90,7 +90,7 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void toggleTopBarVisible(final String screenInstanceID, final boolean hidden, final boolean animated) {
+    public static void setTopBarVisible(final String screenInstanceID, final boolean hidden, final boolean animated) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;

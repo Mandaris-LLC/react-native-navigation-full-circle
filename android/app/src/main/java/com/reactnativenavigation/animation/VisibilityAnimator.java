@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.reactnativenavigation.views.ScrollDirectionListener;
 
-// TODO find a better name for this class
 public class VisibilityAnimator {
 
     public enum HideDirection {
@@ -42,10 +41,10 @@ public class VisibilityAnimator {
     }
 
     public void setVisible(boolean visible, boolean animate) {
-        if (isShowing() && !visible) {
-            hide(animate);
-        } else if (isHiding() && visible) {
+        if (visible && isHiding()) {
             show(animate);
+        } else if (!visible && isShowing()) {
+            hide(animate);
         }
     }
 
