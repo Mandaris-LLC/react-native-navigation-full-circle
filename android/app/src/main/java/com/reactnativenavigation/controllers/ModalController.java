@@ -1,6 +1,26 @@
 package com.reactnativenavigation.controllers;
 
+import android.app.Activity;
+
+import com.reactnativenavigation.params.ScreenParams;
+
+import java.util.Stack;
+
 public class ModalController {
+    private final Activity activity;
+    private Stack<Modal> stack = new Stack<>();
+
+    public ModalController(Activity activity) {
+        this.activity = activity;
+    }
+
+
+    public void showModal(ScreenParams screenParams) {
+        Modal modal = new Modal(activity, screenParams);
+        modal.show();
+        stack.add(modal);
+    }
+
     public boolean onBackPressed() {
         return false;
     }
@@ -8,13 +28,7 @@ public class ModalController {
     public void onDestroy() {
 
     }
-
-//    private final Stack<RnnModal> modals = new Stack<>();
-//
-//    public ModalController() {
-//    }
-//
-//    public void add(RnnModal modal) {
+    //    public void add(RnnModal modal) {
 //        modals.add(modal);
 //    }
 //

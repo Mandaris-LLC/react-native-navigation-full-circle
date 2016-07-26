@@ -14,7 +14,7 @@ public class ScreenParams {
     //    public String tabLabel; TODO when tabs are supported move to TabParams
     //    public Drawable tabIcon;
 
-    // TODO navigationParams should be a class with a `toBundle` method or something. Then we wouldn't neet to keep these two fields here
+    // TODO navigationParams should be a terminated. destroyed. annihilated. disintegrated. banished from existence.
     public String screenInstanceId;
     public String navigatorEventId;
     public Bundle navigationParams;

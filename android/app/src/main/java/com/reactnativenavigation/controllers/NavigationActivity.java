@@ -28,8 +28,8 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
      */
     static NavigationActivity currentActivity;
 
-    private final ModalController modalController = new ModalController();
     private ActivityParams activityParams;
+    private ModalController modalController;
     private Layout layout;
 
     @Override
@@ -40,6 +40,11 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         activityParams = NavigationCommandsHandler.getActivityParams(getIntent());
 
         createLayout();
+        createModalController();
+    }
+
+    private void createModalController() {
+        modalController = new ModalController(this);
     }
 
     private void createLayout() {
@@ -124,5 +129,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     void setTopBarVisible(String screenInstanceID, boolean hidden, boolean animated) {
         layout.setTopBarVisible(screenInstanceID, hidden, animated);
+    }
+
+    void showModal(ScreenParams screenParams) {
+        modalController.showModal(screenParams);
     }
 }

@@ -103,4 +103,20 @@ public class NavigationCommandsHandler {
             }
         });
     }
+
+    public static void showModal(Bundle params) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        final ScreenParams screenParams = ScreenParamsParser.parse(params);
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.showModal(screenParams);
+            }
+        });
+    }
 }
