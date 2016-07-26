@@ -85,8 +85,8 @@ public class ScreenStack extends FrameLayout {
         return getStackSize() > 1;
     }
 
-    public void setTopBarVisible(String screenInstanceID, boolean visible, boolean animate) {
-        Screen screen = findScreenByScreenInstanceId(screenInstanceID);
+    public void setTopBarVisible(String screenInstanceId, boolean visible, boolean animate) {
+        Screen screen = findScreenByScreenInstanceId(screenInstanceId);
         if (screen != null) {
             screen.setTopBarVisible(visible, animate);
         }
@@ -104,6 +104,13 @@ public class ScreenStack extends FrameLayout {
         }
 
         return null;
+    }
+
+    public void setTitleBarTitle(String screenInstanceId, String title) {
+        Screen screen = findScreenByScreenInstanceId(screenInstanceId);
+        if (screen != null) {
+            screen.setTitleBarTitle(title);
+        }
     }
 
 

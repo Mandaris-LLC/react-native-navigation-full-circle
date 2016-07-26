@@ -103,4 +103,18 @@ public class NavigationCommandsHandler {
             }
         });
     }
+
+    public static void setScreenTitleBarTitle(final String screenInstanceId, final String title) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.setTitleBarTitle(screenInstanceId, title);
+            }
+        });
+    }
 }

@@ -115,4 +115,8 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
     public void setTopBarVisible(boolean visible, boolean animate) {
         topBarVisibilityAnimator.setVisible(visible, animate);
     }
+
+    public void setTitleBarTitle(String title) {
+        topBar.setTitle(title);
+    }
 }
