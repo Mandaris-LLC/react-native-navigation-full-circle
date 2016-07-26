@@ -37,7 +37,7 @@ export default class App {
       case 'login':
         Navigation.startSingleScreenApp({
           screen: {
-            screen: 'example.ListScreen',
+            screen: 'example.FirstTabScreen',
             title: 'Login',
             navigatorStyle: {}
           },

@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
+import _ from 'lodash';
 
-let navBarVisiable = true;
+let topBarVisible = true;
 
 // this is a traditional React component connected to the redux store
 class FirstTabScreen extends Component {
@@ -83,6 +84,10 @@ class FirstTabScreen extends Component {
           <Text style={styles.button}>Toggle NavBar</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onSetTitlePress.bind(this) }>
+          <Text style={styles.button}>Set Title</Text>
+        </TouchableOpacity>
+
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
         <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
         <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
@@ -134,11 +139,15 @@ class FirstTabScreen extends Component {
   }
 
   onToggleNavBarPress() {
-    navBarVisiable = !navBarVisiable;
+    topBarVisible = !topBarVisible;
     this.props.navigator.toggleNavBar({
-      to: navBarVisiable ? 'shown' : 'hidden',
+      to: topBarVisible ? 'shown' : 'hidden',
       animated: true
     });
+  }
+
+  onSetTitlePress() {
+    this.props.navigator.setTitle(_.random(0, 100).toString());
   }
 }
 
