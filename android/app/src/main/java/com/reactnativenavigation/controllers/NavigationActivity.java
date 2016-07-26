@@ -12,9 +12,12 @@ import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.LayoutFactory;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.NavigationReactInstance;
 import com.reactnativenavigation.react.RedboxPermission;
+
+import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, NavigationReactInstance.OnJsDevReloadListener {
 
@@ -133,6 +136,10 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     void setTitleBarTitle(String screenInstanceId, String title) {
         layout.setTitleBarTitle(screenInstanceId, title);
+    }
+
+    public void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+        layout.setTitleBarButtons(screenInstanceId, navigatorEventId, titleBarButtons);
     }
 
     void showModal(ScreenParams screenParams) {

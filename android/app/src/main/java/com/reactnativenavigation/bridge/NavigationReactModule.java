@@ -3,8 +3,13 @@ package com.reactnativenavigation.bridge;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.controllers.NavigationCommandsHandler;
+import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.parsers.TitleBarButtonParamsParser;
+
+import java.util.List;
 
 /**
  * The basic abstract components we will expose:
@@ -39,7 +44,9 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setScreenTitleBarButtons(final ReadableMap params) {
+    public void setScreenTitleBarButtons(String screenInstanceId, String navigatorEventId, ReadableArray buttons) {
+        List<TitleBarButtonParams> titleBarButtons = TitleBarButtonParamsParser.parse(BundleConverter.toBundle(buttons));
+        NavigationCommandsHandler.setScreenTitleBarButtons(screenInstanceId, navigatorEventId, titleBarButtons);
     }
 
     @ReactMethod

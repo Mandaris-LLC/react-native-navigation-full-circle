@@ -36,4 +36,8 @@ public class TopBar extends AppBarLayout {
         setVisibility(styleParams.topBarHidden ? GONE : VISIBLE);
         titleBar.setVisibility(styleParams.titleBarHidden ? GONE : VISIBLE);
     }
+
+    public void setTitleBarButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+        titleBar.setButtons(titleBarButtons, navigatorEventId);
+    }
 }

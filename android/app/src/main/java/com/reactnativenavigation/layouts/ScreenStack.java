@@ -5,7 +5,9 @@ import android.content.Context;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.TitleBarButtonParams;
 
+import java.util.List;
 import java.util.Stack;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -110,6 +112,13 @@ public class ScreenStack extends FrameLayout {
         Screen screen = findScreenByScreenInstanceId(screenInstanceId);
         if (screen != null) {
             screen.setTitleBarTitle(title);
+        }
+    }
+
+    public void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+        Screen screen = findScreenByScreenInstanceId(screenInstanceId);
+        if (screen != null) {
+            screen.setTitleBarButtons(navigatorEventId, titleBarButtons);
         }
     }
 

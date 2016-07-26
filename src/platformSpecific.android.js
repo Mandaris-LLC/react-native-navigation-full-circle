@@ -40,6 +40,10 @@ function setScreenTitleBarTitle(screenInstanceID, title) {
   NativeModules.NavigationReactModule.setScreenTitleBarTitle(screenInstanceID, title);
 }
 
+function setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons) {
+  NativeModules.NavigationReactModule.setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons);
+}
+
 module.exports = {
   startApp,
   push,
@@ -47,5 +51,6 @@ module.exports = {
   popToRoot,
   newStack,
   toggleTopBarVisible,
-  setScreenTitleBarTitle
+  setScreenTitleBarTitle,
+  setScreenTitleBarButtons
 };

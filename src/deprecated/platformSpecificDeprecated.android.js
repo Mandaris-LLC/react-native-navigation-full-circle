@@ -138,17 +138,17 @@ function addTabIcon(tab) {
 }
 
 function navigatorSetButtons(navigator, navigatorEventID, params) {
-  //if (params.rightButtons) {
-  //  params.rightButtons.forEach(function(button) {
-  //    if (button.icon) {
-  //      const icon = resolveAssetSource(button.icon);
-  //      if (icon) {
-  //        button.icon = icon.uri;
-  //      }
-  //    }
-  //  });
-  //}
-  //RctActivity.setNavigatorButtons(params);
+  if (params.rightButtons) {
+   params.rightButtons.forEach(function(button) {
+     if (button.icon) {
+       const icon = resolveAssetSource(button.icon);
+       if (icon) {
+         button.icon = icon.uri;
+       }
+     }
+   });
+  }
+  newPlatformSpecific.setScreenTitleBarButtons(navigator.screenInstanceID, navigatorEventID, params.rightButtons);
 }
 
 function navigatorSetTabBadge(navigator, params) {
