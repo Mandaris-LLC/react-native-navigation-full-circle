@@ -172,7 +172,7 @@ public class ScreenStack extends android.support.design.widget.CoordinatorLayout
             // Ensure view will be properly detached and unmounted
             view.onRemoveFromScreen();
             // Unmount the view
-            view.detachFromScreen();
+            view.detachReactRootView(mReactInstanceManager);
         }
         removeAllViews();
     }

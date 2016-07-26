@@ -73,6 +73,10 @@ public class RctView extends FrameLayout {
                 }
             };
 
+    public void detachReactRootView(ReactInstanceManager reactInstanceManager) {
+        reactInstanceManager.detachRootView(reactRootView);
+    }
+
     /**
      * Interface used to run some code when the {@link ReactRootView} is visible.
      */
