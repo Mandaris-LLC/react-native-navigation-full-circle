@@ -1,6 +1,7 @@
 package com.reactnativenavigation.controllers;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.reactnativenavigation.params.ScreenParams;
 
@@ -25,6 +26,7 @@ public class ModalController {
     }
 
     public boolean onBackPressed() {
+        Log.d("LOG", "ModalController.onBackPressed ");
         return false;
     }
 
