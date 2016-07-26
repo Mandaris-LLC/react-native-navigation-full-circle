@@ -2,6 +2,7 @@ package com.reactnativenavigation.views;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TabLayout;
 
 import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -12,6 +13,7 @@ import java.util.List;
 public class TopBar extends AppBarLayout {
 
     private TitleBar titleBar;
+    private TabLayout tabLayout;
 
     public TopBar(Context context) {
         super(context);
@@ -39,5 +41,11 @@ public class TopBar extends AppBarLayout {
 
     public void setTitleBarButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         titleBar.setButtons(titleBarButtons, navigatorEventId);
+    }
+
+    public TabLayout initTabs() {
+        tabLayout = new TabLayout(getContext());
+        addView(tabLayout);
+        return tabLayout;
     }
 }

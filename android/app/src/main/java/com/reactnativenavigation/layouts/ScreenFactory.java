@@ -7,7 +7,7 @@ import com.reactnativenavigation.params.ScreenParams;
 public class ScreenFactory {
     public static Screen create(Context context, ScreenParams screenParams) {
         if (screenParams.hasTopTabs()) {
-            throw new UnsupportedOperationException("Rotem do your magic here");
+            return new TabbedScreen(context, screenParams);
         } else {
             return new SingleScreen(context, screenParams);
         }
