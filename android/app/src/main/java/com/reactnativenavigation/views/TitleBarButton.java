@@ -56,7 +56,7 @@ public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
     }
 
     private void setIconColor() {
-        ViewUtils.tintDrawable(buttonParams.icon, buttonParams.color.getColor());
+        ViewUtils.tintDrawable(buttonParams.icon, buttonParams.color.getColor(), buttonParams.enabled);
     }
 
     private void setTextColor() {
