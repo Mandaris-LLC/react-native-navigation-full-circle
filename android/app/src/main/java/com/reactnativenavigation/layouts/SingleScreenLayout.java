@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.screens.ScreenStack;
 
 import java.util.List;
 

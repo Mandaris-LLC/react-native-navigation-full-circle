@@ -1,8 +1,7 @@
-package com.reactnativenavigation.layouts;
+package com.reactnativenavigation.screens;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.views.ContentView;
@@ -28,7 +27,7 @@ public class SingleScreen extends Screen {
     private LayoutParams addBelowTopBar() {
         LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         if (!screenParams.styleParams.drawUnderTopBar) {
-            params.addRule(RelativeLayout.BELOW, topBar.getId());
+            params.addRule(BELOW, topBar.getId());
         }
         return params;
     }

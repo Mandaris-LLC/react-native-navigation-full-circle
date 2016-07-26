@@ -1,4 +1,4 @@
-package com.reactnativenavigation.layouts;
+package com.reactnativenavigation.screens;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

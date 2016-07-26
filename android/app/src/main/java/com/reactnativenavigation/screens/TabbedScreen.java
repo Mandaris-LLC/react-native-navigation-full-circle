@@ -1,4 +1,4 @@
-package com.reactnativenavigation.layouts;
+package com.reactnativenavigation.screens;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,7 +7,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TopTabParams;
@@ -51,7 +50,7 @@ public class TabbedScreen extends Screen {
     private LayoutParams addBelowTopBar() {
         LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         if (!screenParams.styleParams.drawUnderTopBar) {
-            params.addRule(RelativeLayout.BELOW, topBar.getId());
+            params.addRule(BELOW, topBar.getId());
         }
         return params;
     }
