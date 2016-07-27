@@ -8,17 +8,24 @@ import android.view.Window;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.layouts.Layout;
+import com.reactnativenavigation.layouts.ScreenStackContainer;
 import com.reactnativenavigation.layouts.SingleScreenLayout;
 import com.reactnativenavigation.params.ScreenParams;
 
-public class Modal extends Dialog implements DialogInterface.OnDismissListener {
-    private final ModalController modalController;
+public class Modal extends Dialog implements DialogInterface.OnDismissListener, ScreenStackContainer {
+
+    private final OnModalDismissedListener onModalDismissedListener;
+
+    public interface OnModalDismissedListener {
+        void onModalDismissed(Modal modal);
+    }
+
     private final ScreenParams screenParams;
     private Layout layout;
 
-    public Modal(Activity activity, ModalController modalController, ScreenParams screenParams) {
+    public Modal(Activity activity, OnModalDismissedListener onModalDismissedListener, ScreenParams screenParams) {
         super(activity, R.style.Modal);
-        this.modalController = modalController;
+        this.onModalDismissedListener = onModalDismissedListener;
         this.screenParams = screenParams;
         createContent();
     }
@@ -31,8 +38,29 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener {
         setContentView(layout.asView());
     }
 
+    @Override
     public void push(ScreenParams params) {
         layout.push(params);
+    }
+
+    @Override
+    public void pop(ScreenParams screenParams) {
+        layout.pop(screenParams);
+    }
+
+    @Override
+    public void popToRoot(ScreenParams params) {
+        layout.popToRoot(params);
+    }
+
+    @Override
+    public void newStack(ScreenParams params) {
+        layout.newStack(params);
+    }
+
+    @Override
+    public void destroy() {
+        layout.destroy();
     }
 
     @Override
@@ -45,7 +73,7 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        layout.removeAllReactViews();
-        modalController.modalDismissed(this);
+        destroy();
+        onModalDismissedListener.onModalDismissed(this);
     }
 }

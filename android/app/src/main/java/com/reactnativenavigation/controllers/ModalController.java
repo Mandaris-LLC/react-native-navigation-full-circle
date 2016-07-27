@@ -3,11 +3,12 @@ package com.reactnativenavigation.controllers;
 import android.app.Activity;
 import android.util.Log;
 
+import com.reactnativenavigation.layouts.ScreenStackContainer;
 import com.reactnativenavigation.params.ScreenParams;
 
 import java.util.Stack;
 
-public class ModalController {
+public class ModalController implements ScreenStackContainer, Modal.OnModalDismissedListener {
     private final Activity activity;
     private Stack<Modal> stack = new Stack<>();
 
@@ -22,7 +23,7 @@ public class ModalController {
     }
 
     public void dismissModal() {
-
+        stack.pop().destroy();
     }
 
     public boolean onBackPressed() {
@@ -30,19 +31,39 @@ public class ModalController {
         return false;
     }
 
-    public void onDestroy() {
-
-    }
-
     public boolean isShowing() {
         return !stack.empty();
     }
 
-    public void modalDismissed(Modal modal) {
-        stack.remove(modal);
-    }
-
     public void push(ScreenParams params) {
         stack.peek().push(params);
+    }
+
+    @Override
+    public void pop(ScreenParams screenParams) {
+        stack.peek().pop(screenParams);
+    }
+
+    @Override
+    public void popToRoot(ScreenParams params) {
+        stack.peek().popToRoot(params);
+    }
+
+    @Override
+    public void newStack(ScreenParams params) {
+        stack.peek().newStack(params);
+    }
+
+    @Override
+    public void destroy() {
+        for (Modal modal : stack) {
+            modal.destroy();
+        }
+        stack.clear();
+    }
+
+    @Override
+    public void onModalDismissed(Modal modal) {
+        stack.remove(modal);
     }
 }

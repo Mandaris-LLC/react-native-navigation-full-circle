@@ -43,12 +43,7 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     }
 
     @Override
-    public void onDestroy() {
-        stack.destroy();
-    }
-
-    @Override
-    public void removeAllReactViews() {
+    public void destroy() {
         stack.destroy();
     }
 

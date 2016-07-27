@@ -71,7 +71,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     protected void onDestroy() {
         modalController.onDestroy();
-        layout.onDestroy();
+        layout.destroy();
         super.onDestroy();
         if (currentActivity == null || currentActivity.isFinishing()) {
             getNavigationReactInstance().onHostDestroy();
@@ -80,7 +80,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     @Override
     public void onJsDevReload() {
-        layout.removeAllReactViews();
+        layout.destroy();
     }
 
     @Override
