@@ -215,7 +215,7 @@ function dismissModal() {
 }
 
 function dismissAllModals(params) {
-  //RctActivity.dismissAllModals(params.animationType);
+  newPlatformSpecific.dismissAllModals();
 }
 
 function addNavigatorParams(screen, navigator = null, idx = '') {

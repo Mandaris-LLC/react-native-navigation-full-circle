@@ -150,6 +150,10 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     void dismissTopModal() {
-        modalController.dismissModal();
+        modalController.dismissTopModal();
+    }
+
+    void dismissAllModals() {
+        modalController.dismissAllModals();
     }
 }

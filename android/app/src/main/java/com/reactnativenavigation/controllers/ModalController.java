@@ -22,9 +22,15 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
         stack.add(modal);
     }
 
-    public void dismissModal() {
+    public void dismissTopModal() {
         if (isShowing()) {
             stack.pop().dismiss();
+        }
+    }
+
+    public void dismissAllModals() {
+        while (isShowing()) {
+            dismissTopModal();
         }
     }
 
@@ -69,4 +75,5 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
     public void onModalDismissed(Modal modal) {
         stack.remove(modal);
     }
+
 }

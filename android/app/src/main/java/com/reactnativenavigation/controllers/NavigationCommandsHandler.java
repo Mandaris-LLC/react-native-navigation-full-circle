@@ -164,4 +164,18 @@ public class NavigationCommandsHandler {
             }
         });
     }
+
+    public static void dismissAlModals() {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.dismissAllModals();
+            }
+        });
+    }
 }

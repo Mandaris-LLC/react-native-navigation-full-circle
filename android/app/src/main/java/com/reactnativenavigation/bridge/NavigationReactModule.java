@@ -104,7 +104,8 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void dismissAllModals(final ReadableMap params) {
+    public void dismissAllModals() {
+        NavigationCommandsHandler.dismissAlModals();
     }
 
     @ReactMethod

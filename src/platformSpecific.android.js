@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import Navigation from './Navigation';
 
-NativeBridge = NativeModules.NavigationReactModule;
+const NativeReactModule = NativeModules.NavigationReactModule;
 
 const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
@@ -15,43 +15,47 @@ function startApp(activityParams) {
     return;
   }
 
-  NativeBridge.startApp(activityParams);
+  NativeReactModule.startApp(activityParams);
 }
 
 function push(screenParams) {
-  NativeBridge.push(screenParams);
+  NativeReactModule.push(screenParams);
 }
 
 function pop(screenParams) {
-  NativeBridge.pop(screenParams);
+  NativeReactModule.pop(screenParams);
 }
 
 function popToRoot(screenParams) {
-  NativeBridge.popToRoot(screenParams);
+  NativeReactModule.popToRoot(screenParams);
 }
 
 function newStack(screenParams) {
-  NativeBridge.newStack(screenParams);
+  NativeReactModule.newStack(screenParams);
 }
 
 function toggleTopBarVisible(screenInstanceID, visible, animated) {
-  NativeBridge.setTopBarVisible(screenInstanceID, visible, animated);
+  NativeReactModule.setTopBarVisible(screenInstanceID, visible, animated);
 }
 
 function setScreenTitleBarTitle(screenInstanceID, title) {
-  NativeBridge.setScreenTitleBarTitle(screenInstanceID, title);
+  NativeReactModule.setScreenTitleBarTitle(screenInstanceID, title);
 }
 
 function setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons) {
-  NativeBridge.setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons);
+  NativeReactModule.setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons);
 }
 
 function showModal(screenParams) {
-  NativeBridge.showModal(screenParams);
+  NativeReactModule.showModal(screenParams);
 }
 
 function dismissTopModal() {
-  NativeBridge.dismissTopModal();
+  NativeReactModule.dismissTopModal();
+}
+
+function dismissAllModals() {
+  NativeReactModule.dismissAllModals();
 }
 
 module.exports = {
@@ -64,5 +68,6 @@ module.exports = {
   setScreenTitleBarTitle,
   setScreenTitleBarButtons,
   showModal,
-  dismissTopModal
+  dismissTopModal,
+  dismissAllModals
 };
