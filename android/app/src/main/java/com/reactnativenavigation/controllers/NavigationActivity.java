@@ -90,13 +90,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     @Override
     public void onBackPressed() {
-        if (modalController.onBackPressed()) {
-            return;
+        if (!layout.onBackPressed()) {
+            getNavigationReactInstance().onBackPressed();
         }
-        if (layout.onBackPressed()) {
-            return;
-        }
-        getNavigationReactInstance().onBackPressed();
     }
 
     @Override

@@ -165,7 +165,7 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void dismissAlModals() {
+    public static void dismissAllModals() {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;

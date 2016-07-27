@@ -1,7 +1,6 @@
 package com.reactnativenavigation.controllers;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.reactnativenavigation.layouts.ScreenStackContainer;
 import com.reactnativenavigation.params.ScreenParams;
@@ -32,11 +31,6 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
         while (isShowing()) {
             dismissTopModal();
         }
-    }
-
-    public boolean onBackPressed() {
-        Log.d("LOG", "ModalController.onBackPressed ");
-        return false;
     }
 
     public boolean isShowing() {

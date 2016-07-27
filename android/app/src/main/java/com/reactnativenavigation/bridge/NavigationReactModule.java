@@ -16,10 +16,12 @@ import java.util.List;
  * BottomTabs (app) - boolean
  * TopBar (per screen)
  * - TitleBar
- * - TopTabs (segmented control / view pager)
+ * - - RightButtons
+ * - - LeftButton
+ * - TopTabs (segmented control / view pager tabs)
  * DeviceStatusBar (app) (colors are per screen)
  * AndroidNavigationBar (app) (colors are per screen)
- * SideMenu (app) - boolean
+ * SideMenu (app) - boolean, (menu icon is screen-based)
  */
 public class NavigationReactModule extends ReactContextBaseJavaModule {
     public static final String NAME = "NavigationReactModule";
@@ -107,7 +109,7 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void dismissAllModals() {
-        NavigationCommandsHandler.dismissAlModals();
+        NavigationCommandsHandler.dismissAllModals();
     }
 
     @ReactMethod

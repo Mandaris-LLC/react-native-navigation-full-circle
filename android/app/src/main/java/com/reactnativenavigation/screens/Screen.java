@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
@@ -104,6 +105,18 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
         } else {
             window.setNavigationBarColor(Color.BLACK);
         }
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Log.d("LOG", "Screen.onAttachedToWindow " + this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Log.d("LOG", "Screen.onDetachedFromWindow " + this);
     }
 
     @Override

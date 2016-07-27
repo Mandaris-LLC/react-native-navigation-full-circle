@@ -3,7 +3,6 @@ package com.reactnativenavigation.controllers;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.Window;
 
 import com.reactnativenavigation.R;
@@ -71,7 +70,6 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
 
     @Override
     public void onBackPressed() {
-        Log.d("LOG", "Modal.onBackPressed ");
         if (!layout.onBackPressed()) {
             super.onBackPressed();
         }
