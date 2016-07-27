@@ -27,10 +27,10 @@ public class ScreenParamsParser extends Parser {
         result.navigatorEventId = result.navigationParams.getString(KEY_NAVIGATOR_EVENT_ID);
         result.screenInstanceId = result.navigationParams.getString(KEY_SCREEN_INSTANCE_ID);
         if (hasKey(params, KEY_RIGHT_BUTTONS)) {
-            result.rightButtons = TitleBarButtonParamsParser.parseButtons(params.getBundle(KEY_RIGHT_BUTTONS));
+            result.rightButtons = new TitleBarButtonParamsParser().parseButtons(params.getBundle(KEY_RIGHT_BUTTONS));
         }
         if (hasKey(params, KEY_LEFT_BUTTON)) {
-            result.leftButton = TitleBarButtonParamsParser.parseSingleButton(params.getBundle(KEY_LEFT_BUTTON));
+            result.leftButton = new TitleBarLeftButtonParamsParser().parseSingleButton(params.getBundle(KEY_LEFT_BUTTON));
         }
         result.title = params.getString(KEY_TITLE);
         result.styleParams = ScreenStyleParamsParser.parse(params.getBundle(STYLE_PARAMS));

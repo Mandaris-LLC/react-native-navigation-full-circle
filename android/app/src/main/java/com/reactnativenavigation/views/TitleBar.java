@@ -6,6 +6,7 @@ import android.view.Menu;
 
 import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class TitleBar extends Toolbar {
         button.addToMenu(index);
     }
 
-    public void setLeftButton(TitleBarButtonParams leftButtonParams,
+    public void setLeftButton(TitleBarLeftButtonParams leftButtonParams,
                                TitleBarBackButtonListener titleBarBackButtonListener, String navigatorEventId) {
         LeftButton leftButton = new LeftButton(getContext(), leftButtonParams, titleBarBackButtonListener, navigatorEventId);
         setNavigationOnClickListener(leftButton);

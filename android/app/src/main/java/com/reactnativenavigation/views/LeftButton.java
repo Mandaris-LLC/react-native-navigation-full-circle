@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 
 // TODO: replace with vector menu drawable
 public class LeftButton extends MaterialMenuDrawable implements View.OnClickListener {
@@ -16,12 +17,12 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
                 Color.BLACK;
     }
 
-    private TitleBarButtonParams params;
+    private TitleBarLeftButtonParams params;
     private final TitleBarBackButtonListener titleBarBackButtonListener;
     private final String navigatorEventId;
 
     public LeftButton(Context context,
-                      TitleBarButtonParams params,
+                      TitleBarLeftButtonParams params,
                       TitleBarBackButtonListener titleBarBackButtonListener,
                       String navigatorEventId) {
         super(context, getColor(params), Stroke.THIN);
@@ -33,7 +34,7 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
 
     private void setInitialState() {
         if (params != null) {
-            setIconState(getIconStateFromId(params.eventId));
+            setIconState(params.initialIconState);
         } else {
             setVisible(false);
         }
@@ -43,22 +44,6 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
     public void onClick(View v) {
         if (isBackButton()) {
             titleBarBackButtonListener.onTitleBarBackPress();
-        }
-    }
-
-    // TODO: move to parser
-    public IconState getIconStateFromId(String id) {
-        switch (id) {
-            case "back":
-                return IconState.ARROW;
-            case "cancel":
-                return IconState.X;
-            case "accept":
-                return IconState.CHECK;
-            case "sideMenu":
-                return IconState.BURGER;
-            default:
-                throw new RuntimeException("Unsupported button type " + id);
         }
     }
 

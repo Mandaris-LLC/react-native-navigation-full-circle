@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 
 import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.ViewUtils;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class TopBar extends AppBarLayout {
         setId(ViewUtils.generateViewId());
     }
 
-    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> rightButtons, TitleBarButtonParams leftButton,
+    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> rightButtons, TitleBarLeftButtonParams leftButton,
                                          TitleBarBackButtonListener titleBarBackButtonListener,
                                          String navigatorEventId) {
         titleBar = new TitleBar(getContext());

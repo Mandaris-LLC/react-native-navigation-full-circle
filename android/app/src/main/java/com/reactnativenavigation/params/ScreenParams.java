@@ -8,7 +8,7 @@ public class ScreenParams {
     public String screenId;
     public Bundle passProps;
     public List<TitleBarButtonParams> rightButtons;
-    public TitleBarButtonParams leftButton;
+    public TitleBarLeftButtonParams leftButton;
     public String title;
     public ScreenStyleParams styleParams;
     public List<TopTabParams> topTabParams;

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TitleBarButtonParamsParser extends Parser {
-    public static List<TitleBarButtonParams> parseButtons(Bundle params) {
+    public List<TitleBarButtonParams> parseButtons(Bundle params) {
         List<TitleBarButtonParams> result = new ArrayList<>();
 
         for (String key : params.keySet()) {
@@ -19,7 +19,7 @@ public class TitleBarButtonParamsParser extends Parser {
         return result;
     }
 
-    public static TitleBarButtonParams parseSingleButton(Bundle bundle) {
+    public TitleBarButtonParams parseSingleButton(Bundle bundle) {
         TitleBarButtonParams result = new TitleBarButtonParams();
         result.label = bundle.getString("title");
         if (hasKey(bundle,"icon")) {

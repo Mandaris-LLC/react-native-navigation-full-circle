@@ -136,7 +136,6 @@ function addTabIcon(tab) {
   }
 }
 
-// TODO: add left buttons here
 function navigatorSetButtons(navigator, navigatorEventID, params) {
   if (params.rightButtons) {
     params.rightButtons.forEach(function(button) {
@@ -148,7 +147,17 @@ function navigatorSetButtons(navigator, navigatorEventID, params) {
       }
     });
   }
-  newPlatformSpecific.setScreenTitleBarButtons(navigator.screenInstanceID, navigatorEventID, params.rightButtons);
+  if (params.leftButton) {
+    params.leftButton.forEach(function(button) {
+      if (button.icon) {
+        const icon = resolveAssetSource(button.icon);
+        if (icon) {
+          button.icon = icon.uri;
+        }
+      }
+    });
+  }
+  newPlatformSpecific.setScreenTitleBarButtons(navigator.screenInstanceID, navigatorEventID, params.rightButtons, params.leftButton);
 }
 
 function navigatorSetTabBadge(navigator, params) {

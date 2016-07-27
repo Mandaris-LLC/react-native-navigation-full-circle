@@ -42,8 +42,8 @@ function setScreenTitleBarTitle(screenInstanceID, title) {
   NativeReactModule.setScreenTitleBarTitle(screenInstanceID, title);
 }
 
-function setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons) {
-  NativeReactModule.setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons);
+function setScreenTitleBarButtons(screenInstanceID, navigatorEventID, rightButtons, leftButton) {
+  NativeReactModule.setScreenTitleBarButtons(screenInstanceID, navigatorEventID, rightButtons, leftButton);
 }
 
 function showModal(screenParams) {

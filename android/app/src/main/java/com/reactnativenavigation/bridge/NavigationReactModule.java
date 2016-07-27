@@ -44,8 +44,10 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setScreenTitleBarButtons(String screenInstanceId, String navigatorEventId, ReadableArray buttons) {
-        List<TitleBarButtonParams> titleBarButtons = TitleBarButtonParamsParser.parseButtons(BundleConverter.toBundle(buttons));
+    public void setScreenTitleBarButtons(String screenInstanceId, String navigatorEventId, ReadableArray rightButtons, ReadableMap leftButton) {
+        List<TitleBarButtonParams> titleBarButtons = new TitleBarButtonParamsParser().
+                parseButtons(BundleConverter.toBundle(rightButtons));
+
         NavigationCommandsHandler.setScreenTitleBarButtons(screenInstanceId, navigatorEventId, titleBarButtons);
     }
 
