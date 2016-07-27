@@ -14,6 +14,7 @@ public class TitleBar extends Toolbar {
 
     private boolean hideOnScroll = false;
     private VisibilityAnimator visibilityAnimator;
+    private LeftButton leftButton;
 
     public TitleBar(Context context) {
         super(context);
@@ -44,7 +45,15 @@ public class TitleBar extends Toolbar {
 
     public void setLeftButton(TitleBarLeftButtonParams leftButtonParams,
                                TitleBarBackButtonListener titleBarBackButtonListener, String navigatorEventId) {
-        LeftButton leftButton = new LeftButton(getContext(), leftButtonParams, titleBarBackButtonListener, navigatorEventId);
+        if (leftButton == null) {
+            createAndSetLeftButton(leftButtonParams, titleBarBackButtonListener, navigatorEventId);
+        } else {
+            leftButton.animateIconState(leftButtonParams.iconState);
+        }
+    }
+
+    private void createAndSetLeftButton(TitleBarLeftButtonParams leftButtonParams, TitleBarBackButtonListener titleBarBackButtonListener, String navigatorEventId) {
+        leftButton = new LeftButton(getContext(), leftButtonParams, titleBarBackButtonListener, navigatorEventId);
         setNavigationOnClickListener(leftButton);
         setNavigationIcon(leftButton);
     }

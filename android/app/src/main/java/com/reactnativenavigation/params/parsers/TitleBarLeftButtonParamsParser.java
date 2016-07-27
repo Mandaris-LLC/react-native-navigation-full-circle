@@ -9,7 +9,7 @@ public class TitleBarLeftButtonParamsParser extends TitleBarButtonParamsParser {
 
     public TitleBarLeftButtonParams parseSingleButton(Bundle params) {
         TitleBarLeftButtonParams backButtonParams = new TitleBarLeftButtonParams(super.parseSingleButton(params));
-        backButtonParams.initialIconState = getIconStateFromId(backButtonParams.eventId);
+        backButtonParams.iconState = getIconStateFromId(backButtonParams.eventId);
         return backButtonParams;
     }
 

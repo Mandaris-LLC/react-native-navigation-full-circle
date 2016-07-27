@@ -43,7 +43,7 @@ public class TopBar extends AppBarLayout {
         titleBar.setVisibility(styleParams.titleBarHidden ? GONE : VISIBLE);
     }
 
-    public void setTitleBarButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+    public void setTitleBarRightButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         titleBar.setRightButtons(titleBarButtons, navigatorEventId);
     }
 
@@ -51,5 +51,11 @@ public class TopBar extends AppBarLayout {
         tabLayout = new TabLayout(getContext());
         addView(tabLayout);
         return tabLayout;
+    }
+
+    public void setTitleBarRightButton(String navigatorEventId,
+                                       TitleBarBackButtonListener titleBarBackButtonListener,
+                                       TitleBarLeftButtonParams titleBarLeftButtonParams) {
+        titleBar.setLeftButton(titleBarLeftButtonParams, titleBarBackButtonListener, navigatorEventId);
     }
 }

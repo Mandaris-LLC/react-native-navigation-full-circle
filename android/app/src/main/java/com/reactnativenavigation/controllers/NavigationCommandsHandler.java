@@ -7,6 +7,7 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.params.parsers.ActivityParamsParser;
 import com.reactnativenavigation.params.parsers.ScreenParamsParser;
 
@@ -137,7 +138,9 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void setScreenTitleBarButtons(final String screenInstanceId, final String navigatorEventId, final List<TitleBarButtonParams> titleBarButtons) {
+    public static void setScreenTitleBarRightButtons(final String screenInstanceId,
+                                                     final String navigatorEventId,
+                                                     final List<TitleBarButtonParams> titleBarButtons) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -147,6 +150,22 @@ public class NavigationCommandsHandler {
             @Override
             public void run() {
                 currentActivity.setTitleBarButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+            }
+        });
+    }
+
+    public static void setScreenTitleBarLeftButtons(final String screenInstanceId,
+                                                     final String navigatorEventId,
+                                                     final TitleBarLeftButtonParams titleBarButtons) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarButtons);
             }
         });
     }

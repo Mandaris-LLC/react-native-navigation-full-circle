@@ -13,6 +13,7 @@ import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.ScrollDirectionListener;
@@ -140,7 +141,12 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
         topBar.setTitle(title);
     }
 
-    public void setTitleBarButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
-        topBar.setTitleBarButtons(navigatorEventId, titleBarButtons);
+    public void setTitleBarRightButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+        topBar.setTitleBarRightButtons(navigatorEventId, titleBarButtons);
+    }
+
+    public void setTitleBarLeftButton(String navigatorEventId, TitleBarBackButtonListener backButtonListener,
+                                      TitleBarLeftButtonParams titleBarLeftButtonParams) {
+        topBar.setTitleBarRightButton(navigatorEventId, backButtonListener, titleBarLeftButtonParams);
     }
 }

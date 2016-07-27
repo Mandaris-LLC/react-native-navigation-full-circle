@@ -148,14 +148,12 @@ function navigatorSetButtons(navigator, navigatorEventID, params) {
     });
   }
   if (params.leftButton) {
-    params.leftButton.forEach(function(button) {
-      if (button.icon) {
-        const icon = resolveAssetSource(button.icon);
-        if (icon) {
-          button.icon = icon.uri;
-        }
+    if (params.leftButton.icon) {
+      const icon = resolveAssetSource(params.leftButton.icon);
+      if (icon) {
+        params.leftButton.icon = icon.uri;
       }
-    });
+    }
   }
   newPlatformSpecific.setScreenTitleBarButtons(navigator.screenInstanceID, navigatorEventID, params.rightButtons, params.leftButton);
 }

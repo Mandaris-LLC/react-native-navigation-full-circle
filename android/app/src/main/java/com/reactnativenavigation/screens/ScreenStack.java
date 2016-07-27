@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.util.List;
@@ -112,10 +113,17 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
         }
     }
 
-    public void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+    public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         Screen screen = findScreenByScreenInstanceId(screenInstanceId);
         if (screen != null) {
-            screen.setTitleBarButtons(navigatorEventId, titleBarButtons);
+            screen.setTitleBarRightButtons(navigatorEventId, titleBarButtons);
+        }
+    }
+
+    public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams) {
+        Screen screen = findScreenByScreenInstanceId(screenInstanceId);
+        if (screen != null) {
+            screen.setTitleBarLeftButton(navigatorEventId, this, titleBarLeftButtonParams);
         }
     }
 
@@ -125,23 +133,4 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
             pop();
         }
     }
-
-    //    /**
-//     * Remove the ScreenStack from {@code parent} while preventing all child react views from getting unmounted
-//        -= USE WHEN SWITCHING TABS =-
-//     */
-//    public void removeFromScreen(ViewGroup parent) {
-//        mStack.peek().view.onTemporallyRemovedFromScreen();
-//
-//        parent.removeView(this);
-//    }
-//    /**
-//     * Add ScreenStack to {@code parent}
-//       -= USE WHEN SWITCHING TABS =-
-//     */
-//    public void addToScreen(ViewGroup parent) {
-//        mStack.peek().view.onReAddToScreen();
-//
-//        parent.addView(this, new CoordinatorLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
-//    }
 }

@@ -34,7 +34,7 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
 
     private void setInitialState() {
         if (params != null) {
-            setIconState(params.initialIconState);
+            setIconState(params.iconState);
         } else {
             setVisible(false);
         }

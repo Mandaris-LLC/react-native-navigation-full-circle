@@ -7,7 +7,9 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.controllers.NavigationCommandsHandler;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.params.parsers.TitleBarButtonParamsParser;
+import com.reactnativenavigation.params.parsers.TitleBarLeftButtonParamsParser;
 
 import java.util.List;
 
@@ -46,11 +48,27 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setScreenTitleBarButtons(String screenInstanceId, String navigatorEventId, ReadableArray rightButtons, ReadableMap leftButton) {
-        List<TitleBarButtonParams> titleBarButtons = new TitleBarButtonParamsParser().
-                parseButtons(BundleConverter.toBundle(rightButtons));
+    public void setScreenTitleBarButtons(String screenInstanceId, String navigatorEventId,
+                                         ReadableArray rightButtonsParams, ReadableMap leftButtonParams) {
+        if (rightButtonsParams != null) {
+            setScreenTitleBarRightButtons(screenInstanceId, navigatorEventId, rightButtonsParams);
+        }
 
-        NavigationCommandsHandler.setScreenTitleBarButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+        if (leftButtonParams != null) {
+            setScreenTitleBarLeftButton(screenInstanceId, navigatorEventId, leftButtonParams);
+        }
+    }
+
+    private void setScreenTitleBarRightButtons(String screenInstanceId, String navigatorEventId, ReadableArray rightButtonsParams) {
+        List<TitleBarButtonParams> rightButtons = new TitleBarButtonParamsParser()
+                .parseButtons(BundleConverter.toBundle(rightButtonsParams));
+        NavigationCommandsHandler.setScreenTitleBarRightButtons(screenInstanceId, navigatorEventId, rightButtons);
+    }
+
+    private void setScreenTitleBarLeftButton(String screenInstanceId, String navigatorEventId, ReadableMap leftButtonParams) {
+        TitleBarLeftButtonParams leftButton = new TitleBarLeftButtonParamsParser()
+                .parseSingleButton(BundleConverter.toBundle(leftButtonParams));
+        NavigationCommandsHandler.setScreenTitleBarLeftButtons(screenInstanceId, navigatorEventId, leftButton);
     }
 
     @ReactMethod

@@ -3,6 +3,7 @@ package com.reactnativenavigation.layouts;
 import android.view.View;
 
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface Layout extends ScreenStackContainer {
 
     void setTitleBarTitle(String screenInstanceId, String title);
 
-    void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons);
+    void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons);
+
+    void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams);
 }

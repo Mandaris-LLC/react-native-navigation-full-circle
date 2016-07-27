@@ -12,6 +12,7 @@ import com.reactnativenavigation.layouts.LayoutFactory;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.NavigationReactInstance;
 import com.reactnativenavigation.react.RedboxPermission;
@@ -138,7 +139,11 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     public void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
-        layout.setTitleBarButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+        layout.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+    }
+
+    public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButton) {
+        layout.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
     }
 
     void showModal(ScreenParams screenParams) {

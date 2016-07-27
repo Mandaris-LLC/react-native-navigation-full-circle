@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
 
 import java.util.List;
@@ -83,7 +84,13 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     }
 
     @Override
-    public void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
-        stack.setTitleBarButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+    public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId,
+                                        List<TitleBarButtonParams> titleBarRightButtons) {
+        stack.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarRightButtons);
+    }
+
+    @Override
+    public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams) {
+        stack.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButtonParams);
     }
 }
