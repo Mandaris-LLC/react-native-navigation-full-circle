@@ -21,10 +21,12 @@ class PushedScreen extends Component {
     tabIndicatorColor: '#FF4081'
   };
 
-  static propTypes = {
-    str: PropTypes.string.isRequired,
-    obj: PropTypes.object.isRequired,
-    num: PropTypes.number.isRequired
+  static navigatorButtons = {
+    leftButton:
+      {
+        id: 'back',
+        color: '#00ff00'
+      }
   };
 
   constructor(props) {
