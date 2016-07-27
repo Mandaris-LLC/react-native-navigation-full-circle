@@ -70,7 +70,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     @Override
     protected void onDestroy() {
-        modalController.onDestroy();
+        modalController.destroy();
         layout.destroy();
         super.onDestroy();
         if (currentActivity == null || currentActivity.isFinishing()) {

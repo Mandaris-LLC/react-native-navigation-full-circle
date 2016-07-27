@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 import Navigation from './Navigation';
 
+NativeBridge = NativeModules.NavigationReactModule;
+
 const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
 function startApp(activityParams) {
@@ -13,35 +15,39 @@ function startApp(activityParams) {
     return;
   }
 
-  NativeModules.NavigationReactModule.startApp(activityParams);
+  NativeBridge.startApp(activityParams);
 }
 
 function push(screenParams) {
-  NativeModules.NavigationReactModule.push(screenParams);
+  NativeBridge.push(screenParams);
 }
 
 function pop(screenParams) {
-  NativeModules.NavigationReactModule.pop(screenParams);
+  NativeBridge.pop(screenParams);
 }
 
 function popToRoot(screenParams) {
-  NativeModules.NavigationReactModule.popToRoot(screenParams);
+  NativeBridge.popToRoot(screenParams);
 }
 
 function newStack(screenParams) {
-  NativeModules.NavigationReactModule.newStack(screenParams);
+  NativeBridge.newStack(screenParams);
 }
 
 function toggleTopBarVisible(screenInstanceID, visible, animated) {
-  NativeModules.NavigationReactModule.setTopBarVisible(screenInstanceID, visible, animated);
+  NativeBridge.setTopBarVisible(screenInstanceID, visible, animated);
 }
 
 function setScreenTitleBarTitle(screenInstanceID, title) {
-  NativeModules.NavigationReactModule.setScreenTitleBarTitle(screenInstanceID, title);
+  NativeBridge.setScreenTitleBarTitle(screenInstanceID, title);
 }
 
 function setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons) {
-  NativeModules.NavigationReactModule.setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons);
+  NativeBridge.setScreenTitleBarButtons(screenInstanceID, navigatorEventID, buttons);
+}
+
+function showModal(screenParams) {
+  NativeBridge.showModal(screenParams);
 }
 
 module.exports = {
@@ -52,5 +58,6 @@ module.exports = {
   newStack,
   toggleTopBarVisible,
   setScreenTitleBarTitle,
-  setScreenTitleBarButtons
+  setScreenTitleBarButtons,
+  showModal
 };

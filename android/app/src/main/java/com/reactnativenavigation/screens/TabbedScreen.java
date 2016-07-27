@@ -21,9 +21,9 @@ public class TabbedScreen extends Screen {
 
     private List<ContentView> contentViews;
     private ViewPager viewPager;
-    private ViewPagerAdapter viewPagerAdapter;
+    private ContentViewPagerAdapter adapter;
 
-    public  TabbedScreen(Context context, ScreenParams screenParams) {
+    public TabbedScreen(Context context, ScreenParams screenParams) {
         super(context, screenParams);
     }
 
@@ -45,8 +45,8 @@ public class TabbedScreen extends Screen {
             contentViews.add(contentView);
         }
 
-        viewPagerAdapter = new ViewPagerAdapter(viewPager, contentViews, screenParams.topTabParams);
-        viewPager.setAdapter(viewPagerAdapter);
+        adapter = new ContentViewPagerAdapter(viewPager, contentViews, screenParams.topTabParams);
+        viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -61,26 +61,26 @@ public class TabbedScreen extends Screen {
 
     @Override
     public void ensureUnmountOnDetachedFromWindow() {
-        for (ContentView contentView: contentViews) {
+        for (ContentView contentView : contentViews) {
             contentView.ensureUnmountOnDetachedFromWindow();
         }
     }
 
     @Override
     public void preventUnmountOnDetachedFromWindow() {
-        for (ContentView contentView: contentViews) {
+        for (ContentView contentView : contentViews) {
             contentView.preventUnmountOnDetachedFromWindow();
         }
     }
 
 
-    public class ViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
+    public class ContentViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
 
         private ViewPager viewPager;
         private List<ContentView> contentViews;
         private List<TopTabParams> topTabParams;
 
-        public ViewPagerAdapter(ViewPager viewPager, List<ContentView> contentViews, List<TopTabParams> topTabParams) {
+        public ContentViewPagerAdapter(ViewPager viewPager, List<ContentView> contentViews, List<TopTabParams> topTabParams) {
             this.viewPager = viewPager;
             this.contentViews = contentViews;
             this.topTabParams = topTabParams;

@@ -14,6 +14,7 @@ import com.reactnativenavigation.params.ScreenParams;
 
 public class Modal extends Dialog implements DialogInterface.OnDismissListener, ScreenStackContainer {
 
+    private final Activity activity;
     private final OnModalDismissedListener onModalDismissedListener;
 
     public interface OnModalDismissedListener {
@@ -25,16 +26,21 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
 
     public Modal(Activity activity, OnModalDismissedListener onModalDismissedListener, ScreenParams screenParams) {
         super(activity, R.style.Modal);
+        this.activity = activity;
         this.onModalDismissedListener = onModalDismissedListener;
         this.screenParams = screenParams;
         createContent();
+    }
+
+    public Activity getActivity() {
+        return activity;
     }
 
     private void createContent() {
         setCancelable(true);
         setOnDismissListener(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        layout = new SingleScreenLayout(getContext(), screenParams);
+        layout = new SingleScreenLayout(getActivity(), screenParams);
         setContentView(layout.asView());
     }
 

@@ -1,6 +1,6 @@
 package com.reactnativenavigation.layouts;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -17,18 +17,18 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     private final ScreenParams screenParams;
     private ScreenStack stack;
 
-    public SingleScreenLayout(Context context, ScreenParams screenParams) {
-        super(context);
+    public SingleScreenLayout(Activity activity, ScreenParams screenParams) {
+        super(activity);
         this.screenParams = screenParams;
-        createStack(context);
+        createStack();
     }
 
-    private void createStack(Context context) {
+    private void createStack() {
         if (stack != null) {
             stack.destroy();
             removeView(stack);
         }
-        stack = new ScreenStack(context, screenParams);
+        stack = new ScreenStack(getContext(), screenParams);
         addView(stack, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
@@ -64,7 +64,7 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
 
     @Override
     public void newStack(ScreenParams params) {
-        createStack(getContext());
+        createStack();
     }
 
     @Override

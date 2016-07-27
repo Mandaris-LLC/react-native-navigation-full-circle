@@ -21,11 +21,10 @@ function startSingleScreenApp(params) {
   screen.passProps = params.passProps;
   //const drawer = setupDrawer(params.drawer);
 
-  screen.screenId = screen.screen;
-
   /*
    * adapt to new API
    */
+  screen.screenId = screen.screen;
   params.screen = adaptNavigationStyleToScreenStyle(screen);
   params.screen = adaptNavigationParams(screen);
 
@@ -139,14 +138,14 @@ function addTabIcon(tab) {
 
 function navigatorSetButtons(navigator, navigatorEventID, params) {
   if (params.rightButtons) {
-   params.rightButtons.forEach(function(button) {
-     if (button.icon) {
-       const icon = resolveAssetSource(button.icon);
-       if (icon) {
-         button.icon = icon.uri;
-       }
-     }
-   });
+    params.rightButtons.forEach(function(button) {
+      if (button.icon) {
+        const icon = resolveAssetSource(button.icon);
+        if (icon) {
+          button.icon = icon.uri;
+        }
+      }
+    });
   }
   newPlatformSpecific.setScreenTitleBarButtons(navigator.screenInstanceID, navigatorEventID, params.rightButtons);
 }
@@ -197,10 +196,18 @@ function navigatorToggleTabs(navigator, params) {
 }
 
 function showModal(params) {
-  //addNavigatorParams(params);
-  //addNavigatorButtons(params);
-  //addNavigationStyleParams(params);
-  //RctActivity.showModal(params);
+  addNavigatorParams(params);
+  addNavigatorButtons(params);
+  addNavigationStyleParams(params);
+
+  /*
+   * adapt to new API
+   */
+  params.screenId = params.screen;
+  let adapted = adaptNavigationStyleToScreenStyle(params);
+  adapted = adaptNavigationParams(adapted);
+
+  newPlatformSpecific.showModal(adapted);
 }
 
 function dismissModal() {
