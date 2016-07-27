@@ -136,6 +136,7 @@ function addTabIcon(tab) {
   }
 }
 
+// TODO: add left buttons here
 function navigatorSetButtons(navigator, navigatorEventID, params) {
   if (params.rightButtons) {
     params.rightButtons.forEach(function(button) {
@@ -229,8 +230,7 @@ function addNavigatorButtons(screen) {
   Object.assign(screen, Screen.navigatorButtons);
 
   // Get image uri from image id
-  const rightButtons = screen.navigatorButtons ? screen.navigatorButtons.rightButtons : null;
-
+  const rightButtons = getRightButtons(screen);
   if (rightButtons) {
     rightButtons.forEach(function(button) {
       if (button.icon) {
@@ -242,7 +242,38 @@ function addNavigatorButtons(screen) {
     });
   }
 
-  screen.titleBarButtons = rightButtons;
+  const leftButton = getLeftButton(screen);
+  if (leftButton) {
+    if (leftButton.icon) {
+      const icon = resolveAssetSource(leftButton.icon);
+      if (icon) {
+        leftButton.icon = icon.uri;
+      }
+    }
+  }
+
+  if (rightButtons) {
+    screen.rightButtons = rightButtons;
+  }
+  if (leftButton) {
+    screen.leftButton = leftButton;
+  }
+}
+
+function getLeftButton(screen) {
+  if (screen.navigatorButtons) {
+    return screen.navigatorButtons.leftButton;
+  }
+
+  return screen.leftButton
+}
+
+function getRightButtons(screen) {
+  if (screen.navigatorButtons) {
+    return screen.navigatorButtons.rightButtons;
+  }
+
+  return screen.rightButtons
 }
 
 function addNavigationStyleParams(screen) {

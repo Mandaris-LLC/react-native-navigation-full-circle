@@ -11,7 +11,8 @@ public class ScreenParamsParser extends Parser {
     private static final String KEY_NAVIGATOR_EVENT_ID = "navigatorEventID";
     private static final String KEY_PROPS = "passProps";
     private static final String KEY_NAVIGATION_PARAMS = "navigationParams";
-    private static final String KEY_BUTTONS = "titleBarButtons";
+    private static final String KEY_RIGHT_BUTTONS = "rightButtons";
+    private static final String KEY_LEFT_BUTTON = "leftButton";
     private static final String STYLE_PARAMS = "styleParams";
     public static final String TOP_TABS = "topTabs";
 
@@ -25,7 +26,12 @@ public class ScreenParamsParser extends Parser {
         result.navigationParams = params.getBundle(KEY_NAVIGATION_PARAMS);
         result.navigatorEventId = result.navigationParams.getString(KEY_NAVIGATOR_EVENT_ID);
         result.screenInstanceId = result.navigationParams.getString(KEY_SCREEN_INSTANCE_ID);
-        result.buttons = TitleBarButtonParamsParser.parse(params.getBundle(KEY_BUTTONS));
+        if (hasKey(params, KEY_RIGHT_BUTTONS)) {
+            result.rightButtons = TitleBarButtonParamsParser.parseButtons(params.getBundle(KEY_RIGHT_BUTTONS));
+        }
+        if (hasKey(params, KEY_LEFT_BUTTON)) {
+            result.leftButton = TitleBarButtonParamsParser.parseSingleButton(params.getBundle(KEY_LEFT_BUTTON));
+        }
         result.title = params.getString(KEY_TITLE);
         result.styleParams = ScreenStyleParamsParser.parse(params.getBundle(STYLE_PARAMS));
         if (hasKey(params, TOP_TABS)) {

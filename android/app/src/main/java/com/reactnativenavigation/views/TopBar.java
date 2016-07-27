@@ -21,10 +21,13 @@ public class TopBar extends AppBarLayout {
         setId(ViewUtils.generateViewId());
     }
 
-    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> buttons, String navigatorEventId) {
+    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> rightButtons, TitleBarButtonParams leftButton,
+                                         TitleBarBackButtonListener titleBarBackButtonListener,
+                                         String navigatorEventId) {
         titleBar = new TitleBar(getContext());
         addView(titleBar);
-        titleBar.setButtons(buttons, navigatorEventId);
+        titleBar.setRightButtons(rightButtons, navigatorEventId);
+        titleBar.setLeftButton(leftButton, titleBarBackButtonListener, navigatorEventId);
     }
 
     public void setTitle(String title) {
@@ -40,7 +43,7 @@ public class TopBar extends AppBarLayout {
     }
 
     public void setTitleBarButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
-        titleBar.setButtons(titleBarButtons, navigatorEventId);
+        titleBar.setRightButtons(titleBarButtons, navigatorEventId);
     }
 
     public TabLayout initTabs() {

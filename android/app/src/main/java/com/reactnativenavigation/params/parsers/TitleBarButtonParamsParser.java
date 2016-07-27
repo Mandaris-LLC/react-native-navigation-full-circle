@@ -10,19 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TitleBarButtonParamsParser extends Parser {
-    public static List<TitleBarButtonParams> parse(Bundle params) {
+    public static List<TitleBarButtonParams> parseButtons(Bundle params) {
         List<TitleBarButtonParams> result = new ArrayList<>();
-        if (params == null) {
-            return result;
-        }
 
         for (String key : params.keySet()) {
-            result.add(parseItem(params.getBundle(key)));
+            result.add(parseSingleButton(params.getBundle(key)));
         }
         return result;
     }
 
-    private static TitleBarButtonParams parseItem(Bundle bundle) {
+    public static TitleBarButtonParams parseSingleButton(Bundle bundle) {
         TitleBarButtonParams result = new TitleBarButtonParams();
         result.label = bundle.getString("title");
         if (hasKey(bundle,"icon")) {

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.views.ContentView;
+import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -12,8 +13,9 @@ public class SingleScreen extends Screen {
 
     private ContentView contentView;
 
-    public SingleScreen(Context context, ScreenParams screenParams) {
-        super(context, screenParams);
+    public SingleScreen(Context context, ScreenParams screenParams,
+                        TitleBarBackButtonListener titleBarBarBackButtonListener) {
+        super(context, screenParams, titleBarBarBackButtonListener);
     }
 
     @Override

@@ -18,16 +18,34 @@ public class TitleBar extends Toolbar {
         super(context);
     }
 
-    public void setButtons(List<TitleBarButtonParams> buttons, String navigatorEventId) {
+    public void setRightButtons(List<TitleBarButtonParams> rightButtons, String navigatorEventId) {
         Menu menu = getMenu();
         menu.clear();
 
-        for (int i = 0; i < buttons.size(); i++) {
-            final TitleBarButton button = new TitleBarButton(menu, this, buttons.get(i), navigatorEventId);
-            // Add button in reverse order because in iOS index 0 starts at right
-            final int index = buttons.size() - i - 1;
-            button.addToMenu(index);
+        if (rightButtons == null) {
+            return;
         }
+
+        addButtonsToTitleBar(rightButtons, navigatorEventId, menu);
+    }
+
+    private void addButtonsToTitleBar(List<TitleBarButtonParams> rightButtons, String navigatorEventId, Menu menu) {
+        for (int i = 0; i < rightButtons.size(); i++) {
+            final TitleBarButton button = new TitleBarButton(menu, this, rightButtons.get(i), navigatorEventId);
+            addButtonInReverseOrder(rightButtons, i, button);
+        }
+    }
+
+    private void addButtonInReverseOrder(List<TitleBarButtonParams> rightButtons, int i, TitleBarButton button) {
+        final int index = rightButtons.size() - i - 1;
+        button.addToMenu(index);
+    }
+
+    public void setLeftButton(TitleBarButtonParams leftButtonParams,
+                               TitleBarBackButtonListener titleBarBackButtonListener, String navigatorEventId) {
+        LeftButton leftButton = new LeftButton(getContext(), leftButtonParams, titleBarBackButtonListener, navigatorEventId);
+        setNavigationOnClickListener(leftButton);
+        setNavigationIcon(leftButton);
     }
 
     public void setHideOnScroll(boolean hideOnScroll) {

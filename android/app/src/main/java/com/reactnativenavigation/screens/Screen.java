@@ -15,6 +15,7 @@ import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.ScrollDirectionListener;
+import com.reactnativenavigation.views.TitleBarBackButtonListener;
 import com.reactnativenavigation.views.TopBar;
 
 import java.util.List;
@@ -25,12 +26,14 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public abstract class Screen extends RelativeLayout implements ScrollDirectionListener.OnScrollChanged {
 
     protected final ScreenParams screenParams;
+    private final TitleBarBackButtonListener titleBarBackButtonListener;
     protected TopBar topBar;
     private VisibilityAnimator topBarVisibilityAnimator;
 
-    public Screen(Context context, ScreenParams screenParams) {
+    public Screen(Context context, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
         super(context);
         this.screenParams = screenParams;
+        this.titleBarBackButtonListener = titleBarBackButtonListener;
 
         createViews();
         setStyle(screenParams.styleParams);
@@ -45,7 +48,8 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
     protected abstract void createContent();
 
     private void createTitleBar() {
-        topBar.addTitleBarAndSetButtons(screenParams.buttons, screenParams.navigatorEventId);
+        topBar.addTitleBarAndSetButtons(screenParams.rightButtons, screenParams.leftButton,
+                titleBarBackButtonListener, screenParams.navigatorEventId);
         topBar.setTitle(screenParams.title);
     }
 

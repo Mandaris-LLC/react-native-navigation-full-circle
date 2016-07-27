@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.util.List;
 import java.util.Stack;
@@ -13,27 +14,27 @@ import java.util.Stack;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 // TODO there's really no reason for ScreenStack to extend FrameLayout. All screens can be added to parent.
-public class ScreenStack extends FrameLayout {
+public class ScreenStack extends FrameLayout implements TitleBarBackButtonListener {
     private Stack<Screen> stack = new Stack<>();
 
     public ScreenStack(Context context, ScreenParams initialScreenParams) {
         super(context);
         setLayoutTransition(new LayoutTransition());
-        push(initialScreenParams);
+        pushInitialScreen(initialScreenParams);
+    }
+
+    private void pushInitialScreen(ScreenParams initialScreenParams) {
+        addScreen(initialScreenParams);
     }
 
     public void push(ScreenParams screenParams) {
-        if (isEmpty()) {
-            addScreen(screenParams);
-        } else {
-            Screen previous = stack.peek();
-            addScreen(screenParams);
-            removePreviousWithoutUnmount(previous);
-        }
+        Screen previous = stack.peek();
+        addScreen(screenParams);
+        removePreviousWithoutUnmount(previous);
     }
 
     private void addScreen(ScreenParams screenParams) {
-        Screen screen = ScreenFactory.create(getContext(), screenParams);
+        Screen screen = ScreenFactory.create(getContext(), screenParams, this);
         addView(screen, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         stack.push(screen);
     }
@@ -73,10 +74,6 @@ public class ScreenStack extends FrameLayout {
             removeView(screen);
         }
         stack.clear();
-    }
-
-    public boolean isEmpty() {
-        return stack.isEmpty();
     }
 
     public int getStackSize() {
@@ -122,6 +119,12 @@ public class ScreenStack extends FrameLayout {
         }
     }
 
+    @Override
+    public void onTitleBarBackPress() {
+        if (canPop()) {
+            pop();
+        }
+    }
 
     //    /**
 //     * Remove the ScreenStack from {@code parent} while preventing all child react views from getting unmounted
