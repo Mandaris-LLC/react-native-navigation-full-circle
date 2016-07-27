@@ -8,10 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TopTabParams;
 import com.reactnativenavigation.views.ContentView;
+import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,8 @@ public class TabbedScreen extends Screen {
     private ViewPager viewPager;
     private ContentViewPagerAdapter adapter;
 
-    public TabbedScreen(Context context, ScreenParams screenParams) {
-        super(context, screenParams);
+    public TabbedScreen(Context context, ScreenParams screenParams, TitleBarBackButtonListener backButtonListener) {
+        super(context, screenParams, backButtonListener);
     }
 
     @Override

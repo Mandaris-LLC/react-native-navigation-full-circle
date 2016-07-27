@@ -10,7 +10,7 @@ public class ScreenFactory {
                                 ScreenParams screenParams,
                                 TitleBarBackButtonListener titleBarBackButtonListener) {
         if (screenParams.hasTopTabs()) {
-            return new TabbedScreen(context, screenParams);
+            return new TabbedScreen(context, screenParams, titleBarBackButtonListener);
         } else {
             return new SingleScreen(context, screenParams, titleBarBackButtonListener);
         }
