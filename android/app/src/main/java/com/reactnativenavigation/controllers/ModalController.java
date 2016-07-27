@@ -23,7 +23,9 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
     }
 
     public void dismissModal() {
-        stack.pop().destroy();
+        if (isShowing()) {
+            stack.pop().dismiss();
+        }
     }
 
     public boolean onBackPressed() {
@@ -58,6 +60,7 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
     public void destroy() {
         for (Modal modal : stack) {
             modal.destroy();
+            modal.dismiss();
         }
         stack.clear();
     }

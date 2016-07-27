@@ -211,7 +211,7 @@ function showModal(params) {
 }
 
 function dismissModal() {
-  //RctActivity.dismissModal();
+  newPlatformSpecific.dismissTopModal();
 }
 
 function dismissAllModals(params) {

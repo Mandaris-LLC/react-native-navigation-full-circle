@@ -50,6 +50,10 @@ function showModal(screenParams) {
   NativeBridge.showModal(screenParams);
 }
 
+function dismissTopModal() {
+  NativeBridge.dismissTopModal();
+}
+
 module.exports = {
   startApp,
   push,
@@ -59,5 +63,6 @@ module.exports = {
   toggleTopBarVisible,
   setScreenTitleBarTitle,
   setScreenTitleBarButtons,
-  showModal
+  showModal,
+  dismissTopModal
 };

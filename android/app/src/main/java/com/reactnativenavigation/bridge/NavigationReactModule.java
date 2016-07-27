@@ -109,5 +109,6 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void dismissTopModal() {
+        NavigationCommandsHandler.dismissTopModal();
     }
 }
