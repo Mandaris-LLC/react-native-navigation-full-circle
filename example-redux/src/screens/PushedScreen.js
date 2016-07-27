@@ -10,6 +10,8 @@ import {
 import {connect} from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
 
+const leftButtons = ['back', 'cancel', 'accept', 'sideMenu'];
+
 // this is a traditional React component connected to the redux store
 class PushedScreen extends Component {
   static navigatorStyle = {
@@ -33,6 +35,7 @@ class PushedScreen extends Component {
     super(props);
     this.bgColor = this.getRandomColor();
     console.log(`constructor ${this.bgColor}`);
+    this.currentBackButton = 0;
   }
 
   componentWillUnmount() {
@@ -76,7 +79,6 @@ class PushedScreen extends Component {
           <Text style={styles.button}>Dismiss modal</Text>
         </TouchableOpacity>
 
-
         <TouchableOpacity onPress={ this.onDismissAllModalsPress.bind(this) }>
           <Text style={styles.button}>Dismiss all modals</Text>
         </TouchableOpacity>
@@ -87,6 +89,10 @@ class PushedScreen extends Component {
 
         <TouchableOpacity onPress={ this.onNewStackPress.bind(this) }>
           <Text style={styles.button}>New Stack</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onChangeLeftButtonPress.bind(this) }>
+          <Text style={styles.button}>Change Left Button</Text>
         </TouchableOpacity>
 
         <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
@@ -175,6 +181,16 @@ class PushedScreen extends Component {
         num: 1234
       }
     });
+  }
+
+  onChangeLeftButtonPress() {
+    this.props.navigator.setButtons({
+      leftButton: {
+        id: leftButtons[this.currentBackButton]
+      }
+    });
+    this.currentBackButton += 1;
+    this.currentBackButton = this.currentBackButton % 4;
   }
 }
 
