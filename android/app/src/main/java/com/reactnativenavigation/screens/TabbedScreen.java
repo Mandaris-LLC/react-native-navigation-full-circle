@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TopTabParams;
 import com.reactnativenavigation.views.ContentView;
@@ -32,6 +33,7 @@ public class TabbedScreen extends Screen {
         TabLayout tabLayout = topBar.initTabs();
         contentViews = new ArrayList<>();
         viewPager = new ViewPager(getContext());
+        viewPager.setOffscreenPageLimit(99);
         addView(viewPager);
 
         for (TopTabParams topTabParam : screenParams.topTabParams) {
@@ -93,7 +95,7 @@ public class TabbedScreen extends Screen {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object view) {
-            container.removeView((View) view);
+
         }
 
         @Override
