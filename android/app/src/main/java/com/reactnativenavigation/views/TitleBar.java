@@ -45,11 +45,23 @@ public class TitleBar extends Toolbar {
 
     public void setLeftButton(TitleBarLeftButtonParams leftButtonParams,
                                TitleBarBackButtonListener titleBarBackButtonListener, String navigatorEventId) {
-        if (leftButton == null) {
+        if (shouldSetLeftButton(leftButtonParams)) {
             createAndSetLeftButton(leftButtonParams, titleBarBackButtonListener, navigatorEventId);
-        } else {
-            leftButton.setIconState(leftButtonParams);
+        } else if (hasLeftButton()) {
+            updateLeftButton(leftButtonParams);
         }
+    }
+
+    private boolean hasLeftButton() {
+        return leftButton != null;
+    }
+
+    private void updateLeftButton(TitleBarLeftButtonParams leftButtonParams) {
+        leftButton.setIconState(leftButtonParams);
+    }
+
+    private boolean shouldSetLeftButton(TitleBarLeftButtonParams leftButtonParams) {
+        return leftButton == null && leftButtonParams != null;
     }
 
     private void createAndSetLeftButton(TitleBarLeftButtonParams leftButtonParams, TitleBarBackButtonListener titleBarBackButtonListener, String navigatorEventId) {
