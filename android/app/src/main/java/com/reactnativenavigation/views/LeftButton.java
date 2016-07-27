@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 
@@ -32,6 +33,23 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
         setInitialState();
     }
 
+    public void setIconState(TitleBarLeftButtonParams params) {
+        this.params = params;
+        if (params.color.hasColor()) {
+            setColor(params.color.getColor());
+        }
+        animateIconState(params.iconState);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (isBackButton()) {
+            titleBarBackButtonListener.onTitleBarBackPress();
+        } else {
+            sendClickEvent();
+        }
+    }
+
     private void setInitialState() {
         if (params != null) {
             setIconState(params.iconState);
@@ -40,14 +58,11 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        if (isBackButton()) {
-            titleBarBackButtonListener.onTitleBarBackPress();
-        }
-    }
-
     private boolean isBackButton() {
         return getIconState() == IconState.ARROW;
+    }
+
+    private void sendClickEvent() {
+        NavigationApplication.instance.sendEvent(params.eventId, navigatorEventId);
     }
 }

@@ -48,7 +48,7 @@ public class TitleBar extends Toolbar {
         if (leftButton == null) {
             createAndSetLeftButton(leftButtonParams, titleBarBackButtonListener, navigatorEventId);
         } else {
-            leftButton.animateIconState(leftButtonParams.iconState);
+            leftButton.setIconState(leftButtonParams);
         }
     }
 

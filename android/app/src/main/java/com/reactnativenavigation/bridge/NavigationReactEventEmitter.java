@@ -9,6 +9,7 @@ public class NavigationReactEventEmitter {
 
     private static final String KEY_EVENT_ID = "id";
     private static final String KEY_EVENT_TYPE = "type";
+    private static final String KEY_NAVIGATOR_EVENT_ID = "navigatorEventID";
     private static final String EVENT_TYPE = "NavBarButtonPress";
     private RCTDeviceEventEmitter eventEmitter;
 
@@ -20,7 +21,7 @@ public class NavigationReactEventEmitter {
         WritableMap params = Arguments.createMap();
         params.putString(KEY_EVENT_TYPE, EVENT_TYPE);
         params.putString(KEY_EVENT_ID, eventId);
-        params.putString("navigatorEventID", navigatorEventId);
+        params.putString(KEY_NAVIGATOR_EVENT_ID, navigatorEventId);
         eventEmitter.emit(navigatorEventId, params);
     }
 }
