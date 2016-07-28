@@ -6,15 +6,7 @@ import Navigation from './Navigation';
 
 const NativeReactModule = NativeModules.NavigationReactModule;
 
-const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
-
 function startApp(activityParams) {
-  const screen = activityParams.screen;
-  if (!screen.screenId) {
-    console.error('startApp(activityParams): screenId property must be supplied');
-    return;
-  }
-
   NativeReactModule.startApp(activityParams);
 }
 

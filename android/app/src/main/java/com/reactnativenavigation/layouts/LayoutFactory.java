@@ -8,7 +8,7 @@ public class LayoutFactory {
     public static Layout create(Activity activity, ActivityParams params) {
         switch (params.type) {
             case TabBased:
-                throw new UnsupportedOperationException("WHAT!? u crazy...");
+                return createBottomTabsScreenLayout(activity, params);
             case SingleScreen:
             default:
                 return createSingleScreenLayout(activity, params);
@@ -19,12 +19,9 @@ public class LayoutFactory {
         return new SingleScreenLayout(activity, params.screenParams);
     }
 
-//    private static void addBottomTabsIfNeeded(Activity activity, Params params, LinearLayout root) {
-//        if (params.bottomTabs.enabled) {
-//            AHBottomNavigation bottomTabs = createBottomTabs(activity);
-//            root.addView(bottomTabs, new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
-//        }
-//    }
+    private static Layout createBottomTabsScreenLayout(Activity activity, ActivityParams params) {
+        return new BottomTabsLayout(activity, params);
+    }
 //
 //    private static void addContentWithMenuIfNeeded(Activity activity, Params params, LinearLayout root, FrameLayout content) {
 //        if (params.sideMenu.enabled) {
@@ -33,10 +30,6 @@ public class LayoutFactory {
 //        } else {
 //            root.addView(content, new LinearLayout.LayoutParams(MATCH_PARENT, 0, 1));
 //        }
-//    }
-//
-//    private static AHBottomNavigation createBottomTabs(Activity activity) {
-//        return new AHBottomNavigation(activity);
 //    }
 //
 //    private static LinearLayout createRoot(Activity activity) {

@@ -92,7 +92,7 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
         }
     }
 
-    private Screen findScreenByScreenInstanceId(String screenInstanceId) {
+    public Screen findScreenByScreenInstanceId(String screenInstanceId) {
         if (stack.isEmpty()) {
             return null;
         }

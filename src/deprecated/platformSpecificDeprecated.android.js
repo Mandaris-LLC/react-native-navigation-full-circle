@@ -106,21 +106,26 @@ function adaptNavigationParams(screen) {
 }
 
 function startTabBasedApp(params) {
-  //if (!params.tabs) {
-  //  console.error('startTabBasedApp(params): params.tabs is required');
-  //  return;
-  //}
-  //
-  //params.tabs.forEach(function(tab, idx) {
-  //  addNavigatorParams(tab, null, idx);
-  //  addNavigatorButtons(tab);
-  //  addNavigationStyleParams(tab);
-  //  addTabIcon(tab);
-  //  tab.passProps = params.passProps;
-  //});
-  //
-  //const drawer = setupDrawer(params.drawer);
-  //RctActivity.startTabBasedApp(params.tabs, params.tabsStyle, drawer);
+  if (!params.tabs) {
+   console.error('startTabBasedApp(params): params.tabs is required');
+   return;
+  }
+
+  params.tabs.forEach(function(tab, idx) {
+    debugger;
+    addNavigatorParams(tab, null, idx);
+    addNavigatorButtons(tab);
+    addNavigationStyleParams(tab);
+    addTabIcon(tab);
+    tab.passProps = params.passProps;
+
+    tab.screenId = tab.screen;
+    tab.screen = adaptNavigationStyleToScreenStyle(tab);
+    tab.screen = adaptNavigationParams(tab);
+  });
+
+  // TODO: add drawer params
+  newPlatformSpecific.startApp(params);
 }
 
 function addTabIcon(tab) {

@@ -3,6 +3,10 @@ package com.reactnativenavigation.params.parsers;
 import android.os.Bundle;
 
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.react.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScreenParamsParser extends Parser {
     private static final String KEY_TITLE = "title";
@@ -36,6 +40,20 @@ public class ScreenParamsParser extends Parser {
         result.styleParams = ScreenStyleParamsParser.parse(params.getBundle(STYLE_PARAMS));
         if (hasKey(params, TOP_TABS)) {
             result.topTabParams = TopTabParamsParser.parse(params.getBundle(TOP_TABS));
+        }
+        if (hasKey(params, "label")) {
+            result.tabLabel = params.getString("label");
+        }
+        if (hasKey(params, "icon")) {
+            result.tabIcon = ImageLoader.loadImage(params.getString("icon"));
+        }
+        return result;
+    }
+
+    public static List<ScreenParams> parseTabs(Bundle params) {
+        List<ScreenParams> result = new ArrayList<>();
+        for (String key : params.keySet()) {
+            result.add(ScreenParamsParser.parse(params.getBundle(key)));
         }
         return result;
     }

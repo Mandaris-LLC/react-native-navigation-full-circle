@@ -1,5 +1,6 @@
 package com.reactnativenavigation.params;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import java.util.List;
@@ -12,8 +13,8 @@ public class ScreenParams {
     public String title;
     public ScreenStyleParams styleParams;
     public List<TopTabParams> topTabParams;
-    //    public String tabLabel; TODO when tabs are supported move to TabParams
-    //    public Drawable tabIcon;
+    public String tabLabel;
+    public Drawable tabIcon;
 
     // TODO navigationParams should be a terminated. destroyed. annihilated. disintegrated. banished from existence. + abolished, eradicated, exterminated...
     public String screenInstanceId;
