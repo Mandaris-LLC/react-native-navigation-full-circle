@@ -1,6 +1,5 @@
 package com.reactnativenavigation.layouts;
 
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -13,7 +12,6 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
 import com.reactnativenavigation.views.BottomTabs;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -129,7 +127,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         currentScreenStack.destroy();
         removeView(currentScreenStack);
 
-        ScreenStack newStack = new ScreenStack(getContext(), params);
+        ScreenStack newStack = new ScreenStack(activity, params);
         screenStacks[currentStackIndex] = newStack;
         addView(newStack, 0, new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
@@ -158,7 +156,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void createAndAddScreenStack(int position) {
-        ScreenStack newStack = new ScreenStack(getContext(), params.tabParams.get(position));
+        ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position));
         screenStacks[position] = newStack;
         addView(newStack, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }

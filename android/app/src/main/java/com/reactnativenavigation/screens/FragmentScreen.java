@@ -102,4 +102,9 @@ public class FragmentScreen extends Screen {
     public void preventUnmountOnDetachedFromWindow() {
         // nothing
     }
+
+    @Override
+    public void preventMountAfterReattachedToWindow() {
+        // nothing
+    }
 }
