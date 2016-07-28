@@ -24,8 +24,8 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     private ActivityParams params;
     private BottomTabs bottomTabs;
-    private List<ScreenStack> screenStacks;
-    private int currentStack = 0;
+    private ArrayList<ScreenStack> screenStacks;
+    private int currentStackIndex = 0;
 
     public BottomTabsLayout(Context context, ActivityParams params) {
         super(context);
@@ -116,26 +116,28 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void push(ScreenParams screenParams) {
-        for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-//            screenStacks.get(i).push(screenParams);
-        }
+        getCurrentScreenStack().push(screenParams);
     }
 
     @Override
     public void pop(ScreenParams screenParams) {
-//        for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-//            screenStacks.get(i).pop();
-//        }
+        getCurrentScreenStack().pop();
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
-
+        getCurrentScreenStack().popToRoot();
     }
 
     @Override
     public void newStack(ScreenParams params) {
+        ScreenStack currentScreenStack = getCurrentScreenStack();
+        currentScreenStack.destroy();
+        removeView(currentScreenStack);
 
+        ScreenStack newStack = new ScreenStack(getContext(), params);
+        screenStacks.set(currentStackIndex, newStack);
+        addView(newStack, 0, new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
     @Override
@@ -147,11 +149,11 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     public void onTabSelected(int position, boolean wasSelected) {
         removeView(getCurrentScreenStack());
         addView(screenStacks.get(position), 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
-        currentStack = position;
+        currentStackIndex = position;
     }
 
     private ScreenStack getCurrentScreenStack() {
-        return screenStacks.get(currentStack);
+        return screenStacks.get(currentStackIndex);
     }
 
     private ScreenStack getFirstScreenStack() {
