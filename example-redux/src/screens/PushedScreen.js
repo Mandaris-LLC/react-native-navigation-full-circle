@@ -5,7 +5,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
@@ -35,6 +36,7 @@ class PushedScreen extends Component {
     super(props);
     this.bgColor = this.getRandomColor();
     console.log(`constructor ${this.bgColor}`);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     this.currentBackButton = 0;
   }
 
@@ -49,6 +51,19 @@ class PushedScreen extends Component {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  }
+
+  onNavigatorEvent(event) {
+    console.log('onNavigatorEvent ' + event.id);
+    switch (event.id) {
+      case 'cancel':
+        Alert.alert('NavBar', 'Cancel button pressed');
+        break;
+
+      case 'accept':
+        Alert.alert('NavBar', 'Accept button pressed');
+        break;
+    }
   }
 
   render() {
