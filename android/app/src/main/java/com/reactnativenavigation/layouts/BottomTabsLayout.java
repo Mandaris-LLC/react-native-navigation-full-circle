@@ -36,7 +36,21 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     private void createLayout() {
         createBottomTabs();
         addBottomTabsToScreen();
-        addInitialScreen();
+        addScreenStacks();
+        showInitialScreenStack();
+    }
+
+    private void addScreenStacks() {
+        for (int i = 0; i < screenStacks.length; i++) {
+            createAndAddScreenStack(i);
+        }
+    }
+
+    private void createAndAddScreenStack(int position) {
+        ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position));
+        screenStacks[position] = newStack;
+        newStack.setVisibility(GONE);
+        addView(newStack, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
     private void createBottomTabs() {
@@ -51,8 +65,8 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         addView(bottomTabs, lp);
     }
 
-    private void addInitialScreen() {
-        createAndAddScreenStack(0);
+    private void showInitialScreenStack() {
+        showStack(screenStacks[0]);
     }
 
     private void setBottomTabsStyle() {
@@ -143,28 +157,20 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void onTabSelected(int position, boolean wasSelected) {
-        removeCurrentStack();
+        hideCurrentStack();
 
         ScreenStack newStack = screenStacks[position];
-        if (newStack == null) {
-            createAndAddScreenStack(position);
-        } else {
-            addView(newStack, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
-            newStack.preventMountAfterReatachedToWindow();
-        }
+        showStack(newStack);
         currentStackIndex = position;
     }
 
-    private void createAndAddScreenStack(int position) {
-        ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position));
-        screenStacks[position] = newStack;
-        addView(newStack, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+    private void showStack(ScreenStack newStack) {
+        newStack.setVisibility(VISIBLE);
     }
 
-    private void removeCurrentStack() {
+    private void hideCurrentStack() {
         ScreenStack currentScreenStack = getCurrentScreenStack();
-        currentScreenStack.preventUnmountOnDetachedFromWindow();
-        removeView(currentScreenStack);
+        currentScreenStack.setVisibility(GONE);
     }
 
     private ScreenStack getCurrentScreenStack() {
