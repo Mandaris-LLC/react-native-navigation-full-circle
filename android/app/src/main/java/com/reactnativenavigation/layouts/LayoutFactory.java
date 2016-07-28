@@ -19,7 +19,7 @@ public class LayoutFactory {
         return new SingleScreenLayout(activity, params.screenParams);
     }
 
-    private static Layout createBottomTabsScreenLayout(Activity activity, ActivityParams params) {
+    private static Layout createBottomTabsScreenLayout(AppCompatActivity activity, ActivityParams params) {
         return new BottomTabsLayout(activity, params);
     }
 //

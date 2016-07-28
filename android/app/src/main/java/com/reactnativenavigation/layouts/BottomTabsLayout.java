@@ -1,7 +1,7 @@
 package com.reactnativenavigation.layouts;
 
-import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -22,13 +22,15 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottomNavigation.OnTabSelectedListener {
 
+    private final AppCompatActivity activity;
     private ActivityParams params;
     private BottomTabs bottomTabs;
     private ArrayList<ScreenStack> screenStacks;
     private int currentStackIndex = 0;
 
-    public BottomTabsLayout(Context context, ActivityParams params) {
-        super(context);
+    public BottomTabsLayout(AppCompatActivity activity, ActivityParams params) {
+        super(activity);
+        this.activity = activity;
         this.params = params;
         screenStacks = new ArrayList<>();
         createLayout();
@@ -66,7 +68,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     private void addTabs() {
         for (ScreenParams screenParams : params.tabParams) {
-            ScreenStack stack = new ScreenStack(getContext(), screenParams);
+            ScreenStack stack = new ScreenStack(activity, screenParams);
             screenStacks.add(stack);
 
             AHBottomNavigationItem item = new AHBottomNavigationItem(screenParams.title, screenParams.tabIcon,
@@ -135,7 +137,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         currentScreenStack.destroy();
         removeView(currentScreenStack);
 
-        ScreenStack newStack = new ScreenStack(getContext(), params);
+        ScreenStack newStack = new ScreenStack(activity, params);
         screenStacks.set(currentStackIndex, newStack);
         addView(newStack, 0, new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
