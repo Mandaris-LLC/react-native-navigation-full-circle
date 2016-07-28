@@ -1,8 +1,8 @@
 package com.reactnativenavigation.controllers;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 import com.reactnativenavigation.R;
@@ -13,7 +13,7 @@ import com.reactnativenavigation.params.ScreenParams;
 
 public class Modal extends Dialog implements DialogInterface.OnDismissListener, ScreenStackContainer {
 
-    private final Activity activity;
+    private final AppCompatActivity activity;
     private final OnModalDismissedListener onModalDismissedListener;
 
     public interface OnModalDismissedListener {
@@ -23,7 +23,7 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
     private final ScreenParams screenParams;
     private Layout layout;
 
-    public Modal(Activity activity, OnModalDismissedListener onModalDismissedListener, ScreenParams screenParams) {
+    public Modal(AppCompatActivity activity, OnModalDismissedListener onModalDismissedListener, ScreenParams screenParams) {
         super(activity, R.style.Modal);
         this.activity = activity;
         this.onModalDismissedListener = onModalDismissedListener;
@@ -31,7 +31,7 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
         createContent();
     }
 
-    public Activity getActivity() {
+    public AppCompatActivity getActivity() {
         return activity;
     }
 

@@ -1,7 +1,7 @@
 package com.reactnativenavigation.screens;
 
 import android.animation.LayoutTransition;
-import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
@@ -16,10 +16,12 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 // TODO there's really no reason for ScreenStack to extend FrameLayout. All screens can be added to parent.
 public class ScreenStack extends FrameLayout implements TitleBarBackButtonListener {
+    private final AppCompatActivity activity;
     private Stack<Screen> stack = new Stack<>();
 
-    public ScreenStack(Context context, ScreenParams initialScreenParams) {
-        super(context);
+    public ScreenStack(AppCompatActivity activity, ScreenParams initialScreenParams) {
+        super(activity);
+        this.activity = activity;
         setLayoutTransition(new LayoutTransition());
         pushInitialScreen(initialScreenParams);
     }
@@ -35,7 +37,7 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
     }
 
     private void addScreen(ScreenParams screenParams) {
-        Screen screen = ScreenFactory.create(getContext(), screenParams, this);
+        Screen screen = ScreenFactory.create(activity, screenParams, this);
         addView(screen, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         stack.push(screen);
     }

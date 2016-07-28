@@ -28,8 +28,8 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public abstract class Screen extends RelativeLayout implements ScrollDirectionListener.OnScrollChanged {
 
     protected final ScreenParams screenParams;
-    private final TitleBarBackButtonListener titleBarBackButtonListener;
     protected TopBar topBar;
+    private final TitleBarBackButtonListener titleBarBackButtonListener;
     private VisibilityAnimator topBarVisibilityAnimator;
 
     public Screen(Context context, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {

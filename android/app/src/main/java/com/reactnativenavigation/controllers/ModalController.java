@@ -1,6 +1,6 @@
 package com.reactnativenavigation.controllers;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.reactnativenavigation.layouts.ScreenStackContainer;
 import com.reactnativenavigation.params.ScreenParams;
@@ -8,10 +8,10 @@ import com.reactnativenavigation.params.ScreenParams;
 import java.util.Stack;
 
 public class ModalController implements ScreenStackContainer, Modal.OnModalDismissedListener {
-    private final Activity activity;
+    private final AppCompatActivity activity;
     private Stack<Modal> stack = new Stack<>();
 
-    public ModalController(Activity activity) {
+    public ModalController(AppCompatActivity activity) {
         this.activity = activity;
     }
 

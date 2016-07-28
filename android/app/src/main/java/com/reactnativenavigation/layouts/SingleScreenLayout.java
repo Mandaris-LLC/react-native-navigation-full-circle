@@ -1,6 +1,6 @@
 package com.reactnativenavigation.layouts;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -15,11 +15,13 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class SingleScreenLayout extends FrameLayout implements Layout {
 
+    private final AppCompatActivity activity;
     private final ScreenParams screenParams;
     private ScreenStack stack;
 
-    public SingleScreenLayout(Activity activity, ScreenParams screenParams) {
+    public SingleScreenLayout(AppCompatActivity activity, ScreenParams screenParams) {
         super(activity);
+        this.activity = activity;
         this.screenParams = screenParams;
         createStack();
     }
@@ -29,7 +31,7 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
             stack.destroy();
             removeView(stack);
         }
-        stack = new ScreenStack(getContext(), screenParams);
+        stack = new ScreenStack(activity, screenParams);
         addView(stack, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 

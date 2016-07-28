@@ -13,6 +13,10 @@ public class ScreenParams {
     public String title;
     public ScreenStyleParams styleParams;
     public List<TopTabParams> topTabParams;
+    public String fragmentCreatorClassName;
+
+    //    public String tabLabel; TODO when tabs are supported move to TabParams
+    //    public Drawable tabIcon;
     public String tabLabel;
     public Drawable tabIcon;
 
@@ -23,5 +27,9 @@ public class ScreenParams {
 
     public boolean hasTopTabs() {
         return topTabParams != null && !topTabParams.isEmpty();
+    }
+
+    public boolean isFragmentScreen() {
+        return fragmentCreatorClassName != null;
     }
 }
