@@ -49,4 +49,8 @@ public class ContentView extends ReactRootView {
     public void ensureUnmountOnDetachedFromWindow() {
         ReactViewHacks.ensureUnmountOnDetachedFromWindow(this);
     }
+
+    public void preventMountAfterReattachedToWindow() {
+        ReactViewHacks.preventMountAfterReattachedToWindow(this);
+    }
 }

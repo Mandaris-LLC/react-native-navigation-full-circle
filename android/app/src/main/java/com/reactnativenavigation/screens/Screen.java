@@ -131,6 +131,8 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
 
     public abstract void preventUnmountOnDetachedFromWindow();
 
+    public abstract void preventMountAfterReattachedToWindow();
+
     public String getScreenInstanceId() {
         return screenParams.screenInstanceId;
     }

@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -25,14 +24,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     private final AppCompatActivity activity;
     private ActivityParams params;
     private BottomTabs bottomTabs;
-    private ArrayList<ScreenStack> screenStacks;
+    private ScreenStack[] screenStacks;
     private int currentStackIndex = 0;
 
     public BottomTabsLayout(AppCompatActivity activity, ActivityParams params) {
         super(activity);
         this.activity = activity;
         this.params = params;
-        screenStacks = new ArrayList<>();
+        screenStacks = new ScreenStack[(params.tabParams.size())];
         createLayout();
     }
 
@@ -45,7 +44,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     private void createBottomTabs() {
         bottomTabs = new BottomTabs(getContext());
         setBottomTabsStyle();
-        addTabs();
+        bottomTabs.addTabs(params.tabParams, this);
     }
 
     private void addBottomTabsToScreen() {
@@ -55,7 +54,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void addInitialScreen() {
-        addView(getFirstScreenStack());
+        createAndAddScreenStack(0);
     }
 
     private void setBottomTabsStyle() {
@@ -66,18 +65,6 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 //        bottomTabs.setAccentColor(getColor(style, TAB_STYLE_SELECTED_COLOR, DEFAULT_TAB_SELECTED_COLOR));
     }
 
-    private void addTabs() {
-        for (ScreenParams screenParams : params.tabParams) {
-            ScreenStack stack = new ScreenStack(activity, screenParams);
-            screenStacks.add(stack);
-
-            AHBottomNavigationItem item = new AHBottomNavigationItem(screenParams.title, screenParams.tabIcon,
-                    Color.GRAY);
-            bottomTabs.addItem(item);
-            bottomTabs.setOnTabSelectedListener(this);
-        }
-    }
-
     @Override
     public View asView() {
         return this;
@@ -85,34 +72,39 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public boolean onBackPressed() {
-        return false;
+        if (getCurrentScreenStack().canPop()) {
+            getCurrentScreenStack().pop();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-            screenStacks.get(i).setTopBarVisible(screenInstanceId, hidden, animated);
+            screenStacks[i].setTopBarVisible(screenInstanceId, hidden, animated);
         }
     }
 
     @Override
     public void setTitleBarTitle(String screenInstanceId, String title) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-            screenStacks.get(i).setTitleBarTitle(screenInstanceId, title);
+            screenStacks[i].setTitleBarTitle(screenInstanceId, title);
         }
     }
 
     @Override
     public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-            screenStacks.get(i).setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+            screenStacks[i].setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
         }
     }
 
     @Override
     public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-            screenStacks.get(i).setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButtonParams);
+            screenStacks[i].setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButtonParams);
         }
     }
 
@@ -137,28 +129,47 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         currentScreenStack.destroy();
         removeView(currentScreenStack);
 
-        ScreenStack newStack = new ScreenStack(activity, params);
-        screenStacks.set(currentStackIndex, newStack);
+        ScreenStack newStack = new ScreenStack(getContext(), params);
+        screenStacks[currentStackIndex] = newStack;
         addView(newStack, 0, new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
     @Override
     public void destroy() {
-
+        for (ScreenStack screenStack : screenStacks) {
+            screenStack.destroy();
+            removeView(screenStack);
+        }
+        screenStacks = null;
     }
 
     @Override
     public void onTabSelected(int position, boolean wasSelected) {
-        removeView(getCurrentScreenStack());
-        addView(screenStacks.get(position), 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        removeCurrentStack();
+
+        ScreenStack newStack = screenStacks[position];
+        if (newStack == null) {
+            createAndAddScreenStack(position);
+        } else {
+            addView(newStack, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+            newStack.preventMountAfterReatachedToWindow();
+        }
         currentStackIndex = position;
     }
 
-    private ScreenStack getCurrentScreenStack() {
-        return screenStacks.get(currentStackIndex);
+    private void createAndAddScreenStack(int position) {
+        ScreenStack newStack = new ScreenStack(getContext(), params.tabParams.get(position));
+        screenStacks[position] = newStack;
+        addView(newStack, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
-    private ScreenStack getFirstScreenStack() {
-        return screenStacks.get(0);
+    private void removeCurrentStack() {
+        ScreenStack currentScreenStack = getCurrentScreenStack();
+        currentScreenStack.preventUnmountOnDetachedFromWindow();
+        removeView(currentScreenStack);
+    }
+
+    private ScreenStack getCurrentScreenStack() {
+        return screenStacks[currentStackIndex];
     }
 }

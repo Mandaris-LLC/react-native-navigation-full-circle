@@ -75,6 +75,12 @@ public class TabbedScreen extends Screen {
         }
     }
 
+    @Override
+    public void preventMountAfterReattachedToWindow() {
+        for (ContentView contentView : contentViews) {
+            contentView.preventMountAfterReattachedToWindow();
+        }
+    }
 
     public class ContentViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
 

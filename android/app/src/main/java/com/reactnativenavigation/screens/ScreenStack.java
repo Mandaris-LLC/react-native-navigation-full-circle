@@ -135,4 +135,22 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
             pop();
         }
     }
+
+    public void preventUnmountOnDetachedFromWindow() {
+        for (Screen screen : stack) {
+            screen.preventUnmountOnDetachedFromWindow();
+        }
+    }
+
+    public void ensureUnmountOnDetachedFromWindow() {
+        for (Screen screen : stack) {
+            screen.ensureUnmountOnDetachedFromWindow();
+        }
+    }
+
+    public void preventMountAfterReatachedToWindow() {
+        for (Screen screen : stack) {
+            screen.preventMountAfterReattachedToWindow();
+        }
+    }
 }
