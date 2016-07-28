@@ -8,7 +8,6 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.NavigationApplication;
-import com.reactnativenavigation.utils.ViewUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,10 +32,6 @@ public class JsDevImageLoader {
     private static Drawable tryLoadIcon(String iconDevUri) throws IOException {
         URL url = new URL(iconDevUri);
         Bitmap bitmap = BitmapFactory.decodeStream(url.openStream());
-        final int dimensions = (int) ViewUtils.convertDpToPixel(48);
-        // TODO: fix hard coded dimensions -add options to decodeStream
-        bitmap = Bitmap.createScaledBitmap(bitmap, dimensions, dimensions, false);
         return new BitmapDrawable(NavigationApplication.instance.getResources(), bitmap);
     }
-
 }
