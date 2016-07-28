@@ -63,6 +63,7 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
 
     private void readdPrevious(Screen previous) {
         addView(previous, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        previous.preventMountAfterReattachedToWindow();
     }
 
     public void popToRoot() {
