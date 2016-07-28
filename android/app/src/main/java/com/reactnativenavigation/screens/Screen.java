@@ -2,9 +2,9 @@ package com.reactnativenavigation.screens;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.widget.RelativeLayout;
@@ -27,13 +27,15 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public abstract class Screen extends RelativeLayout implements ScrollDirectionListener.OnScrollChanged {
 
+    protected final AppCompatActivity activity;
     protected final ScreenParams screenParams;
     protected TopBar topBar;
     private final TitleBarBackButtonListener titleBarBackButtonListener;
     private VisibilityAnimator topBarVisibilityAnimator;
 
-    public Screen(Context context, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
-        super(context);
+    public Screen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
+        super(activity);
+        this.activity = activity;
         this.screenParams = screenParams;
         this.titleBarBackButtonListener = titleBarBackButtonListener;
 

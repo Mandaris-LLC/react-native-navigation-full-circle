@@ -22,12 +22,10 @@ public class FragmentScreen extends Screen {
 
     private static final String CONTRACT_GET_FRAGMENT = "getFragment";
     private static final String CONTRACT_GET_SUPPORT_FRAGMENT = "getSupportFragment";
-    private final AppCompatActivity activity;
     private FrameLayout content;
 
     public FragmentScreen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
         super(activity, screenParams, titleBarBackButtonListener);
-        this.activity = activity;
     }
 
     @Override

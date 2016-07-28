@@ -1,10 +1,10 @@
 package com.reactnativenavigation.screens;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,8 +24,8 @@ public class TabbedScreen extends Screen {
     private ViewPager viewPager;
     private ContentViewPagerAdapter adapter;
 
-    public TabbedScreen(Context context, ScreenParams screenParams, TitleBarBackButtonListener backButtonListener) {
-        super(context, screenParams, backButtonListener);
+    public TabbedScreen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener backButtonListener) {
+        super(activity, screenParams, backButtonListener);
     }
 
     @Override

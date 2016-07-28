@@ -1,7 +1,7 @@
 package com.reactnativenavigation.screens;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.views.ContentView;
@@ -13,9 +13,9 @@ public class SingleScreen extends Screen {
 
     private ContentView contentView;
 
-    public SingleScreen(Context context, ScreenParams screenParams,
+    public SingleScreen(AppCompatActivity activity, ScreenParams screenParams,
                         TitleBarBackButtonListener titleBarBarBackButtonListener) {
-        super(context, screenParams, titleBarBarBackButtonListener);
+        super(activity, screenParams, titleBarBarBackButtonListener);
     }
 
     @Override

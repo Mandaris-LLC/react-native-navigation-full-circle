@@ -277,7 +277,7 @@ function getLeftButton(screen) {
     return screen.navigatorButtons.leftButton;
   }
 
-  return screen.leftButton
+  return screen.leftButton;
 }
 
 function getRightButtons(screen) {
@@ -285,7 +285,7 @@ function getRightButtons(screen) {
     return screen.navigatorButtons.rightButtons;
   }
 
-  return screen.rightButtons
+  return screen.rightButtons;
 }
 
 function addNavigationStyleParams(screen) {

@@ -9,7 +9,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.bridge.NavigationReactPackage;
 import com.reactnativenavigation.react.NavigationReactInstance;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class NavigationApplication extends Application {
@@ -38,9 +38,9 @@ public abstract class NavigationApplication extends Application {
     }
 
     public final List<ReactPackage> createReactPackages() {
-        List<ReactPackage> list = Arrays.asList(
-                new MainReactPackage(),
-                new NavigationReactPackage());
+        List<ReactPackage> list = new ArrayList<>();
+        list.add(new MainReactPackage());
+        list.add(new NavigationReactPackage());
         addAdditionalReactPackagesIfNeeded(list);
         return list;
     }
