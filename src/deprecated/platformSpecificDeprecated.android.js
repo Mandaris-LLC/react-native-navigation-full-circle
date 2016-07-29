@@ -90,7 +90,10 @@ function adaptNavigationStyleToScreenStyle(screen) {
     topTabsHidden: navigatorStyle.topTabsHidden,
     bottomTabsHidden: navigatorStyle.tabBarHidden,
     bottomTabsHiddenOnScroll: navigatorStyle.bottomTabsHiddenOnScroll,
-    drawUnderTopBar: navigatorStyle.drawUnderNavBar
+    drawUnderTopBar: navigatorStyle.drawUnderNavBar,
+    bottomTabsColor: navigatorStyle.tabBarBackgroundColor,
+    bottomTabsButtonColor: navigatorStyle.tabBarButtonColor,
+    selectedBottomTabsButtonColor: navigatorStyle.tabBarButtonColor
   };
 
   return _.omit(screen, ['navigatorStyle']);

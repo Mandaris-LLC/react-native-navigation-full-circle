@@ -24,13 +24,21 @@ public class ScreenStyleParams {
     }
 
     public Color statusBarColor;
+
     public Color topBarColor;
-    public Color navigationBarColor;
-    public boolean titleBarHidden;
     public boolean topBarHidden;
-    public boolean backButtonHidden;
     public boolean topTabsHidden;
+
+    public boolean titleBarHidden;
+    public boolean backButtonHidden;
+
     public boolean bottomTabsHidden;
     public boolean bottomTabsHiddenOnScroll;
+    public Color bottomTabsColor;
+    public Color selectedBottomTabsButtonColor;
+    public Color bottomTabsButtonColor;
+
+    public Color navigationBarColor;
+
     public boolean drawUnderTopBar;
 }

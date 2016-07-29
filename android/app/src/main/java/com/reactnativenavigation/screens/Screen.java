@@ -153,4 +153,8 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
                                       TitleBarLeftButtonParams titleBarLeftButtonParams) {
         topBar.setTitleBarRightButton(navigatorEventId, backButtonListener, titleBarLeftButtonParams);
     }
+
+    public ScreenStyleParams getStyleParams() {
+        return screenParams.styleParams;
+    }
 }

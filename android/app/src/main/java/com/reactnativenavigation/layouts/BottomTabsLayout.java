@@ -55,7 +55,6 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     private void createBottomTabs() {
         bottomTabs = new BottomTabs(getContext());
-        setBottomTabsStyle();
         bottomTabs.addTabs(params.tabParams, this);
     }
 
@@ -67,14 +66,6 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     private void showInitialScreenStack() {
         showStack(screenStacks[0]);
-    }
-
-    private void setBottomTabsStyle() {
-//        bottomTabs.setForceTitlesDisplay(style.getBoolean(TAB_STYLE_INACTIVE_TITLES, DEFAULT_TAB_INACTIVE_TITLES));
-        bottomTabs.setForceTint(true);
-//        bottomTabs.setDefaultBackgroundColor(getColor(style, TAB_STYLE_BAR_BG_COLOR, DEFAULT_TAB_BAR_BG_COLOR));
-//        bottomTabs.setInactiveColor(getColor(style, TAB_STYLE_BUTTON_COLOR, DEFAULT_TAB_BUTTON_COLOR));
-//        bottomTabs.setAccentColor(getColor(style, TAB_STYLE_SELECTED_COLOR, DEFAULT_TAB_SELECTED_COLOR));
     }
 
     @Override
@@ -150,22 +141,23 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     public void destroy() {
         for (ScreenStack screenStack : screenStacks) {
             screenStack.destroy();
-            removeView(screenStack);
         }
-        screenStacks = null;
     }
 
     @Override
-    public void onTabSelected(int position, boolean wasSelected) {
+    public boolean onTabSelected(int position, boolean wasSelected) {
         hideCurrentStack();
 
         ScreenStack newStack = screenStacks[position];
         showStack(newStack);
         currentStackIndex = position;
+
+        return true;
     }
 
     private void showStack(ScreenStack newStack) {
         newStack.setVisibility(VISIBLE);
+        bottomTabs.setStyleFromScreen(newStack.getCurrentScreenStyleParams());
     }
 
     private void hideCurrentStack() {
