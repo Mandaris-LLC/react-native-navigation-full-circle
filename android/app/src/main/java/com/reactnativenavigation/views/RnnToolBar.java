@@ -309,6 +309,7 @@ public class RnnToolBar extends Toolbar {
         private final List<Button> mNewButtons;
         private final WeakReference<RnnToolBar> mToolbarWR;
         @ColorInt private final Integer mTintColor;
+        @ColorInt private final Integer mButtonTextColor;
         private final int mIconDimensions;
 
         public SetupToolbarButtonsTask(RnnToolBar toolBar, Screen oldScreen, Screen newScreen) {
@@ -316,6 +317,7 @@ public class RnnToolBar extends Toolbar {
             mOldButtons = oldScreen == null ? null : oldScreen.getButtons();
             mNewButtons = newScreen.getButtons();
             mTintColor = newScreen.navBarButtonColor;
+            mButtonTextColor = newScreen.navBarTextColor;
             mIconDimensions = (int) ImageUtils.convertDpToPixel(48, toolBar.getContext());
         }
 
@@ -394,7 +396,7 @@ public class RnnToolBar extends Toolbar {
                 }
 
                 // Tint text buttons
-                if (textButtons.size() > 0 && mTintColor != null) {
+                if (textButtons.size() > 0 && mButtonTextColor != null) {
                     final View decorView = ((Activity) context).getWindow().getDecorView();
                     decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                         @Override
@@ -408,7 +410,7 @@ public class RnnToolBar extends Toolbar {
 
                             // Set text color
                             for (View button : toolBar.mMenuItems) {
-                                ((TextView) button).setTextColor(mTintColor);
+                                ((TextView) button).setTextColor(mButtonTextColor);
                             }
 
                             toolBar.mMenuItems.clear();
