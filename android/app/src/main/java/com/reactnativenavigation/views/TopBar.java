@@ -40,7 +40,7 @@ public class TopBar extends AppBarLayout {
             setBackgroundColor(styleParams.topBarColor.getColor());
         }
         setVisibility(styleParams.topBarHidden ? GONE : VISIBLE);
-        titleBar.setVisibility(styleParams.titleBarHidden ? GONE : VISIBLE);
+        titleBar.setStyle(styleParams);
     }
 
     public void setTitleBarRightButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {

@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.reactnativenavigation.animation.VisibilityAnimator;
+import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 
@@ -31,6 +32,19 @@ public class TitleBar extends Toolbar {
         addButtonsToTitleBar(rightButtons, navigatorEventId, menu);
     }
 
+    public void setLeftButton(TitleBarLeftButtonParams leftButtonParams,
+                               TitleBarBackButtonListener titleBarBackButtonListener, String navigatorEventId) {
+        if (shouldSetLeftButton(leftButtonParams)) {
+            createAndSetLeftButton(leftButtonParams, titleBarBackButtonListener, navigatorEventId);
+        } else if (hasLeftButton()) {
+            updateLeftButton(leftButtonParams);
+        }
+    }
+
+    public void setStyle(ScreenStyleParams params) {
+        setVisibility(params.titleBarHidden ? GONE : VISIBLE);
+    }
+
     private void addButtonsToTitleBar(List<TitleBarButtonParams> rightButtons, String navigatorEventId, Menu menu) {
         for (int i = 0; i < rightButtons.size(); i++) {
             final TitleBarButton button = new TitleBarButton(menu, this, rightButtons.get(i), navigatorEventId);
@@ -41,15 +55,6 @@ public class TitleBar extends Toolbar {
     private void addButtonInReverseOrder(List<TitleBarButtonParams> rightButtons, int i, TitleBarButton button) {
         final int index = rightButtons.size() - i - 1;
         button.addToMenu(index);
-    }
-
-    public void setLeftButton(TitleBarLeftButtonParams leftButtonParams,
-                               TitleBarBackButtonListener titleBarBackButtonListener, String navigatorEventId) {
-        if (shouldSetLeftButton(leftButtonParams)) {
-            createAndSetLeftButton(leftButtonParams, titleBarBackButtonListener, navigatorEventId);
-        } else if (hasLeftButton()) {
-            updateLeftButton(leftButtonParams);
-        }
     }
 
     private boolean hasLeftButton() {
