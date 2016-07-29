@@ -86,6 +86,7 @@ function adaptNavigationStyleToScreenStyle(screen) {
     topBarColor: navigatorStyle.toolBarColor,
     navigationBarColor: navigatorStyle.navigationBarColor,
     titleBarHidden: navigatorStyle.navBarHidden,
+    titleBarTitleColor: navigatorStyle.navBarTextColor,
     backButtonHidden: navigatorStyle.backButtonHidden,
     topTabsHidden: navigatorStyle.topTabsHidden,
     bottomTabsHidden: navigatorStyle.tabBarHidden,

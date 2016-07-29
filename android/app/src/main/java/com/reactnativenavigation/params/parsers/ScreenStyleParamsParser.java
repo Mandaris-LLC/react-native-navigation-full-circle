@@ -15,6 +15,8 @@ public class ScreenStyleParamsParser {
         result.topBarColor = new ScreenStyleParams.Color(ColorParser.parse(params.getString("topBarColor")));
         result.navigationBarColor = new ScreenStyleParams.Color(ColorParser.parse(params.getString("navigationBarColor")));
         result.titleBarHidden = params.getBoolean("titleBarHidden");
+        result.titleBarTitleColor =
+                new ScreenStyleParams.Color(ColorParser.parse(params.getString("titleBarTitleColor")));
         result.backButtonHidden = params.getBoolean("backButtonHidden");
         result.topTabsHidden = params.getBoolean("topTabsHidden");
         result.bottomTabsHidden = params.getBoolean("bottomTabsHidden");

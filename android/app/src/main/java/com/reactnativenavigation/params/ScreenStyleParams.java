@@ -30,6 +30,7 @@ public class ScreenStyleParams {
     public boolean topTabsHidden;
 
     public boolean titleBarHidden;
+    public Color titleBarTitleColor;
     public boolean backButtonHidden;
 
     public boolean bottomTabsHidden;

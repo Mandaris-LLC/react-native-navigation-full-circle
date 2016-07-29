@@ -43,6 +43,13 @@ public class TitleBar extends Toolbar {
 
     public void setStyle(ScreenStyleParams params) {
         setVisibility(params.titleBarHidden ? GONE : VISIBLE);
+        setTitleTextColor(params);
+    }
+
+    private void setTitleTextColor(ScreenStyleParams params) {
+        if (params.titleBarTitleColor.hasColor()) {
+            setTitleTextColor(params.titleBarTitleColor.getColor());
+        }
     }
 
     private void addButtonsToTitleBar(List<TitleBarButtonParams> rightButtons, String navigatorEventId, Menu menu) {
