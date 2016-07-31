@@ -32,18 +32,23 @@ public class FragmentScreen extends Screen {
 
     @Override
     protected void createContent() {
-        FrameLayout frame = new FrameLayout(getContext());
-        LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        params.addRule(BELOW, topBar.getId());
-        addView(frame, params);
         content = new FrameLayout(getContext());
         content.setId(ViewUtils.generateViewId());
         ContentView contentView = new ContentView(getContext(), screenParams.screenId, screenParams.passProps, screenParams.navigationParams, null);
-        addView(contentView);
-        frame.addView(content, MATCH_PARENT, MATCH_PARENT);
+        addView(content, addBelowTopBar());
         addFragment();
         contentView.init();
     }
+
+    @NonNull
+    private LayoutParams addBelowTopBar() {
+        LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        if (!screenParams.styleParams.drawUnderTopBar) {
+            params.addRule(BELOW, topBar.getId());
+        }
+        return params;
+    }
+
 
     private void addFragment() {
         try {
