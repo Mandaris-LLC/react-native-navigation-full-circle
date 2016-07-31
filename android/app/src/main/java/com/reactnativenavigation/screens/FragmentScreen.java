@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.utils.ViewUtils;
+import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,8 +33,11 @@ public class FragmentScreen extends Screen {
     protected void createContent() {
         content = new FrameLayout(getContext());
         content.setId(ViewUtils.generateViewId());
+        ContentView contentView = new ContentView(getContext(), screenParams.screenId, screenParams.passProps, screenParams.navigationParams, null);
+        addView(contentView, 0, 0);
         addView(content, MATCH_PARENT, MATCH_PARENT);
         addFragment();
+        contentView.init();
     }
 
     private void addFragment() {
