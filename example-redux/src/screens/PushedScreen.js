@@ -25,11 +25,10 @@ class PushedScreen extends Component {
   };
 
   static navigatorButtons = {
-    leftButton:
-      {
-        id: 'back',
-        color: '#00ff00'
-      }
+    leftButton: {
+      id: 'back',
+      color: '#00ff00'
+    }
   };
 
   constructor(props) {
@@ -127,8 +126,8 @@ class PushedScreen extends Component {
 
   onPushPress() {
     this.props.navigator.push({
-      title: "More",
-      screen: "example.PushedScreen",
+      title: "List",
+      screen: "example.ListScreen",
       passProps: {
         passed: 'This is a prop passed in \'navigator.push()\'!',
         obj: {

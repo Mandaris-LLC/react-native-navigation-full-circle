@@ -35,10 +35,56 @@ export default class App {
   startApp(root) {
     switch (root) {
       case 'login':
+        //Navigation.startSingleScreenApp({
+        //  screen: {
+        //    screen: 'example.LoginScreen',
+        //    title: 'Login',
+        //    navigatorStyle: {}
+        //  },
+        //  passProps: {
+        //    str: 'This is a prop passed in \'startSingleScreenApp()\'!',
+        //    obj: {
+        //      str: 'This is a prop passed in an object!',
+        //      arr: [
+        //        {
+        //          str: 'This is a prop in an object in an array in an object!'
+        //        }
+        //      ],
+        //      arr2: [
+        //        [
+        //          'array of strings',
+        //          'with two strings'
+        //        ],
+        //        [
+        //          1, 2, 3
+        //        ]
+        //      ]
+        //    },
+        //    num: 1234
+        //  }
+        //});
         Navigation.startSingleScreenApp({
           screen: {
-            screen: 'example.LoginScreen',
+            screen: 'example.FirstTabScreen',
             title: 'Login',
+            topTabs: [
+              {
+                screenId: 'example.ListScreen',
+                title: 'Tab1'
+              },
+              {
+                screenId: 'example.PushedScreen',
+                title: 'Tab2'
+              },
+              {
+                screenId: 'example.PushedScreen',
+                title: 'Tab3'
+              },
+              {
+                screenId: 'example.FirstTabScreen',
+                title: 'Tab4'
+              }
+            ],
             navigatorStyle: {}
           },
           passProps: {

@@ -29,7 +29,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         super(activity);
         this.activity = activity;
         this.params = params;
-        screenStacks = new ScreenStack[(params.tabParams.size())];
+        screenStacks = new ScreenStack[params.tabParams.size()];
         createLayout();
     }
 
@@ -65,7 +65,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void showInitialScreenStack() {
-        showStack(screenStacks[0]);
+        showStackAndUpdateStyle(screenStacks[0]);
     }
 
     @Override
@@ -86,28 +86,28 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     @Override
     public void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-            screenStacks[i].setTopBarVisible(screenInstanceId, hidden, animated);
+            screenStacks[i].setScreenTopBarVisible(screenInstanceId, hidden, animated);
         }
     }
 
     @Override
     public void setTitleBarTitle(String screenInstanceId, String title) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-            screenStacks[i].setTitleBarTitle(screenInstanceId, title);
+            screenStacks[i].setScreenTitleBarTitle(screenInstanceId, title);
         }
     }
 
     @Override
     public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-            screenStacks[i].setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+            screenStacks[i].setScreenTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
         }
     }
 
     @Override
     public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
-            screenStacks[i].setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButtonParams);
+            screenStacks[i].setScreenTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButtonParams);
         }
     }
 
@@ -149,13 +149,13 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         hideCurrentStack();
 
         ScreenStack newStack = screenStacks[position];
-        showStack(newStack);
+        showStackAndUpdateStyle(newStack);
         currentStackIndex = position;
 
         return true;
     }
 
-    private void showStack(ScreenStack newStack) {
+    private void showStackAndUpdateStyle(ScreenStack newStack) {
         newStack.setVisibility(VISIBLE);
         bottomTabs.setStyleFromScreen(newStack.getCurrentScreenStyleParams());
     }

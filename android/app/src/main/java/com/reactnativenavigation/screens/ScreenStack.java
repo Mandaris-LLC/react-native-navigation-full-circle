@@ -8,6 +8,7 @@ import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.ScreenStyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
+import com.reactnativenavigation.utils.Task;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 // TODO there's really no reason for ScreenStack to extend FrameLayout. All screens can be added to parent.
 public class ScreenStack extends FrameLayout implements TitleBarBackButtonListener {
+
     private final AppCompatActivity activity;
     private Stack<Screen> stack = new Stack<>();
 
@@ -50,7 +52,7 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
 
     public void pop() {
         if (!canPop()) {
-            throw new RuntimeException("Can't pop ScreenStack of size " + getStackSize());
+            return;
         }
 
         Screen toRemove = stack.pop();
@@ -89,46 +91,40 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
         return getStackSize() > 1;
     }
 
-    public void setTopBarVisible(String screenInstanceId, boolean visible, boolean animate) {
-        Screen screen = findScreenByScreenInstanceId(screenInstanceId);
-        if (screen != null) {
-            screen.setTopBarVisible(visible, animate);
-        }
-    }
-
-    public Screen findScreenByScreenInstanceId(String screenInstanceId) {
-        if (stack.isEmpty()) {
-            return null;
-        }
-
-        for (Screen screen : stack) {
-            if (screen.getScreenInstanceId().equals(screenInstanceId)) {
-                return screen;
+    public void setScreenTopBarVisible(String screenInstanceId, final boolean visible, final boolean animate) {
+        performOnScreen(screenInstanceId, new Task<Screen>() {
+            @Override
+            public void run(Screen param) {
+                param.setTopBarVisible(visible, animate);
             }
-        }
-
-        return null;
+        });
     }
 
-    public void setTitleBarTitle(String screenInstanceId, String title) {
-        Screen screen = findScreenByScreenInstanceId(screenInstanceId);
-        if (screen != null) {
-            screen.setTitleBarTitle(title);
-        }
+    public void setScreenTitleBarTitle(String screenInstanceId, final String title) {
+        performOnScreen(screenInstanceId, new Task<Screen>() {
+            @Override
+            public void run(Screen param) {
+                param.setTitleBarTitle(title);
+            }
+        });
     }
 
-    public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
-        Screen screen = findScreenByScreenInstanceId(screenInstanceId);
-        if (screen != null) {
-            screen.setTitleBarRightButtons(navigatorEventId, titleBarButtons);
-        }
+    public void setScreenTitleBarRightButtons(String screenInstanceId, final String navigatorEventId, final List<TitleBarButtonParams> titleBarButtons) {
+        performOnScreen(screenInstanceId, new Task<Screen>() {
+            @Override
+            public void run(Screen param) {
+                param.setTitleBarRightButtons(navigatorEventId, titleBarButtons);
+            }
+        });
     }
 
-    public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams) {
-        Screen screen = findScreenByScreenInstanceId(screenInstanceId);
-        if (screen != null) {
-            screen.setTitleBarLeftButton(navigatorEventId, this, titleBarLeftButtonParams);
-        }
+    public void setScreenTitleBarLeftButton(String screenInstanceId, final String navigatorEventId, final TitleBarLeftButtonParams titleBarLeftButtonParams) {
+        performOnScreen(screenInstanceId, new Task<Screen>() {
+            @Override
+            public void run(Screen param) {
+                param.setTitleBarLeftButton(navigatorEventId, ScreenStack.this, titleBarLeftButtonParams);
+            }
+        });
     }
 
     @Override
@@ -138,25 +134,20 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
         }
     }
 
-    public void preventUnmountOnDetachedFromWindow() {
-        for (Screen screen : stack) {
-            screen.preventUnmountOnDetachedFromWindow();
-        }
-    }
-
-    public void ensureUnmountOnDetachedFromWindow() {
-        for (Screen screen : stack) {
-            screen.ensureUnmountOnDetachedFromWindow();
-        }
-    }
-
-    public void preventMountAfterReatachedToWindow() {
-        for (Screen screen : stack) {
-            screen.preventMountAfterReattachedToWindow();
-        }
-    }
-
     public ScreenStyleParams getCurrentScreenStyleParams() {
         return stack.peek().getStyleParams();
+    }
+
+    private void performOnScreen(String screenInstanceId, Task<Screen> task) {
+        if (stack.isEmpty()) {
+            return;
+        }
+
+        for (Screen screen : stack) {
+            if (screen.getScreenInstanceId().equals(screenInstanceId)) {
+                task.run(screen);
+                return;
+            }
+        }
     }
 }

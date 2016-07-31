@@ -72,12 +72,12 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
 
     @Override
     public void setTopBarVisible(String screenInstanceID, boolean visible, boolean animate) {
-        stack.setTopBarVisible(screenInstanceID, visible, animate);
+        stack.setScreenTopBarVisible(screenInstanceID, visible, animate);
     }
 
     @Override
     public void setTitleBarTitle(String screenInstanceId, String title) {
-        stack.setTitleBarTitle(screenInstanceId, title);
+        stack.setScreenTitleBarTitle(screenInstanceId, title);
     }
 
     @Override
@@ -88,11 +88,11 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     @Override
     public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId,
                                         List<TitleBarButtonParams> titleBarRightButtons) {
-        stack.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarRightButtons);
+        stack.setScreenTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarRightButtons);
     }
 
     @Override
     public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams) {
-        stack.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButtonParams);
+        stack.setScreenTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButtonParams);
     }
 }
