@@ -35,6 +35,7 @@ public class FragmentScreen extends Screen {
         content = new FrameLayout(getContext());
         content.setId(ViewUtils.generateViewId());
         ContentView contentView = new ContentView(getContext(), screenParams.screenId, screenParams.passProps, screenParams.navigationParams, null);
+        addView(contentView, 0, 0);
         addView(content, addBelowTopBar());
         addFragment();
         contentView.init();
