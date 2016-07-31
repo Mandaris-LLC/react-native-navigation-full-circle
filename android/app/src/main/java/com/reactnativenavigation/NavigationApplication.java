@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.bridge.NavigationReactPackage;
 import com.reactnativenavigation.react.NavigationReactInstance;
@@ -66,13 +68,25 @@ public abstract class NavigationApplication extends Application {
         return "index.android.bundle";
     }
 
+    public ReactContext getReactContext() {
+        return navigationReactInstance.getReactInstanceManager().getCurrentReactContext();
+    }
+
     public abstract boolean isDebug();
 
     @NonNull
     public abstract List<ReactPackage> createAdditionalReactPackages();
 
+    public void sendNavigatorEvent(String eventId, String navigatorEventId) {
+        navigationReactInstance.getReactEventEmitter().sendNavigatorEvent(eventId, navigatorEventId);
+    }
+
     public void sendEvent(String eventId, String navigatorEventId) {
         navigationReactInstance.getReactEventEmitter().sendEvent(eventId, navigatorEventId);
+    }
+
+    public void sendNavigatorEvent(String eventId, WritableMap arguments) {
+        navigationReactInstance.getReactEventEmitter().sendEvent(eventId, arguments);
     }
 
     public void startReactContext() {

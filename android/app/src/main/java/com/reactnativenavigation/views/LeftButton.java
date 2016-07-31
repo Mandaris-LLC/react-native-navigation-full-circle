@@ -63,6 +63,6 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
     }
 
     private void sendClickEvent() {
-        NavigationApplication.instance.sendEvent(params.eventId, navigatorEventId);
+        NavigationApplication.instance.sendNavigatorEvent(params.eventId, navigatorEventId);
     }
 }
