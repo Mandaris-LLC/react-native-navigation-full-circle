@@ -1,3 +1,4 @@
+[TOC]
 # React Native Navigation
 
 App-wide support for 100% native navigation with an easy cross-platform interface. For iOS, this package is a wrapper around [react-native-controllers](https://github.com/wix/react-native-controllers), but provides a simplified more abstract API over it. This abstract API will be unified with the Android solution which is currently work in progress. It also fully supports redux if you use it.
@@ -66,11 +67,88 @@ For example, this package replaces the native [NavigatorIOS](https://facebook.gi
 }
 ```
 
-3. Have your `MainActivity.java` extend `com.reactnativenavigation.activities.RootActivity`. 
-`RootActivity` is used as a proxy activity to start your actuall app.
+3. Your `MainActivity` should extend `com.reactnativenavigation.controllers.SplashActivity` instead of `ReactActivity`. If you have any `react-native` related methods in your `MainActivity` you can safely delete them.
 
-	The only method you might need to override is `getPackages()`, make sure you add `RnnPackage` as well.
+4. Create a custom Application class and update the `Application` element in `AndroidManifest.xml`
+	
+	```java
+	import com.reactnativenavigation.NavigationApplication;
+	
+	public class MyApplication extends NavigationApplication {
+	
+	}
+	```
+	
+	```xml
+	<application
+        android:name=".MyApplication"
+        ...
+        />
+	```
+5. Implement `isDebug` and `createAdditionalReactPackages`
 
+	```java
+	import com.reactnativenavigation.NavigationApplication;
+	
+	public class MyApplication extends NavigationApplication {
+ 
+    	@Override
+		public boolean isDebug() {
+			return BuildConfig.DEBUG;
+		}
+
+	    @NonNull
+	    @Override
+	    public List<ReactPackage> createAdditionalReactPackages() {
+		    // Add the packages you require here.
+			// No need to add RnnPackage and MainReactPackage
+	        return null;
+	    }
+	}
+	```
+
+## Migrating to version 2.0
+Migrating your code base to version 2.0 will require a few changes to your native Java code. The actual navigation API has not changes so there will be no changes to your JS code base.
+
+* Your `MainActivity` should now extend `com.reactnativenavigation.controllers.SplashActivity`
+* Delete the `getPackages()` method if you've overridden it in `MainActivity`. Don't forget to delete unused imports after this step.
+* Create a custom Application class and update the `Application` element in `AndroidManifest.xml`
+	
+	```java
+	import com.reactnativenavigation.NavigationApplication;
+	
+	public class MyApplication extends NavigationApplication {
+	
+	}
+	```
+	
+	```xml
+	<application
+        android:name=".MyApplication"
+        ...
+        />
+	```
+* Implement `isDebug` and `createAdditionalReactPackages`
+
+	```java
+	import com.reactnativenavigation.NavigationApplication;
+	
+	public class MyApplication extends NavigationApplication {
+ 
+    	@Override
+		public boolean isDebug() {
+			return BuildConfig.DEBUG;
+		}
+
+	    @NonNull
+	    @Override
+	    public List<ReactPackage> createAdditionalReactPackages() {
+		    // Add the packages you require here.
+			// No need to add RnnPackage and MainReactPackage
+	        return null;
+	    }
+	}
+	```
 
 ## Usage
 
