@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
@@ -31,11 +32,15 @@ public class FragmentScreen extends Screen {
 
     @Override
     protected void createContent() {
+        FrameLayout frame = new FrameLayout(getContext());
+        LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        params.addRule(BELOW, topBar.getId());
+        addView(frame, params);
         content = new FrameLayout(getContext());
         content.setId(ViewUtils.generateViewId());
         ContentView contentView = new ContentView(getContext(), screenParams.screenId, screenParams.passProps, screenParams.navigationParams, null);
-        addView(contentView, 0, 0);
-        addView(content, MATCH_PARENT, MATCH_PARENT);
+        addView(contentView);
+        frame.addView(content, MATCH_PARENT, MATCH_PARENT);
         addFragment();
         contentView.init();
     }
