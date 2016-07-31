@@ -24,7 +24,7 @@ public class JsDevImageLoader {
             StrictMode.setThreadPolicy(threadPolicy);
             return drawable;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(iconDevUri, e);
         }
     }
 
