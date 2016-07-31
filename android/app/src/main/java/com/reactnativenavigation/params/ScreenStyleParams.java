@@ -41,5 +41,5 @@ public class ScreenStyleParams {
 
     public Color navigationBarColor;
 
-    public boolean drawUnderTopBar;
+    public boolean drawBelowTopBar;
 }

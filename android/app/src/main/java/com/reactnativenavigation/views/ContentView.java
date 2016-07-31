@@ -21,10 +21,13 @@ public class ContentView extends ReactRootView {
         this.screenId = screenId;
         this.passProps = passProps;
         this.navigationParams = navigationParams;
-        scrollViewAttacher = new ScrollViewAttacher(scrollListener);
+        if (scrollListener != null) {
+            scrollViewAttacher = new ScrollViewAttacher(scrollListener);
+        }
+        attachToJS();
     }
 
-    public void init() {
+    private void attachToJS() {
         ReactInstanceManager react = NavigationApplication.instance.getNavigationReactInstance().getReactInstanceManager();
         startReactApplication(react, screenId, mergePropsAndNavigationParams());
     }
@@ -32,7 +35,9 @@ public class ContentView extends ReactRootView {
     @Override
     public void onViewAdded(View child) {
         super.onViewAdded(child);
-        scrollViewAttacher.onViewAdded(child);
+        if (scrollViewAttacher != null) {
+            scrollViewAttacher.onViewAdded(child);
+        }
     }
 
     private Bundle mergePropsAndNavigationParams() {

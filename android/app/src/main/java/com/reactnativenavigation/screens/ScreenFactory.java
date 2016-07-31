@@ -12,7 +12,7 @@ public class ScreenFactory {
         if (screenParams.isFragmentScreen()) {
             return new FragmentScreen(activity, screenParams, titleBarBackButtonListener);
         } else if (screenParams.hasTopTabs()) {
-            return new TabbedScreen(activity, screenParams, titleBarBackButtonListener);
+            return new ViewPagerScreen(activity, screenParams, titleBarBackButtonListener);
         } else {
             return new SingleScreen(activity, screenParams, titleBarBackButtonListener);
         }

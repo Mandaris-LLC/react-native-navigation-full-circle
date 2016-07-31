@@ -1,6 +1,5 @@
 package com.reactnativenavigation.screens;
 
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,13 +17,13 @@ import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
-public class TabbedScreen extends Screen {
+public class ViewPagerScreen extends Screen {
 
     private List<ContentView> contentViews;
     private ViewPager viewPager;
     private ContentViewPagerAdapter adapter;
 
-    public TabbedScreen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener backButtonListener) {
+    public ViewPagerScreen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener backButtonListener) {
         super(activity, screenParams, backButtonListener);
     }
 
@@ -42,8 +41,7 @@ public class TabbedScreen extends Screen {
                     screenParams.passProps,
                     screenParams.navigationParams,
                     this);
-            viewPager.addView(contentView, addBelowTopBar());
-            contentView.init();
+            addContent(contentView);
             contentViews.add(contentView);
         }
 
@@ -52,13 +50,12 @@ public class TabbedScreen extends Screen {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    @NonNull
-    private LayoutParams addBelowTopBar() {
+    private void addContent(ContentView contentView) {
         LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        if (!screenParams.styleParams.drawUnderTopBar) {
+        if (screenParams.styleParams.drawBelowTopBar) {
             params.addRule(BELOW, topBar.getId());
         }
-        return params;
+        viewPager.addView(contentView, params);
     }
 
     @Override

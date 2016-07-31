@@ -26,7 +26,7 @@ public class ScreenStyleParamsParser {
                 new ScreenStyleParams.Color(ColorParser.parse(params.getString("bottomTabsButtonColor")));
         result.selectedBottomTabsButtonColor =
                 new ScreenStyleParams.Color(ColorParser.parse(params.getString("selectedBottomTabsButtonColor")));
-        result.drawUnderTopBar = params.getBoolean("drawUnderTopBar", false);
+        result.drawBelowTopBar = params.getBoolean("drawBelowTopBar", false);
         return result;
     }
 }
