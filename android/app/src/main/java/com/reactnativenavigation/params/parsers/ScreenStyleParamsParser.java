@@ -22,6 +22,10 @@ public class ScreenStyleParamsParser {
         result.bottomTabsHidden = params.getBoolean("bottomTabsHidden");
         result.bottomTabsHiddenOnScroll = params.getBoolean("bottomTabsHiddenOnScroll");
         result.bottomTabsColor = new ScreenStyleParams.Color(ColorParser.parse(params.getString("bottomTabsColor")));
+        result.bottomTabsButtonColor =
+                new ScreenStyleParams.Color(ColorParser.parse(params.getString("bottomTabsButtonColor")));
+        result.selectedBottomTabsButtonColor =
+                new ScreenStyleParams.Color(ColorParser.parse(params.getString("selectedBottomTabsButtonColor")));
         result.drawUnderTopBar = params.getBoolean("drawUnderTopBar", false);
         return result;
     }
