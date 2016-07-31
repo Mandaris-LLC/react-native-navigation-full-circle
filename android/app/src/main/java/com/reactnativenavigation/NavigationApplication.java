@@ -25,6 +25,7 @@ public abstract class NavigationApplication extends Application {
         super.onCreate();
         instance = this;
         handler = new Handler(getMainLooper());
+        navigationReactInstance = new NavigationReactInstance();
     }
 
     public void runOnMainThread(Runnable runnable) {
@@ -72,6 +73,10 @@ public abstract class NavigationApplication extends Application {
         return navigationReactInstance.getReactInstanceManager().getCurrentReactContext();
     }
 
+    public boolean isReactInstanceManagerInitialized() {
+        return navigationReactInstance.getReactInstanceManager() != null;
+    }
+
     public abstract boolean isDebug();
 
     @NonNull
@@ -90,7 +95,6 @@ public abstract class NavigationApplication extends Application {
     }
 
     public void startReactContext() {
-        navigationReactInstance = new NavigationReactInstance();
         navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
     }
 }
