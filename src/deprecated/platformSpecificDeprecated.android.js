@@ -91,7 +91,7 @@ function adaptNavigationStyleToScreenStyle(screen) {
     topTabsHidden: navigatorStyle.topTabsHidden,
     bottomTabsHidden: navigatorStyle.tabBarHidden,
     bottomTabsHiddenOnScroll: navigatorStyle.bottomTabsHiddenOnScroll,
-    drawUnderTopBar: navigatorStyle.drawUnderNavBar,
+    drawBelowTopBar: !navigatorStyle.drawUnderNavBar,
     bottomTabsColor: navigatorStyle.tabBarBackgroundColor,
     bottomTabsButtonColor: navigatorStyle.tabBarButtonColor,
     selectedBottomTabsButtonColor: navigatorStyle.tabBarButtonColor
