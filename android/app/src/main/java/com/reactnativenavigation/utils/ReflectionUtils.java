@@ -43,15 +43,4 @@ public class ReflectionUtils {
             return null;
         }
     }
-
-//    public static Object invoke(Object object, String methodName) {
-//        try {
-//            Method method = object.getClass().getDeclaredMethod(methodName);
-//            method.setAccessible(true);
-//            return method.invoke(object);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 }
