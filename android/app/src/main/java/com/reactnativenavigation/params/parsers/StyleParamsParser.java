@@ -122,7 +122,7 @@ public class StyleParamsParser {
         if (color.hasColor()) {
             return color;
         } else {
-            return defaultColor.hasColor() ? defaultColor : color;
+            return defaultColor != null && defaultColor.hasColor() ? defaultColor : color;
         }
     }
 }
