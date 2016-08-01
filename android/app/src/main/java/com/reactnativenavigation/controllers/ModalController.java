@@ -4,7 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.reactnativenavigation.layouts.ScreenStackContainer;
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 
+import java.util.List;
 import java.util.Stack;
 
 public class ModalController implements ScreenStackContainer, Modal.OnModalDismissedListener {
@@ -70,4 +73,27 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
         stack.remove(modal);
     }
 
+    public void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
+        for (Modal modal : stack) {
+            modal.setTopBarVisible(screenInstanceId, hidden, animated);
+        }
+    }
+
+    public void setTitleBarTitle(String screenInstanceId, String title) {
+        for (Modal modal : stack) {
+            modal.setTitleBarTitle(screenInstanceId, title);
+        }
+    }
+
+    public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+        for (Modal modal : stack) {
+            modal.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+        }
+    }
+
+    public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButton) {
+        for (Modal modal : stack) {
+            modal.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
+        }
+    }
 }

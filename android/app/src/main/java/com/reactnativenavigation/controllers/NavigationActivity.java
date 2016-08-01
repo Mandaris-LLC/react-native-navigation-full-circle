@@ -119,31 +119,47 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     void pop(ScreenParams params) {
-        layout.pop(params);
+        if (modalController.isShowing()) {
+            modalController.pop(params);
+        } else {
+            layout.pop(params);
+        }
     }
 
     void popToRoot(ScreenParams params) {
-        layout.popToRoot(params);
+        if (modalController.isShowing()) {
+            modalController.popToRoot(params);
+        } else {
+            layout.popToRoot(params);
+        }
     }
 
     void newStack(ScreenParams params) {
-        layout.newStack(params);
+        if (modalController.isShowing()) {
+            modalController.newStack(params);
+        } else {
+            layout.newStack(params);
+        }
     }
 
     void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
         layout.setTopBarVisible(screenInstanceId, hidden, animated);
+        modalController.setTopBarVisible(screenInstanceId, hidden, animated);
     }
 
     void setTitleBarTitle(String screenInstanceId, String title) {
         layout.setTitleBarTitle(screenInstanceId, title);
+        modalController.setTitleBarTitle(screenInstanceId, title);
     }
 
     public void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         layout.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+        modalController.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
     }
 
     public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButton) {
         layout.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
+        modalController.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
     }
 
     void showModal(ScreenParams screenParams) {

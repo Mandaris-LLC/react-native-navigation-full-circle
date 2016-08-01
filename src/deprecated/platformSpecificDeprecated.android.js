@@ -266,6 +266,7 @@ function addNavigatorButtons(screen) {
   const rightButtons = getRightButtons(screen);
   if (rightButtons) {
     rightButtons.forEach(function(button) {
+      button.enabled = !button.disabled;
       if (button.icon) {
         const icon = resolveAssetSource(button.icon);
         if (icon) {
