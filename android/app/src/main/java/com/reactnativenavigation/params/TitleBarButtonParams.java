@@ -20,7 +20,7 @@ public class TitleBarButtonParams {
     public String eventId;
     public String label;
     public Drawable icon;
-    public ScreenStyleParams.Color color;
+    public StyleParams.Color color;
     public ShowAsAction showAsAction;
     public boolean enabled = true;
 }

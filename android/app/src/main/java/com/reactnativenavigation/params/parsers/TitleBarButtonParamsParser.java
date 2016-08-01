@@ -2,7 +2,7 @@ package com.reactnativenavigation.params.parsers;
 
 import android.os.Bundle;
 
-import com.reactnativenavigation.params.ScreenStyleParams;
+import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.react.ImageLoader;
 
@@ -25,7 +25,7 @@ public class TitleBarButtonParamsParser extends Parser {
         if (hasKey(bundle,"icon")) {
             result.icon = ImageLoader.loadImage(bundle.getString("icon"));
         }
-        result.color = new ScreenStyleParams.Color(ColorParser.parse(bundle.getString("color")));
+        result.color = new StyleParams.Color(ColorParser.parse(bundle.getString("color")));
         result.showAsAction = parseShowAsAction(bundle.getString("showAsAction"));
         result.enabled = bundle.getBoolean("enabled", true);
         result.eventId = bundle.getString("id");

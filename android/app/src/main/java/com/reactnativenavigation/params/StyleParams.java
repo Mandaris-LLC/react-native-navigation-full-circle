@@ -2,7 +2,7 @@ package com.reactnativenavigation.params;
 
 import android.support.annotation.ColorInt;
 
-public class ScreenStyleParams {
+public class StyleParams {
     public static class Color {
         @ColorInt
         private int color = -1;
@@ -41,5 +41,5 @@ public class ScreenStyleParams {
 
     public Color navigationBarColor;
 
-    public boolean drawBelowTopBar;
+    public boolean drawScreenBelowTopBar;
 }

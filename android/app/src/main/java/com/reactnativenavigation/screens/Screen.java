@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.ScreenParams;
-import com.reactnativenavigation.params.ScreenStyleParams;
+import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.SdkSupports;
@@ -74,14 +74,14 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
         });
     }
 
-    private void setStyle(ScreenStyleParams styleParams) {
+    private void setStyle(StyleParams styleParams) {
         setStatusBarColor(styleParams.statusBarColor);
         setNavigationBarColor(styleParams.navigationBarColor);
         topBar.setStyle(styleParams);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setStatusBarColor(ScreenStyleParams.Color statusBarColor) {
+    private void setStatusBarColor(StyleParams.Color statusBarColor) {
         if (!SdkSupports.lollipop()) {
             return;
         }
@@ -96,7 +96,7 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setNavigationBarColor(ScreenStyleParams.Color navigationBarColor) {
+    public void setNavigationBarColor(StyleParams.Color navigationBarColor) {
         if (!SdkSupports.lollipop()) {
             return;
         }
@@ -154,7 +154,7 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
         topBar.setTitleBarRightButton(navigatorEventId, backButtonListener, titleBarLeftButtonParams);
     }
 
-    public ScreenStyleParams getStyleParams() {
+    public StyleParams getStyleParams() {
         return screenParams.styleParams;
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 
-import com.reactnativenavigation.params.ScreenStyleParams;
+import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.ViewUtils;
@@ -35,7 +35,7 @@ public class TopBar extends AppBarLayout {
         titleBar.setTitle(title);
     }
 
-    public void setStyle(ScreenStyleParams styleParams) {
+    public void setStyle(StyleParams styleParams) {
         if (styleParams.topBarColor.hasColor()) {
             setBackgroundColor(styleParams.topBarColor.getColor());
         }

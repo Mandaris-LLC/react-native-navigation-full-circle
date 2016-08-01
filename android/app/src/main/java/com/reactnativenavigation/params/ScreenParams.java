@@ -11,7 +11,7 @@ public class ScreenParams {
     public List<TitleBarButtonParams> rightButtons;
     public TitleBarLeftButtonParams leftButton;
     public String title;
-    public ScreenStyleParams styleParams;
+    public StyleParams styleParams;
     public List<TopTabParams> topTabParams;
     public String fragmentCreatorClassName;
 

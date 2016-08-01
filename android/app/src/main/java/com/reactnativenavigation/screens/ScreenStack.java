@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
-import com.reactnativenavigation.params.ScreenStyleParams;
+import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.Task;
@@ -134,7 +134,7 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
         }
     }
 
-    public ScreenStyleParams getCurrentScreenStyleParams() {
+    public StyleParams getCurrentScreenStyleParams() {
         return stack.peek().getStyleParams();
     }
 

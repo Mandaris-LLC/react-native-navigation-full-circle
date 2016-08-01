@@ -6,7 +6,7 @@ import android.graphics.Color;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.reactnativenavigation.params.ScreenParams;
-import com.reactnativenavigation.params.ScreenStyleParams;
+import com.reactnativenavigation.params.StyleParams;
 
 import java.util.List;
 
@@ -25,8 +25,9 @@ public class BottomTabs extends AHBottomNavigation {
         }
     }
 
-    public void setStyleFromScreen(ScreenStyleParams params) {
+    public void setStyleFromScreen(StyleParams params) {
         setBackgroundColor(params.bottomTabsColor);
+
         if (params.bottomTabsButtonColor.hasColor()) {
             setInactiveColor(params.bottomTabsButtonColor.getColor());
         }
@@ -36,7 +37,7 @@ public class BottomTabs extends AHBottomNavigation {
         }
     }
 
-    private void setBackgroundColor(ScreenStyleParams.Color bottomTabsColor) {
+    private void setBackgroundColor(StyleParams.Color bottomTabsColor) {
         if (bottomTabsColor.hasColor()) {
             setDefaultBackgroundColor(bottomTabsColor.getColor());
         } else {

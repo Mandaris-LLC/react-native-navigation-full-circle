@@ -5,7 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.reactnativenavigation.animation.VisibilityAnimator;
-import com.reactnativenavigation.params.ScreenStyleParams;
+import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 
@@ -41,12 +41,12 @@ public class TitleBar extends Toolbar {
         }
     }
 
-    public void setStyle(ScreenStyleParams params) {
+    public void setStyle(StyleParams params) {
         setVisibility(params.titleBarHidden ? GONE : VISIBLE);
         setTitleTextColor(params);
     }
 
-    private void setTitleTextColor(ScreenStyleParams params) {
+    private void setTitleTextColor(StyleParams params) {
         if (params.titleBarTitleColor.hasColor()) {
             setTitleTextColor(params.titleBarTitleColor.getColor());
         }

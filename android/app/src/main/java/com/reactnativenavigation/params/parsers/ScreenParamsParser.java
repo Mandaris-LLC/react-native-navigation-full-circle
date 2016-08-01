@@ -38,7 +38,7 @@ public class ScreenParamsParser extends Parser {
             result.leftButton = new TitleBarLeftButtonParamsParser().parseSingleButton(params.getBundle(KEY_LEFT_BUTTON));
         }
         result.title = params.getString(KEY_TITLE);
-        result.styleParams = ScreenStyleParamsParser.parse(params.getBundle(STYLE_PARAMS));
+        result.styleParams = new StyleParamsParser(params.getBundle(STYLE_PARAMS)).parse();
         if (hasKey(params, TOP_TABS)) {
             result.topTabParams = TopTabParamsParser.parse(params.getBundle(TOP_TABS));
         }

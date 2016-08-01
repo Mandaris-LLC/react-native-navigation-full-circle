@@ -24,9 +24,11 @@ function startSingleScreenApp(params) {
   /*
    * adapt to new API
    */
+  console.log('0');
   screen.screenId = screen.screen;
   params.screen = adaptNavigationStyleToScreenStyle(screen);
   params.screen = adaptNavigationParams(screen);
+  params.appStyle = convertStyleParams(params.appStyle);
 
   newPlatformSpecific.startApp(params);
 }
@@ -81,23 +83,31 @@ function adaptNavigationStyleToScreenStyle(screen) {
     return screen;
   }
 
-  screen.styleParams = {
-    statusBarColor: navigatorStyle.statusBarColor,
-    topBarColor: navigatorStyle.toolBarColor,
-    navigationBarColor: navigatorStyle.navigationBarColor,
-    titleBarHidden: navigatorStyle.navBarHidden,
-    titleBarTitleColor: navigatorStyle.navBarTextColor,
-    backButtonHidden: navigatorStyle.backButtonHidden,
-    topTabsHidden: navigatorStyle.topTabsHidden,
-    bottomTabsHidden: navigatorStyle.tabBarHidden,
-    bottomTabsHiddenOnScroll: navigatorStyle.bottomTabsHiddenOnScroll,
-    drawBelowTopBar: !navigatorStyle.drawUnderNavBar,
-    bottomTabsColor: navigatorStyle.tabBarBackgroundColor,
-    bottomTabsButtonColor: navigatorStyle.tabBarButtonColor,
-    selectedBottomTabsButtonColor: navigatorStyle.tabBarButtonColor
-  };
+  screen.styleParams = convertStyleParams(navigatorStyle);
 
   return _.omit(screen, ['navigatorStyle']);
+}
+
+function convertStyleParams(originalStyleObject) {
+  if (!originalStyleObject) {
+    return null;
+  }
+
+  return {
+    statusBarColor: originalStyleObject.statusBarColor,
+    topBarColor: originalStyleObject.toolBarColor,
+    navigationBarColor: originalStyleObject.navigationBarColor,
+    titleBarHidden: originalStyleObject.navBarHidden,
+    titleBarTitleColor: originalStyleObject.navBarTextColor,
+    backButtonHidden: originalStyleObject.backButtonHidden,
+    topTabsHidden: originalStyleObject.topTabsHidden,
+    bottomTabsHidden: originalStyleObject.tabBarHidden,
+    bottomTabsHiddenOnScroll: originalStyleObject.bottomTabsHiddenOnScroll,
+    drawBelowTopBar: !originalStyleObject.drawUnderNavBar,
+    bottomTabsColor: originalStyleObject.tabBarBackgroundColor,
+    bottomTabsButtonColor: originalStyleObject.tabBarButtonColor,
+    selectedBottomTabsButtonColor: originalStyleObject.tabBarSelectedButtonColor
+  }
 }
 
 function adaptNavigationParams(screen) {
@@ -127,6 +137,12 @@ function startTabBasedApp(params) {
     tab.screen = adaptNavigationStyleToScreenStyle(tab);
     tab.screen = adaptNavigationParams(tab);
   });
+
+  params.appStyle = convertStyleParams(params.appStyle);
+
+  console.log('appStyle.bottomTabsButtonColor', params.appStyle.bottomTabsButtonColor);
+  console.log('appStyle.bottomTabsColor', params.appStyle.bottomTabsColor);
+  console.log('appStyle.selectedBottomTabsButtonColor', params.appStyle.selectedBottomTabsButtonColor);
 
   // TODO: add drawer params
   newPlatformSpecific.startApp(params);
