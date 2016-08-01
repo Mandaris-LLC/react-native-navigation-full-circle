@@ -2,7 +2,7 @@ package com.reactnativenavigation;
 
 import android.app.Application;
 import android.os.Handler;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
@@ -50,6 +50,9 @@ public abstract class NavigationApplication extends Application {
 
     private void addAdditionalReactPackagesIfNeeded(List<ReactPackage> list) {
         List<ReactPackage> additionalReactPackages = createAdditionalReactPackages();
+        if (additionalReactPackages == null) {
+            return;
+        }
 
         for (ReactPackage reactPackage : additionalReactPackages) {
             if (reactPackage instanceof MainReactPackage)
@@ -79,7 +82,7 @@ public abstract class NavigationApplication extends Application {
 
     public abstract boolean isDebug();
 
-    @NonNull
+    @Nullable
     public abstract List<ReactPackage> createAdditionalReactPackages();
 
     public void sendNavigatorEvent(String eventId, String navigatorEventId) {
