@@ -19,7 +19,7 @@ public class SingleScreen extends Screen {
 
     @Override
     protected void createContent() {
-        contentView = new ContentView(getContext(), screenParams.screenId, screenParams.passProps, screenParams.navigationParams, this);
+        contentView = new ContentView(getContext(), screenParams.screenId, screenParams.passProps, screenParams.navigationParams, topBar);
         LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         if (screenParams.styleParams.drawScreenBelowTopBar) {
             params.addRule(BELOW, topBar.getId());
