@@ -106,7 +106,7 @@ function convertStyleParams(originalStyleObject) {
     drawBelowTopBar: !originalStyleObject.drawUnderNavBar,
     bottomTabsColor: originalStyleObject.tabBarBackgroundColor,
     bottomTabsButtonColor: originalStyleObject.tabBarButtonColor,
-    selectedBottomTabsButtonColor: originalStyleObject.tabBarSelectedButtonColor
+    bottomTabsSelectedButtonColor: originalStyleObject.tabBarSelectedButtonColor
   }
 }
 

@@ -40,7 +40,7 @@ public class StyleParamsParser {
         result.bottomTabsColor = getColor("bottomTabsColor", getDefaultBottomTabsColor());
         result.bottomTabsButtonColor = getColor("bottomTabsButtonColor", getDefaultBottomTabsButtonColor());
         result.selectedBottomTabsButtonColor =
-                getColor("selectedBottomTabsButtonColor", getDefaultSelectedBottomTabsButtonColor());
+                getColor("bottomTabsSelectedButtonColor", getDefaultSelectedBottomTabsButtonColor());
 
         result.navigationBarColor = getColor("navigationBarColor", getDefaultNavigationColor());
 
