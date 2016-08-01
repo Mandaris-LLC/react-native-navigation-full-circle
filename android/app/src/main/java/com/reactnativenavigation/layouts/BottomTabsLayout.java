@@ -141,6 +141,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     public void destroy() {
         for (ScreenStack screenStack : screenStacks) {
             screenStack.destroy();
+            removeView(screenStack);
         }
     }
 
