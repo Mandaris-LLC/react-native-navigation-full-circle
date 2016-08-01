@@ -29,7 +29,7 @@ public class StyleParamsParser {
         result.topBarColor = getColor("topBarColor", getDefaultTopBarColor());
         result.titleBarHidden = getBoolean("titleBarHidden", isDefaultTopBarHidden());
         result.titleBarTitleColor = getColor("titleBarTitleColor", getDefaultTitleBarColor());
-        result.titleBarButtonColor = getColor("titleBarButtonColor", getDefaultTitleBarColor());
+        result.titleBarButtonColor = getColor("titleBarButtonColor", getTitleBarButtonColor());
         result.backButtonHidden = getBoolean("backButtonHidden", isDefaultBackButtonHidden());
         result.topTabsHidden = getBoolean("topTabsHidden", isDefaultTopTabsHidden());
 
@@ -50,22 +50,22 @@ public class StyleParamsParser {
 
     @Nullable
     private StyleParams.Color getDefaultNavigationColor() {
-        return appStyle == null ? new StyleParams.Color(-1) : appStyle.navigationBarColor;
+        return appStyle == null ? new StyleParams.Color() : appStyle.navigationBarColor;
     }
 
     @Nullable
     private StyleParams.Color getDefaultSelectedBottomTabsButtonColor() {
-        return appStyle == null ? new StyleParams.Color(-1) : appStyle.selectedBottomTabsButtonColor;
+        return appStyle == null ? new StyleParams.Color() : appStyle.selectedBottomTabsButtonColor;
     }
 
     @Nullable
     private StyleParams.Color getDefaultBottomTabsButtonColor() {
-        return appStyle == null ? new StyleParams.Color(-1) : appStyle.bottomTabsButtonColor;
+        return appStyle == null ? new StyleParams.Color() : appStyle.bottomTabsButtonColor;
     }
 
     @Nullable
     private StyleParams.Color getDefaultBottomTabsColor() {
-        return appStyle == null ? new StyleParams.Color(-1) : appStyle.bottomTabsColor;
+        return appStyle == null ? new StyleParams.Color() : appStyle.bottomTabsColor;
     }
 
     private boolean isDefaultBottomTabsHiddenOnScroll() {
@@ -90,12 +90,12 @@ public class StyleParamsParser {
 
     @Nullable
     private StyleParams.Color getDefaultTitleBarColor() {
-        return appStyle == null ? new StyleParams.Color(-1) : appStyle.titleBarTitleColor;
+        return appStyle == null ? new StyleParams.Color() : appStyle.titleBarTitleColor;
     }
 
     @Nullable
     private StyleParams.Color getTitleBarButtonColor() {
-        return appStyle == null ? new StyleParams.Color(-1) : appStyle.titleBarButtonColor;
+        return appStyle == null ? new StyleParams.Color() : appStyle.titleBarButtonColor;
     }
 
     private boolean isDefaultTopBarHidden() {
@@ -104,12 +104,12 @@ public class StyleParamsParser {
 
     @Nullable
     private StyleParams.Color getDefaultTopBarColor() {
-        return appStyle == null ? new StyleParams.Color(-1) : appStyle.topBarColor;
+        return appStyle == null ? new StyleParams.Color() : appStyle.topBarColor;
     }
 
     @Nullable
     private StyleParams.Color getDefaultStatusBarColor() {
-        return appStyle == null ? new StyleParams.Color(-1) : appStyle.statusBarColor;
+        return appStyle == null ? new StyleParams.Color() : appStyle.statusBarColor;
     }
 
     private boolean getBoolean(String titleBarHidden, boolean defaultValue) {
@@ -118,7 +118,7 @@ public class StyleParamsParser {
 
     @NonNull
     private StyleParams.Color getColor(String key, StyleParams.Color defaultColor) {
-        StyleParams.Color color = new StyleParams.Color(ColorParser.parse(params.getString(key)));
+        StyleParams.Color color = StyleParams.Color.parse(params.getString(key));
         if (color.hasColor()) {
             return color;
         } else {

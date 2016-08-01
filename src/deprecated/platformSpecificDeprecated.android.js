@@ -140,11 +140,6 @@ function startTabBasedApp(params) {
   });
 
   params.appStyle = convertStyleParams(params.appStyle);
-
-  console.log('appStyle.bottomTabsButtonColor', params.appStyle.bottomTabsButtonColor);
-  console.log('appStyle.bottomTabsColor', params.appStyle.bottomTabsColor);
-  console.log('appStyle.selectedBottomTabsButtonColor', params.appStyle.selectedBottomTabsButtonColor);
-
   // TODO: add drawer params
   newPlatformSpecific.startApp(params);
 }

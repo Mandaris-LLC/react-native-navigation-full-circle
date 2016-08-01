@@ -5,14 +5,18 @@ import android.support.annotation.ColorInt;
 public class StyleParams {
     public static class Color {
         @ColorInt
-        private int color = -1;
+        private Integer color = null;
 
-        public Color(int color) {
+        public Color() {
+            color = null;
+        }
+
+        public Color(Integer color) {
             this.color = color;
         }
 
         public boolean hasColor() {
-            return color != -1;
+            return color != null;
         }
 
         public int getColor() {
@@ -20,6 +24,13 @@ public class StyleParams {
                 throw new RuntimeException("Color undefined");
             }
             return color;
+        }
+
+        public static Color parse(String str) {
+            if (str == null) {
+                return new Color();
+            }
+            return new Color(android.graphics.Color.parseColor(str));
         }
     }
 
