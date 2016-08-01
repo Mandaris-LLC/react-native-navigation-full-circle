@@ -27,7 +27,7 @@ public class TitleBarButtonParamsParser extends Parser {
         }
         result.color = new StyleParams.Color(ColorParser.parse(bundle.getString("color")));
         result.showAsAction = parseShowAsAction(bundle.getString("showAsAction"));
-        result.enabled = bundle.getBoolean("enabled", true);
+        result.enabled = !bundle.getBoolean("disabled", false);
         result.eventId = bundle.getString("id");
         return result;
     }

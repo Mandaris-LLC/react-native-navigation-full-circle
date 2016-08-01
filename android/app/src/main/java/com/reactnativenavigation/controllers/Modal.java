@@ -10,11 +10,31 @@ import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.ScreenStackContainer;
 import com.reactnativenavigation.layouts.SingleScreenLayout;
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.TitleBarButtonParams;
+import com.reactnativenavigation.params.TitleBarLeftButtonParams;
+
+import java.util.List;
 
 public class Modal extends Dialog implements DialogInterface.OnDismissListener, ScreenStackContainer {
 
     private final AppCompatActivity activity;
     private final OnModalDismissedListener onModalDismissedListener;
+
+    public void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
+        layout.setTopBarVisible(screenInstanceId, hidden, animated);
+    }
+
+    public void setTitleBarTitle(String screenInstanceId, String title) {
+        layout.setTitleBarTitle(screenInstanceId, title);
+    }
+
+    public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+        layout.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+    }
+
+    public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButton) {
+        layout.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
+    }
 
     public interface OnModalDismissedListener {
         void onModalDismissed(Modal modal);
