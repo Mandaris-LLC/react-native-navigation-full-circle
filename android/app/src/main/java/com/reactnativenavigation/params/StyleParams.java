@@ -31,6 +31,7 @@ public class StyleParams {
 
     public boolean titleBarHidden;
     public Color titleBarTitleColor;
+    public Color titleBarButtonColor;
     public boolean backButtonHidden;
 
     public boolean bottomTabsHidden;

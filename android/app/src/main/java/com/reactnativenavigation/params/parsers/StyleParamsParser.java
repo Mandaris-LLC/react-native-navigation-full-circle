@@ -29,6 +29,7 @@ public class StyleParamsParser {
         result.topBarColor = getColor("topBarColor", getDefaultTopBarColor());
         result.titleBarHidden = getBoolean("titleBarHidden", isDefaultTopBarHidden());
         result.titleBarTitleColor = getColor("titleBarTitleColor", getDefaultTitleBarColor());
+        result.titleBarButtonColor = getColor("titleBarButtonColor", getDefaultTitleBarColor());
         result.backButtonHidden = getBoolean("backButtonHidden", isDefaultBackButtonHidden());
         result.topTabsHidden = getBoolean("topTabsHidden", isDefaultTopTabsHidden());
 
@@ -90,6 +91,11 @@ public class StyleParamsParser {
     @Nullable
     private StyleParams.Color getDefaultTitleBarColor() {
         return appStyle == null ? new StyleParams.Color(-1) : appStyle.titleBarTitleColor;
+    }
+
+    @Nullable
+    private StyleParams.Color getTitleBarButtonColor() {
+        return appStyle == null ? new StyleParams.Color(-1) : appStyle.titleBarButtonColor;
     }
 
     private boolean isDefaultTopBarHidden() {

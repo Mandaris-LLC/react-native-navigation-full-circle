@@ -95,10 +95,11 @@ function convertStyleParams(originalStyleObject) {
 
   return {
     statusBarColor: originalStyleObject.statusBarColor,
-    topBarColor: originalStyleObject.toolBarColor,
+    topBarColor: originalStyleObject.navBarBackgroundColor,
     navigationBarColor: originalStyleObject.navigationBarColor,
     titleBarHidden: originalStyleObject.navBarHidden,
     titleBarTitleColor: originalStyleObject.navBarTextColor,
+    titleBarButtonColor: originalStyleObject.navBarButtonColor,
     backButtonHidden: originalStyleObject.backButtonHidden,
     topTabsHidden: originalStyleObject.topTabsHidden,
     bottomTabsHidden: originalStyleObject.tabBarHidden,
