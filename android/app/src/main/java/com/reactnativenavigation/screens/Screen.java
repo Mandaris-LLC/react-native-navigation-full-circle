@@ -147,6 +147,10 @@ public abstract class Screen extends RelativeLayout {
     }
 
     private void setButtonColorFromScreen(List<TitleBarButtonParams> titleBarButtonParams) {
+        if (titleBarButtonParams == null) {
+            return;
+        }
+
         for (TitleBarButtonParams titleBarButtonParam : titleBarButtonParams) {
             titleBarButtonParam.setColorFromScreenStyle(screenParams.styleParams.titleBarButtonColor);
         }
