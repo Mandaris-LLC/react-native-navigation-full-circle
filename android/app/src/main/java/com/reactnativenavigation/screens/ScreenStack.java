@@ -86,7 +86,10 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
     }
 
     private void removeFromScreen() {
-        ((ViewManager) getParent()).removeView(this);
+        ViewManager parent = (ViewManager) getParent();
+        if (parent != null) {
+            parent.removeView(this);
+        }
     }
 
     public int getStackSize() {
