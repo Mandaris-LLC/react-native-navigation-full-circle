@@ -2,6 +2,7 @@ package com.reactnativenavigation.screens;
 
 import android.animation.LayoutTransition;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewManager;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
@@ -81,6 +82,11 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
             removeView(screen);
         }
         stack.clear();
+        removeFromScreen();
+    }
+
+    private void removeFromScreen() {
+        ((ViewManager) getParent()).removeView(this);
     }
 
     public int getStackSize() {
