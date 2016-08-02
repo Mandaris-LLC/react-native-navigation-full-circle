@@ -39,8 +39,7 @@ public class ViewPagerScreen extends Screen {
             ContentView contentView = new ContentView(getContext(),
                     topTabParam.screenId,
                     screenParams.passProps,
-                    screenParams.navigationParams,
-                    this);
+                    screenParams.navigationParams, topBar);
             addContent(contentView);
             contentViews.add(contentView);
         }

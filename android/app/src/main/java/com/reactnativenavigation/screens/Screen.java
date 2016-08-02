@@ -9,14 +9,11 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
-import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.SdkSupports;
-import com.reactnativenavigation.utils.ViewUtils;
-import com.reactnativenavigation.views.ScrollDirectionListener;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 import com.reactnativenavigation.views.TopBar;
 
@@ -25,13 +22,12 @@ import java.util.List;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public abstract class Screen extends RelativeLayout implements ScrollDirectionListener.OnScrollChanged {
+public abstract class Screen extends RelativeLayout {
 
     protected final AppCompatActivity activity;
     protected final ScreenParams screenParams;
     protected TopBar topBar;
     private final TitleBarBackButtonListener titleBarBackButtonListener;
-    private VisibilityAnimator topBarVisibilityAnimator;
 
     public Screen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
         super(activity);
@@ -59,22 +55,10 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
 
     private void createTopBar() {
         topBar = new TopBar(getContext());
-        createTopBarVisibilityAnimator();
         addView(topBar, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
     }
 
-    private void createTopBarVisibilityAnimator() {
-        ViewUtils.runOnPreDraw(topBar, new Runnable() {
-            @Override
-            public void run() {
-                if (topBarVisibilityAnimator == null) {
-                    topBarVisibilityAnimator = new VisibilityAnimator(topBar, VisibilityAnimator.HideDirection.Up, topBar.getHeight());
-                }
-            }
-        });
-    }
-
-    private void setStyle(StyleParams styleParams) {
+    private void setStyle(ScreenStyleParams styleParams) {
         setStatusBarColor(styleParams.statusBarColor);
         setNavigationBarColor(styleParams.navigationBarColor);
         topBar.setStyle(styleParams);
@@ -122,11 +106,6 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
         Log.d("LOG", "Screen.onDetachedFromWindow " + this);
     }
 
-    @Override
-    public void onScrollChanged(ScrollDirectionListener.Direction direction) {
-        topBarVisibilityAnimator.onScrollChanged(direction);
-    }
-
     public abstract void ensureUnmountOnDetachedFromWindow();
 
     public abstract void preventUnmountOnDetachedFromWindow();
@@ -138,7 +117,7 @@ public abstract class Screen extends RelativeLayout implements ScrollDirectionLi
     }
 
     public void setTopBarVisible(boolean visible, boolean animate) {
-        topBarVisibilityAnimator.setVisible(visible, animate);
+//        topBarVisibilityAnimator.setVisible(visible, animate); TODO
     }
 
     public void setTitleBarTitle(String title) {

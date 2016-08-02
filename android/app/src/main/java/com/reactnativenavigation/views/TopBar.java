@@ -58,4 +58,8 @@ public class TopBar extends AppBarLayout {
                                        TitleBarLeftButtonParams titleBarLeftButtonParams) {
         titleBar.setLeftButton(titleBarLeftButtonParams, titleBarBackButtonListener, navigatorEventId);
     }
+
+    public TitleBar getTitleBar() {
+        return titleBar;
+    }
 }
