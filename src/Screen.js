@@ -10,6 +10,13 @@ import _ from 'lodash';
 
 const _allNavigatorEventHandlers = {};
 
+const throttledPlatformSpecificFunctions = {
+  push: _.throttle(platformSpecific.navigatorPush, 500, {leading: true, trailing: false}),
+  pop: _.throttle(platformSpecific.navigatorPop, 500, {leading: true, trailing: false}),
+  popToRoot: _.throttle(platformSpecific.navigatorPopToRoot, 500, {leading: true, trailing: false}),
+  resetTo: _.throttle(platformSpecific.navigatorResetTo, 500, {leading: true, trailing: false})
+};
+
 class Navigator {
   constructor(navigatorID, navigatorEventID, screenInstanceID) {
     this.navigatorID = navigatorID;
@@ -20,19 +27,19 @@ class Navigator {
   }
 
   push(params = {}) {
-    return platformSpecific.navigatorPush(this, params);
+    return throttledPlatformSpecificFunctions.push(this, params);
   }
 
   pop(params = {}) {
-    return platformSpecific.navigatorPop(this, params);
+    return throttledPlatformSpecificFunctions.pop(this, params);
   }
 
   popToRoot(params = {}) {
-    return platformSpecific.navigatorPopToRoot(this, params);
+    return throttledPlatformSpecificFunctions.popToRoot(this, params);
   }
 
   resetTo(params = {}) {
-    return platformSpecific.navigatorResetTo(this, params);
+    return throttledPlatformSpecificFunctions.resetTo(this, params);
   }
 
   showModal(params = {}) {
@@ -93,10 +100,6 @@ class Navigator {
 
   switchToTab(params = {}) {
     return platformSpecific.navigatorSwitchToTab(this, params);
-  }
-
-  showFAB(params = {}) {
-    return platformSpecific.showFAB(params);
   }
 
   setOnNavigatorEvent(callback) {
