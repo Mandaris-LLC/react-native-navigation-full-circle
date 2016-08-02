@@ -11,10 +11,10 @@ import _ from 'lodash';
 const _allNavigatorEventHandlers = {};
 
 const throttledPlatformSpecificFunctions = {
-  push: _.throttle(platformSpecific.navigatorPush, 500, {leading: true, trailing: false}),
-  pop: _.throttle(platformSpecific.navigatorPop, 500, {leading: true, trailing: false}),
-  popToRoot: _.throttle(platformSpecific.navigatorPopToRoot, 500, {leading: true, trailing: false}),
-  resetTo: _.throttle(platformSpecific.navigatorResetTo, 500, {leading: true, trailing: false})
+  push: _.throttle(platformSpecific.navigatorPush, 1000, {leading: true, trailing: false}),
+  pop: _.throttle(platformSpecific.navigatorPop, 100, {leading: true, trailing: false}),
+  popToRoot: _.throttle(platformSpecific.navigatorPopToRoot, 100, {leading: true, trailing: false}),
+  resetTo: _.throttle(platformSpecific.navigatorResetTo, 100, {leading: true, trailing: false})
 };
 
 class Navigator {

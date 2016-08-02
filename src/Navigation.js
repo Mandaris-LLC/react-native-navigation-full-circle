@@ -106,13 +106,13 @@ export default {
   registerScreen,
   getRegisteredScreen,
   registerComponent,
-  showModal: _.throttle(showModal, 500, {leading: true, trailing: false}),
-  dismissModal: _.throttle(dismissModal, 500, {leading: true, trailing: false}),
-  dismissAllModals: _.throttle(dismissAllModals, 500, {leading: true, trailing: false}),
-  showLightBox: _.throttle(showLightBox, 500, {leading: true, trailing: false}),
-  dismissLightBox: _.throttle(dismissLightBox, 500, {leading: true, trailing: false}),
-  showInAppNotification: _.throttle(showInAppNotification, 500, {leading: true, trailing: false}),
-  dismissInAppNotification: _.throttle(dismissInAppNotification, 500, {leading: true, trailing: false}),
-  startTabBasedApp: _.throttle(startTabBasedApp, 500, {leading: true, trailing: false}),
-  startSingleScreenApp: _.throttle(startSingleScreenApp, 500, {leading: true, trailing: false})
+  showModal: _.throttle(showModal, 1000, {leading: true, trailing: false}),
+  dismissModal: dismissModal,
+  dismissAllModals: dismissAllModals,
+  showLightBox: _.throttle(showLightBox, 1000, {leading: true, trailing: false}),
+  dismissLightBox: dismissLightBox,
+  showInAppNotification: showInAppNotification,
+  dismissInAppNotification: dismissInAppNotification,
+  startTabBasedApp: _.throttle(startTabBasedApp, 1000, {leading: true, trailing: false}),
+  startSingleScreenApp: _.throttle(startSingleScreenApp, 1000, {leading: true, trailing: false})
 };
