@@ -48,9 +48,17 @@ public abstract class Screen extends RelativeLayout {
     protected abstract void createContent();
 
     private void createTitleBar() {
+        addTitleBarButtons();
+        topBar.setTitle(screenParams.title);
+    }
+
+    private void addTitleBarButtons() {
+        setButtonColorFromScreen(screenParams.rightButtons);
+        if (screenParams.leftButton != null) {
+            screenParams.leftButton.setColorFromScreenStyle(screenParams.styleParams.titleBarButtonColor);
+        }
         topBar.addTitleBarAndSetButtons(screenParams.rightButtons, screenParams.leftButton,
                 titleBarBackButtonListener, screenParams.navigatorEventId);
-        topBar.setTitle(screenParams.title);
     }
 
     private void createTopBar() {
@@ -117,7 +125,7 @@ public abstract class Screen extends RelativeLayout {
     }
 
     public void setTopBarVisible(boolean visible, boolean animate) {
-//        topBarVisibilityAnimator.setVisible(visible, animate); TODO
+        //        topBarVisibilityAnimator.setVisible(visible, animate); TODO
     }
 
     public void setTitleBarTitle(String title) {
@@ -138,9 +146,9 @@ public abstract class Screen extends RelativeLayout {
         return screenParams.styleParams;
     }
 
-    private void setButtonColorFromScreen(List<TitleBarButtonParams> titleBarButtonParamses) {
-        for (TitleBarButtonParams titleBarButtonParamse : titleBarButtonParamses) {
-            titleBarButtonParamse.setColorFromScreenStyle(screenParams.styleParams.titleBarButtonColor);
+    private void setButtonColorFromScreen(List<TitleBarButtonParams> titleBarButtonParams) {
+        for (TitleBarButtonParams titleBarButtonParam : titleBarButtonParams) {
+            titleBarButtonParam.setColorFromScreenStyle(screenParams.styleParams.titleBarButtonColor);
         }
     }
 }
