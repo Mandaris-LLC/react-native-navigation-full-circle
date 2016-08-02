@@ -37,6 +37,8 @@ public class BottomTabs extends AHBottomNavigation {
         if (params.selectedBottomTabsButtonColor.hasColor()) {
             setAccentColor(params.selectedBottomTabsButtonColor.getColor());
         }
+
+        setVisibility(params.bottomTabsHidden);
     }
 
     private void setBackgroundColor(StyleParams.Color bottomTabsColor) {
@@ -45,5 +47,9 @@ public class BottomTabs extends AHBottomNavigation {
         } else {
             setDefaultBackgroundColor(Color.WHITE);
         }
+    }
+
+    private void setVisibility(boolean bottomTabsHidden) {
+        setVisibility(bottomTabsHidden ? GONE : VISIBLE);
     }
 }
