@@ -50,7 +50,9 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position));
         screenStacks[position] = newStack;
         newStack.setVisibility(INVISIBLE);
-        addView(newStack, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        lp.addRule(ABOVE, bottomTabs.getId());
+        addView(newStack, 0, lp);
     }
 
     private void createBottomTabs() {

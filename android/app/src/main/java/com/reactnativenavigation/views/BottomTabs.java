@@ -7,6 +7,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
+import com.reactnativenavigation.utils.ViewUtils;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class BottomTabs extends AHBottomNavigation {
     public BottomTabs(Context context) {
         super(context);
         setForceTint(true);
+        setId(ViewUtils.generateViewId());
     }
 
     public void addTabs(List<ScreenParams> params, OnTabSelectedListener onTabSelectedListener) {
