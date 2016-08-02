@@ -58,7 +58,7 @@ public abstract class Screen extends RelativeLayout {
         addView(topBar, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
     }
 
-    private void setStyle(ScreenStyleParams styleParams) {
+    private void setStyle(StyleParams styleParams) {
         setStatusBarColor(styleParams.statusBarColor);
         setNavigationBarColor(styleParams.navigationBarColor);
         topBar.setStyle(styleParams);
