@@ -23,4 +23,10 @@ public class TitleBarButtonParams {
     public StyleParams.Color color;
     public ShowAsAction showAsAction;
     public boolean enabled = true;
+
+    public void setColorFromScreenStyle(StyleParams.Color titleBarButtonColor) {
+        if (!color.hasColor() && titleBarButtonColor.hasColor()) {
+            color = titleBarButtonColor;
+        }
+    }
 }

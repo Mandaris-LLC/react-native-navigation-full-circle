@@ -125,6 +125,7 @@ public abstract class Screen extends RelativeLayout {
     }
 
     public void setTitleBarRightButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+        setButtonColorFromScreen(titleBarButtons);
         topBar.setTitleBarRightButtons(navigatorEventId, titleBarButtons);
     }
 
@@ -135,5 +136,11 @@ public abstract class Screen extends RelativeLayout {
 
     public StyleParams getStyleParams() {
         return screenParams.styleParams;
+    }
+
+    private void setButtonColorFromScreen(List<TitleBarButtonParams> titleBarButtonParamses) {
+        for (TitleBarButtonParams titleBarButtonParamse : titleBarButtonParamses) {
+            titleBarButtonParamse.setColorFromScreenStyle(screenParams.styleParams.titleBarButtonColor);
+        }
     }
 }

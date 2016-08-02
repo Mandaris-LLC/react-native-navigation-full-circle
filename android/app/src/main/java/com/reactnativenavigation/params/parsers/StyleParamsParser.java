@@ -4,15 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.reactnativenavigation.params.AppStyle;
 import com.reactnativenavigation.params.StyleParams;
 
 public class StyleParamsParser {
-    private static StyleParams appStyle;
     private Bundle params;
-
-    public static void setAppStyle(Bundle params) {
-        StyleParamsParser.appStyle = new StyleParamsParser(params.getBundle("appStyle")).parse();
-    }
 
     public StyleParamsParser(Bundle params) {
         this.params = params;
@@ -50,66 +46,66 @@ public class StyleParamsParser {
 
     @Nullable
     private StyleParams.Color getDefaultNavigationColor() {
-        return appStyle == null ? new StyleParams.Color() : appStyle.navigationBarColor;
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.navigationBarColor;
     }
 
     @Nullable
     private StyleParams.Color getDefaultSelectedBottomTabsButtonColor() {
-        return appStyle == null ? new StyleParams.Color() : appStyle.selectedBottomTabsButtonColor;
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.selectedBottomTabsButtonColor;
     }
 
     @Nullable
     private StyleParams.Color getDefaultBottomTabsButtonColor() {
-        return appStyle == null ? new StyleParams.Color() : appStyle.bottomTabsButtonColor;
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.bottomTabsButtonColor;
     }
 
     @Nullable
     private StyleParams.Color getDefaultBottomTabsColor() {
-        return appStyle == null ? new StyleParams.Color() : appStyle.bottomTabsColor;
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.bottomTabsColor;
     }
 
     private boolean isDefaultBottomTabsHiddenOnScroll() {
-        return appStyle != null && appStyle.bottomTabsHiddenOnScroll;
+        return AppStyle.appStyle != null && AppStyle.appStyle.bottomTabsHiddenOnScroll;
     }
 
     private boolean isDefaultBottomTabsHidden() {
-        return appStyle != null && appStyle.bottomTabsHidden;
+        return AppStyle.appStyle != null && AppStyle.appStyle.bottomTabsHidden;
     }
 
     private boolean isDefaultScreenBelowTopBar() {
-        return appStyle == null || appStyle.drawScreenBelowTopBar;
+        return AppStyle.appStyle == null || AppStyle.appStyle.drawScreenBelowTopBar;
     }
 
     private boolean isDefaultTopTabsHidden() {
-        return appStyle != null && appStyle.topTabsHidden;
+        return AppStyle.appStyle != null && AppStyle.appStyle.topTabsHidden;
     }
 
     private boolean isDefaultBackButtonHidden() {
-        return appStyle != null && appStyle.backButtonHidden;
+        return AppStyle.appStyle != null && AppStyle.appStyle.backButtonHidden;
     }
 
     @Nullable
     private StyleParams.Color getDefaultTitleBarColor() {
-        return appStyle == null ? new StyleParams.Color() : appStyle.titleBarTitleColor;
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.titleBarTitleColor;
     }
 
     @Nullable
     private StyleParams.Color getTitleBarButtonColor() {
-        return appStyle == null ? new StyleParams.Color() : appStyle.titleBarButtonColor;
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.titleBarButtonColor;
     }
 
     private boolean isDefaultTopBarHidden() {
-        return appStyle != null && appStyle.titleBarHidden;
+        return AppStyle.appStyle != null && AppStyle.appStyle.titleBarHidden;
     }
 
     @Nullable
     private StyleParams.Color getDefaultTopBarColor() {
-        return appStyle == null ? new StyleParams.Color() : appStyle.topBarColor;
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.topBarColor;
     }
 
     @Nullable
     private StyleParams.Color getDefaultStatusBarColor() {
-        return appStyle == null ? new StyleParams.Color() : appStyle.statusBarColor;
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.statusBarColor;
     }
 
     private boolean getBoolean(String titleBarHidden, boolean defaultValue) {
