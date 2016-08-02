@@ -60,7 +60,7 @@ function getRegisteredScreen(screenID) {
   const generator = registeredScreens[screenID];
   if (!generator) {
     console.error(`Navigation.getRegisteredScreen: ${screenID} used but not yet registered`);
-    return;
+    return undefined;
   }
   return generator();
 }
@@ -93,6 +93,14 @@ function dismissInAppNotification(params = {}) {
   return platformSpecific.dismissInAppNotification(params);
 }
 
+function startTabBasedApp(params) {
+  return platformSpecific.startTabBasedApp(params);
+}
+
+function startSingleScreenApp(params) {
+  return platformSpecific.startSingleScreenApp(params);
+}
+
 export default {
   registerScreen,
   getRegisteredScreen,
@@ -104,6 +112,6 @@ export default {
   dismissLightBox,
   showInAppNotification,
   dismissInAppNotification,
-  startTabBasedApp: platformSpecific.startTabBasedApp,
-  startSingleScreenApp: platformSpecific.startSingleScreenApp
+  startTabBasedApp,
+  startSingleScreenApp
 };
