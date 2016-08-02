@@ -290,7 +290,7 @@ function addNavigatorButtons(screen) {
 }
 
 function getLeftButton(screen) {
-  if (screen.navigatorButtons) {
+  if (screen.navigatorButtons && screen.navigatorButtons.leftButton) {
     return screen.navigatorButtons.leftButton;
   }
 
@@ -298,7 +298,7 @@ function getLeftButton(screen) {
 }
 
 function getRightButtons(screen) {
-  if (screen.navigatorButtons) {
+  if (screen.navigatorButtons && screen.navigatorButtons.rightButtons) {
     return screen.navigatorButtons.rightButtons;
   }
 
