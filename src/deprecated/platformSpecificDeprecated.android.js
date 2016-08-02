@@ -187,7 +187,7 @@ function navigatorSetTabBadge(navigator, params) {
 }
 
 function navigatorSetTitle(navigator, params) {
-  newPlatformSpecific.setScreenTitleBarTitle(navigator.screenInstanceID, params);
+  newPlatformSpecific.setScreenTitleBarTitle(navigator.screenInstanceID, params.title);
 }
 
 function navigatorSwitchToTab(navigator, params) {
