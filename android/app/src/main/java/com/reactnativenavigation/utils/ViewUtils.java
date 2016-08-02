@@ -12,7 +12,7 @@ import com.reactnativenavigation.NavigationApplication;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ViewUtils {
-    private static final AtomicInteger viewId = new AtomicInteger();
+    private static final AtomicInteger viewId = new AtomicInteger(1);
 
     public static void runOnPreDraw(final View view, final Runnable task) {
         view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
