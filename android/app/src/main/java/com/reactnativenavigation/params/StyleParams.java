@@ -47,7 +47,6 @@ public class StyleParams {
 
     public Color topTabTextColor;
     public Color selectedTopTabTextColor;
-    public Color selectedTopTabColor;
     public int selectedTopTabIndicatorHeight;
     public Color selectedTopTabIndicatorColor;
 

@@ -107,7 +107,6 @@ function convertStyleParams(originalStyleObject) {
 
     topTabTextColor: originalStyleObject.topTabTextColor,
     selectedTopTabTextColor: originalStyleObject.selectedTopTabTextColor,
-    selectedTopTabColor: originalStyleObject.selectedTopTabColor,
     selectedTopTabIndicatorHeight: originalStyleObject.selectedTopTabIndicatorHeight,
     selectedTopTabIndicatorColor: originalStyleObject.selectedTopTabIndicatorColor,
 
