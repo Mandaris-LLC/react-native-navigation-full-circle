@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
+import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.SdkSupports;
+import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 import com.reactnativenavigation.views.TopBar;
 
@@ -28,6 +30,7 @@ public abstract class Screen extends RelativeLayout {
     protected final ScreenParams screenParams;
     protected TopBar topBar;
     private final TitleBarBackButtonListener titleBarBackButtonListener;
+    private VisibilityAnimator topBarVisibilityAnimator;
 
     public Screen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
         super(activity);
@@ -63,7 +66,21 @@ public abstract class Screen extends RelativeLayout {
 
     private void createTopBar() {
         topBar = new TopBar(getContext());
+        createTopBarVisibilityAnimator();
         addView(topBar, new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+    }
+
+    private void createTopBarVisibilityAnimator() {
+        ViewUtils.runOnPreDraw(topBar, new Runnable() {
+            @Override
+            public void run() {
+                if (topBarVisibilityAnimator == null) {
+                    topBarVisibilityAnimator = new VisibilityAnimator(topBar,
+                            VisibilityAnimator.HideDirection.Up,
+                            topBar.getHeight());
+                }
+            }
+        });
     }
 
     private void setStyle(StyleParams styleParams) {
@@ -125,7 +142,7 @@ public abstract class Screen extends RelativeLayout {
     }
 
     public void setTopBarVisible(boolean visible, boolean animate) {
-        //        topBarVisibilityAnimator.setVisible(visible, animate); TODO
+        topBarVisibilityAnimator.setVisible(visible, animate);
     }
 
     public void setTitleBarTitle(String title) {

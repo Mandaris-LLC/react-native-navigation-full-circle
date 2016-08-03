@@ -21,7 +21,6 @@ public class ViewPagerScreen extends Screen {
 
     private List<ContentView> contentViews;
     private ViewPager viewPager;
-    private ContentViewPagerAdapter adapter;
 
     public ViewPagerScreen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener backButtonListener) {
         super(activity, screenParams, backButtonListener);
@@ -39,12 +38,13 @@ public class ViewPagerScreen extends Screen {
             ContentView contentView = new ContentView(getContext(),
                     topTabParam.screenId,
                     screenParams.passProps,
-                    screenParams.navigationParams, topBar);
+                    screenParams.navigationParams);
             addContent(contentView);
             contentViews.add(contentView);
         }
 
-        adapter = new ContentViewPagerAdapter(viewPager, contentViews, screenParams.topTabParams);
+        ContentViewPagerAdapter adapter =
+                new ContentViewPagerAdapter(viewPager, contentViews, screenParams.topTabParams);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
