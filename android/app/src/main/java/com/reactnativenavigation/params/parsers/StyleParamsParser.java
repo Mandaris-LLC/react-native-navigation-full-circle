@@ -29,7 +29,9 @@ public class StyleParamsParser {
         result.backButtonHidden = getBoolean("backButtonHidden", isDefaultBackButtonHidden());
         result.topTabsHidden = getBoolean("topTabsHidden", isDefaultTopTabsHidden());
 
-        result.drawScreenBelowTopBar = params.getBoolean("drawBelowTopBar", isDefaultScreenBelowTopBar());
+        // TODO: Uncomment once we support drawBelowTopBar again
+        //result.drawScreenBelowTopBar = params.getBoolean("drawBelowTopBar", isDefaultScreenBelowTopBar());
+        result.drawScreenBelowTopBar = true;
 
         result.bottomTabsHidden = getBoolean("bottomTabsHidden", isDefaultBottomTabsHidden());
         result.bottomTabsHiddenOnScroll =
