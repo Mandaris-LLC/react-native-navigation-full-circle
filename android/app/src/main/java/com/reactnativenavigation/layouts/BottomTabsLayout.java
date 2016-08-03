@@ -79,7 +79,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     public boolean onBackPressed() {
         if (getCurrentScreenStack().canPop()) {
             getCurrentScreenStack().pop();
-            bottomTabs.setStyleFromScreen(getCurrentScreenStack().getCurrentScreenStyleParams());
+            setBottomTabsStyleFromCurrentScreen();
             return true;
         } else {
             return false;
@@ -123,13 +123,13 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     @Override
     public void pop(ScreenParams screenParams) {
         getCurrentScreenStack().pop();
-        bottomTabs.setStyleFromScreen(screenParams.styleParams);
+        setBottomTabsStyleFromCurrentScreen();
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
         getCurrentScreenStack().popToRoot();
-        bottomTabs.setStyleFromScreen(getCurrentScreenStack().getCurrentScreenStyleParams());
+        setBottomTabsStyleFromCurrentScreen();
     }
 
     @Override
@@ -175,5 +175,9 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     private ScreenStack getCurrentScreenStack() {
         return screenStacks[currentStackIndex];
+    }
+
+    private void setBottomTabsStyleFromCurrentScreen() {
+        bottomTabs.setStyleFromScreen(getCurrentScreenStack().getCurrentScreenStyleParams());
     }
 }
