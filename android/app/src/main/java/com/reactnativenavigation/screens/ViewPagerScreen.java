@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TopTabParams;
@@ -32,7 +33,11 @@ public class ViewPagerScreen extends Screen {
         contentViews = new ArrayList<>();
         viewPager = new ViewPager(getContext());
         viewPager.setOffscreenPageLimit(99);
-        addView(viewPager);
+        RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        if (screenParams.styleParams.drawScreenBelowTopBar) {
+            lp.addRule(BELOW, topBar.getId());
+        }
+        addView(viewPager, lp);
 
         for (TopTabParams topTabParam : screenParams.topTabParams) {
             ContentView contentView = new ContentView(getContext(),
@@ -51,9 +56,6 @@ public class ViewPagerScreen extends Screen {
 
     private void addContent(ContentView contentView) {
         LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        if (screenParams.styleParams.drawScreenBelowTopBar) {
-            params.addRule(BELOW, topBar.getId());
-        }
         viewPager.addView(contentView, params);
     }
 
