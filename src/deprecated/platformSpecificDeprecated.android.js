@@ -36,6 +36,7 @@ function startSingleScreenApp(params) {
 function navigatorPush(navigator, params) {
   addNavigatorParams(params, navigator);
   addNavigatorButtons(params);
+  addTitleBarBackButtonIfNeeded(params);
   addNavigationStyleParams(params);
 
   params.screenId = params.screen;
@@ -286,6 +287,15 @@ function addNavigatorButtons(screen) {
   }
   if (leftButton) {
     screen.leftButton = leftButton;
+  }
+}
+
+function addTitleBarBackButtonIfNeeded(screen) {
+  const leftButton = getLeftButton(screen);
+  if (!leftButton) {
+    screen.leftButton = {
+      id: 'back'
+    }
   }
 }
 
