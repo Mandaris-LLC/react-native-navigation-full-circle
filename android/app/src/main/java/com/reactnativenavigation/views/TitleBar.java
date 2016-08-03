@@ -1,13 +1,17 @@
 package com.reactnativenavigation.views;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 
 import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
+import com.reactnativenavigation.utils.ViewUtils;
 
 import java.util.List;
 
@@ -16,9 +20,18 @@ public class TitleBar extends Toolbar {
     private boolean hideOnScroll = false;
     private VisibilityAnimator visibilityAnimator;
     private LeftButton leftButton;
+    private ActionMenuView actionMenuView;
 
     public TitleBar(Context context) {
         super(context);
+    }
+
+    @Override
+    public void onViewAdded(View child) {
+        super.onViewAdded(child);
+        if (child instanceof ActionMenuView) {
+            actionMenuView = (ActionMenuView) child;
+        }
     }
 
     public void setRightButtons(List<TitleBarButtonParams> rightButtons, String navigatorEventId) {
@@ -44,6 +57,18 @@ public class TitleBar extends Toolbar {
     public void setStyle(StyleParams params) {
         setVisibility(params.titleBarHidden ? GONE : VISIBLE);
         setTitleTextColor(params);
+        colorOverflowButton(params);
+    }
+
+    private void colorOverflowButton(StyleParams params) {
+        Drawable overflowIcon = actionMenuView.getOverflowIcon();
+        if (shouldColorOverflowButton(params, overflowIcon)) {
+            ViewUtils.tintDrawable(overflowIcon, params.titleBarButtonColor.getColor(), true);
+        }
+    }
+
+    private boolean shouldColorOverflowButton(StyleParams params, Drawable overflowIcon) {
+        return overflowIcon != null && params.titleBarButtonColor.hasColor();
     }
 
     private void setTitleTextColor(StyleParams params) {

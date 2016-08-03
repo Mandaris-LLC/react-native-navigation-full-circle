@@ -14,7 +14,6 @@ import java.util.List;
 public class TopBar extends AppBarLayout {
 
     private TitleBar titleBar;
-    private TabLayout tabLayout;
 
     public TopBar(Context context) {
         super(context);
@@ -48,7 +47,7 @@ public class TopBar extends AppBarLayout {
     }
 
     public TabLayout initTabs() {
-        tabLayout = new TabLayout(getContext());
+        TabLayout tabLayout = new TabLayout(getContext());
         addView(tabLayout);
         return tabLayout;
     }
