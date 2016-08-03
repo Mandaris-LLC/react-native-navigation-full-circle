@@ -97,18 +97,27 @@ function convertStyleParams(originalStyleObject) {
   return {
     statusBarColor: originalStyleObject.statusBarColor,
     topBarColor: originalStyleObject.navBarBackgroundColor,
-    navigationBarColor: originalStyleObject.navigationBarColor,
     titleBarHidden: originalStyleObject.navBarHidden,
     titleBarTitleColor: originalStyleObject.navBarTextColor,
     titleBarButtonColor: originalStyleObject.navBarButtonColor,
     backButtonHidden: originalStyleObject.backButtonHidden,
     topTabsHidden: originalStyleObject.topTabsHidden,
-    bottomTabsHidden: originalStyleObject.tabBarHidden,
-    bottomTabsHiddenOnScroll: originalStyleObject.bottomTabsHiddenOnScroll,
+
     drawBelowTopBar: !originalStyleObject.drawUnderNavBar,
+
+    topTabTextColor: originalStyleObject.topTabTextColor,
+    selectedTopTabTextColor: originalStyleObject.selectedTopTabTextColor,
+    selectedTopTabColor: originalStyleObject.selectedTopTabColor,
+    selectedTopTabIndicatorHeight: originalStyleObject.selectedTopTabIndicatorHeight,
+    selectedTopTabIndicatorColor: originalStyleObject.selectedTopTabIndicatorColor,
+
     bottomTabsColor: originalStyleObject.tabBarBackgroundColor,
     bottomTabsButtonColor: originalStyleObject.tabBarButtonColor,
-    bottomTabsSelectedButtonColor: originalStyleObject.tabBarSelectedButtonColor
+    bottomTabsSelectedButtonColor: originalStyleObject.tabBarSelectedButtonColor,
+    bottomTabsHidden: originalStyleObject.tabBarHidden,
+    bottomTabsHiddenOnScroll: originalStyleObject.bottomTabsHiddenOnScroll,
+
+    navigationBarColor: originalStyleObject.navigationBarColor
   }
 }
 

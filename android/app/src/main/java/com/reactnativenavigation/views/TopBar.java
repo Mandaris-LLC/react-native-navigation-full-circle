@@ -14,6 +14,7 @@ import java.util.List;
 public class TopBar extends AppBarLayout {
 
     private TitleBar titleBar;
+    private TopTabs topTabs;
 
     public TopBar(Context context) {
         super(context);
@@ -40,6 +41,7 @@ public class TopBar extends AppBarLayout {
         }
         setVisibility(styleParams.topBarHidden ? GONE : VISIBLE);
         titleBar.setStyle(styleParams);
+        setTopTabsStyle(styleParams);
     }
 
     public void setTitleBarRightButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
@@ -47,9 +49,9 @@ public class TopBar extends AppBarLayout {
     }
 
     public TabLayout initTabs() {
-        TabLayout tabLayout = new TabLayout(getContext());
-        addView(tabLayout);
-        return tabLayout;
+        topTabs = new TopTabs(getContext());
+        addView(topTabs);
+        return topTabs;
     }
 
     public void setTitleBarRightButton(String navigatorEventId,
@@ -58,7 +60,12 @@ public class TopBar extends AppBarLayout {
         titleBar.setLeftButton(titleBarLeftButtonParams, titleBarBackButtonListener, navigatorEventId);
     }
 
-    public TitleBar getTitleBar() {
-        return titleBar;
+    private void setTopTabsStyle(StyleParams style) {
+        if (topTabs == null) {
+            return;
+        }
+
+        topTabs.setTopTabsTextColor(style);
+        topTabs.setSelectedTabIndicatorStyle(style);
     }
 }

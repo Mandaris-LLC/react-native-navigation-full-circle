@@ -45,6 +45,12 @@ public class StyleParams {
     public Color titleBarButtonColor;
     public boolean backButtonHidden;
 
+    public Color topTabTextColor;
+    public Color selectedTopTabTextColor;
+    public Color selectedTopTabColor;
+    public int selectedTopTabIndicatorHeight;
+    public Color selectedTopTabIndicatorColor;
+
     public boolean bottomTabsHidden;
     public boolean bottomTabsHiddenOnScroll;
     public Color bottomTabsColor;

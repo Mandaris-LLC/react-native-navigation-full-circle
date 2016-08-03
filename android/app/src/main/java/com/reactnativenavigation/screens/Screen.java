@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
@@ -117,18 +116,6 @@ public abstract class Screen extends RelativeLayout {
         } else {
             window.setNavigationBarColor(Color.BLACK);
         }
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        Log.d("LOG", "Screen.onAttachedToWindow " + this);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        Log.d("LOG", "Screen.onDetachedFromWindow " + this);
     }
 
     public abstract void ensureUnmountOnDetachedFromWindow();

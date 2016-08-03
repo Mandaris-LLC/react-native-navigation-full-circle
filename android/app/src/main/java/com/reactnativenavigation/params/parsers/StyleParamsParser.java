@@ -23,19 +23,25 @@ public class StyleParamsParser {
         result.statusBarColor = getColor("statusBarColor", getDefaultStatusBarColor());
 
         result.topBarColor = getColor("topBarColor", getDefaultTopBarColor());
-        result.titleBarHidden = getBoolean("titleBarHidden", isDefaultTopBarHidden());
+        result.titleBarHidden = getBoolean("titleBarHidden", getDefaultTopBarHidden());
         result.titleBarTitleColor = getColor("titleBarTitleColor", getDefaultTitleBarColor());
         result.titleBarButtonColor = getColor("titleBarButtonColor", getTitleBarButtonColor());
-        result.backButtonHidden = getBoolean("backButtonHidden", isDefaultBackButtonHidden());
-        result.topTabsHidden = getBoolean("topTabsHidden", isDefaultTopTabsHidden());
+        result.backButtonHidden = getBoolean("backButtonHidden", getDefaultBackButtonHidden());
+        result.topTabsHidden = getBoolean("topTabsHidden", getDefaultTopTabsHidden());
+
+        result.topTabTextColor = getColor("topTabTextColor", getDefaultTopTabTextColor());
+        result.selectedTopTabTextColor = getColor("selectedTopTabTextColor", getDefaultSelectedTopTabTextColor());
+        result.selectedTopTabColor = getColor("selectedTopTabColor", getDefaultSelectedTopTabColor());
+        result.selectedTopTabIndicatorHeight = getInt("selectedTopTabIndicatorHeight", getDefaultSelectedTopTabIndicatorHeight());
+        result.selectedTopTabIndicatorColor = getColor("selectedTopTabIndicatorColor", getDefaultSelectedTopTabIndicatorColor());
 
         // TODO: Uncomment once we support drawBelowTopBar again
         //result.drawScreenBelowTopBar = params.getBoolean("drawBelowTopBar", isDefaultScreenBelowTopBar());
         result.drawScreenBelowTopBar = true;
 
-        result.bottomTabsHidden = getBoolean("bottomTabsHidden", isDefaultBottomTabsHidden());
+        result.bottomTabsHidden = getBoolean("bottomTabsHidden", getDefaultBottomTabsHidden());
         result.bottomTabsHiddenOnScroll =
-                getBoolean("bottomTabsHiddenOnScroll", isDefaultBottomTabsHiddenOnScroll());
+                getBoolean("bottomTabsHiddenOnScroll", getDefaultBottomTabsHiddenOnScroll());
         result.bottomTabsColor = getColor("bottomTabsColor", getDefaultBottomTabsColor());
         result.bottomTabsButtonColor = getColor("bottomTabsButtonColor", getDefaultBottomTabsButtonColor());
         result.selectedBottomTabsButtonColor =
@@ -44,6 +50,22 @@ public class StyleParamsParser {
         result.navigationBarColor = getColor("navigationBarColor", getDefaultNavigationColor());
 
         return result;
+    }
+
+    private StyleParams.Color getDefaultSelectedTopTabIndicatorColor() {
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.selectedTopTabIndicatorColor;
+    }
+
+    private int getDefaultSelectedTopTabIndicatorHeight() {
+        return AppStyle.appStyle == null ? -1 : AppStyle.appStyle.selectedTopTabIndicatorHeight;
+    }
+
+    private StyleParams.Color getDefaultSelectedTopTabColor() {
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.selectedTopTabColor;
+    }
+
+    private StyleParams.Color getDefaultSelectedTopTabTextColor() {
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.selectedTopTabTextColor;
     }
 
     @Nullable
@@ -66,11 +88,11 @@ public class StyleParamsParser {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.bottomTabsColor;
     }
 
-    private boolean isDefaultBottomTabsHiddenOnScroll() {
+    private boolean getDefaultBottomTabsHiddenOnScroll() {
         return AppStyle.appStyle != null && AppStyle.appStyle.bottomTabsHiddenOnScroll;
     }
 
-    private boolean isDefaultBottomTabsHidden() {
+    private boolean getDefaultBottomTabsHidden() {
         return AppStyle.appStyle != null && AppStyle.appStyle.bottomTabsHidden;
     }
 
@@ -78,11 +100,15 @@ public class StyleParamsParser {
         return AppStyle.appStyle == null || AppStyle.appStyle.drawScreenBelowTopBar;
     }
 
-    private boolean isDefaultTopTabsHidden() {
+    private boolean getDefaultTopTabsHidden() {
         return AppStyle.appStyle != null && AppStyle.appStyle.topTabsHidden;
     }
 
-    private boolean isDefaultBackButtonHidden() {
+    private StyleParams.Color getDefaultTopTabTextColor() {
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.topTabTextColor;
+    }
+
+    private boolean getDefaultBackButtonHidden() {
         return AppStyle.appStyle != null && AppStyle.appStyle.backButtonHidden;
     }
 
@@ -96,7 +122,7 @@ public class StyleParamsParser {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.titleBarButtonColor;
     }
 
-    private boolean isDefaultTopBarHidden() {
+    private boolean getDefaultTopBarHidden() {
         return AppStyle.appStyle != null && AppStyle.appStyle.titleBarHidden;
     }
 
@@ -122,5 +148,11 @@ public class StyleParamsParser {
         } else {
             return defaultColor != null && defaultColor.hasColor() ? defaultColor : color;
         }
+    }
+
+    private int getInt(String selectedTopTabIndicatorHeight, int defaultSelectedTopTabIndicatorHeight) {
+        return params.containsKey(selectedTopTabIndicatorHeight) ?
+                (int) params.getDouble(selectedTopTabIndicatorHeight) :
+                defaultSelectedTopTabIndicatorHeight;
     }
 }
