@@ -31,7 +31,7 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
             stack.destroy();
             removeView(stack);
         }
-        stack = new ScreenStack(activity, screenParams);
+        stack = new ScreenStack(activity, screenParams, this);
         addView(stack, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
@@ -94,5 +94,12 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     @Override
     public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams) {
         stack.setScreenTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButtonParams);
+    }
+
+    @Override
+    public void onTitleBarBackPress() {
+        if (stack.canPop()) {
+            stack.pop();
+        }
     }
 }

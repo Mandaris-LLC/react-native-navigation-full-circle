@@ -96,4 +96,9 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
             modal.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
         }
     }
+
+    @Override
+    public void onTitleBarBackPress() {
+        // Do nothing and let the layout handle the back press
+    }
 }

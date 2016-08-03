@@ -18,14 +18,16 @@ import java.util.Stack;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 // TODO there's really no reason for ScreenStack to extend FrameLayout. All screens can be added to parent.
-public class ScreenStack extends FrameLayout implements TitleBarBackButtonListener {
+public class ScreenStack extends FrameLayout {
 
     private final AppCompatActivity activity;
+    private TitleBarBackButtonListener titleBarBackButtonListener;
     private Stack<Screen> stack = new Stack<>();
 
-    public ScreenStack(AppCompatActivity activity, ScreenParams initialScreenParams) {
+    public ScreenStack(AppCompatActivity activity, ScreenParams initialScreenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
         super(activity);
         this.activity = activity;
+        this.titleBarBackButtonListener = titleBarBackButtonListener;
         setLayoutTransition(new LayoutTransition());
         pushInitialScreen(initialScreenParams);
     }
@@ -41,7 +43,7 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
     }
 
     private void addScreen(ScreenParams screenParams) {
-        Screen screen = ScreenFactory.create(activity, screenParams, this);
+        Screen screen = ScreenFactory.create(activity, screenParams, titleBarBackButtonListener);
         addView(screen, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         stack.push(screen);
     }
@@ -131,16 +133,9 @@ public class ScreenStack extends FrameLayout implements TitleBarBackButtonListen
         performOnScreen(screenInstanceId, new Task<Screen>() {
             @Override
             public void run(Screen param) {
-                param.setTitleBarLeftButton(navigatorEventId, ScreenStack.this, titleBarLeftButtonParams);
+                param.setTitleBarLeftButton(navigatorEventId, titleBarBackButtonListener, titleBarLeftButtonParams);
             }
         });
-    }
-
-    @Override
-    public void onTitleBarBackPress() {
-        if (canPop()) {
-            pop();
-        }
     }
 
     public StyleParams getCurrentScreenStyleParams() {

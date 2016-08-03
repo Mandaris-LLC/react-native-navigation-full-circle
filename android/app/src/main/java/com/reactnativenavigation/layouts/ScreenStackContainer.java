@@ -1,8 +1,9 @@
 package com.reactnativenavigation.layouts;
 
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
-public interface ScreenStackContainer {
+public interface ScreenStackContainer extends TitleBarBackButtonListener {
     void push(ScreenParams screenParams);
 
     void pop(ScreenParams screenParams);

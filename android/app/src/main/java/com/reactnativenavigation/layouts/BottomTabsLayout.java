@@ -47,7 +47,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void createAndAddScreenStack(int position) {
-        ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position));
+        ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position), this);
         screenStacks[position] = newStack;
         newStack.setVisibility(INVISIBLE);
         LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
@@ -138,7 +138,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         currentScreenStack.destroy();
         removeView(currentScreenStack);
 
-        ScreenStack newStack = new ScreenStack(activity, params);
+        ScreenStack newStack = new ScreenStack(activity, params, this);
         screenStacks[currentStackIndex] = newStack;
         addView(newStack, 0, new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
 
@@ -179,5 +179,13 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     private void setBottomTabsStyleFromCurrentScreen() {
         bottomTabs.setStyleFromScreen(getCurrentScreenStack().getCurrentScreenStyleParams());
+    }
+
+    @Override
+    public void onTitleBarBackPress() {
+        if (getCurrentScreenStack().canPop()) {
+            getCurrentScreenStack().pop();
+            setBottomTabsStyleFromCurrentScreen();
+        }
     }
 }

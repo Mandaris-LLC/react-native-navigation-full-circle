@@ -19,6 +19,8 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
 
     private final AppCompatActivity activity;
     private final OnModalDismissedListener onModalDismissedListener;
+    private final ScreenParams screenParams;
+    private Layout layout;
 
     public void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
         layout.setTopBarVisible(screenInstanceId, hidden, animated);
@@ -36,12 +38,14 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
         layout.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
     }
 
+    @Override
+    public void onTitleBarBackPress() {
+        layout.onTitleBarBackPress();
+    }
+
     public interface OnModalDismissedListener {
         void onModalDismissed(Modal modal);
     }
-
-    private final ScreenParams screenParams;
-    private Layout layout;
 
     public Modal(AppCompatActivity activity, OnModalDismissedListener onModalDismissedListener, ScreenParams screenParams) {
         super(activity, R.style.Modal);
