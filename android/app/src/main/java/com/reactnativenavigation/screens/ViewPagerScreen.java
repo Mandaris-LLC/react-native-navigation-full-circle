@@ -1,11 +1,8 @@
 package com.reactnativenavigation.screens;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TopTabParams;
@@ -19,6 +16,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class ViewPagerScreen extends Screen {
 
+    private static final int OFFSCREEN_PAGE_LIMIT = 99;
     private List<ContentView> contentViews;
     private ViewPager viewPager;
 
@@ -36,7 +34,7 @@ public class ViewPagerScreen extends Screen {
 
     private void createViewPager() {
         viewPager = new ViewPager(getContext());
-        viewPager.setOffscreenPageLimit(99);
+        viewPager.setOffscreenPageLimit(OFFSCREEN_PAGE_LIMIT);
         LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         if (screenParams.styleParams.drawScreenBelowTopBar) {
             lp.addRule(BELOW, topBar.getId());
@@ -47,18 +45,14 @@ public class ViewPagerScreen extends Screen {
     private void addPages() {
         contentViews = new ArrayList<>();
         for (TopTabParams topTabParam : screenParams.topTabParams) {
-            ContentView contentView = new ContentView(getContext(),
-                    topTabParam.screenId,
-                    screenParams.passProps,
-                    screenParams.navigationParams);
+            ContentView contentView = new ContentView(getContext(), screenParams, topTabParam.screenId);
             addContent(contentView);
             contentViews.add(contentView);
         }
     }
 
     private void setupViewPager(TabLayout tabLayout) {
-        ContentViewPagerAdapter adapter =
-                new ContentViewPagerAdapter(viewPager, contentViews, screenParams.topTabParams);
+        ContentViewPagerAdapter adapter = new ContentViewPagerAdapter(contentViews, screenParams.topTabParams);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -86,75 +80,6 @@ public class ViewPagerScreen extends Screen {
     public void preventMountAfterReattachedToWindow() {
         for (ContentView contentView : contentViews) {
             contentView.preventMountAfterReattachedToWindow();
-        }
-    }
-
-    public class ContentViewPagerAdapter extends PagerAdapter implements TabLayout.OnTabSelectedListener, ViewPager.OnPageChangeListener {
-
-        private ViewPager viewPager;
-        private List<ContentView> contentViews;
-        private List<TopTabParams> topTabParams;
-
-        public ContentViewPagerAdapter(ViewPager viewPager, List<ContentView> contentViews, List<TopTabParams> topTabParams) {
-            this.viewPager = viewPager;
-            this.contentViews = contentViews;
-            this.topTabParams = topTabParams;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            return contentViews.get(position);
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object view) {
-
-        }
-
-        @Override
-        public int getCount() {
-            return contentViews.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return topTabParams.get(position).title;
-        }
-
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            int position = tab.getPosition();
-            viewPager.setCurrentItem(position);
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
         }
     }
 }

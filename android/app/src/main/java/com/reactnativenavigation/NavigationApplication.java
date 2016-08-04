@@ -89,6 +89,13 @@ public abstract class NavigationApplication extends Application {
         navigationReactInstance.getReactEventEmitter().sendNavigatorEvent(eventId, navigatorEventId);
     }
 
+    public void sendNavigatorEvent(String eventId, String navigatorEventId, WritableMap data) {
+        if (navigationReactInstance == null) {
+            return;
+        }
+        navigationReactInstance.getReactEventEmitter().sendNavigatorEvent(eventId, navigatorEventId, data);
+    }
+
     public void sendEvent(String eventId, String navigatorEventId) {
         if (navigationReactInstance == null) {
             return;

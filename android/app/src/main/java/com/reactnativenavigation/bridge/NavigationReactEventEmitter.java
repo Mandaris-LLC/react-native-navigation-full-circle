@@ -25,6 +25,12 @@ public class NavigationReactEventEmitter {
         eventEmitter.emit(navigatorEventId, data);
     }
 
+    public void sendNavigatorEvent(String eventId, String navigatorEventId, WritableMap data) {
+        data.putString(KEY_NAVIGATOR_EVENT_ID, navigatorEventId);
+        data.putString(KEY_EVENT_ID, eventId);
+        eventEmitter.emit(navigatorEventId, data);
+    }
+
     public void sendEvent(String eventId, String data) {
         eventEmitter.emit(eventId, data);
     }
