@@ -50,9 +50,19 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position), this);
         screenStacks[position] = newStack;
         newStack.setVisibility(INVISIBLE);
+        addScreenStack(newStack);
+    }
+
+    private void addScreenStack(ScreenStack newStack) {
         LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        lp.addRule(ABOVE, bottomTabs.getId());
+        if (shouldDrawScreenStackAboveBottomTabs(newStack)) {
+            lp.addRule(ABOVE, bottomTabs.getId());
+        }
         addView(newStack, 0, lp);
+    }
+
+    private boolean shouldDrawScreenStackAboveBottomTabs(ScreenStack newStack) {
+        return newStack.getCurrentScreenStyleParams().drawScreenAboveBottomTabs;
     }
 
     private void createBottomTabs() {

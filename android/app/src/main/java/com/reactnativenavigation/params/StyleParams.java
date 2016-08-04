@@ -39,6 +39,7 @@ public class StyleParams {
     public Color topBarColor;
     public boolean topBarHidden;
     public boolean topTabsHidden;
+    public boolean drawScreenBelowTopBar;
 
     public boolean titleBarHidden;
     public Color titleBarTitleColor;
@@ -50,6 +51,8 @@ public class StyleParams {
     public int selectedTopTabIndicatorHeight;
     public Color selectedTopTabIndicatorColor;
 
+    public boolean drawScreenAboveBottomTabs;
+
     public boolean bottomTabsHidden;
     public boolean bottomTabsHiddenOnScroll;
     public Color bottomTabsColor;
@@ -57,6 +60,4 @@ public class StyleParams {
     public Color bottomTabsButtonColor;
 
     public Color navigationBarColor;
-
-    public boolean drawScreenBelowTopBar;
 }

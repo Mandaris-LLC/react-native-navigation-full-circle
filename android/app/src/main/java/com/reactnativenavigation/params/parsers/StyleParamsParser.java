@@ -38,6 +38,9 @@ public class StyleParamsParser {
         //result.drawScreenBelowTopBar = params.getBoolean("drawBelowTopBar", isDefaultScreenBelowTopBar());
         result.drawScreenBelowTopBar = true;
 
+        result.drawScreenAboveBottomTabs =
+                params.getBoolean("drawScreenAboveBottomTabs", getDefaultDrawScreenAboveBottomTabs());
+
         result.bottomTabsHidden = getBoolean("bottomTabsHidden", getDefaultBottomTabsHidden());
         result.bottomTabsHiddenOnScroll =
                 getBoolean("bottomTabsHiddenOnScroll", getDefaultBottomTabsHiddenOnScroll());
@@ -49,6 +52,10 @@ public class StyleParamsParser {
         result.navigationBarColor = getColor("navigationBarColor", getDefaultNavigationColor());
 
         return result;
+    }
+
+    private boolean getDefaultDrawScreenAboveBottomTabs() {
+        return AppStyle.appStyle == null || AppStyle.appStyle.drawScreenAboveBottomTabs;
     }
 
     private StyleParams.Color getDefaultSelectedTopTabIndicatorColor() {
