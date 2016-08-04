@@ -59,6 +59,7 @@ public class NavigationReactInstance {
 
     public void onHostDestroy() {
         reactInstanceManager.onHostDestroy();
+        reactInstanceManager.destroy();
     }
 
     private void replaceJsDevReloadListener() {

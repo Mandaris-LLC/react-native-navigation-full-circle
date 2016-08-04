@@ -25,7 +25,6 @@ public abstract class NavigationApplication extends Application {
         super.onCreate();
         instance = this;
         handler = new Handler(getMainLooper());
-        navigationReactInstance = new NavigationReactInstance();
     }
 
     public void runOnMainThread(Runnable runnable) {
@@ -73,31 +72,44 @@ public abstract class NavigationApplication extends Application {
     }
 
     public ReactContext getReactContext() {
+        if (navigationReactInstance == null) {
+            return null;
+        }
         return navigationReactInstance.getReactInstanceManager().getCurrentReactContext();
     }
 
     public boolean isReactInstanceManagerInitialized() {
-        return navigationReactInstance.getReactInstanceManager() != null;
+        return navigationReactInstance != null && navigationReactInstance.getReactInstanceManager() != null;
+    }
+
+    public void sendNavigatorEvent(String eventId, String navigatorEventId) {
+        if (navigationReactInstance == null) {
+            return;
+        }
+        navigationReactInstance.getReactEventEmitter().sendNavigatorEvent(eventId, navigatorEventId);
+    }
+
+    public void sendEvent(String eventId, String navigatorEventId) {
+        if (navigationReactInstance == null) {
+            return;
+        }
+        navigationReactInstance.getReactEventEmitter().sendEvent(eventId, navigatorEventId);
+    }
+
+    public void sendNavigatorEvent(String eventId, WritableMap arguments) {
+        if (navigationReactInstance == null) {
+            return;
+        }
+        navigationReactInstance.getReactEventEmitter().sendEvent(eventId, arguments);
+    }
+
+    public void startReactContext() {
+        navigationReactInstance = new NavigationReactInstance();
+        navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
     }
 
     public abstract boolean isDebug();
 
     @Nullable
     public abstract List<ReactPackage> createAdditionalReactPackages();
-
-    public void sendNavigatorEvent(String eventId, String navigatorEventId) {
-        navigationReactInstance.getReactEventEmitter().sendNavigatorEvent(eventId, navigatorEventId);
-    }
-
-    public void sendEvent(String eventId, String navigatorEventId) {
-        navigationReactInstance.getReactEventEmitter().sendEvent(eventId, navigatorEventId);
-    }
-
-    public void sendNavigatorEvent(String eventId, WritableMap arguments) {
-        navigationReactInstance.getReactEventEmitter().sendEvent(eventId, arguments);
-    }
-
-    public void startReactContext() {
-        navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
-    }
 }
