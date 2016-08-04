@@ -98,7 +98,8 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
     }
 
     @Override
-    public void onTitleBarBackPress() {
+    public boolean onTitleBarBackPress() {
         // Do nothing and let the layout handle the back press
+        return false;
     }
 }

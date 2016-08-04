@@ -8,6 +8,7 @@ import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
+import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.util.List;
 
@@ -18,6 +19,12 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     private final AppCompatActivity activity;
     private final ScreenParams screenParams;
     private ScreenStack stack;
+    private TitleBarBackButtonListener titleBarBackButtonListener;
+
+    public SingleScreenLayout(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
+        this(activity, screenParams);
+        this.titleBarBackButtonListener = titleBarBackButtonListener;
+    }
 
     public SingleScreenLayout(AppCompatActivity activity, ScreenParams screenParams) {
         super(activity);
@@ -48,6 +55,7 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     @Override
     public void destroy() {
         stack.destroy();
+        removeView(stack);
     }
 
     @Override
@@ -97,9 +105,11 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     }
 
     @Override
-    public void onTitleBarBackPress() {
-        if (stack.canPop()) {
-            stack.pop();
+    public boolean onTitleBarBackPress() {
+        if (titleBarBackButtonListener != null) {
+            return titleBarBackButtonListener.onTitleBarBackPress();
         }
+
+        return onBackPressed();
     }
 }

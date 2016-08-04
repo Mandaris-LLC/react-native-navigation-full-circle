@@ -39,8 +39,11 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
     }
 
     @Override
-    public void onTitleBarBackPress() {
-        layout.onTitleBarBackPress();
+    public boolean onTitleBarBackPress() {
+        if (!layout.onBackPressed()) {
+            onBackPressed();
+        }
+        return true;
     }
 
     public interface OnModalDismissedListener {
@@ -63,7 +66,7 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
         setCancelable(true);
         setOnDismissListener(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        layout = new SingleScreenLayout(getActivity(), screenParams);
+        layout = new SingleScreenLayout(getActivity(), screenParams, this);
         setContentView(layout.asView());
     }
 

@@ -196,10 +196,13 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     @Override
-    public void onTitleBarBackPress() {
+    public boolean onTitleBarBackPress() {
         if (getCurrentScreenStack().canPop()) {
             getCurrentScreenStack().pop();
             setBottomTabsStyleFromCurrentScreen();
+            return true;
         }
+
+        return false;
     }
 }
