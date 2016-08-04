@@ -24,7 +24,6 @@ function startSingleScreenApp(params) {
   /*
    * adapt to new API
    */
-  console.log('0');
   screen.screenId = screen.screen;
   params.screen = adaptNavigationStyleToScreenStyle(screen);
   params.screen = adaptNavigationParams(screen);
@@ -227,10 +226,9 @@ function navigatorToggleNavBar(navigator, params) {
 }
 
 function navigatorToggleTabs(navigator, params) {
-  //RctActivity.toggleNavigatorTabs({
-  //  hidden: params.to === 'hidden',
-  //  animated: !(params.animated === false)
-  //});
+  const visibility = params.to === 'hidden';
+  const animated = !(params.animated === false);
+  newPlatformSpecific.toggleBottomTabsVisible(visibility, animated);
 }
 
 function showModal(params) {

@@ -48,7 +48,6 @@ public class NavigationCommandsHandler {
         });
     }
 
-
     public static void pop(Bundle screenParams) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
@@ -104,6 +103,20 @@ public class NavigationCommandsHandler {
             @Override
             public void run() {
                 currentActivity.setTopBarVisible(screenInstanceID, hidden, animated);
+            }
+        });
+    }
+
+    public static void setBottomTabsVisible(final boolean hidden, final boolean animated) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.setBottomTabsVisible(hidden, animated);
             }
         });
     }

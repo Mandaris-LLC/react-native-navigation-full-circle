@@ -30,6 +30,10 @@ function toggleTopBarVisible(screenInstanceID, visible, animated) {
   NativeReactModule.setTopBarVisible(screenInstanceID, visible, animated);
 }
 
+function toggleBottomTabsVisible(visible, animated) {
+  NativeReactModule.setBottomTabsVisible(visible, animated);
+}
+
 function setScreenTitleBarTitle(screenInstanceID, title) {
   NativeReactModule.setScreenTitleBarTitle(screenInstanceID, title);
 }
@@ -57,6 +61,7 @@ module.exports = {
   popToRoot,
   newStack,
   toggleTopBarVisible,
+  toggleBottomTabsVisible,
   setScreenTitleBarTitle,
   setScreenTitleBarButtons,
   showModal,

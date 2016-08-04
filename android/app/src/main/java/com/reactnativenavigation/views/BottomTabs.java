@@ -5,6 +5,7 @@ import android.graphics.Color;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.utils.ViewUtils;
@@ -12,10 +13,14 @@ import com.reactnativenavigation.utils.ViewUtils;
 import java.util.List;
 
 public class BottomTabs extends AHBottomNavigation {
+
+    private VisibilityAnimator visibilityAnimator;
+
     public BottomTabs(Context context) {
         super(context);
         setForceTint(true);
         setId(ViewUtils.generateViewId());
+        createVisibilityAnimator();
     }
 
     public void addTabs(List<ScreenParams> params, OnTabSelectedListener onTabSelectedListener) {
@@ -25,6 +30,10 @@ public class BottomTabs extends AHBottomNavigation {
             addItem(item);
             setOnTabSelectedListener(onTabSelectedListener);
         }
+    }
+
+    public void setVisibility(boolean hidden, boolean animated) {
+        visibilityAnimator.setVisible(hidden, animated);
     }
 
     public void setStyleFromScreen(StyleParams params) {
@@ -51,5 +60,16 @@ public class BottomTabs extends AHBottomNavigation {
 
     private void setVisibility(boolean bottomTabsHidden) {
         setVisibility(bottomTabsHidden ? GONE : VISIBLE);
+    }
+
+    private void createVisibilityAnimator() {
+        ViewUtils.runOnPreDraw(this, new Runnable() {
+            @Override
+            public void run() {
+                visibilityAnimator = new VisibilityAnimator(BottomTabs.this,
+                        VisibilityAnimator.HideDirection.Down,
+                        getHeight());
+            }
+        });
     }
 }

@@ -88,8 +88,8 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setTopBarVisible(String screenInstanceID, boolean hidden, boolean animated) {
-        NavigationCommandsHandler.setTopBarVisible(screenInstanceID, hidden, animated);
+    public void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
+        NavigationCommandsHandler.setTopBarVisible(screenInstanceId, hidden, animated);
     }
 
     @ReactMethod
@@ -97,7 +97,8 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setBottomTabsVisible(final ReadableMap params) {
+    public void setBottomTabsVisible(boolean hidden, boolean animated) {
+        NavigationCommandsHandler.setBottomTabsVisible(hidden, animated);
     }
 
     @ReactMethod

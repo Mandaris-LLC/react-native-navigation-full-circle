@@ -93,6 +93,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         }
     }
 
+    public void setBottomTabsVisible(boolean hidden, boolean animated) {
+        bottomTabs.setVisibility(hidden, animated);
+    }
+
     @Override
     public void setTitleBarTitle(String screenInstanceId, String title) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {

@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.layouts.BottomTabsLayout;
 import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.LayoutFactory;
 import com.reactnativenavigation.params.ActivityParams;
@@ -145,6 +146,12 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
         layout.setTopBarVisible(screenInstanceId, hidden, animated);
         modalController.setTopBarVisible(screenInstanceId, hidden, animated);
+    }
+
+    public void setBottomTabsVisible(boolean hidden, boolean animated) {
+        if (layout instanceof BottomTabsLayout) {
+            ((BottomTabsLayout) layout).setBottomTabsVisible(hidden, animated);
+        }
     }
 
     void setTitleBarTitle(String screenInstanceId, String title) {
