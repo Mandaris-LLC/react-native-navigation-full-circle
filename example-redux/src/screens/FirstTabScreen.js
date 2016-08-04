@@ -56,13 +56,44 @@ class FirstTabScreen extends Component {
         break;
 
       case 'selectedTabChanged':
-        console.log('selectedTabChanged ' + event.position);
+        this.onTabSelected(event.position);
         break;
 
       default:
         console.log('Unhandled event ' + event.id);
         break;
     }
+  }
+
+  onTabSelected(position) {
+    console.log('selectedTabChanged ' + position);
+    let rightButtons;
+
+    switch(position) {
+      case 0:
+        rightButtons = [
+          {
+            id: 'account',
+            icon: require('../../img/ic_account_box_.png')
+          }
+        ];
+        break;
+
+      case 1:
+        rightButtons = [
+          {
+            id: 'account',
+            icon: require('../../img/ic_add_alert.png')
+          }
+        ];
+        break;
+
+      default:
+        rightButtons = [];
+        break;
+    }
+
+    this.props.navigator.setButtons({rightButtons});
   }
 
   render() {
