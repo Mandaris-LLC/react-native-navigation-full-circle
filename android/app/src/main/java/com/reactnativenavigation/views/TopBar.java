@@ -22,7 +22,8 @@ public class TopBar extends AppBarLayout {
         setId(ViewUtils.generateViewId());
     }
 
-    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> rightButtons, TitleBarLeftButtonParams leftButton,
+    public void addTitleBarAndSetButtons(List<TitleBarButtonParams> rightButtons,
+                                         TitleBarLeftButtonParams leftButton,
                                          TitleBarBackButtonListener titleBarBackButtonListener,
                                          String navigatorEventId) {
         titleBar = new TitleBar(getContext());

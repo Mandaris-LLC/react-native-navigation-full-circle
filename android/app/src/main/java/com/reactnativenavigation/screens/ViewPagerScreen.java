@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TopTabParams;
@@ -30,15 +29,23 @@ public class ViewPagerScreen extends Screen {
     @Override
     protected void createContent() {
         TabLayout tabLayout = topBar.initTabs();
-        contentViews = new ArrayList<>();
+        createViewPager();
+        addPages();
+        setupViewPager(tabLayout);
+    }
+
+    private void createViewPager() {
         viewPager = new ViewPager(getContext());
         viewPager.setOffscreenPageLimit(99);
-        RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         if (screenParams.styleParams.drawScreenBelowTopBar) {
             lp.addRule(BELOW, topBar.getId());
         }
         addView(viewPager, lp);
+    }
 
+    private void addPages() {
+        contentViews = new ArrayList<>();
         for (TopTabParams topTabParam : screenParams.topTabParams) {
             ContentView contentView = new ContentView(getContext(),
                     topTabParam.screenId,
@@ -47,7 +54,9 @@ public class ViewPagerScreen extends Screen {
             addContent(contentView);
             contentViews.add(contentView);
         }
+    }
 
+    private void setupViewPager(TabLayout tabLayout) {
         ContentViewPagerAdapter adapter =
                 new ContentViewPagerAdapter(viewPager, contentViews, screenParams.topTabParams);
         viewPager.setAdapter(adapter);
