@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
 
 const leftButtons = ['back', 'cancel', 'accept', 'sideMenu'];
+let bottomTabsVisible = true;
 
 // this is a traditional React component connected to the redux store
 class PushedScreen extends Component {
@@ -53,7 +54,6 @@ class PushedScreen extends Component {
   }
 
   onNavigatorEvent(event) {
-    console.log('onNavigatorEvent ' + event.id);
     switch (event.id) {
       case 'cancel':
         Alert.alert('NavBar', 'Cancel button pressed');
@@ -107,6 +107,10 @@ class PushedScreen extends Component {
 
         <TouchableOpacity onPress={ this.onChangeLeftButtonPress.bind(this) }>
           <Text style={styles.button}>Change Left Button</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onToggleBottomTabsPress.bind(this) }>
+          <Text style={styles.button}>Toggle BottomTabs</Text>
         </TouchableOpacity>
 
         <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}/>
@@ -205,6 +209,14 @@ class PushedScreen extends Component {
     });
     this.currentBackButton += 1;
     this.currentBackButton = this.currentBackButton % 4;
+  }
+
+  onToggleBottomTabsPress() {
+    this.props.navigator.toggleTabs({
+      to: bottomTabsVisible ? 'shown' : 'hidden',
+      animated: true
+    });
+    bottomTabsVisible = !bottomTabsVisible;
   }
 }
 

@@ -21,7 +21,8 @@ class FirstTabScreen extends Component {
     navigationBarColor: '#303F9F',
     tabSelectedTextColor: '#FFA000',
     tabNormalTextColor: '#FFC107',
-    tabIndicatorColor: '#FFA000'
+    tabIndicatorColor: '#FFA000',
+    drawUnderTabBar: true
   };
 
   static navigatorButtons = {
@@ -52,6 +53,10 @@ class FirstTabScreen extends Component {
 
       case 'add':
         Alert.alert('NavBar', 'Add button pressed');
+        break;
+
+      case 'selectedTabChanged':
+        console.log('selectedTabChanged ' + event.position);
         break;
 
       default:
