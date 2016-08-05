@@ -38,7 +38,10 @@ public class FragmentScreen extends Screen {
     }
 
     private void addContent() {
-        ContentView contentView = new ContentView(getContext(), screenParams, screenParams.screenId);
+        ContentView contentView = new ContentView(getContext(),
+                screenParams,
+                screenParams.screenId,
+                screenParams.passProps);
         addView(contentView, 0, 0);
         LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         if (screenParams.styleParams.drawScreenBelowTopBar) {

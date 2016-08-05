@@ -14,15 +14,12 @@ public class ContentView extends ReactRootView {
     private final String screenId;
     private final String navigatorEventId;
     private final Bundle passProps;
-    private Bundle navigationParams;
 
-    public ContentView(Context context, ScreenParams screenParams, String screenId) {
+    public ContentView(Context context, ScreenParams screenParams, String screenId, Bundle passProps) {
         super(context);
         this.screenId = screenId;
         navigatorEventId = screenParams.navigatorEventId;
-
-        passProps = screenParams.passProps;
-        navigationParams = screenParams.navigationParams;
+        this.passProps = mergePropsAndNavigationParams(screenParams, passProps);
         attachToJS();
     }
 
@@ -44,10 +41,11 @@ public class ContentView extends ReactRootView {
 
     private void attachToJS() {
         ReactInstanceManager react = NavigationApplication.instance.getNavigationReactInstance().getReactInstanceManager();
-        startReactApplication(react, screenId, mergePropsAndNavigationParams());
+        startReactApplication(react, screenId, passProps);
     }
 
-    private Bundle mergePropsAndNavigationParams() {
+    private Bundle mergePropsAndNavigationParams(ScreenParams screenParams, Bundle passProps) {
+        Bundle navigationParams = (Bundle) screenParams.navigationParams.clone();
         if (passProps != null) {
             navigationParams.putAll(passProps);
         }
