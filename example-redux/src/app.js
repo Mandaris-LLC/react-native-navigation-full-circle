@@ -70,43 +70,35 @@ export default class App {
             topTabs: [
               {
                 screenId: 'example.ListScreen',
-                title: 'Tab1'
+                title: 'Tab1',
+                 passProps: {
+                   str: 'This is a prop passed to Tab1'
+                 }
               },
               {
                 screenId: 'example.PushedScreen',
-                title: 'Tab2'
+                title: 'Tab2',
+                passProps: {
+                  str: 'This is a prop passed to Tab2'
+                }
+
               },
               {
                 screenId: 'example.PushedScreen',
-                title: 'Tab3'
+                title: 'Tab3',
+                passProps: {
+                  str: 'This is a prop passed to Tab3'
+                }
               },
               {
                 screenId: 'example.FirstTabScreen',
-                title: 'Tab4'
+                title: 'Tab4',
+                passProps: {
+                  str: 'This is a prop passed to Tab4'
+                }
               }
             ],
             navigatorStyle: {}
-          },
-          passProps: {
-            str: 'This is a prop passed in \'startSingleScreenApp()\'!',
-            obj: {
-              str: 'This is a prop passed in an object!',
-              arr: [
-                {
-                  str: 'This is a prop in an object in an array in an object!'
-                }
-              ],
-              arr2: [
-                [
-                  'array of strings',
-                  'with two strings'
-                ],
-                [
-                  1, 2, 3
-                ]
-              ]
-            },
-            num: 1234
           }
         });
         return;

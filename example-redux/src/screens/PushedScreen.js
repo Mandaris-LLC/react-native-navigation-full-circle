@@ -67,7 +67,7 @@ class PushedScreen extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, padding: 20, backgroundColor: this.bgColor}}>
+      <ScrollView style={{flex: 1, padding: 20, backgroundColor: this.bgColor}}>
 
         <Text style={styles.text}>
           <Text style={{fontWeight: '500'}}>Counter: </Text> {this.props.counter.count}
@@ -117,10 +117,10 @@ class PushedScreen extends Component {
 
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
         <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
-        <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
-        <Text style={{fontWeight: '500'}}>Array prop: {this.props.obj.arr[0].str}</Text>
+        {this.props.obj ? <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text> : false}
+        {this.props.obj && this.props.obj.arr ? <Text style={{fontWeight: '500'}}>Array prop: {this.props.obj.arr[0].str}</Text> : false}
 
-      </View>
+      </ScrollView>
     );
   }
 
