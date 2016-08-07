@@ -170,6 +170,7 @@ function addTabIcon(tab) {
 function navigatorSetButtons(navigator, navigatorEventID, params) {
   if (params.rightButtons) {
     params.rightButtons.forEach(function(button) {
+      button.enabled = !button.disabled;
       if (button.icon) {
         const icon = resolveAssetSource(button.icon);
         if (icon) {
