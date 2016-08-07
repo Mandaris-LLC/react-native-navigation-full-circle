@@ -116,6 +116,7 @@ function convertStyleParams(originalStyleObject) {
     bottomTabsSelectedButtonColor: originalStyleObject.tabBarSelectedButtonColor,
     bottomTabsHidden: originalStyleObject.tabBarHidden,
     bottomTabsHiddenOnScroll: originalStyleObject.bottomTabsHiddenOnScroll,
+    forceTitlesDisplay: originalStyleObject.forceTitlesDisplay,
 
     navigationBarColor: originalStyleObject.navigationBarColor
   }

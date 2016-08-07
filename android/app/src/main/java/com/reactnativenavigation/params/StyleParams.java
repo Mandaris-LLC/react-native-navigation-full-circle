@@ -58,6 +58,7 @@ public class StyleParams {
     public Color bottomTabsColor;
     public Color selectedBottomTabsButtonColor;
     public Color bottomTabsButtonColor;
+    public boolean forceTitlesDisplay;
 
     public Color navigationBarColor;
 }

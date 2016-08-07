@@ -50,6 +50,7 @@ public class StyleParamsParser {
                 getColor("bottomTabsSelectedButtonColor", getDefaultSelectedBottomTabsButtonColor());
 
         result.navigationBarColor = getColor("navigationBarColor", getDefaultNavigationColor());
+        result.forceTitlesDisplay = getBoolean("forceTitlesDisplay", getDefaultForceTitlesDisplay());
 
         return result;
     }
@@ -73,6 +74,10 @@ public class StyleParamsParser {
     @Nullable
     private StyleParams.Color getDefaultNavigationColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.navigationBarColor;
+    }
+
+    private boolean getDefaultForceTitlesDisplay() {
+        return AppStyle.appStyle != null && AppStyle.appStyle.forceTitlesDisplay;
     }
 
     @Nullable
@@ -138,8 +143,8 @@ public class StyleParamsParser {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.statusBarColor;
     }
 
-    private boolean getBoolean(String titleBarHidden, boolean defaultValue) {
-        return params.containsKey(titleBarHidden) ? params.getBoolean(titleBarHidden) : defaultValue;
+    private boolean getBoolean(String key, boolean defaultValue) {
+        return params.containsKey(key) ? params.getBoolean(key) : defaultValue;
     }
 
     @NonNull
