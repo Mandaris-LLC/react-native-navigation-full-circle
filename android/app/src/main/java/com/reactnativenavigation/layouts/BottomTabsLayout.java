@@ -9,6 +9,7 @@ import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
+import com.reactnativenavigation.screens.ScreenAnimator;
 import com.reactnativenavigation.screens.ScreenStack;
 import com.reactnativenavigation.views.BottomTabs;
 
@@ -24,6 +25,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     private BottomTabs bottomTabs;
     private ScreenStack[] screenStacks;
     private int currentStackIndex = 0;
+    private ScreenAnimator screenAnimator;
 
     public BottomTabsLayout(AppCompatActivity activity, ActivityParams params) {
         super(activity);
@@ -35,6 +37,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     private void createLayout() {
         createBottomTabs();
+        createScreenAnimator();
         addBottomTabsToScreen();
         addScreenStacks();
         showInitialScreenStack();
@@ -47,7 +50,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void createAndAddScreenStack(int position) {
-        ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position), this);
+        ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position), this, screenAnimator);
         screenStacks[position] = newStack;
         newStack.setVisibility(INVISIBLE);
         addScreenStack(newStack);
@@ -70,6 +73,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         bottomTabs.addTabs(params.tabParams, this);
     }
 
+    private void createScreenAnimator() {
+        screenAnimator = new ScreenAnimator(bottomTabs);
+    }
+
     private void addBottomTabsToScreen() {
         LayoutParams lp = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
         lp.addRule(ALIGN_PARENT_BOTTOM);
@@ -88,7 +95,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     @Override
     public boolean onBackPressed() {
         if (getCurrentScreenStack().canPop()) {
-            getCurrentScreenStack().pop();
+            getCurrentScreenStack().pop(screenAnimator);
             setBottomTabsStyleFromCurrentScreen();
             return true;
         } else {
@@ -130,19 +137,19 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void push(ScreenParams screenParams) {
-        getCurrentScreenStack().push(screenParams);
+        getCurrentScreenStack().push(screenAnimator, screenParams);
         bottomTabs.setStyleFromScreen(screenParams.styleParams);
     }
 
     @Override
     public void pop(ScreenParams screenParams) {
-        getCurrentScreenStack().pop();
+        getCurrentScreenStack().pop(screenAnimator);
         setBottomTabsStyleFromCurrentScreen();
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
-        getCurrentScreenStack().popToRoot();
+        getCurrentScreenStack().popToRoot(screenAnimator);
         setBottomTabsStyleFromCurrentScreen();
     }
 
@@ -152,7 +159,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         currentScreenStack.destroy();
         removeView(currentScreenStack);
 
-        ScreenStack newStack = new ScreenStack(activity, params, this);
+        ScreenStack newStack = new ScreenStack(activity, params, this, screenAnimator);
         screenStacks[currentStackIndex] = newStack;
         addView(newStack, 0, new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
 
@@ -198,7 +205,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     @Override
     public boolean onTitleBarBackPress() {
         if (getCurrentScreenStack().canPop()) {
-            getCurrentScreenStack().pop();
+            getCurrentScreenStack().pop(screenAnimator);
             setBottomTabsStyleFromCurrentScreen();
             return true;
         }

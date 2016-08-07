@@ -1,11 +1,14 @@
 package com.reactnativenavigation.utils;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 
 import com.reactnativenavigation.NavigationApplication;
 
@@ -39,6 +42,13 @@ public class ViewUtils {
 
     public static int generateViewId() {
         return viewId.incrementAndGet();
+    }
+
+    public static float getScreenHeight() {
+        WindowManager wm = (WindowManager) NavigationApplication.instance.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(metrics);
+        return metrics.heightPixels;
     }
 }
 

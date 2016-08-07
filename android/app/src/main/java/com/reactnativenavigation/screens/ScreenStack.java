@@ -1,6 +1,5 @@
 package com.reactnativenavigation.screens;
 
-import android.animation.LayoutTransition;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewManager;
 import android.widget.FrameLayout;
@@ -24,26 +23,37 @@ public class ScreenStack extends FrameLayout {
     private TitleBarBackButtonListener titleBarBackButtonListener;
     private Stack<Screen> stack = new Stack<>();
 
-    public ScreenStack(AppCompatActivity activity, ScreenParams initialScreenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
+    public ScreenStack(AppCompatActivity activity,
+                       ScreenParams initialScreenParams,
+                       TitleBarBackButtonListener titleBarBackButtonListener,
+                       ScreenAnimator screenAnimator) {
         super(activity);
         this.activity = activity;
         this.titleBarBackButtonListener = titleBarBackButtonListener;
-        setLayoutTransition(new LayoutTransition());
-        pushInitialScreen(initialScreenParams);
+//        setLayoutTransition(new LayoutTransition());
+        pushInitialScreen(screenAnimator, initialScreenParams);
     }
 
-    private void pushInitialScreen(ScreenParams initialScreenParams) {
-        addScreen(initialScreenParams);
+    private void pushInitialScreen(ScreenAnimator screenAnimator, ScreenParams initialScreenParams) {
+        Screen initialScreen = ScreenFactory.create(activity, initialScreenParams, titleBarBackButtonListener);
+        addScreen(initialScreen);
+        screenAnimator.show(initialScreen);
     }
 
-    public void push(ScreenParams screenParams) {
-        Screen previous = stack.peek();
-        addScreen(screenParams);
-        removePreviousWithoutUnmount(previous);
+    public void push(ScreenAnimator screenAnimator, ScreenParams params) {
+        Screen nextScreen = ScreenFactory.create(activity, params, titleBarBackButtonListener);
+        final Screen previousScreen = stack.peek();
+        addScreen(nextScreen);
+        screenAnimator.show(nextScreen, new Runnable() {
+            @Override
+            public void run() {
+                removePreviousWithoutUnmount(previousScreen);
+            }
+        });
     }
 
-    private void addScreen(ScreenParams screenParams) {
-        Screen screen = ScreenFactory.create(activity, screenParams, titleBarBackButtonListener);
+    private void addScreen(Screen screen) {
+        screen.setVisibility(INVISIBLE);
         addView(screen, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         stack.push(screen);
     }
@@ -53,28 +63,32 @@ public class ScreenStack extends FrameLayout {
         removeView(previous);
     }
 
-    public void pop() {
+    public void pop(ScreenAnimator screenAnimator) {
         if (!canPop()) {
             return;
         }
 
-        Screen toRemove = stack.pop();
+        final Screen toRemove = stack.pop();
         Screen previous = stack.peek();
 
         readdPrevious(previous);
-
-        toRemove.ensureUnmountOnDetachedFromWindow();
-        removeView(toRemove);
+        screenAnimator.hide(toRemove, new Runnable() {
+            @Override
+            public void run() {
+                toRemove.ensureUnmountOnDetachedFromWindow();
+                removeView(toRemove);
+            }
+        });
     }
 
     private void readdPrevious(Screen previous) {
-        addView(previous, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        addView(previous, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
         previous.preventMountAfterReattachedToWindow();
     }
 
-    public void popToRoot() {
+    public void popToRoot(ScreenAnimator screenAnimator) {
         while (canPop()) {
-            pop();
+            pop(screenAnimator);
         }
     }
 
