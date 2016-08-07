@@ -30,6 +30,7 @@ public abstract class Screen extends RelativeLayout {
     protected TopBar topBar;
     private final TitleBarBackButtonListener titleBarBackButtonListener;
     private VisibilityAnimator topBarVisibilityAnimator;
+    private ScreenAnimator screenAnimator;
 
     public Screen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
         super(activity);
@@ -37,6 +38,7 @@ public abstract class Screen extends RelativeLayout {
         this.screenParams = screenParams;
         this.titleBarBackButtonListener = titleBarBackButtonListener;
 
+        screenAnimator = new ScreenAnimator(this);
         createViews();
         setStyle(screenParams.styleParams);
     }
@@ -158,5 +160,17 @@ public abstract class Screen extends RelativeLayout {
         for (TitleBarButtonParams titleBarButtonParam : titleBarButtonParams) {
             titleBarButtonParam.setColorFromScreenStyle(screenParams.styleParams.titleBarButtonColor);
         }
+    }
+
+    public void show(boolean animated) {
+        screenAnimator.show(animated);
+    }
+
+    public void show(boolean animated, Runnable onAnimationEnd) {
+        screenAnimator.show(animated, onAnimationEnd);
+    }
+
+    public void hide(boolean animated, Runnable onAnimatedEnd) {
+        screenAnimator.hide(animated, onAnimatedEnd);
     }
 }

@@ -32,12 +32,7 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
         super(activity);
         this.activity = activity;
         this.screenParams = screenParams;
-        createScreenAnimator();
         createStack();
-    }
-
-    private void createScreenAnimator() {
-        screenAnimator = new ScreenAnimator();
     }
 
     private void createStack() {
@@ -45,14 +40,14 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
             stack.destroy();
             removeView(stack);
         }
-        stack = new ScreenStack(activity, screenParams, this, screenAnimator);
+        stack = new ScreenStack(activity, screenParams, this);
         addView(stack, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
     }
 
     @Override
     public boolean onBackPressed() {
         if (stack.canPop()) {
-            stack.pop(screenAnimator);
+            stack.pop(true);
             return true;
         } else {
             return false;
@@ -67,17 +62,17 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
 
     @Override
     public void push(ScreenParams params) {
-        stack.push(screenAnimator, params);
+        stack.push(params);
     }
 
     @Override
     public void pop(ScreenParams params) {
-        stack.pop(screenAnimator);
+        stack.pop(params.animateScreenTransitions);
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
-        stack.popToRoot(screenAnimator);
+        stack.popToRoot(params.animateScreenTransitions);
     }
 
     @Override

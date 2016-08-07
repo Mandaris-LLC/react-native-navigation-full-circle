@@ -25,26 +25,24 @@ public class ScreenStack extends FrameLayout {
 
     public ScreenStack(AppCompatActivity activity,
                        ScreenParams initialScreenParams,
-                       TitleBarBackButtonListener titleBarBackButtonListener,
-                       ScreenAnimator screenAnimator) {
+                       TitleBarBackButtonListener titleBarBackButtonListener) {
         super(activity);
         this.activity = activity;
         this.titleBarBackButtonListener = titleBarBackButtonListener;
-//        setLayoutTransition(new LayoutTransition());
-        pushInitialScreen(screenAnimator, initialScreenParams);
+        pushInitialScreen(initialScreenParams);
     }
 
-    private void pushInitialScreen(ScreenAnimator screenAnimator, ScreenParams initialScreenParams) {
+    private void pushInitialScreen(ScreenParams initialScreenParams) {
         Screen initialScreen = ScreenFactory.create(activity, initialScreenParams, titleBarBackButtonListener);
         addScreen(initialScreen);
-        screenAnimator.show(initialScreen);
+        initialScreen.show(initialScreenParams.animateScreenTransitions);
     }
 
-    public void push(ScreenAnimator screenAnimator, ScreenParams params) {
+    public void push(final ScreenParams params) {
         Screen nextScreen = ScreenFactory.create(activity, params, titleBarBackButtonListener);
         final Screen previousScreen = stack.peek();
         addScreen(nextScreen);
-        screenAnimator.show(nextScreen, new Runnable() {
+        nextScreen.show(params.animateScreenTransitions, new Runnable() {
             @Override
             public void run() {
                 removePreviousWithoutUnmount(previousScreen);
@@ -63,7 +61,7 @@ public class ScreenStack extends FrameLayout {
         removeView(previous);
     }
 
-    public void pop(ScreenAnimator screenAnimator) {
+    public void pop(boolean animated) {
         if (!canPop()) {
             return;
         }
@@ -72,7 +70,7 @@ public class ScreenStack extends FrameLayout {
         Screen previous = stack.peek();
 
         readdPrevious(previous);
-        screenAnimator.hide(toRemove, new Runnable() {
+        toRemove.hide(animated, new Runnable() {
             @Override
             public void run() {
                 toRemove.ensureUnmountOnDetachedFromWindow();
@@ -86,9 +84,9 @@ public class ScreenStack extends FrameLayout {
         previous.preventMountAfterReattachedToWindow();
     }
 
-    public void popToRoot(ScreenAnimator screenAnimator) {
+    public void popToRoot(boolean animated) {
         while (canPop()) {
-            pop(screenAnimator);
+            pop(animated);
         }
     }
 

@@ -14,6 +14,7 @@ public class ScreenParams {
     public StyleParams styleParams;
     public List<TopTabParams> topTabParams;
     public String fragmentCreatorClassName;
+    public boolean animateScreenTransitions;
 
     //    public String tabLabel; TODO when tabs are supported move to TabParams
     //    public Drawable tabIcon;

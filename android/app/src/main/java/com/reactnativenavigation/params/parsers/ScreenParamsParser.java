@@ -51,6 +51,7 @@ public class ScreenParamsParser extends Parser {
         if (hasKey(params, "icon")) {
             result.tabIcon = ImageLoader.loadImage(params.getString("icon"));
         }
+        result.animateScreenTransitions = params.getBoolean("animated", true);
         return result;
     }
 
