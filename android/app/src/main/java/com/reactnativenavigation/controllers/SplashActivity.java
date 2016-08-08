@@ -14,8 +14,8 @@ public abstract class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NavigationApplication.instance.startReactContext();
         setSplashLayout();
+        NavigationApplication.instance.startReactContext();
     }
 
     private void setSplashLayout() {
@@ -23,19 +23,24 @@ public abstract class SplashActivity extends AppCompatActivity {
         if (splashLayout > 0) {
             setContentView(splashLayout);
         } else {
-            setDefaultSplashLayout();
+            setContentView(createSplashLayout());
         }
     }
 
-    private void setDefaultSplashLayout() {
-        View view = new View(this);
-        view.setBackgroundColor(Color.WHITE);
-        setContentView(view);
+    /**
+     * @return xml layout res id
+     */
+    @LayoutRes
+    public int getSplashLayout() {
+        return 0;
     }
 
     /**
-     * 
-     * @return -1 if you don't need a splash layout
+     * @return the layout you would like to show while react's js context loads
      */
-    public abstract @LayoutRes int getSplashLayout();
+    public View createSplashLayout() {
+        View view = new View(this);
+        view.setBackgroundColor(Color.WHITE);
+        return view;
+    }
 }
