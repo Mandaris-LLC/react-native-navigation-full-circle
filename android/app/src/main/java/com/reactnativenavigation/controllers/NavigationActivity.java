@@ -15,12 +15,12 @@ import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.react.JsDevReloadHandler;
-import com.reactnativenavigation.react.NavigationReactInstance;
+import com.reactnativenavigation.react.ReactGateway;
 import com.reactnativenavigation.react.RedboxPermission;
 
 import java.util.List;
 
-public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, NavigationReactInstance.OnJsDevReloadListener {
+public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, ReactGateway.OnJsDevReloadListener {
 
     /**
      * Although we start multiple activities, we make sure to pass Intent.CLEAR_TASK | Intent.NEW_TASK
@@ -39,9 +39,16 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!NavigationApplication.instance.isReactContextInitialized()) {
+            NavigationApplication.instance.startReactContext();
+            finish();
+            return;
+        }
+
         RedboxPermission.permissionToShowRedboxIfNeeded(this);
 
-        activityParams = NavigationCommandsHandler.getActivityParams(getIntent());
+        activityParams = NavigationCommandsHandler.parseActivityParams(getIntent());
 
         createLayout();
         createModalController();
@@ -59,29 +66,40 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     protected void onResume() {
         super.onResume();
+        if (isFinishing()) {
+            return;
+        }
+
         currentActivity = this;
-        getNavigationReactInstance().onResume(this, this, this);
+        NavigationApplication.instance.getReactGateway().onResume(this, this, this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         currentActivity = null;
-        getNavigationReactInstance().onPause();
+        NavigationApplication.instance.getReactGateway().onPause();
     }
 
     @Override
     protected void onDestroy() {
-        modalController.destroy();
-        layout.destroy();
-        super.onDestroy();
-        if (currentActivity == null || currentActivity.isFinishing()) {
-            getNavigationReactInstance().onHostDestroy();
+        if (modalController != null) {
+            modalController.destroy();
         }
+        if (layout != null) {
+            layout.destroy();
+        }
+        if (currentActivity == null || currentActivity.isFinishing()) {
+            if (NavigationApplication.instance.isReactContextInitialized()) {
+                NavigationApplication.instance.getReactGateway().onDestroyApp();
+            }
+        }
+        super.onDestroy();
     }
 
     @Override
     public void onJsDevReload() {
+        modalController.destroy();
         layout.destroy();
     }
 
@@ -93,22 +111,18 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     public void onBackPressed() {
         if (!layout.onBackPressed()) {
-            getNavigationReactInstance().onBackPressed();
+            NavigationApplication.instance.getReactGateway().onBackPressed();
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getNavigationReactInstance().onActivityResult(requestCode, resultCode, data);
+        NavigationApplication.instance.getReactGateway().onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         return JsDevReloadHandler.onKeyUp(getCurrentFocus(), keyCode) || super.onKeyUp(keyCode, event);
-    }
-
-    private NavigationReactInstance getNavigationReactInstance() {
-        return NavigationApplication.instance.getNavigationReactInstance();
     }
 
     void push(ScreenParams params) {
@@ -143,32 +157,6 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         }
     }
 
-    void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
-        layout.setTopBarVisible(screenInstanceId, hidden, animated);
-        modalController.setTopBarVisible(screenInstanceId, hidden, animated);
-    }
-
-    public void setBottomTabsVisible(boolean hidden, boolean animated) {
-        if (layout instanceof BottomTabsLayout) {
-            ((BottomTabsLayout) layout).setBottomTabsVisible(hidden, animated);
-        }
-    }
-
-    void setTitleBarTitle(String screenInstanceId, String title) {
-        layout.setTitleBarTitle(screenInstanceId, title);
-        modalController.setTitleBarTitle(screenInstanceId, title);
-    }
-
-    public void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
-        layout.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
-        modalController.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
-    }
-
-    public void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButton) {
-        layout.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
-        modalController.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
-    }
-
     void showModal(ScreenParams screenParams) {
         modalController.showModal(screenParams);
     }
@@ -179,5 +167,32 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     void dismissAllModals() {
         modalController.dismissAllModals();
+    }
+
+    //TODO all these setters should be combined to something like setStyle
+    void setTopBarVisible(String screenInstanceId, boolean hidden, boolean animated) {
+        layout.setTopBarVisible(screenInstanceId, hidden, animated);
+        modalController.setTopBarVisible(screenInstanceId, hidden, animated);
+    }
+
+    void setBottomTabsVisible(boolean hidden, boolean animated) {
+        if (layout instanceof BottomTabsLayout) {
+            ((BottomTabsLayout) layout).setBottomTabsVisible(hidden, animated);
+        }
+    }
+
+    void setTitleBarTitle(String screenInstanceId, String title) {
+        layout.setTitleBarTitle(screenInstanceId, title);
+        modalController.setTitleBarTitle(screenInstanceId, title);
+    }
+
+    void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
+        layout.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+        modalController.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
+    }
+
+    void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButton) {
+        layout.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
+        modalController.setTitleBarLeftButton(screenInstanceId, navigatorEventId, titleBarLeftButton);
     }
 }

@@ -5,26 +5,29 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactPackage;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.shell.MainReactPackage;
-import com.reactnativenavigation.bridge.NavigationReactPackage;
-import com.reactnativenavigation.react.NavigationReactInstance;
+import com.reactnativenavigation.react.NavigationReactGateway;
+import com.reactnativenavigation.react.ReactGateway;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class NavigationApplication extends Application {
 
     public static NavigationApplication instance;
-    private NavigationReactInstance navigationReactInstance;
+
+    private ReactGateway reactGateway;
     private Handler handler;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        reactGateway = new NavigationReactGateway();
         handler = new Handler(getMainLooper());
+    }
+
+    public void startReactContext() {
+        reactGateway.startReactContextOnceInBackgroundAndExecuteJS();
     }
 
     public void runOnMainThread(Runnable runnable) {
@@ -35,32 +38,12 @@ public abstract class NavigationApplication extends Application {
         handler.postDelayed(runnable, delay);
     }
 
-    public NavigationReactInstance getNavigationReactInstance() {
-        return navigationReactInstance;
+    public ReactGateway getReactGateway() {
+        return reactGateway;
     }
 
-    public final List<ReactPackage> createReactPackages() {
-        List<ReactPackage> list = new ArrayList<>();
-        list.add(new MainReactPackage());
-        list.add(new NavigationReactPackage());
-        addAdditionalReactPackagesIfNeeded(list);
-        return list;
-    }
-
-    private void addAdditionalReactPackagesIfNeeded(List<ReactPackage> list) {
-        List<ReactPackage> additionalReactPackages = createAdditionalReactPackages();
-        if (additionalReactPackages == null) {
-            return;
-        }
-
-        for (ReactPackage reactPackage : additionalReactPackages) {
-            if (reactPackage instanceof MainReactPackage)
-                throw new RuntimeException("Do not create a new MainReactPackage. This is created for you.");
-            if (reactPackage instanceof NavigationReactPackage)
-                throw new RuntimeException("Do not create a new NavigationReactPackage. This is created for you.");
-        }
-
-        list.addAll(additionalReactPackages);
+    public boolean isReactContextInitialized() {
+        return reactGateway.isInitialized();
     }
 
     public String getJsEntryFileName() {
@@ -71,52 +54,37 @@ public abstract class NavigationApplication extends Application {
         return "index.android.bundle";
     }
 
-    public ReactContext getReactContext() {
-        if (navigationReactInstance == null) {
-            return null;
-        }
-        return navigationReactInstance.getReactInstanceManager().getCurrentReactContext();
-    }
-
-    public boolean isReactInstanceManagerInitialized() {
-        return navigationReactInstance != null && navigationReactInstance.getReactInstanceManager() != null;
-    }
-
-    public void sendNavigatorEvent(String eventId, String navigatorEventId) {
-        if (navigationReactInstance == null) {
-            return;
-        }
-        navigationReactInstance.getReactEventEmitter().sendNavigatorEvent(eventId, navigatorEventId);
-    }
-
-    public void sendNavigatorEvent(String eventId, String navigatorEventId, WritableMap data) {
-        if (navigationReactInstance == null) {
-            return;
-        }
-        navigationReactInstance.getReactEventEmitter().sendNavigatorEvent(eventId, navigatorEventId, data);
-    }
-
-    public void sendEvent(String eventId, String navigatorEventId) {
-        if (navigationReactInstance == null) {
-            return;
-        }
-        navigationReactInstance.getReactEventEmitter().sendEvent(eventId, navigatorEventId);
-    }
-
-    public void sendNavigatorEvent(String eventId, WritableMap arguments) {
-        if (navigationReactInstance == null) {
-            return;
-        }
-        navigationReactInstance.getReactEventEmitter().sendEvent(eventId, arguments);
-    }
-
-    public void startReactContext() {
-        navigationReactInstance = new NavigationReactInstance();
-        navigationReactInstance.startReactContextOnceInBackgroundAndExecuteJS();
-    }
-
     public abstract boolean isDebug();
 
     @Nullable
     public abstract List<ReactPackage> createAdditionalReactPackages();
+
+    //TODO move all these navigator junk elsewhere
+    public void sendNavigatorEvent(String eventId, String navigatorEventId) {
+        if (!isReactContextInitialized()) {
+            return;
+        }
+        reactGateway.getReactEventEmitter().sendNavigatorEvent(eventId, navigatorEventId);
+    }
+
+    public void sendNavigatorEvent(String eventId, String navigatorEventId, WritableMap data) {
+        if (!isReactContextInitialized()) {
+            return;
+        }
+        reactGateway.getReactEventEmitter().sendNavigatorEvent(eventId, navigatorEventId, data);
+    }
+
+    public void sendEvent(String eventId, String navigatorEventId) {
+        if (!isReactContextInitialized()) {
+            return;
+        }
+        reactGateway.getReactEventEmitter().sendEvent(eventId, navigatorEventId);
+    }
+
+    public void sendNavigatorEvent(String eventId, WritableMap arguments) {
+        if (!isReactContextInitialized()) {
+            return;
+        }
+        reactGateway.getReactEventEmitter().sendEvent(eventId, arguments);
+    }
 }

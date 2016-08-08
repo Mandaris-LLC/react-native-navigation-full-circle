@@ -17,7 +17,7 @@ public class NavigationCommandsHandler {
 
     private static final String ACTIVITY_PARAMS_BUNDLE = "ACTIVITY_PARAMS_BUNDLE";
 
-    static ActivityParams getActivityParams(Intent intent) {
+    static ActivityParams parseActivityParams(Intent intent) {
         return ActivityParamsParser.parse(intent.getBundleExtra(NavigationCommandsHandler.ACTIVITY_PARAMS_BUNDLE));
     }
 

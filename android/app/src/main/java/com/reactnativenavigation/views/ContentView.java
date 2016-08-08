@@ -3,7 +3,6 @@ package com.reactnativenavigation.views;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ScreenParams;
@@ -40,8 +39,7 @@ public class ContentView extends ReactRootView {
     }
 
     private void attachToJS() {
-        ReactInstanceManager react = NavigationApplication.instance.getNavigationReactInstance().getReactInstanceManager();
-        startReactApplication(react, screenId, passProps);
+        startReactApplication(NavigationApplication.instance.getReactGateway().getReactInstanceManager(), screenId, passProps);
     }
 
     private Bundle mergePropsAndNavigationParams(ScreenParams screenParams, Bundle passProps) {

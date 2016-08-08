@@ -13,10 +13,9 @@ public class JsDevReloadHandler {
 
     //TODO yuck.
     public static boolean onKeyUp(View currentFocus, int keyCode) {
-
         ReactInstanceManager reactInstanceManager = NavigationApplication
                 .instance
-                .getNavigationReactInstance()
+                .getReactGateway()
                 .getReactInstanceManager();
 
         if (reactInstanceManager != null &&
@@ -40,7 +39,7 @@ public class JsDevReloadHandler {
                                     shouldRefreshOnRR = false;
                                 }
                             },
-                            200);
+                            500);
                 }
             }
         }
