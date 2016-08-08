@@ -177,7 +177,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void showStackAndUpdateStyle(ScreenStack newStack) {
-        newStack.showScreen();
+        newStack.showFirstScreen();
         bottomTabs.setStyleFromScreen(newStack.getCurrentScreenStyleParams());
     }
 

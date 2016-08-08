@@ -159,7 +159,7 @@ public class ScreenStack {
         }
     }
 
-    public void showScreen() {
+    public void showFirstScreen() {
         stack.peek().setVisibility(View.VISIBLE);
     }
 
