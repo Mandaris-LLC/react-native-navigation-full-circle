@@ -9,6 +9,7 @@ import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.Task;
+import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class ScreenStack extends FrameLayout {
     private final AppCompatActivity activity;
     private TitleBarBackButtonListener titleBarBackButtonListener;
     private Stack<Screen> stack = new Stack<>();
+    private final int bottomTabsHeight;
 
     public ScreenStack(AppCompatActivity activity,
                        ScreenParams initialScreenParams,
@@ -29,6 +31,7 @@ public class ScreenStack extends FrameLayout {
         super(activity);
         this.activity = activity;
         this.titleBarBackButtonListener = titleBarBackButtonListener;
+        bottomTabsHeight = (int) ViewUtils.convertDpToPixel(56);
         pushInitialScreen(initialScreenParams);
     }
 
@@ -52,7 +55,11 @@ public class ScreenStack extends FrameLayout {
 
     private void addScreen(Screen screen) {
         screen.setVisibility(INVISIBLE);
-        addView(screen, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        if (screen.screenParams.styleParams.drawScreenAboveBottomTabs) {
+            params.setMargins(0, 0, 0, bottomTabsHeight);
+        }
+        addView(screen, params);
         stack.push(screen);
     }
 

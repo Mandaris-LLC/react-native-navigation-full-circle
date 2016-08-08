@@ -32,10 +32,6 @@ public class BottomTabs extends AHBottomNavigation {
         }
     }
 
-    public void setVisibility(boolean hidden, boolean animated) {
-        visibilityAnimator.setVisible(hidden, animated);
-    }
-
     public void setStyleFromScreen(StyleParams params) {
         setBackgroundColor(params.bottomTabsColor);
 
@@ -49,7 +45,15 @@ public class BottomTabs extends AHBottomNavigation {
 
         setForceTitlesDisplay(params.forceTitlesDisplay);
 
-        setVisibility(params.bottomTabsHidden);
+        setVisibility(params.bottomTabsHidden, true);
+    }
+
+    public void setVisibility(boolean hidden, boolean animated) {
+        if (visibilityAnimator != null) {
+            visibilityAnimator.setVisible(!hidden, animated);
+        } else {
+            setVisibility(hidden);
+        }
     }
 
     private void setBackgroundColor(StyleParams.Color bottomTabsColor) {
