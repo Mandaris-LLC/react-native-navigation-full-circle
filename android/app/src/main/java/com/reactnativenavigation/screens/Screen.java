@@ -162,6 +162,10 @@ public abstract class Screen extends RelativeLayout {
         }
     }
 
+    public void show() {
+        screenAnimator.show(screenParams.animateScreenTransitions);
+    }
+
     public void show(boolean animated) {
         screenAnimator.show(animated);
     }

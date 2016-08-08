@@ -1,50 +1,44 @@
 package com.reactnativenavigation.screens;
 
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewManager;
-import android.widget.FrameLayout;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.Task;
-import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.util.List;
 import java.util.Stack;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
-// TODO there's really no reason for ScreenStack to extend FrameLayout. All screens can be added to parent.
-public class ScreenStack extends FrameLayout {
+public class ScreenStack {
 
     private final AppCompatActivity activity;
+    private RelativeLayout parent;
     private TitleBarBackButtonListener titleBarBackButtonListener;
     private Stack<Screen> stack = new Stack<>();
-    private final int bottomTabsHeight;
 
     public ScreenStack(AppCompatActivity activity,
-                       ScreenParams initialScreenParams,
+                       RelativeLayout parent,
                        TitleBarBackButtonListener titleBarBackButtonListener) {
-        super(activity);
         this.activity = activity;
+        this.parent = parent;
         this.titleBarBackButtonListener = titleBarBackButtonListener;
-        bottomTabsHeight = (int) ViewUtils.convertDpToPixel(56);
-        pushInitialScreen(initialScreenParams);
     }
 
-    private void pushInitialScreen(ScreenParams initialScreenParams) {
+    public void pushInitialScreen(ScreenParams initialScreenParams, RelativeLayout.LayoutParams params) {
         Screen initialScreen = ScreenFactory.create(activity, initialScreenParams, titleBarBackButtonListener);
-        addScreen(initialScreen);
-        initialScreen.show(initialScreenParams.animateScreenTransitions);
+        initialScreen.setVisibility(View.INVISIBLE);
+        addScreen(initialScreen, params);
     }
 
-    public void push(final ScreenParams params) {
+    public void push(final ScreenParams params, RelativeLayout.LayoutParams layoutParams) {
         Screen nextScreen = ScreenFactory.create(activity, params, titleBarBackButtonListener);
         final Screen previousScreen = stack.peek();
-        addScreen(nextScreen);
+        addScreen(nextScreen, layoutParams);
         nextScreen.show(params.animateScreenTransitions, new Runnable() {
             @Override
             public void run() {
@@ -53,19 +47,14 @@ public class ScreenStack extends FrameLayout {
         });
     }
 
-    private void addScreen(Screen screen) {
-        screen.setVisibility(INVISIBLE);
-        LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        if (screen.screenParams.styleParams.drawScreenAboveBottomTabs) {
-            params.setMargins(0, 0, 0, bottomTabsHeight);
-        }
-        addView(screen, params);
+    private void addScreen(Screen screen, RelativeLayout.LayoutParams layoutParams) {
+        parent.addView(screen, layoutParams);
         stack.push(screen);
     }
 
     private void removePreviousWithoutUnmount(Screen previous) {
         previous.preventUnmountOnDetachedFromWindow();
-        removeView(previous);
+        parent.removeView(previous);
     }
 
     public void pop(boolean animated) {
@@ -81,13 +70,17 @@ public class ScreenStack extends FrameLayout {
             @Override
             public void run() {
                 toRemove.ensureUnmountOnDetachedFromWindow();
-                removeView(toRemove);
+                parent.removeView(toRemove);
             }
         });
     }
 
+    public Screen peek() {
+        return stack.peek();
+    }
+
     private void readdPrevious(Screen previous) {
-        addView(previous, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        parent.addView(previous, 0);
         previous.preventMountAfterReattachedToWindow();
     }
 
@@ -100,17 +93,9 @@ public class ScreenStack extends FrameLayout {
     public void destroy() {
         for (Screen screen : stack) {
             screen.ensureUnmountOnDetachedFromWindow();
-            removeView(screen);
+            parent.removeView(screen);
         }
         stack.clear();
-        removeFromScreen();
-    }
-
-    private void removeFromScreen() {
-        ViewManager parent = (ViewManager) getParent();
-        if (parent != null) {
-            parent.removeView(this);
-        }
     }
 
     public int getStackSize() {
@@ -172,5 +157,13 @@ public class ScreenStack extends FrameLayout {
                 return;
             }
         }
+    }
+
+    public void showScreen() {
+        stack.peek().setVisibility(View.VISIBLE);
+    }
+
+    public void hideScreen() {
+        stack.peek().setVisibility(View.INVISIBLE);
     }
 }

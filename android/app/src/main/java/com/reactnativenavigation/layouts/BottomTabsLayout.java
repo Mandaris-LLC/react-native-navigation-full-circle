@@ -1,5 +1,6 @@
 package com.reactnativenavigation.layouts;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -42,19 +43,24 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     private void addScreenStacks() {
         for (int i = 0; i < screenStacks.length; i++) {
-            createAndAddScreenStack(i);
+            createAndAddScreens(i);
         }
     }
 
-    private void createAndAddScreenStack(int position) {
-        ScreenStack newStack = new ScreenStack(activity, params.tabParams.get(position), this);
+    private void createAndAddScreens(int position) {
+        ScreenStack newStack = new ScreenStack(activity, this, this);
+        ScreenParams screenParams = params.tabParams.get(position);
+        newStack.pushInitialScreen(screenParams, createScreenLayoutParams(screenParams));
         screenStacks[position] = newStack;
-        newStack.setVisibility(INVISIBLE);
-        addScreenStack(newStack);
     }
 
-    private void addScreenStack(ScreenStack newStack) {
-        addView(newStack, 0, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+    @NonNull
+    private LayoutParams createScreenLayoutParams(ScreenParams params) {
+        LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        if (params.styleParams.drawScreenAboveBottomTabs) {
+            lp.addRule(RelativeLayout.ABOVE, bottomTabs.getId());
+        }
+        return lp;
     }
 
     private void createBottomTabs() {
@@ -122,7 +128,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void push(ScreenParams screenParams) {
-        getCurrentScreenStack().push(screenParams);
+        getCurrentScreenStack().push(screenParams, createScreenLayoutParams(screenParams));
         bottomTabs.setStyleFromScreen(screenParams.styleParams);
     }
 
@@ -142,11 +148,12 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     public void newStack(ScreenParams params) {
         ScreenStack currentScreenStack = getCurrentScreenStack();
         currentScreenStack.destroy();
-        removeView(currentScreenStack);
+        removeView(currentScreenStack.peek());
 
-        ScreenStack newStack = new ScreenStack(activity, params, this);
+        ScreenStack newStack = new ScreenStack(activity, this, this);
+        LayoutParams lp = createScreenLayoutParams(params);
+        newStack.pushInitialScreen(params, lp);
         screenStacks[currentStackIndex] = newStack;
-        addView(newStack, 0, new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
 
         bottomTabs.setStyleFromScreen(params.styleParams);
     }
@@ -170,13 +177,13 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void showStackAndUpdateStyle(ScreenStack newStack) {
-        newStack.setVisibility(VISIBLE);
+        newStack.showScreen();
         bottomTabs.setStyleFromScreen(newStack.getCurrentScreenStyleParams());
     }
 
     private void hideCurrentStack() {
         ScreenStack currentScreenStack = getCurrentScreenStack();
-        currentScreenStack.setVisibility(INVISIBLE);
+        currentScreenStack.hideScreen();
     }
 
     private ScreenStack getCurrentScreenStack() {

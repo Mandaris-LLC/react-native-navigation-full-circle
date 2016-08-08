@@ -2,7 +2,7 @@ package com.reactnativenavigation.layouts;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -13,9 +13,7 @@ import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.util.List;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
-public class SingleScreenLayout extends FrameLayout implements Layout {
+public class SingleScreenLayout extends RelativeLayout implements Layout {
 
     private final AppCompatActivity activity;
     private final ScreenParams screenParams;
@@ -38,10 +36,10 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     private void createStack() {
         if (stack != null) {
             stack.destroy();
-            removeView(stack);
         }
-        stack = new ScreenStack(activity, screenParams, this);
-        addView(stack, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        stack = new ScreenStack(activity, this, this);
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        stack.pushInitialScreen(screenParams, lp);
     }
 
     @Override
@@ -57,12 +55,12 @@ public class SingleScreenLayout extends FrameLayout implements Layout {
     @Override
     public void destroy() {
         stack.destroy();
-        removeView(stack);
     }
 
     @Override
     public void push(ScreenParams params) {
-        stack.push(params);
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        stack.push(params, lp);
     }
 
     @Override
