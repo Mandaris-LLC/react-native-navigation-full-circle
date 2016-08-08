@@ -2,7 +2,6 @@ import React from 'react';
 import {AppRegistry} from 'react-native';
 import platformSpecific from './deprecated/platformSpecificDeprecated';
 import Screen from './Screen';
-import _ from 'lodash';
 
 const registeredScreens = {};
 
@@ -106,13 +105,13 @@ export default {
   registerScreen,
   getRegisteredScreen,
   registerComponent,
-  showModal: _.throttle(showModal, 1000, {leading: true, trailing: false}),
+  showModal: showModal,
   dismissModal: dismissModal,
   dismissAllModals: dismissAllModals,
-  showLightBox: _.throttle(showLightBox, 1000, {leading: true, trailing: false}),
+  showLightBox: showLightBox,
   dismissLightBox: dismissLightBox,
   showInAppNotification: showInAppNotification,
   dismissInAppNotification: dismissInAppNotification,
-  startTabBasedApp: _.throttle(startTabBasedApp, 1000, {leading: true, trailing: false}),
-  startSingleScreenApp: _.throttle(startSingleScreenApp, 1000, {leading: true, trailing: false})
+  startTabBasedApp: startTabBasedApp,
+  startSingleScreenApp: startSingleScreenApp
 };

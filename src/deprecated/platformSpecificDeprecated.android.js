@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {AppRegistry, NativeModules} from 'react-native';
 import _ from 'lodash';
-import utils from './utils';
 
 import Navigation from './../Navigation';
 
@@ -259,8 +258,8 @@ function dismissAllModals(params) {
 }
 
 function addNavigatorParams(screen, navigator = null, idx = '') {
-  screen.navigatorID = navigator ? navigator.navigatorID : utils.getRandomId() + '_nav' + idx;
-  screen.screenInstanceID = utils.getRandomId();
+  screen.navigatorID = navigator ? navigator.navigatorID : _.uniqueId('navigatorID') + '_nav' + idx;
+  screen.screenInstanceID = _.uniqueId('screenInstanceID');
   screen.navigatorEventID = screen.screenInstanceID + '_events';
 }
 

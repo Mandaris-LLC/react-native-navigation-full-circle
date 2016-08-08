@@ -1,4 +1,3 @@
-import utils from './utils';
 import Navigation from './../Navigation';
 import Controllers, {Modal, Notification} from 'react-native-controllers';
 const React = Controllers.hijackReact();
@@ -8,13 +7,14 @@ const {
   NavigationControllerIOS,
   DrawerControllerIOS
 } = React;
+import _ from 'lodash';
 
 function startTabBasedApp(params) {
   if (!params.tabs) {
     console.error('startTabBasedApp(params): params.tabs is required');
     return;
   }
-  const controllerID = utils.getRandomId();
+  const controllerID = _.uniqueId('controllerID');
   const Controller = Controllers.createClass({
     render: function() {
       if (!params.drawer || (!params.drawer.left && !params.drawer.right)) {
@@ -44,7 +44,7 @@ function startTabBasedApp(params) {
           {
             params.tabs.map(function(tab, index) {
               const navigatorID = controllerID + '_nav' + index;
-              const screenInstanceID = utils.getRandomId();
+              const screenInstanceID = _.uniqueId('screenInstanceID');
               if (!tab.screen) {
                 console.error('startTabBasedApp(params): every tab must include a screen property, take a look at tab#' + (index + 1));
                 return;
@@ -87,7 +87,7 @@ function startSingleScreenApp(params) {
     console.error('startSingleScreenApp(params): params.screen is required');
     return;
   }
-  const controllerID = utils.getRandomId();
+  const controllerID = _.uniqueId('controllerID');
   const Controller = Controllers.createClass({
     render: function() {
       if (!params.drawer || (!params.drawer.left && !params.drawer.right)) {
@@ -109,7 +109,7 @@ function startSingleScreenApp(params) {
     renderBody: function() {
       const screen = params.screen;
       const navigatorID = controllerID + '_nav';
-      const screenInstanceID = utils.getRandomId();
+      const screenInstanceID = _.uniqueId('screenInstanceID');
       if (!screen.screen) {
         console.error('startSingleScreenApp(params): screen must include a screen property');
         return;
@@ -175,7 +175,7 @@ function navigatorPush(navigator, params) {
     console.error('Navigator.push(params): params.screen is required');
     return;
   }
-  const screenInstanceID = utils.getRandomId();
+  const screenInstanceID = _.uniqueId('screenInstanceID');
   const {
     navigatorStyle,
     navigatorButtons,
@@ -216,7 +216,7 @@ function navigatorResetTo(navigator, params) {
     console.error('Navigator.resetTo(params): params.screen is required');
     return;
   }
-  const screenInstanceID = utils.getRandomId();
+  const screenInstanceID = _.uniqueId('screenInstanceID');
   const {
     navigatorStyle,
     navigatorButtons,
@@ -337,11 +337,11 @@ function showModal(params) {
     console.error('showModal(params): params.screen is required');
     return;
   }
-  const controllerID = utils.getRandomId();
+  const controllerID = _.uniqueId('controllerID');
   const Controller = Controllers.createClass({
     render: function() {
       const navigatorID = controllerID + '_nav';
-      const screenInstanceID = utils.getRandomId();
+      const screenInstanceID = _.uniqueId('screenInstanceID');
       const {
         navigatorStyle,
         navigatorButtons,
@@ -381,9 +381,9 @@ function showLightBox(params) {
     console.error('showLightBox(params): params.screen is required');
     return;
   }
-  const controllerID = utils.getRandomId();
+  const controllerID = _.uniqueId('controllerID');
   const navigatorID = controllerID + '_nav';
-  const screenInstanceID = utils.getRandomId();
+  const screenInstanceID = _.uniqueId('screenInstanceID');
   const {
     navigatorStyle,
     navigatorButtons,
@@ -410,9 +410,9 @@ function showInAppNotification(params) {
     return;
   }
 
-  const controllerID = utils.getRandomId();
+  const controllerID = _.uniqueId('controllerID');
   const navigatorID = controllerID + '_nav';
-  const screenInstanceID = utils.getRandomId();
+  const screenInstanceID = _.uniqueId('screenInstanceID');
   const {
     navigatorStyle,
     navigatorButtons,

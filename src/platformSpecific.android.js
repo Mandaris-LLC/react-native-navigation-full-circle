@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import {AppRegistry, NativeModules} from 'react-native';
-import _ from 'lodash';
-
-import Navigation from './Navigation';
 
 const NativeReactModule = NativeModules.NavigationReactModule;
 

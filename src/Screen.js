@@ -6,15 +6,14 @@ import {
 } from 'react-native';
 import platformSpecific from './deprecated/platformSpecificDeprecated';
 import Navigation from './Navigation';
-import _ from 'lodash';
 
 const _allNavigatorEventHandlers = {};
 
-const throttledPlatformSpecificFunctions = {
-  push: _.throttle(platformSpecific.navigatorPush, 1000, {leading: true, trailing: false}),
-  pop: _.throttle(platformSpecific.navigatorPop, 100, {leading: true, trailing: false}),
-  popToRoot: _.throttle(platformSpecific.navigatorPopToRoot, 100, {leading: true, trailing: false}),
-  resetTo: _.throttle(platformSpecific.navigatorResetTo, 100, {leading: true, trailing: false})
+const NavigationSpecific = {
+  push: platformSpecific.navigatorPush,
+  pop: platformSpecific.navigatorPop,
+  popToRoot: platformSpecific.navigatorPopToRoot,
+  resetTo: platformSpecific.navigatorResetTo
 };
 
 class Navigator {
@@ -27,19 +26,19 @@ class Navigator {
   }
 
   push(params = {}) {
-    return throttledPlatformSpecificFunctions.push(this, params);
+    return NavigationSpecific.push(this, params);
   }
 
   pop(params = {}) {
-    return throttledPlatformSpecificFunctions.pop(this, params);
+    return NavigationSpecific.pop(this, params);
   }
 
   popToRoot(params = {}) {
-    return throttledPlatformSpecificFunctions.popToRoot(this, params);
+    return NavigationSpecific.popToRoot(this, params);
   }
 
   resetTo(params = {}) {
-    return throttledPlatformSpecificFunctions.resetTo(this, params);
+    return NavigationSpecific.resetTo(this, params);
   }
 
   showModal(params = {}) {
