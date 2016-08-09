@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -41,7 +42,11 @@ public class ViewUtils {
     }
 
     public static int generateViewId() {
-        return viewId.incrementAndGet();
+        if (Build.VERSION.SDK_INT >= 17) {
+            return View.generateViewId();
+        } else {
+            return compatGenerateViewId();
+        }
     }
 
     public static float getScreenHeight() {
@@ -50,5 +55,18 @@ public class ViewUtils {
         wm.getDefaultDisplay().getMetrics(metrics);
         return metrics.heightPixels;
     }
+
+    private static int compatGenerateViewId() {
+        for (; ; ) {
+            final int result = viewId.get();
+            // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
+            int newValue = result + 1;
+            if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+            if (viewId.compareAndSet(result, newValue)) {
+                return result;
+            }
+        }
+    }
+
 }
 
