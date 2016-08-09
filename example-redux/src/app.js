@@ -74,9 +74,9 @@ export default class App {
         //      {
         //        screenId: 'example.ListScreen',
         //        title: 'Tab1',
-        //         passProps: {
-        //           str: 'This is a prop passed to Tab1'
-        //         }
+        //        passProps: {
+        //          str: 'This is a prop passed to Tab1'
+        //        }
         //      },
         //      {
         //        screenId: 'example.PushedScreen',

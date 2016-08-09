@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import {AppRegistry, NativeModules} from 'react-native';
-
+import _ from 'lodash';
 import PropRegistry from './PropRegistry';
 
 const NativeReactModule = NativeModules.NavigationReactModule;
 
 function startApp(activityParams) {
-  PropRegistry.save(activityParams.screen.navigationParams.screenInstanceID, activityParams.screen.passProps);
+  savePassProps(activityParams);
   NativeReactModule.startApp(activityParams);
 }
 
 function push(screenParams) {
-  PropRegistry.save(screenParams.navigationParams.screenInstanceID, screenParams.passProps);
+  savePassProps(screenParams);
   NativeReactModule.push(screenParams);
 }
 
@@ -24,7 +24,7 @@ function popToRoot(screenParams) {
 }
 
 function newStack(screenParams) {
-  PropRegistry.save(screenParams.navigationParams.screenInstanceID, screenParams.passProps);
+  savePassProps(screenParams);
   NativeReactModule.newStack(screenParams);
 }
 
@@ -45,7 +45,7 @@ function setScreenTitleBarButtons(screenInstanceID, navigatorEventID, rightButto
 }
 
 function showModal(screenParams) {
-  PropRegistry.save(screenParams.navigationParams.screenInstanceID, screenParams.passProps);
+  savePassProps(screenParams);
   NativeReactModule.showModal(screenParams);
 }
 
@@ -55,6 +55,30 @@ function dismissTopModal() {
 
 function dismissAllModals() {
   NativeReactModule.dismissAllModals();
+}
+
+function savePassProps(params) {
+  //TODO this needs to be handled in a common place,
+  //TODO also, all global passProps should be handled differently
+  //TODO also, topTabs passProps not working
+  if (params.navigationParams && params.passProps) {
+    PropRegistry.save(params.navigationParams.screenInstanceID, params.passProps);
+  }
+
+  if (params.screen && params.screen.passProps) {
+    PropRegistry.save(params.screen.navigationParams.screenInstanceID, params.screen.passProps);
+  }
+
+  if (_.get(params, 'screen.topTabs')) {
+    _.forEach(params.screen.topTabs, (tab) => savePassProps(tab));
+  }
+
+  if (params.tabs) {
+    _.forEach(params.tabs, (tab) => {
+      tab.passProps = params.passProps;
+      savePassProps(tab);
+    });
+  }
 }
 
 module.exports = {

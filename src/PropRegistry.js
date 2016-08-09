@@ -3,7 +3,7 @@ class PropRegistry {
     this.registry = {};
   }
 
-  save(screenInstanceId, passProps) {
+  save(screenInstanceId = '', passProps = {}) {
     this.registry[screenInstanceId] = passProps;
   }
 
