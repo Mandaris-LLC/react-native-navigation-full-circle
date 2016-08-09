@@ -38,10 +38,9 @@ public class StyleParamsParser {
         //result.drawScreenBelowTopBar = params.getBoolean("drawBelowTopBar", isDefaultScreenBelowTopBar());
         result.drawScreenBelowTopBar = true;
 
-        result.drawScreenAboveBottomTabs =
-                params.getBoolean("drawScreenAboveBottomTabs", getDefaultDrawScreenAboveBottomTabs());
-
         result.bottomTabsHidden = getBoolean("bottomTabsHidden", getDefaultBottomTabsHidden());
+        result.drawScreenAboveBottomTabs = !result.bottomTabsHidden &&
+                params.getBoolean("drawScreenAboveBottomTabs", getDefaultDrawScreenAboveBottomTabs());
         result.bottomTabsHiddenOnScroll =
                 getBoolean("bottomTabsHiddenOnScroll", getDefaultBottomTabsHiddenOnScroll());
         result.bottomTabsColor = getColor("bottomTabsColor", getDefaultBottomTabsColor());
