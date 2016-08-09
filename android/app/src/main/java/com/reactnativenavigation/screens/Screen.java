@@ -13,7 +13,6 @@ import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
-import com.reactnativenavigation.utils.SdkSupports;
 import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 import com.reactnativenavigation.views.TopBar;
@@ -92,9 +91,7 @@ public abstract class Screen extends RelativeLayout {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setStatusBarColor(StyleParams.Color statusBarColor) {
-        if (!SdkSupports.lollipop()) {
-            return;
-        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
 
         final Activity context = (Activity) getContext();
         final Window window = context.getWindow();
@@ -107,9 +104,7 @@ public abstract class Screen extends RelativeLayout {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void setNavigationBarColor(StyleParams.Color navigationBarColor) {
-        if (!SdkSupports.lollipop()) {
-            return;
-        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return;
 
         final Activity context = (Activity) getContext();
         final Window window = context.getWindow();
