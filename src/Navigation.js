@@ -3,6 +3,8 @@ import {AppRegistry} from 'react-native';
 import platformSpecific from './deprecated/platformSpecificDeprecated';
 import Screen from './Screen';
 
+import PropRegistry from './PropRegistry';
+
 const registeredScreens = {};
 
 function registerScreen(screenID, generator) {
@@ -25,9 +27,14 @@ function _registerComponentNoRedux(screenID, generator) {
       static navigatorStyle = InternalComponent.navigatorStyle || {};
       static navigatorButtons = InternalComponent.navigatorButtons || {};
 
+      constructor(props) {
+        super(props);
+        this.allProps = {...props, ...PropRegistry.load(this.navigator.screenInstanceID)};
+      }
+
       render() {
         return (
-          <InternalComponent navigator={this.navigator} {...this.props} />
+          <InternalComponent navigator={this.navigator} {...this.allProps} />
         );
       }
     };
@@ -43,10 +50,15 @@ function _registerComponentRedux(screenID, generator, store, Provider) {
       static navigatorStyle = InternalComponent.navigatorStyle || {};
       static navigatorButtons = InternalComponent.navigatorButtons || {};
 
+      constructor(props) {
+        super(props);
+        this.allProps = {...props, ...PropRegistry.load(this.navigator.screenInstanceID)};
+      }
+
       render() {
         return (
           <Provider store={store}>
-            <InternalComponent navigator={this.navigator} {...this.props} />
+            <InternalComponent navigator={this.navigator} {...this.allProps} />
           </Provider>
         );
       }
@@ -102,7 +114,6 @@ function startSingleScreenApp(params) {
 }
 
 export default {
-  registerScreen,
   getRegisteredScreen,
   registerComponent,
   showModal: showModal,

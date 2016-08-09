@@ -42,8 +42,7 @@ public class FragmentScreen extends Screen {
     private void addContent() {
         ContentView contentView = new ContentView(getContext(),
                 screenParams,
-                screenParams.screenId,
-                screenParams.passProps);
+                screenParams.screenId);
         addView(contentView, 0, 0);
         LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         if (screenParams.styleParams.drawScreenBelowTopBar) {
@@ -92,7 +91,7 @@ public class FragmentScreen extends Screen {
             String className = screenParams.fragmentCreatorClassName;
             Class<?> fragmentCreatorClass = Class.forName(className);
             Method method = fragmentCreatorClass.getMethod(CONTRACT_GET_FRAGMENT, Bundle.class);
-            return (android.app.Fragment) method.invoke(null, screenParams.passProps);
+            return (android.app.Fragment) method.invoke(null, "TODO");
         } catch (NoSuchMethodException noSuchMethod) {
             return null;
         }
@@ -104,7 +103,7 @@ public class FragmentScreen extends Screen {
             String className = screenParams.fragmentCreatorClassName;
             Class<?> fragmentCreatorClass = Class.forName(className);
             Method method = fragmentCreatorClass.getMethod(CONTRACT_GET_SUPPORT_FRAGMENT, Bundle.class);
-            return (android.support.v4.app.Fragment) method.invoke(null, screenParams.passProps);
+            return (android.support.v4.app.Fragment) method.invoke(null, "TODO");
         } catch (NoSuchMethodException noSuchMethod) {
             return null;
         }

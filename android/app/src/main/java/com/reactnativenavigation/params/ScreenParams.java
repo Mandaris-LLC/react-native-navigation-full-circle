@@ -7,7 +7,6 @@ import java.util.List;
 
 public class ScreenParams {
     public String screenId;
-    public Bundle passProps;
     public List<TitleBarButtonParams> rightButtons;
     public TitleBarLeftButtonParams leftButton;
     public String title;
@@ -16,8 +15,6 @@ public class ScreenParams {
     public String fragmentCreatorClassName;
     public boolean animateScreenTransitions;
 
-    //    public String tabLabel; TODO when tabs are supported move to TabParams
-    //    public Drawable tabIcon;
     public String tabLabel;
     public Drawable tabIcon;
 

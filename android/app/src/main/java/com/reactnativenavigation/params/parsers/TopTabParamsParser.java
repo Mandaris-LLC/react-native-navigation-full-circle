@@ -11,7 +11,6 @@ import java.util.List;
 public class TopTabParamsParser extends Parser {
     private static final String KEY_SCREEN_ID = "screenId";
     private static final String KEY_TITLE = "title";
-    private static final String KEY_PROPS = "passProps";
 
     @SuppressWarnings("ConstantConditions")
     public static List<TopTabParams> parse(Bundle params) {
@@ -27,7 +26,6 @@ public class TopTabParamsParser extends Parser {
         TopTabParams result = new TopTabParams();
         result.screenId = params.getString(KEY_SCREEN_ID);
         result.title = params.getString(KEY_TITLE);
-        result.passProps = params.getBundle(KEY_PROPS);
         return result;
     }
 }
