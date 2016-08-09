@@ -16,6 +16,8 @@ import com.reactnativenavigation.views.TitleBarBackButtonListener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import com.reactnativenavigation.R;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 @SuppressWarnings("ResourceType")
@@ -32,7 +34,7 @@ public class FragmentScreen extends Screen {
     @Override
     protected void createContent() {
         content = new FrameLayout(getContext());
-        content.setId(ViewUtils.generateViewId());
+        content.setId(R.id.fragment_screen_content);
         addContent();
         addFragment();
     }
@@ -73,14 +75,14 @@ public class FragmentScreen extends Screen {
     private void addFragment(Fragment fragment) {
         FragmentManager fm = activity.getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.add(content.getId(), fragment);
+        transaction.add(R.id.fragment_screen_content, fragment);
         transaction.commit();
     }
 
     private void addSupportFragment(android.support.v4.app.Fragment supportFragment) {
         android.support.v4.app.FragmentManager fm = activity.getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fm.beginTransaction();
-        transaction.add(content.getId(), supportFragment);
+        transaction.add(R.id.fragment_screen_content, supportFragment);
         transaction.commit();
     }
 
