@@ -134,3 +134,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
   from configurations.compile
   into 'libs'
 }
+
+task runDebug(dependsOn: ['assembleDebug', 'installDebug']) << {
+    println 'FINISHED'
+}
