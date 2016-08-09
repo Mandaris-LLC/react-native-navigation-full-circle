@@ -29,7 +29,7 @@ function _registerComponentNoRedux(screenID, generator) {
 
       constructor(props) {
         super(props);
-        this.allProps = {...props, ...PropRegistry.load(this.navigator.screenInstanceID)};
+        this.allProps = {...props, ...PropRegistry.load(props.screenInstanceID)};
       }
 
       render() {
@@ -52,7 +52,7 @@ function _registerComponentRedux(screenID, generator, store, Provider) {
 
       constructor(props) {
         super(props);
-        this.allProps = {...props, ...PropRegistry.load(this.navigator.screenInstanceID)};
+        this.allProps = {...props, ...PropRegistry.load(props.screenInstanceID)};
       }
 
       render() {

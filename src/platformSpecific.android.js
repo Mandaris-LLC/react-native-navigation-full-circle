@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 import {AppRegistry, NativeModules} from 'react-native';
 
+import PropRegistry from './PropRegistry';
+
 const NativeReactModule = NativeModules.NavigationReactModule;
 
 function startApp(activityParams) {
+  PropRegistry.save(activityParams.screen.navigationParams.screenInstanceID, activityParams.screen.passProps);
   NativeReactModule.startApp(activityParams);
 }
 
 function push(screenParams) {
+  PropRegistry.save(screenParams.navigationParams.screenInstanceID, screenParams.passProps);
   NativeReactModule.push(screenParams);
 }
 
@@ -20,6 +24,7 @@ function popToRoot(screenParams) {
 }
 
 function newStack(screenParams) {
+  PropRegistry.save(screenParams.navigationParams.screenInstanceID, screenParams.passProps);
   NativeReactModule.newStack(screenParams);
 }
 
@@ -40,6 +45,7 @@ function setScreenTitleBarButtons(screenInstanceID, navigatorEventID, rightButto
 }
 
 function showModal(screenParams) {
+  PropRegistry.save(screenParams.navigationParams.screenInstanceID, screenParams.passProps);
   NativeReactModule.showModal(screenParams);
 }
 

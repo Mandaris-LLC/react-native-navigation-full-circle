@@ -4,8 +4,6 @@ import _ from 'lodash';
 
 import Navigation from './../Navigation';
 
-import PropRegistry from '../PropRegistry';
-
 const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
 import * as newPlatformSpecific from './../platformSpecific';
@@ -20,7 +18,6 @@ function startSingleScreenApp(params) {
   addNavigatorButtons(screen);
   addNavigationStyleParams(screen);
   screen.passProps = params.passProps;
-  PropRegistry.save(screen.screenInstanceID, screen.passProps);
   //const drawer = setupDrawer(params.drawer);
 
   /*

@@ -8,15 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 
+import com.reactnativenavigation.R;
 import com.reactnativenavigation.params.ScreenParams;
-import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import com.reactnativenavigation.R;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -91,7 +89,7 @@ public class FragmentScreen extends Screen {
             String className = screenParams.fragmentCreatorClassName;
             Class<?> fragmentCreatorClass = Class.forName(className);
             Method method = fragmentCreatorClass.getMethod(CONTRACT_GET_FRAGMENT, Bundle.class);
-            return (android.app.Fragment) method.invoke(null, "TODO");
+            return (android.app.Fragment) method.invoke(null, new Bundle());
         } catch (NoSuchMethodException noSuchMethod) {
             return null;
         }
@@ -103,7 +101,7 @@ public class FragmentScreen extends Screen {
             String className = screenParams.fragmentCreatorClassName;
             Class<?> fragmentCreatorClass = Class.forName(className);
             Method method = fragmentCreatorClass.getMethod(CONTRACT_GET_SUPPORT_FRAGMENT, Bundle.class);
-            return (android.support.v4.app.Fragment) method.invoke(null, "TODO");
+            return (android.support.v4.app.Fragment) method.invoke(null, new Bundle());
         } catch (NoSuchMethodException noSuchMethod) {
             return null;
         }

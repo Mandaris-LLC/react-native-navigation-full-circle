@@ -18,7 +18,6 @@ public class ScreenParams {
     public String tabLabel;
     public Drawable tabIcon;
 
-    // TODO navigationParams should be a terminated. destroyed. annihilated. disintegrated. banished from existence. + abolished, eradicated, exterminated...
     public String screenInstanceId;
     public String navigatorEventId;
     public Bundle navigationParams;
