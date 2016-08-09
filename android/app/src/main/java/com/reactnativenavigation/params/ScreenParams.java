@@ -13,6 +13,7 @@ public class ScreenParams {
     public StyleParams styleParams;
     public List<TopTabParams> topTabParams;
     public String fragmentCreatorClassName;
+    public Bundle fragmentCreatorPassProps;
     public boolean animateScreenTransitions;
 
     public String tabLabel;

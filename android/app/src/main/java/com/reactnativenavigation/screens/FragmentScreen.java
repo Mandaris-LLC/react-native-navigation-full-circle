@@ -89,7 +89,7 @@ public class FragmentScreen extends Screen {
             String className = screenParams.fragmentCreatorClassName;
             Class<?> fragmentCreatorClass = Class.forName(className);
             Method method = fragmentCreatorClass.getMethod(CONTRACT_GET_FRAGMENT, Bundle.class);
-            return (android.app.Fragment) method.invoke(null, new Bundle());
+            return (android.app.Fragment) method.invoke(null, screenParams.fragmentCreatorPassProps);
         } catch (NoSuchMethodException noSuchMethod) {
             return null;
         }
@@ -101,7 +101,7 @@ public class FragmentScreen extends Screen {
             String className = screenParams.fragmentCreatorClassName;
             Class<?> fragmentCreatorClass = Class.forName(className);
             Method method = fragmentCreatorClass.getMethod(CONTRACT_GET_SUPPORT_FRAGMENT, Bundle.class);
-            return (android.support.v4.app.Fragment) method.invoke(null, new Bundle());
+            return (android.support.v4.app.Fragment) method.invoke(null, screenParams.fragmentCreatorPassProps);
         } catch (NoSuchMethodException noSuchMethod) {
             return null;
         }

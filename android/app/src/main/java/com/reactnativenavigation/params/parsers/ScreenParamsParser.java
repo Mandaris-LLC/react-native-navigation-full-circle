@@ -19,6 +19,7 @@ public class ScreenParamsParser extends Parser {
     private static final String STYLE_PARAMS = "styleParams";
     private static final String TOP_TABS = "topTabs";
     private static final String FRAGMENT_CREATOR_CLASS_NAME = "fragmentCreatorClassName";
+    private static final String FRAGMENT_CREATOR_PASS_PROPS = "fragmentCreatorPassProps";
 
     @SuppressWarnings("ConstantConditions")
     public static ScreenParams parse(Bundle params) {
@@ -42,6 +43,7 @@ public class ScreenParamsParser extends Parser {
         }
         if (hasKey(params, FRAGMENT_CREATOR_CLASS_NAME)) {
             result.fragmentCreatorClassName = params.getString(FRAGMENT_CREATOR_CLASS_NAME);
+            result.fragmentCreatorPassProps = params.getBundle(FRAGMENT_CREATOR_PASS_PROPS);
         }
         if (hasKey(params, "label")) {
             result.tabLabel = params.getString("label");
