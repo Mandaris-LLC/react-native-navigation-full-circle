@@ -60,7 +60,6 @@ function dismissAllModals() {
 function savePassProps(params) {
   //TODO this needs to be handled in a common place,
   //TODO also, all global passProps should be handled differently
-  //TODO also, topTabs passProps not working
   if (params.navigationParams && params.passProps) {
     PropRegistry.save(params.navigationParams.screenInstanceID, params.passProps);
   }

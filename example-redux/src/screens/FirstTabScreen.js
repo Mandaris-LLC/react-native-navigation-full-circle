@@ -69,7 +69,7 @@ class FirstTabScreen extends Component {
     console.log('selectedTabChanged ' + position);
     let rightButtons;
 
-    switch(position) {
+    switch (position) {
       case 0:
         rightButtons = [
           {
@@ -133,7 +133,7 @@ class FirstTabScreen extends Component {
         </TouchableOpacity>
 
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
-        <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
+        <Text style={{fontWeight: '500'}}>Function prop: {this.props.fn ? this.props.fn() : ''}</Text>
         {this.props.obj ? <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text> : false}
         {this.props.obj && this.props.obj.arr ? <Text style={{fontWeight: '500'}}>Array prop: {this.props.obj.arr[0].str}</Text> : false}
       </View>

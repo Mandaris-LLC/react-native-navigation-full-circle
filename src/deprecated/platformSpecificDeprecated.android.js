@@ -18,6 +18,14 @@ function startSingleScreenApp(params) {
   addNavigatorButtons(screen);
   addNavigationStyleParams(screen);
   screen.passProps = params.passProps;
+
+  if (screen.topTabs) {
+    _.forEach(screen.topTabs, (tab) => {
+      addNavigatorParams(tab);
+      adaptNavigationParams(tab);
+    });
+  }
+
   //const drawer = setupDrawer(params.drawer);
 
   /*
@@ -127,7 +135,7 @@ function adaptNavigationParams(screen) {
     navigatorID: screen.navigatorID,
     navigatorEventID: screen.navigatorEventID
   };
-  return _.omit(screen, ['screenInstanceID', 'navigatorID', 'navigatorEventID']);
+  return screen;
 }
 
 function startTabBasedApp(params) {

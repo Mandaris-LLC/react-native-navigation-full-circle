@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.NavigationApplication;
-import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.react.ReactViewHacks;
 
 public class ContentView extends ReactRootView {
@@ -14,11 +13,11 @@ public class ContentView extends ReactRootView {
     private final String navigatorEventId;
     private final Bundle navigationParams;
 
-    public ContentView(Context context, ScreenParams screenParams, String screenId) {
+    public ContentView(Context context, String screenId, String navigatorEventId, Bundle navigationParams) {
         super(context);
         this.screenId = screenId;
-        navigatorEventId = screenParams.navigatorEventId;
-        navigationParams = screenParams.navigationParams;
+        this.navigatorEventId = navigatorEventId;
+        this.navigationParams = navigationParams;
         attachToJS();
     }
 
