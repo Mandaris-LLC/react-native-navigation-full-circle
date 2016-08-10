@@ -1,5 +1,6 @@
 package com.reactnativenavigation.screens;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -8,6 +9,7 @@ import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
+import com.reactnativenavigation.utils.KeyboardVisibilityDetector;
 import com.reactnativenavigation.utils.Task;
 import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
@@ -16,10 +18,15 @@ import java.util.Stack;
 
 public class ScreenStack {
 
+    public interface OnScreenPop {
+        void onScreenPopAnimationEnd();
+    }
+
     private final AppCompatActivity activity;
     private RelativeLayout parent;
     private TitleBarBackButtonListener titleBarBackButtonListener;
     private Stack<Screen> stack = new Stack<>();
+    private final KeyboardVisibilityDetector keyboardVisibilityDetector;
 
     public ScreenStack(AppCompatActivity activity,
                        RelativeLayout parent,
@@ -27,6 +34,7 @@ public class ScreenStack {
         this.activity = activity;
         this.parent = parent;
         this.titleBarBackButtonListener = titleBarBackButtonListener;
+        keyboardVisibilityDetector = new KeyboardVisibilityDetector(parent);
     }
 
     public void pushInitialScreen(ScreenParams initialScreenParams, RelativeLayout.LayoutParams params) {
@@ -58,13 +66,30 @@ public class ScreenStack {
     }
 
     public void pop(boolean animated) {
+        pop(animated, null);
+    }
+
+    public void pop(final boolean animated, @Nullable final OnScreenPop onScreenPop) {
         if (!canPop()) {
             return;
         }
 
         final Screen toRemove = stack.pop();
-        Screen previous = stack.peek();
+        final Screen previous = stack.peek();
 
+        if (keyboardVisibilityDetector.isKeyboardVisible()) {
+            keyboardVisibilityDetector.closeKeyboard(new Runnable() {
+                @Override
+                public void run() {
+                    swapScreens(animated, toRemove, previous, onScreenPop);
+                }
+            });
+        } else {
+            swapScreens(animated, toRemove, previous, onScreenPop);
+        }
+    }
+
+    private void swapScreens(boolean animated, final Screen toRemove, Screen previous, OnScreenPop onScreenPop) {
         readdPrevious(previous);
         toRemove.hide(animated, new Runnable() {
             @Override
@@ -73,6 +98,10 @@ public class ScreenStack {
                 parent.removeView(toRemove);
             }
         });
+
+        if (onScreenPop != null) {
+            onScreenPop.onScreenPopAnimationEnd();
+        }
     }
 
     public Screen peek() {

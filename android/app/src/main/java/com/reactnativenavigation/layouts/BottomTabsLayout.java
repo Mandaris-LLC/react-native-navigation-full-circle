@@ -134,8 +134,12 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void pop(ScreenParams screenParams) {
-        getCurrentScreenStack().pop(screenParams.animateScreenTransitions);
-        setBottomTabsStyleFromCurrentScreen();
+        getCurrentScreenStack().pop(screenParams.animateScreenTransitions, new ScreenStack.OnScreenPop() {
+            @Override
+            public void onScreenPopAnimationEnd() {
+                setBottomTabsStyleFromCurrentScreen();
+            }
+        });
     }
 
     @Override
@@ -197,8 +201,12 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     @Override
     public boolean onTitleBarBackPress() {
         if (getCurrentScreenStack().canPop()) {
-            getCurrentScreenStack().pop(true);
-            setBottomTabsStyleFromCurrentScreen();
+            getCurrentScreenStack().pop(true, new ScreenStack.OnScreenPop() {
+                @Override
+                public void onScreenPopAnimationEnd() {
+                    setBottomTabsStyleFromCurrentScreen();
+                }
+            });
             return true;
         }
 
