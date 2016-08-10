@@ -78,6 +78,8 @@ function startTabBasedApp(params) {
       );
     }
   });
+  savePassProps(params);
+
   ControllerRegistry.registerController(controllerID, () => Controller);
   ControllerRegistry.setRootController(controllerID, params.animationType, params.passProps || {});
 }
@@ -137,6 +139,8 @@ function startSingleScreenApp(params) {
       );
     }
   });
+  savePassProps(params);
+
   ControllerRegistry.registerController(controllerID, () => Controller);
   ControllerRegistry.setRootController(controllerID, params.animationType, params.passProps || {});
 }
@@ -185,6 +189,9 @@ function navigatorPush(navigator, params) {
   passProps.navigatorID = navigator.navigatorID;
   passProps.screenInstanceID = screenInstanceID;
   passProps.navigatorEventID = navigatorEventID;
+
+  savePassProps(params);
+
   Controllers.NavigationControllerIOS(navigator.navigatorID).push({
     title: params.title,
     titleImage: params.titleImage,
@@ -226,6 +233,9 @@ function navigatorResetTo(navigator, params) {
   passProps.navigatorID = navigator.navigatorID;
   passProps.screenInstanceID = screenInstanceID;
   passProps.navigatorEventID = navigatorEventID;
+
+  savePassProps(params);
+
   Controllers.NavigationControllerIOS(navigator.navigatorID).resetTo({
     title: params.title,
     titleImage: params.titleImage,
@@ -364,6 +374,9 @@ function showModal(params) {
       );
     }
   });
+
+  savePassProps(params);
+
   ControllerRegistry.registerController(controllerID, () => Controller);
   Modal.showController(controllerID, params.animationType);
 }
@@ -393,6 +406,9 @@ function showLightBox(params) {
   passProps.navigatorID = navigatorID;
   passProps.screenInstanceID = screenInstanceID;
   passProps.navigatorEventID = navigatorEventID;
+
+  savePassProps(params);
+
   Modal.showLightBox({
     component: params.screen,
     passProps: passProps,
@@ -439,6 +455,29 @@ function dismissInAppNotification(params) {
   Notification.dismiss(params);
 }
 
+function savePassProps(params) {
+  //TODO this needs to be handled in a common place,
+  //TODO also, all global passProps should be handled differently
+  if (params.navigationParams && params.passProps) {
+    PropRegistry.save(params.navigationParams.screenInstanceID, params.passProps);
+  }
+
+  if (params.screen && params.screen.passProps) {
+    PropRegistry.save(params.screen.navigationParams.screenInstanceID, params.screen.passProps);
+  }
+
+  if (_.get(params, 'screen.topTabs')) {
+    _.forEach(params.screen.topTabs, (tab) => savePassProps(tab));
+  }
+
+  if (params.tabs) {
+    _.forEach(params.tabs, (tab) => {
+      tab.passProps = params.passProps;
+      savePassProps(tab);
+    });
+  }
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -461,4 +500,4 @@ export default {
   navigatorSetTabBadge,
   navigatorSwitchToTab,
   navigatorToggleNavBar
-}
+};
