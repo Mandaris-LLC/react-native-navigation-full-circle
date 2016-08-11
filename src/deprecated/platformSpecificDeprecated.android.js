@@ -33,8 +33,8 @@ function startSingleScreenApp(params) {
   newPlatformSpecific.startApp(params);
 }
 
-function adaptTopTabs(topTabs) {
-  _.forEach(topTabs, (tab) => {
+function adaptTopTabs(screen) {
+  _.forEach(_.get(screen, 'topTabs'), (tab) => {
     addNavigatorParams(tab);
     adaptNavigationParams(tab);
   });
