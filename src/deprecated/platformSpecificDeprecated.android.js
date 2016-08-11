@@ -19,18 +19,13 @@ function startSingleScreenApp(params) {
   addNavigationStyleParams(screen);
   screen.passProps = params.passProps;
 
-  if (screen.topTabs) {
-    _.forEach(screen.topTabs, (tab) => {
-      addNavigatorParams(tab);
-      adaptNavigationParams(tab);
-    });
-  }
 
   //const drawer = setupDrawer(params.drawer);
 
   /*
    * adapt to new API
    */
+  adaptTopTabs(screen);
   screen.screenId = screen.screen;
   params.screen = adaptNavigationStyleToScreenStyle(screen);
   params.screen = adaptNavigationParams(screen);
@@ -39,11 +34,20 @@ function startSingleScreenApp(params) {
   newPlatformSpecific.startApp(params);
 }
 
+function adaptTopTabs(topTabs) {
+  _.forEach(topTabs, (tab) => {
+    addNavigatorParams(tab);
+    adaptNavigationParams(tab);
+  });
+}
+
 function navigatorPush(navigator, params) {
   addNavigatorParams(params, navigator);
   addNavigatorButtons(params);
   addTitleBarBackButtonIfNeeded(params);
   addNavigationStyleParams(params);
+
+  adaptTopTabs(params);
 
   params.screenId = params.screen;
   let adapted = adaptNavigationStyleToScreenStyle(params);
@@ -76,6 +80,8 @@ function navigatorResetTo(navigator, params) {
   addNavigatorParams(params, navigator);
   addNavigatorButtons(params);
   addNavigationStyleParams(params);
+
+  adaptTopTabs(params);
 
   params.screenId = params.screen;
   let adapted = adaptNavigationStyleToScreenStyle(params);
@@ -152,6 +158,8 @@ function startTabBasedApp(params) {
     addNavigationStyleParams(tab);
     addTabIcon(tab);
     tab.passProps = params.passProps;
+
+    adaptTopTabs(params);
 
     tab.screenId = tab.screen;
 
@@ -255,6 +263,7 @@ function showModal(params) {
   /*
    * adapt to new API
    */
+  adaptTopTabs(params);
   params.screenId = params.screen;
   let adapted = adaptNavigationStyleToScreenStyle(params);
   adapted = adaptNavigationParams(adapted);
