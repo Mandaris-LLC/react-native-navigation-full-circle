@@ -21,6 +21,7 @@ public class TitleBarButtonParams {
     public String label;
     public Drawable icon;
     public StyleParams.Color color;
+    public StyleParams.Color disabledColor;
     public ShowAsAction showAsAction;
     public boolean enabled = true;
 

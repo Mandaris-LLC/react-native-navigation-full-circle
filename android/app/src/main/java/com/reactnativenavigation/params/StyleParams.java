@@ -19,6 +19,7 @@ public class StyleParams {
             return color != null;
         }
 
+        @ColorInt
         public int getColor() {
             if (!hasColor()) {
                 throw new RuntimeException("Color undefined");
@@ -44,6 +45,7 @@ public class StyleParams {
     public boolean titleBarHidden;
     public Color titleBarTitleColor;
     public Color titleBarButtonColor;
+    public Color titleBarDisabledButtonColor;
     public boolean backButtonHidden;
 
     public Color topTabTextColor;

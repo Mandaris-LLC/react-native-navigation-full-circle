@@ -1,7 +1,6 @@
 package com.reactnativenavigation.utils;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -12,6 +11,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.params.AppStyle;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,7 +33,9 @@ public class ViewUtils {
     }
 
     public static void tintDrawable(Drawable drawable, int tint, boolean enabled) {
-        drawable.setColorFilter(new PorterDuffColorFilter(enabled ? tint : Color.LTGRAY, PorterDuff.Mode.SRC_IN));
+        drawable.setColorFilter(new PorterDuffColorFilter(enabled ? tint :
+                AppStyle.appStyle.titleBarDisabledButtonColor.getColor(),
+                PorterDuff.Mode.SRC_IN));
     }
 
     public static float convertDpToPixel(float dp) {
