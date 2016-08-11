@@ -164,7 +164,6 @@ function startTabBasedApp(params) {
   params.appStyle = convertStyleParams(params.appStyle);
   // TODO: add drawer params
 
-  console.log('DebuggingIsHell', 'startTabBasedApp:startTabBasedApp()', params);
   newPlatformSpecific.startApp(params);
 }
 
