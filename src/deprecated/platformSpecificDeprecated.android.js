@@ -19,7 +19,6 @@ function startSingleScreenApp(params) {
   addNavigationStyleParams(screen);
   screen.passProps = params.passProps;
 
-
   //const drawer = setupDrawer(params.drawer);
 
   /*
@@ -159,7 +158,7 @@ function startTabBasedApp(params) {
     addTabIcon(tab);
     tab.passProps = params.passProps;
 
-    adaptTopTabs(params);
+    adaptTopTabs(tab);
 
     tab.screenId = tab.screen;
 
