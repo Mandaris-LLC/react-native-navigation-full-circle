@@ -144,6 +144,8 @@ function startTabBasedApp(params) {
     return;
   }
 
+  const newTabs = [];
+
   params.tabs.forEach(function(tab, idx) {
     addNavigatorParams(tab, null, idx);
     addNavigatorButtons(tab);
@@ -152,12 +154,17 @@ function startTabBasedApp(params) {
     tab.passProps = params.passProps;
 
     tab.screenId = tab.screen;
-    tab.screen = adaptNavigationStyleToScreenStyle(tab);
-    tab.screen = adaptNavigationParams(tab);
+
+    let newtab = adaptNavigationStyleToScreenStyle(tab);
+    newtab = adaptNavigationParams(tab);
+    newTabs.push(newtab);
   });
+  params.tabs = newTabs;
 
   params.appStyle = convertStyleParams(params.appStyle);
   // TODO: add drawer params
+
+  console.log('DebuggingIsHell', 'startTabBasedApp:startTabBasedApp()', params);
   newPlatformSpecific.startApp(params);
 }
 
