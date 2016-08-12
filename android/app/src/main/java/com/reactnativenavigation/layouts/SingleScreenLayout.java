@@ -24,7 +24,7 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     private final SideMenuParams sideMenuParams;
     private ScreenStack stack;
     private TitleBarBackButtonListener titleBarBackButtonListener;
-    private SideMenu sideMenu;
+    private @Nullable SideMenu sideMenu;
 
     public SingleScreenLayout(AppCompatActivity activity, ScreenParams screenParams,
                               TitleBarBackButtonListener titleBarBackButtonListener) {
@@ -44,15 +44,16 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
         if (sideMenuParams == null) {
             createStack(this);
         } else {
-            createSideMenu();
+            sideMenu = createSideMenu();
             createStack(sideMenu.getContentContainer());
         }
     }
 
-    private void createSideMenu() {
-        sideMenu = new SideMenu(getContext(), sideMenuParams);
+    private SideMenu createSideMenu() {
+        SideMenu sideMenu = new SideMenu(getContext(), sideMenuParams);
         RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         addView(sideMenu, lp);
+        return sideMenu;
     }
 
     private void createStack(RelativeLayout parent) {
@@ -78,6 +79,9 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     @Override
     public void destroy() {
         stack.destroy();
+        if (sideMenu != null) {
+            sideMenu.destroy();
+        }
     }
 
     @Override
@@ -98,7 +102,7 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
 
     @Override
     public void newStack(ScreenParams params) {
-        RelativeLayout parent = sideMenuParams == null ? this : sideMenu.getContentContainer();
+        RelativeLayout parent = sideMenu == null ? this : sideMenu.getContentContainer();
         createStack(parent);
     }
 

@@ -9,7 +9,9 @@ public class SideMenuParamsParser extends Parser {
     public static SideMenuParams parse(Bundle sideMenu) {
         SideMenuParams result = new SideMenuParams();
         result.screenId = sideMenu.getString("screenId");
+        result.navigationParams = sideMenu.getBundle("navigationParams");
         result.disableOpenGesture = sideMenu.getBoolean("disableOpenGesture", false);
+        result.passProps = sideMenu.getBundle("passProps");
         return result;
     }
 }

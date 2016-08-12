@@ -143,6 +143,7 @@ function convertDrawerParamsToSideMenuParams(drawerParams) {
   result.disableOpenGesture = drawer.disableOpenGesture !== undefined;
   result.screenId = drawer.left.screen;
   addNavigatorParams(result);
+  result = adaptNavigationParams(result);
 
   return result;
 }

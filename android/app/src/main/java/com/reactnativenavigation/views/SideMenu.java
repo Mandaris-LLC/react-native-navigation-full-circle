@@ -18,6 +18,11 @@ public class SideMenu extends DrawerLayout {
         return contentContainer;
     }
 
+    public void destroy() {
+        sideMenuView.ensureUnmountOnDetachedFromWindow();
+        removeView(sideMenuView);
+    }
+
     public SideMenu(Context context, SideMenuParams sideMenuParams) {
         super(context);
         createContentContainer();
