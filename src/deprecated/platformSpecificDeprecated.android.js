@@ -167,7 +167,7 @@ function startTabBasedApp(params) {
 
   params.tabs.forEach(function(tab, idx) {
     addNavigatorParams(tab, null, idx);
-    addNavigatorButtons(tab);
+    addNavigatorButtons(tab, params.drawer);
     addNavigationStyleParams(tab);
     addTabIcon(tab);
     tab.passProps = params.passProps;
@@ -183,7 +183,7 @@ function startTabBasedApp(params) {
   params.tabs = newTabs;
 
   params.appStyle = convertStyleParams(params.appStyle);
-  // TODO: add drawer params
+  params.sideMenu = convertDrawerParamsToSideMenuParams(params.drawer);
 
   newPlatformSpecific.startApp(params);
 }

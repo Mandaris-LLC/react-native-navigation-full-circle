@@ -1,6 +1,7 @@
 package com.reactnativenavigation.layouts;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -8,10 +9,12 @@ import android.widget.RelativeLayout;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.SideMenuParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
 import com.reactnativenavigation.views.BottomTabs;
+import com.reactnativenavigation.views.SideMenu;
 
 import java.util.List;
 
@@ -24,21 +27,35 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     private ActivityParams params;
     private BottomTabs bottomTabs;
     private ScreenStack[] screenStacks;
+    private final SideMenuParams sideMenuParams;
+    private @Nullable SideMenu sideMenu;
     private int currentStackIndex = 0;
 
     public BottomTabsLayout(AppCompatActivity activity, ActivityParams params) {
         super(activity);
         this.activity = activity;
         this.params = params;
+        this.sideMenuParams = params.sideMenuParams;
         screenStacks = new ScreenStack[params.tabParams.size()];
         createLayout();
     }
 
     private void createLayout() {
+        createSideMenu();
         createBottomTabs();
-        addBottomTabsToScreen();
+        addBottomTabs();
         addScreenStacks();
         showInitialScreenStack();
+    }
+
+    private void createSideMenu() {
+        if (sideMenuParams == null) {
+            return;
+        }
+
+        sideMenu = new SideMenu(getContext(), sideMenuParams);
+        RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        addView(sideMenu, lp);
     }
 
     private void addScreenStacks() {
@@ -48,10 +65,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void createAndAddScreens(int position) {
-        ScreenStack newStack = new ScreenStack(activity, this, this);
+        ScreenStack newStack = new ScreenStack(activity, getContentContainer(), this);
         ScreenParams screenParams = params.tabParams.get(position);
         newStack.pushInitialScreen(screenParams, createScreenLayoutParams(screenParams));
         screenStacks[position] = newStack;
+    }
+
+    private RelativeLayout getContentContainer() {
+        return sideMenu == null ? this : sideMenu.getContentContainer();
     }
 
     @NonNull
@@ -68,10 +89,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         bottomTabs.addTabs(params.tabParams, this);
     }
 
-    private void addBottomTabsToScreen() {
+    private void addBottomTabs() {
         LayoutParams lp = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
         lp.addRule(ALIGN_PARENT_BOTTOM);
-        addView(bottomTabs, lp);
+        getContentContainer().addView(bottomTabs, lp);
     }
 
     private void showInitialScreenStack() {
@@ -128,12 +149,16 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void toggleSideMenuVisible(boolean animated) {
-
+        if (sideMenu != null) {
+            sideMenu.toggleVisible(animated);
+        }
     }
 
     @Override
     public void setSideMenuVisible(boolean animated, boolean visible) {
-
+        if (sideMenu != null) {
+            sideMenu.setVisible(visible, animated);
+        }
     }
 
     @Override
@@ -176,6 +201,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     public void destroy() {
         for (ScreenStack screenStack : screenStacks) {
             screenStack.destroy();
+        }
+
+        if (sideMenu != null) {
+            sideMenu.destroy();
         }
     }
 
@@ -225,6 +254,8 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void onSideMenuButtonClick() {
-
+        if (sideMenu != null) {
+            sideMenu.openDrawer();
+        }
     }
 }
