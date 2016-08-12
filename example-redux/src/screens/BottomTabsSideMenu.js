@@ -31,10 +31,6 @@ class SideMenu extends Component {
         <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
           <Text style={styles.button}>Show modal</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity onPress={ this.onPushScreen.bind(this) }>
-          <Text style={styles.button}>Push screen</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -55,12 +51,6 @@ class SideMenu extends Component {
         },
         num: 1234
       }
-    });
-  }
-
-  onPushScreen() {
-    this.props.navigator.handleDeepLink({
-      link: 'tab1/pushScreen/example.PushedScreen'
     });
   }
 }
