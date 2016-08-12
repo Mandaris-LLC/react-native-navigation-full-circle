@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
 import _ from 'lodash';
 
-class FirstSideMenu extends Component {
+class SideMenu extends Component {
 
   constructor(props) {
     super(props);
@@ -25,9 +25,11 @@ class FirstSideMenu extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, padding: 20}}>
-        <Text style={styles.text}>Hello from SideMenu</Text>
+      <View style={{flex: 1, padding: 20, backgroundColor: 'green'}}>
+        <Text>Hello from SideMenu</Text>
       </View>
     );
   }
 }
+
+export default connect()(SideMenu);
