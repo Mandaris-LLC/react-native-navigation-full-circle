@@ -42,6 +42,12 @@ class ListScreen extends Component {
     if (event.type == 'DeepLink') {
       const parts = event.link.split('/');
       if (parts[0] == 'tab1' && parts[1] == 'pushScreen') {
+        this.props.navigator.toggleDrawer({
+          side: 'left',
+          animated: true,
+          to: 'closed'
+        });
+
         this.props.navigator.push({
           title: "Pushed from SideMenu",
           screen: parts[2],

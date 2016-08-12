@@ -33,7 +33,7 @@ class SideMenu extends Component {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={ this.onPushScreenToTabOne.bind(this) }>
-          <Text style={styles.button}>Push screen to tab 1</Text>
+          <Text style={styles.button}>Push screen</Text>
         </TouchableOpacity>
       </View>
     );
