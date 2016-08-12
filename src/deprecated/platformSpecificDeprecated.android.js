@@ -15,7 +15,7 @@ function startSingleScreenApp(params) {
     return;
   }
   addNavigatorParams(screen);
-  addNavigatorButtons(screen);
+  addNavigatorButtons(screen, params.drawer);
   addNavigationStyleParams(screen);
   screen.passProps = params.passProps;
 
@@ -298,7 +298,7 @@ function addNavigatorParams(screen, navigator = null, idx = '') {
   screen.navigatorEventID = screen.screenInstanceID + '_events';
 }
 
-function addNavigatorButtons(screen) {
+function addNavigatorButtons(screen, sideMenuParams) {
   const Screen = Navigation.getRegisteredScreen(screen.screen);
   Object.assign(screen, Screen.navigatorButtons);
 
@@ -316,7 +316,11 @@ function addNavigatorButtons(screen) {
     });
   }
 
-  const leftButton = getLeftButton(screen);
+  let leftButton = getLeftButton(screen);
+  debugger;
+  if (sideMenuParams && !leftButton) {
+    leftButton = createSideMenuButton();
+  }
   if (leftButton) {
     if (leftButton.icon) {
       const icon = resolveAssetSource(leftButton.icon);
@@ -332,6 +336,12 @@ function addNavigatorButtons(screen) {
   if (leftButton) {
     screen.leftButton = leftButton;
   }
+}
+
+function createSideMenuButton() {
+  return {
+    id: "sideMenu"
+  };
 }
 
 function addTitleBarBackButtonIfNeeded(screen) {
