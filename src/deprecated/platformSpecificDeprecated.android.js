@@ -19,8 +19,6 @@ function startSingleScreenApp(params) {
   addNavigationStyleParams(screen);
   screen.passProps = params.passProps;
 
-  //const drawer = setupDrawer(params.drawer);
-
   /*
    * adapt to new API
    */
@@ -29,6 +27,7 @@ function startSingleScreenApp(params) {
   params.screen = adaptNavigationStyleToScreenStyle(screen);
   params.screen = adaptNavigationParams(screen);
   params.appStyle = convertStyleParams(params.appStyle);
+  params.sideMenu = convertDrawerParamsToSideMenuParams(params.drawer);
 
   newPlatformSpecific.startApp(params);
 }
@@ -132,6 +131,20 @@ function convertStyleParams(originalStyleObject) {
 
     navigationBarColor: originalStyleObject.navigationBarColor
   }
+}
+
+function convertDrawerParamsToSideMenuParams(drawerParams) {
+  const drawer = Object.assign({}, drawerParams);
+  if (!drawer.left || !drawer.left.screen) {
+    return null;
+  }
+
+  let result = {};
+  result.disableOpenGesture = drawer.disableOpenGesture !== undefined;
+  result.screenId = drawer.left.screen;
+  addNavigatorParams(result);
+
+  return result;
 }
 
 function adaptNavigationParams(screen) {
@@ -348,24 +361,6 @@ function getRightButtons(screen) {
 function addNavigationStyleParams(screen) {
   const Screen = Navigation.getRegisteredScreen(screen.screen);
   screen.navigatorStyle = Object.assign({}, screen.navigatorStyle, Screen.navigatorStyle);
-}
-
-function setupDrawer(drawerParams) {
-  const drawer = Object.assign({}, drawerParams);
-  [drawer.left, drawer.right].forEach(side => {
-    if (!side) {
-      return;
-    }
-    const icon = resolveAssetSource(side.icon);
-    if (icon) {
-      side.icon = icon.uri;
-    }
-  });
-  if (drawer.disableOpenGesture === undefined) {
-    drawer.disableOpenGesture = false;
-  }
-
-  return drawer;
 }
 
 export default {

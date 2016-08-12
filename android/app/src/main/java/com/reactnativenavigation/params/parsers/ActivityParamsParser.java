@@ -21,6 +21,10 @@ public class ActivityParamsParser extends Parser {
             result.tabParams = ScreenParamsParser.parseTabs(params.getBundle("tabs"));
         }
 
+        if (hasKey(params, "sideMenu")) {
+            result.sideMenuParams = SideMenuParamsParser.parse(params.getBundle("sideMenu"));
+        }
+
         return result;
     }
 }

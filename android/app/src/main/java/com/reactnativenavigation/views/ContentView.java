@@ -10,10 +10,14 @@ import com.reactnativenavigation.react.ReactViewHacks;
 public class ContentView extends ReactRootView {
 
     private final String screenId;
-    private final String navigatorEventId;
+    private String navigatorEventId;
     private final Bundle navigationParams;
 
-    public ContentView(Context context, String screenId, String navigatorEventId, Bundle navigationParams) {
+    public ContentView(Context context, String screenId, Bundle navigationParams) {
+        this(context, screenId, navigationParams, null);
+    }
+
+    public ContentView(Context context, String screenId, Bundle navigationParams, String navigatorEventId) {
         super(context);
         this.screenId = screenId;
         this.navigatorEventId = navigatorEventId;
