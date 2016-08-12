@@ -19,4 +19,8 @@ public interface Layout extends ScreenStackContainer {
     void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons);
 
     void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams);
+
+    void toggleSideMenuVisible(boolean animated);
+
+    void setSideMenuVisible(boolean animated, boolean visible);
 }

@@ -127,6 +127,16 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     @Override
+    public void toggleSideMenuVisible(boolean animated) {
+
+    }
+
+    @Override
+    public void setSideMenuVisible(boolean animated, boolean visible) {
+
+    }
+
+    @Override
     public void push(ScreenParams screenParams) {
         getCurrentScreenStack().push(screenParams, createScreenLayoutParams(screenParams));
         bottomTabs.setStyleFromScreen(screenParams.styleParams);

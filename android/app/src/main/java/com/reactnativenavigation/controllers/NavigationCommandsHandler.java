@@ -210,4 +210,32 @@ public class NavigationCommandsHandler {
             }
         });
     }
+
+    public static void toggleSideMenuVisible(final boolean animated) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.toggleSideMenuVisible(animated);
+            }
+        });
+    }
+
+    public static void setSideMenuVisible(final boolean animated, final boolean visible) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.setSideMenuVisible(animated, visible);
+            }
+        });
+    }
 }

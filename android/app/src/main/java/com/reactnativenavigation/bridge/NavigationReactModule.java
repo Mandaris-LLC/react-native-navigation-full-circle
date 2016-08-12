@@ -80,7 +80,13 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void toggleSideMenuVisible(final ReadableMap params) {
+    public void toggleSideMenuVisible(boolean animated) {
+        NavigationCommandsHandler.toggleSideMenuVisible(animated);
+    }
+
+    @ReactMethod
+    public void setSideMenuVisible(boolean animated, boolean visible) {
+        NavigationCommandsHandler.setSideMenuVisible(animated, visible);
     }
 
     @ReactMethod

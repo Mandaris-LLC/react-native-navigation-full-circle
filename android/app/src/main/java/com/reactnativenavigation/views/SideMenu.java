@@ -23,8 +23,34 @@ public class SideMenu extends DrawerLayout {
         removeView(sideMenuView);
     }
 
+    public void setVisible(boolean visible, boolean animated) {
+        if (!isShown() && visible) {
+            openDrawer(animated);
+        }
+
+        if (isShown() && !visible) {
+            closeDrawer(animated);
+        }
+    }
+
     public void openDrawer() {
         openDrawer(Gravity.LEFT);
+    }
+
+    public void openDrawer(boolean animated) {
+        openDrawer(Gravity.LEFT, animated);
+    }
+
+    public void closeDrawer(boolean animated) {
+        closeDrawer(Gravity.LEFT, animated);
+    }
+
+    public void toggleVisible(boolean animated) {
+        if (isShown()) {
+            closeDrawer(animated);
+        } else {
+            openDrawer(animated);
+        }
     }
 
     public SideMenu(Context context, SideMenuParams sideMenuParams) {

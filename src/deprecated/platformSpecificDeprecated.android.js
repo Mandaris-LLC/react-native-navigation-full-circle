@@ -243,11 +243,13 @@ function navigatorSwitchToTab(navigator, params) {
 }
 
 function navigatorToggleDrawer(navigator, params) {
-  //RctActivity.toggleDrawer({
-  //  side: params.side,
-  //  animated: !(params.animated === false),
-  //  to: params.to || ''
-  //});
+  const animated = !(params.animated === false);
+  if (params.to) {
+    const visible = params.to === 'open';
+    newPlatformSpecific.setSideMenuVisible(animated, visible);
+  } else {
+    newPlatformSpecific.toggleSideMenuVisible(animated);
+  }
 }
 
 function navigatorToggleNavBar(navigator, params) {
@@ -317,7 +319,6 @@ function addNavigatorButtons(screen, sideMenuParams) {
   }
 
   let leftButton = getLeftButton(screen);
-  debugger;
   if (sideMenuParams && !leftButton) {
     leftButton = createSideMenuButton();
   }

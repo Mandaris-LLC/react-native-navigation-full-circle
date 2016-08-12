@@ -80,6 +80,14 @@ function savePassProps(params) {
   }
 }
 
+function toggleSideMenuVisible(animated) {
+  NativeReactModule.toggleSideMenuVisible(animated);
+}
+
+function setSideMenuVisible(animated, visible) {
+  NativeReactModule.setSideMenuVisible(animated, visible);
+}
+
 module.exports = {
   startApp,
   push,
@@ -92,5 +100,7 @@ module.exports = {
   setScreenTitleBarButtons,
   showModal,
   dismissTopModal,
-  dismissAllModals
+  dismissAllModals,
+  toggleSideMenuVisible,
+  setSideMenuVisible
 };

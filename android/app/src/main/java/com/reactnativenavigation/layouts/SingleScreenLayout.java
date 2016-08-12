@@ -133,6 +133,20 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     }
 
     @Override
+    public void toggleSideMenuVisible(boolean animated) {
+        if (sideMenu != null) {
+            sideMenu.toggleVisible(animated);
+        }
+    }
+
+    @Override
+    public void setSideMenuVisible(boolean animated, boolean visible) {
+        if (sideMenu != null) {
+            sideMenu.setVisible(visible, animated);
+        }
+    }
+
+    @Override
     public boolean onTitleBarBackButtonClick() {
         if (leftButtonOnClickListener != null) {
             return leftButtonOnClickListener.onTitleBarBackButtonClick();
