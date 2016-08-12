@@ -20,16 +20,70 @@ class SideMenu extends Component {
   }
 
   onNavigatorEvent(event) {
-      console.log('Unhandled event ' + event.id);
+      console.log('SideMenu', 'Unhandled event ' + event.id);
   }
 
   render() {
     return (
-      <View style={{flex: 1, padding: 20, backgroundColor: 'green'}}>
-        <Text>Hello from SideMenu</Text>
+      <View style={styles.sideMenu}>
+        <Text style={styles.title}>Hello from SideMenu</Text>
+
+        <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
+          <Text style={styles.button}>Show modal</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onPushScreenToTabOne.bind(this) }>
+          <Text style={styles.button}>Push screen to tab 1</Text>
+        </TouchableOpacity>
       </View>
     );
   }
+
+  onShowModalPress() {
+    this.props.navigator.showModal({
+      title: "Modal Screen from SideMenu",
+      screen: "example.PushedScreen",
+      passProps: {
+        str: 'This is a prop passed in \'navigator.showModal()\'!',
+        obj: {
+          str: 'This is a prop passed in an object!',
+          arr: [
+            {
+              str: 'This is a prop in an object in an array in an object!'
+            }
+          ]
+        },
+        num: 1234
+      }
+    });
+  }
+
+  onPushScreenToTabOne() {
+    this.props.navigator.handleDeepLink({
+      link: 'tab1/pushScreen/example.PushedScreen'
+    });
+  }
 }
+
+const styles = StyleSheet.create({
+  sideMenu: {
+    flex: 1,
+    backgroundColor: '#efefef',
+    padding: 20
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: 15
+  },
+  button: {
+    textAlign: 'center',
+    fontSize: 18,
+    borderBottomWidth: 1,
+    borderColor: 'grey',
+    marginBottom: 10,
+    marginTop:10,
+    color: 'black'
+  }
+});
 
 export default connect()(SideMenu);
