@@ -23,6 +23,10 @@ public class SideMenu extends DrawerLayout {
         removeView(sideMenuView);
     }
 
+    public void openDrawer() {
+        openDrawer(Gravity.LEFT);
+    }
+
     public SideMenu(Context context, SideMenuParams sideMenuParams) {
         super(context);
         createContentContainer();

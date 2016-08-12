@@ -10,8 +10,8 @@ import com.reactnativenavigation.params.SideMenuParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
+import com.reactnativenavigation.views.LeftButtonOnClickListener;
 import com.reactnativenavigation.views.SideMenu;
-import com.reactnativenavigation.views.TitleBarBackButtonListener;
 
 import java.util.List;
 
@@ -23,13 +23,13 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     private final ScreenParams screenParams;
     private final SideMenuParams sideMenuParams;
     private ScreenStack stack;
-    private TitleBarBackButtonListener titleBarBackButtonListener;
+    private LeftButtonOnClickListener leftButtonOnClickListener;
     private @Nullable SideMenu sideMenu;
 
     public SingleScreenLayout(AppCompatActivity activity, ScreenParams screenParams,
-                              TitleBarBackButtonListener titleBarBackButtonListener) {
+                              LeftButtonOnClickListener leftButtonOnClickListener) {
         this(activity, null, screenParams);
-        this.titleBarBackButtonListener = titleBarBackButtonListener;
+        this.leftButtonOnClickListener = leftButtonOnClickListener;
     }
 
     public SingleScreenLayout(AppCompatActivity activity, @Nullable SideMenuParams sideMenuParams, ScreenParams screenParams) {
@@ -133,11 +133,18 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     }
 
     @Override
-    public boolean onTitleBarBackPress() {
-        if (titleBarBackButtonListener != null) {
-            return titleBarBackButtonListener.onTitleBarBackPress();
+    public boolean onTitleBarBackButtonClick() {
+        if (leftButtonOnClickListener != null) {
+            return leftButtonOnClickListener.onTitleBarBackButtonClick();
         }
 
         return onBackPressed();
+    }
+
+    @Override
+    public void onSideMenuButtonClick() {
+        if (sideMenu != null) {
+            sideMenu.openDrawer();
+        }
     }
 }

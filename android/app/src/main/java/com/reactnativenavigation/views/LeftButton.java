@@ -19,16 +19,16 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
     }
 
     private TitleBarLeftButtonParams params;
-    private final TitleBarBackButtonListener titleBarBackButtonListener;
+    private final LeftButtonOnClickListener onClickListener;
     private final String navigatorEventId;
 
     public LeftButton(Context context,
                       TitleBarLeftButtonParams params,
-                      TitleBarBackButtonListener titleBarBackButtonListener,
+                      LeftButtonOnClickListener onClickListener,
                       String navigatorEventId) {
         super(context, getColor(params), Stroke.THIN);
         this.params = params;
-        this.titleBarBackButtonListener = titleBarBackButtonListener;
+        this.onClickListener = onClickListener;
         this.navigatorEventId = navigatorEventId;
         setInitialState();
     }
@@ -44,7 +44,9 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (isBackButton()) {
-            titleBarBackButtonListener.onTitleBarBackPress();
+            onClickListener.onTitleBarBackButtonClick();
+        } else if (isSideMenuButton()) {
+            onClickListener.onSideMenuButtonClick();
         } else {
             sendClickEvent();
         }
@@ -60,6 +62,10 @@ public class LeftButton extends MaterialMenuDrawable implements View.OnClickList
 
     private boolean isBackButton() {
         return getIconState() == IconState.ARROW;
+    }
+
+    private boolean isSideMenuButton() {
+        return getIconState() == IconState.BURGER;
     }
 
     private void sendClickEvent() {

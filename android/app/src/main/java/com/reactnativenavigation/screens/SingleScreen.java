@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.views.ContentView;
-import com.reactnativenavigation.views.TitleBarBackButtonListener;
+import com.reactnativenavigation.views.LeftButtonOnClickListener;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -13,7 +13,7 @@ public class SingleScreen extends Screen {
     private ContentView contentView;
 
     public SingleScreen(AppCompatActivity activity, ScreenParams screenParams,
-                        TitleBarBackButtonListener titleBarBarBackButtonListener) {
+                        LeftButtonOnClickListener titleBarBarBackButtonListener) {
         super(activity, screenParams, titleBarBarBackButtonListener);
     }
 

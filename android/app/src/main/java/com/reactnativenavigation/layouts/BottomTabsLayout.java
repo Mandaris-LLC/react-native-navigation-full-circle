@@ -199,7 +199,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     @Override
-    public boolean onTitleBarBackPress() {
+    public boolean onTitleBarBackButtonClick() {
         if (getCurrentScreenStack().canPop()) {
             getCurrentScreenStack().pop(true, new ScreenStack.OnScreenPop() {
                 @Override
@@ -211,5 +211,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         }
 
         return false;
+    }
+
+    @Override
+    public void onSideMenuButtonClick() {
+
     }
 }
