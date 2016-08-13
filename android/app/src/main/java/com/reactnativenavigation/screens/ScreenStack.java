@@ -27,12 +27,20 @@ public class ScreenStack {
     private LeftButtonOnClickListener leftButtonOnClickListener;
     private Stack<Screen> stack = new Stack<>();
     private final KeyboardVisibilityDetector keyboardVisibilityDetector;
+    private boolean isStackVisible = false;
+    private final String navigatorId;
+
+    public String getNavigatorId() {
+        return navigatorId;
+    }
 
     public ScreenStack(AppCompatActivity activity,
                        RelativeLayout parent,
+                       String navigatorId,
                        LeftButtonOnClickListener leftButtonOnClickListener) {
         this.activity = activity;
         this.parent = parent;
+        this.navigatorId = navigatorId;
         this.leftButtonOnClickListener = leftButtonOnClickListener;
         keyboardVisibilityDetector = new KeyboardVisibilityDetector(parent);
     }
@@ -46,6 +54,15 @@ public class ScreenStack {
     public void push(final ScreenParams params, RelativeLayout.LayoutParams layoutParams) {
         Screen nextScreen = ScreenFactory.create(activity, params, leftButtonOnClickListener);
         final Screen previousScreen = stack.peek();
+        if (isStackVisible) {
+            pushScreenToVisibleStack(params, layoutParams, nextScreen, previousScreen);
+        } else {
+            pushScreenToInvisibleStack(layoutParams, nextScreen, previousScreen);
+        }
+    }
+
+    private void pushScreenToVisibleStack(ScreenParams params, RelativeLayout.LayoutParams layoutParams,
+                                          Screen nextScreen, final Screen previousScreen) {
         addScreen(nextScreen, layoutParams);
         nextScreen.show(params.animateScreenTransitions, new Runnable() {
             @Override
@@ -53,6 +70,13 @@ public class ScreenStack {
                 removePreviousWithoutUnmount(previousScreen);
             }
         });
+    }
+
+    private void pushScreenToInvisibleStack(RelativeLayout.LayoutParams layoutParams, Screen nextScreen,
+                                            Screen previousScreen) {
+        nextScreen.setVisibility(View.INVISIBLE);
+        addScreen(nextScreen, layoutParams);
+        removePreviousWithoutUnmount(previousScreen);
     }
 
     private void addScreen(Screen screen, RelativeLayout.LayoutParams layoutParams) {
@@ -109,6 +133,7 @@ public class ScreenStack {
     }
 
     private void readdPrevious(Screen previous) {
+        previous.setVisibility(View.VISIBLE);
         parent.addView(previous, 0);
         previous.preventMountAfterReattachedToWindow();
     }
@@ -188,11 +213,13 @@ public class ScreenStack {
         }
     }
 
-    public void showFirstScreen() {
+    public void show() {
+        isStackVisible = true;
         stack.peek().setVisibility(View.VISIBLE);
     }
 
-    public void hideScreen() {
+    public void hide() {
+        isStackVisible = false;
         stack.peek().setVisibility(View.INVISIBLE);
     }
 }

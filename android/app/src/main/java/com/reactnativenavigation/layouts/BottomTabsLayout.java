@@ -52,7 +52,6 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         if (sideMenuParams == null) {
             return;
         }
-
         sideMenu = new SideMenu(getContext(), sideMenuParams);
         RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         addView(sideMenu, lp);
@@ -65,8 +64,8 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void createAndAddScreens(int position) {
-        ScreenStack newStack = new ScreenStack(activity, getContentContainer(), this);
         ScreenParams screenParams = params.tabParams.get(position);
+        ScreenStack newStack = new ScreenStack(activity, getContentContainer(), screenParams.navigatorId, this);
         newStack.pushInitialScreen(screenParams, createScreenLayoutParams(screenParams));
         screenStacks[position] = newStack;
     }
@@ -163,8 +162,17 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void push(ScreenParams screenParams) {
-        getCurrentScreenStack().push(screenParams, createScreenLayoutParams(screenParams));
-        bottomTabs.setStyleFromScreen(screenParams.styleParams);
+        ScreenStack screenStack = getScreenStack(screenParams.navigatorId);
+        if (screenStack == null) {
+            return;
+        }
+
+        if (isCurrentStack(screenStack)) {
+            screenStack.push(screenParams, createScreenLayoutParams(screenParams));
+            bottomTabs.setStyleFromScreen(screenParams.styleParams);
+        } else {
+            screenStack.push(screenParams, createScreenLayoutParams(screenParams));
+        }
     }
 
     @Override
@@ -189,7 +197,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         currentScreenStack.destroy();
         removeView(currentScreenStack.peek());
 
-        ScreenStack newStack = new ScreenStack(activity, this, this);
+        ScreenStack newStack = new ScreenStack(activity, this, params.navigatorId, this);
         LayoutParams lp = createScreenLayoutParams(params);
         newStack.pushInitialScreen(params, lp);
         screenStacks[currentStackIndex] = newStack;
@@ -220,17 +228,30 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void showStackAndUpdateStyle(ScreenStack newStack) {
-        newStack.showFirstScreen();
+        newStack.show();
         bottomTabs.setStyleFromScreen(newStack.getCurrentScreenStyleParams());
     }
 
     private void hideCurrentStack() {
         ScreenStack currentScreenStack = getCurrentScreenStack();
-        currentScreenStack.hideScreen();
+        currentScreenStack.hide();
     }
 
     private ScreenStack getCurrentScreenStack() {
         return screenStacks[currentStackIndex];
+    }
+
+    private @Nullable ScreenStack getScreenStack(String navigatorId) {
+        for (ScreenStack screenStack : screenStacks) {
+            if (screenStack.getNavigatorId().equals(navigatorId)) {
+                return screenStack;
+            }
+        }
+        return null;
+    }
+
+    private boolean isCurrentStack(ScreenStack screenStack) {
+        return getCurrentScreenStack() == screenStack;
     }
 
     private void setBottomTabsStyleFromCurrentScreen() {
@@ -248,7 +269,6 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
             });
             return true;
         }
-
         return false;
     }
 

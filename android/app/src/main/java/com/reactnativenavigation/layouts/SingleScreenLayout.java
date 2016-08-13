@@ -60,10 +60,10 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
         if (stack != null) {
             stack.destroy();
         }
-        stack = new ScreenStack(activity, parent, this);
+        stack = new ScreenStack(activity, parent, screenParams.navigatorId, this);
         LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         stack.pushInitialScreen(screenParams, lp);
-        stack.showFirstScreen();
+        stack.show();
     }
 
     @Override

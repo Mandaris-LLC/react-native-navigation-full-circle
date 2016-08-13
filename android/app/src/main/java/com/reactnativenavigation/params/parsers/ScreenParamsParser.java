@@ -17,6 +17,7 @@ public class ScreenParamsParser extends Parser {
     private static final String KEY_SCREEN_ID = "screenId";
     private static final String KEY_SCREEN_INSTANCE_ID = "screenInstanceID";
     private static final String KEY_NAVIGATOR_EVENT_ID = "navigatorEventID";
+    private static final String KEY_NAVIGATOR_ID = "navigatorID";
     private static final String KEY_NAVIGATION_PARAMS = "navigationParams";
     private static final String KEY_RIGHT_BUTTONS = "rightButtons";
     private static final String KEY_LEFT_BUTTON = "leftButton";
@@ -34,6 +35,7 @@ public class ScreenParamsParser extends Parser {
         assertKeyExists(params, KEY_NAVIGATION_PARAMS);
         result.navigationParams = params.getBundle(KEY_NAVIGATION_PARAMS);
         result.navigatorEventId = result.navigationParams.getString(KEY_NAVIGATOR_EVENT_ID);
+        result.navigatorId = result.navigationParams.getString(KEY_NAVIGATOR_ID);
         result.screenInstanceId = result.navigationParams.getString(KEY_SCREEN_INSTANCE_ID);
 
         result.styleParams = new StyleParamsParser(params.getBundle(STYLE_PARAMS)).parse();
