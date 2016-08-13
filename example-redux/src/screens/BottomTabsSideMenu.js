@@ -31,6 +31,14 @@ class SideMenu extends Component {
         <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
           <Text style={styles.button}>Show modal</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onPushScreenToFirstTab.bind(this) }>
+          <Text style={styles.button}>Push screen to first tab</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onPushScreenToSecondTab.bind(this) }>
+          <Text style={styles.button}>Push screen to second tab</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -51,6 +59,19 @@ class SideMenu extends Component {
         },
         num: 1234
       }
+    });
+  }
+
+  onPushScreenToFirstTab() {
+    this.props.navigator.handleDeepLink({
+      link: 'tab1/pushScreen/example.PushedScreen'
+    });
+  }
+
+  onPushScreenToSecondTab() {
+    console.log('SideMenu', 'onPushScreenToSecondTab ' + 'tab2/pushScreen/example.PushedScreen');
+    this.props.navigator.handleDeepLink({
+      link: 'tab2/pushScreen/example.PushedScreen'
     });
   }
 }
