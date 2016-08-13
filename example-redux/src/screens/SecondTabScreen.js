@@ -82,45 +82,50 @@ class SecondTabScreen extends Component {
 
   onNavigatorEvent(event) {
     if (event.type == 'DeepLink') {
-      console.log('SecondTabScreen', 'onNavigatorEvent ' + event.link);
-      const parts = event.link.split('/');
-      if (parts[0] == 'tab2' && parts[1] == 'pushScreen') {
-        this.props.navigator.toggleDrawer({
-          side: 'left',
-          animated: true,
-          to: 'closed'
-        });
-
-        this.props.navigator.push({
-          title: "Pushed from SideMenu",
-          screen: parts[2],
-          passProps: {
-            str: 'This is a prop passed in \'navigator.push()\'!',
-            obj: {
-              str: 'This is a prop passed in an object!',
-              arr: [
-                {
-                  str: 'This is a prop in an object in an array in an object!'
-                }
-              ]
-            },
-            num: 1234
-          }
-        });
+      this.handleDeepLink(event);
+    } else {
+      switch (event.id) {
+        case 'left':
+          Alert.alert('NavBar', 'Left button pressed');
+          break;
+        case 'right':
+          Alert.alert('NavBar', 'Right button pressed');
+          break;
       }
-      return;
-    }
-
-    switch (event.id) {
-      case 'left':
-        Alert.alert('NavBar', 'Left button pressed');
-        break;
-      case 'right':
-        Alert.alert('NavBar', 'Right button pressed');
-        break;
     }
     console.log('ListScreen', 'Unhandled event ' + event.id);
   }
+
+  handleDeepLink(event) {
+    const parts = event.link.split('/');
+    if (parts[0] == 'tab2' && parts[1] == 'pushScreen') {
+      this.props.navigator.toggleDrawer({
+        side: 'left',
+        animated: true,
+        to: 'closed'
+      });
+
+      this.props.navigator.push({
+        title: "Pushed from SideMenu",
+        screen: parts[2],
+        passProps: {
+          str: 'This is a prop passed in \'navigator.push()\'!',
+          obj: {
+            str: 'This is a prop passed in an object!',
+            arr: [
+              {
+                str: 'This is a prop in an object in an array in an object!'
+              }
+            ]
+          },
+          num: 1234
+        }
+      });
+    }
+    return;
+
+  }
+
 }
 
 const styles = StyleSheet.create({
