@@ -3,7 +3,6 @@ package com.reactnativenavigation.views;
 import android.content.Context;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.params.SideMenuParams;
@@ -67,12 +66,8 @@ public class SideMenu extends DrawerLayout {
     }
 
     private void createSideMenu(SideMenuParams sideMenuParams) {
-        sideMenuView = new ContentView(getContext(),
-                sideMenuParams.screenId,
-                sideMenuParams.navigationParams);
-
-        DrawerLayout.LayoutParams lp =
-                new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        sideMenuView = new ContentView(getContext(), sideMenuParams.screenId, sideMenuParams.navigationParams);
+        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         lp.gravity = Gravity.START;
         addView(sideMenuView, lp);
     }
