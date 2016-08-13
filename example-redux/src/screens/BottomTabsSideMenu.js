@@ -79,6 +79,7 @@ class SideMenu extends Component {
 const styles = StyleSheet.create({
   sideMenu: {
     flex: 1,
+    width: 260,
     backgroundColor: '#efefef',
     padding: 20
   },

@@ -72,7 +72,7 @@ public class SideMenu extends DrawerLayout {
                 sideMenuParams.navigationParams);
 
         DrawerLayout.LayoutParams lp =
-                new LayoutParams((int) ViewUtils.convertDpToPixel(240), ViewGroup.LayoutParams.MATCH_PARENT);
+                new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         lp.gravity = Gravity.START;
         addView(sideMenuView, lp);
     }
