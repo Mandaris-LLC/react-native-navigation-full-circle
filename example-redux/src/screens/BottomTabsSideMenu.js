@@ -26,7 +26,7 @@ class SideMenu extends Component {
   render() {
     return (
       <View style={styles.sideMenu}>
-        <Text style={styles.title}>Hello from SideMenu</Text>
+        <Text style={styles.title}>{this.props.title}</Text>
 
         <TouchableOpacity onPress={ this.onShowModalPress.bind(this) }>
           <Text style={styles.button}>Show modal</Text>

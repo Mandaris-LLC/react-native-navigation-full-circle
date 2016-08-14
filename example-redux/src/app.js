@@ -150,7 +150,10 @@ export default class App {
             left: { // optional, define if you want a drawer from the left
               screen: 'example.BottomTabsSideMenu' // unique ID registered with Navigation.registerScreen
             },
-            disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
+            disableOpenGesture: false, // optional, can the drawer be opened with a swipe instead of button
+            passProps: {
+              title: 'Hello from SideMenu'
+            }
           }
         });
         return;
