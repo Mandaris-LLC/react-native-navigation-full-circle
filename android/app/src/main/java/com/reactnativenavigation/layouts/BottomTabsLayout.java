@@ -105,6 +105,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public boolean onBackPressed() {
+        if (getCurrentScreenStack().handleBackPressInJs()) {
+            return true;
+        }
+
         if (getCurrentScreenStack().canPop()) {
             getCurrentScreenStack().pop(true);
             setBottomTabsStyleFromCurrentScreen();

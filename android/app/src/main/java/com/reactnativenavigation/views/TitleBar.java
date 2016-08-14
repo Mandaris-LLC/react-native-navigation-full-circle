@@ -46,9 +46,9 @@ public class TitleBar extends Toolbar {
     }
 
     public void setLeftButton(TitleBarLeftButtonParams leftButtonParams,
-                              LeftButtonOnClickListener leftButtonOnClickListener, String navigatorEventId) {
+                              LeftButtonOnClickListener leftButtonOnClickListener, String navigatorEventId, boolean overrideBackPressInJs) {
         if (shouldSetLeftButton(leftButtonParams)) {
-            createAndSetLeftButton(leftButtonParams, leftButtonOnClickListener, navigatorEventId);
+            createAndSetLeftButton(leftButtonParams, leftButtonOnClickListener, navigatorEventId, overrideBackPressInJs);
         } else if (hasLeftButton()) {
             updateLeftButton(leftButtonParams);
         }
@@ -101,8 +101,12 @@ public class TitleBar extends Toolbar {
         return leftButton == null && leftButtonParams != null;
     }
 
-    private void createAndSetLeftButton(TitleBarLeftButtonParams leftButtonParams, LeftButtonOnClickListener leftButtonOnClickListener, String navigatorEventId) {
-        leftButton = new LeftButton(getContext(), leftButtonParams, leftButtonOnClickListener, navigatorEventId);
+    private void createAndSetLeftButton(TitleBarLeftButtonParams leftButtonParams,
+                                        LeftButtonOnClickListener leftButtonOnClickListener,
+                                        String navigatorEventId,
+                                        boolean overrideBackPressInJs) {
+        leftButton = new LeftButton(getContext(), leftButtonParams, leftButtonOnClickListener, navigatorEventId,
+                overrideBackPressInJs);
         setNavigationOnClickListener(leftButton);
         setNavigationIcon(leftButton);
     }

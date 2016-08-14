@@ -66,8 +66,11 @@ public abstract class Screen extends RelativeLayout {
         if (screenParams.leftButton != null) {
             screenParams.leftButton.setColorFromScreenStyle(screenParams.styleParams.titleBarButtonColor);
         }
-        topBar.addTitleBarAndSetButtons(screenParams.rightButtons, screenParams.leftButton,
-                leftButtonOnClickListener, screenParams.navigatorEventId);
+        topBar.addTitleBarAndSetButtons(screenParams.rightButtons,
+                screenParams.leftButton,
+                leftButtonOnClickListener,
+                screenParams.navigatorEventId,
+                screenParams.overrideBackPressInJs);
     }
 
     private void createTopBar() {
@@ -140,7 +143,10 @@ public abstract class Screen extends RelativeLayout {
 
     public void setTitleBarLeftButton(String navigatorEventId, LeftButtonOnClickListener backButtonListener,
                                       TitleBarLeftButtonParams titleBarLeftButtonParams) {
-        topBar.setTitleBarRightButton(navigatorEventId, backButtonListener, titleBarLeftButtonParams);
+        topBar.setTitleBarLeftButton(navigatorEventId,
+                backButtonListener,
+                titleBarLeftButtonParams,
+                screenParams.overrideBackPressInJs);
     }
 
     public StyleParams getStyleParams() {

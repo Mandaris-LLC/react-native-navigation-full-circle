@@ -68,6 +68,10 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
 
     @Override
     public boolean onBackPressed() {
+        if (stack.handleBackPressInJs()) {
+            return true;
+        }
+
         if (stack.canPop()) {
             stack.pop(true);
             return true;

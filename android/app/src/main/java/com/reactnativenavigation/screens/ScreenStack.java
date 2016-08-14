@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -199,6 +200,15 @@ public class ScreenStack {
 
     public StyleParams getCurrentScreenStyleParams() {
         return stack.peek().getStyleParams();
+    }
+
+    public boolean handleBackPressInJs() {
+        ScreenParams currentScreen = stack.peek().screenParams;
+        if (currentScreen.overrideBackPressInJs) {
+            NavigationApplication.instance.sendNavigatorEvent("backPress", currentScreen.navigatorEventId);
+            return true;
+        }
+        return false;
     }
 
     private void performOnScreen(String screenInstanceId, Task<Screen> task) {

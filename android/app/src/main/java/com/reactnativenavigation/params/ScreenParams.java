@@ -9,6 +9,7 @@ public class ScreenParams {
     public String screenId;
     public List<TitleBarButtonParams> rightButtons;
     public TitleBarLeftButtonParams leftButton;
+    public boolean overrideBackPressInJs;
     public String title;
     public StyleParams styleParams;
     public List<TopTabParams> topTabParams;
