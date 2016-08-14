@@ -121,6 +121,7 @@ export default class App {
               icon: require('../img/one.png'),
               selectedIcon: require('../img/one_selected.png'),
               title: 'Screen One',
+              overrideBackPress: true,
               navigatorStyle: {}
             },
             {

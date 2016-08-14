@@ -181,6 +181,7 @@ class FirstTabScreen extends Component {
     this.props.navigator.push({
       title: "More",
       screen: "example.PushedScreen",
+      overrideBackPress: true,
       passProps: {
         str: 'This is a prop passed in \'navigator.push()\'!',
         obj: {
