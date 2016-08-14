@@ -144,7 +144,7 @@ function convertDrawerParamsToSideMenuParams(drawerParams) {
   result.screenId = drawer.left.screen;
   addNavigatorParams(result);
   result = adaptNavigationParams(result);
-
+  result.passProps = drawer.passProps;
   return result;
 }
 

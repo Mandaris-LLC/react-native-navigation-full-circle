@@ -78,6 +78,10 @@ function savePassProps(params) {
       savePassProps(tab);
     });
   }
+
+  if (params.sideMenu) {
+    PropRegistry.save(params.sideMenu.navigationParams.screenInstanceID, params.sideMenu.passProps);
+  }
 }
 
 function toggleSideMenuVisible(animated) {
