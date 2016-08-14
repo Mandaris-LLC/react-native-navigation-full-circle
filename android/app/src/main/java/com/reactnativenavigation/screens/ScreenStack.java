@@ -64,6 +64,7 @@ public class ScreenStack {
 
     private void pushScreenToVisibleStack(final ScreenParams params, RelativeLayout.LayoutParams layoutParams,
                                           final Screen nextScreen, final Screen previousScreen) {
+        nextScreen.setVisibility(View.INVISIBLE);
         addScreen(nextScreen, layoutParams);
         nextScreen.setOnDisplayListener(new Screen.OnDisplayListener() {
             @Override
