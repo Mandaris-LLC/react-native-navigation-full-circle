@@ -1,6 +1,7 @@
 package com.reactnativenavigation.layouts;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -8,10 +9,12 @@ import android.widget.RelativeLayout;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.SideMenuParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
 import com.reactnativenavigation.views.BottomTabs;
+import com.reactnativenavigation.views.SideMenu;
 
 import java.util.List;
 
@@ -24,21 +27,34 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     private ActivityParams params;
     private BottomTabs bottomTabs;
     private ScreenStack[] screenStacks;
+    private final SideMenuParams sideMenuParams;
+    private @Nullable SideMenu sideMenu;
     private int currentStackIndex = 0;
 
     public BottomTabsLayout(AppCompatActivity activity, ActivityParams params) {
         super(activity);
         this.activity = activity;
         this.params = params;
+        this.sideMenuParams = params.sideMenuParams;
         screenStacks = new ScreenStack[params.tabParams.size()];
         createLayout();
     }
 
     private void createLayout() {
+        createSideMenu();
         createBottomTabs();
-        addBottomTabsToScreen();
+        addBottomTabs();
         addScreenStacks();
         showInitialScreenStack();
+    }
+
+    private void createSideMenu() {
+        if (sideMenuParams == null) {
+            return;
+        }
+        sideMenu = new SideMenu(getContext(), sideMenuParams);
+        RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        addView(sideMenu, lp);
     }
 
     private void addScreenStacks() {
@@ -48,10 +64,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void createAndAddScreens(int position) {
-        ScreenStack newStack = new ScreenStack(activity, this, this);
         ScreenParams screenParams = params.tabParams.get(position);
+        ScreenStack newStack = new ScreenStack(activity, getScreenStackParent(), screenParams.navigatorId, this);
         newStack.pushInitialScreen(screenParams, createScreenLayoutParams(screenParams));
         screenStacks[position] = newStack;
+    }
+
+    private RelativeLayout getScreenStackParent() {
+        return sideMenu == null ? this : sideMenu.getContentContainer();
     }
 
     @NonNull
@@ -68,10 +88,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         bottomTabs.addTabs(params.tabParams, this);
     }
 
-    private void addBottomTabsToScreen() {
+    private void addBottomTabs() {
         LayoutParams lp = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
         lp.addRule(ALIGN_PARENT_BOTTOM);
-        addView(bottomTabs, lp);
+        getScreenStackParent().addView(bottomTabs, lp);
     }
 
     private void showInitialScreenStack() {
@@ -127,9 +147,32 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     @Override
+    public void toggleSideMenuVisible(boolean animated) {
+        if (sideMenu != null) {
+            sideMenu.toggleVisible(animated);
+        }
+    }
+
+    @Override
+    public void setSideMenuVisible(boolean animated, boolean visible) {
+        if (sideMenu != null) {
+            sideMenu.setVisible(visible, animated);
+        }
+    }
+
+    @Override
     public void push(ScreenParams screenParams) {
-        getCurrentScreenStack().push(screenParams, createScreenLayoutParams(screenParams));
-        bottomTabs.setStyleFromScreen(screenParams.styleParams);
+        ScreenStack screenStack = getScreenStack(screenParams.navigatorId);
+        if (screenStack == null) {
+            return;
+        }
+
+        if (isCurrentStack(screenStack)) {
+            screenStack.push(screenParams, createScreenLayoutParams(screenParams));
+            bottomTabs.setStyleFromScreen(screenParams.styleParams);
+        } else {
+            screenStack.push(screenParams, createScreenLayoutParams(screenParams));
+        }
     }
 
     @Override
@@ -154,7 +197,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         currentScreenStack.destroy();
         removeView(currentScreenStack.peek());
 
-        ScreenStack newStack = new ScreenStack(activity, this, this);
+        ScreenStack newStack = new ScreenStack(activity, getScreenStackParent(), params.navigatorId, this);
         LayoutParams lp = createScreenLayoutParams(params);
         newStack.pushInitialScreen(params, lp);
         screenStacks[currentStackIndex] = newStack;
@@ -166,6 +209,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     public void destroy() {
         for (ScreenStack screenStack : screenStacks) {
             screenStack.destroy();
+        }
+
+        if (sideMenu != null) {
+            sideMenu.destroy();
         }
     }
 
@@ -181,17 +228,30 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void showStackAndUpdateStyle(ScreenStack newStack) {
-        newStack.showFirstScreen();
+        newStack.show();
         bottomTabs.setStyleFromScreen(newStack.getCurrentScreenStyleParams());
     }
 
     private void hideCurrentStack() {
         ScreenStack currentScreenStack = getCurrentScreenStack();
-        currentScreenStack.hideScreen();
+        currentScreenStack.hide();
     }
 
     private ScreenStack getCurrentScreenStack() {
         return screenStacks[currentStackIndex];
+    }
+
+    private @Nullable ScreenStack getScreenStack(String navigatorId) {
+        for (ScreenStack screenStack : screenStacks) {
+            if (screenStack.getNavigatorId().equals(navigatorId)) {
+                return screenStack;
+            }
+        }
+        return null;
+    }
+
+    private boolean isCurrentStack(ScreenStack screenStack) {
+        return getCurrentScreenStack() == screenStack;
     }
 
     private void setBottomTabsStyleFromCurrentScreen() {
@@ -199,7 +259,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     @Override
-    public boolean onTitleBarBackPress() {
+    public boolean onTitleBarBackButtonClick() {
         if (getCurrentScreenStack().canPop()) {
             getCurrentScreenStack().pop(true, new ScreenStack.OnScreenPop() {
                 @Override
@@ -209,7 +269,13 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
             });
             return true;
         }
-
         return false;
+    }
+
+    @Override
+    public void onSideMenuButtonClick() {
+        if (sideMenu != null) {
+            sideMenu.openDrawer();
+        }
     }
 }

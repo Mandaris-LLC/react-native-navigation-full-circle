@@ -78,6 +78,18 @@ function savePassProps(params) {
       savePassProps(tab);
     });
   }
+
+  if (params.sideMenu) {
+    PropRegistry.save(params.sideMenu.navigationParams.screenInstanceID, params.sideMenu.passProps);
+  }
+}
+
+function toggleSideMenuVisible(animated) {
+  NativeReactModule.toggleSideMenuVisible(animated);
+}
+
+function setSideMenuVisible(animated, visible) {
+  NativeReactModule.setSideMenuVisible(animated, visible);
 }
 
 module.exports = {
@@ -92,5 +104,7 @@ module.exports = {
   setScreenTitleBarButtons,
   showModal,
   dismissTopModal,
-  dismissAllModals
+  dismissAllModals,
+  toggleSideMenuVisible,
+  setSideMenuVisible
 };

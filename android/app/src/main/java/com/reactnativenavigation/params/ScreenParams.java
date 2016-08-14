@@ -21,6 +21,7 @@ public class ScreenParams {
 
     public String screenInstanceId;
     public String navigatorEventId;
+    public String navigatorId;
     public Bundle navigationParams;
 
     public boolean hasTopTabs() {

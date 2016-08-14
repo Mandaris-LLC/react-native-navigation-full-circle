@@ -15,11 +15,9 @@ function startSingleScreenApp(params) {
     return;
   }
   addNavigatorParams(screen);
-  addNavigatorButtons(screen);
+  addNavigatorButtons(screen, params.drawer);
   addNavigationStyleParams(screen);
   screen.passProps = params.passProps;
-
-  //const drawer = setupDrawer(params.drawer);
 
   /*
    * adapt to new API
@@ -29,6 +27,7 @@ function startSingleScreenApp(params) {
   params.screen = adaptNavigationStyleToScreenStyle(screen);
   params.screen = adaptNavigationParams(screen);
   params.appStyle = convertStyleParams(params.appStyle);
+  params.sideMenu = convertDrawerParamsToSideMenuParams(params.drawer);
 
   newPlatformSpecific.startApp(params);
 }
@@ -134,6 +133,21 @@ function convertStyleParams(originalStyleObject) {
   }
 }
 
+function convertDrawerParamsToSideMenuParams(drawerParams) {
+  const drawer = Object.assign({}, drawerParams);
+  if (!drawer.left || !drawer.left.screen) {
+    return null;
+  }
+
+  let result = {};
+  result.disableOpenGesture = drawer.disableOpenGesture !== undefined;
+  result.screenId = drawer.left.screen;
+  addNavigatorParams(result);
+  result = adaptNavigationParams(result);
+  result.passProps = drawer.passProps;
+  return result;
+}
+
 function adaptNavigationParams(screen) {
   screen.navigationParams = {
     screenInstanceID: screen.screenInstanceID,
@@ -153,7 +167,7 @@ function startTabBasedApp(params) {
 
   params.tabs.forEach(function(tab, idx) {
     addNavigatorParams(tab, null, idx);
-    addNavigatorButtons(tab);
+    addNavigatorButtons(tab, params.drawer);
     addNavigationStyleParams(tab);
     addTabIcon(tab);
     tab.passProps = params.passProps;
@@ -169,7 +183,7 @@ function startTabBasedApp(params) {
   params.tabs = newTabs;
 
   params.appStyle = convertStyleParams(params.appStyle);
-  // TODO: add drawer params
+  params.sideMenu = convertDrawerParamsToSideMenuParams(params.drawer);
 
   newPlatformSpecific.startApp(params);
 }
@@ -229,11 +243,13 @@ function navigatorSwitchToTab(navigator, params) {
 }
 
 function navigatorToggleDrawer(navigator, params) {
-  //RctActivity.toggleDrawer({
-  //  side: params.side,
-  //  animated: !(params.animated === false),
-  //  to: params.to || ''
-  //});
+  const animated = !(params.animated === false);
+  if (params.to) {
+    const visible = params.to === 'open';
+    newPlatformSpecific.setSideMenuVisible(animated, visible);
+  } else {
+    newPlatformSpecific.toggleSideMenuVisible(animated);
+  }
 }
 
 function navigatorToggleNavBar(navigator, params) {
@@ -284,7 +300,7 @@ function addNavigatorParams(screen, navigator = null, idx = '') {
   screen.navigatorEventID = screen.screenInstanceID + '_events';
 }
 
-function addNavigatorButtons(screen) {
+function addNavigatorButtons(screen, sideMenuParams) {
   const Screen = Navigation.getRegisteredScreen(screen.screen);
   Object.assign(screen, Screen.navigatorButtons);
 
@@ -302,7 +318,10 @@ function addNavigatorButtons(screen) {
     });
   }
 
-  const leftButton = getLeftButton(screen);
+  let leftButton = getLeftButton(screen);
+  if (sideMenuParams && !leftButton) {
+    leftButton = createSideMenuButton();
+  }
   if (leftButton) {
     if (leftButton.icon) {
       const icon = resolveAssetSource(leftButton.icon);
@@ -318,6 +337,12 @@ function addNavigatorButtons(screen) {
   if (leftButton) {
     screen.leftButton = leftButton;
   }
+}
+
+function createSideMenuButton() {
+  return {
+    id: "sideMenu"
+  };
 }
 
 function addTitleBarBackButtonIfNeeded(screen) {
@@ -348,24 +373,6 @@ function getRightButtons(screen) {
 function addNavigationStyleParams(screen) {
   const Screen = Navigation.getRegisteredScreen(screen.screen);
   screen.navigatorStyle = Object.assign({}, screen.navigatorStyle, Screen.navigatorStyle);
-}
-
-function setupDrawer(drawerParams) {
-  const drawer = Object.assign({}, drawerParams);
-  [drawer.left, drawer.right].forEach(side => {
-    if (!side) {
-      return;
-    }
-    const icon = resolveAssetSource(side.icon);
-    if (icon) {
-      side.icon = icon.uri;
-    }
-  });
-  if (drawer.disableOpenGesture === undefined) {
-    drawer.disableOpenGesture = false;
-  }
-
-  return drawer;
 }
 
 export default {

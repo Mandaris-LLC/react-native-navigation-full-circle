@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.views.ContentView;
-import com.reactnativenavigation.views.TitleBarBackButtonListener;
+import com.reactnativenavigation.views.LeftButtonOnClickListener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,8 +25,8 @@ public class FragmentScreen extends Screen {
     private static final String CONTRACT_GET_SUPPORT_FRAGMENT = "getSupportFragment";
     private FrameLayout content;
 
-    public FragmentScreen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
-        super(activity, screenParams, titleBarBackButtonListener);
+    public FragmentScreen(AppCompatActivity activity, ScreenParams screenParams, LeftButtonOnClickListener leftButtonOnClickListener) {
+        super(activity, screenParams, leftButtonOnClickListener);
     }
 
     @Override
@@ -40,7 +40,6 @@ public class FragmentScreen extends Screen {
     private void addContent() {
         ContentView contentView = new ContentView(getContext(),
                 screenParams.screenId,
-                screenParams.navigatorEventId,
                 screenParams.navigationParams);
         addView(contentView, 0, 0);
         LayoutParams params = new LayoutParams(MATCH_PARENT, MATCH_PARENT);

@@ -14,7 +14,7 @@ import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.ViewUtils;
-import com.reactnativenavigation.views.TitleBarBackButtonListener;
+import com.reactnativenavigation.views.LeftButtonOnClickListener;
 import com.reactnativenavigation.views.TopBar;
 
 import java.util.List;
@@ -27,15 +27,15 @@ public abstract class Screen extends RelativeLayout {
     protected final AppCompatActivity activity;
     protected final ScreenParams screenParams;
     protected TopBar topBar;
-    private final TitleBarBackButtonListener titleBarBackButtonListener;
+    private final LeftButtonOnClickListener leftButtonOnClickListener;
     private VisibilityAnimator topBarVisibilityAnimator;
     private ScreenAnimator screenAnimator;
 
-    public Screen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
+    public Screen(AppCompatActivity activity, ScreenParams screenParams, LeftButtonOnClickListener leftButtonOnClickListener) {
         super(activity);
         this.activity = activity;
         this.screenParams = screenParams;
-        this.titleBarBackButtonListener = titleBarBackButtonListener;
+        this.leftButtonOnClickListener = leftButtonOnClickListener;
 
         screenAnimator = new ScreenAnimator(this);
         createViews();
@@ -61,7 +61,7 @@ public abstract class Screen extends RelativeLayout {
             screenParams.leftButton.setColorFromScreenStyle(screenParams.styleParams.titleBarButtonColor);
         }
         topBar.addTitleBarAndSetButtons(screenParams.rightButtons, screenParams.leftButton,
-                titleBarBackButtonListener, screenParams.navigatorEventId);
+                leftButtonOnClickListener, screenParams.navigatorEventId);
     }
 
     private void createTopBar() {
@@ -138,7 +138,7 @@ public abstract class Screen extends RelativeLayout {
         topBar.setTitleBarRightButtons(navigatorEventId, titleBarButtons);
     }
 
-    public void setTitleBarLeftButton(String navigatorEventId, TitleBarBackButtonListener backButtonListener,
+    public void setTitleBarLeftButton(String navigatorEventId, LeftButtonOnClickListener backButtonListener,
                                       TitleBarLeftButtonParams titleBarLeftButtonParams) {
         topBar.setTitleBarRightButton(navigatorEventId, backButtonListener, titleBarLeftButtonParams);
     }

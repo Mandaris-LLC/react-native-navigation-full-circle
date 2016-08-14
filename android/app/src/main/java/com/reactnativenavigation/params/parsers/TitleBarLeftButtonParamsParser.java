@@ -8,9 +8,9 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 public class TitleBarLeftButtonParamsParser extends TitleBarButtonParamsParser {
 
     public TitleBarLeftButtonParams parseSingleButton(Bundle params) {
-        TitleBarLeftButtonParams backButtonParams = new TitleBarLeftButtonParams(super.parseSingleButton(params));
-        backButtonParams.iconState = getIconStateFromId(backButtonParams.eventId);
-        return backButtonParams;
+        TitleBarLeftButtonParams leftButtonParams = new TitleBarLeftButtonParams(super.parseSingleButton(params));
+        leftButtonParams.iconState = getIconStateFromId(leftButtonParams.eventId);
+        return leftButtonParams;
     }
 
     private MaterialMenuDrawable.IconState getIconStateFromId(String id) {

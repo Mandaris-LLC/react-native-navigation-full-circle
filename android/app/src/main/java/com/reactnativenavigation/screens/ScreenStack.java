@@ -11,7 +11,7 @@ import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.utils.KeyboardVisibilityDetector;
 import com.reactnativenavigation.utils.Task;
-import com.reactnativenavigation.views.TitleBarBackButtonListener;
+import com.reactnativenavigation.views.LeftButtonOnClickListener;
 
 import java.util.List;
 import java.util.Stack;
@@ -24,28 +24,45 @@ public class ScreenStack {
 
     private final AppCompatActivity activity;
     private RelativeLayout parent;
-    private TitleBarBackButtonListener titleBarBackButtonListener;
+    private LeftButtonOnClickListener leftButtonOnClickListener;
     private Stack<Screen> stack = new Stack<>();
     private final KeyboardVisibilityDetector keyboardVisibilityDetector;
+    private boolean isStackVisible = false;
+    private final String navigatorId;
+
+    public String getNavigatorId() {
+        return navigatorId;
+    }
 
     public ScreenStack(AppCompatActivity activity,
                        RelativeLayout parent,
-                       TitleBarBackButtonListener titleBarBackButtonListener) {
+                       String navigatorId,
+                       LeftButtonOnClickListener leftButtonOnClickListener) {
         this.activity = activity;
         this.parent = parent;
-        this.titleBarBackButtonListener = titleBarBackButtonListener;
+        this.navigatorId = navigatorId;
+        this.leftButtonOnClickListener = leftButtonOnClickListener;
         keyboardVisibilityDetector = new KeyboardVisibilityDetector(parent);
     }
 
     public void pushInitialScreen(ScreenParams initialScreenParams, RelativeLayout.LayoutParams params) {
-        Screen initialScreen = ScreenFactory.create(activity, initialScreenParams, titleBarBackButtonListener);
+        Screen initialScreen = ScreenFactory.create(activity, initialScreenParams, leftButtonOnClickListener);
         initialScreen.setVisibility(View.INVISIBLE);
         addScreen(initialScreen, params);
     }
 
     public void push(final ScreenParams params, RelativeLayout.LayoutParams layoutParams) {
-        Screen nextScreen = ScreenFactory.create(activity, params, titleBarBackButtonListener);
+        Screen nextScreen = ScreenFactory.create(activity, params, leftButtonOnClickListener);
         final Screen previousScreen = stack.peek();
+        if (isStackVisible) {
+            pushScreenToVisibleStack(params, layoutParams, nextScreen, previousScreen);
+        } else {
+            pushScreenToInvisibleStack(layoutParams, nextScreen, previousScreen);
+        }
+    }
+
+    private void pushScreenToVisibleStack(ScreenParams params, RelativeLayout.LayoutParams layoutParams,
+                                          Screen nextScreen, final Screen previousScreen) {
         addScreen(nextScreen, layoutParams);
         nextScreen.show(params.animateScreenTransitions, new Runnable() {
             @Override
@@ -53,6 +70,13 @@ public class ScreenStack {
                 removePreviousWithoutUnmount(previousScreen);
             }
         });
+    }
+
+    private void pushScreenToInvisibleStack(RelativeLayout.LayoutParams layoutParams, Screen nextScreen,
+                                            Screen previousScreen) {
+        nextScreen.setVisibility(View.INVISIBLE);
+        addScreen(nextScreen, layoutParams);
+        removePreviousWithoutUnmount(previousScreen);
     }
 
     private void addScreen(Screen screen, RelativeLayout.LayoutParams layoutParams) {
@@ -109,6 +133,7 @@ public class ScreenStack {
     }
 
     private void readdPrevious(Screen previous) {
+        previous.setVisibility(View.VISIBLE);
         parent.addView(previous, 0);
         previous.preventMountAfterReattachedToWindow();
     }
@@ -166,7 +191,7 @@ public class ScreenStack {
         performOnScreen(screenInstanceId, new Task<Screen>() {
             @Override
             public void run(Screen param) {
-                param.setTitleBarLeftButton(navigatorEventId, titleBarBackButtonListener, titleBarLeftButtonParams);
+                param.setTitleBarLeftButton(navigatorEventId, leftButtonOnClickListener, titleBarLeftButtonParams);
             }
         });
     }
@@ -188,11 +213,13 @@ public class ScreenStack {
         }
     }
 
-    public void showFirstScreen() {
+    public void show() {
+        isStackVisible = true;
         stack.peek().setVisibility(View.VISIBLE);
     }
 
-    public void hideScreen() {
+    public void hide() {
+        isStackVisible = false;
         stack.peek().setVisibility(View.INVISIBLE);
     }
 }

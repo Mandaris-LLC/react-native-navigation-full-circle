@@ -39,11 +39,14 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
     }
 
     @Override
-    public boolean onTitleBarBackPress() {
+    public boolean onTitleBarBackButtonClick() {
         if (!layout.onBackPressed()) {
             onBackPressed();
         }
         return true;
+    }
+
+    public void onSideMenuButtonClick() {
     }
 
     public interface OnModalDismissedListener {

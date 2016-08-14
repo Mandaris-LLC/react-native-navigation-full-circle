@@ -1,46 +1,69 @@
 package com.reactnativenavigation.layouts;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.SideMenuParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
-import com.reactnativenavigation.screens.ScreenAnimator;
 import com.reactnativenavigation.screens.ScreenStack;
-import com.reactnativenavigation.views.TitleBarBackButtonListener;
+import com.reactnativenavigation.views.LeftButtonOnClickListener;
+import com.reactnativenavigation.views.SideMenu;
 
 import java.util.List;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class SingleScreenLayout extends RelativeLayout implements Layout {
 
     private final AppCompatActivity activity;
     private final ScreenParams screenParams;
+    private final SideMenuParams sideMenuParams;
     private ScreenStack stack;
-    private ScreenAnimator screenAnimator;
-    private TitleBarBackButtonListener titleBarBackButtonListener;
+    private LeftButtonOnClickListener leftButtonOnClickListener;
+    private @Nullable SideMenu sideMenu;
 
-    public SingleScreenLayout(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener titleBarBackButtonListener) {
-        this(activity, screenParams);
-        this.titleBarBackButtonListener = titleBarBackButtonListener;
+    public SingleScreenLayout(AppCompatActivity activity, ScreenParams screenParams,
+                              LeftButtonOnClickListener leftButtonOnClickListener) {
+        this(activity, null, screenParams);
+        this.leftButtonOnClickListener = leftButtonOnClickListener;
     }
 
-    public SingleScreenLayout(AppCompatActivity activity, ScreenParams screenParams) {
+    public SingleScreenLayout(AppCompatActivity activity, @Nullable SideMenuParams sideMenuParams, ScreenParams screenParams) {
         super(activity);
         this.activity = activity;
         this.screenParams = screenParams;
-        createStack();
+        this.sideMenuParams = sideMenuParams;
+        createLayout();
     }
 
-    private void createStack() {
+    private void createLayout() {
+        if (sideMenuParams == null) {
+            createStack(this);
+        } else {
+            sideMenu = createSideMenu();
+            createStack(sideMenu.getContentContainer());
+        }
+    }
+
+    private SideMenu createSideMenu() {
+        SideMenu sideMenu = new SideMenu(getContext(), sideMenuParams);
+        RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        addView(sideMenu, lp);
+        return sideMenu;
+    }
+
+    private void createStack(RelativeLayout parent) {
         if (stack != null) {
             stack.destroy();
         }
-        stack = new ScreenStack(activity, this, this);
-        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        stack = new ScreenStack(activity, parent, screenParams.navigatorId, this);
+        LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         stack.pushInitialScreen(screenParams, lp);
-        stack.showFirstScreen();
+        stack.show();
     }
 
     @Override
@@ -56,11 +79,14 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     @Override
     public void destroy() {
         stack.destroy();
+        if (sideMenu != null) {
+            sideMenu.destroy();
+        }
     }
 
     @Override
     public void push(ScreenParams params) {
-        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         stack.push(params, lp);
     }
 
@@ -76,7 +102,8 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
 
     @Override
     public void newStack(ScreenParams params) {
-        createStack();
+        RelativeLayout parent = sideMenu == null ? this : sideMenu.getContentContainer();
+        createStack(parent);
     }
 
     @Override
@@ -106,11 +133,32 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     }
 
     @Override
-    public boolean onTitleBarBackPress() {
-        if (titleBarBackButtonListener != null) {
-            return titleBarBackButtonListener.onTitleBarBackPress();
+    public void toggleSideMenuVisible(boolean animated) {
+        if (sideMenu != null) {
+            sideMenu.toggleVisible(animated);
+        }
+    }
+
+    @Override
+    public void setSideMenuVisible(boolean animated, boolean visible) {
+        if (sideMenu != null) {
+            sideMenu.setVisible(visible, animated);
+        }
+    }
+
+    @Override
+    public boolean onTitleBarBackButtonClick() {
+        if (leftButtonOnClickListener != null) {
+            return leftButtonOnClickListener.onTitleBarBackButtonClick();
         }
 
         return onBackPressed();
+    }
+
+    @Override
+    public void onSideMenuButtonClick() {
+        if (sideMenu != null) {
+            sideMenu.openDrawer();
+        }
     }
 }

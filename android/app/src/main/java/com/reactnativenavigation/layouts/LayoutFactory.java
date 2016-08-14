@@ -1,6 +1,7 @@
 package com.reactnativenavigation.layouts;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.reactnativenavigation.params.ActivityParams;
 
@@ -16,7 +17,7 @@ public class LayoutFactory {
     }
 
     private static Layout createSingleScreenLayout(AppCompatActivity activity, ActivityParams params) {
-        return new SingleScreenLayout(activity, params.screenParams);
+        return new SingleScreenLayout(activity, params.sideMenuParams, params.screenParams);
     }
 
     private static Layout createBottomTabsScreenLayout(AppCompatActivity activity, ActivityParams params) {
@@ -27,7 +28,7 @@ public class LayoutFactory {
     }
 
     private static void removeAllButTheFirst5Tabs(ActivityParams params) {
-        android.util.Log.e("LOG", "LayoutFactory:createBottomTabsScreenLayout() does not support more than 5 tabs, currently");
+        Log.e("Navigation", "LayoutFactory:createBottomTabsScreenLayout() does not support more than 5 tabs, currently");
         while (params.tabParams.size() > 5) {
             params.tabParams.remove(params.tabParams.size() - 1);
         }

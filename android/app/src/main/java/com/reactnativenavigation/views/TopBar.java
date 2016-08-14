@@ -24,12 +24,12 @@ public class TopBar extends AppBarLayout {
 
     public void addTitleBarAndSetButtons(List<TitleBarButtonParams> rightButtons,
                                          TitleBarLeftButtonParams leftButton,
-                                         TitleBarBackButtonListener titleBarBackButtonListener,
+                                         LeftButtonOnClickListener leftButtonOnClickListener,
                                          String navigatorEventId) {
         titleBar = new TitleBar(getContext());
         addView(titleBar);
         titleBar.setRightButtons(rightButtons, navigatorEventId);
-        titleBar.setLeftButton(leftButton, titleBarBackButtonListener, navigatorEventId);
+        titleBar.setLeftButton(leftButton, leftButtonOnClickListener, navigatorEventId);
     }
 
     public void setTitle(String title) {
@@ -56,9 +56,9 @@ public class TopBar extends AppBarLayout {
     }
 
     public void setTitleBarRightButton(String navigatorEventId,
-                                       TitleBarBackButtonListener titleBarBackButtonListener,
+                                       LeftButtonOnClickListener leftButtonOnClickListener,
                                        TitleBarLeftButtonParams titleBarLeftButtonParams) {
-        titleBar.setLeftButton(titleBarLeftButtonParams, titleBarBackButtonListener, navigatorEventId);
+        titleBar.setLeftButton(titleBarLeftButtonParams, leftButtonOnClickListener, navigatorEventId);
     }
 
     private void setTopTabsStyle(StyleParams style) {

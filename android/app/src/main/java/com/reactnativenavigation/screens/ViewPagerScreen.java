@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TopTabParams;
 import com.reactnativenavigation.views.ContentView;
-import com.reactnativenavigation.views.TitleBarBackButtonListener;
+import com.reactnativenavigation.views.LeftButtonOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ViewPagerScreen extends Screen {
     private List<ContentView> contentViews;
     private ViewPager viewPager;
 
-    public ViewPagerScreen(AppCompatActivity activity, ScreenParams screenParams, TitleBarBackButtonListener backButtonListener) {
+    public ViewPagerScreen(AppCompatActivity activity, ScreenParams screenParams, LeftButtonOnClickListener backButtonListener) {
         super(activity, screenParams, backButtonListener);
     }
 
@@ -45,7 +45,7 @@ public class ViewPagerScreen extends Screen {
     private void addPages() {
         contentViews = new ArrayList<>();
         for (TopTabParams tab : screenParams.topTabParams) {
-            ContentView contentView = new ContentView(getContext(), tab.screenId, screenParams.navigatorEventId, tab.navigationParams);
+            ContentView contentView = new ContentView(getContext(), tab.screenId, tab.navigationParams, screenParams.navigatorEventId);
             addContent(contentView);
             contentViews.add(contentView);
         }
