@@ -26,6 +26,7 @@ public class ScreenParamsParser extends Parser {
     private static final String TOP_TABS = "topTabs";
     private static final String FRAGMENT_CREATOR_CLASS_NAME = "fragmentCreatorClassName";
     private static final String FRAGMENT_CREATOR_PASS_PROPS = "fragmentCreatorPassProps";
+    public static final String OVERRIDE_BACK_PRESS = "overrideBackPress";
 
     @SuppressWarnings("ConstantConditions")
     public static ScreenParams parse(Bundle params) {
@@ -42,6 +43,7 @@ public class ScreenParamsParser extends Parser {
 
         result.title = params.getString(KEY_TITLE);
         result.rightButtons = parseRightButton(params);
+        result.overrideBackPressInJs = params.getBoolean(OVERRIDE_BACK_PRESS, false);
         result.leftButton = parseLeftButton(params);
 
         result.topTabParams = parseTopTabs(params);

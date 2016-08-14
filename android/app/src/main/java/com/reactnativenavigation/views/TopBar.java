@@ -25,11 +25,11 @@ public class TopBar extends AppBarLayout {
     public void addTitleBarAndSetButtons(List<TitleBarButtonParams> rightButtons,
                                          TitleBarLeftButtonParams leftButton,
                                          LeftButtonOnClickListener leftButtonOnClickListener,
-                                         String navigatorEventId) {
+                                         String navigatorEventId, boolean overrideBackPressInJs) {
         titleBar = new TitleBar(getContext());
         addView(titleBar);
         titleBar.setRightButtons(rightButtons, navigatorEventId);
-        titleBar.setLeftButton(leftButton, leftButtonOnClickListener, navigatorEventId);
+        titleBar.setLeftButton(leftButton, leftButtonOnClickListener, navigatorEventId, overrideBackPressInJs);
     }
 
     public void setTitle(String title) {
@@ -55,10 +55,12 @@ public class TopBar extends AppBarLayout {
         return topTabs;
     }
 
-    public void setTitleBarRightButton(String navigatorEventId,
-                                       LeftButtonOnClickListener leftButtonOnClickListener,
-                                       TitleBarLeftButtonParams titleBarLeftButtonParams) {
-        titleBar.setLeftButton(titleBarLeftButtonParams, leftButtonOnClickListener, navigatorEventId);
+    public void setTitleBarLeftButton(String navigatorEventId,
+                                      LeftButtonOnClickListener leftButtonOnClickListener,
+                                      TitleBarLeftButtonParams titleBarLeftButtonParams,
+                                      boolean overrideBackPressInJs) {
+        titleBar.setLeftButton(titleBarLeftButtonParams, leftButtonOnClickListener, navigatorEventId,
+                overrideBackPressInJs);
     }
 
     private void setTopTabsStyle(StyleParams style) {

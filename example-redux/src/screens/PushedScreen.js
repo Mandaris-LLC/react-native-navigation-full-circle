@@ -62,7 +62,24 @@ class PushedScreen extends Component {
       case 'accept':
         Alert.alert('NavBar', 'Accept button pressed');
         break;
+
+      case 'backPress':
+        this.handleBackPress();
+        break;
+
+      default:
+        console.log('PushedScreen', 'Unknown event ' + event.id);
     }
+  }
+
+  handleBackPress() {
+    Alert.alert(
+      'Back button press!',
+      'Handling back press in JS',
+      [
+        {text: 'Pop', onPress: () => this.props.navigator.pop()}
+      ]
+    )
   }
 
   render() {
