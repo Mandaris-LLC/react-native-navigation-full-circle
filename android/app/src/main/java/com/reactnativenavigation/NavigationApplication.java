@@ -47,6 +47,10 @@ public abstract class NavigationApplication extends Application {
         return reactGateway.isInitialized();
     }
 
+    public void onReactInitialized(ReactContext reactContext) {
+        // nothing
+    }
+    
     public String getJsEntryFileName() {
         return "index.android";
     }
@@ -57,12 +61,6 @@ public abstract class NavigationApplication extends Application {
 
     public abstract boolean isDebug();
 
-    /**
-     * override to listen to react initialization event
-     */
-    public void onReactInitialized(ReactContext reactContext) {
-        // nothing
-    }
 
     @Nullable
     public abstract List<ReactPackage> createAdditionalReactPackages();
