@@ -16,7 +16,7 @@ import com.reactnativenavigation.bridge.NavigationReactPackage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationReactGateway implements ReactGateway {
+public class NavigationReactGateway implements ReactGateway, ReactInstanceManager.ReactInstanceEventListener {
 
     private OnJsDevReloadListener onJsDevReloadListener;
     private ReactInstanceManager reactInstanceManager;
@@ -26,10 +26,12 @@ public class NavigationReactGateway implements ReactGateway {
         reactInstanceManager = createReactInstanceManager();
     }
 
+    @Override
     public void startReactContextOnceInBackgroundAndExecuteJS() {
         if (reactInstanceManager == null) {
             reactInstanceManager = createReactInstanceManager();
         }
+
         if (!reactInstanceManager.hasStartedCreatingInitialContext()) {
             reactInstanceManager.createReactContextInBackground();
         }
@@ -58,6 +60,7 @@ public class NavigationReactGateway implements ReactGateway {
     public void onDestroyApp() {
         reactInstanceManager.onHostDestroy();
         reactInstanceManager.destroy();
+        reactInstanceManager.removeReactInstanceEventListener(this);
         reactInstanceManager = null;
     }
 
@@ -105,6 +108,8 @@ public class NavigationReactGateway implements ReactGateway {
             replaceJsDevReloadListener(manager);
         }
 
+        manager.addReactInstanceEventListener(this);
+
         return manager;
     }
 
@@ -130,5 +135,10 @@ public class NavigationReactGateway implements ReactGateway {
         }
 
         list.addAll(additionalReactPackages);
+    }
+
+    @Override
+    public void onReactContextInitialized(ReactContext context) {
+        NavigationApplication.instance.onReactInitialized(context);
     }
 }

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.react.NavigationReactGateway;
 import com.reactnativenavigation.react.ReactGateway;
@@ -56,6 +57,13 @@ public abstract class NavigationApplication extends Application {
 
     public abstract boolean isDebug();
 
+    /**
+     * override to listen to react initialization event
+     */
+    public void onReactInitialized(ReactContext reactContext) {
+        // nothing
+    }
+
     @Nullable
     public abstract List<ReactPackage> createAdditionalReactPackages();
 
@@ -87,4 +95,5 @@ public abstract class NavigationApplication extends Application {
         }
         reactGateway.getReactEventEmitter().sendEvent(eventId, arguments);
     }
+
 }
