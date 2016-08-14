@@ -121,4 +121,9 @@ public class FragmentScreen extends Screen {
     public void preventMountAfterReattachedToWindow() {
         // nothing
     }
+
+    @Override
+    public void setOnDisplayListener(OnDisplayListener onContentViewDisplayedListener) {
+        // nothing
+    }
 }

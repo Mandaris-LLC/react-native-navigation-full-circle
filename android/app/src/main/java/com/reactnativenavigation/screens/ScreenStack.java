@@ -62,13 +62,18 @@ public class ScreenStack {
         }
     }
 
-    private void pushScreenToVisibleStack(ScreenParams params, RelativeLayout.LayoutParams layoutParams,
-                                          Screen nextScreen, final Screen previousScreen) {
+    private void pushScreenToVisibleStack(final ScreenParams params, RelativeLayout.LayoutParams layoutParams,
+                                          final Screen nextScreen, final Screen previousScreen) {
         addScreen(nextScreen, layoutParams);
-        nextScreen.show(params.animateScreenTransitions, new Runnable() {
+        nextScreen.setOnDisplayListener(new Screen.OnDisplayListener() {
             @Override
-            public void run() {
-                removePreviousWithoutUnmount(previousScreen);
+            public void onDisplay() {
+                nextScreen.show(params.animateScreenTransitions, new Runnable() {
+                    @Override
+                    public void run() {
+                        removePreviousWithoutUnmount(previousScreen);
+                    }
+                });
             }
         });
     }

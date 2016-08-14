@@ -41,4 +41,9 @@ public class SingleScreen extends Screen {
     public void preventMountAfterReattachedToWindow() {
         contentView.preventMountAfterReattachedToWindow();
     }
+
+    @Override
+    public void setOnDisplayListener(OnDisplayListener onContentViewDisplayedListener) {
+        contentView.setOnDisplayListener(onContentViewDisplayedListener);
+    }
 }

@@ -82,4 +82,9 @@ public class ViewPagerScreen extends Screen {
             contentView.preventMountAfterReattachedToWindow();
         }
     }
+
+    @Override
+    public void setOnDisplayListener(OnDisplayListener onContentViewDisplayedListener) {
+        contentViews.get(0).setOnDisplayListener(onContentViewDisplayedListener);
+    }
 }

@@ -24,6 +24,10 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public abstract class Screen extends RelativeLayout {
 
+    public interface OnDisplayListener {
+        void onDisplay();
+    }
+
     protected final AppCompatActivity activity;
     protected final ScreenParams screenParams;
     protected TopBar topBar;
@@ -162,6 +166,8 @@ public abstract class Screen extends RelativeLayout {
             titleBarButtonParam.setColorFromScreenStyle(screenParams.styleParams.titleBarButtonColor);
         }
     }
+
+    public abstract void setOnDisplayListener(OnDisplayListener onContentViewDisplayedListener);
 
     public void show() {
         screenAnimator.show(screenParams.animateScreenTransitions);
