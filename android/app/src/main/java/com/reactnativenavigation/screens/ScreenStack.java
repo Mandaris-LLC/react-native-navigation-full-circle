@@ -115,6 +115,7 @@ public class ScreenStack {
 
     private void swapScreens(boolean animated, final Screen toRemove, Screen previous, OnScreenPop onScreenPop) {
         readdPrevious(previous);
+        previous.setStyle();
         toRemove.hide(animated, new Runnable() {
             @Override
             public void run() {
@@ -215,6 +216,7 @@ public class ScreenStack {
 
     public void show() {
         isStackVisible = true;
+        stack.peek().setStyle();
         stack.peek().setVisibility(View.VISIBLE);
     }
 

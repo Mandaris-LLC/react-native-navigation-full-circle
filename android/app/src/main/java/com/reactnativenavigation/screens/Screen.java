@@ -30,16 +30,22 @@ public abstract class Screen extends RelativeLayout {
     private final LeftButtonOnClickListener leftButtonOnClickListener;
     private VisibilityAnimator topBarVisibilityAnimator;
     private ScreenAnimator screenAnimator;
+    private final StyleParams styleParams;
 
     public Screen(AppCompatActivity activity, ScreenParams screenParams, LeftButtonOnClickListener leftButtonOnClickListener) {
         super(activity);
         this.activity = activity;
         this.screenParams = screenParams;
+        styleParams = screenParams.styleParams;
         this.leftButtonOnClickListener = leftButtonOnClickListener;
-
         screenAnimator = new ScreenAnimator(this);
         createViews();
-        setStyle(screenParams.styleParams);
+    }
+
+    public void setStyle() {
+        setStatusBarColor(styleParams.statusBarColor);
+        setNavigationBarColor(styleParams.navigationBarColor);
+        topBar.setStyle(styleParams);
     }
 
     private void createViews() {
@@ -81,12 +87,6 @@ public abstract class Screen extends RelativeLayout {
                 }
             }
         });
-    }
-
-    private void setStyle(StyleParams styleParams) {
-        setStatusBarColor(styleParams.statusBarColor);
-        setNavigationBarColor(styleParams.navigationBarColor);
-        topBar.setStyle(styleParams);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -166,6 +166,7 @@ public abstract class Screen extends RelativeLayout {
     }
 
     public void show(boolean animated, Runnable onAnimationEnd) {
+        setStyle();
         screenAnimator.show(animated, onAnimationEnd);
     }
 
