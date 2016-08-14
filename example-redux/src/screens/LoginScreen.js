@@ -47,7 +47,7 @@ class LoginScreen extends Component {
           <Text style={styles.button}>Show another login as modal</Text>
         </TouchableOpacity>
 
-        <Text style={{fontWeight: '500'}}>Function prop: {this.props.fn()}</Text>
+        <Text style={{fontWeight: '500'}}>Function prop: {this.props.fn ? this.props.fn() : ''}</Text>
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
         <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
         <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
