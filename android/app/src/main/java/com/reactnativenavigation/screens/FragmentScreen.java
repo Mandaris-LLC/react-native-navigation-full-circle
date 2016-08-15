@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.ContentView;
 import com.reactnativenavigation.views.LeftButtonOnClickListener;
 
@@ -123,7 +124,12 @@ public class FragmentScreen extends Screen {
     }
 
     @Override
-    public void setOnDisplayListener(OnDisplayListener onContentViewDisplayedListener) {
-        // nothing
+    public void setOnDisplayListener(final OnDisplayListener onContentViewDisplayedListener) {
+        ViewUtils.runOnPreDraw(content, new Runnable() {
+            @Override
+            public void run() {
+                onContentViewDisplayedListener.onDisplay();
+            }
+        });
     }
 }
