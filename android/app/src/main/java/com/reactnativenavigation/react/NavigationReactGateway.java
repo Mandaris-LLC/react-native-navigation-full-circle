@@ -67,13 +67,11 @@ public class NavigationReactGateway implements ReactGateway, ReactInstanceManage
     public void onPause() {
         reactInstanceManager.onHostPause();
         onJsDevReloadListener = null;
-        reactEventEmitter = null;
     }
 
     public void onResume(Activity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler, OnJsDevReloadListener onJsDevReloadListener) {
         this.onJsDevReloadListener = onJsDevReloadListener;
         reactInstanceManager.onHostResume(activity, defaultHardwareBackBtnHandler);
-        reactEventEmitter = new NavigationReactEventEmitter(reactInstanceManager.getCurrentReactContext());
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -139,6 +137,7 @@ public class NavigationReactGateway implements ReactGateway, ReactInstanceManage
 
     @Override
     public void onReactContextInitialized(ReactContext context) {
+        reactEventEmitter = new NavigationReactEventEmitter(context);
         NavigationApplication.instance.onReactInitialized(context);
     }
 }
