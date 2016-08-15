@@ -40,8 +40,7 @@ public class ContentViewPagerAdapter extends PagerAdapter {
     private void sendPageChangeEvent() {
         WritableMap data = Arguments.createMap();
         String navigatorEventId = contentViews.get(currentPosition).getNavigatorEventId();
-        data.putInt("position", currentPosition);
-        NavigationApplication.instance.sendNavigatorEvent("selectedTabChanged", navigatorEventId, data);
+        NavigationApplication.instance.sendNavigatorEvent("tabSelected", navigatorEventId, data);
     }
 
     @Override

@@ -45,7 +45,7 @@ public class ViewPagerScreen extends Screen {
     private void addPages() {
         contentViews = new ArrayList<>();
         for (TopTabParams tab : screenParams.topTabParams) {
-            ContentView contentView = new ContentView(getContext(), tab.screenId, tab.navigationParams, screenParams.navigatorEventId);
+            ContentView contentView = new ContentView(getContext(), tab.screenId, tab.navigationParams);
             addContent(contentView);
             contentViews.add(contentView);
         }
@@ -86,5 +86,10 @@ public class ViewPagerScreen extends Screen {
     @Override
     public void setOnDisplayListener(OnDisplayListener onContentViewDisplayedListener) {
         contentViews.get(0).setOnDisplayListener(onContentViewDisplayedListener);
+    }
+
+    @Override
+    public String getScreenInstanceId() {
+        return screenParams.topTabParams.get(viewPager.getCurrentItem()).navigationParams.screenInstanceId;
     }
 }

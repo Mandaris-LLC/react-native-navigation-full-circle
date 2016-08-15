@@ -73,7 +73,7 @@ public abstract class Screen extends RelativeLayout {
         topBar.addTitleBarAndSetButtons(screenParams.rightButtons,
                 screenParams.leftButton,
                 leftButtonOnClickListener,
-                screenParams.navigatorEventId,
+                screenParams.getNavigatorEventId(),
                 screenParams.overrideBackPressInJs);
     }
 
@@ -129,7 +129,7 @@ public abstract class Screen extends RelativeLayout {
     public abstract void preventMountAfterReattachedToWindow();
 
     public String getScreenInstanceId() {
-        return screenParams.screenInstanceId;
+        return screenParams.getScreenInstanceId();
     }
 
     public void setTopBarVisible(boolean visible, boolean animate) {

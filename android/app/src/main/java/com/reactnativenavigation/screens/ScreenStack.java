@@ -211,7 +211,7 @@ public class ScreenStack {
     public boolean handleBackPressInJs() {
         ScreenParams currentScreen = stack.peek().screenParams;
         if (currentScreen.overrideBackPressInJs) {
-            NavigationApplication.instance.sendNavigatorEvent("backPress", currentScreen.navigatorEventId);
+            NavigationApplication.instance.sendNavigatorEvent("backPress", currentScreen.getNavigatorEventId());
             return true;
         }
         return false;

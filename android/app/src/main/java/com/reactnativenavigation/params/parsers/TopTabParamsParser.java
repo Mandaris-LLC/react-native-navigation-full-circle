@@ -3,6 +3,7 @@ package com.reactnativenavigation.params.parsers;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.reactnativenavigation.params.NavigationParams;
 import com.reactnativenavigation.params.TopTabParams;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class TopTabParamsParser extends Parser {
         TopTabParams result = new TopTabParams();
         result.screenId = params.getString(KEY_SCREEN_ID);
         result.title = params.getString(KEY_TITLE);
-        result.navigationParams = params.getBundle(NAVIGATION_PARAMS);
+        result.navigationParams = new NavigationParams(params.getBundle(NAVIGATION_PARAMS));
         return result;
     }
 }

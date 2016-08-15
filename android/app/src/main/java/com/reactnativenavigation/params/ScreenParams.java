@@ -20,10 +20,7 @@ public class ScreenParams {
     public String tabLabel;
     public Drawable tabIcon;
 
-    public String screenInstanceId;
-    public String navigatorEventId;
-    public String navigatorId;
-    public Bundle navigationParams;
+    public NavigationParams navigationParams;
 
     public boolean hasTopTabs() {
         return topTabParams != null && !topTabParams.isEmpty();
@@ -31,5 +28,17 @@ public class ScreenParams {
 
     public boolean isFragmentScreen() {
         return fragmentCreatorClassName != null;
+    }
+
+    public String getScreenInstanceId() {
+        return navigationParams.screenInstanceId;
+    }
+
+    public String getNavigatorId() {
+        return navigationParams.navigatorId;
+    }
+
+    public String getNavigatorEventId() {
+        return navigationParams.navigatorEventId;
     }
 }
