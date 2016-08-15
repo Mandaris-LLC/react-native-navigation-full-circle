@@ -279,6 +279,7 @@ function navigatorToggleTabs(navigator, params) {
 function showModal(params) {
   addNavigatorParams(params);
   addNavigatorButtons(params);
+  addTitleBarBackButtonIfNeeded(params);
   addNavigationStyleParams(params);
 
   /*
