@@ -1,6 +1,5 @@
 package com.reactnativenavigation.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.view.View;
@@ -28,14 +27,9 @@ public class KeyboardVisibilityDetector {
     }
 
     public void closeKeyboard(Runnable keyboardClosedListener) {
-        Activity context = (Activity) screen.getContext();
-        View view = context.getCurrentFocus();
-        if (view != null) {
-            this.keyboardCloseListener = keyboardClosedListener;
-
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-        }
+        this.keyboardCloseListener = keyboardClosedListener;
+        InputMethodManager imm = (InputMethodManager) screen.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     private static class KeyboardVisibilityLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
