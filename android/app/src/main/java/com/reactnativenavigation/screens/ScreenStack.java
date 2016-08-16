@@ -2,6 +2,7 @@ package com.reactnativenavigation.screens;
 
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class ScreenStack {
+    private static final String TAG = "ScreenStack";
 
     public interface OnScreenPop {
         void onScreenPopAnimationEnd();
@@ -165,7 +167,16 @@ public class ScreenStack {
     }
 
     public boolean canPop() {
-        return getStackSize() > 1;
+        return getStackSize() > 1 && !isPreviousScreenAttachedToWindow();
+    }
+
+    private boolean isPreviousScreenAttachedToWindow() {
+        Screen previousScreen = stack.get(stack.size() - 2);
+        if (previousScreen.getParent() != null) {
+            Log.w(TAG, "Can't pop stack. reason: previous screen is already attached");
+            return true;
+        }
+        return false;
     }
 
     public void setScreenTopBarVisible(String screenInstanceId, final boolean visible, final boolean animate) {
