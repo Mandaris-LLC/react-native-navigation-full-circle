@@ -67,10 +67,27 @@ class PushedScreen extends Component {
         this.handleBackPress();
         break;
 
+      case 'tabSelected':
+        this.onTabSelected();
+        break;
+
       default:
         console.log('PushedScreen', 'Unknown event ' + event.id);
     }
   }
+
+  onTabSelected() {
+    console.log('PushedScreen', 'onTabSelected');
+    this.props.navigator.setButtons({
+      rightButtons: [
+        {
+          id: 'account',
+          icon: require('../../img/ic_add_alert.png')
+        }
+      ]
+    });
+  }
+
 
   handleBackPress() {
     Alert.alert(

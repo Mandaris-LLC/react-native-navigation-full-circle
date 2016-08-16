@@ -35,82 +35,82 @@ export default class App {
   startApp(root) {
     switch (root) {
       case 'login':
-        Navigation.startSingleScreenApp({
-         screen: {
-           screen: 'example.LoginScreen',
-           title: 'Login',
-           navigatorStyle: {}
-         },
-         passProps: {
-           str: 'This is a prop passed in \'startSingleScreenApp()\'!',
-           obj: {
-             str: 'This is a prop passed in an object!',
-             arr: [
-               {
-                 str: 'This is a prop in an object in an array in an object!'
-               }
-             ],
-             arr2: [
-               [
-                 'array of strings',
-                 'with two strings'
-               ],
-               [
-                 1, 2, 3
-               ]
-             ]
-           },
-           num: 1234,
-           fn: function() {
-             return 'Hello from a function!';
-           }
-         }
-        });
         // Navigation.startSingleScreenApp({
-        //   screen: {
-        //     screen: 'example.FirstTabScreen',
-        //     title: 'Login',
-        //     topTabs: [
-        //       {
-        //         screenId: 'example.ListScreen',
-        //         title: 'Tab1',
-        //         passProps: {
-        //           str: 'This is a prop passed to Tab1'
-        //         }
-        //       },
-        //       {
-        //         screenId: 'example.PushedScreen',
-        //         title: 'Tab2',
-        //         passProps: {
-        //           str: 'This is a prop passed to Tab2'
-        //         }
-        //
-        //       },
-        //       {
-        //         screenId: 'example.PushedScreen',
-        //         title: 'Tab3',
-        //         passProps: {
-        //           str: 'This is a prop passed to Tab3'
-        //         }
-        //       },
-        //       {
-        //         screenId: 'example.FirstTabScreen',
-        //         title: 'Tab4',
-        //         passProps: {
-        //           str: 'This is a prop passed to Tab4',
-        //           fn: () => 'Hello from a function passed as passProps!'
-        //         }
-        //       }
-        //     ],
-        //     navigatorStyle: {}
-        //   },
-        //   drawer: { // optional, add this if you want a side menu drawer in your app
-        //     left: { // optional, define if you want a drawer from the left
-        //       screen: 'example.SideMenu' // unique ID registered with Navigation.registerScreen
-        //     },
-        //     disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
-        //   }
+        //  screen: {
+        //    screen: 'example.LoginScreen',
+        //    title: 'Login',
+        //    navigatorStyle: {}
+        //  },
+        //  passProps: {
+        //    str: 'This is a prop passed in \'startSingleScreenApp()\'!',
+        //    obj: {
+        //      str: 'This is a prop passed in an object!',
+        //      arr: [
+        //        {
+        //          str: 'This is a prop in an object in an array in an object!'
+        //        }
+        //      ],
+        //      arr2: [
+        //        [
+        //          'array of strings',
+        //          'with two strings'
+        //        ],
+        //        [
+        //          1, 2, 3
+        //        ]
+        //      ]
+        //    },
+        //    num: 1234,
+        //    fn: function() {
+        //      return 'Hello from a function!';
+        //    }
+        //  }
         // });
+        Navigation.startSingleScreenApp({
+          screen: {
+            screen: 'example.FirstTabScreen',
+            title: 'Login',
+            topTabs: [
+              {
+                screenId: 'example.ListScreen',
+                title: 'Tab1',
+                passProps: {
+                  str: 'This is a prop passed to Tab1'
+                }
+              },
+              {
+                screenId: 'example.PushedScreen',
+                title: 'Tab2',
+                passProps: {
+                  str: 'This is a prop passed to Tab2'
+                }
+
+              },
+              {
+                screenId: 'example.PushedScreen',
+                title: 'Tab3',
+                passProps: {
+                  str: 'This is a prop passed to Tab3'
+                }
+              },
+              {
+                screenId: 'example.FirstTabScreen',
+                title: 'Tab4',
+                passProps: {
+                  str: 'This is a prop passed to Tab4',
+                  fn: () => 'Hello from a function passed as passProps!'
+                }
+              }
+            ],
+            navigatorStyle: {}
+          },
+          drawer: { // optional, add this if you want a side menu drawer in your app
+            left: { // optional, define if you want a drawer from the left
+              screen: 'example.SideMenu' // unique ID registered with Navigation.registerScreen
+            },
+            disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
+          }
+        });
         return;
       case 'after-login':
         Navigation.startTabBasedApp({
