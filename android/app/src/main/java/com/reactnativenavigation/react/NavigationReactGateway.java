@@ -64,12 +64,12 @@ public class NavigationReactGateway implements ReactGateway, ReactInstanceManage
         reactInstanceManager = null;
     }
 
-    public void onPause() {
+    public void onPauseActivity() {
         reactInstanceManager.onHostPause();
         onJsDevReloadListener = null;
     }
 
-    public void onResume(Activity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler, OnJsDevReloadListener onJsDevReloadListener) {
+    public void onResumeActivity(Activity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler, OnJsDevReloadListener onJsDevReloadListener) {
         this.onJsDevReloadListener = onJsDevReloadListener;
         reactInstanceManager.onHostResume(activity, defaultHardwareBackBtnHandler);
     }

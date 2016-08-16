@@ -18,6 +18,12 @@ public abstract class SplashActivity extends AppCompatActivity {
         NavigationApplication.instance.startReactContext();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
     private void setSplashLayout() {
         final int splashLayout = getSplashLayout();
         if (splashLayout > 0) {

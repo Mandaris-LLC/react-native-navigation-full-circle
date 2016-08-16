@@ -50,7 +50,7 @@ public abstract class NavigationApplication extends Application {
     public void onReactInitialized(ReactContext reactContext) {
         // nothing
     }
-    
+
     public String getJsEntryFileName() {
         return "index.android";
     }
@@ -60,7 +60,6 @@ public abstract class NavigationApplication extends Application {
     }
 
     public abstract boolean isDebug();
-
 
     @Nullable
     public abstract List<ReactPackage> createAdditionalReactPackages();

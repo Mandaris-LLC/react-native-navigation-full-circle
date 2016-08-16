@@ -24,9 +24,9 @@ public interface ReactGateway {
 
     ReactInstanceManager getReactInstanceManager();
 
-    void onResume(Activity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler, OnJsDevReloadListener onJsDevReloadListener);
+    void onResumeActivity(Activity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler, OnJsDevReloadListener onJsDevReloadListener);
 
-    void onPause();
+    void onPauseActivity();
 
     void onDestroyApp();
 

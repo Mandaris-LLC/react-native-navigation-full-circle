@@ -17,6 +17,7 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.ReactGateway;
 import com.reactnativenavigation.react.RedboxPermission;
+import com.reactnativenavigation.utils.IntentUtils;
 
 import java.util.List;
 
@@ -35,14 +36,16 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     private ActivityParams activityParams;
     private ModalController modalController;
     private Layout layout;
+    private boolean waitingForNewJsContext = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (!NavigationApplication.instance.isReactContextInitialized()) {
-            NavigationApplication.instance.startReactContext();
+            waitingForNewJsContext = true;
             finish();
+            startActivity(IntentUtils.getLauncherIntent());
             return;
         }
 
@@ -71,30 +74,36 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         }
 
         currentActivity = this;
-        NavigationApplication.instance.getReactGateway().onResume(this, this, this);
+        NavigationApplication.instance.getReactGateway().onResumeActivity(this, this, this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         currentActivity = null;
-        NavigationApplication.instance.getReactGateway().onPause();
+        NavigationApplication.instance.getReactGateway().onPauseActivity();
     }
 
     @Override
     protected void onDestroy() {
+        destroyLayouts();
+        destroyJsIfNeeded();
+        super.onDestroy();
+    }
+
+    private void destroyLayouts() {
         if (modalController != null) {
             modalController.destroy();
         }
         if (layout != null) {
             layout.destroy();
         }
-        if (currentActivity == null || currentActivity.isFinishing()) {
-            if (NavigationApplication.instance.isReactContextInitialized()) {
-                NavigationApplication.instance.getReactGateway().onDestroyApp();
-            }
+    }
+
+    private void destroyJsIfNeeded() {
+        if (!waitingForNewJsContext && (currentActivity == null || currentActivity.isFinishing())) {
+            NavigationApplication.instance.getReactGateway().onDestroyApp();
         }
-        super.onDestroy();
     }
 
     @Override
