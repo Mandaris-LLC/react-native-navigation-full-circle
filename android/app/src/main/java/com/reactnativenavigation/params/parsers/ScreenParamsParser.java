@@ -11,6 +11,7 @@ import com.reactnativenavigation.params.TopTabParams;
 import com.reactnativenavigation.react.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ScreenParamsParser extends Parser {
@@ -101,10 +102,10 @@ public class ScreenParamsParser extends Parser {
     }
 
     public static List<ScreenParams> parseTabs(Bundle params) {
-        List<ScreenParams> result = new ArrayList<>();
+        ScreenParams result[] = new ScreenParams[params.keySet().size()];
         for (String key : params.keySet()) {
-            result.add(ScreenParamsParser.parse(params.getBundle(key)));
+            result[Integer.parseInt(key)] = ScreenParamsParser.parse(params.getBundle(key));
         }
-        return result;
+        return new ArrayList<>(Arrays.asList(result));
     }
 }
