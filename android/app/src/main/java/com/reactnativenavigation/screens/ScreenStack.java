@@ -111,12 +111,14 @@ public class ScreenStack {
         final Screen previous = stack.peek();
 
         if (keyboardVisibilityDetector.isKeyboardVisible()) {
-            keyboardVisibilityDetector.closeKeyboard(new Runnable() {
+            keyboardVisibilityDetector.setKeyboardCloseListener(new Runnable() {
                 @Override
                 public void run() {
+                    keyboardVisibilityDetector.setKeyboardCloseListener(null);
                     swapScreens(animated, toRemove, previous, onScreenPop);
                 }
             });
+            keyboardVisibilityDetector.closeKeyboard();
         } else {
             swapScreens(animated, toRemove, previous, onScreenPop);
         }
