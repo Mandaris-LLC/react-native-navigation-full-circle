@@ -29,12 +29,20 @@ function _registerComponentNoRedux(screenID, generator) {
 
       constructor(props) {
         super(props);
-        this.allProps = {...props, ...PropRegistry.load(props.screenInstanceID)};
+        this.state = {
+          internalProps: {...props, ...PropRegistry.load(props.screenInstanceID)}
+        }
+      }
+  
+      componentWillReceiveProps(nextProps) {
+        this.setState({
+          internalProps: {...PropRegistry.load(this.props.screenInstanceID), ...nextProps}
+        })
       }
 
       render() {
         return (
-          <InternalComponent navigator={this.navigator} {...this.allProps} />
+          <InternalComponent navigator={this.navigator} {...this.state.internalProps} />
         );
       }
     };
@@ -52,13 +60,21 @@ function _registerComponentRedux(screenID, generator, store, Provider) {
 
       constructor(props) {
         super(props);
-        this.allProps = {...props, ...PropRegistry.load(props.screenInstanceID)};
+        this.state = {
+          internalProps: {...props, ...PropRegistry.load(props.screenInstanceID)}
+        }
+      }
+      
+      componentWillReceiveProps(nextProps) {
+        this.setState({
+          internalProps: {...PropRegistry.load(this.props.screenInstanceID), ...nextProps}
+        })
       }
 
       render() {
         return (
           <Provider store={store}>
-            <InternalComponent navigator={this.navigator} {...this.allProps} />
+            <InternalComponent navigator={this.navigator} {...this.state.internalProps} />
           </Provider>
         );
       }
