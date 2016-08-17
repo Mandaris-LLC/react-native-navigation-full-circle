@@ -26,8 +26,11 @@ public class KeyboardVisibilityDetector {
         return keyboardVisibilityListener.isKeyboardVisible();
     }
 
-    public void closeKeyboard(Runnable keyboardClosedListener) {
-        this.keyboardCloseListener = keyboardClosedListener;
+    public void setKeyboardCloseListener(Runnable keyboardCloseListener) {
+        this.keyboardCloseListener = keyboardCloseListener;
+    }
+
+    public void closeKeyboard() {
         InputMethodManager imm = (InputMethodManager) screen.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }

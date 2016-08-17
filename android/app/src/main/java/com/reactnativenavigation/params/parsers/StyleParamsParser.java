@@ -2,8 +2,6 @@ package com.reactnativenavigation.params.parsers;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.reactnativenavigation.params.AppStyle;
 import com.reactnativenavigation.params.StyleParams;
@@ -72,7 +70,6 @@ public class StyleParamsParser {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.selectedTopTabTextColor;
     }
 
-    @Nullable
     private StyleParams.Color getDefaultNavigationColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.navigationBarColor;
     }
@@ -81,17 +78,14 @@ public class StyleParamsParser {
         return AppStyle.appStyle != null && AppStyle.appStyle.forceTitlesDisplay;
     }
 
-    @Nullable
     private StyleParams.Color getDefaultSelectedBottomTabsButtonColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.selectedBottomTabsButtonColor;
     }
 
-    @Nullable
     private StyleParams.Color getDefaultBottomTabsButtonColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.bottomTabsButtonColor;
     }
 
-    @Nullable
     private StyleParams.Color getDefaultBottomTabsColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.bottomTabsColor;
     }
@@ -120,17 +114,14 @@ public class StyleParamsParser {
         return AppStyle.appStyle != null && AppStyle.appStyle.backButtonHidden;
     }
 
-    @Nullable
     private StyleParams.Color getDefaultTitleBarColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.titleBarTitleColor;
     }
 
-    @Nullable
     private StyleParams.Color getTitleBarButtonColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.titleBarButtonColor;
     }
 
-    @Nullable
     private StyleParams.Color getTitleBarDisabledButtonColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color(Color.LTGRAY) : AppStyle.appStyle.titleBarDisabledButtonColor;
     }
@@ -139,12 +130,10 @@ public class StyleParamsParser {
         return AppStyle.appStyle != null && AppStyle.appStyle.titleBarHidden;
     }
 
-    @Nullable
     private StyleParams.Color getDefaultTopBarColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.topBarColor;
     }
 
-    @Nullable
     private StyleParams.Color getDefaultStatusBarColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.statusBarColor;
     }
@@ -153,7 +142,6 @@ public class StyleParamsParser {
         return params.containsKey(key) ? params.getBoolean(key) : defaultValue;
     }
 
-    @NonNull
     private StyleParams.Color getColor(String key, StyleParams.Color defaultColor) {
         StyleParams.Color color = StyleParams.Color.parse(params.getString(key));
         if (color.hasColor()) {
