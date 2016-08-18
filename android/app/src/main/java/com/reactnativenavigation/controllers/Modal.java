@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.reactnativenavigation.R;
 import com.reactnativenavigation.layouts.Layout;
@@ -70,6 +71,7 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
         setOnDismissListener(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         layout = new SingleScreenLayout(getActivity(), screenParams, this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(layout.asView());
     }
 
