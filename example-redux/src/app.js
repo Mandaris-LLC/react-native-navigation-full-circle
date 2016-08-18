@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import { Navigation } from 'react-native-navigation';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import {Navigation} from 'react-native-navigation';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
 import * as appActions from './reducers/app/actions';
@@ -11,7 +11,7 @@ const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
 
 // screen related book keeping
-import { registerScreens } from './screens';
+import {registerScreens} from './screens';
 registerScreens(store, Provider);
 
 // notice that this is just a simple class, it's not a React component
@@ -23,7 +23,7 @@ export default class App {
   }
 
   onStoreUpdate() {
-    const { root } = store.getState().app;
+    const {root} = store.getState().app;
     // handle a root change
     // if your app doesn't change roots in runtime, you can remove onStoreUpdate() altogether
     if (this.currentRoot != root) {
@@ -35,32 +35,80 @@ export default class App {
   startApp(root) {
     switch (root) {
       case 'login':
+        // Navigation.startSingleScreenApp({
+        //  screen: {
+        //    screen: 'example.LoginScreen',
+        //    title: 'Login',
+        //    navigatorStyle: {}
+        //  },
+        //  passProps: {
+        //    str: 'This is a prop passed in \'startSingleScreenApp()\'!',
+        //    obj: {
+        //      str: 'This is a prop passed in an object!',
+        //      arr: [
+        //        {
+        //          str: 'This is a prop in an object in an array in an object!'
+        //        }
+        //      ],
+        //      arr2: [
+        //        [
+        //          'array of strings',
+        //          'with two strings'
+        //        ],
+        //        [
+        //          1, 2, 3
+        //        ]
+        //      ]
+        //    },
+        //    num: 1234,
+        //    fn: function() {
+        //      return 'Hello from a function!';
+        //    }
+        //  }
+        // });
         Navigation.startSingleScreenApp({
           screen: {
-            screen: 'example.LoginScreen',
+            screen: 'example.FirstTabScreen',
             title: 'Login',
+            topTabs: [
+              {
+                screenId: 'example.ListScreen',
+                title: 'Tab1',
+                passProps: {
+                  str: 'This is a prop passed to Tab1'
+                }
+              },
+              {
+                screenId: 'example.PushedScreen',
+                title: 'Tab2',
+                passProps: {
+                  str: 'This is a prop passed to Tab2'
+                }
+
+              },
+              {
+                screenId: 'example.PushedScreen',
+                title: 'Tab3',
+                passProps: {
+                  str: 'This is a prop passed to Tab3'
+                }
+              },
+              {
+                screenId: 'example.FirstTabScreen',
+                title: 'Tab4',
+                passProps: {
+                  str: 'This is a prop passed to Tab4',
+                  fn: () => 'Hello from a function passed as passProps!'
+                }
+              }
+            ],
             navigatorStyle: {}
           },
-          passProps: {
-            str: 'This is a prop passed in \'startSingleScreenApp()\'!',
-            obj: {
-              str: 'This is a prop passed in an object!',
-              arr: [
-                {
-                  str: 'This is a prop in an object in an array in an object!'
-                }
-              ],
-              arr2: [
-                [
-                  'array of strings',
-                  'with two strings'
-                ],
-                [
-                  1, 2, 3
-                ]
-              ]
+          drawer: { // optional, add this if you want a side menu drawer in your app
+            left: { // optional, define if you want a drawer from the left
+              screen: 'example.SideMenu' // unique ID registered with Navigation.registerScreen
             },
-            num: 1234
+            disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
           }
         });
         return;
@@ -73,7 +121,8 @@ export default class App {
               icon: require('../img/one.png'),
               selectedIcon: require('../img/one_selected.png'),
               title: 'Screen One',
-              navigatorStyle: {},
+              overrideBackPress: true,
+              navigatorStyle: {}
             },
             {
               label: 'Two',
@@ -81,7 +130,7 @@ export default class App {
               icon: require('../img/two.png'),
               selectedIcon: require('../img/two_selected.png'),
               title: 'Screen Two',
-              navigatorStyle: {},
+              navigatorStyle: {}
             }
           ],
           passProps: {
@@ -97,7 +146,16 @@ export default class App {
             num: 1234
           },
           animationType: 'slide-down',
-          title: 'Redux Example'
+          title: 'Redux Example',
+          drawer: { // optional, add this if you want a side menu drawer in your app
+            left: { // optional, define if you want a drawer from the left
+              screen: 'example.BottomTabsSideMenu' // unique ID registered with Navigation.registerScreen
+            },
+            disableOpenGesture: false, // optional, can the drawer be opened with a swipe instead of button
+            passProps: {
+              title: 'Hello from SideMenu'
+            }
+          }
         });
         return;
       default:

@@ -1,7 +1,16 @@
 package com.exampleredux;
 
-import com.reactnativenavigation.activities.RootActivity;
+import android.graphics.Color;
+import android.view.View;
 
-public class MainActivity extends RootActivity {
+import com.reactnativenavigation.controllers.SplashActivity;
 
+public class MainActivity extends SplashActivity {
+
+    @Override
+    public View createSplashLayout() {
+        View view = new View(this);
+        view.setBackgroundColor(Color.BLUE);
+        return view;
+    }
 }

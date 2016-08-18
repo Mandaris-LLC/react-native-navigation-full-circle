@@ -7,24 +7,54 @@
     "type": "git",
     "url": "https://github.com/wix/react-native-navigation.git"
   },
-  "version": "1.0.30",
+  "version": "2.0.0-experimental.69",
   "description": "React Native Navigation - truly native navigation for iOS and Android",
   "nativePackage": true,
   "bugs": {
     "url": "https://github.com/wix/react-native-navigation/issues"
   },
   "homepage": "https://github.com/wix/react-native-navigation",
-  "main": "index.js",
+  "readme": "https://github.com/wix/react-native-navigation#readme",
+  "main": "src/index.js",
   "author": "Tal Kol <talkol@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": ":",
+    "lint": "eslint src test",
+    "pretest": "npm run lint",
+    "test": ":",
+    "release": "npm version prerelease && npm publish --tag next && npm view react-native-navigation dist-tags && git push"
+  },
   "peerDependencies": {
     "react-native": ">=0.25.1",
     "react": ">=0.14.5"
   },
   "dependencies": {
-    "react-native-controllers": "^2.0.0"
+    "react-native-controllers": "^2.0.0",
+    "lodash": "^4.13.0",
+    "babel-preset-react-native-stage-0": "^1.0.0"
   },
   "optionalDependencies": {
     "react-redux": "*"
+  },
+  "devDependencies": {
+    "react-native": "0.25.1",
+    "react": "0.14.5",
+    "app-root-path": "^1.0.0",
+    "babel-cli": "^6.8.0",
+    "babel-core": "^6.8.0",
+    "babel-polyfill": "^6.8.0",
+    "babel-preset-react-native-stage-0": "^1.0.0",
+    "babel-register": "^6.8.0",
+    "eslint": "^2.5.1",
+    "eslint-plugin-babel": "^3.0.0",
+    "eslint-plugin-react": "^4.2.3",
+    "eslint-plugin-react-native": "^1.0.0",
+    "babel-eslint": "^6.0.4",
+    "jasmine": "^2.4.1",
+    "jasmine-reporters": "^2.1.1",
+    "jasmine-spec-reporter": "^2.4.0",
+    "jasmine-expect": "^2.0.2",
+    "proxyquire": "1.7.4"
   }
 }

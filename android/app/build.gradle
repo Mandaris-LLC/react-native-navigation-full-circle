@@ -24,6 +24,9 @@ android {
             minifyEnabled false
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 repositories {
@@ -33,10 +36,22 @@ repositories {
     }
 }
 
+allprojects { p ->
+    p.tasks.whenTaskAdded { task ->
+        if (task.name.toLowerCase().contains('lint')) {
+            task.enabled = false;
+        }
+    }
+}
+
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.aurelhubert:ahbottomnavigation:1.2.3"
+    compile "com.aurelhubert:ahbottomnavigation:1.3.3"
     compile "com.android.support:appcompat-v7:23.0.1"
     compile 'com.android.support:design:23.1.1'
     compile "com.facebook.react:react-native:+"  // From node_modules
+    compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.robolectric:robolectric:3.1.1"
 }
