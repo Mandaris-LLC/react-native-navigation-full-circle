@@ -58,8 +58,8 @@ class FirstTabScreen extends Component {
           Alert.alert('NavBar', 'Add button pressed');
           break;
 
-        case 'selectedTabChanged':
-          this.onTabSelected(event.position);
+        case 'tabSelected':
+          this.onTabSelected();
           break;
 
         default:
@@ -95,38 +95,16 @@ class FirstTabScreen extends Component {
         }
       });
     }
-    return;
   }
 
-  onTabSelected(position) {
-    console.log('selectedTabChanged ' + position);
-    let rightButtons;
-
-    switch (position) {
-      case 0:
-        rightButtons = [
-          {
-            id: 'account',
-            icon: require('../../img/ic_account_box_.png')
-          }
-        ];
-        break;
-
-      case 1:
-        rightButtons = [
-          {
-            id: 'account',
-            icon: require('../../img/ic_add_alert.png')
-          }
-        ];
-        break;
-
-      default:
-        rightButtons = [];
-        break;
-    }
-
-    this.props.navigator.setButtons({rightButtons});
+  onTabSelected() {
+    console.log('selectedTabChanged');
+    this.props.navigator.setButtons({rightButtons: [
+      {
+        id: 'account',
+        icon: require('../../img/ic_account_box_.png')
+      }
+    ]});
   }
 
   render() {
@@ -163,6 +141,10 @@ class FirstTabScreen extends Component {
 
         <TouchableOpacity onPress={ this.onSetTwoButtonsPress.bind(this) }>
           <Text style={styles.button}>Set Two Buttons</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onToggleDrawerPress.bind(this) }>
+          <Text style={styles.button}>Toggle Drawer</Text>
         </TouchableOpacity>
 
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
@@ -257,6 +239,13 @@ class FirstTabScreen extends Component {
           color: '#9CCC65'
         }
       ]
+    })
+  }
+
+  onToggleDrawerPress() {
+    this.props.navigator.toggleDrawer({
+      side: 'left',
+      animated: true
     })
   }
 }
