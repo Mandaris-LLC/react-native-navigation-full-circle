@@ -1,6 +1,7 @@
 package com.reactnativenavigation.views;
 
 import android.content.Context;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.widget.RelativeLayout;
@@ -45,7 +46,7 @@ public class SideMenu extends DrawerLayout {
     }
 
     public void toggleVisible(boolean animated) {
-        if (isShown()) {
+        if (isDrawerOpen(GravityCompat.START)) {
             closeDrawer(animated);
         } else {
             openDrawer(animated);
