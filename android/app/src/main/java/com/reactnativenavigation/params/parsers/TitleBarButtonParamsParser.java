@@ -7,17 +7,16 @@ import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.react.ImageLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TitleBarButtonParamsParser extends Parser {
     public List<TitleBarButtonParams> parseButtons(Bundle params) {
-        List<TitleBarButtonParams> result = new ArrayList<>();
-
-        for (String key : params.keySet()) {
-            result.add(parseSingleButton(params.getBundle(key)));
-        }
-        return result;
+        return parseBundle(params, new ParseStrategy<TitleBarButtonParams>() {
+            @Override
+            public TitleBarButtonParams parse(Bundle button) {
+                return parseSingleButton(button);
+            }
+        });
     }
 
     public TitleBarButtonParams parseSingleButton(Bundle bundle) {

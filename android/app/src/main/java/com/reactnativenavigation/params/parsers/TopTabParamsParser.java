@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import com.reactnativenavigation.params.NavigationParams;
 import com.reactnativenavigation.params.TopTabParams;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TopTabParamsParser extends Parser {
@@ -15,12 +14,13 @@ public class TopTabParamsParser extends Parser {
     private static final String NAVIGATION_PARAMS = "navigationParams";
 
     @SuppressWarnings("ConstantConditions")
-    public static List<TopTabParams> parse(Bundle params) {
-        List<TopTabParams> result = new ArrayList<>();
-        for (String key : params.keySet()) {
-            result.add(parseItem(params.getBundle(key)));
-        }
-        return result;
+    public List<TopTabParams> parse(Bundle params) {
+        return parseBundle(params, new ParseStrategy<TopTabParams>() {
+            @Override
+            public TopTabParams parse(Bundle topTabs) {
+                return parseItem(topTabs);
+            }
+        });
     }
 
     @NonNull

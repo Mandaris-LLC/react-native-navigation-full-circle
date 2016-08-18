@@ -10,8 +10,6 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.params.TopTabParams;
 import com.reactnativenavigation.react.ImageLoader;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ScreenParamsParser extends Parser {
@@ -75,7 +73,7 @@ public class ScreenParamsParser extends Parser {
     private static List<TopTabParams> parseTopTabs(Bundle params) {
         List<TopTabParams> topTabParams = null;
         if (hasKey(params, TOP_TABS)) {
-             topTabParams = TopTabParamsParser.parse(params.getBundle(TOP_TABS));
+            topTabParams = new TopTabParamsParser().parse(params.getBundle(TOP_TABS));
         }
         return topTabParams;
     }
@@ -101,11 +99,12 @@ public class ScreenParamsParser extends Parser {
         return leftButton;
     }
 
-    public static List<ScreenParams> parseTabs(Bundle params) {
-        ScreenParams result[] = new ScreenParams[params.keySet().size()];
-        for (String key : params.keySet()) {
-            result[Integer.parseInt(key)] = ScreenParamsParser.parse(params.getBundle(key));
-        }
-        return new ArrayList<>(Arrays.asList(result));
+    public List<ScreenParams> parseTabs(Bundle params) {
+        return parseBundle(params, new ParseStrategy<ScreenParams>() {
+            @Override
+            public ScreenParams parse(Bundle screen) {
+                return ScreenParamsParser.parse(screen);
+            }
+        });
     }
 }

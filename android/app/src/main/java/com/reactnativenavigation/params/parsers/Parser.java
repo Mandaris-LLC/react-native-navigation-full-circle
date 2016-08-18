@@ -2,8 +2,11 @@ package com.reactnativenavigation.params.parsers;
 
 import android.os.Bundle;
 
-public class Parser {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+public class Parser {
     protected static boolean hasKey(Bundle bundle, String key) {
         return bundle.keySet().contains(key);
     }
@@ -19,5 +22,17 @@ public class Parser {
         public KeyDoesNotExistsException(String key) {
             super(key);
         }
+    }
+
+    protected interface ParseStrategy<T> {
+        T parse(Bundle params);
+    }
+
+    protected <T> List<T> parseBundle(Bundle params, ParseStrategy<T> strategy) {
+        ArrayList<T> result = new ArrayList<>(Collections.nCopies(params.keySet().size(), (T) null));
+        for (String key : params.keySet()) {
+            result.set(Integer.parseInt(key), strategy.parse(params.getBundle(key)));
+        }
+        return result;
     }
 }
