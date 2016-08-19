@@ -72,33 +72,25 @@ export default class App {
             title: 'Login',
             topTabs: [
               {
-                screenId: 'example.ListScreen',
+                screenId: 'example.FirstTabScreen',
                 title: 'Tab1',
                 passProps: {
-                  str: 'This is a prop passed to Tab1'
+                  str: 'This is a prop passed to Tab4',
+                  fn: () => 'Hello from a function passed as passProps!'
                 }
-              },
-              {
-                screenId: 'example.PushedScreen',
-                title: 'Tab2',
-                passProps: {
-                  str: 'This is a prop passed to Tab2'
-                }
-
               },
               {
                 screenId: 'example.PushedScreen',
                 title: 'Tab3',
                 passProps: {
-                  str: 'This is a prop passed to Tab3'
+                  str: 'This is a prop passed to Tab2'
                 }
               },
               {
-                screenId: 'example.FirstTabScreen',
-                title: 'Tab4',
+                screenId: 'example.ListScreen',
+                title: 'Tab2',
                 passProps: {
-                  str: 'This is a prop passed to Tab4',
-                  fn: () => 'Hello from a function passed as passProps!'
+                  str: 'This is a prop passed to Tab1'
                 }
               }
             ],
