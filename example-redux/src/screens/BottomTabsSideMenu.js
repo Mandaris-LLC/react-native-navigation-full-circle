@@ -69,7 +69,6 @@ class SideMenu extends Component {
   }
 
   onPushScreenToSecondTab() {
-    console.log('SideMenu', 'onPushScreenToSecondTab ' + 'tab2/pushScreen/example.PushedScreen');
     this.props.navigator.handleDeepLink({
       link: 'tab2/pushScreen/example.PushedScreen'
     });
