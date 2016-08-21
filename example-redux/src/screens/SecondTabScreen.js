@@ -65,7 +65,9 @@ class SecondTabScreen extends Component {
   }
 
   onSelectFirstTabPress() {
-    this.props.navigator.switchToTab()
+    this.props.navigator.switchToTab({
+      tabIndex: 0
+    })
   }
 
   onSetButton() {
