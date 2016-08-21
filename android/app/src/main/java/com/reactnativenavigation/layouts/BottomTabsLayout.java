@@ -164,18 +164,20 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         }
     }
 
+    public void selectBottomTab(String navigatorId, Integer index) {
+        if (index != null) {
+            bottomTabs.setCurrentItem(index);
+        } else {
+            bottomTabs.setCurrentItem(getScreenStackIndex(navigatorId));
+        }
+    }
+
     @Override
     public void push(ScreenParams screenParams) {
         ScreenStack screenStack = getScreenStack(screenParams.getNavigatorId());
-        if (screenStack == null) {
-            return;
-        }
-
+        screenStack.push(screenParams, createScreenLayoutParams(screenParams));
         if (isCurrentStack(screenStack)) {
-            screenStack.push(screenParams, createScreenLayoutParams(screenParams));
             bottomTabs.setStyleFromScreen(screenParams.styleParams);
-        } else {
-            screenStack.push(screenParams, createScreenLayoutParams(screenParams));
         }
     }
 
@@ -245,13 +247,24 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         return screenStacks[currentStackIndex];
     }
 
-    private @Nullable ScreenStack getScreenStack(String navigatorId) {
-        for (ScreenStack screenStack : screenStacks) {
-            if (screenStack.getNavigatorId().equals(navigatorId)) {
-                return screenStack;
+    private @NonNull ScreenStack getScreenStack(String navigatorId) {
+        int index = getScreenStackIndex(navigatorId);
+        return screenStacks[index];
+    }
+
+    private int getScreenStackIndex(String navigatorId) throws ScreenStackNotFoundException {
+        for (int i = 0; i < screenStacks.length; i++) {
+            if (screenStacks[i].getNavigatorId().equals(navigatorId)) {
+                return i;
             }
         }
-        return null;
+        throw new ScreenStackNotFoundException("Stack " + navigatorId + " not found");
+    }
+
+    private class ScreenStackNotFoundException extends RuntimeException {
+        public ScreenStackNotFoundException(String navigatorId) {
+            super(navigatorId);
+        }
     }
 
     private boolean isCurrentStack(ScreenStack screenStack) {

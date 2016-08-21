@@ -76,7 +76,8 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void selectBottomTab(final ReadableMap params) {
+    public void selectBottomTab(String navigatorId, Integer index) {
+        NavigationCommandsHandler.selectBottomTab(navigatorId, index);
     }
 
     @ReactMethod

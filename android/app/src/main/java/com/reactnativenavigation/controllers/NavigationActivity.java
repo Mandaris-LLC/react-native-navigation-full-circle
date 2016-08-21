@@ -212,4 +212,10 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     public void setSideMenuVisible(boolean animated, boolean visible) {
         layout.setSideMenuVisible(animated, visible);
     }
+
+    public void selectBottomTab(String navigatorId, Integer index) {
+        if (layout instanceof BottomTabsLayout) {
+            ((BottomTabsLayout) layout).selectBottomTab(navigatorId, index);
+        }
+    }
 }

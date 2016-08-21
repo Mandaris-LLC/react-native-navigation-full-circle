@@ -243,10 +243,7 @@ function navigatorSetTitle(navigator, params) {
 }
 
 function navigatorSwitchToTab(navigator, params) {
-  //RctActivity.switchToTab({
-  //  navigatorID: navigator.navigatorID,
-  //  tabIndex: params.tabIndex
-  //});
+  newPlatformSpecific.selectBottomTab(navigator.navigatorID, params.tabIndex);
 }
 
 function navigatorToggleDrawer(navigator, params) {

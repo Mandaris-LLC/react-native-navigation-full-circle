@@ -41,6 +41,10 @@ class SecondTabScreen extends Component {
             <Text style={styles.button}>Increment Counter</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity onPress={ this.onSelectFirstTabPress.bind(this) }>
+            <Text style={styles.button}>Select First Tab</Text>
+          </TouchableOpacity>
+
           <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
           <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
           <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
@@ -58,6 +62,10 @@ class SecondTabScreen extends Component {
 
   onIncrementPress() {
     this.props.dispatch(counterActions.increment());
+  }
+
+  onSelectFirstTabPress() {
+    this.props.navigator.switchToTab()
   }
 
   onSetButton() {
