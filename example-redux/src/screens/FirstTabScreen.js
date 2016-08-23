@@ -147,6 +147,10 @@ class FirstTabScreen extends Component {
           <Text style={styles.button}>Toggle Drawer</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onSelectSecondTabPress.bind(this) }>
+          <Text style={styles.button}>Select Second Tab</Text>
+        </TouchableOpacity>
+
         <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
         <Text style={{fontWeight: '500'}}>Function prop: {this.props.fn ? this.props.fn() : ''}</Text>
         {this.props.obj ? <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text> : false}
@@ -246,6 +250,12 @@ class FirstTabScreen extends Component {
     this.props.navigator.toggleDrawer({
       side: 'left',
       animated: true
+    })
+  }
+
+  onSelectSecondTabPress() {
+    this.props.navigator.handleDeepLink({
+      link: 'tab2/select'
     })
   }
 }

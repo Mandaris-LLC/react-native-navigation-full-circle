@@ -108,34 +108,41 @@ class SecondTabScreen extends Component {
 
   handleDeepLink(event) {
     const parts = event.link.split('/');
-    if (parts[0] == 'tab2' && parts[1] == 'pushScreen') {
-      this.props.navigator.toggleDrawer({
-        side: 'left',
-        animated: true,
-        to: 'closed'
-      });
+    if (parts[0] == 'tab2') {
+      if (parts[1] == 'select') {
+        this.props.navigator.switchToTab({});
+      }
 
-      this.props.navigator.push({
-        title: "Pushed from SideMenu",
-        screen: parts[2],
-        passProps: {
-          str: 'This is a prop passed in \'navigator.push()\'!',
-          obj: {
-            str: 'This is a prop passed in an object!',
-            arr: [
-              {
-                str: 'This is a prop in an object in an array in an object!'
-              }
-            ]
-          },
-          num: 1234
-        }
-      });
+      if (parts[1] == 'pushScreen') {
+        this.pushScreenFromSideMenu();
+      }
     }
-    return;
-
   }
 
+  pushScreenFromSideMenu() {
+    this.props.navigator.toggleDrawer({
+      side: 'left',
+      animated: true,
+      to: 'closed'
+    });
+
+    this.props.navigator.push({
+      title: "Pushed from SideMenu",
+      screen: parts[2],
+      passProps: {
+        str: 'This is a prop passed in \'navigator.push()\'!',
+        obj: {
+          str: 'This is a prop passed in an object!',
+          arr: [
+            {
+              str: 'This is a prop in an object in an array in an object!'
+            }
+          ]
+        },
+        num: 1234
+      }
+    });
+  }
 }
 
 const styles = StyleSheet.create({
