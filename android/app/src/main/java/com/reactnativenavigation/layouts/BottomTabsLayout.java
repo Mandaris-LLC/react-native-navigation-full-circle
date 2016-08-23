@@ -164,12 +164,12 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         }
     }
 
-    public void selectBottomTab(String navigatorId, Integer index) {
-        if (index != null) {
-            bottomTabs.setCurrentItem(index);
-        } else {
-            bottomTabs.setCurrentItem(getScreenStackIndex(navigatorId));
-        }
+    public void selectBottomTabByTabIndex(Integer index) {
+        bottomTabs.setCurrentItem(index);
+    }
+
+    public void selectBottomTabByNavigatorId(String navigatorId) {
+        bottomTabs.setCurrentItem(getScreenStackIndex(navigatorId));
     }
 
     @Override

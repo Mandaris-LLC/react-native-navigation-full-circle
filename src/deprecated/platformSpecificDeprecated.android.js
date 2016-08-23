@@ -243,7 +243,12 @@ function navigatorSetTitle(navigator, params) {
 }
 
 function navigatorSwitchToTab(navigator, params) {
-  newPlatformSpecific.selectBottomTab(navigator.navigatorID, params.tabIndex);
+  debugger;
+  if (params.tabIndex >= 0) {
+    newPlatformSpecific.selectBottomTabByTabIndex(params.tabIndex);
+  } else {
+    newPlatformSpecific.selectBottomTabByNavigatorId(navigator.navigatorID);
+  }
 }
 
 function navigatorToggleDrawer(navigator, params) {

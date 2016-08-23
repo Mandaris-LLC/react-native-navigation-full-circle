@@ -239,7 +239,7 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void selectBottomTab(final String navigatorId, final Integer index) {
+    public static void selectBottomTabByTabIndex(final Integer index) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -248,7 +248,21 @@ public class NavigationCommandsHandler {
         NavigationApplication.instance.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                currentActivity.selectBottomTab(navigatorId, index);
+                currentActivity.selectBottomTabByTabIndex(index);
+            }
+        });
+    }
+
+    public static void selectBottomTabByNavigatorId(final String navigatorId) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.selectBottomTabByNavigatorId(navigatorId);
             }
         });
     }

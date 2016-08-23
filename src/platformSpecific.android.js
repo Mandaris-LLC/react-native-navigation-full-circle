@@ -92,8 +92,12 @@ function setSideMenuVisible(animated, visible) {
   NativeReactModule.setSideMenuVisible(animated, visible);
 }
 
-function selectBottomTab(navigatorId, index) {
-  NativeReactModule.selectBottomTab(navigatorId, index);
+function selectBottomTabByNavigatorId(navigatorId) {
+  NativeReactModule.selectBottomTabByNavigatorId(navigatorId);
+}
+
+function selectBottomTabByTabIndex(index) {
+  NativeReactModule.selectBottomTabByTabIndex(index);
 }
 
 module.exports = {
@@ -111,5 +115,6 @@ module.exports = {
   dismissAllModals,
   toggleSideMenuVisible,
   setSideMenuVisible,
-  selectBottomTab
+  selectBottomTabByNavigatorId,
+  selectBottomTabByTabIndex
 };
