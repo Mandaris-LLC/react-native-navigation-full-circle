@@ -243,7 +243,6 @@ function navigatorSetTitle(navigator, params) {
 }
 
 function navigatorSwitchToTab(navigator, params) {
-  debugger;
   if (params.tabIndex >= 0) {
     newPlatformSpecific.selectBottomTabByTabIndex(params.tabIndex);
   } else {
