@@ -29,6 +29,7 @@ function startSingleScreenApp(params) {
   params.appStyle = convertStyleParams(params.appStyle);
   params.sideMenu = convertDrawerParamsToSideMenuParams(params.drawer);
   params.overrideBackPress = screen.overrideBackPress;
+  params.animateShow = convertAnimationType(params.animationType);
 
   newPlatformSpecific.startApp(params);
 }
@@ -193,6 +194,7 @@ function startTabBasedApp(params) {
 
   params.appStyle = convertStyleParams(params.appStyle);
   params.sideMenu = convertDrawerParamsToSideMenuParams(params.drawer);
+  params.animateShow = convertAnimationType(params.animationType);
 
   newPlatformSpecific.startApp(params);
 }
@@ -208,6 +210,10 @@ function addTabIcon(tab) {
   if (!tab.icon) {
     throw new Error("No icon defined for tab " + tab.screen);
   }
+}
+
+function convertAnimationType(animationType) {
+  return animationType !== 'none';
 }
 
 function navigatorSetButtons(navigator, navigatorEventID, params) {

@@ -25,6 +25,8 @@ public class ActivityParamsParser extends Parser {
             result.sideMenuParams = SideMenuParamsParser.parse(params.getBundle("sideMenu"));
         }
 
+        result.animateShow = params.getBoolean("animateShow", true);
+
         return result;
     }
 }

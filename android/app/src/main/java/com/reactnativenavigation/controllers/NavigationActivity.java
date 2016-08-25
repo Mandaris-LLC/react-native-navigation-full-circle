@@ -50,8 +50,15 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         RedboxPermission.permissionToShowRedboxIfNeeded(this);
         activityParams = NavigationCommandsHandler.parseActivityParams(getIntent());
 
+        disableActivityShowAnimationIfNeeded();
         createLayout();
         createModalController();
+    }
+
+    private void disableActivityShowAnimationIfNeeded() {
+        if (!activityParams.animateShow) {
+            overridePendingTransition(0, 0);
+        }
     }
 
     private void createModalController() {

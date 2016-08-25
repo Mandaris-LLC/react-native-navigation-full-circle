@@ -11,4 +11,5 @@ public class ActivityParams {
     public ScreenParams screenParams;
     public List<ScreenParams> tabParams;
     public SideMenuParams sideMenuParams;
+    public boolean animateShow;
 }
