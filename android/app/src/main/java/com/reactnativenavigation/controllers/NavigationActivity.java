@@ -17,7 +17,6 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.ReactGateway;
 import com.reactnativenavigation.react.RedboxPermission;
-import com.reactnativenavigation.utils.IntentUtils;
 
 import java.util.List;
 
@@ -44,13 +43,11 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
         if (!NavigationApplication.instance.isReactContextInitialized()) {
             waitingForNewJsContext = true;
-            finish();
-            startActivity(IntentUtils.getLauncherIntent());
+            recreate();
             return;
         }
 
         RedboxPermission.permissionToShowRedboxIfNeeded(this);
-
         activityParams = NavigationCommandsHandler.parseActivityParams(getIntent());
 
         createLayout();
