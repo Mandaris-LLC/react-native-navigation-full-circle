@@ -47,6 +47,8 @@ public class StyleParamsParser {
         result.bottomTabsButtonColor = getColor("bottomTabsButtonColor", getDefaultBottomTabsButtonColor());
         result.selectedBottomTabsButtonColor =
                 getColor("bottomTabsSelectedButtonColor", getDefaultSelectedBottomTabsButtonColor());
+        result.bottomTabBadgeTextColor = getColor("bottomTabBadgeTextColor", getBottomTabBadgeTextColor());
+        result.bottomTabBadgeBackgroundColor = getColor("bottomTabBadgeBackgroundColor", getBottomTabBadgeBackgroundColor());
 
         result.navigationBarColor = getColor("navigationBarColor", getDefaultNavigationColor());
         result.forceTitlesDisplay = getBoolean("forceTitlesDisplay", getDefaultForceTitlesDisplay());
@@ -80,6 +82,14 @@ public class StyleParamsParser {
 
     private StyleParams.Color getDefaultSelectedBottomTabsButtonColor() {
         return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.selectedBottomTabsButtonColor;
+    }
+
+    private StyleParams.Color getBottomTabBadgeTextColor() {
+        return new StyleParams.Color();
+    }
+
+    private StyleParams.Color getBottomTabBadgeBackgroundColor() {
+        return new StyleParams.Color();
     }
 
     private StyleParams.Color getDefaultBottomTabsButtonColor() {

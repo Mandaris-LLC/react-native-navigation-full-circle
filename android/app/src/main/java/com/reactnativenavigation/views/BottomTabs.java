@@ -6,6 +6,7 @@ import android.graphics.Color;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.reactnativenavigation.animation.VisibilityAnimator;
+import com.reactnativenavigation.params.AppStyle;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.utils.ViewUtils;
@@ -21,6 +22,7 @@ public class BottomTabs extends AHBottomNavigation {
         setForceTint(true);
         setId(ViewUtils.generateViewId());
         createVisibilityAnimator();
+        setStyle();
     }
 
     public void addTabs(List<ScreenParams> params, OnTabSelectedListener onTabSelectedListener) {
@@ -77,5 +79,14 @@ public class BottomTabs extends AHBottomNavigation {
                         getHeight());
             }
         });
+    }
+
+    private void setStyle() {
+        if (AppStyle.appStyle.bottomTabBadgeBackgroundColor.hasColor()) {
+            setNotificationBackgroundColor(AppStyle.appStyle.bottomTabBadgeBackgroundColor.getColor());
+        }
+        if (AppStyle.appStyle.bottomTabBadgeTextColor.hasColor()) {
+            setNotificationTextColor(AppStyle.appStyle.bottomTabBadgeTextColor.getColor());
+        }
     }
 }

@@ -134,6 +134,8 @@ function convertStyleParams(originalStyleObject) {
     bottomTabsHidden: originalStyleObject.tabBarHidden,
     bottomTabsHiddenOnScroll: originalStyleObject.bottomTabsHiddenOnScroll,
     forceTitlesDisplay: originalStyleObject.forceTitlesDisplay,
+    bottomTabBadgeTextColor: originalStyleObject.bottomTabBadgeTextColor,
+    bottomTabBadgeBackgroundColor: originalStyleObject.bottomTabBadgeBackgroundColor,
 
     navigationBarColor: originalStyleObject.navigationBarColor
   }

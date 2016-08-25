@@ -61,6 +61,8 @@ public class StyleParams {
     public Color selectedBottomTabsButtonColor;
     public Color bottomTabsButtonColor;
     public boolean forceTitlesDisplay;
+    public Color bottomTabBadgeTextColor;
+    public Color bottomTabBadgeBackgroundColor;
 
     public Color navigationBarColor;
 }
