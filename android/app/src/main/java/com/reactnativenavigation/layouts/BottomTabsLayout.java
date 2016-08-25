@@ -252,6 +252,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         return screenStacks[index];
     }
 
+    public void setBottomTabBadgeByIndex(Integer index, String badge) {
+        bottomTabs.setNotification(badge, index);
+    }
+
+    public void setBottomTabBadgeByNavigatorId(String navigatorId, String badge) {
+        bottomTabs.setNotification(badge, getScreenStackIndex(navigatorId));
+    }
+
     private int getScreenStackIndex(String navigatorId) throws ScreenStackNotFoundException {
         for (int i = 0; i < screenStacks.length; i++) {
             if (screenStacks[i].getNavigatorId().equals(navigatorId)) {

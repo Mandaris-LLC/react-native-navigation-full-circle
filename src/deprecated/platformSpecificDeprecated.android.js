@@ -232,10 +232,12 @@ function navigatorSetButtons(navigator, navigatorEventID, params) {
 }
 
 function navigatorSetTabBadge(navigator, params) {
-  //RctActivity.setTabBadge({
-  //  tabIndex: params.tabIndex,
-  //  badge: params.badge
-  //});
+  const badge = params.badge.toString();
+  if (params.tabIndex >= 0) {
+    newPlatformSpecific.setBottomTabBadgeByIndex(params.tabIndex, badge);
+  } else {
+    newPlatformSpecific.setBottomTabBadgeByNavigatorId(navigator.navigatorID, badge);
+  }
 }
 
 function navigatorSetTitle(navigator, params) {

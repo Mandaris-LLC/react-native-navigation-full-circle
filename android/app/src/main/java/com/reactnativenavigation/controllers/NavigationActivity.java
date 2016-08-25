@@ -224,4 +224,16 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
             ((BottomTabsLayout) layout).selectBottomTabByNavigatorId(navigatorId);
         }
     }
+
+    public void setBottomTabBadgeByIndex(Integer index, String badge) {
+        if (layout instanceof BottomTabsLayout) {
+            ((BottomTabsLayout) layout).setBottomTabBadgeByIndex(index, badge);
+        }
+    }
+
+    public void setBottomTabBadgeByNavigatorId(String navigatorId, String badge) {
+        if (layout instanceof BottomTabsLayout) {
+            ((BottomTabsLayout) layout).setBottomTabBadgeByNavigatorId(navigatorId, badge);
+        }
+    }
 }

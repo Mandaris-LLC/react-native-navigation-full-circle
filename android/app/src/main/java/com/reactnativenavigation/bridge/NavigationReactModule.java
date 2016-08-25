@@ -72,7 +72,13 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setTabBadge(final ReadableMap params) {
+    public void setBottomTabBadgeByIndex(Integer index, String badge) {
+        NavigationCommandsHandler.setBottomTabBadgeByIndex(index, badge);
+    }
+
+    @ReactMethod
+    public void setBottomTabBadgeByNavigatorId(String navigatorId, String badge) {
+        NavigationCommandsHandler.setBottomTabBadgeByNavigatorId(navigatorId, badge);
     }
 
     @ReactMethod
