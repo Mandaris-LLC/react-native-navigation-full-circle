@@ -147,6 +147,10 @@ export default class App {
             passProps: {
               title: 'Hello from SideMenu'
             }
+          },
+          appStyle: {
+            bottomTabBadgeTextColor: '#ffffff',
+            bottomTabBadgeBackgroundColor: '#ff0000'
           }
         });
         return;
