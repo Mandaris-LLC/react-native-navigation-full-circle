@@ -45,6 +45,10 @@ class SecondTabScreen extends Component {
             <Text style={styles.button}>Select First Tab</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity onPress={ this.onSetTabBadgePress.bind(this) }>
+            <Text style={styles.button}>Set Tab Badge</Text>
+          </TouchableOpacity>
+
           <Text style={{fontWeight: '500'}}>String prop: {this.props.str}</Text>
           <Text style={{fontWeight: '500'}}>Number prop: {this.props.num}</Text>
           <Text style={{fontWeight: '500'}}>Object prop: {this.props.obj.str}</Text>
@@ -141,6 +145,13 @@ class SecondTabScreen extends Component {
         },
         num: 1234
       }
+    });
+  }
+
+  onSetTabBadgePress() {
+    this.props.navigator.setTabBadge({
+      badge: this.props.counter.count,
+      tabIndex: 1
     });
   }
 }
