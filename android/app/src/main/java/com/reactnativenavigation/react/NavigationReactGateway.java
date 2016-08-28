@@ -18,64 +18,51 @@ import java.util.List;
 public class NavigationReactGateway extends ReactGatewayHost implements ReactInstanceManager.ReactInstanceEventListener {
 
     private OnJsDevReloadListener onJsDevReloadListener;
-    private ReactInstanceManager reactInstanceManager;
     private NavigationReactEventEmitter reactEventEmitter;
 
     public NavigationReactGateway() {
         super(NavigationApplication.instance);
-        reactInstanceManager = createReactInstanceManager();
     }
 
     @Override
     public void startReactContextOnceInBackgroundAndExecuteJS() {
-        if (reactInstanceManager == null) {
-            reactInstanceManager = createReactInstanceManager();
-        }
-
-        if (!reactInstanceManager.hasStartedCreatingInitialContext()) {
-            reactInstanceManager.createReactContextInBackground();
-        }
+        getReactInstanceManager().createReactContextInBackground();
     }
 
     public boolean isInitialized() {
-        return reactInstanceManager != null && reactInstanceManager.getCurrentReactContext() != null;
+        return hasInstance() && getReactInstanceManager().getCurrentReactContext() != null;
     }
 
     public ReactContext getReactContext() {
-        return reactInstanceManager.getCurrentReactContext();
+        return getReactInstanceManager().getCurrentReactContext();
     }
 
     public NavigationReactEventEmitter getReactEventEmitter() {
         return reactEventEmitter;
     }
 
-    public ReactInstanceManager getReactInstanceManager() {
-        return reactInstanceManager;
-    }
-
     public void onBackPressed() {
-        reactInstanceManager.onBackPressed();
+        getReactInstanceManager().onBackPressed();
     }
 
     public void onDestroyApp() {
-        reactInstanceManager.onHostDestroy();
-        reactInstanceManager.destroy();
-        reactInstanceManager.removeReactInstanceEventListener(this);
-        reactInstanceManager = null;
+        getReactInstanceManager().onHostDestroy();
+        getReactInstanceManager().removeReactInstanceEventListener(this);
+        clear();
     }
 
     public void onPauseActivity() {
-        reactInstanceManager.onHostPause();
+        getReactInstanceManager().onHostPause();
         onJsDevReloadListener = null;
     }
 
     public void onResumeActivity(Activity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler, OnJsDevReloadListener onJsDevReloadListener) {
         this.onJsDevReloadListener = onJsDevReloadListener;
-        reactInstanceManager.onHostResume(activity, defaultHardwareBackBtnHandler);
+        getReactInstanceManager().onHostResume(activity, defaultHardwareBackBtnHandler);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        reactInstanceManager.onActivityResult(requestCode, resultCode, data);
+        getReactInstanceManager().onActivityResult(requestCode, resultCode, data);
     }
 
     private void replaceJsDevReloadListener(ReactInstanceManager manager) {
