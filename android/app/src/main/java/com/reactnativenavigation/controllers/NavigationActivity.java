@@ -17,7 +17,6 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.react.ReactGateway;
 import com.reactnativenavigation.react.RedboxPermission;
-import com.reactnativenavigation.utils.IntentUtils;
 
 import java.util.List;
 
@@ -36,16 +35,13 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     private ActivityParams activityParams;
     private ModalController modalController;
     private Layout layout;
-    private boolean waitingForNewJsContext = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (!NavigationApplication.instance.isReactContextInitialized()) {
-            waitingForNewJsContext = true;
-            finish();
-            startActivity(IntentUtils.getLauncherIntent());
+            NavigationApplication.instance.startReactContext();
             return;
         }
 
@@ -108,7 +104,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     private void destroyJsIfNeeded() {
-        if (!waitingForNewJsContext && (currentActivity == null || currentActivity.isFinishing())) {
+        if (currentActivity == null || currentActivity.isFinishing()) {
             NavigationApplication.instance.getReactGateway().onDestroyApp();
         }
     }
