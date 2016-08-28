@@ -3,7 +3,6 @@ package com.reactnativenavigation.react;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
@@ -16,13 +15,14 @@ import com.reactnativenavigation.bridge.NavigationReactPackage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationReactGateway implements ReactGateway, ReactInstanceManager.ReactInstanceEventListener {
+public class NavigationReactGateway extends ReactGatewayHost implements ReactInstanceManager.ReactInstanceEventListener {
 
     private OnJsDevReloadListener onJsDevReloadListener;
     private ReactInstanceManager reactInstanceManager;
     private NavigationReactEventEmitter reactEventEmitter;
 
     public NavigationReactGateway() {
+        super(NavigationApplication.instance);
         reactInstanceManager = createReactInstanceManager();
     }
 
@@ -88,27 +88,24 @@ public class NavigationReactGateway implements ReactGateway, ReactInstanceManage
         }).replace();
     }
 
-    private ReactInstanceManager createReactInstanceManager() {
-        ReactInstanceManager.Builder builder = ReactInstanceManager.builder()
-                .setApplication(NavigationApplication.instance)
-                .setJSMainModuleName(NavigationApplication.instance.getJsEntryFileName())
-                .setBundleAssetName(NavigationApplication.instance.getBundleAssetName())
-                .setUseDeveloperSupport(NavigationApplication.instance.isDebug())
-                .setInitialLifecycleState(LifecycleState.BEFORE_RESUME);
-
-        for (ReactPackage reactPackage : createReactPackages()) {
-            builder.addPackage(reactPackage);
-        }
-
-        ReactInstanceManager manager = builder.build();
-
+    @Override
+    protected ReactInstanceManager createReactInstanceManager() {
+        ReactInstanceManager manager = super.createReactInstanceManager();
         if (NavigationApplication.instance.isDebug()) {
             replaceJsDevReloadListener(manager);
         }
-
         manager.addReactInstanceEventListener(this);
-
         return manager;
+    }
+
+    @Override
+    protected boolean getUseDeveloperSupport() {
+        return NavigationApplication.instance.isDebug();
+    }
+
+    @Override
+    protected List<ReactPackage> getPackages() {
+        return createReactPackages();
     }
 
     private List<ReactPackage> createReactPackages() {
