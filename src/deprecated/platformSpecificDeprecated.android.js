@@ -386,9 +386,12 @@ function getLeftButton(screen) {
     return screen.navigatorButtons.leftButtons[0];
   }
 
-
   if (screen.leftButtons) {
-    return screen.leftButtons[0];
+    if (_.isArray(screen.leftButtons)) {
+      return screen.leftButtons[0];
+    } else {
+      return screen.leftButtons;
+    }
   }
 
   return null;
