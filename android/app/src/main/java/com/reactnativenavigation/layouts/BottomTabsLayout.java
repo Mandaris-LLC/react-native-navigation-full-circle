@@ -178,7 +178,8 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void showSnackbar(SnackbarParams params) {
-        snackbarContainer.addSnackbar(params);
+        final String eventId = getCurrentScreenStack().peek().getNavigatorEventId();
+        snackbarContainer.showSnackbar(eventId, params);
     }
 
     public void selectBottomTabByTabIndex(Integer index) {

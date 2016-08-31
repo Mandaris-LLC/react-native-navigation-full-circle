@@ -132,6 +132,10 @@ public abstract class Screen extends RelativeLayout {
         return screenParams.getScreenInstanceId();
     }
 
+    public String getNavigatorEventId() {
+        return screenParams.getNavigatorEventId();
+    }
+
     public void setTopBarVisible(boolean visible, boolean animate) {
         topBarVisibilityAnimator.setVisible(visible, animate);
     }

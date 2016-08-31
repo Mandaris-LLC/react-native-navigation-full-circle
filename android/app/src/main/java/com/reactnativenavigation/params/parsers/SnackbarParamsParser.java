@@ -10,10 +10,10 @@ public class SnackbarParamsParser extends Parser {
     public SnackbarParams parse(Bundle params) {
         SnackbarParams result = new SnackbarParams();
         result.text = params.getString("text");
-        result.textColor = getColor(params, "textColor", AppStyle.appStyle.snackbarTextColor);
-        result.buttonText = params.getString("buttonText");
-        result.buttonColor = getColor(params, "buttonColor", AppStyle.appStyle.snackbarButtonColor);
+        result.buttonText = params.getString("actionText");
+        result.buttonColor = getColor(params, "actionColor", AppStyle.appStyle.snackbarButtonColor);
         result.duration = getDuration(params.getString("duration", "short"));
+        result.eventId = params.getString("actionId");
         return result;
     }
 

@@ -419,7 +419,7 @@ function addNavigationStyleParams(screen) {
 }
 
 function showSnackbar(navigator, params) {
-  return newPlatformSpecific.showSnackbar(params);
+  return newPlatformSpecific.showSnackbar(navigator.navigatorEventID, params);
 }
 
 export default {

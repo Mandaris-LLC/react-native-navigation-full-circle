@@ -2,7 +2,6 @@ package com.reactnativenavigation.views;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 
 import com.reactnativenavigation.params.SnackbarParams;
 
@@ -12,8 +11,7 @@ public class SnackbarContainer extends CoordinatorLayout {
         super(context);
     }
 
-    public void addSnackbar(SnackbarParams params) {
-        Snackbar snackbar = Snackbar.make(this, params.text, params.duration);
-        snackbar.show();
+    public void showSnackbar(final String navigatorEventId, final SnackbarParams params) {
+        new Snakbar(this, navigatorEventId, params).show();
     }
 }
