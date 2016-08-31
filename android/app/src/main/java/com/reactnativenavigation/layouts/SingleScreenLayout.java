@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SideMenuParams;
+import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
@@ -146,6 +147,11 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
         if (sideMenu != null) {
             sideMenu.setVisible(visible, animated);
         }
+    }
+
+    @Override
+    public void showSnackbar(SnackbarParams params) {
+        // TODO: implement me
     }
 
     @Override

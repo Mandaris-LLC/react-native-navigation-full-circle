@@ -418,6 +418,10 @@ function addNavigationStyleParams(screen) {
   screen.navigatorStyle = Object.assign({}, screen.navigatorStyle, Screen.navigatorStyle);
 }
 
+function showSnackbar(navigator, params) {
+  return newPlatformSpecific.showSnackbar(params.text);
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -434,5 +438,6 @@ export default {
   navigatorSwitchToTab,
   navigatorToggleDrawer,
   navigatorToggleTabs,
-  navigatorToggleNavBar
+  navigatorToggleNavBar,
+  showSnackbar
 };

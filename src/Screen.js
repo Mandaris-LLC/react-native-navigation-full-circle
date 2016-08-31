@@ -101,6 +101,10 @@ class Navigator {
     return platformSpecific.navigatorSwitchToTab(this, params);
   }
 
+  showSnackbar(params = {}) {
+    return platformSpecific.showSnackbar(this, params);
+  }
+
   setOnNavigatorEvent(callback) {
     this.navigatorEventHandler = callback;
     if (!this.navigatorEventSubscription) {
