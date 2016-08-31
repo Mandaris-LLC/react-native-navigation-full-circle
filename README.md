@@ -4,7 +4,7 @@ App-wide support for 100% native navigation with an easy cross-platform interfac
 
 <img src="https://github.com/wix/react-native/blob/master/assets/themes/bootstrap-3/images/demo.gif?raw=true" width="240">
 
-## Wix Wiki
+## Wiki
 
 * [Overview](https://github.com/wix/react-native-navigation/wiki)
 * [Why use this package](https://github.com/wix/react-native-navigation/wiki#why-use-this-package)
