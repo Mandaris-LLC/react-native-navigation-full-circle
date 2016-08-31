@@ -13,10 +13,12 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
 import com.reactnativenavigation.views.LeftButtonOnClickListener;
 import com.reactnativenavigation.views.SideMenu;
+import com.reactnativenavigation.views.SnackbarContainer;
 
 import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class SingleScreenLayout extends RelativeLayout implements Layout {
 
@@ -24,6 +26,7 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     protected final ScreenParams screenParams;
     private final SideMenuParams sideMenuParams;
     protected ScreenStack stack;
+    private SnackbarContainer snackbarContainer;
     protected LeftButtonOnClickListener leftButtonOnClickListener;
     private @Nullable SideMenu sideMenu;
 
@@ -37,11 +40,16 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
 
     private void createLayout() {
         if (sideMenuParams == null) {
-            createStack(this);
+            createStack(getScreenStackParent());
         } else {
             sideMenu = createSideMenu();
-            createStack(sideMenu.getContentContainer());
+            createStack(getScreenStackParent());
         }
+        createSnackbarContainer();
+    }
+
+    private RelativeLayout getScreenStackParent() {
+        return sideMenu == null ? this : sideMenu.getContentContainer();
     }
 
     private SideMenu createSideMenu() {
@@ -63,6 +71,14 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     protected void pushInitialScreen(LayoutParams lp) {
         stack.pushInitialScreen(screenParams, lp);
         stack.show();
+    }
+
+    private void createSnackbarContainer() {
+        snackbarContainer = new SnackbarContainer(getContext());
+        RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+        lp.addRule(ALIGN_PARENT_BOTTOM);
+        snackbarContainer.setLayoutParams(lp);
+        getScreenStackParent().addView(snackbarContainer);
     }
 
     @Override
@@ -151,7 +167,8 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
 
     @Override
     public void showSnackbar(SnackbarParams params) {
-        // TODO: implement me
+        final String navigatorEventId = stack.peek().getNavigatorEventId();
+        snackbarContainer.showSnackbar(navigatorEventId, params);
     }
 
     @Override
