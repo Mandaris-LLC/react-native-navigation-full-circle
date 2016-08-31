@@ -103,6 +103,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
         lp.addRule(ABOVE, bottomTabs.getId());
         snackbarContainer.setLayoutParams(lp);
+        getScreenStackParent().addView(snackbarContainer);
     }
 
     private void showInitialScreenStack() {
@@ -177,7 +178,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void showSnackbar(SnackbarParams params) {
-        // TODO: implement me
+        snackbarContainer.addSnackbar(params);
     }
 
     public void selectBottomTabByTabIndex(Integer index) {

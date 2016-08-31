@@ -108,8 +108,8 @@ function setBottomTabBadgeByNavigatorId(navigatorId, badge) {
   NativeReactModule.setBottomTabBadgeByNavigatorId(navigatorId, badge);
 }
 
-function showSnackbar(text) {
-  NativeReactModule.showSnackbar(text);
+function showSnackbar(params) {
+  NativeReactModule.showSnackbar(params);
 }
 
 module.exports = {
