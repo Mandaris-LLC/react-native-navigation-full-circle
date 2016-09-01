@@ -197,6 +197,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         if (isCurrentStack(screenStack)) {
             bottomTabs.setStyleFromScreen(screenParams.styleParams);
         }
+        snackbarContainer.onScreenChange();
     }
 
     @Override
@@ -207,12 +208,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
                 setBottomTabsStyleFromCurrentScreen();
             }
         });
+        snackbarContainer.onScreenChange();
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
         getCurrentScreenStack().popToRoot(params.animateScreenTransitions);
         setBottomTabsStyleFromCurrentScreen();
+        snackbarContainer.onScreenChange();
     }
 
     @Override
@@ -227,14 +230,15 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         screenStacks[currentStackIndex] = newStack;
 
         bottomTabs.setStyleFromScreen(params.styleParams);
+        snackbarContainer.onScreenChange();
     }
 
     @Override
     public void destroy() {
+        snackbarContainer.destroy();
         for (ScreenStack screenStack : screenStacks) {
             screenStack.destroy();
         }
-
         if (sideMenu != null) {
             sideMenu.destroy();
         }

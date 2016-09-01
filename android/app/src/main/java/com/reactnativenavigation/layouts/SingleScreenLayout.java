@@ -108,22 +108,26 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     public void push(ScreenParams params) {
         LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         stack.push(params, lp);
+        snackbarContainer.onScreenChange();
     }
 
     @Override
     public void pop(ScreenParams params) {
         stack.pop(params.animateScreenTransitions);
+        snackbarContainer.onScreenChange();
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
         stack.popToRoot(params.animateScreenTransitions);
+        snackbarContainer.onScreenChange();
     }
 
     @Override
     public void newStack(ScreenParams params) {
         RelativeLayout parent = sideMenu == null ? this : sideMenu.getContentContainer();
         createStack(parent);
+        snackbarContainer.onScreenChange();
     }
 
     @Override
