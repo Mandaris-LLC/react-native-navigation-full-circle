@@ -98,6 +98,7 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     @Override
     public void destroy() {
         stack.destroy();
+        snackbarContainer.destroy();
         if (sideMenu != null) {
             sideMenu.destroy();
         }

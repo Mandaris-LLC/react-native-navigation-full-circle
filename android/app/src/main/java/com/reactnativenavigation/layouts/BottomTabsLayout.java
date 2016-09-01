@@ -243,12 +243,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
         hideCurrentStack();
-
-        ScreenStack newStack = screenStacks[position];
-        showStackAndUpdateStyle(newStack);
-        currentStackIndex = position;
-
+        showNewStack(position);
+        snackbarContainer.onScreenChange();
         return true;
+    }
+
+    private void showNewStack(int position) {
+        showStackAndUpdateStyle(screenStacks[position]);
+        currentStackIndex = position;
     }
 
     private void showStackAndUpdateStyle(ScreenStack newStack) {

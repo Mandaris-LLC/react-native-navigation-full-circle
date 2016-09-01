@@ -7,21 +7,27 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.SnackbarParams;
 
 public class Snakbar {
-    private final View parent;
+    private final SnackbarContainer parent;
     private final String navigatorEventId;
     private final SnackbarParams params;
+    private Snackbar snackbar;
 
-    public Snakbar(View parent, String navigatorEventId, SnackbarParams params) {
+    public interface OnDismissListener {
+        void onDismiss();
+    }
+
+    public Snakbar(SnackbarContainer parent, String navigatorEventId, SnackbarParams params) {
         this.parent = parent;
         this.navigatorEventId = navigatorEventId;
         this.params = params;
+        create();
     }
 
-    public void show() {
-        Snackbar snackbar = Snackbar.make(parent, params.text, params.duration);
+    private void create() {
+        snackbar = Snackbar.make(parent, params.text, params.duration);
         setAction(navigatorEventId, params, snackbar);
         setStyle(snackbar, params);
-        snackbar.show();
+        setOnDismissListener();
     }
 
     private void setAction(final String navigatorEventId, final SnackbarParams params, Snackbar snackbar) {
@@ -39,5 +45,27 @@ public class Snakbar {
         if (params.buttonColor.hasColor()) {
             snackbar.setActionTextColor(params.buttonColor.getColor());
         }
+    }
+
+    private void setOnDismissListener() {
+        snackbar.getView().addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                parent.onDismiss();
+            }
+        });
+    }
+
+    public void show() {
+        snackbar.show();
+    }
+
+    public void dismiss() {
+        snackbar.dismiss();
     }
 }

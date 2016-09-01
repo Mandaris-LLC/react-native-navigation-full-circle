@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.events.ScreenChangeBroadcast;
 import com.reactnativenavigation.params.TopTabParams;
 import com.reactnativenavigation.views.ContentView;
 
@@ -33,11 +34,16 @@ public class ContentViewPagerAdapter extends PagerAdapter {
         super.setPrimaryItem(container, position, object);
         if (position != currentPosition) {
             currentPosition = position;
-            sendPageChangeEvent();
+            sendScreenChangeBroadcast();
+            sendTabSelectedEventToJs();
         }
     }
 
-    private void sendPageChangeEvent() {
+    private void sendScreenChangeBroadcast() {
+        new ScreenChangeBroadcast().send();
+    }
+
+    private void sendTabSelectedEventToJs() {
         WritableMap data = Arguments.createMap();
         String navigatorEventId = contentViews.get(currentPosition).getNavigatorEventId();
         NavigationApplication.instance.sendNavigatorEvent("tabSelected", navigatorEventId, data);
