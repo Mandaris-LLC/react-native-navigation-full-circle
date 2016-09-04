@@ -44,6 +44,7 @@ public class StyleParams {
 
     public boolean titleBarHidden;
     public Color titleBarTitleColor;
+    public Color titleBarSubtitleColor;
     public Color titleBarButtonColor;
     public Color titleBarDisabledButtonColor;
     public boolean backButtonHidden;
