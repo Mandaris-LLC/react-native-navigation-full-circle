@@ -23,7 +23,8 @@ class FirstTabScreen extends Component {
     tabSelectedTextColor: '#FFA000',
     tabNormalTextColor: '#FFC107',
     tabIndicatorColor: '#FFA000',
-    drawUnderTabBar: true
+    drawUnderTabBar: true,
+    navBarTextSubtitleColor: '#0060A0'
   };
 
   static navigatorButtons = {
