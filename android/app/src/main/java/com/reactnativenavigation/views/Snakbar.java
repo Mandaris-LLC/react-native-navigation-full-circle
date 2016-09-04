@@ -7,7 +7,7 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.SnackbarParams;
 
 public class Snakbar {
-    private final SnackbarContainer parent;
+    private final OnDismissListener parent;
     private final String navigatorEventId;
     private final SnackbarParams params;
     private Snackbar snackbar;
@@ -16,7 +16,7 @@ public class Snakbar {
         void onDismiss();
     }
 
-    public Snakbar(SnackbarContainer parent, String navigatorEventId, SnackbarParams params) {
+    public Snakbar(OnDismissListener parent, String navigatorEventId, SnackbarParams params) {
         this.parent = parent;
         this.navigatorEventId = navigatorEventId;
         this.params = params;
@@ -24,7 +24,7 @@ public class Snakbar {
     }
 
     private void create() {
-        snackbar = Snackbar.make(parent, params.text, params.duration);
+        snackbar = Snackbar.make((View) parent, params.text, params.duration);
         setAction(navigatorEventId, params, snackbar);
         setStyle(snackbar, params);
         setOnDismissListener();
