@@ -92,4 +92,9 @@ public class ViewPagerScreen extends Screen {
     public String getScreenInstanceId() {
         return screenParams.topTabParams.get(viewPager.getCurrentItem()).navigationParams.screenInstanceId;
     }
+
+    @Override
+    public String getNavigatorEventId() {
+        return screenParams.topTabParams.get(viewPager.getCurrentItem()).navigationParams.navigatorEventId;
+    }
 }

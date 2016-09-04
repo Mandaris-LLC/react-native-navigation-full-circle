@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.params.parsers.ActivityParamsParser;
@@ -291,6 +292,20 @@ public class NavigationCommandsHandler {
             @Override
             public void run() {
                 currentActivity.setBottomTabBadgeByNavigatorId(navigatorId, badge);
+            }
+        });
+    }
+
+    public static void showSnackbar(final SnackbarParams params) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.showSnackbar(params);
             }
         });
     }

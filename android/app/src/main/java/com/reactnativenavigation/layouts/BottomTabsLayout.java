@@ -10,11 +10,13 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SideMenuParams;
+import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
 import com.reactnativenavigation.views.BottomTabs;
 import com.reactnativenavigation.views.SideMenu;
+import com.reactnativenavigation.views.SnackbarContainer;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     private final AppCompatActivity activity;
     private ActivityParams params;
+    private SnackbarContainer snackbarContainer;
     private BottomTabs bottomTabs;
     private ScreenStack[] screenStacks;
     private final SideMenuParams sideMenuParams;
@@ -45,6 +48,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         createBottomTabs();
         addBottomTabs();
         addScreenStacks();
+        createSnackbarContainer();
         showInitialScreenStack();
     }
 
@@ -92,6 +96,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         LayoutParams lp = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
         lp.addRule(ALIGN_PARENT_BOTTOM);
         getScreenStackParent().addView(bottomTabs, lp);
+    }
+
+    private void createSnackbarContainer() {
+        snackbarContainer = new SnackbarContainer(getContext());
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+        lp.addRule(ABOVE, bottomTabs.getId());
+        snackbarContainer.setLayoutParams(lp);
+        getScreenStackParent().addView(snackbarContainer);
     }
 
     private void showInitialScreenStack() {
@@ -164,6 +176,12 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         }
     }
 
+    @Override
+    public void showSnackbar(SnackbarParams params) {
+        final String eventId = getCurrentScreenStack().peek().getNavigatorEventId();
+        snackbarContainer.showSnackbar(eventId, params);
+    }
+
     public void selectBottomTabByTabIndex(Integer index) {
         bottomTabs.setCurrentItem(index);
     }
@@ -179,6 +197,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         if (isCurrentStack(screenStack)) {
             bottomTabs.setStyleFromScreen(screenParams.styleParams);
         }
+        snackbarContainer.onScreenChange();
     }
 
     @Override
@@ -189,12 +208,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
                 setBottomTabsStyleFromCurrentScreen();
             }
         });
+        snackbarContainer.onScreenChange();
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
         getCurrentScreenStack().popToRoot(params.animateScreenTransitions);
         setBottomTabsStyleFromCurrentScreen();
+        snackbarContainer.onScreenChange();
     }
 
     @Override
@@ -209,14 +230,15 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         screenStacks[currentStackIndex] = newStack;
 
         bottomTabs.setStyleFromScreen(params.styleParams);
+        snackbarContainer.onScreenChange();
     }
 
     @Override
     public void destroy() {
+        snackbarContainer.destroy();
         for (ScreenStack screenStack : screenStacks) {
             screenStack.destroy();
         }
-
         if (sideMenu != null) {
             sideMenu.destroy();
         }
@@ -225,12 +247,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
         hideCurrentStack();
-
-        ScreenStack newStack = screenStacks[position];
-        showStackAndUpdateStyle(newStack);
-        currentStackIndex = position;
-
+        showNewStack(position);
+        snackbarContainer.onScreenChange();
         return true;
+    }
+
+    private void showNewStack(int position) {
+        showStackAndUpdateStyle(screenStacks[position]);
+        currentStackIndex = position;
     }
 
     private void showStackAndUpdateStyle(ScreenStack newStack) {

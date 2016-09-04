@@ -2,6 +2,7 @@ package com.reactnativenavigation.layouts;
 
 import android.view.View;
 
+import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 
@@ -23,4 +24,6 @@ public interface Layout extends ScreenStackContainer {
     void toggleSideMenuVisible(boolean animated);
 
     void setSideMenuVisible(boolean animated, boolean visible);
+
+    void showSnackbar(SnackbarParams params);
 }
