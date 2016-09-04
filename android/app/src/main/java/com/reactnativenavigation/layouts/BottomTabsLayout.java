@@ -228,12 +228,12 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     @Override
     public void newStack(ScreenParams params) {
         ScreenStack currentScreenStack = getCurrentScreenStack();
-        currentScreenStack.destroy();
         removeView(currentScreenStack.peek());
+        currentScreenStack.destroy();
 
         ScreenStack newStack = new ScreenStack(activity, getScreenStackParent(), params.getNavigatorId(), this);
         LayoutParams lp = createScreenLayoutParams(params);
-        newStack.pushInitialScreen(params, lp);
+        newStack.pushInitialScreenWithAnimation(params, lp);
         screenStacks[currentStackIndex] = newStack;
 
         bottomTabs.setStyleFromScreen(params.styleParams);
