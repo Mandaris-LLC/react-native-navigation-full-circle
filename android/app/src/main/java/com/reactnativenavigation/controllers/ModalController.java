@@ -86,6 +86,12 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
         }
     }
 
+    public void setTitleBarSubtitle(String screenInstanceId, String subtitle) {
+        for (Modal modal : stack) {
+            modal.setTitleBarSubtitle(screenInstanceId, subtitle);
+        }
+    }
+
     public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         for (Modal modal : stack) {
             modal.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);

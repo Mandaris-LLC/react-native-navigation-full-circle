@@ -253,6 +253,10 @@ function navigatorSetTitle(navigator, params) {
   newPlatformSpecific.setScreenTitleBarTitle(navigator.screenInstanceID, params.title);
 }
 
+function navigatorSetSubtitle(navigator, params) {
+  newPlatformSpecific.setScreenTitleBarSubtitle(navigator.screenInstanceID, params.subtitle);
+}
+
 function navigatorSwitchToTab(navigator, params) {
   if (params.tabIndex >= 0) {
     newPlatformSpecific.selectBottomTabByTabIndex(params.tabIndex);
@@ -435,6 +439,7 @@ export default {
   navigatorSetButtons,
   navigatorSetTabBadge,
   navigatorSetTitle,
+  navigatorSetSubtitle,
   navigatorSwitchToTab,
   navigatorToggleDrawer,
   navigatorToggleTabs,

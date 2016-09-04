@@ -212,6 +212,15 @@ public class ScreenStack {
         });
     }
 
+    public void setScreenTitleBarSubtitle(String screenInstanceId, final String subtitle) {
+        performOnScreen(screenInstanceId, new Task<Screen>() {
+            @Override
+            public void run(Screen param) {
+                param.setTitleBarSubtitle(subtitle);
+            }
+        });
+    }
+
     public void setScreenTitleBarRightButtons(String screenInstanceId, final String navigatorEventId, final List<TitleBarButtonParams> titleBarButtons) {
         performOnScreen(screenInstanceId, new Task<Screen>() {
             @Override

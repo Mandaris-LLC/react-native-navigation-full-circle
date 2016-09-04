@@ -17,6 +17,8 @@ public interface Layout extends ScreenStackContainer {
 
     void setTitleBarTitle(String screenInstanceId, String title);
 
+    void setTitleBarSubtitle(String screenInstanceId, String subtitle);
+
     void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons);
 
     void setTitleBarLeftButton(String screenInstanceId, String navigatorEventId, TitleBarLeftButtonParams titleBarLeftButtonParams);

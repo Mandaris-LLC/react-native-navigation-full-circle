@@ -199,6 +199,11 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         modalController.setTitleBarTitle(screenInstanceId, title);
     }
 
+    public void setTitleBarSubtitle(String screenInstanceId, String subtitle) {
+        layout.setTitleBarSubtitle(screenInstanceId, subtitle);
+        modalController.setTitleBarSubtitle(screenInstanceId, subtitle);
+    }
+
     void setTitleBarButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         layout.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);
         modalController.setTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);

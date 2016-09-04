@@ -77,6 +77,10 @@ class Navigator {
     return platformSpecific.navigatorSetTitle(this, params);
   }
 
+  setSubTitle(params = {}) {
+    return platformSpecific.navigatorSetSubtitle(this, params);
+  }
+
   setTitleImage(params = {}) {
     return platformSpecific.navigatorSetTitleImage(this, params);
   }

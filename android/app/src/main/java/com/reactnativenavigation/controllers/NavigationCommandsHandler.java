@@ -136,6 +136,20 @@ public class NavigationCommandsHandler {
         });
     }
 
+    public static void setScreenTitleBarSubtitle(final String screenInstanceId, final String subtitle) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.setTitleBarSubtitle(screenInstanceId, subtitle);
+            }
+        });
+    }
+
     public static void showModal(Bundle params) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {

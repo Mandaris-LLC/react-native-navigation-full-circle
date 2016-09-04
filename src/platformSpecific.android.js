@@ -40,6 +40,10 @@ function setScreenTitleBarTitle(screenInstanceID, title) {
   NativeReactModule.setScreenTitleBarTitle(screenInstanceID, title);
 }
 
+function setScreenTitleBarSubtitle(screenInstanceID, subtitle) {
+  NativeReactModule.setScreenTitleBarSubtitle(screenInstanceID, subtitle);
+}
+
 function setScreenTitleBarButtons(screenInstanceID, navigatorEventID, rightButtons, leftButton) {
   NativeReactModule.setScreenTitleBarButtons(screenInstanceID, navigatorEventID, rightButtons, leftButton);
 }
@@ -121,6 +125,7 @@ module.exports = {
   toggleTopBarVisible,
   toggleBottomTabsVisible,
   setScreenTitleBarTitle,
+  setScreenTitleBarSubtitle,
   setScreenTitleBarButtons,
   showModal,
   dismissTopModal,

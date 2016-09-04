@@ -144,6 +144,10 @@ public abstract class Screen extends RelativeLayout {
         topBar.setTitle(title);
     }
 
+    public void setTitleBarSubtitle(String subtitle) {
+        topBar.setSubtitle(subtitle);
+    }
+
     public void setTitleBarRightButtons(String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         setButtonColorFromScreen(titleBarButtons);
         topBar.setTitleBarRightButtons(navigatorEventId, titleBarButtons);

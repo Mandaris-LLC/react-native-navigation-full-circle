@@ -149,6 +149,13 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     @Override
+    public void setTitleBarSubtitle(String screenInstanceId, String subtitle) {
+        for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
+            screenStacks[i].setScreenTitleBarSubtitle(screenInstanceId, subtitle);
+        }
+    }
+
+    @Override
     public void setTitleBarRightButtons(String screenInstanceId, String navigatorEventId, List<TitleBarButtonParams> titleBarButtons) {
         for (int i = 0; i < bottomTabs.getItemsCount(); i++) {
             screenStacks[i].setScreenTitleBarRightButtons(screenInstanceId, navigatorEventId, titleBarButtons);

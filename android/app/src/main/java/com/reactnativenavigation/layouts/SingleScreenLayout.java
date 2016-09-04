@@ -141,6 +141,11 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     }
 
     @Override
+    public void setTitleBarSubtitle(String screenInstanceId, String subtitle) {
+        stack.setScreenTitleBarSubtitle(screenInstanceId, subtitle);
+    }
+
+    @Override
     public View asView() {
         return this;
     }

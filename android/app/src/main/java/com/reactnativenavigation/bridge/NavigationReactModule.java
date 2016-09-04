@@ -50,6 +50,11 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void setScreenTitleBarSubtitle(String screenInstanceId, String subtitle) {
+        NavigationCommandsHandler.setScreenTitleBarSubtitle(screenInstanceId, subtitle);
+    }
+
+    @ReactMethod
     public void setScreenTitleBarButtons(String screenInstanceId, String navigatorEventId,
                                          ReadableArray rightButtonsParams, ReadableMap leftButtonParams) {
         if (rightButtonsParams != null) {
