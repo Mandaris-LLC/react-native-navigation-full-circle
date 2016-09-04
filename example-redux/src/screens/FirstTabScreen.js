@@ -5,7 +5,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as counterActions from '../reducers/counter/actions';
@@ -131,6 +132,13 @@ class FirstTabScreen extends Component {
           <Text style={styles.button}>Toggle NavBar</Text>
         </TouchableOpacity>
 
+        {
+          Platform.OS === 'android' ?
+          <TouchableOpacity onPress={ this.onShowSnackbarPress.bind(this) }>
+            <Text style={styles.button}>Show Snackbar</Text>
+          </TouchableOpacity> : false
+        }
+
         <TouchableOpacity onPress={ this.onSetTitlePress.bind(this) }>
           <Text style={styles.button}>Set Title</Text>
         </TouchableOpacity>
@@ -207,6 +215,16 @@ class FirstTabScreen extends Component {
     this.props.navigator.toggleNavBar({
       to: topBarVisible ? 'shown' : 'hidden',
       animated: true
+    });
+  }
+
+  onShowSnackbarPress() {
+    this.props.navigator.showSnackbar({
+      text: 'Counter: ' + this.props.counter.count,
+      actionText: 'Undo',
+      actionColor: '#ff0000',
+      actionId: 'undo',
+      duration: 'indefinite'
     });
   }
 
