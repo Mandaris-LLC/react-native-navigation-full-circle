@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ActivityParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SideMenuParams;
@@ -332,6 +333,9 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     public void onSideMenuButtonClick() {
         if (sideMenu != null) {
             sideMenu.openDrawer();
+        } else {
+            final String navigatorEventId = getCurrentScreenStack().peek().getNavigatorEventId();
+            NavigationApplication.instance.sendNavigatorEvent("sideMenu", navigatorEventId);
         }
     }
 }

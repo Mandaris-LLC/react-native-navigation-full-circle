@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SideMenuParams;
 import com.reactnativenavigation.params.SnackbarParams;
@@ -194,6 +195,9 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     public void onSideMenuButtonClick() {
         if (sideMenu != null) {
             sideMenu.openDrawer();
+        } else {
+            final String navigatorEventId = stack.peek().getNavigatorEventId();
+            NavigationApplication.instance.sendNavigatorEvent("sideMenu", navigatorEventId);
         }
     }
 }
