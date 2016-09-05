@@ -34,28 +34,8 @@ public class FloatingActionButtonCoordinator {
         collapsedFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                collapsedFab.animate()
-                        .alpha(0)
-                        .setDuration(crossFadeAnimationDuration)
-                        .rotation(90)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                collapsedFab.setVisibility(View.GONE);
-                            }
-                        })
-                        .start();
-                expendedFab.animate()
-                        .alpha(1)
-                        .setDuration(crossFadeAnimationDuration)
-                        .rotation(0)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationStart(Animator animation) {
-                                expendedFab.setVisibility(View.VISIBLE);
-                            }
-                        })
-                        .start();
+                hideCollapsed();
+                showExpended();
             }
         });
     }
@@ -67,31 +47,49 @@ public class FloatingActionButtonCoordinator {
         expendedFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                expendedFab.animate()
-                        .alpha(0)
-                        .setDuration(crossFadeAnimationDuration)
-                        .rotation(-90)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                expendedFab.setVisibility(View.GONE);
-                            }
-                        })
-                        .start();
-                collapsedFab.animate()
-                        .alpha(1)
-                        .setDuration(crossFadeAnimationDuration)
-                        .rotation(0)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationStart(Animator animation) {
-                                collapsedFab.setVisibility(View.VISIBLE);
-                            }
-                        })
-                        .start();
+                hideExpended();
+                showCollapsed();
             }
         });
     }
+
+    private void hideCollapsed() {
+        animateFab(collapsedFab, 0, 90);
+    }
+
+    private void showExpended() {
+        animateFab(expendedFab, 1, 0);
+    }
+
+    private void showCollapsed() {
+        animateFab(collapsedFab, 1, 0);
+    }
+
+    private void hideExpended() {
+        animateFab(expendedFab, 0, -90);
+    }
+
+    private void animateFab(final FloatingActionButton fab, final int alpha, int rotation) {
+        fab.animate()
+                .alpha(alpha)
+                .setDuration(crossFadeAnimationDuration)
+                .rotation(rotation)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        if (fab.getVisibility() == View.GONE) {
+                            fab.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        fab.setVisibility(alpha == 0 ? View.GONE : View.VISIBLE);
+                    }
+                })
+                .start();
+    }
+
 
     private FloatingActionButton createFab(Drawable icon) {
         FloatingActionButton fab = new FloatingActionButton(parent.getContext());
@@ -110,6 +108,10 @@ public class FloatingActionButtonCoordinator {
     }
 
     private void setStyle() {
+
+    }
+
+    public void show() {
 
     }
 }

@@ -9,7 +9,6 @@ import com.reactnativenavigation.params.FabParams;
 import com.reactnativenavigation.params.SnackbarParams;
 
 public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakbar.OnDismissListener, ScreenChangeBroadcastReceiver.OnScreenChangeListener {
-    private static final String TAG = "SnackbarAndFabContainer";
     private Snakbar snakbar;
     private ScreenChangeBroadcastReceiver screenChangeBroadcastReceiver;
     private FloatingActionButtonCoordinator actionButtonCoordinator;
