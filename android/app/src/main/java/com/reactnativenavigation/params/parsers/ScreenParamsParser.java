@@ -3,6 +3,7 @@ package com.reactnativenavigation.params.parsers;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import com.reactnativenavigation.params.FabParams;
 import com.reactnativenavigation.params.NavigationParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -18,6 +19,7 @@ public class ScreenParamsParser extends Parser {
     private static final String KEY_NAVIGATION_PARAMS = "navigationParams";
     private static final String KEY_RIGHT_BUTTONS = "rightButtons";
     private static final String KEY_LEFT_BUTTON = "leftButton";
+    private static final String KEY_FAB = "fab";
     private static final String KEY_BACK_BUTTON_HIDDEN = "backButtonHidden";
     private static final String STYLE_PARAMS = "styleParams";
     private static final String TOP_TABS = "topTabs";
@@ -45,6 +47,8 @@ public class ScreenParamsParser extends Parser {
             result.fragmentCreatorClassName = params.getString(FRAGMENT_CREATOR_CLASS_NAME);
             result.fragmentCreatorPassProps = params.getBundle(FRAGMENT_CREATOR_PASS_PROPS);
         }
+
+        result.fabParams = parseFab(params);
 
         result.tabLabel = getTabLabel(params);
         result.tabIcon = getTabIcon(params);
@@ -97,6 +101,14 @@ public class ScreenParamsParser extends Parser {
             }
         }
         return leftButton;
+    }
+
+    private static FabParams parseFab(Bundle params) {
+        FabParams fabParams = null;
+        if (hasKey(params, KEY_FAB)) {
+            fabParams = new FabParamsParser().parse(params.getBundle(KEY_FAB));
+        }
+        return fabParams;
     }
 
     public List<ScreenParams> parseTabs(Bundle params) {

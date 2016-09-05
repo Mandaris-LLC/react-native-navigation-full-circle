@@ -357,11 +357,34 @@ function addNavigatorButtons(screen, sideMenuParams) {
     }
   }
 
+  const fab = getFab(screen);
+  if (fab) {
+    screen.fab = fab;
+  }
+
   if (rightButtons) {
     screen.rightButtons = rightButtons;
   }
   if (leftButton) {
     screen.leftButton = leftButton;
+  }
+}
+
+function getFab(screen) {
+  if (screen.fab) {
+    const fab = screen.fab;
+    debugger;
+    fab.collapsedIcon = resolveAssetSource(fab.collapsedIcon).uri;
+    fab.expendedIcon = resolveAssetSource(fab.expendedIcon).uri;
+
+    if (fab.actions) {
+      _.forEach(fab.actions, (action) => {
+        action.icon = resolveAssetSource(action.icon).uri;
+        return action;
+      })
+    }
+
+    return fab;
   }
 }
 

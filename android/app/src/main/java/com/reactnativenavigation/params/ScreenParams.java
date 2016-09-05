@@ -16,7 +16,7 @@ public class ScreenParams {
     public String fragmentCreatorClassName;
     public Bundle fragmentCreatorPassProps;
     public boolean animateScreenTransitions;
-
+    public FabParams fabParams;
     public String tabLabel;
     public Drawable tabIcon;
 
