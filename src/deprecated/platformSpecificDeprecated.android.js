@@ -375,7 +375,9 @@ function getFab(screen) {
     const fab = screen.fab;
     debugger;
     fab.collapsedIcon = resolveAssetSource(fab.collapsedIcon).uri;
-    fab.expendedIcon = resolveAssetSource(fab.expendedIcon).uri;
+    if (fab.expendedIcon) {
+      fab.expendedIcon = resolveAssetSource(fab.expendedIcon).uri;
+    }
 
     if (fab.actions) {
       _.forEach(fab.actions, (action) => {

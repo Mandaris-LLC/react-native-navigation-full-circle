@@ -4,23 +4,20 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 
-import com.reactnativenavigation.events.ScreenChangeBroadcastReceiver;
+import com.reactnativenavigation.events.Event;
+import com.reactnativenavigation.events.EventBus;
+import com.reactnativenavigation.events.ScreenChangedEvent;
+import com.reactnativenavigation.events.Subscriber;
 import com.reactnativenavigation.params.FabParams;
 import com.reactnativenavigation.params.SnackbarParams;
 
-public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakbar.OnDismissListener, ScreenChangeBroadcastReceiver.OnScreenChangeListener {
+public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakbar.OnDismissListener, Subscriber{
     private Snakbar snakbar;
-    private ScreenChangeBroadcastReceiver screenChangeBroadcastReceiver;
     private FloatingActionButtonCoordinator actionButtonCoordinator;
 
     public SnackbarAndFabContainer(Context context) {
         super(context);
-        registerTabSelectedReceiver();
-    }
-
-    private void registerTabSelectedReceiver() {
-        screenChangeBroadcastReceiver = new ScreenChangeBroadcastReceiver(this);
-        screenChangeBroadcastReceiver.register();
+        EventBus.instance.register(this);
     }
 
     public void showSnackbar(final String navigatorEventId, final SnackbarParams params) {
@@ -43,15 +40,17 @@ public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakba
     }
 
     public void destroy() {
-        screenChangeBroadcastReceiver.unregister();
-    }
-
-    @Override
-    public void onScreenChangeListener() {
-        onScreenChange();
+        EventBus.instance.unregister(this);
     }
 
     public void showFab(@NonNull FabParams fabParams) {
         actionButtonCoordinator = new FloatingActionButtonCoordinator(this, fabParams);
+    }
+
+    @Override
+    public void onEvent(Event event) {
+        if (event.getType() == ScreenChangedEvent.TYPE) {
+            onScreenChange();
+        }
     }
 }
