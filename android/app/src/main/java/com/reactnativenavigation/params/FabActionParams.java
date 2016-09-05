@@ -5,4 +5,5 @@ import android.graphics.drawable.Drawable;
 public class FabActionParams {
     public String id;
     public Drawable icon;
+    public StyleParams.Color backgroundColor;
 }

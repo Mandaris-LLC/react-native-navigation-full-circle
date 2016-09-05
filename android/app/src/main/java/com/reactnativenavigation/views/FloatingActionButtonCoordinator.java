@@ -2,6 +2,7 @@ package com.reactnativenavigation.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
@@ -9,13 +10,14 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.reactnativenavigation.params.FabActionParams;
 import com.reactnativenavigation.params.FabParams;
 import com.reactnativenavigation.utils.ViewUtils;
 
 import java.util.ArrayList;
+
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class FloatingActionButtonCoordinator {
 
@@ -112,7 +114,7 @@ public class FloatingActionButtonCoordinator {
     }
 
     private CoordinatorLayout.LayoutParams createFabLayoutParams() {
-        final CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        final CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
         lp.bottomMargin = margin;
         lp.rightMargin = margin;
@@ -121,7 +123,8 @@ public class FloatingActionButtonCoordinator {
     }
 
     private void setStyle() {
-
+        collapsedFab.setBackgroundTintList(ColorStateList.valueOf(params.backgroundColor.getColor()));
+        expendedFab.setBackgroundTintList(ColorStateList.valueOf(params.backgroundColor.getColor()));
     }
 
     public void show() {
@@ -144,13 +147,16 @@ public class FloatingActionButtonCoordinator {
         FabActionParams actionParams = params.actions.get(index);
         FloatingActionButton action = createFab(actionParams.icon);
         action.setLayoutParams(createActionLayoutParams(index));
-     //   action.setAlpha(0);
+        if (actionParams.backgroundColor.hasColor()) {
+            action.setBackgroundTintList(ColorStateList.valueOf(actionParams.backgroundColor.getColor()));
+        }
+        action.setSize(FloatingActionButton.SIZE_MINI);
         return action;
     }
 
     @NonNull
     private CoordinatorLayout.LayoutParams createActionLayoutParams(int actionIndex) {
-        CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(actionSize, actionSize);
+        CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         lp.setAnchorId(expendedFab.getId());
         lp.anchorGravity = Gravity.CENTER_HORIZONTAL;
         lp.setBehavior(new ActionBehaviour(expendedFab, (actionIndex + 1) * (actionSize + margin / 2)));
