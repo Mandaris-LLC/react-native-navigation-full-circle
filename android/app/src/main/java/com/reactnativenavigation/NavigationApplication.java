@@ -4,19 +4,22 @@ import android.app.Application;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 
+import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.react.NavigationReactGateway;
 import com.reactnativenavigation.react.ReactGateway;
+import com.reactnativenavigation.react.ReactGatewayHost;
 
 import java.util.List;
 
-public abstract class NavigationApplication extends Application {
+public abstract class NavigationApplication extends Application implements ReactApplication {
 
     public static NavigationApplication instance;
 
-    private ReactGateway reactGateway;
+    private ReactGatewayHost reactGateway;
     private Handler handler;
 
     @Override
@@ -51,12 +54,9 @@ public abstract class NavigationApplication extends Application {
         // nothing
     }
 
-    public String getJsEntryFileName() {
-        return "index.android";
-    }
-
-    public String getBundleAssetName() {
-        return "index.android.bundle";
+    @Override
+    public ReactNativeHost getReactNativeHost() {
+        return reactGateway;
     }
 
     public abstract boolean isDebug();
