@@ -36,8 +36,10 @@ public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakba
     }
 
     @Override
-    public void onDismiss() {
-        snakbar = null;
+    public void onDismiss(Snakbar snakbar) {
+        if (this.snakbar == snakbar) {
+            this.snakbar = null;
+        }
     }
 
     public void destroy() {

@@ -13,7 +13,7 @@ public class Snakbar {
     private Snackbar snackbar;
 
     public interface OnDismissListener {
-        void onDismiss();
+        void onDismiss(Snakbar snakbar);
     }
 
     public void show() {
@@ -68,7 +68,7 @@ public class Snakbar {
 
             @Override
             public void onViewDetachedFromWindow(View v) {
-                parent.onDismiss();
+                parent.onDismiss(Snakbar.this);
             }
         });
     }
