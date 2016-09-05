@@ -41,7 +41,8 @@ public class ContentViewPagerAdapter extends PagerAdapter {
     }
 
     private void sendScreenChangeBroadcast() {
-        EventBus.instance.post(new ScreenChangedEvent());
+        // TODO Send navigatorParams to native. -guyca
+        EventBus.instance.post(new ScreenChangedEvent(null));
     }
 
     private void sendTabSelectedEventToJs() {

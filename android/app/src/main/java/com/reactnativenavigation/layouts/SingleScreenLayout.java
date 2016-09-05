@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.events.EventBus;
+import com.reactnativenavigation.events.ScreenChangedEvent;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SideMenuParams;
 import com.reactnativenavigation.params.SnackbarParams;
@@ -109,26 +111,26 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     public void push(ScreenParams params) {
         LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         stack.push(params, lp);
-        snackbarAndFabContainer.onScreenChange();
+        EventBus.instance.post(new ScreenChangedEvent(params));
     }
 
     @Override
     public void pop(ScreenParams params) {
         stack.pop(params.animateScreenTransitions);
-        snackbarAndFabContainer.onScreenChange();
+        EventBus.instance.post(new ScreenChangedEvent(stack.peek().getScreenParams()));
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
         stack.popToRoot(params.animateScreenTransitions);
-        snackbarAndFabContainer.onScreenChange();
+        EventBus.instance.post(new ScreenChangedEvent(stack.peek().getScreenParams()));
     }
 
     @Override
     public void newStack(ScreenParams params) {
         RelativeLayout parent = sideMenu == null ? this : sideMenu.getContentContainer();
         createStack(parent);
-        snackbarAndFabContainer.onScreenChange();
+        EventBus.instance.post(new ScreenChangedEvent(params));
     }
 
     @Override
