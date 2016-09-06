@@ -375,7 +375,6 @@ function addNavigatorButtons(screen, sideMenuParams) {
 function getFab(screen) {
   if (screen.fab) {
     const fab = screen.fab;
-    debugger;
     fab.collapsedIcon = resolveAssetSource(fab.collapsedIcon).uri;
     if (fab.expendedIcon) {
       fab.expendedIcon = resolveAssetSource(fab.expendedIcon).uri;
