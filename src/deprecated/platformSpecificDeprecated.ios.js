@@ -151,6 +151,7 @@ function startSingleScreenApp(params) {
         <NavigationControllerIOS
           id={navigatorID}
           title={screen.title}
+          subtitle={params.subtitle}
           titleImage={screen.titleImage}
           component={screen.screen}
           passProps={{
@@ -228,6 +229,7 @@ function navigatorPush(navigator, params) {
 
   Controllers.NavigationControllerIOS(navigator.navigatorID).push({
     title: params.title,
+    subtitle:params.subtitle,
     titleImage: params.titleImage,
     component: params.screen,
     animated: params.animated,
@@ -280,6 +282,7 @@ function navigatorResetTo(navigator, params) {
 
   Controllers.NavigationControllerIOS(navigator.navigatorID).resetTo({
     title: params.title,
+    subtitle: params.subtitle,
     titleImage: params.titleImage,
     component: params.screen,
     animated: params.animated,
@@ -292,7 +295,10 @@ function navigatorResetTo(navigator, params) {
 
 function navigatorSetTitle(navigator, params) {
   Controllers.NavigationControllerIOS(navigator.navigatorID).setTitle({
-    title: params.title
+    title: params.title,
+    subtitle: params.subtitle,
+    titleImage: params.titleImage,
+    style: params.navigatorStyle
   });
 }
 
@@ -416,6 +422,7 @@ function showModal(params) {
         <NavigationControllerIOS
           id={navigatorID}
           title={params.title}
+          subtitle={params.subtitle}
           titleImage={params.titleImage}
           component={params.screen}
           passProps={passProps}
