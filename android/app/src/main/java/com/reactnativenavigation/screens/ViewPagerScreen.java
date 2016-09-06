@@ -54,6 +54,7 @@ public class ViewPagerScreen extends Screen {
     private void setupViewPager(TabLayout tabLayout) {
         ContentViewPagerAdapter adapter = new ContentViewPagerAdapter(contentViews, screenParams.topTabParams);
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 

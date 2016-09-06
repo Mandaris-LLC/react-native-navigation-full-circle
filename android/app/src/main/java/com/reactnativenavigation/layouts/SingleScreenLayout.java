@@ -21,7 +21,6 @@ import com.reactnativenavigation.views.SnackbarAndFabContainer;
 import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class SingleScreenLayout extends RelativeLayout implements Layout {
 
@@ -48,7 +47,7 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
             sideMenu = createSideMenu();
             createStack(getScreenStackParent());
         }
-        createSnackbarContainer();
+        createFabAndSnackbarContainer();
     }
 
     private RelativeLayout getScreenStackParent() {
@@ -76,9 +75,9 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
         stack.show();
     }
 
-    private void createSnackbarContainer() {
+    private void createFabAndSnackbarContainer() {
         snackbarAndFabContainer = new SnackbarAndFabContainer(getContext());
-        RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+        RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         lp.addRule(ALIGN_PARENT_BOTTOM);
         snackbarAndFabContainer.setLayoutParams(lp);
         getScreenStackParent().addView(snackbarAndFabContainer);

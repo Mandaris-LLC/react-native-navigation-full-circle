@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.view.Gravity;
@@ -46,9 +47,15 @@ public class FloatingActionButtonCoordinator {
         show();
     }
 
-    public void remove(final Runnable onComplete) {
+    public void remove() {
+        remove(null);
+    }
+
+    public void remove(@Nullable final Runnable onComplete) {
         if (parent.getChildCount() == 0) {
-            onComplete.run();
+            if (onComplete != null) {
+                onComplete.run();
+            }
             return;
         }
 
@@ -56,7 +63,9 @@ public class FloatingActionButtonCoordinator {
             @Override
             public void onAnimationEnd(Animator animation) {
                 removeAllViews();
-                onComplete.run();
+                if (onComplete != null) {
+                    onComplete.run();
+                }
             }
         });
         removeFabFromScreen(collapsedFab, null);

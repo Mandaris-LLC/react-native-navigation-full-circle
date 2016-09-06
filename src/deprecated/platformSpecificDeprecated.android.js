@@ -40,6 +40,8 @@ function adaptTopTabs(screen, navigatorID) {
     if (navigatorID) {
       tab.navigatorID = navigatorID;
     }
+    tab.screen = tab.screenId;
+    addNavigatorButtons(tab);
     adaptNavigationParams(tab);
   });
 }

@@ -7,7 +7,7 @@ import com.reactnativenavigation.events.Event;
 import com.reactnativenavigation.events.EventBus;
 import com.reactnativenavigation.events.ScreenChangedEvent;
 import com.reactnativenavigation.events.Subscriber;
-import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.FabParams;
 import com.reactnativenavigation.params.SnackbarParams;
 
 public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakbar.OnDismissListener, Subscriber{
@@ -39,13 +39,13 @@ public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakba
     @Override
     public void onEvent(Event event) {
         if (event.getType() == ScreenChangedEvent.TYPE) {
-            onScreenChange(((ScreenChangedEvent) event).getScreenParams());
+            onScreenChange(((ScreenChangedEvent) event).fabParams);
         }
     }
 
-    private void onScreenChange(ScreenParams screenParams) {
+    private void onScreenChange(FabParams fabParams) {
         dismissSnackbar();
-        updateFab(screenParams);
+        updateFab(fabParams);
     }
 
     private void dismissSnackbar() {
@@ -55,12 +55,12 @@ public class SnackbarAndFabContainer extends CoordinatorLayout implements Snakba
         }
     }
 
-    private void updateFab(final ScreenParams screenParams) {
+    private void updateFab(final FabParams fabParams) {
         fabCoordinator.remove(new Runnable() {
             @Override
             public void run() {
-                if (screenParams.fabParams != null) {
-                    fabCoordinator.add(screenParams.fabParams);
+                if (fabParams != null) {
+                    fabCoordinator.add(fabParams);
                 }
             }
         });

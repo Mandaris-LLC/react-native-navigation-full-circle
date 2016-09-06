@@ -29,6 +29,9 @@ public class TopTabParamsParser extends Parser {
         result.screenId = params.getString(KEY_SCREEN_ID);
         result.title = params.getString(KEY_TITLE);
         result.navigationParams = new NavigationParams(params.getBundle(NAVIGATION_PARAMS));
+        result.leftButton = ButtonParser.parseLeftButton(params);
+        result.rightButtons = ButtonParser.parseRightButton(params);
+        result.fabParams = ButtonParser.parseFab(params);
         return result;
     }
 }

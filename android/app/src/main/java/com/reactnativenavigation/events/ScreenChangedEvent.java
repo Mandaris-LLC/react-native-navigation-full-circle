@@ -1,17 +1,19 @@
 package com.reactnativenavigation.events;
 
+import com.reactnativenavigation.params.FabParams;
 import com.reactnativenavigation.params.ScreenParams;
+import com.reactnativenavigation.params.TopTabParams;
 
 public class ScreenChangedEvent implements Event {
     public static final String TYPE = "ScreenChangedEvent";
-    private ScreenParams screenParams;
+    public FabParams fabParams;
 
     public ScreenChangedEvent(ScreenParams screenParams) {
-        this.screenParams = screenParams;
+        this.fabParams = screenParams.fabParams;
     }
 
-    public ScreenParams getScreenParams() {
-        return screenParams;
+    public ScreenChangedEvent(TopTabParams topTabParams) {
+        this.fabParams = topTabParams.fabParams;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.reactnativenavigation.screens;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,8 +15,7 @@ import com.reactnativenavigation.views.ContentView;
 
 import java.util.List;
 
-public class ContentViewPagerAdapter extends PagerAdapter {
-
+public class ContentViewPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
     private List<ContentView> contentViews;
     private List<TopTabParams> topTabParams;
     private int currentPosition = 0;
@@ -31,27 +31,6 @@ public class ContentViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        super.setPrimaryItem(container, position, object);
-        if (position != currentPosition) {
-            currentPosition = position;
-            sendScreenChangeBroadcast();
-            sendTabSelectedEventToJs();
-        }
-    }
-
-    private void sendScreenChangeBroadcast() {
-        // TODO Send navigatorParams to native. -guyca
-        EventBus.instance.post(new ScreenChangedEvent(null));
-    }
-
-    private void sendTabSelectedEventToJs() {
-        WritableMap data = Arguments.createMap();
-        String navigatorEventId = contentViews.get(currentPosition).getNavigatorEventId();
-        NavigationApplication.instance.sendNavigatorEvent("tabSelected", navigatorEventId, data);
-    }
-
-    @Override
     public int getCount() {
         return contentViews.size();
     }
@@ -64,5 +43,28 @@ public class ContentViewPagerAdapter extends PagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return topTabParams.get(position).title;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        currentPosition = position;
+        EventBus.instance.post(new ScreenChangedEvent(topTabParams.get(currentPosition)));
+        sendTabSelectedEventToJs();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    private void sendTabSelectedEventToJs() {
+        WritableMap data = Arguments.createMap();
+        String navigatorEventId = contentViews.get(currentPosition).getNavigatorEventId();
+        NavigationApplication.instance.sendNavigatorEvent("tabSelected", navigatorEventId, data);
     }
 }
