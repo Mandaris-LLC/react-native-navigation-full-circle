@@ -48,6 +48,7 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
             createStack(getScreenStackParent());
         }
         createFabAndSnackbarContainer();
+        sendScreenChangedEventAfterInitialPush();
     }
 
     private RelativeLayout getScreenStackParent() {
@@ -73,6 +74,14 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     protected void pushInitialScreen(LayoutParams lp) {
         stack.pushInitialScreen(screenParams, lp);
         stack.show();
+    }
+
+    private void sendScreenChangedEventAfterInitialPush() {
+        if (screenParams.topTabParams != null) {
+            EventBus.instance.post(new ScreenChangedEvent(screenParams.topTabParams.get(0)));
+        } else {
+            EventBus.instance.post(new ScreenChangedEvent(screenParams));
+        }
     }
 
     private void createFabAndSnackbarContainer() {
