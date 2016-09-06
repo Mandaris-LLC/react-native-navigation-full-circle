@@ -29,6 +29,11 @@ class PushedScreen extends Component {
     leftButton: {
       id: 'back',
       color: '#00ff00'
+    },
+    fab: {
+      id: 'share',
+      collapsedIcon: require('../../img/ic_home.png'),
+      backgroundColor: '#607D8B'
     }
   };
 

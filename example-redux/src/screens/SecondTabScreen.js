@@ -19,6 +19,14 @@ class SecondTabScreen extends Component {
     navBarTranslucent: true
   };
 
+  static navigatorButtons = {
+    fab: {
+      id: 'share',
+      collapsedIcon: require('../../img/ic_home.png'),
+      backgroundColor: '#607D8B'
+    }
+  };
+
   constructor(props) {
     super(props);
     this.buttonsCounter = 0;

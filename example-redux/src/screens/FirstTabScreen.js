@@ -38,7 +38,36 @@ class FirstTabScreen extends Component {
         title: 'Add',
         id: 'add'
       }
-    ]
+    ],
+    fab: {
+      id: 'share',
+      collapsedIcon: require('../../img/ic_share.png'),
+      expendedIcon: require('../../img/ic_clear.png'),
+      backgroundColor: '#3F51B5',
+      actions: [
+        {
+          id: 'mail',
+          icon: require('../../img/ic_mail.png'),
+          backgroundColor: '#03A9F4'
+        },
+        {
+          id: 'action2',
+          icon: require('../../img/ic_home.png'),
+          backgroundColor: '#4CAF50'
+        },
+        {
+          id: 'action3',
+          icon: require('../../img/ic_home.png'),
+          backgroundColor: '#FFEB3B'
+        },
+        {
+          id: 'action3',
+          icon: require('../../img/ic_share.png'),
+          backgroundColor: '#FF5722'
+        }
+      ]
+
+    }
   };
 
   constructor(props) {

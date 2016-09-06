@@ -30,6 +30,7 @@ public class FloatingActionButtonCoordinator {
     private final int crossFadeAnimationDuration;
     private final int actionSize;
     final int margin = (int) ViewUtils.convertDpToPixel(16);
+    FloatingActionButtonAnimator fabAnimator;
     private final ArrayList<FloatingActionButton> actions;
 
     public FloatingActionButtonCoordinator(CoordinatorLayout parent) {
@@ -44,22 +45,19 @@ public class FloatingActionButtonCoordinator {
         createCollapsedFab();
         createExpendedFab();
         setStyle();
-        show();
-    }
-
-    public void remove() {
-        remove(null);
+        fabAnimator = new FloatingActionButtonAnimator(collapsedFab, expendedFab, crossFadeAnimationDuration);
+        fabAnimator.show();
     }
 
     public void remove(@Nullable final Runnable onComplete) {
-        if (parent.getChildCount() == 0) {
+        if (parent.getChildCount() == 0 || fabAnimator.isAnimating()) {
             if (onComplete != null) {
                 onComplete.run();
             }
             return;
         }
 
-        removeFabFromScreen(expendedFab, new AnimatorListenerAdapter() {
+        fabAnimator.removeFabFromScreen(expendedFab, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 removeAllViews();
@@ -68,29 +66,8 @@ public class FloatingActionButtonCoordinator {
                 }
             }
         });
-        removeFabFromScreen(collapsedFab, null);
-        removeActionsFromScreen();
-    }
-
-    private void removeActionsFromScreen() {
-        for (FloatingActionButton action : actions) {
-            action.animate()
-                    .alpha(0)
-                    .scaleX(0)
-                    .scaleY(0)
-                    .setDuration(crossFadeAnimationDuration)
-                    .start();
-        }
-    }
-
-    private void removeFabFromScreen(FloatingActionButton fab, AnimatorListenerAdapter animationListener) {
-        fab.animate()
-                .alpha(0)
-                .scaleX(0)
-                .scaleY(0)
-                .setDuration(crossFadeAnimationDuration)
-                .setListener(animationListener)
-                .start();
+        fabAnimator.removeFabFromScreen(collapsedFab, null);
+        fabAnimator.removeActionsFromScreen(actions);
     }
 
     private void removeAllViews() {
@@ -110,8 +87,8 @@ public class FloatingActionButtonCoordinator {
         collapsedFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideCollapsed();
-                showExpended();
+                fabAnimator.hideCollapsed();
+                fabAnimator.showExpended();
                 showActions();
             }
         });
@@ -125,8 +102,8 @@ public class FloatingActionButtonCoordinator {
         expendedFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideExpended();
-                showCollapsed();
+                fabAnimator.hideExpended();
+                fabAnimator.showCollapsed();
             }
         });
     }
@@ -136,43 +113,6 @@ public class FloatingActionButtonCoordinator {
         fab.setId(ViewUtils.generateViewId());
         fab.setImageDrawable(icon);
         return fab;
-    }
-
-    private void hideCollapsed() {
-        animateFab(collapsedFab, 0, 90);
-    }
-
-    private void showExpended() {
-        animateFab(expendedFab, 1, 0);
-    }
-
-    private void showCollapsed() {
-        animateFab(collapsedFab, 1, 0);
-    }
-
-    private void hideExpended() {
-        animateFab(expendedFab, 0, -90);
-    }
-
-    private void animateFab(final FloatingActionButton fab, final int alpha, int rotation) {
-        fab.animate()
-                .alpha(alpha)
-                .setDuration(crossFadeAnimationDuration)
-                .rotation(rotation)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                        if (fab.getVisibility() == View.GONE) {
-                            fab.setVisibility(View.VISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        fab.setVisibility(alpha == 0 ? View.GONE : View.VISIBLE);
-                    }
-                })
-                .start();
     }
 
     private CoordinatorLayout.LayoutParams createFabLayoutParams() {
@@ -187,17 +127,6 @@ public class FloatingActionButtonCoordinator {
     private void setStyle() {
         collapsedFab.setBackgroundTintList(ColorStateList.valueOf(params.backgroundColor.getColor()));
         expendedFab.setBackgroundTintList(ColorStateList.valueOf(params.backgroundColor.getColor()));
-    }
-
-    private void show() {
-        collapsedFab.setScaleX(0);
-        collapsedFab.setScaleY(0);
-        collapsedFab.animate()
-                .alpha(1)
-                .scaleX(1)
-                .scaleY(1)
-                .setDuration(crossFadeAnimationDuration)
-                .start();
     }
 
     private void showActions() {
