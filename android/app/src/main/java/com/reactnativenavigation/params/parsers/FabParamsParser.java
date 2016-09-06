@@ -10,7 +10,8 @@ import com.reactnativenavigation.react.ImageLoader;
 public class FabParamsParser extends Parser {
     public FabParams parse(Bundle params, final String navigatorEventId) {
         FabParams fabParams = new FabParams();
-        fabParams.id = params.getString("id");
+        fabParams.collapsedId = params.getString("collapsedId");
+        fabParams.expendedId = params.getString("expendedId");
         fabParams.navigatorEventId = navigatorEventId;
         fabParams.backgroundColor = getColor(params, "backgroundColor", new StyleParams.Color());
 

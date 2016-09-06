@@ -92,9 +92,8 @@ public class FloatingActionButtonCoordinator {
                     fabAnimator.hideCollapsed();
                     fabAnimator.showExpended();
                     showActions();
-                } else {
-                    NavigationApplication.instance.sendNavigatorEvent(params.id, params.navigatorEventId);
                 }
+                NavigationApplication.instance.sendNavigatorEvent(params.collapsedId, params.navigatorEventId);
             }
         });
     }
@@ -108,6 +107,7 @@ public class FloatingActionButtonCoordinator {
             @Override
             public void onClick(View v) {
                 fabAnimator.collapse();
+                NavigationApplication.instance.sendNavigatorEvent(params.expendedId, params.navigatorEventId);
             }
         });
     }
