@@ -8,9 +8,10 @@ import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.react.ImageLoader;
 
 public class FabParamsParser extends Parser {
-    public FabParams parse(Bundle params) {
+    public FabParams parse(Bundle params, final String navigatorEventId) {
         FabParams fabParams = new FabParams();
         fabParams.id = params.getString("id");
+        fabParams.navigatorEventId = navigatorEventId;
         fabParams.backgroundColor = getColor(params, "backgroundColor", new StyleParams.Color());
 
         if (hasKey(params, "collapsedIcon")) {
@@ -23,11 +24,10 @@ public class FabParamsParser extends Parser {
             fabParams.actions = parseBundle(params.getBundle("actions"), new ParseStrategy<FabActionParams>() {
                 @Override
                 public FabActionParams parse(Bundle params) {
-                    return new FabActionParamsParser().parse(params);
+                    return new FabActionParamsParser().parse(params, navigatorEventId);
                 }
             });
         }
-
         return fabParams;
     }
 }

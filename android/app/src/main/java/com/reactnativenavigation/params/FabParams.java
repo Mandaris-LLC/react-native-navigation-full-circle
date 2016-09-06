@@ -9,5 +9,10 @@ public class FabParams {
     public Drawable expendedIcon;
     public StyleParams.Color backgroundColor;
     public String id;
+    public String navigatorEventId;
     public List<FabActionParams> actions;
+
+    public boolean hasExpendedState() {
+        return actions != null && actions.size() > 0;
+    }
 }

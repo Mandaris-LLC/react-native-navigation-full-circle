@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.Gravity;
 import android.view.View;
 
+import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.FabActionParams;
 import com.reactnativenavigation.params.FabParams;
 import com.reactnativenavigation.utils.ViewUtils;
@@ -87,9 +88,13 @@ public class FloatingActionButtonCoordinator {
         collapsedFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fabAnimator.hideCollapsed();
-                fabAnimator.showExpended();
-                showActions();
+                if (params.hasExpendedState()) {
+                    fabAnimator.hideCollapsed();
+                    fabAnimator.showExpended();
+                    showActions();
+                } else {
+                    NavigationApplication.instance.sendNavigatorEvent(params.id, params.navigatorEventId);
+                }
             }
         });
     }
@@ -102,8 +107,7 @@ public class FloatingActionButtonCoordinator {
         expendedFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fabAnimator.hideExpended();
-                fabAnimator.showCollapsed();
+                fabAnimator.collapse();
             }
         });
     }
@@ -142,9 +146,16 @@ public class FloatingActionButtonCoordinator {
     }
 
     private FloatingActionButton createAction(int index) {
-        FabActionParams actionParams = params.actions.get(index);
+        final FabActionParams actionParams = params.actions.get(index);
         FloatingActionButton action = createFab(actionParams.icon);
         action.setLayoutParams(createActionLayoutParams(index));
+        action.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationApplication.instance.sendNavigatorEvent(actionParams.id, actionParams.navigatorEventId);
+                fabAnimator.collapse();
+            }
+        });
         if (actionParams.backgroundColor.hasColor()) {
             action.setBackgroundTintList(ColorStateList.valueOf(actionParams.backgroundColor.getColor()));
         }
@@ -182,7 +193,12 @@ public class FloatingActionButtonCoordinator {
             float fraction = calculateTransitionFraction(dependentValue);
             child.setY(calculateY(parent, fraction));
             child.setAlpha(calculateAlpha(fraction));
+            setVisibility(child);
             return true;
+        }
+
+        private void setVisibility(FloatingActionButton child) {
+            child.setVisibility(child.getAlpha() == 0 ? View.GONE : View.VISIBLE);
         }
 
         private float calculateAlpha(float fraction) {

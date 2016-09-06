@@ -35,10 +35,10 @@ public class ButtonParser extends Parser {
         return leftButton;
     }
 
-    public static FabParams parseFab(Bundle params) {
+    public static FabParams parseFab(Bundle params, String navigatorEventId) {
         FabParams fabParams = null;
         if (hasKey(params, KEY_FAB)) {
-            fabParams = new FabParamsParser().parse(params.getBundle(KEY_FAB));
+            fabParams = new FabParamsParser().parse(params.getBundle(KEY_FAB), navigatorEventId);
         }
         return fabParams;
     }
