@@ -422,7 +422,7 @@ function showModal(params) {
         <NavigationControllerIOS
           id={navigatorID}
           title={params.title}
-          subtitle={params.title}
+          subtitle={params.subtitle}
           titleImage={params.titleImage}
           component={params.screen}
           passProps={passProps}
