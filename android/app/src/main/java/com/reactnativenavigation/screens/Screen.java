@@ -122,11 +122,7 @@ public abstract class Screen extends RelativeLayout {
         }
     }
 
-    public abstract void ensureUnmountOnDetachedFromWindow();
-
-    public abstract void preventUnmountOnDetachedFromWindow();
-
-    public abstract void preventMountAfterReattachedToWindow();
+    public abstract void unmountOnDetachedFromWindow();
 
     public String getScreenInstanceId() {
         return screenParams.getScreenInstanceId();

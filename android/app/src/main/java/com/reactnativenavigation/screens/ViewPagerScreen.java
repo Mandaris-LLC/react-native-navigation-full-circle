@@ -64,23 +64,9 @@ public class ViewPagerScreen extends Screen {
     }
 
     @Override
-    public void ensureUnmountOnDetachedFromWindow() {
+    public void unmountOnDetachedFromWindow() {
         for (ContentView contentView : contentViews) {
-            contentView.ensureUnmountOnDetachedFromWindow();
-        }
-    }
-
-    @Override
-    public void preventUnmountOnDetachedFromWindow() {
-        for (ContentView contentView : contentViews) {
-            contentView.preventUnmountOnDetachedFromWindow();
-        }
-    }
-
-    @Override
-    public void preventMountAfterReattachedToWindow() {
-        for (ContentView contentView : contentViews) {
-            contentView.preventMountAfterReattachedToWindow();
+            contentView.unmountOnDetachedFromWindow();
         }
     }
 

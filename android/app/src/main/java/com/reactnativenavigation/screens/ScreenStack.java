@@ -87,7 +87,7 @@ public class ScreenStack {
                 nextScreen.show(nextScreen.screenParams.animateScreenTransitions, new Runnable() {
                     @Override
                     public void run() {
-                        removePreviousWithoutUnmount(previousScreen);
+                        parent.removeView(previousScreen);
                     }
                 });
             }
@@ -97,7 +97,7 @@ public class ScreenStack {
     private void pushScreenToInvisibleStack(LayoutParams layoutParams, Screen nextScreen, Screen previousScreen) {
         nextScreen.setVisibility(View.INVISIBLE);
         addScreen(nextScreen, layoutParams);
-        removePreviousWithoutUnmount(previousScreen);
+        parent.removeView(previousScreen);
     }
 
     private void addScreen(Screen screen, LayoutParams layoutParams) {
@@ -107,11 +107,6 @@ public class ScreenStack {
 
     private void addScreenBeforeSnackbarAndFabLayout(Screen screen, LayoutParams layoutParams) {
         parent.addView(screen, parent.getChildCount() - 1, layoutParams);
-    }
-
-    private void removePreviousWithoutUnmount(Screen previous) {
-        previous.preventUnmountOnDetachedFromWindow();
-        parent.removeView(previous);
     }
 
     public void pop(boolean animated) {
@@ -146,7 +141,7 @@ public class ScreenStack {
         toRemove.hide(animated, new Runnable() {
             @Override
             public void run() {
-                toRemove.ensureUnmountOnDetachedFromWindow();
+                toRemove.unmountOnDetachedFromWindow();
                 parent.removeView(toRemove);
             }
         });
@@ -163,7 +158,6 @@ public class ScreenStack {
     private void readdPrevious(Screen previous) {
         previous.setVisibility(View.VISIBLE);
         parent.addView(previous, 0);
-        previous.preventMountAfterReattachedToWindow();
     }
 
     public void popToRoot(boolean animated) {
@@ -174,7 +168,7 @@ public class ScreenStack {
 
     public void destroy() {
         for (Screen screen : stack) {
-            screen.ensureUnmountOnDetachedFromWindow();
+            screen.unmountOnDetachedFromWindow();
             parent.removeView(screen);
         }
         stack.clear();
