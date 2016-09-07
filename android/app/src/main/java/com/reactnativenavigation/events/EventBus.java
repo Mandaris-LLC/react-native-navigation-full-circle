@@ -3,6 +3,7 @@ package com.reactnativenavigation.events;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public enum EventBus {
     instance;
@@ -15,7 +16,9 @@ public enum EventBus {
     }
 
     public void unregister(Subscriber subscriber) {
-        for (WeakReference<Subscriber> ref : subscribers) {
+        ListIterator<WeakReference<Subscriber>> iterator = subscribers.listIterator();
+        while (iterator.hasNext()) {
+            WeakReference<Subscriber> ref = iterator.next();
             Subscriber registered = ref.get();
             if (registered != null && registered == subscriber) {
                 subscribers.remove(ref);
