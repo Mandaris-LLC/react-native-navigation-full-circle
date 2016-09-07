@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.reactnativenavigation.params.NavigationParams;
 import com.reactnativenavigation.params.ScreenParams;
-import com.reactnativenavigation.params.TopTabParams;
+import com.reactnativenavigation.params.PageParams;
 import com.reactnativenavigation.react.ImageLoader;
 
 import java.util.List;
@@ -67,8 +67,8 @@ public class ScreenParamsParser extends Parser {
         return tabLabel;
     }
 
-    private static List<TopTabParams> parseTopTabs(Bundle params) {
-        List<TopTabParams> topTabParams = null;
+    private static List<PageParams> parseTopTabs(Bundle params) {
+        List<PageParams> topTabParams = null;
         if (hasKey(params, TOP_TABS)) {
             topTabParams = new TopTabParamsParser().parse(params.getBundle(TOP_TABS));
         }

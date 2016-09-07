@@ -10,19 +10,19 @@ import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.events.EventBus;
 import com.reactnativenavigation.events.ScreenChangedEvent;
-import com.reactnativenavigation.params.TopTabParams;
+import com.reactnativenavigation.params.PageParams;
 import com.reactnativenavigation.views.ContentView;
 
 import java.util.List;
 
 public class ContentViewPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
     private List<ContentView> contentViews;
-    private List<TopTabParams> topTabParams;
+    private List<PageParams> pageParams;
     private int currentPosition = 0;
 
-    public ContentViewPagerAdapter(List<ContentView> contentViews, List<TopTabParams> topTabParams) {
+    public ContentViewPagerAdapter(List<ContentView> contentViews, List<PageParams> pageParams) {
         this.contentViews = contentViews;
-        this.topTabParams = topTabParams;
+        this.pageParams = pageParams;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ContentViewPagerAdapter extends PagerAdapter implements ViewPager.O
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return topTabParams.get(position).title;
+        return pageParams.get(position).title;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ContentViewPagerAdapter extends PagerAdapter implements ViewPager.O
     @Override
     public void onPageSelected(int position) {
         currentPosition = position;
-        EventBus.instance.post(new ScreenChangedEvent(topTabParams.get(currentPosition)));
+        EventBus.instance.post(new ScreenChangedEvent(pageParams.get(currentPosition)));
         sendTabSelectedEventToJs();
     }
 

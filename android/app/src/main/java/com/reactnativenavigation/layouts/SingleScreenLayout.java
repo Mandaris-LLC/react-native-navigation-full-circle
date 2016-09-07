@@ -100,6 +100,7 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
 
         if (stack.canPop()) {
             stack.pop(true);
+            EventBus.instance.post(new ScreenChangedEvent(stack.peek().getScreenParams()));
             return true;
         } else {
             return false;
