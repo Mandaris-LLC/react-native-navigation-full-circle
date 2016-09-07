@@ -127,6 +127,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         if (getCurrentScreenStack().canPop()) {
             getCurrentScreenStack().pop(true);
             setBottomTabsStyleFromCurrentScreen();
+            EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
             return true;
         } else {
             return false;
@@ -206,8 +207,8 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         screenStack.push(params, createScreenLayoutParams(params));
         if (isCurrentStack(screenStack)) {
             bottomTabs.setStyleFromScreen(params.styleParams);
+            EventBus.instance.post(new ScreenChangedEvent(params));
         }
-        EventBus.instance.post(new ScreenChangedEvent(params));
     }
 
     @Override
@@ -324,6 +325,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
                 @Override
                 public void onScreenPopAnimationEnd() {
                     setBottomTabsStyleFromCurrentScreen();
+                    EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
                 }
             });
             return true;
