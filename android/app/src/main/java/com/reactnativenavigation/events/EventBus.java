@@ -1,31 +1,44 @@
 package com.reactnativenavigation.events;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 public enum EventBus {
     instance;
 
-    List<Subscriber> subscribers;
-
-    EventBus() {
-        subscribers = new ArrayList<>();
-    }
+    private final List<WeakReference<Subscriber>> subscribers = new ArrayList<>();
 
     public void register(Subscriber subscriber) {
-        if (subscribers.contains(subscriber)) {
-            throw new RuntimeException("Subscriber already registered");
-        }
-        subscribers.add(subscriber);
+        if (isSubscribed(subscriber)) return;
+        subscribers.add(new WeakReference<>(subscriber));
     }
 
     public void unregister(Subscriber subscriber) {
-        subscribers.remove(subscriber);
+        for (WeakReference<Subscriber> ref : subscribers) {
+            Subscriber registered = ref.get();
+            if (registered != null && registered == subscriber) {
+                subscribers.remove(ref);
+            }
+        }
     }
 
     public void post(Event event) {
-        for (Subscriber subscriber : subscribers) {
-            subscriber.onEvent(event);
+        for (WeakReference<Subscriber> ref : subscribers) {
+            Subscriber registered = ref.get();
+            if (registered != null) {
+                registered.onEvent(event);
+            }
         }
+    }
+
+    public boolean isSubscribed(Subscriber subscriber) {
+        for (WeakReference<Subscriber> ref : subscribers) {
+            Subscriber registered = ref.get();
+            if (registered != null && registered.equals(subscriber)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
