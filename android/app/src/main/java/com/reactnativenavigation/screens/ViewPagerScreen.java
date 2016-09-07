@@ -64,9 +64,9 @@ public class ViewPagerScreen extends Screen {
     }
 
     @Override
-    public void unmountOnDetachedFromWindow() {
+    public void unmountReactView() {
         for (ContentView contentView : contentViews) {
-            contentView.unmountOnDetachedFromWindow();
+            contentView.unmountReactView();
         }
     }
 

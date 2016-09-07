@@ -141,7 +141,7 @@ public class ScreenStack {
         toRemove.hide(animated, new Runnable() {
             @Override
             public void run() {
-                toRemove.unmountOnDetachedFromWindow();
+                toRemove.unmountReactView();
                 parent.removeView(toRemove);
             }
         });
@@ -168,7 +168,7 @@ public class ScreenStack {
 
     public void destroy() {
         for (Screen screen : stack) {
-            screen.unmountOnDetachedFromWindow();
+            screen.unmountReactView();
             parent.removeView(screen);
         }
         stack.clear();

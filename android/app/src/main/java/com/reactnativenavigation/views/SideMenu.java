@@ -19,7 +19,7 @@ public class SideMenu extends DrawerLayout {
     }
 
     public void destroy() {
-        sideMenuView.unmountOnDetachedFromWindow();
+        sideMenuView.unmountReactView();
         removeView(sideMenuView);
     }
 

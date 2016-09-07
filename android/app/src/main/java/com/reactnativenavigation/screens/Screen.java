@@ -122,7 +122,7 @@ public abstract class Screen extends RelativeLayout {
         }
     }
 
-    public abstract void unmountOnDetachedFromWindow();
+    public abstract void unmountReactView();
 
     public String getScreenInstanceId() {
         return screenParams.getScreenInstanceId();

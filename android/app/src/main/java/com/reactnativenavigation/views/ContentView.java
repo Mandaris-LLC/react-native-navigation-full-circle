@@ -28,7 +28,7 @@ public class ContentView extends ReactRootView {
         return navigationParams.navigatorEventId;
     }
 
-    public void unmountOnDetachedFromWindow() {
+    public void unmountReactView() {
         unmountReactApplication();
     }
 

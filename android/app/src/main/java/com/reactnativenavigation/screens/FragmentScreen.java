@@ -109,7 +109,7 @@ public class FragmentScreen extends Screen {
     }
 
     @Override
-    public void unmountOnDetachedFromWindow() {
+    public void unmountReactView() {
         // nothing
     }
 
