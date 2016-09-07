@@ -7,6 +7,10 @@ import android.view.KeyEvent;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.events.Event;
+import com.reactnativenavigation.events.EventBus;
+import com.reactnativenavigation.events.ModalDismissedEvent;
+import com.reactnativenavigation.events.Subscriber;
 import com.reactnativenavigation.layouts.BottomTabsLayout;
 import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.LayoutFactory;
@@ -21,7 +25,7 @@ import com.reactnativenavigation.react.RedboxPermission;
 
 import java.util.List;
 
-public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, ReactGateway.OnJsDevReloadListener {
+public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, ReactGateway.OnJsDevReloadListener, Subscriber {
 
     /**
      * Although we start multiple activities, we make sure to pass Intent.CLEAR_TASK | Intent.NEW_TASK
@@ -79,6 +83,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
         currentActivity = this;
         NavigationApplication.instance.getReactGateway().onResumeActivity(this, this, this);
+        EventBus.instance.register(this);
     }
 
     @Override
@@ -86,6 +91,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         super.onPause();
         currentActivity = null;
         NavigationApplication.instance.getReactGateway().onPauseActivity();
+        EventBus.instance.unregister(this);
     }
 
     @Override
@@ -248,5 +254,12 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     public void showSnackbar(SnackbarParams params) {
         layout.showSnackbar(params);
+    }
+
+    @Override
+    public void onEvent(Event event) {
+        if (event.getType() == ModalDismissedEvent.TYPE) {
+            layout.onModalDismissed();
+        }
     }
 }

@@ -194,6 +194,11 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     }
 
     @Override
+    public void onModalDismissed() {
+        EventBus.instance.post(new ScreenChangedEvent(stack.peek().getScreenParams()));
+    }
+
+    @Override
     public boolean onTitleBarBackButtonClick() {
         if (leftButtonOnClickListener != null) {
             return leftButtonOnClickListener.onTitleBarBackButtonClick();

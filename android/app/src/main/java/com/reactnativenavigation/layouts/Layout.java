@@ -28,4 +28,6 @@ public interface Layout extends ScreenStackContainer {
     void setSideMenuVisible(boolean animated, boolean visible);
 
     void showSnackbar(SnackbarParams params);
+
+    void onModalDismissed();
 }

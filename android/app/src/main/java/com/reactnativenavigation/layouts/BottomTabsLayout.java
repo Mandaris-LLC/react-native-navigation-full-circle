@@ -193,6 +193,11 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         snackbarAndFabContainer.showSnackbar(eventId, params);
     }
 
+    @Override
+    public void onModalDismissed() {
+        EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
+    }
+
     public void selectBottomTabByTabIndex(Integer index) {
         bottomTabs.setCurrentItem(index);
     }
