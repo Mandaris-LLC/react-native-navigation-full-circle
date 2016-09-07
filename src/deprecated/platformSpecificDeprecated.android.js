@@ -375,9 +375,16 @@ function addNavigatorButtons(screen, sideMenuParams) {
 function getFab(screen) {
   if (screen.fab) {
     const fab = screen.fab;
-    fab.collapsedIcon = resolveAssetSource(fab.collapsedIcon).uri;
+    const collapsedIconUri = resolveAssetSource(fab.collapsedIcon);
+    if (!collapsedIconUri) {
+      return;
+    }
+    fab.collapsedIcon = collapsedIconUri.uri;
     if (fab.expendedIcon) {
-      fab.expendedIcon = resolveAssetSource(fab.expendedIcon).uri;
+      const expendedIconUri = resolveAssetSource(fab.expendedIcon);
+      if (expendedIconUri) {
+        fab.expendedIcon = expendedIconUri.ui;
+      }
     }
 
     if (fab.actions) {
