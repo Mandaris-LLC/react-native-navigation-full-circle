@@ -29,8 +29,17 @@ class SecondTabScreen extends Component {
 
   constructor(props) {
     super(props);
+    console.log('SecondTabScreen', 'constructor');
     this.buttonsCounter = 0;
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  componentWillMount() {
+    console.log('SecondTabScreen', 'componentWillMount');
+  }
+
+  componentWillUnmount() {
+    console.log('SecondTabScreen', 'componentWillUnmount');
   }
 
   render() {

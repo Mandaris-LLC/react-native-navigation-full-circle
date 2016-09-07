@@ -40,8 +40,9 @@ class FirstTabScreen extends Component {
       }
     ],
     fab: {
-      id: 'share',
+      collapsedId: 'share',
       collapsedIcon: require('../../img/ic_share.png'),
+      expendedId: 'clear',
       expendedIcon: require('../../img/ic_clear.png'),
       backgroundColor: '#3F51B5',
       actions: [
@@ -66,14 +67,22 @@ class FirstTabScreen extends Component {
           backgroundColor: '#FF5722'
         }
       ]
-
     }
   };
 
   constructor(props) {
     super(props);
+    console.log('FirstTabScreen', 'constructor');
     // if you want to listen on navigator events, set this up
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  componentWillMount() {
+    console.log('FirstTabScreen', 'componentWillMount');
+  }
+
+  componentWillUnmount() {
+    console.log('FirstTabScreen', 'componentWillUnmount');
   }
 
   onNavigatorEvent(event) {
