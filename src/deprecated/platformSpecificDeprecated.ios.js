@@ -17,6 +17,7 @@ function startTabBasedApp(params) {
     return;
   }
 
+  const controllerID = _.uniqueId('controllerID');
   params.tabs.map(function(tab, index) {
     const navigatorID = controllerID + '_nav' + index;
     const screenInstanceID = _.uniqueId('screenInstanceID');
@@ -38,7 +39,6 @@ function startTabBasedApp(params) {
     };
   });
 
-  const controllerID = _.uniqueId('controllerID');
   const Controller = Controllers.createClass({
     render: function() {
       if (!params.drawer || (!params.drawer.left && !params.drawer.right)) {
