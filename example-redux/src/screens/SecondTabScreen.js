@@ -149,7 +149,7 @@ class SecondTabScreen extends Component {
 
     this.props.navigator.push({
       title: "Pushed from SideMenu",
-      screen: parts[2],
+      screen: 'example.PushedScreen',
       passProps: {
         str: 'This is a prop passed in \'navigator.push()\'!',
         obj: {
