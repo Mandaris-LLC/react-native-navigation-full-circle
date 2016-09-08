@@ -21,7 +21,7 @@ public enum EventBus {
             WeakReference<Subscriber> ref = iterator.next();
             Subscriber registered = ref.get();
             if (registered != null && registered == subscriber) {
-                subscribers.remove(ref);
+                iterator.remove();
             }
         }
     }
