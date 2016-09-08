@@ -383,7 +383,7 @@ function getFab(screen) {
     if (fab.expendedIcon) {
       const expendedIconUri = resolveAssetSource(fab.expendedIcon);
       if (expendedIconUri) {
-        fab.expendedIcon = expendedIconUri.ui;
+        fab.expendedIcon = expendedIconUri.uri;
       }
     }
 
