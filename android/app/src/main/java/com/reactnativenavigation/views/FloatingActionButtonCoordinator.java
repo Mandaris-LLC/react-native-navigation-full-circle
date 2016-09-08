@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -160,6 +161,9 @@ public class FloatingActionButtonCoordinator {
             action.setBackgroundTintList(ColorStateList.valueOf(actionParams.backgroundColor.getColor()));
         }
         action.setSize(FloatingActionButton.SIZE_MINI);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            action.setCompatElevation(0);
+        }
         return action;
     }
 
