@@ -26,7 +26,8 @@
     "release": "npm version prerelease && npm publish --tag next && npm view react-native-navigation dist-tags && git push"
   },
   "peerDependencies": {
-    "react-native": "*"
+    "react-native": "*",
+    "react": "*"
   },
   "dependencies": {
     "react-native-controllers": "^2.0.0",
