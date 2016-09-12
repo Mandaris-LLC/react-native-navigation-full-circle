@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import Navigation from './../Navigation';
 import Controllers, {Modal, Notification} from 'react-native-controllers';
 const React = Controllers.hijackReact();

@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, {Component} from 'react';
 import {AppRegistry, NativeModules} from 'react-native';
 import _ from 'lodash';
