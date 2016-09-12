@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "watchman watch-del-all && adb reverse tcp:8081 tcp:8081 && node node_modules/react-native/local-cli/cli.js start",
-    "install:android": "pushd android && ./gradlew installDebug && popd"
+    "install:android": "cd android && ./gradlew installDebug"
   },
   "dependencies": {
     "react-native-navigation": "file:../",
@@ -13,7 +13,6 @@
     "react-redux": "^4.0.6",
     "redux": "^3.0.5",
     "redux-thunk": "^1.0.3",
-    "seamless-immutable": "^5.0.1",
-    "babel-preset-react-native-stage-0": "*"
+    "seamless-immutable": "^5.0.1"
   }
 }
