@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
@@ -11,17 +12,21 @@ import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.bridge.NavigationReactEventEmitter;
 import com.reactnativenavigation.bridge.NavigationReactPackage;
+import com.reactnativenavigation.events.EventBus;
+import com.reactnativenavigation.events.JsDevReloadEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationReactGateway extends ReactGatewayHost implements ReactInstanceManager.ReactInstanceEventListener {
+import javax.annotation.Nullable;
 
-    private OnJsDevReloadListener onJsDevReloadListener;
+public class NavigationReactGateway implements ReactGateway {
+
+    private final ReactNativeHost host;
     private NavigationReactEventEmitter reactEventEmitter;
 
     public NavigationReactGateway() {
-        super(NavigationApplication.instance);
+        host = new ReactNativeHostImpl();
     }
 
     @Override
@@ -30,7 +35,7 @@ public class NavigationReactGateway extends ReactGatewayHost implements ReactIns
     }
 
     public boolean isInitialized() {
-        return hasInstance() && getReactInstanceManager().getCurrentReactContext() != null;
+        return host.hasInstance() && getReactInstanceManager().getCurrentReactContext() != null;
     }
 
     public ReactContext getReactContext() {
@@ -38,7 +43,15 @@ public class NavigationReactGateway extends ReactGatewayHost implements ReactIns
     }
 
     public NavigationReactEventEmitter getReactEventEmitter() {
+        if (reactEventEmitter == null && isInitialized()) {
+            reactEventEmitter = new NavigationReactEventEmitter(getReactContext());
+        }
         return reactEventEmitter;
+    }
+
+    @Override
+    public ReactInstanceManager getReactInstanceManager() {
+        return host.getReactInstanceManager();
     }
 
     public void onBackPressed() {
@@ -47,17 +60,14 @@ public class NavigationReactGateway extends ReactGatewayHost implements ReactIns
 
     public void onDestroyApp() {
         getReactInstanceManager().onHostDestroy();
-        getReactInstanceManager().removeReactInstanceEventListener(this);
-        clear();
+        host.clear();
     }
 
     public void onPauseActivity() {
         getReactInstanceManager().onHostPause();
-        onJsDevReloadListener = null;
     }
 
-    public void onResumeActivity(Activity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler, OnJsDevReloadListener onJsDevReloadListener) {
-        this.onJsDevReloadListener = onJsDevReloadListener;
+    public void onResumeActivity(Activity activity, DefaultHardwareBackBtnHandler defaultHardwareBackBtnHandler) {
         getReactInstanceManager().onHostResume(activity, defaultHardwareBackBtnHandler);
     }
 
@@ -65,63 +75,101 @@ public class NavigationReactGateway extends ReactGatewayHost implements ReactIns
         getReactInstanceManager().onActivityResult(requestCode, resultCode, data);
     }
 
-    private void replaceJsDevReloadListener(ReactInstanceManager manager) {
-        new JsDevReloadListenerReplacer(manager, new JsDevReloadListenerReplacer.Listener() {
-            @Override
-            public void onJsDevReload() {
-                if (onJsDevReloadListener != null)
-                    onJsDevReloadListener.onJsDevReload();
+    public ReactNativeHost getReactNativeHost() {
+        return host;
+    }
+
+
+    private static class ReactNativeHostImpl extends ReactNativeHost implements ReactInstanceManager.ReactInstanceEventListener {
+
+        public ReactNativeHostImpl() {
+            super(NavigationApplication.instance);
+        }
+
+        @Override
+        protected boolean getUseDeveloperSupport() {
+            return NavigationApplication.instance.isDebug();
+        }
+
+        @Override
+        protected List<ReactPackage> getPackages() {
+            List<ReactPackage> list = new ArrayList<>();
+            list.add(new MainReactPackage());
+            list.add(new NavigationReactPackage());
+            addAdditionalReactPackagesIfNeeded(list);
+            return list;
+        }
+
+        private void addAdditionalReactPackagesIfNeeded(List<ReactPackage> list) {
+            List<ReactPackage> additionalReactPackages = NavigationApplication.instance.createAdditionalReactPackages();
+            if (additionalReactPackages == null) {
+                return;
             }
-        }).replace();
-    }
 
-    @Override
-    protected ReactInstanceManager createReactInstanceManager() {
-        ReactInstanceManager manager = super.createReactInstanceManager();
-        if (NavigationApplication.instance.isDebug()) {
-            replaceJsDevReloadListener(manager);
-        }
-        manager.addReactInstanceEventListener(this);
-        return manager;
-    }
+            for (ReactPackage reactPackage : additionalReactPackages) {
+                if (reactPackage instanceof MainReactPackage)
+                    throw new RuntimeException("Do not create a new MainReactPackage. This is created for you.");
+                if (reactPackage instanceof NavigationReactPackage)
+                    throw new RuntimeException("Do not create a new NavigationReactPackage. This is created for you.");
+            }
 
-    @Override
-    protected boolean getUseDeveloperSupport() {
-        return NavigationApplication.instance.isDebug();
-    }
-
-    @Override
-    protected List<ReactPackage> getPackages() {
-        return createReactPackages();
-    }
-
-    private List<ReactPackage> createReactPackages() {
-        List<ReactPackage> list = new ArrayList<>();
-        list.add(new MainReactPackage());
-        list.add(new NavigationReactPackage());
-        addAdditionalReactPackagesIfNeeded(list);
-        return list;
-    }
-
-    private void addAdditionalReactPackagesIfNeeded(List<ReactPackage> list) {
-        List<ReactPackage> additionalReactPackages = NavigationApplication.instance.createAdditionalReactPackages();
-        if (additionalReactPackages == null) {
-            return;
+            list.addAll(additionalReactPackages);
         }
 
-        for (ReactPackage reactPackage : additionalReactPackages) {
-            if (reactPackage instanceof MainReactPackage)
-                throw new RuntimeException("Do not create a new MainReactPackage. This is created for you.");
-            if (reactPackage instanceof NavigationReactPackage)
-                throw new RuntimeException("Do not create a new NavigationReactPackage. This is created for you.");
+        @Override
+        protected ReactInstanceManager createReactInstanceManager() {
+            ReactInstanceManager manager = super.createReactInstanceManager();
+            if (NavigationApplication.instance.isDebug()) {
+                replaceJsDevReloadListener(manager);
+            }
+            manager.addReactInstanceEventListener(this);
+            return manager;
         }
 
-        list.addAll(additionalReactPackages);
-    }
+        private void replaceJsDevReloadListener(ReactInstanceManager manager) {
+            new JsDevReloadListenerReplacer(manager, new JsDevReloadListenerReplacer.Listener() {
+                @Override
+                public void onJsDevReload() {
+                    EventBus.instance.post(new JsDevReloadEvent());
+                }
+            }).replace();
+        }
 
-    @Override
-    public void onReactContextInitialized(ReactContext context) {
-        reactEventEmitter = new NavigationReactEventEmitter(context);
-        NavigationApplication.instance.onReactInitialized(context);
+        @Override
+        public void onReactContextInitialized(ReactContext context) {
+            NavigationApplication.instance.onReactInitialized(context);
+        }
+
+        @Override
+        public void clear() {
+            getReactInstanceManager().removeReactInstanceEventListener(this);
+            super.clear();
+        }
+
+        @Override
+        protected String getJSMainModuleName() {
+            String jsMainModuleName = NavigationApplication.instance.getJSMainModuleName();
+            if (jsMainModuleName != null)
+                return jsMainModuleName;
+            return super.getJSMainModuleName();
+        }
+
+        @Nullable
+        @Override
+        protected String getJSBundleFile() {
+            String jsBundleFile = NavigationApplication.instance.getJSBundleFile();
+            if (jsBundleFile != null)
+                return jsBundleFile;
+            return super.getJSBundleFile();
+        }
+
+        @Nullable
+        @Override
+        protected String getBundleAssetName() {
+            String bundleAssetName = NavigationApplication.instance.getBundleAssetName();
+            if (bundleAssetName != null)
+                return bundleAssetName;
+            return super.getBundleAssetName();
+        }
     }
 }

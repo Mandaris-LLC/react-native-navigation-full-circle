@@ -9,6 +9,7 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.events.Event;
 import com.reactnativenavigation.events.EventBus;
+import com.reactnativenavigation.events.JsDevReloadEvent;
 import com.reactnativenavigation.events.ModalDismissedEvent;
 import com.reactnativenavigation.events.Subscriber;
 import com.reactnativenavigation.layouts.BottomTabsLayout;
@@ -20,12 +21,11 @@ import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.react.JsDevReloadHandler;
-import com.reactnativenavigation.react.ReactGateway;
 import com.reactnativenavigation.react.RedboxPermission;
 
 import java.util.List;
 
-public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, ReactGateway.OnJsDevReloadListener, Subscriber {
+public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, Subscriber {
 
     /**
      * Although we start multiple activities, we make sure to pass Intent.CLEAR_TASK | Intent.NEW_TASK
@@ -46,7 +46,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         super.onCreate(savedInstanceState);
 
         if (!NavigationApplication.instance.isReactContextInitialized()) {
-            NavigationApplication.instance.startReactContext();
+            NavigationApplication.instance.startReactContextOnceInBackgroundAndExecuteJS();
             return;
         }
 
@@ -82,7 +82,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         }
 
         currentActivity = this;
-        NavigationApplication.instance.getReactGateway().onResumeActivity(this, this, this);
+        NavigationApplication.instance.getReactGateway().onResumeActivity(this, this);
         EventBus.instance.register(this);
     }
 
@@ -114,12 +114,6 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         if (currentActivity == null || currentActivity.isFinishing()) {
             NavigationApplication.instance.getReactGateway().onDestroyApp();
         }
-    }
-
-    @Override
-    public void onJsDevReload() {
-        modalController.destroy();
-        layout.destroy();
     }
 
     @Override
@@ -258,8 +252,11 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     @Override
     public void onEvent(Event event) {
-        if (event.getType() == ModalDismissedEvent.TYPE) {
+        if (event.getType().equals(ModalDismissedEvent.TYPE)) {
             layout.onModalDismissed();
+        } else if (event.getType().equals(JsDevReloadEvent.TYPE)) {
+            modalController.destroy();
+            layout.destroy();
         }
     }
 }

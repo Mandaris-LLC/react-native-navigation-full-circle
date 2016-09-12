@@ -11,7 +11,6 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.react.NavigationReactGateway;
 import com.reactnativenavigation.react.ReactGateway;
-import com.reactnativenavigation.react.ReactGatewayHost;
 
 import java.util.List;
 
@@ -19,18 +18,18 @@ public abstract class NavigationApplication extends Application implements React
 
     public static NavigationApplication instance;
 
-    private ReactGatewayHost reactGateway;
+    private NavigationReactGateway reactGateway;
     private Handler handler;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-        reactGateway = new NavigationReactGateway();
         handler = new Handler(getMainLooper());
+        reactGateway = new NavigationReactGateway();
     }
 
-    public void startReactContext() {
+    public void startReactContextOnceInBackgroundAndExecuteJS() {
         reactGateway.startReactContextOnceInBackgroundAndExecuteJS();
     }
 
@@ -56,7 +55,31 @@ public abstract class NavigationApplication extends Application implements React
 
     @Override
     public ReactNativeHost getReactNativeHost() {
-        return reactGateway;
+        return reactGateway.getReactNativeHost();
+    }
+
+    /**
+     * @see ReactNativeHost#getJSMainModuleName()
+     */
+    @Nullable
+    public String getJSMainModuleName() {
+        return null;
+    }
+
+    /**
+     * @see ReactNativeHost#getJSBundleFile()
+     */
+    @Nullable
+    public String getJSBundleFile() {
+        return null;
+    }
+
+    /**
+     * @see ReactNativeHost#getBundleAssetName()
+     */
+    @Nullable
+    public String getBundleAssetName() {
+        return null;
     }
 
     public abstract boolean isDebug();
@@ -92,5 +115,4 @@ public abstract class NavigationApplication extends Application implements React
         }
         reactGateway.getReactEventEmitter().sendEvent(eventId, arguments);
     }
-
 }
