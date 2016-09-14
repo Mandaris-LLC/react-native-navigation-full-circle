@@ -136,7 +136,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     void push(ScreenParams params) {
-        if (modalController.isShowing()) {
+        if (modalController.containsNavigator(params.getNavigatorId())) {
             modalController.push(params);
         } else {
             layout.push(params);
@@ -144,7 +144,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     void pop(ScreenParams params) {
-        if (modalController.isShowing()) {
+        if (modalController.containsNavigator(params.getNavigatorId())) {
             modalController.pop(params);
         } else {
             layout.pop(params);
@@ -152,7 +152,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     void popToRoot(ScreenParams params) {
-        if (modalController.isShowing()) {
+        if (modalController.containsNavigator(params.getNavigatorId())) {
             modalController.popToRoot(params);
         } else {
             layout.popToRoot(params);
@@ -160,7 +160,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     void newStack(ScreenParams params) {
-        if (modalController.isShowing()) {
+        if (modalController.containsNavigator(params.getNavigatorId())) {
             modalController.newStack(params);
         } else {
             layout.newStack(params);

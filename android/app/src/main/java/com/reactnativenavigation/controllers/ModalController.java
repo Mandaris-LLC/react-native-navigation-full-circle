@@ -20,6 +20,15 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
         this.activity = activity;
     }
 
+    public boolean containsNavigator(String navigatorId) {
+        for (Modal modal : stack) {
+            if (modal.containsNavigator(navigatorId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void showModal(ScreenParams screenParams) {
         Modal modal = new Modal(activity, this, screenParams);
         modal.show();
