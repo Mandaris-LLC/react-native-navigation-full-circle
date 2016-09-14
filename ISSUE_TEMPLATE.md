@@ -5,6 +5,7 @@
 ```
 ENTER DESCRIPTION HERE
 ```
+> Please make sure to use the currect [naming conventions](https://github.com/wix/react-native-navigation/issues/197)
 
 ## Screenshots
 
