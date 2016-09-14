@@ -198,6 +198,12 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
     }
 
+    @Override
+    public boolean containsNavigator(String navigatorId) {
+        // Unused
+        return false;
+    }
+
     public void selectBottomTabByTabIndex(Integer index) {
         bottomTabs.setCurrentItem(index);
     }
