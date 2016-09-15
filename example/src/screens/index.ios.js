@@ -1,4 +1,4 @@
-import { Navigation } from 'react-native-navigation';
+import {Navigation} from 'react-native-navigation';
 
 import FirstTabScreen from './FirstTabScreen';
 import SecondTabScreen from './SecondTabScreen';
@@ -7,7 +7,7 @@ import PushedScreen from './PushedScreen';
 import StyledScreen from './StyledScreen';
 import ModalScreen from './ModalScreen';
 import LightBoxScreen from './LightBoxScreen';
-import NotificationScreen from './NotificationScreen'
+import NotificationScreen from './NotificationScreen';
 import SideMenu from './SideMenu';
 
 // register all screens of the app (including internal ones)
