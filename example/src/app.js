@@ -1,8 +1,3 @@
-import React, {Component} from 'react';
-import {
-  AppRegistry,
-  View
-} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
 // screen related book keeping
@@ -21,15 +16,5 @@ Navigation.startSingleScreenApp({
       navBarButtonColor: '#ffffff',
       statusBarTextColorScheme: 'light'
     }
-  },
-  drawer: {
-    left: {
-      screen: 'example.SideMenu'
-    }
   }
-  // tabsStyle: {
-  //   tabBarButtonColor: '#ffff00',
-  //   tabBarSelectedButtonColor: '#ff9900',
-  //   tabBarBackgroundColor: '#551A8B'
-  // },
 });
