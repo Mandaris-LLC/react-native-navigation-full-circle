@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  ScrollView,
   TouchableOpacity,
   StyleSheet,
   AlertIOS
@@ -36,16 +35,16 @@ export default class FirstTabScreen extends Component {
   }
 
   onNavigatorEvent(event) {
-    if (event.id == 'menu') {
+    if (event.id === 'menu') {
       this.props.navigator.toggleDrawer({
         side: 'left',
         animated: true
       });
     }
-    if (event.id == 'edit') {
+    if (event.id === 'edit') {
       AlertIOS.alert('NavBar', 'Edit button pressed');
     }
-    if (event.id == 'add') {
+    if (event.id === 'add') {
       AlertIOS.alert('NavBar', 'Add button pressed');
     }
   }
