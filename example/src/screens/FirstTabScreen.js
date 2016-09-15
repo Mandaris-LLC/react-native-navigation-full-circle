@@ -28,11 +28,13 @@ export default class FirstTabScreen extends Component {
   static navigatorStyle = {
     drawUnderTabBar: true
   };
+
   constructor(props) {
     super(props);
     // if you want to listen on navigator events, set this up
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
+
   onNavigatorEvent(event) {
     if (event.id == 'menu') {
       this.props.navigator.toggleDrawer({
@@ -47,6 +49,7 @@ export default class FirstTabScreen extends Component {
       AlertIOS.alert('NavBar', 'Add button pressed');
     }
   }
+
   render() {
     return (
       <View style={{flex: 1, padding: 20}}>
@@ -74,24 +77,28 @@ export default class FirstTabScreen extends Component {
       </View>
     );
   }
+
   onPushPress() {
     this.props.navigator.push({
       title: "More",
       screen: "example.PushedScreen"
     });
   }
+
   onPushStyledPress() {
     this.props.navigator.push({
       title: "Styled",
       screen: "example.StyledScreen"
     });
   }
+
   onModalPress() {
     this.props.navigator.showModal({
       title: "Modal",
       screen: "example.ModalScreen"
     });
   }
+
   onLightBoxPress() {
     this.props.navigator.showLightBox({
       screen: "example.LightBoxScreen",
@@ -100,6 +107,7 @@ export default class FirstTabScreen extends Component {
       }
     });
   }
+
   onInAppNotificationPress() {
     this.props.navigator.showInAppNotification({
       screen: "example.NotificationScreen"
@@ -112,7 +120,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10,
+    marginTop: 10,
     color: 'blue'
   }
 });
