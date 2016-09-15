@@ -183,7 +183,9 @@ function startTabBasedApp(params) {
     addNavigatorButtons(tab, params.drawer);
     addNavigationStyleParams(tab);
     addTabIcon(tab);
-    tab.passProps = params.passProps;
+    if (!tab.passProps) {
+      tab.passProps = params.passProps;
+    }
 
     adaptTopTabs(tab, tab.navigatorID);
 
