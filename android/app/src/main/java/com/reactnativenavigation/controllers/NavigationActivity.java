@@ -250,10 +250,20 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     public void onEvent(Event event) {
         if (event.getType().equals(ModalDismissedEvent.TYPE)) {
-            layout.onModalDismissed();
+            handleModalDismissedEvent();
         } else if (event.getType().equals(JsDevReloadEvent.TYPE)) {
-            modalController.destroy();
-            layout.destroy();
+            handleJsDevReloadEvent();
         }
+    }
+
+    private void handleModalDismissedEvent() {
+        if (!modalController.isShowing()) {
+            layout.onModalDismissed();
+        }
+    }
+
+    private void handleJsDevReloadEvent() {
+        modalController.destroy();
+        layout.destroy();
     }
 }

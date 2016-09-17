@@ -83,6 +83,9 @@ public class ModalController implements ScreenStackContainer, Modal.OnModalDismi
     @Override
     public void onModalDismissed(Modal modal) {
         stack.remove(modal);
+        if (isShowing()) {
+            stack.peek().onModalDismissed();
+        }
         EventBus.instance.post(new ModalDismissedEvent());
     }
 

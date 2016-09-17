@@ -120,4 +120,8 @@ public class Modal extends Dialog implements DialogInterface.OnDismissListener, 
         destroy();
         onModalDismissedListener.onModalDismissed(this);
     }
+
+    public void onModalDismissed() {
+        layout.onModalDismissed();
+    }
 }
