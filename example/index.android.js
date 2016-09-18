@@ -1,1 +1,1 @@
-import App from './src/app.android';
+import App from './src/app';
