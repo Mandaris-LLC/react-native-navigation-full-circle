@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
-  AlertIOS
+  Alert,
+  Platform
 } from 'react-native';
 
 export default class FirstTabScreen extends Component {
@@ -42,37 +43,41 @@ export default class FirstTabScreen extends Component {
       });
     }
     if (event.id === 'edit') {
-      AlertIOS.alert('NavBar', 'Edit button pressed');
+      Alert.alert('NavBar', 'Edit button pressed');
     }
     if (event.id === 'add') {
-      AlertIOS.alert('NavBar', 'Add button pressed');
+      Alert.alert('NavBar', 'Add button pressed');
     }
   }
 
   render() {
     return (
       <View style={{flex: 1, padding: 20}}>
-
-        <TouchableHighlight onPress={ this.onPushPress.bind(this) }>
+        <TouchableOpacity onPress={ this.onPushPress.bind(this) }>
           <Text style={styles.button}>Push Plain Screen</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
-        <TouchableHighlight onPress={ this.onPushStyledPress.bind(this) }>
+        <TouchableOpacity onPress={ this.onPushStyledPress.bind(this) }>
           <Text style={styles.button}>Push Styled Screen</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
-        <TouchableHighlight onPress={ this.onModalPress.bind(this) }>
+        <TouchableOpacity onPress={ this.onModalPress.bind(this) }>
           <Text style={styles.button}>Show Modal Screen</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
-        <TouchableHighlight onPress={ this.onLightBoxPress.bind(this) }>
-          <Text style={styles.button}>Show LightBox</Text>
-        </TouchableHighlight>
+        {
+          Platform.OS === 'ios' ?
+            <TouchableOpacity onPress={ this.onLightBoxPress.bind(this) }>
+              <Text style={styles.button}>Show LightBox</Text>
+            </TouchableOpacity> : false
+        }
 
-        <TouchableHighlight onPress={ this.onInAppNotificationPress.bind(this) }>
-          <Text style={styles.button}>Show In-App Notification</Text>
-        </TouchableHighlight>
-
+        {
+          Platform.OS === 'ios' ?
+            <TouchableOpacity onPress={ this.onInAppNotificationPress.bind(this) }>
+              <Text style={styles.button}>Show In-App Notification</Text>
+            </TouchableOpacity> : false
+        }
       </View>
     );
   }
