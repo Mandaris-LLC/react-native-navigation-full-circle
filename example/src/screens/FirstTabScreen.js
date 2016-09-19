@@ -26,7 +26,14 @@ export default class FirstTabScreen extends Component {
     ]
   };
   static navigatorStyle = {
-    drawUnderTabBar: true
+      navBarBackgroundColor: '#4dbce9',
+      navBarTextColor: '#ffff00',
+      navBarSubtitleTextColor: '#ff0000',
+      navBarButtonColor: '#ffffff',
+      statusBarTextColorScheme: 'light',
+      tabBarBackgroundColor: '#4dbce9',
+      tabBarButtonColor: '#ffffff',
+      tabBarSelectedButtonColor: '#ffff00'
   };
 
   constructor(props) {
