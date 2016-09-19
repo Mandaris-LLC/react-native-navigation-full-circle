@@ -268,6 +268,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public boolean onTabSelected(int position, boolean wasSelected) {
+        if (wasSelected) {
+            return false;
+        }
+        
         hideCurrentStack();
         showNewStack(position);
         EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
