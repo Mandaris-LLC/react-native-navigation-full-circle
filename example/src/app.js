@@ -12,17 +12,7 @@ Navigation.startTabBasedApp({
       screen: 'example.FirstTabScreen',
       icon: require('../img/one.png'),
       selectedIcon: require('../img/one_selected.png'),
-      title: 'Screen One',
-      navigatorStyle: {
-        navBarBackgroundColor: '#4dbce9',
-        navBarTextColor: '#ffff00',
-        navBarSubtitleTextColor: '#ff0000',
-        navBarButtonColor: '#ffffff',
-        statusBarTextColorScheme: 'light',
-        tabBarBackgroundColor: '#4dbce9',
-        tabBarButtonColor: '#ffffff',
-        tabBarSelectedButtonColor: '#ffff00'
-      }
+      title: 'Screen One'
     },
     {
       label: 'Two',
@@ -34,7 +24,12 @@ Navigation.startTabBasedApp({
         tabBarBackgroundColor: '#4dbce9',
       }
     }
-  ]
+  ],
+  drawer: {
+    left: {
+      screen: 'example.SideMenu'
+    }
+  }
 });
 // Navigation.startSingleScreenApp({
 //   screen: {
