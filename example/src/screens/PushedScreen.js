@@ -60,7 +60,7 @@ export default class PushedScreen extends Component {
   onResetToPress() {
     this.props.navigator.resetTo({
       title: "New Root",
-      screen: "example.FirstTabScreen"
+      screen: "example.ThirdTabScreen"
     });
   }
 }

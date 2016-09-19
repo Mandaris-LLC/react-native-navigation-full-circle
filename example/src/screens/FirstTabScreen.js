@@ -7,6 +7,7 @@ import {
   Alert,
   Platform
 } from 'react-native';
+import {Navigation} from 'react-native-navigation';
 
 export default class FirstTabScreen extends Component {
   static navigatorButtons = {
@@ -26,14 +27,14 @@ export default class FirstTabScreen extends Component {
     ]
   };
   static navigatorStyle = {
-      navBarBackgroundColor: '#4dbce9',
-      navBarTextColor: '#ffff00',
-      navBarSubtitleTextColor: '#ff0000',
-      navBarButtonColor: '#ffffff',
-      statusBarTextColorScheme: 'light',
-      tabBarBackgroundColor: '#4dbce9',
-      tabBarButtonColor: '#ffffff',
-      tabBarSelectedButtonColor: '#ffff00'
+    navBarBackgroundColor: '#4dbce9',
+    navBarTextColor: '#ffff00',
+    navBarSubtitleTextColor: '#ff0000',
+    navBarButtonColor: '#ffffff',
+    statusBarTextColorScheme: 'light',
+    tabBarBackgroundColor: '#4dbce9',
+    tabBarButtonColor: '#ffffff',
+    tabBarSelectedButtonColor: '#ffff00'
   };
 
   constructor(props) {
@@ -85,6 +86,10 @@ export default class FirstTabScreen extends Component {
               <Text style={styles.button}>Show In-App Notification</Text>
             </TouchableOpacity> : false
         }
+
+        <TouchableOpacity onPress={ this.onStartSingleScreenApp.bind(this) }>
+          <Text style={styles.button}>Show Single Screen App</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -122,6 +127,14 @@ export default class FirstTabScreen extends Component {
   onInAppNotificationPress() {
     this.props.navigator.showInAppNotification({
       screen: "example.NotificationScreen"
+    });
+  }
+
+  onStartSingleScreenApp() {
+    Navigation.startSingleScreenApp({
+      screen: {
+        screen: 'example.FirstTabScreen'
+      }
     });
   }
 }
