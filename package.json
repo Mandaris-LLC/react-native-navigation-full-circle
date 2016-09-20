@@ -30,6 +30,7 @@
     "react": "*"
   },
   "dependencies": {
+    "react-native-controllers": "^2.0.0",
     "lodash": "^4.13.0"
   },
   "optionalDependencies": {
