@@ -120,7 +120,10 @@ export default class FirstTabScreen extends Component {
       screen: "example.LightBoxScreen",
       style: {
         backgroundBlur: "dark"
-      }
+      },
+      passProps: {
+        greeting: 'hey there'
+      },
     });
   }
 

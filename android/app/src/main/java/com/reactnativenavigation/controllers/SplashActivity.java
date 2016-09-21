@@ -16,25 +16,28 @@ public abstract class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setSplashLayout();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (NavigationApplication.instance.getReactGateway().hasStartedCreatingContext()) {
+            return;
+        }
+
+        if (ReactDevPermission.shouldAskPermission()) {
+            ReactDevPermission.askPermission(this);
+            return;
+        }
 
         if (NavigationApplication.instance.isReactContextInitialized()) {
             finish();
             return;
         }
 
-        if (ReactDevPermission.shouldAskPermission()) {
-            ReactDevPermission.askPermission(this);
-            finish();
-            return;
-        }
-
+        // TODO I'm starting to think this entire flow is incorrect and should be done in Application
         NavigationApplication.instance.startReactContextOnceInBackgroundAndExecuteJS();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
     }
 
     private void setSplashLayout() {
