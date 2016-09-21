@@ -65,7 +65,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void addScreenStacks() {
-        for (int i = 0; i < screenStacks.length; i++) {
+        for (int i = screenStacks.length - 1; i >= 0; i--) {
             createAndAddScreens(i);
         }
     }
