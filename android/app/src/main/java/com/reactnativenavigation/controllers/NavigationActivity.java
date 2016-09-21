@@ -104,6 +104,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         }
         if (layout != null) {
             layout.destroy();
+            layout = null;
         }
     }
 
@@ -120,7 +121,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     @Override
     public void onBackPressed() {
-        if (!layout.onBackPressed()) {
+        if (layout != null && !layout.onBackPressed()) {
             NavigationApplication.instance.getReactGateway().onBackPressed();
         }
     }
