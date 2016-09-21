@@ -29,23 +29,24 @@ Navigation.startTabBasedApp({
     left: {
       screen: 'example.SideMenu'
     }
-  }
+  },
+  portraitOnlyMode: true
 });
-// Navigation.startSingleScreenApp({
-//   screen: {
-//     screen: 'example.FirstTabScreen',
-//     title: 'Navigation',
-//     navigatorStyle: {
-//       navBarBackgroundColor: '#4dbce9',
-//       navBarTextColor: '#ffff00',
-//       navBarSubtitleTextColor: '#ff0000',
-//       navBarButtonColor: '#ffffff',
-//       statusBarTextColorScheme: 'light'
-//     }
-//   },
-//   drawer: {
-//     left: {
-//       screen: 'example.SideMenu'
-//     }
-//   }
-// });
+//Navigation.startSingleScreenApp({
+//  screen: {
+//    screen: 'example.FirstTabScreen',
+//    title: 'Navigation',
+//    navigatorStyle: {
+//      navBarBackgroundColor: '#4dbce9',
+//      navBarTextColor: '#ffff00',
+//      navBarSubtitleTextColor: '#ff0000',
+//      navBarButtonColor: '#ffffff',
+//      statusBarTextColorScheme: 'light'
+//    }
+//  },
+//  drawer: {
+//    left: {
+//      screen: 'example.SideMenu'
+//    }
+//  }
+//});
