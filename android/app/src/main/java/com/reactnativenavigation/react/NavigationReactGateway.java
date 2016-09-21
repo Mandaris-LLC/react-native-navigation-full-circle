@@ -38,6 +38,11 @@ public class NavigationReactGateway implements ReactGateway {
         return host.hasInstance() && getReactInstanceManager().getCurrentReactContext() != null;
     }
 
+    @Override
+    public boolean hasStartedCreatingContext() {
+        return getReactInstanceManager().hasStartedCreatingInitialContext();
+    }
+
     public ReactContext getReactContext() {
         return getReactInstanceManager().getCurrentReactContext();
     }
