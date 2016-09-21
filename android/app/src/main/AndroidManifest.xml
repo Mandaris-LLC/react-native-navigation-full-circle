@@ -2,7 +2,9 @@
     package="com.reactnativenavigation">
 
     <application>
-        <activity android:name=".controllers.NavigationActivity" />
+        <activity
+            android:name=".controllers.NavigationActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
