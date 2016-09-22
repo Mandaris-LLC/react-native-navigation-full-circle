@@ -2,7 +2,6 @@
     package="com.reactnativenavigation">
 
     <application
-        android:allowBackup="false"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".controllers.NavigationActivity" />
         <activity
