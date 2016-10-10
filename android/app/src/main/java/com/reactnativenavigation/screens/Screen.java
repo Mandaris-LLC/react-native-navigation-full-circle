@@ -214,8 +214,7 @@ public abstract class Screen extends RelativeLayout implements Subscriber {
     }
 
     public void showContextualMenu(ContextualMenuParams params, Callback onButtonClicked) {
-        params.setButtonsColor(styleParams.contextualMenuButtonsColor);
-        topBar.showContextualMenu(params, styleParams.contextualMenuBackgroundColor, onButtonClicked);
+        topBar.showContextualMenu(params, styleParams, onButtonClicked);
         setStatusBarColor(styleParams.contextualMenuStatusBarColor);
     }
 

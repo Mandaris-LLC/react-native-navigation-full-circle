@@ -9,8 +9,8 @@ public class ContextualMenuParams {
 
     public void setButtonsColor(StyleParams.Color buttonColor) {
         for (ContextualMenuButtonParams button : buttons) {
-            button.setColorFromScreenStyle(buttonColor);
+            button.color = buttonColor;
         }
-        leftButton.setColorFromScreenStyle(buttonColor);
+        leftButton.color = buttonColor;
     }
 }

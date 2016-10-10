@@ -103,8 +103,8 @@ public class TopBar extends AppBarLayout {
         topTabs.setSelectedTabIndicatorStyle(style);
     }
 
-    public void showContextualMenu(final ContextualMenuParams params, StyleParams.Color contextualMenuBackgroundColor, Callback onButtonClicked) {
-        contextualMenu = new ContextualMenu(getContext(), params, contextualMenuBackgroundColor, onButtonClicked);
+    public void showContextualMenu(final ContextualMenuParams params, StyleParams styleParams, Callback onButtonClicked) {
+        contextualMenu = new ContextualMenu(getContext(), params, styleParams, onButtonClicked);
         titleBarAndContextualMenuContainer.addView(contextualMenu, new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
         ViewUtils.runOnPreDraw(contextualMenu, new Runnable() {
             @Override

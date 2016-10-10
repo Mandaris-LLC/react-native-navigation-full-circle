@@ -15,26 +15,29 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import java.util.List;
 
 public class ContextualMenu extends TitleBar implements LeftButtonOnClickListener, ContextualMenuButton.ContextualButtonClickListener {
+    private ContextualMenuParams params;
     private Callback onButtonClicked;
     private final String navigatorEventId;
 
-    public ContextualMenu(Context context, ContextualMenuParams params, StyleParams.Color contextualMenuBackgroundColor, Callback onButtonClicked) {
+    public ContextualMenu(Context context, ContextualMenuParams params, StyleParams styleParams, Callback onButtonClicked) {
         super(context);
+        this.params = params;
         this.onButtonClicked = onButtonClicked;
         navigatorEventId = params.navigationParams.navigatorEventId;
-        setStyle(contextualMenuBackgroundColor);
-        setButtons(params.buttons, params.leftButton);
+        setStyle(styleParams);
+        setButtons();
     }
 
-    public void setStyle(StyleParams.Color contextualMenuBackgroundColor) {
-        if (contextualMenuBackgroundColor.hasColor()) {
-            setBackgroundColor(contextualMenuBackgroundColor.getColor());
+    public void setStyle(StyleParams styleParams) {
+        params.setButtonsColor(styleParams.contextualMenuButtonsColor);
+        if (styleParams.contextualMenuBackgroundColor.hasColor()) {
+            setBackgroundColor(styleParams.contextualMenuBackgroundColor.getColor());
         }
     }
 
-    public void setButtons(List<ContextualMenuButtonParams> buttons, TitleBarLeftButtonParams leftButton) {
-        addButtonsToContextualMenu(buttons, getMenu());
-        setBackButton(leftButton);
+    public void setButtons() {
+        addButtonsToContextualMenu(params.buttons, getMenu());
+        setBackButton(params.leftButton);
     }
 
     private void setBackButton(TitleBarLeftButtonParams leftButton) {
