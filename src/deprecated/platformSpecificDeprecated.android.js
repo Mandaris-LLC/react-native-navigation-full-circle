@@ -124,6 +124,9 @@ function convertStyleParams(originalStyleObject) {
     titleBarDisabledButtonColor: originalStyleObject.titleBarDisabledButtonColor,
     backButtonHidden: originalStyleObject.backButtonHidden,
     topTabsHidden: originalStyleObject.topTabsHidden,
+    contextualMenuStatusBarColor: originalStyleObject.contextualMenuStatusBarColor,
+    contextualMenuBackgroundColor: originalStyleObject.contextualMenuBackgroundColor,
+    contextualMenuButtonsColor: originalStyleObject.contextualMenuButtonsColor,
 
     drawBelowTopBar: !originalStyleObject.drawUnderNavBar,
 
