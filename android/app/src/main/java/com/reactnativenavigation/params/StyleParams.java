@@ -36,6 +36,9 @@ public class StyleParams {
     }
 
     public Color statusBarColor;
+    public Color contextualMenuStatusBarColor;
+    public Color contextualMenuButtonsColor;
+    public Color contextualMenuBackgroundColor;
 
     public Color topBarColor;
     public boolean topBarHidden;

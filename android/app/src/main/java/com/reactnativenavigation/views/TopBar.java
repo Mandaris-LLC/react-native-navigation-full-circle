@@ -5,7 +5,11 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import com.facebook.react.bridge.Callback;
+import com.reactnativenavigation.params.ContextualMenuParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
@@ -13,15 +17,26 @@ import com.reactnativenavigation.utils.ViewUtils;
 
 import java.util.List;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 public class TopBar extends AppBarLayout {
 
     private TitleBar titleBar;
+    private ContextualMenu contextualMenu;
+    private RelativeLayout titleBarAndContextualMenuContainer;
     private TopTabs topTabs;
 
     public TopBar(Context context) {
         super(context);
         setFitsSystemWindows(true);
         setId(ViewUtils.generateViewId());
+        createLayout();
+    }
+
+    private void createLayout() {
+        titleBarAndContextualMenuContainer = new RelativeLayout(getContext());
+        addView(titleBarAndContextualMenuContainer);
     }
 
     public void addTitleBarAndSetButtons(List<TitleBarButtonParams> rightButtons,
@@ -29,7 +44,7 @@ public class TopBar extends AppBarLayout {
                                          LeftButtonOnClickListener leftButtonOnClickListener,
                                          String navigatorEventId, boolean overrideBackPressInJs) {
         titleBar = new TitleBar(getContext());
-        addView(titleBar);
+        titleBarAndContextualMenuContainer.addView(titleBar, new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
         titleBar.setRightButtons(rightButtons, navigatorEventId);
         titleBar.setLeftButton(leftButton, leftButtonOnClickListener, navigatorEventId, overrideBackPressInJs);
     }
@@ -84,8 +99,31 @@ public class TopBar extends AppBarLayout {
         if (topTabs == null) {
             return;
         }
-
         topTabs.setTopTabsTextColor(style);
         topTabs.setSelectedTabIndicatorStyle(style);
+    }
+
+    public void showContextualMenu(final ContextualMenuParams params, StyleParams.Color contextualMenuBackgroundColor, Callback onButtonClicked) {
+        contextualMenu = new ContextualMenu(getContext(), params, contextualMenuBackgroundColor, onButtonClicked);
+        titleBarAndContextualMenuContainer.addView(contextualMenu, new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+        ViewUtils.runOnPreDraw(contextualMenu, new Runnable() {
+            @Override
+            public void run() {
+                titleBar.hide();
+                contextualMenu.show();
+            }
+        });
+    }
+
+    public void onContextualMenuHidden() {
+        titleBar.show();
+    }
+
+    public void dismissContextualMenu() {
+        if (contextualMenu != null) {
+            contextualMenu.dismiss();
+            contextualMenu = null;
+            titleBar.show();
+        }
     }
 }

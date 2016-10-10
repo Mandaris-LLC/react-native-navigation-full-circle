@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, {Component} from 'react';
-import {AppRegistry, NativeModules} from 'react-native';
+import {AppRegistry, NativeModules, processColor} from 'react-native';
 import _ from 'lodash';
 
 import Navigation from './../Navigation';
@@ -420,7 +420,6 @@ function addTitleBarBackButtonIfNeeded(screen) {
 function getLeftButton(screen) {
   const leftButton = getLeftButtonDeprecated(screen);
   if (leftButton) {
-    console.warn('leftButton is deprecated. Instead, please use leftButtons like on iOS.');
     return leftButton;
   }
 
@@ -464,6 +463,26 @@ function showSnackbar(navigator, params) {
   return newPlatformSpecific.showSnackbar(params);
 }
 
+function showContextualMenu(navigator, params, onButtonPressed) {
+  const contextualMenu = {
+    buttons: [],
+    backButton: {id: 'back'},
+    navigationParams: {navigatorEventID: navigator.navigatorEventID}
+  };
+
+  params.rightButtons.forEach((button, index) => {
+    const btn = {
+      icon: resolveAssetSource(button.icon).uri,
+      color: processColor(button.color),
+      label: button.title,
+      index
+    };
+    contextualMenu.buttons.push(btn);
+  });
+
+  newPlatformSpecific.showContextualMenu(contextualMenu, onButtonPressed);
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -482,5 +501,6 @@ export default {
   navigatorToggleDrawer,
   navigatorToggleTabs,
   navigatorToggleNavBar,
-  showSnackbar
+  showSnackbar,
+  showContextualMenu
 };

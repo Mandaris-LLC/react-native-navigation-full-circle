@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.facebook.react.bridge.Callback;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.events.EventBus;
 import com.reactnativenavigation.events.ScreenChangedEvent;
 import com.reactnativenavigation.params.ActivityParams;
+import com.reactnativenavigation.params.ContextualMenuParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SideMenuParams;
 import com.reactnativenavigation.params.SnackbarParams;
@@ -202,6 +204,11 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     public boolean containsNavigator(String navigatorId) {
         // Unused
         return false;
+    }
+
+    @Override
+    public void showContextualMenu(ContextualMenuParams params, Callback onButtonClicked) {
+        getCurrentScreenStack().peek().showContextualMenu(params, onButtonClicked);
     }
 
     public void selectBottomTabByTabIndex(Integer index) {

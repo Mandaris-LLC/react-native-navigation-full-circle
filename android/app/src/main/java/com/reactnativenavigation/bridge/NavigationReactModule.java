@@ -1,14 +1,17 @@
 package com.reactnativenavigation.bridge;
 
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.controllers.NavigationCommandsHandler;
+import com.reactnativenavigation.params.ContextualMenuParams;
 import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
+import com.reactnativenavigation.params.parsers.ContextualMenuParamsParser;
 import com.reactnativenavigation.params.parsers.SnackbarParamsParser;
 import com.reactnativenavigation.params.parsers.TitleBarButtonParamsParser;
 import com.reactnativenavigation.params.parsers.TitleBarLeftButtonParamsParser;
@@ -169,5 +172,12 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
     public void showSnackbar(final ReadableMap params) {
         SnackbarParams snackbarParams = new SnackbarParamsParser().parse(BundleConverter.toBundle(params));
         NavigationCommandsHandler.showSnackbar(snackbarParams);
+    }
+
+    @ReactMethod
+    public void showContextualMenu(final ReadableMap params, final Callback onButtonClicked) {
+        ContextualMenuParams contextualMenuParams =
+                new ContextualMenuParamsParser().parse(BundleConverter.toBundle(params));
+        NavigationCommandsHandler.showContextualMenu(contextualMenuParams, onButtonClicked);
     }
 }

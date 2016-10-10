@@ -3,8 +3,10 @@ package com.reactnativenavigation.controllers;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.facebook.react.bridge.Callback;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.ActivityParams;
+import com.reactnativenavigation.params.ContextualMenuParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -325,6 +327,20 @@ public class NavigationCommandsHandler {
             @Override
             public void run() {
                 currentActivity.showSnackbar(params);
+            }
+        });
+    }
+
+    public static void showContextualMenu(final ContextualMenuParams params, final Callback onButtonClicked) {
+        final NavigationActivity currentActivity = NavigationActivity.currentActivity;
+        if (currentActivity == null) {
+            return;
+        }
+
+        NavigationApplication.instance.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                currentActivity.showContextualMenu(params, onButtonClicked);
             }
         });
     }

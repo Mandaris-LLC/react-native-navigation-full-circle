@@ -120,6 +120,10 @@ function showSnackbar(params) {
   NativeReactModule.showSnackbar(params);
 }
 
+function showContextualMenu(params, onButtonPressed) {
+  NativeReactModule.showContextualMenu(params, onButtonPressed);
+}
+
 module.exports = {
   startApp,
   push,
@@ -140,5 +144,6 @@ module.exports = {
   selectBottomTabByTabIndex,
   setBottomTabBadgeByNavigatorId,
   setBottomTabBadgeByIndex,
-  showSnackbar
+  showSnackbar,
+  showContextualMenu
 };

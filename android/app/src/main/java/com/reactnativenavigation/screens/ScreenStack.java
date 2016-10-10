@@ -168,7 +168,7 @@ public class ScreenStack {
 
     public void destroy() {
         for (Screen screen : stack) {
-            screen.unmountReactView();
+            screen.destroy();
             parent.removeView(screen);
         }
         stack.clear();

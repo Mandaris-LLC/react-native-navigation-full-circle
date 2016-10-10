@@ -33,6 +33,11 @@ public class SingleScreen extends Screen {
     }
 
     @Override
+    public String getNavigatorEventId() {
+        return screenParams.getNavigatorEventId();
+    }
+
+    @Override
     public void setOnDisplayListener(OnDisplayListener onContentViewDisplayedListener) {
         contentView.setOnDisplayListener(onContentViewDisplayedListener);
     }
