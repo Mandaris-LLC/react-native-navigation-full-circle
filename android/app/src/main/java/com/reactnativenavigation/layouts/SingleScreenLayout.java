@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.facebook.react.bridge.Callback;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.events.EventBus;
 import com.reactnativenavigation.events.ScreenChangedEvent;
+import com.reactnativenavigation.params.ContextualMenuParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SideMenuParams;
 import com.reactnativenavigation.params.SnackbarParams;
@@ -207,6 +209,11 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     @Override
     public boolean containsNavigator(String navigatorId) {
         return stack.getNavigatorId().equals(navigatorId);
+    }
+
+    @Override
+    public void showContextualMenu(ContextualMenuParams params, Callback onButtonClicked) {
+        stack.peek().showContextualMenu(params, onButtonClicked);
     }
 
     @Override

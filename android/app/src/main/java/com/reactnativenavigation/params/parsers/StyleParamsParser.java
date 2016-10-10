@@ -20,6 +20,9 @@ public class StyleParamsParser {
         }
 
         result.statusBarColor = getColor("statusBarColor", getDefaultStatusBarColor());
+        result.contextualMenuStatusBarColor = getColor("contextualMenuStatusBarColor", getDefaultContextualMenuStatusBarColor());
+        result.contextualMenuButtonsColor = getColor("contextualMenuButtonsColor", getDefaultContextualMenuButtonsColor());
+        result.contextualMenuBackgroundColor = getColor("contextualMenuBackgroundColor", getDefaultContextualMenuBackgroundColor());
 
         result.topBarColor = getColor("topBarColor", getDefaultTopBarColor());
         result.titleBarHidden = getBoolean("titleBarHidden", getDefaultTopBarHidden());
@@ -56,6 +59,18 @@ public class StyleParamsParser {
         result.forceTitlesDisplay = getBoolean("forceTitlesDisplay", getDefaultForceTitlesDisplay());
 
         return result;
+    }
+
+    private StyleParams.Color getDefaultContextualMenuStatusBarColor() {
+        return new StyleParams.Color(Color.parseColor("#7c7c7c"));
+    }
+
+    private StyleParams.Color getDefaultContextualMenuBackgroundColor() {
+        return new StyleParams.Color(Color.WHITE);
+    }
+
+    private StyleParams.Color getDefaultContextualMenuButtonsColor() {
+        return new StyleParams.Color(Color.parseColor("#757575"));
     }
 
     private boolean getDefaultDrawScreenAboveBottomTabs() {

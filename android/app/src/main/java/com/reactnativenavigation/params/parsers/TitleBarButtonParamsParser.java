@@ -3,6 +3,7 @@ package com.reactnativenavigation.params.parsers;
 import android.os.Bundle;
 
 import com.reactnativenavigation.params.AppStyle;
+import com.reactnativenavigation.params.BaseTitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.react.ImageLoader;
 
@@ -32,21 +33,21 @@ public class TitleBarButtonParamsParser extends Parser {
         return result;
     }
 
-    private static TitleBarButtonParams.ShowAsAction parseShowAsAction(String showAsAction) {
+    protected BaseTitleBarButtonParams.ShowAsAction parseShowAsAction(String showAsAction) {
         if (showAsAction == null) {
-            return TitleBarButtonParams.ShowAsAction.IfRoom;
+            return BaseTitleBarButtonParams.ShowAsAction.IfRoom;
         }
 
         switch (showAsAction) {
             case "always":
-                return TitleBarButtonParams.ShowAsAction.Always;
+                return BaseTitleBarButtonParams.ShowAsAction.Always;
             case "never":
-                return TitleBarButtonParams.ShowAsAction.Never;
+                return BaseTitleBarButtonParams.ShowAsAction.Never;
             case "withText":
-                return TitleBarButtonParams.ShowAsAction.WithText;
+                return BaseTitleBarButtonParams.ShowAsAction.WithText;
             case "ifRoom":
             default:
-                return TitleBarButtonParams.ShowAsAction.IfRoom;
+                return BaseTitleBarButtonParams.ShowAsAction.IfRoom;
         }
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.events.Event;
@@ -16,6 +17,7 @@ import com.reactnativenavigation.layouts.BottomTabsLayout;
 import com.reactnativenavigation.layouts.Layout;
 import com.reactnativenavigation.layouts.LayoutFactory;
 import com.reactnativenavigation.params.ActivityParams;
+import com.reactnativenavigation.params.ContextualMenuParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -246,6 +248,10 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     public void showSnackbar(SnackbarParams params) {
         layout.showSnackbar(params);
+    }
+
+    public void showContextualMenu(ContextualMenuParams params, Callback onButtonClicked) {
+        layout.showContextualMenu(params, onButtonClicked);
     }
 
     @Override

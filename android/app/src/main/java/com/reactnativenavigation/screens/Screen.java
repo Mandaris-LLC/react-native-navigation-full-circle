@@ -8,8 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
+import com.facebook.react.bridge.Callback;
 import com.reactnativenavigation.animation.VisibilityAnimator;
+import com.reactnativenavigation.events.ContextualMenuHiddenEvent;
+import com.reactnativenavigation.events.Event;
+import com.reactnativenavigation.events.EventBus;
+import com.reactnativenavigation.events.Subscriber;
+import com.reactnativenavigation.events.ViewPagerScreenChangedEvent;
 import com.reactnativenavigation.params.BaseScreenParams;
+import com.reactnativenavigation.params.ContextualMenuParams;
 import com.reactnativenavigation.params.ScreenParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -23,7 +30,7 @@ import java.util.List;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public abstract class Screen extends RelativeLayout {
+public abstract class Screen extends RelativeLayout implements Subscriber {
 
     public interface OnDisplayListener {
         void onDisplay();
@@ -45,6 +52,19 @@ public abstract class Screen extends RelativeLayout {
         this.leftButtonOnClickListener = leftButtonOnClickListener;
         screenAnimator = new ScreenAnimator(this);
         createViews();
+        EventBus.instance.register(this);
+    }
+
+    @Override
+    public void onEvent(Event event) {
+        if (ContextualMenuHiddenEvent.TYPE.equals(event.getType()) && isShown()) {
+            setStyle();
+            topBar.onContextualMenuHidden();
+        }
+        if (ViewPagerScreenChangedEvent.TYPE.equals(event.getType()) && isShown() ) {
+            setStyle();
+            topBar.dismissContextualMenu();
+        }
     }
 
     public void setStyle() {
@@ -129,9 +149,7 @@ public abstract class Screen extends RelativeLayout {
         return screenParams.getScreenInstanceId();
     }
 
-    public String getNavigatorEventId() {
-        return screenParams.getNavigatorEventId();
-    }
+    public abstract String getNavigatorEventId();
 
     public BaseScreenParams getScreenParams() {
         return screenParams;
@@ -193,5 +211,16 @@ public abstract class Screen extends RelativeLayout {
 
     public void hide(boolean animated, Runnable onAnimatedEnd) {
         screenAnimator.hide(animated, onAnimatedEnd);
+    }
+
+    public void showContextualMenu(ContextualMenuParams params, Callback onButtonClicked) {
+        params.setButtonsColor(styleParams.contextualMenuButtonsColor);
+        topBar.showContextualMenu(params, styleParams.contextualMenuBackgroundColor, onButtonClicked);
+        setStatusBarColor(styleParams.contextualMenuStatusBarColor);
+    }
+
+    public void destroy() {
+        unmountReactView();
+        EventBus.instance.unregister(this);
     }
 }
