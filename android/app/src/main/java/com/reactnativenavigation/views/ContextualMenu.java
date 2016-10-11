@@ -2,6 +2,7 @@ package com.reactnativenavigation.views;
 
 import android.content.Context;
 import android.view.Menu;
+import android.view.ViewManager;
 
 import com.facebook.react.bridge.Callback;
 import com.reactnativenavigation.NavigationApplication;
@@ -71,7 +72,12 @@ public class ContextualMenu extends TitleBar implements LeftButtonOnClickListene
     }
 
     public void dismiss() {
-        hide();
+        hide(new Runnable() {
+            @Override
+            public void run() {
+                ((ViewManager) getParent()).removeView(ContextualMenu.this);
+            }
+        });
         NavigationApplication.instance.sendNavigatorEvent("contextualMenuDismissed", navigatorEventId);
     }
 }

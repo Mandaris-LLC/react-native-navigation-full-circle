@@ -1,7 +1,10 @@
 package com.reactnativenavigation.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -141,17 +144,25 @@ public class TitleBar extends Toolbar {
     }
 
     public void hide() {
+        hide(null);
+    }
+
+    public void hide(@Nullable final Runnable onHidden) {
         animate()
                 .alpha(0)
                 .setDuration(200)
-                .setInterpolator(new AccelerateInterpolator());
+                .setInterpolator(new AccelerateInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        if (onHidden != null) {
+                            onHidden.run();
+                        }
+                    }
+                });
     }
 
     public void show() {
-        if (getAlpha() == 1) {
-            return;
-        }
-
         setAlpha(0);
         animate()
                 .alpha(1)
