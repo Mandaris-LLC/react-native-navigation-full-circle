@@ -254,6 +254,10 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         layout.showContextualMenu(params, onButtonClicked);
     }
 
+    public void dismissContextualMenu() {
+        layout.dismissContextualMenu();
+    }
+
     @Override
     public void onEvent(Event event) {
         if (event.getType().equals(ModalDismissedEvent.TYPE)) {

@@ -211,6 +211,11 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         getCurrentScreenStack().peek().showContextualMenu(params, onButtonClicked);
     }
 
+    @Override
+    public void dismissContextualMenu() {
+        getCurrentScreenStack().peek().dismissContextualMenu();
+    }
+
     public void selectBottomTabByTabIndex(Integer index) {
         bottomTabs.setCurrentItem(index);
     }

@@ -180,4 +180,9 @@ public class NavigationReactModule extends ReactContextBaseJavaModule {
                 new ContextualMenuParamsParser().parse(BundleConverter.toBundle(params));
         NavigationCommandsHandler.showContextualMenu(contextualMenuParams, onButtonClicked);
     }
+
+    @ReactMethod
+    public void dismissContextualMenu() {
+        NavigationCommandsHandler.dismissContextualMenu();
+    }
 }

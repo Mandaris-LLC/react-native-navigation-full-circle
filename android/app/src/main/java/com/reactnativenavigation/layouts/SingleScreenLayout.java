@@ -217,6 +217,11 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     }
 
     @Override
+    public void dismissContextualMenu() {
+        stack.peek().dismissContextualMenu();
+    }
+
+    @Override
     public boolean onTitleBarBackButtonClick() {
         if (leftButtonOnClickListener != null) {
             return leftButtonOnClickListener.onTitleBarBackButtonClick();

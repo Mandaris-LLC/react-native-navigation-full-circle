@@ -218,6 +218,10 @@ public abstract class Screen extends RelativeLayout implements Subscriber {
         setStatusBarColor(styleParams.contextualMenuStatusBarColor);
     }
 
+    public void dismissContextualMenu() {
+        topBar.dismissContextualMenu();
+    }
+
     public void destroy() {
         unmountReactView();
         EventBus.instance.unregister(this);

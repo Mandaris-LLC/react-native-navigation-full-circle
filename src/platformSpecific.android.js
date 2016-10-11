@@ -124,6 +124,10 @@ function showContextualMenu(params, onButtonPressed) {
   NativeReactModule.showContextualMenu(params, onButtonPressed);
 }
 
+function dismissContextualMenu() {
+  NativeReactModule.dismissContextualMenu();
+}
+
 module.exports = {
   startApp,
   push,
@@ -145,5 +149,6 @@ module.exports = {
   setBottomTabBadgeByNavigatorId,
   setBottomTabBadgeByIndex,
   showSnackbar,
-  showContextualMenu
+  showContextualMenu,
+  dismissContextualMenu
 };

@@ -486,6 +486,10 @@ function showContextualMenu(navigator, params, onButtonPressed) {
   newPlatformSpecific.showContextualMenu(contextualMenu, onButtonPressed);
 }
 
+function dismissContextualMenu() {
+  newPlatformSpecific.dismissContextualMenu();
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -505,5 +509,6 @@ export default {
   navigatorToggleTabs,
   navigatorToggleNavBar,
   showSnackbar,
-  showContextualMenu
+  showContextualMenu,
+  dismissContextualMenu
 };
