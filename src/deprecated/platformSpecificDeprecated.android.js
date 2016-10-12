@@ -466,7 +466,7 @@ function showSnackbar(navigator, params) {
   return newPlatformSpecific.showSnackbar(params);
 }
 
-function showContextualMenu(navigator, params, onButtonPressed) {
+function showContextualMenu(navigator, params) {
   const contextualMenu = {
     buttons: [],
     backButton: {id: 'back'},
@@ -483,7 +483,7 @@ function showContextualMenu(navigator, params, onButtonPressed) {
     contextualMenu.buttons.push(btn);
   });
 
-  newPlatformSpecific.showContextualMenu(contextualMenu, onButtonPressed);
+  newPlatformSpecific.showContextualMenu(navigator.screenInstanceID, contextualMenu, params.onButtonPressed);
 }
 
 function dismissContextualMenu() {

@@ -212,13 +212,13 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     }
 
     @Override
-    public void showContextualMenu(ContextualMenuParams params, Callback onButtonClicked) {
-        stack.peek().showContextualMenu(params, onButtonClicked);
+    public void showContextualMenu(String screenInstanceId, ContextualMenuParams params, Callback onButtonClicked) {
+        stack.showContextualMenu(screenInstanceId, params, onButtonClicked);
     }
 
     @Override
-    public void dismissContextualMenu() {
-        stack.peek().dismissContextualMenu();
+    public void dismissContextualMenu(String screenInstanceId) {
+        stack.dismissContextualMenu(screenInstanceId);
     }
 
     @Override
