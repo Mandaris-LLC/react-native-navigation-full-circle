@@ -555,6 +555,14 @@ function savePassProps(params) {
   }
 }
 
+function showContextualMenu() {
+  // Android only
+}
+
+function dismissContextualMenu() {
+  // Android only
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -576,5 +584,7 @@ export default {
   navigatorToggleTabs,
   navigatorSetTabBadge,
   navigatorSwitchToTab,
-  navigatorToggleNavBar
+  navigatorToggleNavBar,
+  showContextualMenu,
+  dismissContextualMenu
 };
