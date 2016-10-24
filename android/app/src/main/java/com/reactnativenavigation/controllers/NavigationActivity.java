@@ -81,8 +81,15 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         }
 
         currentActivity = this;
+        setDeepLinkData();
         NavigationApplication.instance.getReactGateway().onResumeActivity(this, this);
         EventBus.instance.register(this);
+    }
+
+    private void setDeepLinkData() {
+        if (DeepLinkHandler.hasDeepLinkData()) {
+            DeepLinkHandler.setDeepLinkData(getIntent());
+        }
     }
 
     @Override
