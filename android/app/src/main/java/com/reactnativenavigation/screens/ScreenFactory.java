@@ -13,6 +13,8 @@ public class ScreenFactory {
             return new FragmentScreen(activity, screenParams, leftButtonOnClickListener);
         } else if (screenParams.hasTopTabs()) {
             return new ViewPagerScreen(activity, screenParams, leftButtonOnClickListener);
+        } else if (screenParams.hasCollapsingTopBar()) {
+            return new CollapsingSingleScreen(activity, screenParams, leftButtonOnClickListener);
         } else {
             return new SingleScreen(activity, screenParams, leftButtonOnClickListener);
         }

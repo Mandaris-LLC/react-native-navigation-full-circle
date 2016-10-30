@@ -6,7 +6,7 @@ import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 
 import com.facebook.react.bridge.Callback;
 import com.reactnativenavigation.params.ContextualMenuParams;
@@ -21,21 +21,19 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class TopBar extends AppBarLayout {
-
-    private TitleBar titleBar;
+    protected TitleBar titleBar;
     private ContextualMenu contextualMenu;
-    private RelativeLayout titleBarAndContextualMenuContainer;
+    protected FrameLayout titleBarAndContextualMenuContainer;
     private TopTabs topTabs;
 
     public TopBar(Context context) {
         super(context);
-        setFitsSystemWindows(true);
         setId(ViewUtils.generateViewId());
         createLayout();
     }
 
-    private void createLayout() {
-        titleBarAndContextualMenuContainer = new RelativeLayout(getContext());
+    protected void createLayout() {
+        titleBarAndContextualMenuContainer = new FrameLayout(getContext());
         addView(titleBarAndContextualMenuContainer);
     }
 
@@ -43,8 +41,16 @@ public class TopBar extends AppBarLayout {
                                          TitleBarLeftButtonParams leftButton,
                                          LeftButtonOnClickListener leftButtonOnClickListener,
                                          String navigatorEventId, boolean overrideBackPressInJs) {
-        titleBar = new TitleBar(getContext());
-        titleBarAndContextualMenuContainer.addView(titleBar, new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+        titleBar = createTitleBar();
+        titleBarAndContextualMenuContainer.addView(titleBar, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        addButtons(rightButtons, leftButton, leftButtonOnClickListener, navigatorEventId, overrideBackPressInJs);
+    }
+
+    protected TitleBar createTitleBar() {
+        return new TitleBar(getContext());
+    }
+
+    private void addButtons(List<TitleBarButtonParams> rightButtons, TitleBarLeftButtonParams leftButton, LeftButtonOnClickListener leftButtonOnClickListener, String navigatorEventId, boolean overrideBackPressInJs) {
         titleBar.setRightButtons(rightButtons, navigatorEventId);
         titleBar.setLeftButton(leftButton, leftButtonOnClickListener, navigatorEventId, overrideBackPressInJs);
     }
