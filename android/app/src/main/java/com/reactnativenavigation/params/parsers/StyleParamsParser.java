@@ -25,6 +25,7 @@ public class StyleParamsParser {
         result.contextualMenuBackgroundColor = getColor("contextualMenuBackgroundColor", getDefaultContextualMenuBackgroundColor());
 
         result.topBarColor = getColor("topBarColor", getDefaultTopBarColor());
+        result.collapsingTopBarParams = new CollapsingTopBarParser(params).parse();
         result.titleBarHidden = getBoolean("titleBarHidden", getDefaultTopBarHidden());
         result.topBarTransparent = getBoolean("topBarTransparent", getDefaultTopBarHidden());
         result.titleBarTitleColor = getColor("titleBarTitleColor", getDefaultTitleBarColor());

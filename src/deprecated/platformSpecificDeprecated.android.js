@@ -113,10 +113,11 @@ function convertStyleParams(originalStyleObject) {
     return null;
   }
 
-  return {
+  let ret = {
     statusBarColor: originalStyleObject.statusBarColor,
     topBarColor: originalStyleObject.navBarBackgroundColor,
-    topBarTransparent: originalStyleObject.navBarTransparent,
+    collapsingToolBarImage: originalStyleObject.collapsingToolBarImage,
+    collapsingToolBarCollapsedColor: originalStyleObject.collapsingToolBarCollapsedColor,
     titleBarHidden: originalStyleObject.navBarHidden,
     titleBarTitleColor: originalStyleObject.navBarTextColor,
     titleBarSubtitleColor: originalStyleObject.navBarTextSubtitleColor,
@@ -148,6 +149,18 @@ function convertStyleParams(originalStyleObject) {
 
     navigationBarColor: originalStyleObject.navigationBarColor
   }
+
+  if (originalStyleObject.collapsingToolBarImage) {
+    if (_.isString(originalStyleObject.collapsingToolBarImage)) {
+      ret.collapsingToolBarImage = originalStyleObject.collapsingToolBarImage;
+    }
+
+    const collapsingToolBarImage = resolveAssetSource(originalStyleObject.collapsingToolBarImage)
+    if (collapsingToolBarImage) {
+      ret.collapsingToolBarImage = collapsingToolBarImage.uri;
+    }
+  }
+  return ret;
 }
 
 function convertDrawerParamsToSideMenuParams(drawerParams) {
@@ -398,7 +411,7 @@ function getFab(screen) {
       _.forEach(fab.actions, (action) => {
         action.icon = resolveAssetSource(action.icon).uri;
         return action;
-      })
+      });
     }
 
     return fab;

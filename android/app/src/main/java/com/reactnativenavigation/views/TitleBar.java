@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 
-import com.reactnativenavigation.animation.VisibilityAnimator;
 import com.reactnativenavigation.params.BaseTitleBarButtonParams;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
@@ -23,8 +22,6 @@ import java.util.List;
 
 public class TitleBar extends Toolbar {
 
-    private boolean hideOnScroll = false;
-    private VisibilityAnimator visibilityAnimator;
     private LeftButton leftButton;
     private ActionMenuView actionMenuView;
 
@@ -43,11 +40,9 @@ public class TitleBar extends Toolbar {
     public void setRightButtons(List<TitleBarButtonParams> rightButtons, String navigatorEventId) {
         Menu menu = getMenu();
         menu.clear();
-
         if (rightButtons == null) {
             return;
         }
-
         addButtonsToTitleBar(rightButtons, navigatorEventId, menu);
     }
 
@@ -80,13 +75,13 @@ public class TitleBar extends Toolbar {
         return overflowIcon != null && params.titleBarButtonColor.hasColor();
     }
 
-    private void setTitleTextColor(StyleParams params) {
+    protected void setTitleTextColor(StyleParams params) {
         if (params.titleBarTitleColor.hasColor()) {
             setTitleTextColor(params.titleBarTitleColor.getColor());
         }
     }
 
-    private void setSubtitleTextColor(StyleParams params) {
+    protected void setSubtitleTextColor(StyleParams params) {
         if (params.titleBarSubtitleColor.hasColor()) {
             setSubtitleTextColor(params.titleBarSubtitleColor.getColor());
         }
@@ -124,23 +119,6 @@ public class TitleBar extends Toolbar {
                 overrideBackPressInJs);
         setNavigationOnClickListener(leftButton);
         setNavigationIcon(leftButton);
-    }
-
-    public void setHideOnScroll(boolean hideOnScroll) {
-        this.hideOnScroll = hideOnScroll;
-    }
-
-    public void onScrollChanged(ScrollDirectionListener.Direction direction) {
-        if (hideOnScroll) {
-            if (visibilityAnimator == null) {
-                createScrollAnimator();
-            }
-            visibilityAnimator.onScrollChanged(direction);
-        }
-    }
-
-    private void createScrollAnimator() {
-        visibilityAnimator = new VisibilityAnimator(this, VisibilityAnimator.HideDirection.Up, getHeight());
     }
 
     public void hide() {
