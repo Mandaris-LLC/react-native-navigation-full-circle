@@ -1,18 +1,14 @@
+import {
+  Platform
+} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 
 // screen related book keeping
 import {registerScreens} from './screens';
 registerScreens();
 
-// this will start our app
-Navigation.startTabBasedApp({
-  tabs: [
-    {
-      label: 'Collapsing',
-      screen: 'example.CollapsingTopBarScreen',
-      icon: require('../img/one.png'),
-      title: 'Collapsing',
-    },
+const createTabs = () => {
+  let tabs = [
     {
       label: 'One',
       screen: 'example.FirstTabScreen',
@@ -30,12 +26,29 @@ Navigation.startTabBasedApp({
         tabBarBackgroundColor: '#4dbce9',
       }
     }
-  ],
+  ];
+  if (Platform.OS === 'android') {
+    tabs.push({
+      label: 'Collapsing',
+      screen: 'example.CollapsingTopBarScreen',
+      icon: require('../img/one.png'),
+      title: 'Collapsing',
+    });
+  }
+  return tabs;
+};
+// this will start our app
+Navigation.startTabBasedApp({
+  tabs: createTabs(),
   appStyle: {
     tabBarBackgroundColor: '#0f2362',
     tabBarButtonColor: '#ffffff',
     tabBarSelectedButtonColor: '#63d7cc'
-
+  },
+  drawer: {
+    left: {
+      screen: 'example.SideMenu'
+    }
   }
 });
 //Navigation.startSingleScreenApp({
