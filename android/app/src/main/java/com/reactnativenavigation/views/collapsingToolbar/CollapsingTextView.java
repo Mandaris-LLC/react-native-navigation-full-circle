@@ -5,10 +5,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.CheckResult;
 import android.support.annotation.FloatRange;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.TintTypedArray;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
@@ -24,8 +26,10 @@ public class CollapsingTextView extends FrameLayout {
 
     private final int collapsedHeight;
     private TextView dummy;
-    private String text;
-    private Paint paint;
+    private CharSequence textToDraw;
+    private CharSequence expendedTextToDraw;
+    private String originalText;
+    private TextPaint paint;
     private float initialY = -1;
     private float currentY;
     private float collapseY;
@@ -53,6 +57,8 @@ public class CollapsingTextView extends FrameLayout {
         a.recycle();
 
         dummy = new TextView(context);
+        dummy.setSingleLine();
+        dummy.setEllipsize(TextUtils.TruncateAt.END);
         TextViewCompat.setTextAppearance(dummy, titleTextAppearance);
         collapsedTextSize = dummy.getTextSize();
         expendedTextSize = collapsedTextSize * TEXT_SCALE_FACTOR;
@@ -63,12 +69,12 @@ public class CollapsingTextView extends FrameLayout {
 
     private void createTextPaint() {
         paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG);
-        paint.setColor(Color.GREEN);
+        paint.setColor(Color.WHITE);
         paint.setTextSize(expendedTextSize);
     }
 
     public void setText(String text) {
-        this.text = text;
+        this.originalText = text;
         dummy.setText(text);
     }
 
@@ -97,16 +103,28 @@ public class CollapsingTextView extends FrameLayout {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (initialY == -1) {
-            calculateTextPosition();
+            calculateTextPosition(canvas);
         }
         paint.setTextSize(linearInterpolation(expendedTextSize, collapsedTextSize, collapseFraction));
-        canvas.drawText(text, 0, currentY, paint);
+        calculateTextToDraw();
+        canvas.drawText(textToDraw, 0, textToDraw.length(), 0, currentY, paint);
     }
 
-    private void calculateTextPosition() {
+    private void calculateTextToDraw() {
+        if (currentY == collapseY) {
+            textToDraw = calculateText();
+        } else {
+            if (expendedTextToDraw == null) {
+                expendedTextToDraw = calculateText();
+            }
+            textToDraw = expendedTextToDraw;
+        }
+    }
+
+    private void calculateTextPosition(Canvas canvas) {
         final int[] positionOnScreen = new int[2];
         getLocationInWindow(positionOnScreen);
-        currentY = initialY = positionOnScreen[1] + getMeasuredHeight() - dummy.getMeasuredHeight();
+        currentY = initialY = positionOnScreen[1] + canvas.getHeight() - dummy.getMeasuredHeight();
         float bottomMargin = ViewUtils.convertDpToPixel(10);
         collapseY = positionOnScreen[1] + bottomMargin;
     }
@@ -114,5 +132,11 @@ public class CollapsingTextView extends FrameLayout {
     private float linearInterpolation(float from, float to, float fraction) {
         fraction = scaleInterpolator.getInterpolation(fraction);
         return from + (fraction * (to - from));
+    }
+
+    @CheckResult
+    private String calculateText() {
+        return (String) TextUtils.ellipsize(originalText, paint,
+                getWidth(), TextUtils.TruncateAt.END);
     }
 }
