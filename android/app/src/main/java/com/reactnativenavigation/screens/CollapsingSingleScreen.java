@@ -35,13 +35,13 @@ public class CollapsingSingleScreen extends SingleScreen {
     @Override
     protected void createContent() {
         contentView = new ContentView(getContext(), screenParams.screenId, screenParams.navigationParams);
-        contentView.setViewMeasurer(new CollapsingContentViewMeasurer((CollapsingTopBar) topBar));
-        setupScrollDetection((CollapsingTopBar) topBar);
+        contentView.setViewMeasurer(new CollapsingContentViewMeasurer((CollapsingTopBar) topBar, this));
+        setupCollapseDetection((CollapsingTopBar) topBar);
         addView(contentView, createLayoutParams());
     }
 
-    private void setupScrollDetection(final CollapsingTopBar topBar) {
-        contentView.setupScrollDetection(new ScrollListener(topBar,
+    private void setupCollapseDetection(final CollapsingTopBar topBar) {
+        contentView.setupCollapseDetection(new ScrollListener(topBar,
                 new ScrollListener.OnScrollListener() {
                     @Override
                     public void onScroll(float amount) {

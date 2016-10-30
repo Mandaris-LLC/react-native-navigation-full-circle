@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.support.annotation.FloatRange;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.TintTypedArray;
+import android.text.TextPaint;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
@@ -25,11 +26,10 @@ public class CollapsingTextView extends FrameLayout {
     private TextView dummy;
     private String text;
     private Paint paint;
-    private float initialY;
+    private float initialY = -1;
     private float currentY;
     private float collapseY;
     private float collapseFraction;
-    private int[] positionOnScreen;
     private Interpolator scaleInterpolator;
     private float expendedTextSize;
     private float collapsedTextSize;
@@ -62,21 +62,9 @@ public class CollapsingTextView extends FrameLayout {
     }
 
     private void createTextPaint() {
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG);
+        paint = new TextPaint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG);
         paint.setColor(Color.GREEN);
         paint.setTextSize(expendedTextSize);
-
-        ViewUtils.runOnPreDraw(dummy, new Runnable() {
-            @Override
-            public void run() {
-                positionOnScreen = new int[2];
-                getLocationInWindow(positionOnScreen);
-                currentY = initialY = positionOnScreen[1] + getMeasuredHeight() - dummy.getMeasuredHeight();
-                float bottomMargin = ViewUtils.convertDpToPixel(10);
-                collapseY = positionOnScreen[1] + bottomMargin;
-                invalidate();
-            }
-        });
     }
 
     public void setText(String text) {
@@ -108,8 +96,19 @@ public class CollapsingTextView extends FrameLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (initialY == -1) {
+            calculateTextPosition();
+        }
         paint.setTextSize(linearInterpolation(expendedTextSize, collapsedTextSize, collapseFraction));
         canvas.drawText(text, 0, currentY, paint);
+    }
+
+    private void calculateTextPosition() {
+        final int[] positionOnScreen = new int[2];
+        getLocationInWindow(positionOnScreen);
+        currentY = initialY = positionOnScreen[1] + getMeasuredHeight() - dummy.getMeasuredHeight();
+        float bottomMargin = ViewUtils.convertDpToPixel(10);
+        collapseY = positionOnScreen[1] + bottomMargin;
     }
 
     private float linearInterpolation(float from, float to, float fraction) {

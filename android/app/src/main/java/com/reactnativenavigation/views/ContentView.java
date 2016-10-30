@@ -42,7 +42,7 @@ public class ContentView extends ReactRootView {
         viewMeasurer = new ViewMeasurer();
     }
 
-    public void setupScrollDetection(ScrollListener scrollListener) {
+    public void setupCollapseDetection(ScrollListener scrollListener) {
         scrollViewDelegate = new ScrollViewDelegate(scrollListener);
     }
 
@@ -90,10 +90,10 @@ public class ContentView extends ReactRootView {
         }
     }
 
-    private void onScrollViewAdded(ScrollView child) {
+    private void onScrollViewAdded(ScrollView scrollView) {
         if (scrollViewDelegate != null) {
-            scrollViewDelegate.onScrollViewAdded(child);
-            scrollViewAddedListener.onScrollViewAdded(child);
+            scrollViewDelegate.onScrollViewAdded(scrollView);
+            scrollViewAddedListener.onScrollViewAdded(scrollView);
         }
     }
 

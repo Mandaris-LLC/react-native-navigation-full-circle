@@ -6,21 +6,20 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.reactnativenavigation.R;
 import com.reactnativenavigation.params.CollapsingTopBarParams;
 import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.Scrim;
 
 import static android.widget.FrameLayout.LayoutParams.MATCH_PARENT;
 
-public class CollapsingToolBar extends FrameLayout {
+public class CollapsingTopBarBackground extends FrameLayout {
     public static final float MAX_HEIGHT = ViewUtils.convertDpToPixel(256);
     private final CollapsingTopBarParams params;
     private SimpleDraweeView backdrop;
     private Scrim scrim;
     private int topBarHeight = -1;
 
-    public CollapsingToolBar(Context context, CollapsingTopBarParams params) {
+    public CollapsingTopBarBackground(Context context, CollapsingTopBarParams params) {
         super(context);
         this.params = params;
         setFitsSystemWindows(true);
@@ -56,7 +55,7 @@ public class CollapsingToolBar extends FrameLayout {
         return topBarHeight;
     }
     private void calculateTopBarHeight() {
-        int[] attrs = new int[] {R.attr.actionBarSize};
+        int[] attrs = new int[] {android.R.attr.actionBarSize};
         TypedArray ta = getContext().obtainStyledAttributes(attrs);
         topBarHeight = ta.getDimensionPixelSize(0, -1);
         ta.recycle();

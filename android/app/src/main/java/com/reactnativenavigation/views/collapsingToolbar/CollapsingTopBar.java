@@ -5,16 +5,25 @@ import android.view.View;
 import android.widget.ScrollView;
 
 import com.reactnativenavigation.params.CollapsingTopBarParams;
+import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.TitleBar;
 import com.reactnativenavigation.views.TopBar;
 
 public class CollapsingTopBar extends TopBar implements CollapsingView {
-    private CollapsingToolBar collapsingToolBar;
+    private CollapsingTopBarBackground collapsingTopBarBackground;
     private ScrollListener scrollListener;
+    private float finalCollapsedTranslation;
 
     public CollapsingTopBar(Context context, CollapsingTopBarParams params) {
         super(context);
         createCollapsingTopBar(params);
+        ViewUtils.runOnPreDraw(this, new Runnable() {
+            @Override
+            public void run() {
+                finalCollapsedTranslation = getCollapsingTopBarBackground().getCollapsedTopBarHeight() - getHeight();
+            }
+        });
+
     }
 
     public void setScrollListener(ScrollListener scrollListener) {
@@ -22,30 +31,26 @@ public class CollapsingTopBar extends TopBar implements CollapsingView {
     }
 
     private void createCollapsingTopBar(CollapsingTopBarParams params) {
-        collapsingToolBar = new CollapsingToolBar(getContext(), params);
-        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, (int) CollapsingToolBar.MAX_HEIGHT);
-        titleBarAndContextualMenuContainer.addView(collapsingToolBar, lp);
+        collapsingTopBarBackground = new CollapsingTopBarBackground(getContext(), params);
+        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, (int) CollapsingTopBarBackground.MAX_HEIGHT);
+        titleBarAndContextualMenuContainer.addView(collapsingTopBarBackground, lp);
     }
 
     @Override
     protected TitleBar createTitleBar() {
         return new CollapsingTitleBar(getContext(),
-                collapsingToolBar.getCollapsedTopBarHeight(),
+                collapsingTopBarBackground.getCollapsedTopBarHeight(),
                 scrollListener);
     }
 
-    public int getTitleBarHeight() {
-        return titleBar.getMeasuredHeight();
-    }
-
-    public CollapsingToolBar getCollapsingToolBar() {
-        return collapsingToolBar;
+    public CollapsingTopBarBackground getCollapsingTopBarBackground() {
+        return collapsingTopBarBackground;
     }
 
     public void collapse(float collapse) {
         setTranslationY(collapse);
         ((CollapsingTitleBar) titleBar).collapse(collapse);
-        collapsingToolBar.collapse(collapse);
+        collapsingTopBarBackground.collapse(collapse);
     }
 
     public void onScrollViewAdded(ScrollView scrollView) {
@@ -54,7 +59,11 @@ public class CollapsingTopBar extends TopBar implements CollapsingView {
 
     @Override
     public float getFinalCollapseValue() {
-        return getCollapsingToolBar().getCollapsedTopBarHeight() - getHeight();
+        return finalCollapsedTranslation;
+    }
+
+    public int getCollapsedHeight() {
+        return collapsingTopBarBackground.getCollapsedTopBarHeight();
     }
 
     @Override

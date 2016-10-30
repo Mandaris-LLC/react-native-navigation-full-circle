@@ -23,10 +23,6 @@ public class ScrollListener implements ScrollViewDelegate.OnScrollListener {
 
     @Override
     public boolean onTouch(MotionEvent event) {
-        return handleTouch(event);
-    }
-
-    private boolean handleTouch(MotionEvent event) {
         CollapseAmount amount = collapseCalculator.calculate(event);
         if (amount.canCollapse()) {
             scrollListener.onScroll(amount.get());

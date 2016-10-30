@@ -1,7 +1,7 @@
 package com.reactnativenavigation.views.collapsingToolbar;
 
 public class CollapseAmount {
-    public static CollapseAmount NONE = new CollapseAmount();
+    public final static CollapseAmount None = new CollapseAmount();
     private Float amount;
 
     public CollapseAmount(float amount) {
