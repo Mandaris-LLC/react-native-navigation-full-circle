@@ -32,6 +32,7 @@ App-wide support for 100% native navigation with an easy cross-platform interfac
 * [Third party libraries support](https://github.com/wix/react-native-navigation/wiki/Third-party-libraries-support)
 * [Release Notes](https://github.com/wix/react-native-navigation/blob/master/CHANGELOG.md)
 * [Milestones](https://github.com/wix/react-native-navigation/wiki/Milestones)
+* [Contributing](https://github.com/wix/react-native-navigation/wiki/Contributing)
 * [License](https://github.com/wix/react-native-navigation/wiki#license)
 
 ## Why use this package
