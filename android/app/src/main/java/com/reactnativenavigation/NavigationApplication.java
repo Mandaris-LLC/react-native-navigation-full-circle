@@ -9,6 +9,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
+import com.reactnativenavigation.controllers.ActivityCallbacks;
 import com.reactnativenavigation.react.NavigationReactGateway;
 import com.reactnativenavigation.react.ReactGateway;
 
@@ -20,6 +21,7 @@ public abstract class NavigationApplication extends Application implements React
 
     private NavigationReactGateway reactGateway;
     private Handler handler;
+    private ActivityCallbacks activityCallbacks;
 
     @Override
     public void onCreate() {
@@ -27,6 +29,7 @@ public abstract class NavigationApplication extends Application implements React
         instance = this;
         handler = new Handler(getMainLooper());
         reactGateway = new NavigationReactGateway();
+        activityCallbacks = new ActivityCallbacks();
     }
 
     public void startReactContextOnceInBackgroundAndExecuteJS() {
@@ -43,6 +46,14 @@ public abstract class NavigationApplication extends Application implements React
 
     public ReactGateway getReactGateway() {
         return reactGateway;
+    }
+
+    public ActivityCallbacks getActivityCallbacks() {
+        return activityCallbacks;
+    }
+
+    protected void setActivityCallbacks(ActivityCallbacks activityLifecycleCallbacks) {
+        this.activityCallbacks = activityLifecycleCallbacks;
     }
 
     public boolean isReactContextInitialized() {

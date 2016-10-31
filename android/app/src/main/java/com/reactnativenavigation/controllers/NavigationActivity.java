@@ -56,6 +56,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         disableActivityShowAnimationIfNeeded();
         createLayout();
         createModalController();
+        NavigationApplication.instance.getActivityCallbacks().onActivityCreated(this, savedInstanceState);
     }
 
     private void disableActivityShowAnimationIfNeeded() {
@@ -74,6 +75,12 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        NavigationApplication.instance.getActivityCallbacks().onActivityStarted(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (isFinishing() || !NavigationApplication.instance.isReactContextInitialized()) {
@@ -83,6 +90,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         currentActivity = this;
         setDeepLinkData();
         NavigationApplication.instance.getReactGateway().onResumeActivity(this, this);
+        NavigationApplication.instance.getActivityCallbacks().onActivityResumed(this);
         EventBus.instance.register(this);
     }
 
@@ -97,13 +105,21 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         super.onPause();
         currentActivity = null;
         NavigationApplication.instance.getReactGateway().onPauseActivity();
+        NavigationApplication.instance.getActivityCallbacks().onActivityPaused(this);
         EventBus.instance.unregister(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        NavigationApplication.instance.getActivityCallbacks().onActivityStopped(this);
     }
 
     @Override
     protected void onDestroy() {
         destroyLayouts();
         destroyJsIfNeeded();
+        NavigationApplication.instance.getActivityCallbacks().onActivityDestroyed(this);
         super.onDestroy();
     }
 
@@ -138,6 +154,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         NavigationApplication.instance.getReactGateway().onActivityResult(requestCode, resultCode, data);
+        NavigationApplication.instance.getActivityCallbacks().onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
