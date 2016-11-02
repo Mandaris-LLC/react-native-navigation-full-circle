@@ -332,7 +332,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private class ScreenStackNotFoundException extends RuntimeException {
-        public ScreenStackNotFoundException(String navigatorId) {
+        ScreenStackNotFoundException(String navigatorId) {
             super(navigatorId);
         }
     }

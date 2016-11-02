@@ -61,7 +61,6 @@ public class StyleParams {
 
     public boolean drawScreenAboveBottomTabs;
 
-    public Color snackbarTextColor;
     public Color snackbarButtonColor;
 
     public boolean bottomTabsHidden;
