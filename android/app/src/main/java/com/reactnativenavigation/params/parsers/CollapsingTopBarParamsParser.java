@@ -6,10 +6,10 @@ import android.os.Bundle;
 import com.reactnativenavigation.params.CollapsingTopBarParams;
 import com.reactnativenavigation.params.StyleParams;
 
-public class CollapsingTopBarParser extends Parser {
+public class CollapsingTopBarParamsParser extends Parser {
     private Bundle params;
 
-    public CollapsingTopBarParser(Bundle params) {
+    public CollapsingTopBarParamsParser(Bundle params) {
         this.params = params;
     }
 
