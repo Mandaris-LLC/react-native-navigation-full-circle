@@ -40,9 +40,10 @@ public class StyleParamsParser {
         result.selectedTopTabIndicatorHeight = getInt("selectedTopTabIndicatorHeight", getDefaultSelectedTopTabIndicatorHeight());
         result.selectedTopTabIndicatorColor = getColor("selectedTopTabIndicatorColor", getDefaultSelectedTopTabIndicatorColor());
 
-        // TODO: Uncomment once we support drawBelowTopBar again
-        //result.drawScreenBelowTopBar = params.getBoolean("drawBelowTopBar", isDefaultScreenBelowTopBar());
-        result.drawScreenBelowTopBar = !result.topBarTransparent;
+        result.drawScreenBelowTopBar = params.getBoolean("drawBelowTopBar", getDefaultScreenBelowTopBar());
+        if (result.topBarTransparent) {
+            result.drawScreenBelowTopBar = false;
+        }
 
         result.bottomTabsHidden = getBoolean("bottomTabsHidden", getDefaultBottomTabsHidden());
         result.drawScreenAboveBottomTabs = !result.bottomTabsHidden &&
@@ -126,8 +127,8 @@ public class StyleParamsParser {
         return AppStyle.appStyle != null && AppStyle.appStyle.bottomTabsHidden;
     }
 
-    private boolean isDefaultScreenBelowTopBar() {
-        return AppStyle.appStyle == null || AppStyle.appStyle.drawScreenBelowTopBar;
+    private boolean getDefaultScreenBelowTopBar() {
+        return AppStyle.appStyle != null && AppStyle.appStyle.drawScreenBelowTopBar;
     }
 
     private boolean getDefaultTopTabsHidden() {

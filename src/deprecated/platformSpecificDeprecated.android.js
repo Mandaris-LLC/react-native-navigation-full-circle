@@ -116,6 +116,7 @@ function convertStyleParams(originalStyleObject) {
   let ret = {
     statusBarColor: originalStyleObject.statusBarColor,
     topBarColor: originalStyleObject.navBarBackgroundColor,
+    topBarTransparent: originalStyleObject.navBarTransparent,
     collapsingToolBarImage: originalStyleObject.collapsingToolBarImage,
     collapsingToolBarCollapsedColor: originalStyleObject.collapsingToolBarCollapsedColor,
     titleBarHidden: originalStyleObject.navBarHidden,
