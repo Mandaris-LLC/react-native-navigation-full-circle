@@ -185,9 +185,9 @@ function _mergeScreenSpecificSettings(screenID, screenInstanceID, params) {
   }
 
   let navigatorEventID = screenInstanceID + '_events';
-  let navigatorButtons = JSON.parse(JSON.stringify(screenClass.navigatorButtons));
+  let navigatorButtons = _.cloneDeep(screenClass.navigatorButtons);
   if (params.navigatorButtons) {
-    navigatorButtons = JSON.parse(JSON.stringify(params.navigatorButtons));
+    navigatorButtons = _.cloneDeep(params.navigatorButtons);
   }
   if (navigatorButtons.leftButtons) {
     for (let i = 0; i < navigatorButtons.leftButtons.length; i++) {
@@ -230,7 +230,7 @@ function navigatorPush(navigator, params) {
 
   Controllers.NavigationControllerIOS(navigator.navigatorID).push({
     title: params.title,
-    subtitle:params.subtitle,
+    subtitle: params.subtitle,
     titleImage: params.titleImage,
     component: params.screen,
     animated: params.animated,

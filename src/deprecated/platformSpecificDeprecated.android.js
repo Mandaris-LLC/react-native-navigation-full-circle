@@ -59,7 +59,7 @@ function navigatorPush(navigator, params) {
   let adapted = adaptNavigationStyleToScreenStyle(params);
   adapted = adaptNavigationParams(adapted);
   adapted.overrideBackPress = params.overrideBackPress;
-  
+
   newPlatformSpecific.push(adapted);
 }
 
@@ -351,7 +351,7 @@ function addNavigatorParams(screen, navigator = null, idx = '') {
 
 function addNavigatorButtons(screen, sideMenuParams) {
   const Screen = Navigation.getRegisteredScreen(screen.screen);
-  Object.assign(screen, Screen.navigatorButtons);
+  screen.navigatorButtons = _.cloneDeep(Screen.navigatorButtons);
 
   // Get image uri from image id
   const rightButtons = getRightButtons(screen);
