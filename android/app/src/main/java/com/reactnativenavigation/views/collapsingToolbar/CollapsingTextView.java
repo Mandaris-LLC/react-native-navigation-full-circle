@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.reactnativenavigation.R;
 import com.reactnativenavigation.params.StyleParams;
 import com.reactnativenavigation.utils.ViewUtils;
 
@@ -51,9 +52,9 @@ public class CollapsingTextView extends FrameLayout {
     @SuppressLint("PrivateResource")
     private void createDummyTextView(Context context) {
         final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), null,
-                android.support.v7.appcompat.R.styleable.Toolbar, android.support.v7.appcompat.R.attr.toolbarStyle, 0);
+                R.styleable.Toolbar, R.attr.toolbarStyle, 0);
         int titleTextAppearance =
-                a.getResourceId(android.support.v7.appcompat.R.styleable.Toolbar_titleTextAppearance, 0);
+                a.getResourceId(R.styleable.Toolbar_titleTextAppearance, 0);
         a.recycle();
 
         dummy = new TextView(context);
