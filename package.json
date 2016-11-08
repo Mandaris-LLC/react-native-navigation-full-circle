@@ -26,8 +26,8 @@
     "release": "npm version prerelease && npm publish --tag next && npm view react-native-navigation dist-tags && git push"
   },
   "peerDependencies": {
-    "react-native": ">=0.36.1",
-    "react": ">=15.3.2"
+    "react-native": "*",
+    "react": "*"
   },
   "dependencies": {
     "lodash": "^4.16.0"
@@ -36,7 +36,7 @@
     "react-redux": "*"
   },
   "devDependencies": {
-    "react-native": "0.36.1",
+    "react-native": "0.37.0",
     "react": "15.3.2",
     "app-root-path": "^1.0.0",
     "babel-cli": "^6.8.0",
