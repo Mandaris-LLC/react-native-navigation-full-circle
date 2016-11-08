@@ -30,14 +30,14 @@
     "react": "*"
   },
   "dependencies": {
-    "lodash": "^4.13.0"
+    "lodash": "^4.16.0"
   },
   "optionalDependencies": {
     "react-redux": "*"
   },
   "devDependencies": {
-    "react-native": "0.31.0",
-    "react": "15.2.1",
+    "react-native": "0.37.0",
+    "react": "15.3.2",
     "app-root-path": "^1.0.0",
     "babel-cli": "^6.8.0",
     "babel-core": "^6.8.0",
