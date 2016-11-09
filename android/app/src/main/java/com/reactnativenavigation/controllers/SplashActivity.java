@@ -24,10 +24,7 @@ public abstract class SplashActivity extends AppCompatActivity {
         super.onResume();
 
         if (NavigationApplication.instance.getReactGateway().hasStartedCreatingContext()) {
-            if (DeepLinkHandler.hasDeepLinkData()) {
-                finish();
-            }
-            return;
+            finish();
         }
 
         if (ReactDevPermission.shouldAskPermission()) {
