@@ -148,10 +148,22 @@ public class TitleBar extends Toolbar {
     }
 
     public void show() {
+        this.show(null);
+    }
+
+    public void show(final @Nullable Runnable onDisplayed) {
         setAlpha(0);
         animate()
                 .alpha(1)
                 .setDuration(200)
-                .setInterpolator(new AccelerateDecelerateInterpolator());
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        if (onDisplayed != null) {
+                            onDisplayed.run();
+                        }
+                    }
+                });
     }
 }

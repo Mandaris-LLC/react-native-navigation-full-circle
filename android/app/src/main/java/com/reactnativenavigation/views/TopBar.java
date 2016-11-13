@@ -109,18 +109,27 @@ public class TopBar extends AppBarLayout {
     }
 
     public void showContextualMenu(final ContextualMenuParams params, StyleParams styleParams, Callback onButtonClicked) {
+        final ContextualMenu menuToRemove = contextualMenu != null ? contextualMenu : null;
         contextualMenu = new ContextualMenu(getContext(), params, styleParams, onButtonClicked);
         titleBarAndContextualMenuContainer.addView(contextualMenu, new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
         ViewUtils.runOnPreDraw(contextualMenu, new Runnable() {
             @Override
             public void run() {
                 titleBar.hide();
-                contextualMenu.show();
+                contextualMenu.show(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (menuToRemove != null) {
+                           titleBarAndContextualMenuContainer.removeView(menuToRemove);
+                        }
+                    }
+                });
             }
         });
     }
 
     public void onContextualMenuHidden() {
+        contextualMenu = null;
         titleBar.show();
     }
 
