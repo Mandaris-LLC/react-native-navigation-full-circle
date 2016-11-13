@@ -54,11 +54,11 @@ public class CollapsingContentView extends ContentView implements CollapsingView
     }
 
     public void destroy() {
-        if (scrollViewDelegate != null) {
-            scrollViewDelegate.destroy();
-        }
         if (scrollViewDetector != null) {
             scrollViewDetector.destroy();
+        }
+        if (scrollViewDelegate != null) {
+            scrollViewDelegate.destroy();
         }
     }
 
