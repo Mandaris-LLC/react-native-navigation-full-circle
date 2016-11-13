@@ -4,35 +4,39 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.reactnativenavigation.params.CollapsingTopBarParams;
+import com.reactnativenavigation.params.CollapsingTopBarParams.CollapseBehaviour;
 import com.reactnativenavigation.params.StyleParams;
 
-public class CollapsingTopBarParamsParser extends Parser {
+class CollapsingTopBarParamsParser extends Parser {
     private Bundle params;
 
-    public CollapsingTopBarParamsParser(Bundle params) {
+    CollapsingTopBarParamsParser(Bundle params) {
         this.params = params;
     }
 
     public CollapsingTopBarParams parse() {
-        if (!hasLocalImageResource() && !hasImageUrl()) {
+        if (!hasBackgroundImage() && !shouldHideTitleBarOnScroll()) {
             return null;
         }
 
         CollapsingTopBarParams result = new CollapsingTopBarParams();
-        if (hasLocalImageResource()) {
-            result.imageUri = params.getString("collapsingToolBarImage");
-        } else {
+        if (hasBackgroundImage()) {
             result.imageUri = params.getString("collapsingToolBarImage");
         }
         result.scrimColor = getColor(params, "collapsingToolBarCollapsedColor", new StyleParams.Color(Color.WHITE));
+        result.collapseBehaviour = getCollapseBehaviour();
         return result;
     }
 
-    private boolean hasLocalImageResource() {
+    private CollapseBehaviour getCollapseBehaviour() {
+        return shouldHideTitleBarOnScroll() ? CollapseBehaviour.TitleBarHideOnScroll : CollapseBehaviour.CollapseTopBar;
+    }
+
+    private boolean hasBackgroundImage() {
         return params.containsKey("collapsingToolBarImage");
     }
 
-    private boolean hasImageUrl() {
-        return params.containsKey("collapsingToolBarImageUrl");
+    private boolean shouldHideTitleBarOnScroll() {
+        return params.getBoolean("titleBarHideOnScroll", false);
     }
 }

@@ -1,19 +1,13 @@
 package com.reactnativenavigation.views;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ScrollView;
 
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.params.NavigationParams;
 import com.reactnativenavigation.screens.SingleScreen;
 import com.reactnativenavigation.utils.ViewUtils;
-import com.reactnativenavigation.views.collapsingToolbar.OnScrollViewAddedListener;
-import com.reactnativenavigation.views.collapsingToolbar.ScrollListener;
-import com.reactnativenavigation.views.collapsingToolbar.ScrollViewDelegate;
 import com.reactnativenavigation.views.utils.ViewMeasurer;
 
 public class ContentView extends ReactRootView {
@@ -22,16 +16,10 @@ public class ContentView extends ReactRootView {
 
     boolean isContentVisible = false;
     private SingleScreen.OnDisplayListener onDisplayListener;
-    @Nullable private ScrollViewDelegate scrollViewDelegate;
-    private ViewMeasurer viewMeasurer;
-    private OnScrollViewAddedListener scrollViewAddedListener;
+    protected ViewMeasurer viewMeasurer;
 
     public void setOnDisplayListener(SingleScreen.OnDisplayListener onDisplayListener) {
         this.onDisplayListener = onDisplayListener;
-    }
-
-    public void setOnScrollViewAddedListener(OnScrollViewAddedListener scrollViewAddedListener) {
-        this.scrollViewAddedListener = scrollViewAddedListener;
     }
 
     public ContentView(Context context, String screenId, NavigationParams navigationParams) {
@@ -40,10 +28,6 @@ public class ContentView extends ReactRootView {
         this.navigationParams = navigationParams;
         attachToJS();
         viewMeasurer = new ViewMeasurer();
-    }
-
-    public void setupCollapseDetection(ScrollListener scrollListener) {
-        scrollViewDelegate = new ScrollViewDelegate(scrollListener);
     }
 
     public void setViewMeasurer(ViewMeasurer viewMeasurer) {
@@ -71,30 +55,9 @@ public class ContentView extends ReactRootView {
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (scrollViewDelegate != null) {
-            boolean consumed = scrollViewDelegate.didInterceptTouchEvent(ev);
-            if (consumed) {
-                return true;
-            }
-        }
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
     public void onViewAdded(final View child) {
         super.onViewAdded(child);
         detectContentViewVisible(child);
-        if (child instanceof ScrollView) {
-            onScrollViewAdded((ScrollView) child);
-        }
-    }
-
-    private void onScrollViewAdded(ScrollView scrollView) {
-        if (scrollViewDelegate != null) {
-            scrollViewDelegate.onScrollViewAdded(scrollView);
-            scrollViewAddedListener.onScrollViewAdded(scrollView);
-        }
     }
 
     private void detectContentViewVisible(View child) {
@@ -110,9 +73,5 @@ public class ContentView extends ReactRootView {
                 }
             });
         }
-    }
-
-    public void collapse(float collapse) {
-        setTranslationY(collapse);
     }
 }

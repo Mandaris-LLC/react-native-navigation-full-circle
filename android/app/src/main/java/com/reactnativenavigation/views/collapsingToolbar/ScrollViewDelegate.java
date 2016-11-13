@@ -5,23 +5,28 @@ import android.view.View;
 import android.widget.ScrollView;
 
 public class ScrollViewDelegate implements View.OnTouchListener {
-    interface OnScrollListener {
-        boolean onTouch(MotionEvent event);
+    private ScrollView scrollView;
+    private ScrollListener listener;
 
-        void onScrollViewAdded(ScrollView scrollView);
+    public ScrollViewDelegate(ScrollListener scrollListener) {
+        listener = scrollListener;
     }
 
-    private ScrollView scrollView;
-    private OnScrollListener listener;
-    private Boolean didInterceptLastTouchEvent = null;
+    public boolean hasScrollView() {
+        return scrollView != null;
+    }
 
-    public ScrollViewDelegate(OnScrollListener scrollListener) {
-        listener = scrollListener;
+    public ScrollView getScrollView() {
+        return scrollView;
     }
 
     public void onScrollViewAdded(ScrollView scrollView) {
         this.scrollView = scrollView;
         listener.onScrollViewAdded(this.scrollView);
+    }
+
+    public void onScrollViewRemoved() {
+        this.scrollView = null;
     }
 
     public boolean didInterceptTouchEvent(MotionEvent ev) {
@@ -30,9 +35,11 @@ public class ScrollViewDelegate implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        if (!didInterceptLastTouchEvent) {
-            scrollView.onTouchEvent(event);
-        }
+        scrollView.onTouchEvent(event);
         return this.listener.onTouch(event);
+    }
+
+    public void destroy() {
+        scrollView = null;
     }
 }
