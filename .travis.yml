@@ -15,12 +15,12 @@ cache:
 
 before_install:
   - set -e
-  - ./scripts/clean
+  - ./scripts/clean.sh
 
 install:
   #- npm i -g yarn
   #- yarn
-  - ./scripts/installAndroidSDK
+  - ./scripts/installAndroidSDK.sh
 
 script:
   - npm run test
