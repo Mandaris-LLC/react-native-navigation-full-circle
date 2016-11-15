@@ -20,3 +20,4 @@ install:
 script:
   - set -e
   - npm run test
+  - echo "ALL OK"
