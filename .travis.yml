@@ -20,9 +20,7 @@ before_install:
 install:
   #- npm i -g yarn
   #- yarn
-  - ./scripts/installAndroidSDK.sh
-  - export ANDROID_HOME=$HOME/android-sdk-linux
-  - export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+  - source ./scripts/installAndroidSDK.sh
 
 script:
   #- npm run test
