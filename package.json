@@ -20,10 +20,10 @@
   "main": "src/index.js",
   "scripts": {
     "build": ":",
-    "lint": "eslint src test",
+    "lint": "eslint src2",
     "pretest": "npm run lint",
     "test": "jest && cd android && ./gradlew clean testDebugUnitTest",
-    "release": "npm version prerelease && npm publish --tag next && npm view react-native-navigation dist-tags && git push"
+    "release": "npm run test && npm version prerelease && npm publish --tag next && npm view react-native-navigation dist-tags && git push"
   },
   "peerDependencies": {
     "react-native": "*",
@@ -42,8 +42,8 @@
     "babel-register": "6.x.x",
     "eslint": "3.x.x",
     "eslint-plugin-babel": "3.x.x",
-    "eslint-plugin-react": "4.x.x",
-    "eslint-plugin-react-native": "1.x.x",
+    "eslint-plugin-react": "6.x.x",
+    "eslint-plugin-react-native": "2.x.x",
     "jest": "17.x.x",
     "jest-cli": "17.x.x"
   }
