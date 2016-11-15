@@ -23,7 +23,8 @@ install:
   - ./scripts/installAndroidSDK.sh
 
 script:
-  - npm run test
+  #- npm run test
+  - cd android && ./gradlew clean testDebugUnitTest
 
 after_script:
   - echo "BUILD FINISHED"
