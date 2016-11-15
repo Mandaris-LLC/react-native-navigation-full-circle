@@ -18,13 +18,14 @@ before_install:
   - ./scripts/clean.sh
 
 install:
-  #- npm i -g yarn
-  #- yarn
-  - source ./scripts/installAndroidSDK.sh
+  - npm i -g yarn
+  - yarn
 
 script:
-  #- npm run test
-  - cd android && ./gradlew clean testDebugUnitTest
+  - npm run lint
+  - npm run test:js
+  - source ./scripts/installAndroidSDK.sh
+  - npm run test:android
 
 after_script:
   - echo "BUILD FINISHED"
