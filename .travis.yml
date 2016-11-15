@@ -13,14 +13,13 @@ cache:
   directories:
   - $HOME/.yarn-cache
 
-before_install:
-  - set -e
+#before_install:
+#  - set -e
 
 install:
   - npm i -g yarn
   - yarn
 
 script:
-  - echo "before test"
   - npm run test
-  - echo "ALL OK"
+  - "ALL OK"
