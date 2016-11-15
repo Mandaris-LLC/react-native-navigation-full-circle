@@ -1,4 +1,4 @@
-#!/usr/bin/env sh -e
+#!/bin/sh -e
 
 curl --location http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz | tar -x -z -C $HOME
 
