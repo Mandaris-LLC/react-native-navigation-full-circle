@@ -1,4 +1,3 @@
-set -e
 language: node_js
 node_js:
   - "node"
@@ -19,4 +18,5 @@ install:
   - yarn
 
 script:
+  - set -e
   - npm run test
