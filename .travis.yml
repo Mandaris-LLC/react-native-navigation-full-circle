@@ -15,6 +15,10 @@ cache:
 
 before_install:
   - set -e
+  # clean
+  - watchman watch-del-all 2> /dev/null || true
+  - rm -rf "$TMPDIR/react-packager-*" || true
+
 
 install:
   - npm i -g yarn
