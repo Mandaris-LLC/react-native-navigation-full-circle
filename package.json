@@ -4,7 +4,7 @@
   "description": "React Native Navigation - truly native navigation for iOS and Android",
   "license": "MIT",
   "nativePackage": true,
-  "author": "Tal Kol <talkol@gmail.com>",
+  "author": "Daniel Zlotin <zlotindaniel@gmail.com>",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -20,13 +20,13 @@
   "main": "src/index.js",
   "scripts": {
     "build": ":",
-    "lint": "eslint src test",
+    "lint": "eslint src2",
     "test:js": "jest",
     "test:android": "cd android && ./gradlew clean testDebugUnitTest",
     "test:ios": ":",
     "pretest": "npm run lint",
     "test": "npm run test:js && npm run test:android && npm run test:ios",
-    "release": "npm version prerelease && npm publish --tag next && npm view react-native-navigation dist-tags && git push"
+    "release": ": #npm version prerelease && npm publish --tag next && npm view react-native-navigation dist-tags && git push"
   },
   "peerDependencies": {
     "react-native": "*",
