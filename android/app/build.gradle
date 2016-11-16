@@ -35,7 +35,7 @@ android {
                 if (!desc.parent) { // will match the outermost suite
                     def output = "      ${result.resultType} (${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)     "
                     def repeatLength = output.length()
-                    println '\n' + ('-' * repeatLength) + '\n' + output + '\n' + ('-' * repeatLength) + '\n'
+                    println '\n\n' + ('-' * repeatLength) + '\n' + output + '\n' + ('-' * repeatLength) + '\n'
 
                     println "see report at file://${t.reports.html.destination}/index.html"
                 }
