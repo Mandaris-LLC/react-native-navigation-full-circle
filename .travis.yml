@@ -22,10 +22,10 @@ install:
   - yarn
 
 script:
-  - npm run lint
-  - npm run test:js
+  - yarn run lint
+  - yarn run test:js
   - source ./scripts/installAndroidSDK.sh
-  - npm run test:android
+  - yarn run test:android
 
 after_script:
   - echo "BUILD FINISHED"
