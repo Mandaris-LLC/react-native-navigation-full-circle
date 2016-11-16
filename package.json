@@ -49,7 +49,9 @@
     "eslint-plugin-react": "6.x.x",
     "eslint-plugin-react-native": "2.x.x",
     "jest": "17.x.x",
-    "jest-cli": "17.x.x"
+    "jest-cli": "17.x.x",
+    "jest-react-native": "17.x.x",
+    "react-test-renderer": "15.3.2"
   },
   "jest": {
     "resetMocks": true,
