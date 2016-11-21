@@ -106,7 +106,7 @@
     "no-param-reassign": "error",
     "no-proto": "error",
     "no-redeclare": 0,
-    "no-return-assign": "error",
+    "no-return-assign": 0,
     "no-script-url": "error",
     "no-self-assign": "error",
     "no-self-compare": "error",
