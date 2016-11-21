@@ -20,7 +20,7 @@ describe('ComponentRegistry', () => {
     uut = require('./ContainerRegistry');
   });
 
-  xit('registers container component into AppRegistry', () => {
+  it('registers container component into AppRegistry', () => {
     expect(AppRegistry.registerComponent).not.toHaveBeenCalled();
 
     uut.registerContainer('example.MyContainer', () => MyContainer);
@@ -36,6 +36,6 @@ describe('ComponentRegistry', () => {
     const tree = renderer.create(
       <WrappedClass/>
     );
-    console.log(tree.toJSON())
+    expect(tree.toJSON().children).toEqual(['Hello, World!']);
   });
 });
