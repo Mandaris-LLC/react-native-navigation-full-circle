@@ -52,32 +52,31 @@ describe('ComponentRegistry', () => {
     );
     expect(tree.toJSON().children).toEqual(['Hello, Daniel!']);
   });
-  //
-  //xit('updates props into original container', () => {
-  //uut.registerContainer('example.MyContainer', () => MyContainer);
-  //
-  //const NavigationContainer = getRegisteredComponentClassFromAppRegistry();
-  //
-  //class TestParent extends Component {
-  //  constructor(props) {
-  //    super(props);
-  //    this.state = {};
-  //  }
-  //
-  //  render() {
-  //    return (
-  //      <NavigationContainer/>
-  //    );
-  //  }
-  //}
-  //
-  //let navContainerRef;
-  //const NavigationContainer = getRegisteredComponentClassFromAppRegistry();
-  //const tree = renderer.create(
-  //  <NavigationContainer ref={(r) => navContainerRef = r} name={_.get(navContainerRef, 'state.name')}/>
-  //);
-  //expect(tree.toJSON().children).toEqual(['Hello, World!']);
-  //navContainerRef.setState({name: 'Gandalf'});
-  //expect(tree.toJSON().children).toEqual(['Hello, Gandalf!']);
-  //});
+
+  it('updates props into original container', () => {
+    uut.registerContainer('example.MyContainer', () => MyContainer);
+
+    const NavigationContainer = getRegisteredComponentClassFromAppRegistry();
+    let testParentRef = null;
+    class TestParent extends Component { //eslint-disable-line
+      constructor(props) {
+        super(props);
+        this.state = {};
+      }
+
+      render() {
+        return (
+          <NavigationContainer name={this.state.name}/>
+        );
+      }
+    }
+
+    const tree = renderer.create(
+      <TestParent ref={(r) => testParentRef = r}/>
+    );
+
+    expect(tree.toJSON().children).toEqual(['Hello, World!']);
+    testParentRef.setState({name: 'Gandalf'});
+    expect(tree.toJSON().children).toEqual(['Hello, Gandalf!']);
+  });
 });
