@@ -11,6 +11,9 @@ module.exports = function(wallaby) {
     testFramework: 'jest',
 
     files: [
+      'package.json',
+      'node_modules/react/**/*.js',
+      'node_modules/*jest*/**/*.js',
       'src2/**/*.js',
       '!src2/**/*.test.js'
     ],
@@ -25,6 +28,7 @@ module.exports = function(wallaby) {
 
     setup: function(w) {
       require('babel-polyfill');
+      w.testFramework.configure(require('./package.json').jest);
     }
   };
 };

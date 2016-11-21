@@ -44,6 +44,7 @@
     "babel-polyfill": "6.x.x",
     "babel-preset-react-native": "1.x.x",
     "babel-register": "6.x.x",
+    "babel-jest": "17.x.x",
     "eslint": "3.x.x",
     "eslint-plugin-babel": "3.x.x",
     "eslint-plugin-react": "6.x.x",
@@ -54,7 +55,9 @@
     "react-test-renderer": "15.3.2"
   },
   "jest": {
+    "preset": "jest-react-native",
     "resetMocks": true,
-    "resetModules": true
+    "resetModules": true,
+    "verbose": true
   }
 }

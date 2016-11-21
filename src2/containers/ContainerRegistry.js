@@ -1,21 +1,21 @@
-import React from 'react';
-import {AppRegistry, Component} from 'react-native';
+import React, {Component} from 'react';
+import {AppRegistry} from 'react-native';
 
 export function registerContainer(containerKey, getContainerFunc) {
-  const OrigContainer = getContainerFunc();
-  const WrappedContainer = wrapContainer(OrigContainer);
+  const OriginalContainer = getContainerFunc();
+  const WrappedContainer = wrapContainer(OriginalContainer);
   AppRegistry.registerComponent(containerKey, () => WrappedContainer);
 }
 
-function wrapContainer(OrigComponent) {
+function wrapContainer(OriginalContainer) {
   return class extends Component {
-    //constructor(props) {
-    //  super(props);
-    //}
+    constructor(props) {
+      super(props);
+    }
 
     render() {
       return (
-        <OrigComponent/>
+        <OriginalContainer/>
       );
     }
   };

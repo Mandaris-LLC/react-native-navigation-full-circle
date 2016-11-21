@@ -41,3 +41,11 @@ export function showInAppNotification(params) {
 export function dismissInAppNotification(params) {
   //
 }
+
+export function popToRoot(params) {
+  //
+}
+
+export function newStack(params) {
+  //
+}

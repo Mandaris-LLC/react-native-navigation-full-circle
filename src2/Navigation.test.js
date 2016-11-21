@@ -13,6 +13,8 @@ describe('Navigation', () => {
       Navigation.startApp,
       Navigation.push,
       Navigation.pop,
+      Navigation.popToRoot,
+      Navigation.newStack,
       Navigation.showModal,
       Navigation.dismissModal,
       Navigation.dismissAllModals,
