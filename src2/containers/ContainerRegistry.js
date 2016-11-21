@@ -3,19 +3,28 @@ import {AppRegistry} from 'react-native';
 
 export function registerContainer(containerKey, getContainerFunc) {
   const OriginalContainer = getContainerFunc();
-  const WrappedContainer = wrapContainer(OriginalContainer);
-  AppRegistry.registerComponent(containerKey, () => WrappedContainer);
+  const NavigationContainer = wrapContainer(OriginalContainer);
+  AppRegistry.registerComponent(containerKey, () => NavigationContainer);
 }
 
 function wrapContainer(OriginalContainer) {
   return class extends Component {
     constructor(props) {
       super(props);
+      this.state = {
+        allProps: {...props}
+      };
+    }
+
+    componentWillReceiveProps(nextProps) {
+      this.setState({
+        allProps: {...nextProps}
+      });
     }
 
     render() {
       return (
-        <OriginalContainer/>
+        <OriginalContainer {...this.state.allProps}/>
       );
     }
   };
