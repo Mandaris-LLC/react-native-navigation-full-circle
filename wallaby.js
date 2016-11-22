@@ -12,8 +12,6 @@ module.exports = function(wallaby) {
 
     files: [
       'package.json',
-      'node_modules/react/**/*.js',
-      'node_modules/*jest*/**/*.js',
       'src2/**/*.js',
       '!src2/**/*.test.js'
     ],

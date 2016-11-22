@@ -3,14 +3,17 @@ import {AppRegistry} from 'react-native';
 
 export function registerContainer(containerKey, getContainerFunc) {
   const OriginalContainer = getContainerFunc();
-  const NavigationContainer = wrapContainer(OriginalContainer);
+  const NavigationContainer = wrapContainer(containerKey, OriginalContainer);
   AppRegistry.registerComponent(containerKey, () => NavigationContainer);
 }
 
-function wrapContainer(OriginalContainer) {
+function wrapContainer(containerKey, OriginalContainer) {
   return class extends Component {
     constructor(props) {
       super(props);
+      if (!props.screenId) {
+        throw new Error(`Screen ${containerKey} does not have a screenId!`);
+      }
       this.state = {
         allProps: {...props}
       };
