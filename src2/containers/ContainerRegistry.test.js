@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {AppRegistry, Text} from 'react-native';
 import React, {Component} from 'react';
 import renderer from 'react-test-renderer';
+import * as PropStore from './PropsStore';
 
 class MyContainer extends Component {
   render() {
@@ -86,6 +87,12 @@ describe('ComponentRegistry', () => {
       expect(() => {
         renderer.create(<NavigationContainer/>);
       }).toThrow(new Error('Screen example.MyContainer.key does not have a screenId!'));
+    });
+
+    it('pulls props from the PropsStore and injects them into the inner container', () => {
+      const props = {myProp: 1, otherProp: 'hello', yetAnotherProp: {a: 2}};
+      PropStore.setPropsForScreenId('my_screen_1', props);
+      // TODO
     });
   });
 });
