@@ -27,6 +27,11 @@ cache:
 before_cache:
   - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -rf $HOME/.gradle/caches/*/classAnalysis/cache.properties.lock
+  - rm -rf $HOME/.gradle/caches/*/classAnalysis/classAnalysis.bin
+  - rm -rf $HOME/.gradle/caches/*/jarSnapshots/cache.properties.lock
+  - rm -rf $HOME/.gradle/caches/modules-2/metadata-2.16/module-metadata.bin
+  - rm -rf $HOME/.gradle/caches/modules-2/metadata-2.16/module-versions.bin
 
 before_install:
   - set -e
