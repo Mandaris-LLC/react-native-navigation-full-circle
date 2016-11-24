@@ -19,15 +19,12 @@ branches:
 cache:
   directories:
     - $HOME/.yarn-cache
-    - $HOME/.gradle/wrapper/
-    - $HOME/.gradle/native/
-    - $HOME/.gradle/daemon/
-    - $HOME/.gradle/caches/
+    - $HOME/.gradle/
     - $HOME/.m2
     - $ANDROID_HOME/licenses/
 
 before_cache:
-  - rm -rf $HOME/.gradle/caches/modules-2
+  - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 before_install:
@@ -47,4 +44,3 @@ script:
 
 after_script:
   - echo "BUILD FINISHED"
-
