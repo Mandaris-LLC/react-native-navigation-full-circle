@@ -4,7 +4,7 @@
   "description": "React Native Navigation - truly native navigation for iOS and Android",
   "license": "MIT",
   "nativePackage": true,
-  "author": "Daniel Zlotin <zlotindaniel@gmail.com>",
+  "author": "Tal Kol <talkol@gmail.com>",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
