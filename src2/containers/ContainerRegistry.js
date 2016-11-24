@@ -21,21 +21,21 @@ function wrapContainer(containerKey, OriginalContainer) {
       if (!props.screenId) {
         throw new Error(`Screen ${containerKey} does not have a screenId!`);
       }
-      this.screenId = props.screenId;
       this.state = {
-        allProps: {...props, ...PropsStore.getPropsForScreenId(this.screenId)}
+        screenId: props.screenId,
+        allProps: {...props, ...PropsStore.getPropsForScreenId(props.screenId)}
       };
     }
 
     componentWillReceiveProps(nextProps) {
       this.setState({
-        allProps: {...nextProps, ...PropsStore.getPropsForScreenId(this.screenId)}
+        allProps: {...nextProps, ...PropsStore.getPropsForScreenId(this.state.screenId)}
       });
     }
 
     render() {
       return (
-        <OriginalContainer {...this.state.allProps} screenId={this.screenId}/>
+        <OriginalContainer {...this.state.allProps} screenId={this.state.screenId}/>
       );
     }
   };
