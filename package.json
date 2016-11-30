@@ -51,11 +51,10 @@
     "eslint-plugin-react-native": "2.x.x",
     "jest": "17.x.x",
     "jest-cli": "17.x.x",
-    "jest-react-native": "17.x.x",
     "react-test-renderer": "15.4.1"
   },
   "jest": {
-    "preset": "jest-react-native",
+    "preset": "react-native",
     "resetMocks": true,
     "resetModules": true
   }
