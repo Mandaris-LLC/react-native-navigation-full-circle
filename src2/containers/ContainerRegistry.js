@@ -10,10 +10,6 @@ export function registerContainer(containerKey, getContainerFunc) {
   AppRegistry.registerComponent(containerKey, () => NavigationContainer);
 }
 
-export function getRegisteredContainer(containerKey) {
-  return ContainerStore.getContainerClass(containerKey);
-}
-
 function wrapContainer(containerKey, OriginalContainer) {
   return class extends Component {
     constructor(props) {

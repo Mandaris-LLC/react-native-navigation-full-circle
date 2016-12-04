@@ -1,5 +1,7 @@
-export function registerContainer(params) {
-  //
+import * as ContainerRegistry from './containers/ContainerRegistry';
+
+export function registerContainer(containerKey, getContainerFunc) {
+  ContainerRegistry.registerContainer(containerKey, getContainerFunc);
 }
 
 export function startApp(params) {
