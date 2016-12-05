@@ -202,6 +202,8 @@ function startTabBasedApp(params) {
 
   const newTabs = [];
 
+  params.tabs = _.cloneDeep(params.tabs);
+
   params.tabs.forEach(function(tab, idx) {
     addNavigatorParams(tab, null, idx);
     addNavigatorButtons(tab, params.drawer);
