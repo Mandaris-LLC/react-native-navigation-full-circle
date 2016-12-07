@@ -29,10 +29,13 @@ public class NavigationCommandsHandler {
      *
      * @param params ActivityParams as bundle
      */
-    public static void startApp(Bundle params, boolean portraitOnlyMode) {
+
+    public static void startApp(Bundle params, boolean portraitOnlyMode, boolean landscapeOnlyMode) {
         Intent intent;
         if (portraitOnlyMode) {
             intent = new Intent(NavigationApplication.instance, PortraitNavigationActivity.class);
+        } else if (landscapeOnlyMode) {
+            intent = new Intent(NavigationApplication.instance, LandscapeNavigationActivity.class);
         } else {
             intent = new Intent(NavigationApplication.instance, NavigationActivity.class);
         }
