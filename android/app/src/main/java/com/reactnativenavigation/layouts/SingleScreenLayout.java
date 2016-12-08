@@ -18,6 +18,7 @@ import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.screens.ScreenStack;
 import com.reactnativenavigation.views.LeftButtonOnClickListener;
 import com.reactnativenavigation.views.SideMenu;
+import com.reactnativenavigation.views.SideMenu.Side;
 import com.reactnativenavigation.views.SnackbarAndFabContainer;
 
 import java.util.List;
@@ -28,22 +29,25 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
 
     private final AppCompatActivity activity;
     protected final ScreenParams screenParams;
-    private final SideMenuParams sideMenuParams;
+    private final SideMenuParams leftSideMenuParams;
+    private final SideMenuParams rightSideMenuParams;
     protected ScreenStack stack;
     private SnackbarAndFabContainer snackbarAndFabContainer;
     protected LeftButtonOnClickListener leftButtonOnClickListener;
     private @Nullable SideMenu sideMenu;
 
-    public SingleScreenLayout(AppCompatActivity activity, @Nullable SideMenuParams sideMenuParams, ScreenParams screenParams) {
+    public SingleScreenLayout(AppCompatActivity activity, SideMenuParams leftSideMenuParams,
+                              SideMenuParams rightSideMenuParams, ScreenParams screenParams) {
         super(activity);
         this.activity = activity;
         this.screenParams = screenParams;
-        this.sideMenuParams = sideMenuParams;
+        this.leftSideMenuParams = leftSideMenuParams;
+        this.rightSideMenuParams = rightSideMenuParams;
         createLayout();
     }
 
     private void createLayout() {
-        if (sideMenuParams == null) {
+        if (leftSideMenuParams == null) {
             createStack(getScreenStackParent());
         } else {
             sideMenu = createSideMenu();
@@ -58,7 +62,7 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     }
 
     private SideMenu createSideMenu() {
-        SideMenu sideMenu = new SideMenu(getContext(), sideMenuParams);
+        SideMenu sideMenu = new SideMenu(getContext(), leftSideMenuParams, rightSideMenuParams);
         RelativeLayout.LayoutParams lp = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
         addView(sideMenu, lp);
         return sideMenu;
@@ -182,16 +186,16 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     }
 
     @Override
-    public void toggleSideMenuVisible(boolean animated) {
+    public void toggleSideMenuVisible(boolean animated, Side side) {
         if (sideMenu != null) {
-            sideMenu.toggleVisible(animated);
+            sideMenu.toggleVisible(animated, side);
         }
     }
 
     @Override
-    public void setSideMenuVisible(boolean animated, boolean visible) {
+    public void setSideMenuVisible(boolean animated, boolean visible, Side side) {
         if (sideMenu != null) {
-            sideMenu.setVisible(visible, animated);
+            sideMenu.setVisible(visible, animated, side);
         }
     }
 
@@ -233,7 +237,7 @@ public class SingleScreenLayout extends RelativeLayout implements Layout {
     @Override
     public void onSideMenuButtonClick() {
         if (sideMenu != null) {
-            sideMenu.openDrawer();
+            sideMenu.openDrawer(Side.Left);
         } else {
             final String navigatorEventId = stack.peek().getNavigatorEventId();
             NavigationApplication.instance.getEventEmitter().sendNavigatorEvent("sideMenu", navigatorEventId);
