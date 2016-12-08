@@ -176,12 +176,21 @@ function convertDrawerParamsToSideMenuParams(drawerParams) {
     return null;
   }
 
-  let result = {};
+  let result = {
+    left: {},
+    right: {}
+  };
   result.disableOpenGesture = drawer.disableOpenGesture !== undefined;
-  result.screenId = drawer.left.screen;
-  addNavigatorParams(result);
-  result = adaptNavigationParams(result);
-  result.passProps = drawer.passProps;
+  result.left.screenId = drawer.left.screen;
+  addNavigatorParams(result.left);
+  result.left = adaptNavigationParams(result.left);
+  result.left.passProps = drawer.left.passProps;
+
+  result.right.screenId = drawer.right.screen;
+  addNavigatorParams(result.right);
+  result.right = adaptNavigationParams(result.right);
+  result.right.passProps = drawer.right.passProps;
+
   return result;
 }
 
@@ -301,9 +310,9 @@ function navigatorToggleDrawer(navigator, params) {
   const animated = !(params.animated === false);
   if (params.to) {
     const visible = params.to === 'open';
-    newPlatformSpecific.setSideMenuVisible(animated, visible);
+    newPlatformSpecific.setSideMenuVisible(animated, visible, params.side);
   } else {
-    newPlatformSpecific.toggleSideMenuVisible(animated);
+    newPlatformSpecific.toggleSideMenuVisible(animated, params.side);
   }
 }
 

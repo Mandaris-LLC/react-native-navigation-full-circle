@@ -13,6 +13,7 @@ import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
 import com.reactnativenavigation.params.parsers.ActivityParamsParser;
 import com.reactnativenavigation.params.parsers.ScreenParamsParser;
+import com.reactnativenavigation.views.SideMenu.Side;
 
 import java.util.List;
 
@@ -29,10 +30,13 @@ public class NavigationCommandsHandler {
      *
      * @param params ActivityParams as bundle
      */
-    public static void startApp(Bundle params, boolean portraitOnlyMode) {
+
+    public static void startApp(Bundle params, boolean portraitOnlyMode, boolean landscapeOnlyMode) {
         Intent intent;
         if (portraitOnlyMode) {
             intent = new Intent(NavigationApplication.instance, PortraitNavigationActivity.class);
+        } else if (landscapeOnlyMode) {
+            intent = new Intent(NavigationApplication.instance, LandscapeNavigationActivity.class);
         } else {
             intent = new Intent(NavigationApplication.instance, NavigationActivity.class);
         }
@@ -234,7 +238,7 @@ public class NavigationCommandsHandler {
         });
     }
 
-    public static void toggleSideMenuVisible(final boolean animated) {
+    public static void toggleSideMenuVisible(final boolean animated, final Side side) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -243,12 +247,12 @@ public class NavigationCommandsHandler {
         NavigationApplication.instance.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                currentActivity.toggleSideMenuVisible(animated);
+                currentActivity.toggleSideMenuVisible(animated, side);
             }
         });
     }
 
-    public static void setSideMenuVisible(final boolean animated, final boolean visible) {
+    public static void setSideMenuVisible(final boolean animated, final boolean visible, final Side side) {
         final NavigationActivity currentActivity = NavigationActivity.currentActivity;
         if (currentActivity == null) {
             return;
@@ -257,7 +261,7 @@ public class NavigationCommandsHandler {
         NavigationApplication.instance.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                currentActivity.setSideMenuVisible(animated, visible);
+                currentActivity.setSideMenuVisible(animated, visible, side);
             }
         });
     }
