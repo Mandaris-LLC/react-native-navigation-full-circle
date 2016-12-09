@@ -117,7 +117,7 @@ public class SideMenu extends DrawerLayout {
 
     private void setStyle(SideMenuParams params) {
         if (params.disableOpenGesture) {
-            setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, params.side.gravity);
         }
     }
 }
