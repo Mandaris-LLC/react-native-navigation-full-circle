@@ -354,7 +354,10 @@
      *                             ECMAScript 6
      */
     "arrow-body-style": 0,
-    "arrow-parens": 0,
+    "arrow-parens": [
+      "error",
+      "always"
+    ],
     "arrow-spacing": [
       "error",
       {
@@ -363,7 +366,10 @@
       }
     ],
     "constructor-super": "error",
-    "generator-star-spacing": 0,
+    "generator-star-spacing": [
+      "error",
+      "after"
+    ],
     "no-class-assign": "error",
     "no-confusing-arrow": "error",
     "no-const-assign": "error",
@@ -492,10 +498,6 @@
     /*
      *                              babel plugin
      */
-    "babel/generator-star-spacing": [
-      "error",
-      "after"
-    ],
     "babel/new-cap": [
       "error",
       {
@@ -504,19 +506,11 @@
         ]
       }
     ],
-    "babel/array-bracket-spacing": [
-      "error",
-      "never"
-    ],
     "babel/object-curly-spacing": [
       "error",
       "never"
     ],
     "babel/object-shorthand": 0,
-    "babel/arrow-parens": [
-      "error",
-      "always"
-    ],
     "babel/no-await-in-loop": 0
   }
 }
