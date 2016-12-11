@@ -83,6 +83,7 @@ public class SideMenu extends DrawerLayout {
         leftSideMenuView = createSideMenu(leftMenuParams);
         rightSideMenuView = createSideMenu(rightMenuParams);
         setStyle(leftMenuParams);
+        setStyle(rightMenuParams);
     }
 
     private void createContentContainer() {
@@ -117,7 +118,7 @@ public class SideMenu extends DrawerLayout {
 
     private void setStyle(SideMenuParams params) {
         if (params.disableOpenGesture) {
-            setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, params.side.gravity);
         }
     }
 }
