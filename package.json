@@ -56,7 +56,7 @@
   "jest": {
     "preset": "react-native",
     "testPathDirs": [
-      "src"
+      "src2"
     ],
     "resetMocks": true,
     "resetModules": true
