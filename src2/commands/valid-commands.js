@@ -1,6 +1,6 @@
 export const singleScreenApp = {
   screen: {
-    key: 'com.example.MyScreen'
+    key: 'example.FirstTabScreen'
   }
 };
 
@@ -8,17 +8,17 @@ export const tabBasedApp = {
   tabs: [
     {
       screen: {
-        key: 'com.example.FirstTab'
+        key: 'com.example.FirstTabScreen'
       }
     },
     {
       screen: {
-        key: 'com.example.SecondTab'
+        key: 'com.example.SecondTabScreen'
       }
     },
     {
       screen: {
-        key: 'com.example.ThirdTab'
+        key: 'com.example.FirstTabScreen'
       }
     }
   ]
@@ -64,23 +64,26 @@ export const tabBasedWithSideMenu = {
   tabs: [
     {
       screen: {
-        key: 'com.example.FirstTab'
+        key: 'com.example.FirstTabScreen'
       }
     },
     {
       screen: {
-        key: 'com.example.SecondTab'
+        key: 'com.example.SecondTabScreen'
       }
     },
     {
       screen: {
-        key: 'com.example.ThirdTab'
+        key: 'com.example.FirstTabScreen'
       }
     }
   ],
   sideMenu: {
     left: {
       key: 'com.example.Menu1'
+    },
+    right: {
+        key: 'com.example.Menu2'
     }
   }
 };

@@ -173,7 +173,7 @@ RCT_EXPORT_MODULE(RCCManager);
 }
 
 
--(void)startAppHelper:(NSDictionary*)layout
+-(void)startAppAfterBridgeFinishLoading:(NSDictionary*)layout
 {
     [[RCCManager sharedInstance] clearModuleRegistry];
     
@@ -182,7 +182,6 @@ RCT_EXPORT_MODULE(RCCManager);
     
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     
-    // set the new controller as the root
     appDelegate.window.rootViewController = controller;
     [appDelegate.window makeKeyAndVisible];
 }
@@ -196,13 +195,13 @@ startApp:(NSDictionary*)layout)
 {
     if ([[RCCManager sharedInstance] getBridge].loading) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0001 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self startAppHelper:layout];
+            [self startAppAfterBridgeFinishLoading:layout];
         });
         return;
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self startAppHelper:layout];
+        [self startAppAfterBridgeFinishLoading:layout];
     });
 }
 
