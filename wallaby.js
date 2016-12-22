@@ -1,5 +1,6 @@
 /*eslint-disable*/
 'use strict';
+process.env.BABEL_ENV = 'test';
 const babelOptions = require('./package.json').babel.env.test;
 module.exports = function(wallaby) {
   return {
