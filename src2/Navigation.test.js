@@ -3,18 +3,18 @@ import _ from 'lodash';
 describe('Navigation', () => {
   let Navigation;
   let Commands;
-  let ContainerRegistry;
+  let ScreenRegistry;
 
   beforeEach(() => {
-    jest.mock('./containers/ContainerRegistry');
+    jest.mock('./screens/ScreenRegistry');
     Navigation = require('./Navigation');
     Commands = require('./commands/Commands');
-    ContainerRegistry = require('./containers/ContainerRegistry');
+    ScreenRegistry = require('./screens/ScreenRegistry');
   });
 
   it('exposes static commands', () => {
     _.forEach([
-      Navigation.registerContainer,
+      Navigation.registerScreen,
       Navigation.startApp,
       Navigation.push,
       Navigation.pop,
@@ -30,11 +30,11 @@ describe('Navigation', () => {
     ], (f) => expect(f).toBeInstanceOf(Function));
   });
 
-  it('delegates register container to container registry', () => {
-    expect(ContainerRegistry.registerContainer).not.toHaveBeenCalled();
+  it('delegates register screen to screen registry', () => {
+    expect(ScreenRegistry.registerScreen).not.toHaveBeenCalled();
     const fn = jest.fn();
-    Navigation.registerContainer('key', fn);
-    expect(ContainerRegistry.registerContainer).toHaveBeenCalledTimes(1);
-    expect(ContainerRegistry.registerContainer).toHaveBeenCalledWith('key', fn);
+    Navigation.registerScreen('key', fn);
+    expect(ScreenRegistry.registerScreen).toHaveBeenCalledTimes(1);
+    expect(ScreenRegistry.registerScreen).toHaveBeenCalledWith('key', fn);
   });
 });
