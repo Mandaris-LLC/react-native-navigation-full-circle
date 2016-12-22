@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RCTBridge.h"
+
 
 @interface RNNViewController : UIViewController
+
++ (UIViewController*)controllerWithLayout:(NSDictionary *)layout bridge:(RCTBridge *)bridge;
+
 
 @end

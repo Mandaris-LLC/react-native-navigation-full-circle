@@ -10,6 +10,8 @@
 #import "RCCTheSideBarManagerViewController.h"
 #import "RCCNotification.h"
 
+#import "RNNViewController.h"
+
 #define kSlideDownAnimationDuration 0.35
 
 typedef NS_ENUM(NSInteger, RCCManagerModuleErrorCode)
@@ -170,13 +172,38 @@ RCT_EXPORT_MODULE(RCCManager);
     }
 }
 
+
+-(void)startAppHelper:(NSDictionary*)layout
+{
+    [[RCCManager sharedInstance] clearModuleRegistry];
+    
+    UIViewController *controller = [RNNViewController controllerWithLayout:layout bridge:[[RCCManager sharedInstance] getBridge]];
+    if (controller == nil) return;
+    
+    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+    
+    // set the new controller as the root
+    appDelegate.window.rootViewController = controller;
+    [appDelegate.window makeKeyAndVisible];
+}
+
+
 #pragma mark - RCT exported methods
 
 
 RCT_EXPORT_METHOD(
-startApp:(NSDictionary*)layout) {
-
-    NSLog(@"layout:%@", layout);
+startApp:(NSDictionary*)layout)
+{
+    if ([[RCCManager sharedInstance] getBridge].loading) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0001 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self startAppHelper:layout];
+        });
+        return;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self startAppHelper:layout];
+    });
 }
 
 
@@ -184,6 +211,7 @@ startApp:(NSDictionary*)layout) {
 RCT_EXPORT_METHOD(
 setRootController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps)
 {
+    
     if ([[RCCManager sharedInstance] getBridge].loading) {
         [self deferSetRootControllerWhileBridgeLoading:layout animationType:animationType globalProps:globalProps];
         return;
@@ -193,6 +221,8 @@ setRootController:(NSDictionary*)layout animationType:(NSString*)animationType g
         [self performSetRootController:layout animationType:animationType globalProps:globalProps];
    });
 }
+
+
 
 /**
  * on RN31 there's a timing issue, we must wait for the bridge to finish loading
