@@ -83,7 +83,7 @@ export const tabBasedWithSideMenu = {
       key: 'com.example.Menu1'
     },
     right: {
-        key: 'com.example.Menu2'
+      key: 'com.example.Menu2'
     }
   }
 };
