@@ -1,6 +1,6 @@
 /*eslint-disable*/
 'use strict';
-const babelOptions = JSON.parse(require('fs').readFileSync(`${__dirname}/.babelrc`));
+const babelOptions = require('./package.json').babel.env.test;
 module.exports = function(wallaby) {
   return {
     env: {
