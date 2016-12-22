@@ -172,6 +172,15 @@ RCT_EXPORT_MODULE(RCCManager);
 
 #pragma mark - RCT exported methods
 
+
+RCT_EXPORT_METHOD(
+startApp:(NSDictionary*)layout) {
+
+    NSLog(@"layout:%@", layout);
+}
+
+
+
 RCT_EXPORT_METHOD(
 setRootController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps)
 {

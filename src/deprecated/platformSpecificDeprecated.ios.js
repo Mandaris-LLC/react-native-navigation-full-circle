@@ -1,6 +1,10 @@
 /*eslint-disable*/
 import Navigation from './../Navigation';
 import Controllers, {Modal, Notification} from './controllers';
+import _ from 'lodash';
+import PropRegistry from '../PropRegistry';
+import * as newPlatformSpecific from './../platformSpecific';
+
 const React = Controllers.hijackReact();
 const {
   ControllerRegistry,
@@ -8,9 +12,10 @@ const {
   NavigationControllerIOS,
   DrawerControllerIOS
 } = React;
-import _ from 'lodash';
 
-import PropRegistry from '../PropRegistry';
+function startApp(layout) {
+	newPlatformSpecific.startApp(layout);
+}
 
 function startTabBasedApp(params) {
   if (!params.tabs) {
@@ -566,6 +571,7 @@ function dismissContextualMenu() {
 }
 
 export default {
+  startApp,
   startTabBasedApp,
   startSingleScreenApp,
   navigatorPush,
