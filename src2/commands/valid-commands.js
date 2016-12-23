@@ -1,6 +1,6 @@
 export const singleScreenApp = {
   screen: {
-    key: 'example.FirstTabScreen'
+    key: 'com.example.FirstTabScreen'
   }
 };
 

@@ -1,14 +1,7 @@
-//
-//  RNNViewController.m
-//  ReactNativeNavigation
-//
-//  Created by Ran Greenberg on 21/12/2016.
-//  Copyright © 2016 artal. All rights reserved.
-//
-
 #import "RNNViewController.h"
 #import "RCTRootView.h"
 #import "MMDrawerController.h"
+
 
 #define SCREEN                  @"screen"
 #define SIDE_MENU               @"sideMenu"
@@ -18,141 +11,137 @@
 #define SIDE_MENU_RIGHT         @"right"
 
 
-@interface RNNViewController ()
-@end
+typedef enum
+{
+    SideMenuModeNone        = 0,
+    SideMenuModeLeft        = 1 << 0,
+    SideMenuModeRight       = 1 << 1,
+} SideMenuMode;
 
 
 @implementation RNNViewController
 
 
-#pragma mark - Static function
++(SideMenuMode)sideMenuModeForLayout:(NSDictionary*)layout {
+    NSDictionary *sideMenu = layout[SIDE_MENU];
+    SideMenuMode mode = SideMenuModeNone;
+    if (sideMenu) {
+        if (sideMenu[SIDE_MENU_LEFT]) {
+            mode |= SideMenuModeLeft;
+        }
+        if (sideMenu[SIDE_MENU_RIGHT]) {
+            mode |= SideMenuModeRight;
+        }
+    }
+    return mode;
+}
 
 
 + (UIViewController*)controllerWithLayout:(NSDictionary *)layout bridge:(RCTBridge *)bridge {
-    
     UIViewController *controller = nil;
+    SideMenuMode sideMenuMode = [RNNViewController sideMenuModeForLayout:layout];
+    UIViewController *centerViewController = [RNNViewController centerControllerWithLayout:layout bridge:bridge];
+    
+    if (sideMenuMode == SideMenuModeNone) {
+        controller = centerViewController;
+    }
+    else {
+        NSDictionary *sideMenuLayout = layout[SIDE_MENU];
+        controller = [RNNViewController sideMenuControllerWithSideMenuLayout:sideMenuLayout
+                                                                sideMenuMode:sideMenuMode
+                                                        centerViewController:centerViewController
+                                                                      bridge:bridge];
+    }
+    return controller;
+}
+
+
++(UIViewController*)centerControllerWithLayout:(NSDictionary*)layout bridge:(RCTBridge*)bridge {
+    UIViewController *controller = nil;
+    
+    NSDictionary *tabs = layout[TABS];
     NSDictionary *screen = layout[SCREEN];
-    NSArray *tabs = layout[TABS];
-    NSDictionary *sideMenu = layout[SIDE_MENU];
-    
-    if (sideMenu) {
-        NSDictionary *centerScreenDictionary;
-        if (screen) {
-            centerScreenDictionary = @{SCREEN: screen};
-        }
-        else if (tabs){
-            centerScreenDictionary = @{TABS: layout[TABS]};
-        }
-        else {
-            return nil;
-        }
-        
-        UIViewController *centerViewController = [RNNViewController controllerWithLayout:centerScreenDictionary bridge:bridge];
-        controller = [RNNViewController sideMenuWithLayout:sideMenu centerViewController:centerViewController bridge:bridge];
-        
-        return controller;
-    }
-    
     if (tabs) {
-        controller = [RNNViewController tabBarWithTabsArray:tabs bridge:bridge];
-        return controller;
+        controller = [RNNViewController tabBarControllerWithArray:tabs bridge:bridge];
     }
-    
-    if (screen) {
-        NSString *screenKey = screen[SCREEN_KEY];
-        if (screenKey) {
-            controller = [RNNViewController navigationControllerWithScreenKey:screenKey bridge:bridge];
-        }
-        
-        return controller;
+    else if (screen) {
+        NSDictionary *screenLayout = @{SCREEN: screen};
+        controller = [RNNViewController controllerWithScreenLayout:screenLayout bridge:bridge];
     }
     
     return controller;
 }
 
 
-+(UIViewController*)controllerWithScreenKey:(NSString*)screenKey bridge:(RCTBridge *)bridge {
++(MMDrawerController*)sideMenuControllerWithSideMenuLayout:(NSDictionary*)sideMenuLayout sideMenuMode:(SideMenuMode)sideMenuMode centerViewController:(UIViewController*)centerVC bridge:(RCTBridge*)bridge {
+    UIViewController *leftVC, *rightVC = nil;
     
+    if (sideMenuMode & SideMenuModeLeft) {
+        NSDictionary *leftLayout = sideMenuLayout[SIDE_MENU_LEFT];
+        NSString *leftScreenKey = leftLayout[SCREEN_KEY];
+        leftVC = [RNNViewController controllerWithScreenKey:leftScreenKey bridge:bridge];
+    }
+    if (sideMenuMode & SideMenuModeRight) {
+        NSDictionary *rightLayout = sideMenuLayout[SIDE_MENU_RIGHT];
+        NSString *rightScreenKey = rightLayout[SCREEN_KEY];
+        rightVC = [RNNViewController controllerWithScreenKey:rightScreenKey bridge:bridge];
+    }
+    
+    MMDrawerController *controller = [[MMDrawerController alloc] initWithCenterViewController:centerVC
+                                                                     leftDrawerViewController:leftVC
+                                                                    rightDrawerViewController:rightVC];
+    
+    controller.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
+    controller.closeDrawerGestureModeMask = MMCloseDrawerGestureModeAll;
+    
+    return controller;
+}
+
+
++(UITabBarController*)tabBarControllerWithArray:(NSArray*)tabs bridge:(RCTBridge*)bridge {
     UIViewController *controller = nil;
     
-    RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:screenKey initialProperties:nil];
-    if (!reactView) return nil;
-    
-    controller = [UIViewController new];
-    controller.view = reactView;
-    
-    return controller;
-}
-
-
-+(UINavigationController*)navigationControllerWithScreenKey:(NSString*)screenKey bridge:(RCTBridge*)bridge {
-    
-    UINavigationController *controller = nil;
-    
-    UIViewController *viewController = [RNNViewController controllerWithScreenKey:screenKey bridge:bridge];
-    if (!viewController) return nil;
-    
-    controller = [[UINavigationController alloc] initWithRootViewController:viewController];
-    [controller.tabBarItem setTitle:@"tab"];
-    
-    return controller;
-}
-
-
-+(UIViewController*)sideMenuWithLayout:(NSDictionary*)layout centerViewController:(UIViewController*)centerViewController bridge:(RCTBridge*)bridge {
-    
-    UIViewController *leftViewController, *rightViewController, *sideMenuViewController = nil;
-    
-    NSDictionary *left = layout[SIDE_MENU_LEFT];
-    if (left) {
-        NSString *leftScreenKey = left[SCREEN_KEY];
-        leftViewController = [RNNViewController controllerWithScreenKey:leftScreenKey bridge:bridge];
-    }
-    
-    NSDictionary *right = layout[SIDE_MENU_RIGHT];
-    if (right) {
-        NSString *rightScreenKey = right[SCREEN_KEY];
-        rightViewController = [RNNViewController controllerWithScreenKey:rightScreenKey bridge:bridge];
-    }
-    
-    if (rightViewController || leftViewController) {
-        sideMenuViewController = [[MMDrawerController alloc] initWithCenterViewController:centerViewController leftDrawerViewController:leftViewController rightDrawerViewController:rightViewController];
-        
-        // TODO: CHANGE THIS
-        ((MMDrawerController*)sideMenuViewController).openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
-        ((MMDrawerController*)sideMenuViewController).closeDrawerGestureModeMask = MMCloseDrawerGestureModeAll;
-    }
-    
-    return sideMenuViewController;
-}
-
-+(UITabBarController*)tabBarWithTabsArray:(NSArray*)tabsArray bridge:(RCTBridge*)bridge {
-    
-    UITabBarController *tabBarController = nil;
-    NSMutableArray *tabsViewControllersArray = [[NSMutableArray alloc] init];
-    
-    for (NSDictionary *tab in tabsArray) {
-        UIViewController *tabViewController = [RNNViewController controllerWithLayout:tab bridge:bridge];
-        if (tabViewController) {
-            [tabsViewControllersArray addObject:tabViewController];
+    NSMutableArray *tabsVC = [NSMutableArray new];
+    for (NSDictionary* tab in tabs) {
+        UIViewController *tabVC = [RNNViewController controllerWithScreenLayout:tab bridge:bridge];
+        if (tabVC) {
+            [tabsVC addObject:tabVC];
         }
     }
-    if ([tabsViewControllersArray count] > 0) {
-        tabBarController = [UITabBarController new];
-        tabBarController.viewControllers = tabsViewControllersArray;
+    if ([tabsVC count] > 0) {
+        UITabBarController *tabController = [[UITabBarController alloc] init];
+        tabController.viewControllers = tabsVC;
+        controller = tabController;
     }
-    
-    return tabBarController;
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
+    return controller;
 }
 
 
++(UIViewController*)controllerWithScreenLayout:(NSDictionary*)screenLayout bridge:(RCTBridge*)bridge {
+    UIViewController *controller = nil;
+    NSDictionary *screen = screenLayout[SCREEN];
+    NSDictionary *screenKey = screen[SCREEN_KEY];
+    if (screen && screenKey) {
+        UIViewController *rootVC = [RNNViewController controllerWithScreenKey:screenKey bridge:bridge];
+        if (rootVC) {
+            controller = [[UINavigationController alloc] initWithRootViewController:rootVC];
+            [controller.tabBarItem setTitle:screenKey];
+        }
+    }
+    return controller;
+}
 
+
++(UIViewController*)controllerWithScreenKey:(NSString*)screenKey bridge:(RCTBridge*)bridge {
+    UIViewController *controller = nil;
+    if (screenKey) {
+        RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:screenKey initialProperties:nil];
+        if (!reactView) return nil;
+        controller = [UIViewController new];
+        controller.view = reactView;
+    }
+    return controller;
+}
 
 
 @end
-
