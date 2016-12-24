@@ -22,19 +22,7 @@ typedef enum
 @implementation RNNViewController
 
 
-+(SideMenuMode)sideMenuModeForLayout:(NSDictionary*)layout {
-    NSDictionary *sideMenu = layout[SIDE_MENU];
-    SideMenuMode mode = SideMenuModeNone;
-    if (sideMenu) {
-        if (sideMenu[SIDE_MENU_LEFT]) {
-            mode |= SideMenuModeLeft;
-        }
-        if (sideMenu[SIDE_MENU_RIGHT]) {
-            mode |= SideMenuModeRight;
-        }
-    }
-    return mode;
-}
+#pragma mark - External methods
 
 
 + (UIViewController*)controllerWithLayout:(NSDictionary *)layout bridge:(RCTBridge *)bridge {
@@ -53,6 +41,24 @@ typedef enum
                                                                       bridge:bridge];
     }
     return controller;
+}
+
+
+#pragma mark - Helper methods
+
+
++(SideMenuMode)sideMenuModeForLayout:(NSDictionary*)layout {
+    NSDictionary *sideMenu = layout[SIDE_MENU];
+    SideMenuMode mode = SideMenuModeNone;
+    if (sideMenu) {
+        if (sideMenu[SIDE_MENU_LEFT]) {
+            mode |= SideMenuModeLeft;
+        }
+        if (sideMenu[SIDE_MENU_RIGHT]) {
+            mode |= SideMenuModeRight;
+        }
+    }
+    return mode;
 }
 
 
