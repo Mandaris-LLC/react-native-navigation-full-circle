@@ -40,7 +40,7 @@ export default class FirstTabScreen extends Component {
   constructor(props) {
     super(props);
     // if you want to listen on navigator events, set this up
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    //this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   onNavigatorEvent(event) {
@@ -60,7 +60,7 @@ export default class FirstTabScreen extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, padding: 20}}>
+      <View style={{flex: 1, padding: 40}}>
         <TouchableOpacity onPress={ this.onPushPress.bind(this) }>
           <Text style={styles.button}>Push Plain Screen</Text>
         </TouchableOpacity>
@@ -97,27 +97,27 @@ export default class FirstTabScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "example.PushedScreen"
+      screen: "com.example.PushedScreen"
     });
   }
 
   onPushStyledPress() {
     this.props.navigator.push({
       title: "Styled",
-      screen: "example.StyledScreen"
+      screen: "com.example.StyledScreen"
     });
   }
 
   onModalPress() {
     this.props.navigator.showModal({
       title: "Modal",
-      screen: "example.ModalScreen"
+      screen: "com.example.ModalScreen"
     });
   }
 
   onLightBoxPress() {
     this.props.navigator.showLightBox({
-      screen: "example.LightBoxScreen",
+      screen: "com.example.LightBoxScreen",
       style: {
         backgroundBlur: "dark"
       },
@@ -129,18 +129,18 @@ export default class FirstTabScreen extends Component {
 
   onInAppNotificationPress() {
     this.props.navigator.showInAppNotification({
-      screen: "example.NotificationScreen"
+      screen: "com.example.NotificationScreen"
     });
   }
 
   onStartSingleScreenApp() {
     Navigation.startSingleScreenApp({
       screen: {
-        screen: 'example.FirstTabScreen'
+        screen: 'com.example.FirstTabScreen'
       },
       drawer: {
         left: {
-          screen: 'example.SideMenu'
+          screen: 'com.example.SideMenu'
         }
       }
     });

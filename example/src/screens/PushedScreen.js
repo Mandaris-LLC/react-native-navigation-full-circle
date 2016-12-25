@@ -48,7 +48,7 @@ export default class PushedScreen extends Component {
   onPushStyledPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "example.StyledScreen"
+      screen: "com.example.StyledScreen"
     });
   }
   onPopPress() {
@@ -60,8 +60,7 @@ export default class PushedScreen extends Component {
   onResetToPress() {
     this.props.navigator.resetTo({
       title: "New Root",
-      screen: "example.StyledScreen",
-      animated: true
+      screen: "com.example.ThirdTabScreen"
     });
   }
 }

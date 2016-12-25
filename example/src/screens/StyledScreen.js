@@ -66,13 +66,13 @@ export default class StyledScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "example.PushedScreen"
+      screen: "com.example.PushedScreen"
     });
   }
   onPushStyledPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "example.StyledScreen"
+      screen: "com.example.StyledScreen"
     });
   }
   onPopPress() {

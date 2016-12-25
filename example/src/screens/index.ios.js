@@ -11,12 +11,18 @@ import LightBoxScreen from './LightBoxScreen';
 
 // register all screens of the app (including internal ones)
 export function registerScreens() {
-  Navigation.registerComponent('example.FirstTabScreen', () => FirstTabScreen);
-  Navigation.registerComponent('example.SecondTabScreen', () => SecondTabScreen);
-  Navigation.registerComponent('example.PushedScreen', () => PushedScreen);
-  Navigation.registerComponent('example.StyledScreen', () => StyledScreen);
-  Navigation.registerComponent('example.ModalScreen', () => ModalScreen);
-  Navigation.registerComponent('example.NotificationScreen', () => NotificationScreen);
-  Navigation.registerComponent('example.SideMenu', () => SideMenu);
-  Navigation.registerComponent('example.LightBoxScreen', () => LightBoxScreen);
+  Navigation.registerComponent('com.example.FirstTabScreen', () => FirstTabScreen);
+  Navigation.registerComponent('com.example.SecondTabScreen', () => SecondTabScreen);
+  Navigation.registerComponent('com.example.PushedScreen', () => PushedScreen);
+  Navigation.registerComponent('com.example.StyledScreen', () => StyledScreen);
+  Navigation.registerComponent('com.example.ModalScreen', () => ModalScreen);
+  Navigation.registerComponent('com.example.NotificationScreen', () => NotificationScreen);
+  Navigation.registerComponent('com.example.SideMenu', () => SideMenu);
+  Navigation.registerComponent('com.example.LightBoxScreen', () => LightBoxScreen);
+	
+  Navigation.registerComponent('com.example.MyScreen', () => FirstTabScreen);
+  Navigation.registerComponent('com.example.Menu', () => SideMenu);
+  Navigation.registerComponent('com.example.Menu1', () => SideMenu);
+  Navigation.registerComponent('com.example.Menu2', () => SideMenu);
+	
 }

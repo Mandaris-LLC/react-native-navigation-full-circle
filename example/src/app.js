@@ -11,14 +11,17 @@ const createTabs = () => {
   let tabs = [
     {
       label: 'One',
-      screen: 'example.FirstTabScreen',
+      screen: 'com.example.FirstTabScreen',
       icon: require('../img/one.png'),
       selectedIcon: require('../img/one_selected.png'),
-      title: 'Screen One'
+      title: 'Screen One',
+      navigatorStyle: {
+          tabBarHidden: true
+      }
     },
     {
       label: 'Two',
-      screen: 'example.SecondTabScreen',
+      screen: 'com.example.SecondTabScreen',
       icon: require('../img/two.png'),
       selectedIcon: require('../img/two_selected.png'),
       title: 'Screen Two',
@@ -37,35 +40,46 @@ const createTabs = () => {
   }
   return tabs;
 };
+
+import * as Commands from './../node_modules/react-native-navigation/src2/commands/valid-commands';
+//Navigation.startApp(Commands.singleScreenApp);
+//Navigation.startApp(Commands.tabBasedApp);
+//Navigation.startApp(Commands.singleWithSideMenu);
+//Navigation.startApp(Commands.singleWithRightSideMenu);
+//Navigation.startApp(Commands.singleWithBothMenus);
+//Navigation.startApp(Commands.tabBasedWithSideMenu);
+
 // this will start our app
 Navigation.startTabBasedApp({
   tabs: createTabs(),
   appStyle: {
     tabBarBackgroundColor: '#0f2362',
     tabBarButtonColor: '#ffffff',
-    tabBarSelectedButtonColor: '#63d7cc'
+    tabBarSelectedButtonColor: '#63d7cc',
   },
   drawer: {
     left: {
-      screen: 'example.SideMenu'
+      screen: 'com.example.SideMenu'
     }
   }
 });
 //Navigation.startSingleScreenApp({
 //  screen: {
-//    screen: 'example.FirstTabScreen',
+//    screen: 'com.example.FirstTabScreen',
 //    title: 'Navigation',
 //    navigatorStyle: {
 //      navBarBackgroundColor: '#4dbce9',
 //      navBarTextColor: '#ffff00',
 //      navBarSubtitleTextColor: '#ff0000',
 //      navBarButtonColor: '#ffffff',
-//      statusBarTextColorScheme: 'light'
+//      statusBarTextColorScheme: 'light',
+//      tabBarHidden: true
 //    }
 //  },
 //  drawer: {
 //    left: {
-//      screen: 'example.SideMenu'
+//      screen: 'com.example.SideMenu'
 //    }
 //  }
 //});
+

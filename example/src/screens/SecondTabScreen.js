@@ -22,7 +22,7 @@ export default class SecondTabScreen extends Component {
     super(props);
     this.buttonsCounter = 0;
     // if you want to listen on navigator events, set this up
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    //this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
   render() {
