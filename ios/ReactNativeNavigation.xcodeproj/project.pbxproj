@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2606F7DA1E0BC3FC00CC69CC /* RNNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2606F7D91E0BC3FC00CC69CC /* RNNViewController.m */; };
 		260804DB1CE0D9D20094DBA1 /* RCCToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 260804DA1CE0D9D20094DBA1 /* RCCToolBar.m */; };
+		2636F1611E0EC9E7007ABB09 /* RNNStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2636F1601E0EC9E7007ABB09 /* RNNStyler.m */; };
 		26AFF3F51D7EEE2400CBA211 /* RCCTitleViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AFF3F41D7EEE2400CBA211 /* RCCTitleViewHelper.m */; };
 		CC84A19E1C1A0C4E00B3A6A2 /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */; };
 		CC84A19F1C1A0C4E00B3A6A2 /* RCCManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1961C1A0C4E00B3A6A2 /* RCCManagerModule.m */; };
@@ -53,6 +54,8 @@
 		2606F7D91E0BC3FC00CC69CC /* RNNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNViewController.m; sourceTree = "<group>"; };
 		260804D91CE0D9D20094DBA1 /* RCCToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCToolBar.h; sourceTree = "<group>"; };
 		260804DA1CE0D9D20094DBA1 /* RCCToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCToolBar.m; sourceTree = "<group>"; };
+		2636F15F1E0EC9E7007ABB09 /* RNNStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNStyler.h; sourceTree = "<group>"; };
+		2636F1601E0EC9E7007ABB09 /* RNNStyler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNStyler.m; sourceTree = "<group>"; };
 		26AFF3F31D7EEE2400CBA211 /* RCCTitleViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCTitleViewHelper.h; sourceTree = "<group>"; };
 		26AFF3F41D7EEE2400CBA211 /* RCCTitleViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCTitleViewHelper.m; sourceTree = "<group>"; };
 		CC84A1931C1A0C4E00B3A6A2 /* RCCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManager.h; sourceTree = "<group>"; };
@@ -129,6 +132,28 @@
 			path = RCCToolBar;
 			sourceTree = "<group>";
 		};
+		2636F1621E0FD618007ABB09 /* OLD */ = {
+			isa = PBXGroup;
+			children = (
+				CC84A1931C1A0C4E00B3A6A2 /* RCCManager.h */,
+				CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */,
+				CC84A1951C1A0C4E00B3A6A2 /* RCCManagerModule.h */,
+				CC84A1961C1A0C4E00B3A6A2 /* RCCManagerModule.m */,
+				CC84A1971C1A0C4E00B3A6A2 /* RCCNavigationController.h */,
+				CC84A1981C1A0C4E00B3A6A2 /* RCCNavigationController.m */,
+				CC84A1991C1A0C4E00B3A6A2 /* RCCTabBarController.h */,
+				CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */,
+				CC84A19B1C1A0C4E00B3A6A2 /* RCCViewController.h */,
+				CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */,
+				D84813171C8C5EB700051BAF /* RCCLightBox.h */,
+				D84813181C8C5EB700051BAF /* RCCLightBox.m */,
+				D800E8171CFED1DB004A187F /* RCCExternalViewControllerProtocol.h */,
+				D83514F41D29719A00D53758 /* RCCNotification.h */,
+				D83514F51D29719A00D53758 /* RCCNotification.m */,
+			);
+			name = OLD;
+			sourceTree = "<group>";
+		};
 		D85082BB1CBCF42400FDB961 /* RCCDrawerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,26 +222,14 @@
 		D8AFADB41BEE6F3F00A4592D = {
 			isa = PBXGroup;
 			children = (
+				2636F1621E0FD618007ABB09 /* OLD */,
 				D8D779951D04B7180050CFEA /* Helpers */,
 				260804D51CE0D7090094DBA1 /* RCCToolBar */,
 				D85082BB1CBCF42400FDB961 /* RCCDrawerController */,
-				CC84A1931C1A0C4E00B3A6A2 /* RCCManager.h */,
-				CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */,
-				CC84A1951C1A0C4E00B3A6A2 /* RCCManagerModule.h */,
-				CC84A1961C1A0C4E00B3A6A2 /* RCCManagerModule.m */,
-				CC84A1971C1A0C4E00B3A6A2 /* RCCNavigationController.h */,
-				CC84A1981C1A0C4E00B3A6A2 /* RCCNavigationController.m */,
-				CC84A1991C1A0C4E00B3A6A2 /* RCCTabBarController.h */,
-				CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */,
 				2606F7D81E0BC3FC00CC69CC /* RNNViewController.h */,
 				2606F7D91E0BC3FC00CC69CC /* RNNViewController.m */,
-				CC84A19B1C1A0C4E00B3A6A2 /* RCCViewController.h */,
-				CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */,
-				D84813171C8C5EB700051BAF /* RCCLightBox.h */,
-				D84813181C8C5EB700051BAF /* RCCLightBox.m */,
-				D800E8171CFED1DB004A187F /* RCCExternalViewControllerProtocol.h */,
-				D83514F41D29719A00D53758 /* RCCNotification.h */,
-				D83514F51D29719A00D53758 /* RCCNotification.m */,
+				2636F15F1E0EC9E7007ABB09 /* RNNStyler.h */,
+				2636F1601E0EC9E7007ABB09 /* RNNStyler.m */,
 				D8AFADBE1BEE6F3F00A4592D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -315,6 +328,7 @@
 				D85082E71CBCF54200FDB961 /* SidebarFlipboardAnimation.m in Sources */,
 				D85082E51CBCF54200FDB961 /* SidebarFacebookAnimation.m in Sources */,
 				CC84A1A21C1A0C4E00B3A6A2 /* RCCViewController.m in Sources */,
+				2636F1611E0EC9E7007ABB09 /* RNNStyler.m in Sources */,
 				2606F7DA1E0BC3FC00CC69CC /* RNNViewController.m in Sources */,
 				D85082E91CBCF54200FDB961 /* SidebarWunderlistAnimation.m in Sources */,
 				D85082E11CBCF54200FDB961 /* RCCDrawerHelper.m in Sources */,
