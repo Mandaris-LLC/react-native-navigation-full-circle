@@ -520,11 +520,15 @@ function showContextualMenu(navigator, params) {
 
   params.rightButtons.forEach((button, index) => {
     const btn = {
-      icon: resolveAssetSource(button.icon).uri,
+      icon: resolveAssetSource(button.icon),
+      showAsAction: button.showAsAction,
       color: processColor(button.color),
       label: button.title,
       index
     };
+    if (btn.icon) {
+      btn.icon = btn.icon.uri;
+    }
     contextualMenu.buttons.push(btn);
   });
 
