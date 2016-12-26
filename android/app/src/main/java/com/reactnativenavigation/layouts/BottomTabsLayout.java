@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.events.EventBus;
 import com.reactnativenavigation.events.ScreenChangedEvent;
@@ -298,7 +300,14 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
         hideCurrentStack();
         showNewStack(position);
         EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
+        sendTabSelectedEventToJs();
         return true;
+    }
+
+    private void sendTabSelectedEventToJs() {
+        WritableMap data = Arguments.createMap();
+        String navigatorEventId = getCurrentScreenStack().peek().getNavigatorEventId();
+        NavigationApplication.instance.getEventEmitter().sendNavigatorEvent("bottomTabSelected", navigatorEventId, data);
     }
 
     private void showNewStack(int position) {
