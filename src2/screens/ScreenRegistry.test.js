@@ -1,5 +1,5 @@
-import {AppRegistry, Text} from 'react-native';
 import React, {Component} from 'react';
+import {AppRegistry, Text} from 'react-native';
 import renderer from 'react-test-renderer';
 
 describe('ComponentRegistry', () => {
