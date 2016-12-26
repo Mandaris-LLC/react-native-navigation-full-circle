@@ -132,28 +132,6 @@
 			path = RCCToolBar;
 			sourceTree = "<group>";
 		};
-		2636F1621E0FD618007ABB09 /* OLD */ = {
-			isa = PBXGroup;
-			children = (
-				CC84A1931C1A0C4E00B3A6A2 /* RCCManager.h */,
-				CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */,
-				CC84A1951C1A0C4E00B3A6A2 /* RCCManagerModule.h */,
-				CC84A1961C1A0C4E00B3A6A2 /* RCCManagerModule.m */,
-				CC84A1971C1A0C4E00B3A6A2 /* RCCNavigationController.h */,
-				CC84A1981C1A0C4E00B3A6A2 /* RCCNavigationController.m */,
-				CC84A1991C1A0C4E00B3A6A2 /* RCCTabBarController.h */,
-				CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */,
-				CC84A19B1C1A0C4E00B3A6A2 /* RCCViewController.h */,
-				CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */,
-				D84813171C8C5EB700051BAF /* RCCLightBox.h */,
-				D84813181C8C5EB700051BAF /* RCCLightBox.m */,
-				D800E8171CFED1DB004A187F /* RCCExternalViewControllerProtocol.h */,
-				D83514F41D29719A00D53758 /* RCCNotification.h */,
-				D83514F51D29719A00D53758 /* RCCNotification.m */,
-			);
-			name = OLD;
-			sourceTree = "<group>";
-		};
 		D85082BB1CBCF42400FDB961 /* RCCDrawerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,10 +200,24 @@
 		D8AFADB41BEE6F3F00A4592D = {
 			isa = PBXGroup;
 			children = (
-				2636F1621E0FD618007ABB09 /* OLD */,
 				D8D779951D04B7180050CFEA /* Helpers */,
 				260804D51CE0D7090094DBA1 /* RCCToolBar */,
 				D85082BB1CBCF42400FDB961 /* RCCDrawerController */,
+				CC84A1931C1A0C4E00B3A6A2 /* RCCManager.h */,
+				CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */,
+				CC84A1951C1A0C4E00B3A6A2 /* RCCManagerModule.h */,
+				CC84A1961C1A0C4E00B3A6A2 /* RCCManagerModule.m */,
+				CC84A1971C1A0C4E00B3A6A2 /* RCCNavigationController.h */,
+				CC84A1981C1A0C4E00B3A6A2 /* RCCNavigationController.m */,
+				CC84A1991C1A0C4E00B3A6A2 /* RCCTabBarController.h */,
+				CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */,
+				CC84A19B1C1A0C4E00B3A6A2 /* RCCViewController.h */,
+				CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */,
+				D84813171C8C5EB700051BAF /* RCCLightBox.h */,
+				D84813181C8C5EB700051BAF /* RCCLightBox.m */,
+				D800E8171CFED1DB004A187F /* RCCExternalViewControllerProtocol.h */,
+				D83514F41D29719A00D53758 /* RCCNotification.h */,
+				D83514F51D29719A00D53758 /* RCCNotification.m */,
 				2606F7D81E0BC3FC00CC69CC /* RNNViewController.h */,
 				2606F7D91E0BC3FC00CC69CC /* RNNViewController.m */,
 				2636F15F1E0EC9E7007ABB09 /* RNNStyler.h */,
