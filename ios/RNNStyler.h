@@ -16,7 +16,9 @@
 #define STYLE_DRAW_UNDER_TAB_BAR                                @"drawUnderTabBar"
 #define STYLE_NAV_BAR_TRANSLUCENT                               @"navBarTranslucent"
 #define STYLE_NAV_BAR_BLUR                                      @"navBarBlur"
-//#define STYLE_                      @""
+
+#define STYLE_NAV_BAR_SHADOW_IMAGE                              @"shadowImage"
+#define STYLE_NAV_BAR_BACKGROUND_IMAGE                          @"bgImage"
 //#define STYLE_                      @""
 
 

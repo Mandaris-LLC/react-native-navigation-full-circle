@@ -9,6 +9,7 @@
 #import "RNNStyler.h"
 #import "RCTConvert.h"
 
+
 @interface RNNStyler()
 
 @property (nonatomic, readwrite) BOOL _hidesBottomBarWhenPushed;
@@ -117,7 +118,7 @@
     else {
         [RNNStyler navBarForVC:vc].translucent = NO;
     }
-    
+
 }
 
 
@@ -144,6 +145,20 @@
 
 +(UINavigationBar*)navBarForVC:(UIViewController*)vc {
     return vc ? vc.navigationController.navigationBar : nil;
+}
+
+
+-(NSDictionary*)storeOriginalNavBarImages:(UIViewController*)vc {
+    NSMutableDictionary *originalNavBarImages = [@{} mutableCopy];
+    UIImage *bgImage = [[RNNStyler navBarForVC:vc] backgroundImageForBarMetrics:UIBarMetricsDefault];
+    if (bgImage != nil) {
+        originalNavBarImages[STYLE_NAV_BAR_BACKGROUND_COLOR] = bgImage;
+    }
+    UIImage *shadowImage = [RNNStyler navBarForVC:vc].shadowImage;
+    if (shadowImage != nil) {
+        originalNavBarImages[STYLE_NAV_BAR_SHADOW_IMAGE] = shadowImage;
+    }
+    return originalNavBarImages;
 }
 
 

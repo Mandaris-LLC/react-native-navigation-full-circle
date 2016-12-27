@@ -1,6 +1,7 @@
 #import "RNNViewController.h"
 #import "RCTRootView.h"
 #import "MMDrawerController.h"
+#import "RNNStyler.h"
 
 
 #define SCREEN                  @"screen"
@@ -10,13 +11,19 @@
 #define SIDE_MENU_LEFT          @"left"
 #define SIDE_MENU_RIGHT         @"right"
 
-
 typedef enum
 {
     SideMenuModeNone        = 0,
     SideMenuModeLeft        = 1 << 0,
     SideMenuModeRight       = 1 << 1,
 } SideMenuMode;
+
+
+@interface RNNViewController ()
+
+@property (nonatomic, strong) RNNStyler *styler;
+
+@end
 
 
 @implementation RNNViewController
@@ -41,6 +48,29 @@ typedef enum
                                                                       bridge:bridge];
     }
     return controller;
+}
+
+
+#pragma mark - System Methods
+
+
+- (BOOL)hidesBottomBarWhenPushed
+{
+    if (!self.styler._hidesBottomBarWhenPushed) return NO;
+    return (self.navigationController.topViewController == self);
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    if (self.styler._statusBarHidden) {
+        return YES;
+    }
+    if (self.styler._statusBarHideWithNavBar) {
+        return self.navigationController.isNavigationBarHidden;
+    }
+    else {
+        return NO;
+    }
 }
 
 
@@ -148,6 +178,5 @@ typedef enum
     }
     return controller;
 }
-
 
 @end
