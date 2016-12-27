@@ -10,6 +10,7 @@
 		2606F7DA1E0BC3FC00CC69CC /* RNNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2606F7D91E0BC3FC00CC69CC /* RNNViewController.m */; };
 		260804DB1CE0D9D20094DBA1 /* RCCToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 260804DA1CE0D9D20094DBA1 /* RCCToolBar.m */; };
 		263617541E124FA100D88A13 /* RNNNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 263617531E124FA100D88A13 /* RNNNavigationController.m */; };
+		2636176F1E12722900D88A13 /* RNNTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2636176E1E12722900D88A13 /* RNNTabBarController.m */; };
 		2636F1611E0EC9E7007ABB09 /* RNNStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2636F1601E0EC9E7007ABB09 /* RNNStyler.m */; };
 		26AFF3F51D7EEE2400CBA211 /* RCCTitleViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AFF3F41D7EEE2400CBA211 /* RCCTitleViewHelper.m */; };
 		CC84A19E1C1A0C4E00B3A6A2 /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */; };
@@ -57,6 +58,8 @@
 		260804DA1CE0D9D20094DBA1 /* RCCToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCToolBar.m; sourceTree = "<group>"; };
 		263617521E124FA100D88A13 /* RNNNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNNavigationController.h; sourceTree = "<group>"; };
 		263617531E124FA100D88A13 /* RNNNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationController.m; sourceTree = "<group>"; };
+		2636176D1E12722900D88A13 /* RNNTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTabBarController.h; sourceTree = "<group>"; };
+		2636176E1E12722900D88A13 /* RNNTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTabBarController.m; sourceTree = "<group>"; };
 		2636F15F1E0EC9E7007ABB09 /* RNNStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNStyler.h; sourceTree = "<group>"; };
 		2636F1601E0EC9E7007ABB09 /* RNNStyler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNStyler.m; sourceTree = "<group>"; };
 		26AFF3F31D7EEE2400CBA211 /* RCCTitleViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCTitleViewHelper.h; sourceTree = "<group>"; };
@@ -221,6 +224,8 @@
 				D800E8171CFED1DB004A187F /* RCCExternalViewControllerProtocol.h */,
 				D83514F41D29719A00D53758 /* RCCNotification.h */,
 				D83514F51D29719A00D53758 /* RCCNotification.m */,
+				2636176D1E12722900D88A13 /* RNNTabBarController.h */,
+				2636176E1E12722900D88A13 /* RNNTabBarController.m */,
 				2606F7D81E0BC3FC00CC69CC /* RNNViewController.h */,
 				2606F7D91E0BC3FC00CC69CC /* RNNViewController.m */,
 				263617521E124FA100D88A13 /* RNNNavigationController.h */,
@@ -334,6 +339,7 @@
 				D85082FD1CBCF8A800FDB961 /* MMDrawerController.m in Sources */,
 				D85082E41CBCF54200FDB961 /* SidebarAnimation.m in Sources */,
 				D8E11C571CBD1F670018B644 /* RCCDrawerController.m in Sources */,
+				2636176F1E12722900D88A13 /* RNNTabBarController.m in Sources */,
 				260804DB1CE0D9D20094DBA1 /* RCCToolBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

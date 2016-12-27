@@ -16,11 +16,9 @@
 
 
 -(instancetype)initWithRootViewController:(UIViewController*)rooViewController props:(NSDictionary*)props {
+    if (!rooViewController) return nil;
     self = [super initWithRootViewController:rooViewController];
     if (!self) return nil;
-    
-    
-    
     return self;
 }
 
