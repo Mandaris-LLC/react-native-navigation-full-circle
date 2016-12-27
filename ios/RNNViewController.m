@@ -2,6 +2,7 @@
 #import "RCTRootView.h"
 #import "MMDrawerController.h"
 #import "RNNStyler.h"
+#import "RNNNavigationController.h"
 
 
 #define SCREEN                  @"screen"
@@ -160,7 +161,7 @@ typedef enum
     if (screen && screenKey) {
         UIViewController *rootVC = [RNNViewController controllerWithScreenKey:screenKey bridge:bridge];
         if (rootVC) {
-            controller = [[UINavigationController alloc] initWithRootViewController:rootVC];
+            controller = [[RNNNavigationController alloc] initWithRootViewController:rootVC props:nil];
             [controller.tabBarItem setTitle:screenKey];
         }
     }

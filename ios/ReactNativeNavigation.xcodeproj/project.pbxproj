@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2606F7DA1E0BC3FC00CC69CC /* RNNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2606F7D91E0BC3FC00CC69CC /* RNNViewController.m */; };
 		260804DB1CE0D9D20094DBA1 /* RCCToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 260804DA1CE0D9D20094DBA1 /* RCCToolBar.m */; };
+		263617541E124FA100D88A13 /* RNNNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 263617531E124FA100D88A13 /* RNNNavigationController.m */; };
 		2636F1611E0EC9E7007ABB09 /* RNNStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2636F1601E0EC9E7007ABB09 /* RNNStyler.m */; };
 		26AFF3F51D7EEE2400CBA211 /* RCCTitleViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AFF3F41D7EEE2400CBA211 /* RCCTitleViewHelper.m */; };
 		CC84A19E1C1A0C4E00B3A6A2 /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */; };
@@ -54,6 +55,8 @@
 		2606F7D91E0BC3FC00CC69CC /* RNNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNViewController.m; sourceTree = "<group>"; };
 		260804D91CE0D9D20094DBA1 /* RCCToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCToolBar.h; sourceTree = "<group>"; };
 		260804DA1CE0D9D20094DBA1 /* RCCToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCToolBar.m; sourceTree = "<group>"; };
+		263617521E124FA100D88A13 /* RNNNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNNavigationController.h; sourceTree = "<group>"; };
+		263617531E124FA100D88A13 /* RNNNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationController.m; sourceTree = "<group>"; };
 		2636F15F1E0EC9E7007ABB09 /* RNNStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNStyler.h; sourceTree = "<group>"; };
 		2636F1601E0EC9E7007ABB09 /* RNNStyler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNStyler.m; sourceTree = "<group>"; };
 		26AFF3F31D7EEE2400CBA211 /* RCCTitleViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCTitleViewHelper.h; sourceTree = "<group>"; };
@@ -220,6 +223,8 @@
 				D83514F51D29719A00D53758 /* RCCNotification.m */,
 				2606F7D81E0BC3FC00CC69CC /* RNNViewController.h */,
 				2606F7D91E0BC3FC00CC69CC /* RNNViewController.m */,
+				263617521E124FA100D88A13 /* RNNNavigationController.h */,
+				263617531E124FA100D88A13 /* RNNNavigationController.m */,
 				2636F15F1E0EC9E7007ABB09 /* RNNStyler.h */,
 				2636F1601E0EC9E7007ABB09 /* RNNStyler.m */,
 				D8AFADBE1BEE6F3F00A4592D /* Products */,
@@ -321,6 +326,7 @@
 				D85082E51CBCF54200FDB961 /* SidebarFacebookAnimation.m in Sources */,
 				CC84A1A21C1A0C4E00B3A6A2 /* RCCViewController.m in Sources */,
 				2636F1611E0EC9E7007ABB09 /* RNNStyler.m in Sources */,
+				263617541E124FA100D88A13 /* RNNNavigationController.m in Sources */,
 				2606F7DA1E0BC3FC00CC69CC /* RNNViewController.m in Sources */,
 				D85082E91CBCF54200FDB961 /* SidebarWunderlistAnimation.m in Sources */,
 				D85082E11CBCF54200FDB961 /* RCCDrawerHelper.m in Sources */,
