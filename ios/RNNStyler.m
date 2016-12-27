@@ -40,7 +40,7 @@
 
 -(void)setStyleOnAppear:(UIViewController*)vc styleParams:(NSDictionary*)styleParams {
     
-    [self setNavBarStyle:vc styleParams:styleParams];
+    [RNNStyler setNavBarStyle:vc styleParams:styleParams];
     [self setStyleOnAppear:vc styleParams:styleParams];
     
     NSString *screenBackgroundColor = styleParams[STYLE_SCREEN_BACKGROUD_COLOR];
@@ -63,7 +63,7 @@
 #pragma mark - Setters
 
 
--(void)setNavBarStyle:(UIViewController*)vc styleParams:(NSDictionary*)styleParams {
++(void)setNavBarStyle:(UIViewController*)vc styleParams:(NSDictionary*)styleParams {
     
     NSString *navBarBackgroundColor = styleParams[STYLE_NAV_BAR_BACKGROUND_COLOR];
     if (navBarBackgroundColor) {
@@ -122,7 +122,7 @@
 }
 
 
--(void)setTabBarStyle:(UIViewController*)vc styleParams:(NSDictionary*)styleParams {
++(void)setTabBarStyle:(UIViewController*)vc styleParams:(NSDictionary*)styleParams {
     
     NSNumber *drawUnderTabBar = styleParams[STYLE_DRAW_UNDER_TAB_BAR];
     BOOL drawUnderTabBarBool = drawUnderTabBar ? [drawUnderTabBar boolValue] : NO;
