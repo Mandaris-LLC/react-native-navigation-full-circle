@@ -14,6 +14,6 @@ public class ScreenParams extends BaseScreenParams {
     }
 
     public FabParams getFab() {
-        return hasTopTabs() ? topTabParams.get(0).fabParams : null;
+        return hasTopTabs() ? topTabParams.get(0).fabParams : fabParams;
     }
 }
