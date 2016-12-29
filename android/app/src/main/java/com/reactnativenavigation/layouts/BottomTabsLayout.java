@@ -21,6 +21,7 @@ import com.reactnativenavigation.params.SideMenuParams;
 import com.reactnativenavigation.params.SnackbarParams;
 import com.reactnativenavigation.params.TitleBarButtonParams;
 import com.reactnativenavigation.params.TitleBarLeftButtonParams;
+import com.reactnativenavigation.screens.Screen;
 import com.reactnativenavigation.screens.ScreenStack;
 import com.reactnativenavigation.views.BottomTabs;
 import com.reactnativenavigation.views.SideMenu;
@@ -110,7 +111,7 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     }
 
     private void createSnackbarContainer() {
-        snackbarAndFabContainer = new SnackbarAndFabContainer(getContext());
+        snackbarAndFabContainer = new SnackbarAndFabContainer(getContext(), this);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
         lp.addRule(ABOVE, bottomTabs.getId());
         getScreenStackParent().addView(snackbarAndFabContainer, lp);
@@ -227,6 +228,11 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
     @Override
     public void dismissContextualMenu(String screenInstanceId) {
         getCurrentScreenStack().peek().dismissContextualMenu();
+    }
+
+    @Override
+    public Screen getCurrentScreen() {
+        return getCurrentScreenStack().peek();
     }
 
     public void selectBottomTabByTabIndex(Integer index) {
@@ -382,11 +388,10 @@ public class BottomTabsLayout extends RelativeLayout implements Layout, AHBottom
 
     @Override
     public void onSideMenuButtonClick() {
+        final String navigatorEventId = getCurrentScreenStack().peek().getNavigatorEventId();
+        NavigationApplication.instance.getEventEmitter().sendNavigatorEvent("sideMenu", navigatorEventId);
         if (sideMenu != null) {
             sideMenu.openDrawer(Side.Left);
-        } else {
-            final String navigatorEventId = getCurrentScreenStack().peek().getNavigatorEventId();
-            NavigationApplication.instance.getEventEmitter().sendNavigatorEvent("sideMenu", navigatorEventId);
         }
     }
 }
