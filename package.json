@@ -44,13 +44,13 @@
     "babel-polyfill": "6.x.x",
     "babel-preset-react-native": "1.x.x",
     "babel-register": "6.x.x",
-    "babel-jest": "17.x.x",
+    "babel-jest": "18.x.x",
     "eslint": "3.x.x",
     "eslint-plugin-babel": "4.x.x",
     "eslint-plugin-react": "6.x.x",
     "eslint-plugin-react-native": "2.x.x",
-    "jest": "17.x.x",
-    "jest-cli": "17.x.x",
+    "jest": "18.x.x",
+    "jest-cli": "18.x.x",
     "react-test-renderer": "15.4.1"
   },
   "babel": {
@@ -58,14 +58,16 @@
       "test": {
         "presets": [
           "react-native"
-        ]
+        ],
+        "retainLines": true
       }
     }
   },
   "jest": {
     "preset": "react-native",
     "testPathDirs": [
-      "node_modules", "src2"
+      "node_modules",
+      "src2"
     ],
     "resetMocks": true,
     "resetModules": true
