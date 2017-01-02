@@ -1,7 +1,7 @@
-import * as ScreenRegistry from './screens/ScreenRegistry';
+import * as ContainerRegistry from './containers/ContainerRegistry';
 
-export function registerScreen(screenKey, getScreenFunc) {
-  ScreenRegistry.registerScreen(screenKey, getScreenFunc);
+export function registerContainer(containerKey, getContainerFunc) {
+  ContainerRegistry.registerContainer(containerKey, getContainerFunc);
 }
 
 export function startApp(params) {

@@ -5,7 +5,7 @@ import {connect} from 'remx/react-native';
 
 import * as store from './remx-support-store';
 
-class MyScreen extends Component {
+class MyContainer extends Component {
   constructor(props) {
     super(props);
     this.renders = 0;
@@ -19,4 +19,4 @@ class MyScreen extends Component {
   }
 }
 
-export default MyScreen;
+export default MyContainer;

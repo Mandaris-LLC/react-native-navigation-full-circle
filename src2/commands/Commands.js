@@ -9,10 +9,10 @@ function validateParams(params) {
   if (!params) {
     throw new Error(msg);
   }
-  if (params.screenKey) {
+  if (params.containerKey) {
     return true;
   }
-  if (params.tabs && params.tabs.length > 0 && _.every(params.tabs, (t) => t.screenKey)) {
+  if (params.tabs && params.tabs.length > 0 && _.every(params.tabs, (t) => t.containerKey)) {
     return true;
   }
   throw new Error(msg);

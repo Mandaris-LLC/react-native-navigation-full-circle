@@ -1,32 +1,32 @@
-export const singleScreenApp = {
-  screen: {
-    key: 'com.example.FirstTabScreen'
+export const singleContainerApp = {
+  container: {
+    key: 'com.example.FirstTabContainer'
   }
 };
 
 export const tabBasedApp = {
   tabs: [
     {
-      screen: {
-        key: 'com.example.FirstTabScreen'
+      container: {
+        key: 'com.example.FirstTabContainer'
       }
     },
     {
-      screen: {
-        key: 'com.example.SecondTabScreen'
+      container: {
+        key: 'com.example.SecondTabContainer'
       }
     },
     {
-      screen: {
-        key: 'com.example.FirstTabScreen'
+      container: {
+        key: 'com.example.FirstTabContainer'
       }
     }
   ]
 };
 
 export const singleWithSideMenu = {
-  screen: {
-    key: 'com.example.MyScreen'
+  container: {
+    key: 'com.example.MyContainer'
   },
   sideMenu: {
     left: {
@@ -36,8 +36,8 @@ export const singleWithSideMenu = {
 };
 
 export const singleWithRightSideMenu = {
-  screen: {
-    key: 'com.example.MyScreen'
+  container: {
+    key: 'com.example.MyContainer'
   },
   sideMenu: {
     right: {
@@ -47,8 +47,8 @@ export const singleWithRightSideMenu = {
 };
 
 export const singleWithBothMenus = {
-  screen: {
-    key: 'com.example.MyScreen'
+  container: {
+    key: 'com.example.MyContainer'
   },
   sideMenu: {
     left: {
@@ -63,18 +63,18 @@ export const singleWithBothMenus = {
 export const tabBasedWithSideMenu = {
   tabs: [
     {
-      screen: {
-        key: 'com.example.FirstTabScreen'
+      container: {
+        key: 'com.example.FirstTabContainer'
       }
     },
     {
-      screen: {
-        key: 'com.example.SecondTabScreen'
+      container: {
+        key: 'com.example.SecondTabContainer'
       }
     },
     {
-      screen: {
-        key: 'com.example.FirstTabScreen'
+      container: {
+        key: 'com.example.FirstTabContainer'
       }
     }
   ],
