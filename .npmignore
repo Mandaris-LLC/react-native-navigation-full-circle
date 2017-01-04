@@ -1,9 +1,18 @@
-example
-old-example-redux
+playground
+
+
+
+
+
+
+
+
+
 
 #################
 # from .gitignore:
 ################
+
 
 
 ############
@@ -148,7 +157,6 @@ fastlane/screenshots
 android/bin/
 android/gen/
 android/out/
-android/app/build/
 
 # Gradle files
 android/.gradle/
@@ -218,4 +226,3 @@ buck-out/
 \.buckd/
 android/app/libs
 android/keystores/debug.keystore
-

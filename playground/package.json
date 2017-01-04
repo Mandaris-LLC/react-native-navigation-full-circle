@@ -1,9 +1,9 @@
 {
-  "name": "example",
+  "name": "playground",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "node ./scripts/postinstall.js",
+    "postinstall": "rm -rf node_modules/react-native-navigation/node_modules && rm -rf node_modules/react-native-navigation/playground",
     "start": "watchman watch-del-all && (adb reverse tcp:8081 tcp:8081 || true) && node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "xcode": "open ios/example.xcodeproj",
     "android": "cd android && ./gradlew installDebug",
