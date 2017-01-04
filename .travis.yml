@@ -40,9 +40,9 @@ install:
 
 script:
   - yarn run lint
-  - yarn run test:js
+  - yarn run test-js
   - ./scripts/installAndroidSDK.sh
-  - yarn run test:android
+  - yarn run test-android
 #  - yarn run release
 
 after_script:
