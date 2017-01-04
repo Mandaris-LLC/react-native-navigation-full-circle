@@ -140,7 +140,7 @@ export function newStack(params) {
 //}
 
 // new work on platformSpecificDeprecated.ios.js:
-import Navigation from './../Navigation';
+//import Navigation from './../Navigation';
 //import Controllers, {Modal, Notification} from './controllers';
 //+import _ from 'lodash';
 //+import PropRegistry from '../PropRegistry';

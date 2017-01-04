@@ -5,6 +5,12 @@
   "license": "MIT",
   "nativePackage": true,
   "author": "Tal Kol <talkol@gmail.com>",
+  "contributors": [
+    "Daniel Zlotin <zlotindaniel@gmail.com>",
+    "Guy Carmeli <guyc@wix.com>",
+    "Ran Greenberg <rang@wix.com>",
+    "Artal Druk <artald@wix.com>"
+  ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -20,14 +26,13 @@
   "main": "src/index.js",
   "scripts": {
     "build": ":",
-    "lint": "eslint src2",
-    "test:js": "BABEL_ENV=test jest --coverage",
-    "test:android": "cd android && ./gradlew clean testDebugUnitTest",
-    "test:ios": ":",
-    "pretest": "npm run lint",
-    "test": "npm run test:js && npm run test:android && npm run test:ios",
-    "test:watch": "BABEL_ENV=test jest --coverage --watch",
-    "release": ": #npm version prerelease && npm publish --tag next && npm view react-native-navigation dist-tags && git push"
+    "lint": "eslint src",
+    "test-js": "BABEL_ENV=test jest --coverage",
+    "test-android": "cd android && ./gradlew clean testDebugUnitTest",
+    "test-ios": ":",
+    "test": "npm run lint && npm run test:js && npm run test:android && npm run test:ios",
+    "test-watch": "BABEL_ENV=test jest --coverage --watch",
+    "release": ":"
   },
   "peerDependencies": {
     "react-native": "*",
@@ -68,7 +73,7 @@
     "preset": "react-native",
     "testPathDirs": [
       "node_modules",
-      "src2"
+      "src"
     ],
     "resetMocks": true,
     "resetModules": true
