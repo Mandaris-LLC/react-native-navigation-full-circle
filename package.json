@@ -51,7 +51,8 @@
     "eslint-plugin-react-native": "2.x.x",
     "jest": "18.x.x",
     "jest-cli": "18.x.x",
-    "react-test-renderer": "15.4.1"
+    "react-test-renderer": "15.4.1",
+    "semver": "5.x.x"
   },
   "babel": {
     "env": {
