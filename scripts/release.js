@@ -42,16 +42,9 @@ function setupGit() {
 }
 
 function calcNewVersion() {
-  const latestVersion = execSyncRead(`npm view ${process.env.npm_package_name}@next version`);
-  console.log(`latest version is: ${latestVersion}`);
-  const packageJsonVersion = process.env.npm_package_version;
-  console.log(`package.json version is: ${packageJsonVersion}`);
-  const diff = semver.diff(packageJsonVersion, latestVersion);
-  if (diff === 'major' || diff === 'minor') {
-    return packageJsonVersion;
-  } else {
-    return semver.inc(latestVersion, 'patch');
-  }
+  const nextTaggedVersion = execSyncRead(`npm view ${process.env.npm_package_name}@next version`);
+  console.log(`next tagged version is: ${nextTaggedVersion}`);
+  return semver.inc(nextTaggedVersion, 'prerelease');
 }
 
 function copyNpmRc() {
@@ -63,7 +56,7 @@ function tagAndPublish(newVersion) {
   console.log(`new version is: ${newVersion}`);
   execSync(`npm version ${newVersion} -m "v${newVersion} [ci skip]"`);
   execSyncSilently(`git push deploy --tags`);
-  execSync(`npm publish`);
+  execSync(`npm publish --tag next`);
 }
 
 function run() {
@@ -76,4 +69,3 @@ function run() {
 }
 
 run();
-
