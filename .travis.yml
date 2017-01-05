@@ -20,7 +20,7 @@ branches:
 cache:
   yarn: true
   directories:
-    - $HOME/.gradle/caches/modules-2/files-2.1/
+    - $HOME/.gradle/
     - $HOME/.m2
     - $ANDROID_HOME/licenses/
 
