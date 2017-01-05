@@ -1,9 +1,10 @@
 /*eslint-disable*/
+require('babel-polyfill');
 const detox = require('detox');
 const config = require('../package.json').detox;
 
 before(function(done) {
-  this.timeout(120000);
+  this.timeout(60000);
   detox.config(config);
   detox.start(done);
 });

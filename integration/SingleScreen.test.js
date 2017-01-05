@@ -11,7 +11,7 @@ describe('single screen integration', () => {
   xit('startApp directs to native with constructed hirarchy for single screens', () => {
     mockNativeNavigation.startApp = jest.fn();
     Navigation.startApp({
-      container: {
+      root: {
         key: 'com.integration.MyFirstScreen'
       }
     });

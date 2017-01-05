@@ -9,11 +9,11 @@ describe('Commands', () => {
     it('receives params object', () => {
       uut.startApp({
         containerKey: {
-          container: 'example.MyContainer'
+          root: 'example.MyContainer'
         },
         drawer: {
           left: {
-            container: 'example.SideMenu'
+            root: 'example.SideMenu'
           }
         }
       });

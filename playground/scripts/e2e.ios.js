@@ -15,7 +15,7 @@ function kill(process) {
 function buildProjForDetox() {
   exec(`RCT_NO_LAUNCH_PACKAGER=true \
           cd ios && xcodebuild \
-            -scheme playground_Detox clean build \
+            -scheme playground_release_Detox build \
             -project playground.xcodeproj \
             -sdk iphonesimulator \
             -derivedDataPath ./DerivedData/playground`);
@@ -25,7 +25,7 @@ function e2e() {
   try {
     kill(`detox-server`);
     cp.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
-    exec(`BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --recursive --timeout 120000`);
+    exec(`BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --recursive --timeout 120000 --compilers js:babel-register`);
   } finally {
     kill(`detox-server`);
     kill(`Simulator`);

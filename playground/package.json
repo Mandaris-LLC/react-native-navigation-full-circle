@@ -24,8 +24,18 @@
       "sessionId": "playground"
     },
     "ios-simulator": {
-      "app": "ios/DerivedData/playground/Build/Products/Debug_Detox-iphonesimulator/playground.app",
+      "app": "ios/DerivedData/playground/Build/Products/Release_Detox-iphonesimulator/playground.app",
       "device": "iPhone 7, iOS 10.2"
+    }
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "presets": [
+          "react-native"
+        ],
+        "retainLines": true
+      }
     }
   }
 }
