@@ -25,7 +25,7 @@ function e2e() {
   try {
     kill(`detox-server`);
     cp.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
-    exec(`BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --opts ./e2e/mocha.opts`);
+    exec(`BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --recursive --timeout 120000`);
   } finally {
     kill(`detox-server`);
     kill(`Simulator`);
