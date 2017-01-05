@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 import {connect} from 'remx/react-native';
 
-import {selectors} from './remx-support-store';
+import {selectors} from './remxStore';
 
 class MyContainer extends Component {
   constructor(props) {

@@ -1,14 +1,14 @@
+import Navigation from './index';
+
 describe('index', () => {
   let uut;
 
   beforeEach(() => {
-    uut = require('./index');
+    uut = require('./index').default;
   });
 
-  it('exposes Navigation as default or as Object', () => {
-    expect(uut.Navigation).toBeDefined();
-    expect(uut.Navigation).toEqual(uut.default);
-    expect(uut.Navigation.startApp).toBeInstanceOf(Function);
-    expect(uut.default.startApp).toBeInstanceOf(Function);
+  it('exposes Navigation as default', () => {
+    expect(uut.startApp).toBeInstanceOf(Function);
+    expect(Navigation.startApp).toBeInstanceOf(Function);
   });
 });

@@ -1,10 +1,16 @@
-export const singleContainerApp = {
+describe('valid commands', () => {
+  it('just works', () => {
+    //
+  });
+});
+
+const singleContainerApp = {
   container: {
     key: 'com.example.FirstTabContainer'
   }
 };
 
-export const tabBasedApp = {
+const tabBasedApp = {
   tabs: [
     {
       container: {
@@ -24,7 +30,7 @@ export const tabBasedApp = {
   ]
 };
 
-export const singleWithSideMenu = {
+const singleWithSideMenu = {
   container: {
     key: 'com.example.MyContainer'
   },
@@ -35,7 +41,7 @@ export const singleWithSideMenu = {
   }
 };
 
-export const singleWithRightSideMenu = {
+const singleWithRightSideMenu = {
   container: {
     key: 'com.example.MyContainer'
   },
@@ -46,7 +52,7 @@ export const singleWithRightSideMenu = {
   }
 };
 
-export const singleWithBothMenus = {
+const singleWithBothMenus = {
   container: {
     key: 'com.example.MyContainer'
   },
@@ -60,7 +66,7 @@ export const singleWithBothMenus = {
   }
 };
 
-export const tabBasedWithSideMenu = {
+const tabBasedWithSideMenu = {
   tabs: [
     {
       container: {

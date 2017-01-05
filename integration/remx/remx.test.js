@@ -7,8 +7,8 @@ describe('remx support', () => {
   let store;
 
   beforeEach(() => {
-    MyConnectedContainer = require('./remx-support-component').default;
-    store = require('./remx-support-store');
+    MyConnectedContainer = require('./remxComponent').default;
+    store = require('./remxStore');
   });
 
   it('renders normally', () => {

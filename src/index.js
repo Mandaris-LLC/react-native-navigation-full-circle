@@ -1,4 +1,3 @@
-import * as NavigationInner from './Navigation';
+import * as Navigation from './Navigation';
 
-export default NavigationInner;
-export const Navigation = NavigationInner;
+export default Navigation;

@@ -2,14 +2,12 @@ import _ from 'lodash';
 
 describe('Navigation', () => {
   let Navigation;
-  let Commands;
   let ContainerRegistry;
 
   beforeEach(() => {
     jest.mock('./containers/ContainerRegistry');
-    Navigation = require('./Navigation');
-    Commands = require('./commands/Commands');
     ContainerRegistry = require('./containers/ContainerRegistry');
+    Navigation = require('./Navigation');
   });
 
   it('exposes static commands', () => {

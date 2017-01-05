@@ -1,8 +1,8 @@
-describe('PropsStore', () => {
+describe('Store', () => {
   let uut;
 
   beforeEach(() => {
-    uut = require('./PropsStore');
+    uut = require('./Store');
   });
 
   it('initial state', () => {
@@ -19,4 +19,13 @@ describe('PropsStore', () => {
     uut.setPropsForContainerId(undefined, undefined);
     expect(uut.getPropsForContainerId('container1')).toEqual({});
   });
+
+  it('holds containers classes by containerKey', () => {
+    const MyComponent = class {
+      //
+    };
+    uut.setContainerClass('example.mykey', MyComponent);
+    expect(uut.getContainerClass('example.mykey')).toEqual(MyComponent);
+  });
 });
+

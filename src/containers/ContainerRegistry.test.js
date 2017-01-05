@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {AppRegistry, Text} from 'react-native';
 import renderer from 'react-test-renderer';
 
-describe('ComponentRegistry', () => {
+describe('ContainerRegistry', () => {
   let uut;
+  let store;
   let myContainerRef;
   let testParentRef;
-  let containerStore;
 
   class MyContainer extends Component {
     constructor(props) {
@@ -37,12 +37,7 @@ describe('ComponentRegistry', () => {
 
   beforeEach(() => {
     uut = require('./ContainerRegistry');
-    containerStore = require('./ContainerStore');
-  });
-
-  afterEach(() => {
-    myContainerRef = null;
-    testParentRef = null;
+    store = require('./Store');
   });
 
   describe('registerContainer', () => {
@@ -65,7 +60,7 @@ describe('ComponentRegistry', () => {
     });
   });
 
-  describe('NavigationContainer wrapping', () => {
+  describe('NavigationContainer wrapping passed container', () => {
     const containerKey = 'example.MyContainer';
 
     beforeEach(() => {
@@ -73,14 +68,14 @@ describe('ComponentRegistry', () => {
     });
 
     it('must have containerId as prop', () => {
-      const NavigationContainer = containerStore.getContainerClass(containerKey);
+      const NavigationContainer = store.getContainerClass(containerKey);
       expect(() => {
         renderer.create(<NavigationContainer/>);
       }).toThrow(new Error('Container example.MyContainer does not have a containerId!'));
     });
 
     it('wraps the container and saves to store', () => {
-      const NavigationContainer = containerStore.getContainerClass(containerKey);
+      const NavigationContainer = store.getContainerClass(containerKey);
       expect(NavigationContainer).not.toBeInstanceOf(MyContainer);
       const tree = renderer.create(<NavigationContainer containerId={'container1'}/>);
       expect(tree.toJSON().children).toEqual(['Hello, World!']);
@@ -88,13 +83,13 @@ describe('ComponentRegistry', () => {
     });
 
     it('injects props from wrapper into original container', () => {
-      const NavigationContainer = containerStore.getContainerClass(containerKey);
+      const NavigationContainer = store.getContainerClass(containerKey);
       renderer.create(<NavigationContainer containerId={'container1'} myProp={'yo'}/>);
       expect(myContainerRef.props.myProp).toEqual('yo');
     });
 
     it('updates props from wrapper into original container', () => {
-      const NavigationContainer = containerStore.getContainerClass(containerKey);
+      const NavigationContainer = store.getContainerClass(containerKey);
       renderer.create(<TestParent ChildClass={NavigationContainer}/>);
       expect(myContainerRef.props.foo).toEqual(undefined);
       testParentRef.setState({propsFromState: {foo: 'yo'}});
@@ -102,16 +97,16 @@ describe('ComponentRegistry', () => {
     });
 
     it('pulls props from the PropsStore and injects them into the inner container', () => {
-      require('./PropsStore').setPropsForContainerId('container123', {numberProp: 1, stringProp: 'hello', objectProp: {a: 2}});
-      const NavigationContainer = containerStore.getContainerClass(containerKey);
+      store.setPropsForContainerId('container123', {numberProp: 1, stringProp: 'hello', objectProp: {a: 2}});
+      const NavigationContainer = store.getContainerClass(containerKey);
       renderer.create(<NavigationContainer containerId={'container123'}/>);
       expect(myContainerRef.props).toEqual({containerId: 'container123', numberProp: 1, stringProp: 'hello', objectProp: {a: 2}});
     });
 
     it('updates props from PropsStore into inner container', () => {
-      const NavigationContainer = containerStore.getContainerClass(containerKey);
+      const NavigationContainer = store.getContainerClass(containerKey);
       renderer.create(<TestParent ChildClass={NavigationContainer}/>);
-      require('./PropsStore').setPropsForContainerId('container1', {myProp: 'hello'});
+      store.setPropsForContainerId('container1', {myProp: 'hello'});
       expect(myContainerRef.props.foo).toEqual(undefined);
       expect(myContainerRef.props.myProp).toEqual(undefined);
       testParentRef.setState({propsFromState: {foo: 'yo'}});
@@ -120,7 +115,7 @@ describe('ComponentRegistry', () => {
     });
 
     it('protects containerId from change', () => {
-      const NavigationContainer = containerStore.getContainerClass(containerKey);
+      const NavigationContainer = store.getContainerClass(containerKey);
       renderer.create(<TestParent ChildClass={NavigationContainer}/>);
       expect(myContainerRef.props.containerId).toEqual('container1');
       testParentRef.setState({propsFromState: {containerId: 'ERROR'}});
