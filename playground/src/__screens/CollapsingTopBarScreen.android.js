@@ -79,26 +79,26 @@ export default class ThirdTabScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "example.PushedScreen"
+      container: "example.PushedScreen"
     });
   }
   onPushStyledPress() {
     this.props.navigator.push({
       title: "Styled",
-      screen: "example.StyledScreen"
+      container: "example.StyledScreen"
     });
   }
   onPushStyled2Press () {
     this.props.navigator.push({
       title: "Styled",
       titleImage: require('../../img/two.png'),
-      screen: "example.StyledScreen"
+      container: "example.StyledScreen"
     });
   }
   onModalPress() {
     this.props.navigator.showModal({
       title: "Modal",
-      screen: "example.ModalScreen"
+      container: "example.ModalScreen"
     });
   }
 

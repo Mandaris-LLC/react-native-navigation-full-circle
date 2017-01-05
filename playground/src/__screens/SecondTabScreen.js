@@ -109,7 +109,7 @@ export default class SecondTabScreen extends Component {
       if (parts[0] == 'tab2') {
         this.props.navigator.resetTo({
           title: "Replaced Root",
-          screen: parts[1],
+          container: parts[1],
           animated: true
         });
         this.props.navigator.switchToTab();

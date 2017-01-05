@@ -97,27 +97,27 @@ export default class FirstTabScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "com.example.PushedScreen"
+      container: "com.example.PushedScreen"
     });
   }
 
   onPushStyledPress() {
     this.props.navigator.push({
       title: "Styled",
-      screen: "com.example.StyledScreen"
+      container: "com.example.StyledScreen"
     });
   }
 
   onModalPress() {
     this.props.navigator.showModal({
       title: "Modal",
-      screen: "com.example.ModalScreen"
+      container: "com.example.ModalScreen"
     });
   }
 
   onLightBoxPress() {
     this.props.navigator.showLightBox({
-      screen: "com.example.LightBoxScreen",
+      container: "com.example.LightBoxScreen",
       style: {
         backgroundBlur: "dark"
       },
@@ -129,18 +129,18 @@ export default class FirstTabScreen extends Component {
 
   onInAppNotificationPress() {
     this.props.navigator.showInAppNotification({
-      screen: "com.example.NotificationScreen"
+      container: "com.example.NotificationScreen"
     });
   }
 
   onStartSingleScreenApp() {
     Navigation.startSingleScreenApp({
-      screen: {
-        screen: 'com.example.FirstTabScreen'
+      container: {
+        container: 'com.example.FirstTabScreen'
       },
       drawer: {
         left: {
-          screen: 'com.example.SideMenu'
+          container: 'com.example.SideMenu'
         }
       }
     });

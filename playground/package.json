@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "rm -rf node_modules/react-native-navigation/node_modules && rm -rf node_modules/react-native-navigation/playground",
-    "start": "watchman watch-del-all && (adb reverse tcp:8081 tcp:8081 || true) && node node_modules/react-native/local-cli/cli.js start --reset-cache",
+    "postinstall": "node ./scripts/postinstall.js",
+    "start": "adb reverse tcp:8081 tcp:8081; watchman watch-del-all; react-native start --reset-cache",
     "xcode": "open ios/playground.xcodeproj",
-    "android": "cd android && ./gradlew installDebug",
-    "e2e": "node ./scripts/e2e.ios.js"
+    "android": "cd android && ./gradlew installDebug"
   },
   "dependencies": {
     "react-native": "0.38.0",
@@ -25,7 +24,7 @@
     },
     "ios-simulator": {
       "app": "ios/DerivedData/playground/Build/Products/Debug_Detox-iphonesimulator/playground.app",
-      "device": "iPhone 7, iOS 10.1"
+      "device": "iPhone 7, iOS 10.2"
     }
   }
 }

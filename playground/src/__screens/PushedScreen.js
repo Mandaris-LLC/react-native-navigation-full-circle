@@ -42,13 +42,13 @@ export default class PushedScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "example.PushedScreen"
+      container: "example.PushedScreen"
     });
   }
   onPushStyledPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "com.example.StyledScreen"
+      container: "com.example.StyledScreen"
     });
   }
   onPopPress() {
@@ -60,7 +60,7 @@ export default class PushedScreen extends Component {
   onResetToPress() {
     this.props.navigator.resetTo({
       title: "New Root",
-      screen: "com.example.ThirdTabScreen"
+      container: "com.example.ThirdTabScreen"
     });
   }
 }

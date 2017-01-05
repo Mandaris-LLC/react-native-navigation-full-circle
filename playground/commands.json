@@ -1,26 +1,26 @@
 {
   "singleScreenApp": {
-    "screen": {
+    "container": {
       "key": "com.example.FirstTabScreen"
     }
   },
   "tabBasedApp": {
     "tabs": [{
-             "screen": {
+             "container": {
               "key": "com.example.FirstTabScreen"
              }
              }, {
-             "screen": {
+             "container": {
               "key": "com.example.SecondTabScreen"
              }
              }, {
-             "screen": {
+             "container": {
               "key": "com.example.FirstTabScreen"
              }
              }]
   },
   "singleWithLeftSideMenu": {
-    "screen": {
+    "container": {
       "key": "com.example.MyScreen"
     },
     "sideMenu": {
@@ -30,7 +30,7 @@
     }
   },
   "singleWithRightSideMenu": {
-    "screen": {
+    "container": {
       "key": "com.example.MyScreen"
     },
     "sideMenu": {
@@ -40,7 +40,7 @@
     }
   },
   "singleWithBothMenus": {
-    "screen": {
+    "container": {
       "key": "com.example.MyScreen"
     },
     "sideMenu": {
@@ -54,15 +54,15 @@
   },
   "tabBasedWithSideMenu": {
     "tabs": [{
-             "screen": {
+             "container": {
               "key": "com.example.FirstTabScreen"
              }
              }, {
-             "screen": {
+             "container": {
               "key": "com.example.SecondTabScreen"
              }
              }, {
-             "screen": {
+             "container": {
               "key": "com.example.FirstTabScreen"
              }
              }],

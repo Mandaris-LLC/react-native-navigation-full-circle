@@ -1,6 +1,5 @@
 //
 //  RNNViewControllerTests.m
-//  example
 //
 //  Created by Ran Greenberg on 26/12/2016.
 //  Copyright © 2016 Facebook. All rights reserved.

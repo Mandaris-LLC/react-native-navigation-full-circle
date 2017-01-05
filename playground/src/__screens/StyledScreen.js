@@ -45,11 +45,11 @@ export default class StyledScreen extends Component {
           <TouchableOpacity onPress={ this.onPopPress.bind(this) }>
             <Text style={styles.button}>Pop Screen</Text>
           </TouchableOpacity>
-  
+
           <TouchableOpacity onPress={ this.onSetSubtitlePress.bind(this) }>
             <Text style={styles.button}>Set Subtitle</Text>
           </TouchableOpacity>
-  
+
           <TouchableOpacity onPress={ this.onSetTitleImagePress.bind(this) }>
             <Text style={styles.button}>Set Title Image</Text>
           </TouchableOpacity>
@@ -66,19 +66,19 @@ export default class StyledScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "com.example.PushedScreen"
+      container: "com.example.PushedScreen"
     });
   }
   onPushStyledPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "com.example.StyledScreen"
+      container: "com.example.StyledScreen"
     });
   }
   onPopPress() {
     this.props.navigator.pop();
   }
-  
+
   onSetSubtitlePress() {
     if (Platform.OS === 'android') {
       this.props.navigator.setSubTitle({
@@ -96,14 +96,14 @@ export default class StyledScreen extends Component {
       })
     }
   }
-  
+
   onSetTitleImagePress() {
     this.props.navigator.setTitle({
       title: 'title',
       titleImage: require('../../img/one.png'),
     })
   }
-  
+
 }
 
 const styles = StyleSheet.create({

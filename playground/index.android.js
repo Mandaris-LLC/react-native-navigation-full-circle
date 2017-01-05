@@ -1,1 +1,1 @@
-import App from './src/app';
+require('./src/index');

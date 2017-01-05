@@ -50,13 +50,13 @@ export default class ModalScreen extends Component {
   onPushPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "com.example.PushedScreen"
+      container: "com.example.PushedScreen"
     });
   }
   onPushStyledPress() {
     this.props.navigator.push({
       title: "More",
-      screen: "com.example.StyledScreen"
+      container: "com.example.StyledScreen"
     });
   }
   onClosePress() {

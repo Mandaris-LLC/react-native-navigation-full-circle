@@ -41,7 +41,7 @@ export default class SideMenu extends Component {
     this._toggleDrawer();
     this.props.navigator.showModal({
       title: "Modal",
-      screen: "example.ModalScreen"
+      container: "example.ModalScreen"
     });
   }
 
