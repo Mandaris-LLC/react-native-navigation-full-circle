@@ -1,19 +1,11 @@
 import _ from 'lodash';
 import {NativeModules} from 'react-native';
 const {NativeNavigation} = NativeModules;
-import {uniqueId} from '../providers/UniqueIdProvider';
+import * as LayoutBuilder from './LayoutBuilder';
 
 export function startApp(params) {
-  params.container.id = uniqueId(`container`);
-  if (params.sideMenu) {
-    if (params.sideMenu.left) {
-      params.sideMenu.left.id = uniqueId(`container`);
-    }
-    if (params.sideMenu.right) {
-      params.sideMenu.right.id = uniqueId(`container`);
-    }
-  }
-  NativeNavigation.startApp(params);
+  const layout = LayoutBuilder.parse(params);
+  NativeNavigation.startApp(layout);
 }
 //
 //function parseParams(params) {

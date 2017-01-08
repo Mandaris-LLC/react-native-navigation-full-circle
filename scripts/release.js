@@ -20,12 +20,12 @@ function validateEnv() {
   }
 
   if (process.env.TRAVIS_BRANCH !== 'master') {
-    console.error(`not publishing on branch ${process.env.TRAVIS_BRANCH}`);
+    console.log(`not publishing on branch ${process.env.TRAVIS_BRANCH}`);
     return false;
   }
 
   if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
-    console.error(`not publishing as triggered by pull request ${process.env.TRAVIS_PULL_REQUEST}`);
+    console.log(`not publishing as triggered by pull request ${process.env.TRAVIS_PULL_REQUEST}`);
     return false;
   }
 
