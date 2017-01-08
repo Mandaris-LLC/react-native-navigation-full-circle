@@ -4,8 +4,7 @@ const {NativeNavigation} = NativeModules;
 import * as LayoutBuilder from './LayoutBuilder';
 
 export function startApp(params) {
-  const layout = LayoutBuilder.parse(params);
-  NativeNavigation.startApp(layout);
+  NativeNavigation.startApp(LayoutBuilder.parse(params));
 }
 //
 //function parseParams(params) {

@@ -1,8 +1,11 @@
+import _ from 'lodash';
 import {uniqueId} from '../providers/UniqueIdProvider';
 
 export function parse(params) {
-  const layout = params;
-  layout.container.id = uniqueId(`container`);
+  const layout = _.assign({}, params);
+  if (layout.container) {
+    layout.container.id = uniqueId(`container`);
+  }
   if (layout.sideMenu) {
     if (layout.sideMenu.left) {
       layout.sideMenu.left.id = uniqueId(`container`);

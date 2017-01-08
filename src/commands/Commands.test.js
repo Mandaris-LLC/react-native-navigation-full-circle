@@ -36,37 +36,5 @@ describe('Commands', () => {
       });
     });
 
-    it('adds uniqueId to passed sideMenu', () => {
-      uut.startApp({
-        container: {
-          key: 'com.example.MyScreen'
-        },
-        sideMenu: {
-          left: {
-            key: 'com.example.SideMenu1'
-          },
-          right: {
-            key: 'com.example.SideMenu2'
-          }
-        }
-      });
-
-      expect(mockNativeNavigation.startApp).toHaveBeenCalledWith({
-        container: {
-          key: 'com.example.MyScreen',
-          id: 'container123'
-        },
-        sideMenu: {
-          left: {
-            key: 'com.example.SideMenu1',
-            id: 'container123'
-          },
-          right: {
-            key: 'com.example.SideMenu2',
-            id: 'container123'
-          }
-        }
-      });
-    });
   });
 });
