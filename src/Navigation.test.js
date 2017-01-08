@@ -2,11 +2,13 @@ import _ from 'lodash';
 
 describe('Navigation', () => {
   let Navigation;
-  let ContainerRegistry;
+  let ContainerRegistry, Commands;
 
   beforeEach(() => {
     jest.mock('./containers/ContainerRegistry');
+    jest.mock('./commands/Commands');
     ContainerRegistry = require('./containers/ContainerRegistry');
+    Commands = require('./commands/Commands');
     Navigation = require('./Navigation');
   });
 
@@ -28,11 +30,18 @@ describe('Navigation', () => {
     ], (f) => expect(f).toBeInstanceOf(Function));
   });
 
-  it('delegates register container to container registry', () => {
+  it('registerContainer delegates to ContainerRegistry', () => {
     expect(ContainerRegistry.registerContainer).not.toHaveBeenCalled();
     const fn = jest.fn();
     Navigation.registerContainer('key', fn);
     expect(ContainerRegistry.registerContainer).toHaveBeenCalledTimes(1);
     expect(ContainerRegistry.registerContainer).toHaveBeenCalledWith('key', fn);
+  });
+
+  it('startApp delegates to Commands', () => {
+    const params = {};
+    Navigation.startApp(params);
+    expect(Commands.startApp).toHaveBeenCalledTimes(1);
+    expect(Commands.startApp).toHaveBeenCalledWith(params);
   });
 });

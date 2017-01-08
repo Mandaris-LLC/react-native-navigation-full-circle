@@ -1,19 +1,49 @@
 import _ from 'lodash';
+import {NativeModules} from 'react-native';
+const {NativeNavigation} = NativeModules;
+import {uniqueId} from '../providers/UniqueIdProvider';
 
 export function startApp(params) {
-  validateParams(params);
+  NativeNavigation.startApp();
 }
+//
+//function parseParams(params) {
+//  const msg = `invalid params passed to startApp: ${params}`;
+//  if (!params) {
+//    throw new Error(msg);
+//  }
+//
+//  if (params.tabs) {
+//    return parseTabs(params);
+//  }
+//
+//  if (params.container) {
+//    return parseContainer(params);
+//  }
+//
+//  throw new Error(msg);
+//}
+//
+//function parseTabs(params) {
+////&& params.tabs.length > 0 && _.every(params.tabs, (t) => t.containerKey)
+//}
+//
+//function parseContainer(params) {
+//
+//}
 
-function validateParams(params) {
-  const msg = `invalid params passed to startApp: ${params}`;
-  if (!params) {
-    throw new Error(msg);
-  }
-  if (params.containerKey) {
-    return true;
-  }
-  if (params.tabs && params.tabs.length > 0 && _.every(params.tabs, (t) => t.containerKey)) {
-    return true;
-  }
-  throw new Error(msg);
+export function parse(params) {
+  return {
+    containerStack: {
+      id: uniqueId(`containerStack`),
+      stack: [
+        {
+          container: {
+            id: uniqueId(`container`),
+            key: params.container.key
+          }
+        }
+      ]
+    }
+  };
 }

@@ -1,13 +1,12 @@
 import * as ContainerRegistry from './containers/ContainerRegistry';
-import {NativeModules} from 'react-native';
-const {NativeNavigation} = NativeModules;
+import * as Commands from './commands/Commands';
 
 export function registerContainer(containerKey, getContainerFunc) {
   ContainerRegistry.registerContainer(containerKey, getContainerFunc);
 }
 
 export function startApp(params) {
-  NativeNavigation.startApp(params);
+  Commands.startApp(params);
 }
 
 export function push(params) {
