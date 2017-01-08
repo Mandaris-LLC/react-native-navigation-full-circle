@@ -7,7 +7,6 @@ describe('Commands', () => {
       startApp: jest.fn()
     };
     require('react-native').NativeModules.NativeNavigation = mockNativeNavigation;
-    jest.mock('../providers/UniqueIdProvider');
     uut = require('./Commands');
   });
 
