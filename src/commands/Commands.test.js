@@ -1,7 +1,6 @@
 describe('Commands', () => {
   let uut;
   let mockNativeNavigation;
-  let mockUniqueIdProvider;
 
   beforeEach(() => {
     mockNativeNavigation = {
@@ -9,7 +8,6 @@ describe('Commands', () => {
     };
     require('react-native').NativeModules.NativeNavigation = mockNativeNavigation;
     jest.mock('../providers/UniqueIdProvider');
-    mockUniqueIdProvider = require('../providers/UniqueIdProvider');
     uut = require('./Commands');
   });
 
@@ -24,7 +22,6 @@ describe('Commands', () => {
     });
 
     it('adds uniqueId to passed container', () => {
-      mockUniqueIdProvider.uniqueId = jest.fn((prefix) => `${prefix}123`);
       uut.startApp({
         container: {
           key: 'com.example.MyScreen'
