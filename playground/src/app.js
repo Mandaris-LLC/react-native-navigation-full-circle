@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {AppRegistry, View, Text} from 'react-native';
 
-//import Navigation from 'react-native-navigation';
+import Navigation from 'react-native-navigation';
 
 const styles = {
   root: {
@@ -28,11 +28,11 @@ class WelcomeScreen extends Component {
 }
 
 export function start() {
-  AppRegistry.registerComponent('com.example.WelcomeScreen', () => WelcomeScreen);
-  //Navigation.startApp({
-  //  container: {
-  //    key: 'com.example.WelcomeScreen'
-  //  }
-  //});
+  Navigation.registerContainer(`com.example.WelcomeScreen`, () => WelcomeScreen);
+  Navigation.startApp({
+    container: {
+      key: 'com.example.WelcomeScreen'
+    }
+  });
 }
 

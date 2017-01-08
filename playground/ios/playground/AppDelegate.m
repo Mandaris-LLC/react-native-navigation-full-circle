@@ -25,11 +25,11 @@
   // **********************************************
   // *** DON'T MISS: THIS IS HOW WE BOOTSTRAP *****
   // **********************************************
-  /*self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor whiteColor];
-  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation];*/
+  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation];
 
-  
+  /*
   // original RN bootstrap - remove this part
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"com.example.WelcomeScreen"
@@ -40,7 +40,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  
+  */
 
 
   return YES;
