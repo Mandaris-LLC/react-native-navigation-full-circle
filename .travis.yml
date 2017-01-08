@@ -43,7 +43,7 @@ script:
   - yarn run test-js
   - ./scripts/installAndroidSDK.sh
   - yarn run test-android
-  - yarn run release
+#  - yarn run release
 
 after_script:
   - echo "BUILD FINISHED"

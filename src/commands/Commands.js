@@ -5,6 +5,14 @@ import {uniqueId} from '../providers/UniqueIdProvider';
 
 export function startApp(params) {
   params.container.id = uniqueId(`container`);
+  if (params.sideMenu) {
+    if (params.sideMenu.left) {
+      params.sideMenu.left.id = uniqueId(`container`);
+    }
+    if (params.sideMenu.right) {
+      params.sideMenu.right.id = uniqueId(`container`);
+    }
+  }
   NativeNavigation.startApp(params);
 }
 //
