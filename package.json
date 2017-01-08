@@ -4,9 +4,9 @@
   "description": "React Native Navigation - truly native navigation for iOS and Android",
   "license": "MIT",
   "nativePackage": true,
-  "author": "Tal Kol <talkol@gmail.com>",
+  "author": "Daniel Zlotin <zlotindaniel@gmail.com>",
   "contributors": [
-    "Daniel Zlotin <zlotindaniel@gmail.com>",
+    "Tal Kol <talkol@gmail.com>",
     "Guy Carmeli <guyc@wix.com>",
     "Ran Greenberg <rang@wix.com>",
     "Artal Druk <artald@wix.com>"
