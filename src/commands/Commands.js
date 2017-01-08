@@ -4,7 +4,8 @@ const {NativeNavigation} = NativeModules;
 import {uniqueId} from '../providers/UniqueIdProvider';
 
 export function startApp(params) {
-  NativeNavigation.startApp();
+  params.container.id = uniqueId(`container`);
+  NativeNavigation.startApp(params);
 }
 //
 //function parseParams(params) {
@@ -32,18 +33,3 @@ export function startApp(params) {
 //
 //}
 
-export function parse(params) {
-  return {
-    containerStack: {
-      id: uniqueId(`containerStack`),
-      stack: [
-        {
-          container: {
-            id: uniqueId(`container`),
-            key: params.container.key
-          }
-        }
-      ]
-    }
-  };
-}
