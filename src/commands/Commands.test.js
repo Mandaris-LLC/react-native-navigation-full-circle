@@ -20,21 +20,5 @@ describe('Commands', () => {
       });
       expect(mockNativeNavigation.startApp).toHaveBeenCalledTimes(1);
     });
-
-    it('adds uniqueId to passed container', () => {
-      uut.startApp({
-        container: {
-          key: 'com.example.MyScreen'
-        }
-      });
-
-      expect(mockNativeNavigation.startApp).toHaveBeenCalledWith({
-        container: {
-          key: 'com.example.MyScreen',
-          id: 'container123'
-        }
-      });
-    });
-
   });
 });

@@ -42,5 +42,18 @@ describe('LayoutBuilder', () => {
         }
       });
     });
+
+    it('adds uniqueId to passed container', () => {
+      expect(uut.parse({
+        container: {
+          key: 'com.example.MyScreen'
+        }
+      })).toEqual({
+        container: {
+          key: 'com.example.MyScreen',
+          id: 'container123'
+        }
+      });
+    });
   });
 });
