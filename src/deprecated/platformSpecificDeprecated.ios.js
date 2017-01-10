@@ -77,10 +77,10 @@ function startTabBasedApp(params) {
                     titleImage={tab.titleImage}
                     component={tab.screen}
                     passProps={{
-                      navigatorID: tab.navigationParams.navigatorID,
-                      screenInstanceID: tab.navigationParams.screenInstanceID,
-                      navigatorEventID: tab.navigationParams.navigatorEventID
-                    }}
+                    navigatorID: tab.navigationParams.navigatorID,
+                    screenInstanceID: tab.navigationParams.screenInstanceID,
+                    navigatorEventID: tab.navigationParams.navigatorEventID
+                  }}
                     style={tab.navigationParams.navigatorStyle}
                     leftButtons={tab.navigationParams.navigatorButtons.leftButtons}
                     rightButtons={tab.navigationParams.navigatorButtons.rightButtons}
@@ -515,7 +515,7 @@ function showInAppNotification(params) {
     navigatorEventID,
     navigatorID
   };
-
+  
   savePassProps(params);
 
   Notification.show({
@@ -567,10 +567,6 @@ function dismissContextualMenu() {
   // Android only
 }
 
-function showOverlay(params) {
-  showInAppNotification(params);
-}
-
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -594,6 +590,5 @@ export default {
   navigatorSwitchToTab,
   navigatorToggleNavBar,
   showContextualMenu,
-  dismissContextualMenu,
-  showOverlay
+  dismissContextualMenu
 };
