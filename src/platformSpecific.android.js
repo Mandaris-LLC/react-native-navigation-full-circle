@@ -131,6 +131,11 @@ function dismissContextualMenu(screenInstanceID) {
   NativeReactModule.dismissContextualMenu(screenInstanceID);
 }
 
+function showOverlay(params) {
+  savePassProps(params);
+  NativeReactModule.showOverlay(params);
+}
+
 module.exports = {
   startApp,
   push,
@@ -153,5 +158,6 @@ module.exports = {
   setBottomTabBadgeByIndex,
   showSnackbar,
   showContextualMenu,
-  dismissContextualMenu
+  dismissContextualMenu,
+  showOverlay
 };

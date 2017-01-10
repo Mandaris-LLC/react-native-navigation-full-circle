@@ -130,6 +130,10 @@ function startSingleScreenApp(params) {
   return platformSpecific.startSingleScreenApp(params);
 }
 
+function showOverlay(params) {
+  return platformSpecific.showOverlay(params);
+}
+
 export default {
   getRegisteredScreen,
   registerComponent,
@@ -141,5 +145,6 @@ export default {
   showInAppNotification: showInAppNotification,
   dismissInAppNotification: dismissInAppNotification,
   startTabBasedApp: startTabBasedApp,
-  startSingleScreenApp: startSingleScreenApp
+  startSingleScreenApp: startSingleScreenApp,
+  showOverlay
 };

@@ -421,7 +421,7 @@ function getFab(screen) {
   if (fab === null || fab === undefined) {
     return;
   }
-  if (Object.keys(fab).length === 0 ) {
+  if (Object.keys(fab).length === 0) {
     return {};
   }
 
@@ -539,6 +539,10 @@ function dismissContextualMenu() {
   newPlatformSpecific.dismissContextualMenu();
 }
 
+function showOverlay(params) {
+  newPlatformSpecific.showOverlay(params);
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -559,5 +563,6 @@ export default {
   navigatorToggleNavBar,
   showSnackbar,
   showContextualMenu,
-  dismissContextualMenu
+  dismissContextualMenu,
+  showOverlay
 };
