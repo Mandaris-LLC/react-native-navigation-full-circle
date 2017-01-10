@@ -14,7 +14,7 @@ function wrapContainer(containerKey, OriginalContainer) {
     constructor(props) {
       super(props);
       if (!props.containerId) {
-        throw new Error(`Container ${containerKey} does not have a containerId!`);
+        //throw new Error(`Container ${containerKey} does not have a containerId!`);
       }
       this.state = {
         containerId: props.containerId,
