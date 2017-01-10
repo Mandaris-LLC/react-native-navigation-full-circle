@@ -32,7 +32,7 @@
     "test-ios": ":",
     "test": "npm run lint && npm run test-js && npm run test-android && npm run test-ios",
     "test-watch": "BABEL_ENV=test jest --coverage --watch",
-    "release": ":"
+    "release": "node ./scripts/release.js"
   },
   "peerDependencies": {
     "react-native": "*",
