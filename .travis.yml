@@ -38,6 +38,7 @@ before_install:
   - source ~/.nvm/nvm.sh
   - nvm install $NODE_VERSION
   - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - yarn cache dir
 
 install:
   - set -e
