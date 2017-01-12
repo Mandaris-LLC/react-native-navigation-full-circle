@@ -1,5 +1,5 @@
-const cp = require('child_process');
+const shellUtils = require('shell-utils');
 
-cp.execSync(`rm yarn.lock`);
-cp.execSync(`rm -rf node_modules/react-native-navigation/node_modules`);
-cp.execSync(`rm -rf node_modules/react-native-navigation/playground`);
+shellUtils.exec.execSync(`rm yarn.lock`);
+shellUtils.exec.execSync(`rm -rf node_modules/react-native-navigation/node_modules`);
+shellUtils.exec.execSync(`rm -rf node_modules/react-native-navigation/playground`);
