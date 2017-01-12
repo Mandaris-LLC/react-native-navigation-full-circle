@@ -504,7 +504,7 @@ function getRightButtons(screen) {
 
 function addNavigationStyleParams(screen) {
   const Screen = Navigation.getRegisteredScreen(screen.screen);
-  screen.navigatorStyle = Object.assign({}, screen.navigatorStyle, Screen.navigatorStyle);
+  screen.navigatorStyle = Object.assign({}, Screen.navigatorStyle, screen.navigatorStyle);
 }
 
 function showSnackbar(navigator, params) {
