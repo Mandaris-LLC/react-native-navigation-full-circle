@@ -26,6 +26,7 @@ function buildProjForDetox() {
 
 function e2e() {
   try {
+    shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
     shellUtils.exec.kill(`detox-server`);
     shellUtils.exec.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
     const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;

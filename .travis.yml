@@ -8,7 +8,6 @@ env:
     - PATH=$PATH:$HOME/.yarn/bin
     - ANDROID_HOME=$HOME/android-sdk-macosx
     - PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-    - YARN_CACHE=$HOME/.yarn-cache
 
 git:
   depth: 10
@@ -20,7 +19,7 @@ branches:
 
 cache:
   directories:
-    - $YARN_CACHE
+    - $HOME/.yarn-cache
     - $HOME/.gradle/
     - $HOME/.m2
     - $ANDROID_HOME/licenses/
@@ -32,17 +31,11 @@ before_cache:
 before_install:
   - brew update
   - brew cask install java
-  - touch ~/.nvmrc
-  - rm -rf ~/.nvm
-  - git clone https://github.com/creationix/nvm.git ~/.nvm
-  - source ~/.nvm/nvm.sh
   - nvm install $NODE_VERSION
   - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - yarn cache dir
 
 install:
   - set -e
-  - ./scripts/clean.sh
   - yarn install
 
 script:
