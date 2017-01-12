@@ -15,12 +15,12 @@ function buildProjForDetox() {
   const scheme = release ? `playground_release_Detox` : `playground_Detox`;
   const args = release ? '' : `GCC_PREPROCESSOR_DEFINITIONS="DEBUG=1 RCT_DEBUG=1 RCT_DEV=1 RCT_NSASSERT=1"`;
 
-  shellUtils.exec.execSync(`RCT_NO_LAUNCH_PACKAGER=true \
-          cd ios && xcodebuild \
-            -scheme ${scheme} build \
-            -project playground.xcodeproj \
-            -sdk iphonesimulator \
-            -derivedDataPath ./DerivedData/playground \
+  shellUtils.exec.execSync(`RCT_NO_LAUNCH_PACKAGER=true
+          cd ios && xcodebuild
+            -scheme ${scheme} build
+            -project playground.xcodeproj
+            -sdk iphonesimulator
+            -derivedDataPath ./DerivedData/playground
             ${args}`);
 }
 
@@ -29,12 +29,13 @@ function e2e() {
     shellUtils.exec.kill(`detox-server`);
     shellUtils.exec.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
     const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;
+
     shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}" 
-    BABEL_ENV=test 
-    ./node_modules/mocha/bin/mocha e2e 
-    --timeout 120000 
-    --recursive 
-    --compilers js:babel-register`);
+                              BABEL_ENV=test
+                              ./node_modules/mocha/bin/mocha e2e 
+                                --timeout 120000 
+                                --recursive
+                                --compilers js:babel-register`);
   } finally {
     shellUtils.exec.kill(`detox-server`);
     if (release) {
