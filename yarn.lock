@@ -2716,7 +2716,7 @@ http-signature@~1.1.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-iconv-lite@0.4.11:
+iconv-lite@0.4.11, iconv-lite@^0.4.5:
   version "0.4.11"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.11.tgz#2ecb42fd294744922209a2e7c404dac8793d8ade"
 
@@ -2724,7 +2724,7 @@ iconv-lite@0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
 
-iconv-lite@^0.4.13, iconv-lite@^0.4.5, iconv-lite@~0.4.13:
+iconv-lite@^0.4.13, iconv-lite@~0.4.13:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
 
@@ -4850,6 +4850,12 @@ shell-quote@1.6.1:
     array-map "~0.0.0"
     array-reduce "~0.0.0"
     jsonify "~0.0.0"
+
+shell-utils@1.x.x:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/shell-utils/-/shell-utils-1.0.1.tgz#f65f40d05999c49569c0928355e9ede15ad2ce07"
+  dependencies:
+    lodash "4.x.x"
 
 shelljs@^0.5.0:
   version "0.5.3"
