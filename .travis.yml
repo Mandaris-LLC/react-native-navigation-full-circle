@@ -30,9 +30,9 @@ before_cache:
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 before_install:
-  - set -e
   - brew update
   - brew cask install java
+  - touch ~/.nvmrc
   - rm -rf ~/.nvm
   - git clone https://github.com/creationix/nvm.git ~/.nvm
   - source ~/.nvm/nvm.sh
@@ -40,6 +40,7 @@ before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
 
 install:
+  - set -e
   - ./scripts/clean.sh
   - yarn install
 
