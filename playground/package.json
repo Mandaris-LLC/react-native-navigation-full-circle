@@ -24,8 +24,7 @@
       "sessionId": "playground"
     },
     "ios-simulator": {
-      "app": "ios/DerivedData/playground/Build/Products/Debug_Detox-iphonesimulator/playground.app",
-      "device": "iPhone 7, iOS 10.2"
+      "device": "iPhone 7"
     }
   },
   "babel": {

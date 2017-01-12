@@ -1,43 +1,52 @@
-const cp = require('child_process');
+const _ = require('lodash');
+const exec = require('./exec');
+const fs = require('fs');
 
-function exec(cmd) {
-  cp.execSync(cmd, {stdio: ['inherit', 'inherit', 'inherit']});
-}
+const release = _.includes(process.argv, 'release');
 
-function execSilent(cmd) {
-  cp.execSync(cmd, {stdio: ['inherit', 'ignore', 'inherit']});
-}
-
-function kill(process) {
-  execSilent(`pkill -f "${process}" || true`);
+function hackReactXcodeScript() {
+  const fileToHack = `./node_modules/react-native/packager/react-native-xcode.sh`;
+  const lines = _.split(String(fs.readFileSync(fileToHack)), '\n');
+  lines[11] = release ? '' : `exit 0;`;
+  fs.writeFileSync(fileToHack, _.join(lines, '\n'));
 }
 
 function buildProjForDetox() {
-  exec(`RCT_NO_LAUNCH_PACKAGER=true \
+  const scheme = release ? `playground_release_Detox` : `playground_Detox`;
+  const args = release ? '' : `GCC_PREPROCESSOR_DEFINITIONS="DEBUG=1 RCT_DEBUG=1 RCT_DEV=1 RCT_NSASSERT=1"`;
+
+  exec.exec(`RCT_NO_LAUNCH_PACKAGER=true \
           cd ios && xcodebuild \
-            -scheme playground_Detox build \
+            -scheme ${scheme} build \
             -project playground.xcodeproj \
             -sdk iphonesimulator \
             -derivedDataPath ./DerivedData/playground \
-            GCC_PREPROCESSOR_DEFINITIONS="DEBUG=1 RCT_DEBUG=1 RCT_DEV=1 RCT_NSASSERT=1"`);
+            ${args}`);
 }
 
 function e2e() {
   try {
     kill(`detox-server`);
-    cp.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
-    exec(`BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --recursive --compilers js:babel-register`);
+    exec.execAsync(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
+    exec.exec(`${release ? 'detoxMode=release' : ''} BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --recursive --compilers js:babel-register`);
   } finally {
     kill(`detox-server`);
-    //kill(`Simulator`);
-    //kill(`CoreSimulator`);
-    exec(`cat ./detox-server.log`);
-    exec(`rm -f ./detox-server.log`);
-    exec(`sleep 5`);
+    if (release) {
+      kill(`Simulator`);
+      kill(`CoreSimulator`);
+    }
+    exec.exec(`cat ./detox-server.log`);
+    exec.exec(`rm -f ./detox-server.log`);
+    exec.exec(`sleep 5`);
   }
 }
 
+function kill(process) {
+  exec.execSilent(`pkill -f "${process}"`);
+}
+
 function run() {
+  hackReactXcodeScript();
   buildProjForDetox();
   e2e();
 }

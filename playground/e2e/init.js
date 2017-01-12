@@ -1,11 +1,14 @@
 /*eslint-disable*/
 require('babel-polyfill');
 const detox = require('detox');
-const config = require('../package.json').detox;
+const detoxConfig = require('../package.json').detox;
+
+const release = process.env.detoxMode === 'release';
 
 before(function(done) {
   this.timeout(30000);
-  detox.config(config);
+  detoxConfig['ios-simulator'].app = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;
+  detox.config(detoxConfig);
   detox.start(done);
 });
 
