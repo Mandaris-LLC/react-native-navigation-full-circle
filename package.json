@@ -58,7 +58,8 @@
     "jest-cli": "18.x.x",
     "react-test-renderer": "15.4.1",
     "remx": "0.1.x",
-    "semver": "5.x.x"
+    "semver": "5.x.x",
+    "shell-utils": "1.x.x"
   },
   "babel": {
     "env": {
