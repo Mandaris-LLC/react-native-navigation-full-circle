@@ -29,7 +29,12 @@ function e2e() {
     shellUtils.exec.kill(`detox-server`);
     shellUtils.exec.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
     const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;
-    shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}" BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --recursive --compilers js:babel-register`);
+    shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}" 
+    BABEL_ENV=test 
+    ./node_modules/mocha/bin/mocha e2e 
+    --timeout 120000 
+    --recursive 
+    --compilers js:babel-register`);
   } finally {
     shellUtils.exec.kill(`detox-server`);
     if (release) {
