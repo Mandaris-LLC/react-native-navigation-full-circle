@@ -33,9 +33,9 @@ describe('Navigation', () => {
   it('registerContainer delegates to ContainerRegistry', () => {
     expect(ContainerRegistry.registerContainer).not.toHaveBeenCalled();
     const fn = jest.fn();
-    Navigation.registerContainer('key', fn);
+    Navigation.registerContainer('name', fn);
     expect(ContainerRegistry.registerContainer).toHaveBeenCalledTimes(1);
-    expect(ContainerRegistry.registerContainer).toHaveBeenCalledWith('key', fn);
+    expect(ContainerRegistry.registerContainer).toHaveBeenCalledWith('name', fn);
   });
 
   it('startApp delegates to Commands', () => {

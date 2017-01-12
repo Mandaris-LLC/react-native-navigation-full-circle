@@ -17,6 +17,8 @@
 		7BA500781E254908001B9E1B /* RNNSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA500771E254908001B9E1B /* RNNSplashScreen.m */; };
 		7BBFE5441E25330E002A6182 /* RNNBridgeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFE5431E25330E002A6182 /* RNNBridgeModule.m */; };
 		7BBFE5611E253F97002A6182 /* RNNStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFE5601E253F97002A6182 /* RNNStore.m */; };
+		7BC9346B1E267BAD00EFA125 /* RNNCommandsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BC9346A1E267BAD00EFA125 /* RNNCommandsHandler.m */; };
+		7BC9346E1E26886E00EFA125 /* RNNControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */; };
 		CC84A19E1C1A0C4E00B3A6A2 /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */; };
 		CC84A19F1C1A0C4E00B3A6A2 /* RCCManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1961C1A0C4E00B3A6A2 /* RCCManagerModule.m */; };
 		CC84A1A01C1A0C4E00B3A6A2 /* RCCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1981C1A0C4E00B3A6A2 /* RCCNavigationController.m */; };
@@ -76,6 +78,10 @@
 		7BBFE5431E25330E002A6182 /* RNNBridgeModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNBridgeModule.m; sourceTree = "<group>"; };
 		7BBFE55F1E253F97002A6182 /* RNNStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNStore.h; sourceTree = "<group>"; };
 		7BBFE5601E253F97002A6182 /* RNNStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNStore.m; sourceTree = "<group>"; };
+		7BC934691E267BAD00EFA125 /* RNNCommandsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNCommandsHandler.h; sourceTree = "<group>"; };
+		7BC9346A1E267BAD00EFA125 /* RNNCommandsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNCommandsHandler.m; sourceTree = "<group>"; };
+		7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNControllerFactory.h; sourceTree = "<group>"; };
+		7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNControllerFactory.m; sourceTree = "<group>"; };
 		CC84A1931C1A0C4E00B3A6A2 /* RCCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManager.h; sourceTree = "<group>"; };
 		CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCManager.m; sourceTree = "<group>"; tabWidth = 2; };
 		CC84A1951C1A0C4E00B3A6A2 /* RCCManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManagerModule.h; sourceTree = "<group>"; };
@@ -251,6 +257,10 @@
 		D8AFADB41BEE6F3F00A4592D = {
 			isa = PBXGroup;
 			children = (
+				7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */,
+				7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */,
+				7BC934691E267BAD00EFA125 /* RNNCommandsHandler.h */,
+				7BC9346A1E267BAD00EFA125 /* RNNCommandsHandler.m */,
 				7BA500731E2544B9001B9E1B /* ReactNativeNavigation.h */,
 				7BA500741E2544B9001B9E1B /* ReactNativeNavigation.m */,
 				7BA500761E254908001B9E1B /* RNNSplashScreen.h */,
@@ -355,6 +365,7 @@
 				D85082FC1CBCF8A800FDB961 /* MMDrawerBarButtonItem.m in Sources */,
 				D85083001CBCF8A800FDB961 /* UIViewController+MMDrawerController.m in Sources */,
 				D85082FF1CBCF8A800FDB961 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				7BC9346B1E267BAD00EFA125 /* RNNCommandsHandler.m in Sources */,
 				D85082E61CBCF54200FDB961 /* SidebarFeedlyAnimation.m in Sources */,
 				CC84A1A11C1A0C4E00B3A6A2 /* RCCTabBarController.m in Sources */,
 				D85082E71CBCF54200FDB961 /* SidebarFlipboardAnimation.m in Sources */,
@@ -369,6 +380,7 @@
 				D85082FE1CBCF8A800FDB961 /* MMDrawerVisualState.m in Sources */,
 				7BBFE5611E253F97002A6182 /* RNNStore.m in Sources */,
 				D85082FD1CBCF8A800FDB961 /* MMDrawerController.m in Sources */,
+				7BC9346E1E26886E00EFA125 /* RNNControllerFactory.m in Sources */,
 				D85082E41CBCF54200FDB961 /* SidebarAnimation.m in Sources */,
 				D8E11C571CBD1F670018B644 /* RCCDrawerController.m in Sources */,
 				2636176F1E12722900D88A13 /* RNNTabBarController.m in Sources */,

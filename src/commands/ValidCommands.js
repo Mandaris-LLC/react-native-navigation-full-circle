@@ -1,6 +1,6 @@
 export const singleScreenApp = {
   container: {
-    key: 'com.example.MyScreen'
+    name: 'com.example.MyScreen'
   }
 };
 
@@ -8,17 +8,17 @@ export const tabBasedApp = {
   tabs: [
     {
       container: {
-        key: 'com.example.FirstTab'
+        name: 'com.example.FirstTab'
       }
     },
     {
       container: {
-        key: 'com.example.SecondTab'
+        name: 'com.example.SecondTab'
       }
     },
     {
       container: {
-        key: 'com.example.FirstTab'
+        name: 'com.example.FirstTab'
       }
     }
   ]
@@ -26,36 +26,38 @@ export const tabBasedApp = {
 
 export const singleWithSideMenu = {
   container: {
-    key: 'com.example.MyScreen'
+    name: 'com.example.MyScreen'
   },
   sideMenu: {
     left: {
-      key: 'com.example.Menu'
+      container: {
+        name: 'com.example.MyScreen'
+      }
     }
   }
 };
 
 export const singleWithRightSideMenu = {
   container: {
-    key: 'com.example.MyScreen'
+    name: 'com.example.MyScreen'
   },
   sideMenu: {
     right: {
-      key: 'com.example.Menu'
+      name: 'com.example.Menu'
     }
   }
 };
 
 export const singleWithBothMenus = {
   container: {
-    key: 'com.example.MyScreen'
+    name: 'com.example.MyScreen'
   },
   sideMenu: {
     left: {
-      key: 'com.example.Menu1'
+      name: 'com.example.Menu1'
     },
     right: {
-      key: 'com.example.Menu2'
+      name: 'com.example.Menu2'
     }
   }
 };
@@ -64,26 +66,26 @@ export const tabBasedWithSideMenu = {
   tabs: [
     {
       container: {
-        key: 'com.example.FirstTab'
+        name: 'com.example.FirstTab'
       }
     },
     {
       container: {
-        key: 'com.example.SecondTab'
+        name: 'com.example.SecondTab'
       }
     },
     {
       container: {
-        key: 'com.example.FirstTab'
+        name: 'com.example.FirstTab'
       }
     }
   ],
   sideMenu: {
     left: {
-      key: 'com.example.Menu1'
+      name: 'com.example.Menu1'
     },
     right: {
-      key: 'com.example.Menu2'
+      name: 'com.example.Menu2'
     }
   }
 };

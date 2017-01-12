@@ -16,11 +16,11 @@ describe('LayoutBuilder', () => {
     it('adds uniqueId to passed container', () => {
       expect(LayoutBuilder.parse({
         container: {
-          key: 'com.example.MyScreen'
+          name: 'com.example.MyScreen'
         }
       })).toEqual({
         container: {
-          key: 'com.example.MyScreen',
+          name: 'com.example.MyScreen',
           id: 'containerUNIQUE'
         }
       });
@@ -29,28 +29,28 @@ describe('LayoutBuilder', () => {
     it('adds uniqueId to passed sideMenu', () => {
       expect(LayoutBuilder.parse({
         container: {
-          key: 'com.example.MyScreen'
+          name: 'com.example.MyScreen'
         },
         sideMenu: {
           left: {
-            key: 'com.example.SideMenu1'
+            name: 'com.example.SideMenu1'
           },
           right: {
-            key: 'com.example.SideMenu2'
+            name: 'com.example.SideMenu2'
           }
         }
       })).toEqual({
         container: {
-          key: 'com.example.MyScreen',
+          name: 'com.example.MyScreen',
           id: 'containerUNIQUE'
         },
         sideMenu: {
           left: {
-            key: 'com.example.SideMenu1',
+            name: 'com.example.SideMenu1',
             id: 'containerUNIQUE'
           },
           right: {
-            key: 'com.example.SideMenu2',
+            name: 'com.example.SideMenu2',
             id: 'containerUNIQUE'
           }
         }
@@ -62,56 +62,56 @@ describe('LayoutBuilder', () => {
         tabs: [
           {
             container: {
-              key: 'com.example.FirstTab'
+              name: 'com.example.FirstTab'
             }
           },
           {
             container: {
-              key: 'com.example.SecondTab'
+              name: 'com.example.SecondTab'
             }
           },
           {
             container: {
-              key: 'com.example.FirstTab'
+              name: 'com.example.FirstTab'
             }
           }
         ],
         sideMenu: {
           left: {
-            key: 'com.example.Menu1'
+            name: 'com.example.Menu1'
           },
           right: {
-            key: 'com.example.Menu2'
+            name: 'com.example.Menu2'
           }
         }
       })).toEqual({
         tabs: [
           {
             container: {
-              key: 'com.example.FirstTab',
+              name: 'com.example.FirstTab',
               id: 'containerUNIQUE'
             }
           },
           {
             container: {
-              key: 'com.example.SecondTab',
+              name: 'com.example.SecondTab',
               id: 'containerUNIQUE'
             }
           },
           {
             container: {
-              key: 'com.example.FirstTab',
+              name: 'com.example.FirstTab',
               id: 'containerUNIQUE'
             }
           }
         ],
         sideMenu: {
           left: {
-            key: 'com.example.Menu1',
+            name: 'com.example.Menu1',
             id: 'containerUNIQUE'
           },
           right: {
-            key: 'com.example.Menu2',
+            name: 'com.example.Menu2',
             id: 'containerUNIQUE'
           }
         }

@@ -31,7 +31,7 @@ export function start() {
   Navigation.registerContainer(`com.example.WelcomeScreen`, () => WelcomeScreen);
   Navigation.startApp({
     container: {
-      key: 'com.example.WelcomeScreen'
+      name: 'com.example.WelcomeScreen'
     }
   });
 }

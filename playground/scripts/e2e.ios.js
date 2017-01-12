@@ -15,10 +15,11 @@ function kill(process) {
 function buildProjForDetox() {
   exec(`RCT_NO_LAUNCH_PACKAGER=true \
           cd ios && xcodebuild \
-            -scheme playground_release_Detox build \
+            -scheme playground_Detox build \
             -project playground.xcodeproj \
             -sdk iphonesimulator \
-            -derivedDataPath ./DerivedData/playground`);
+            -derivedDataPath ./DerivedData/playground \
+            GCC_PREPROCESSOR_DEFINITIONS="DEBUG=1 RCT_DEBUG=1 RCT_DEV=1 RCT_NSASSERT=1"`);
 }
 
 function e2e() {
@@ -28,8 +29,8 @@ function e2e() {
     exec(`BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --recursive --compilers js:babel-register`);
   } finally {
     kill(`detox-server`);
-    kill(`Simulator`);
-    kill(`CoreSimulator`);
+    //kill(`Simulator`);
+    //kill(`CoreSimulator`);
     exec(`cat ./detox-server.log`);
     exec(`rm -f ./detox-server.log`);
     exec(`sleep 5`);

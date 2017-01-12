@@ -1,4 +1,4 @@
-import * as _Navigation from './Navigation';
+import * as Navigation from './Navigation';
 
-export default _Navigation;
-export const Navigation = _Navigation;
+module.exports = Navigation;
+module.exports.default = Navigation;

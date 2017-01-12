@@ -14,7 +14,7 @@ describe('Commands', () => {
     it('sends startApp to native', () => {
       uut.startApp({
         container: {
-          key: 'com.example.MyScreen'
+          name: 'com.example.MyScreen'
         }
       });
       expect(mockNativeNavigation.startApp).toHaveBeenCalledTimes(1);

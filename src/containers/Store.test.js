@@ -20,12 +20,12 @@ describe('Store', () => {
     expect(uut.getPropsForContainerId('container1')).toEqual({});
   });
 
-  it('holds containers classes by containerKey', () => {
+  it('holds containers classes by containerName', () => {
     const MyComponent = class {
       //
     };
-    uut.setContainerClass('example.mykey', MyComponent);
-    expect(uut.getContainerClass('example.mykey')).toEqual(MyComponent);
+    uut.setContainerClass('example.mycontainer', MyComponent);
+    expect(uut.getContainerClass('example.mycontainer')).toEqual(MyComponent);
   });
 });
 

@@ -1,8 +1,8 @@
 import * as ContainerRegistry from './containers/ContainerRegistry';
 import * as Commands from './commands/Commands';
 
-export function registerContainer(containerKey, getContainerFunc) {
-  ContainerRegistry.registerContainer(containerKey, getContainerFunc);
+export function registerContainer(containerName, getContainerFunc) {
+  ContainerRegistry.registerContainer(containerName, getContainerFunc);
 }
 
 export function startApp(params) {
