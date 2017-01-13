@@ -135,14 +135,22 @@ public class SingleScreenLayout extends BaseLayout {
 
     @Override
     public void pop(ScreenParams params) {
-        stack.pop(params.animateScreenTransitions);
-        EventBus.instance.post(new ScreenChangedEvent(stack.peek().getScreenParams()));
+        stack.pop(params.animateScreenTransitions, new ScreenStack.OnScreenPop() {
+            @Override
+            public void onScreenPopAnimationEnd() {
+                EventBus.instance.post(new ScreenChangedEvent(stack.peek().getScreenParams()));
+            }
+        });
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
-        stack.popToRoot(params.animateScreenTransitions);
-        EventBus.instance.post(new ScreenChangedEvent(stack.peek().getScreenParams()));
+        stack.popToRoot(params.animateScreenTransitions, new ScreenStack.OnScreenPop() {
+            @Override
+            public void onScreenPopAnimationEnd() {
+                EventBus.instance.post(new ScreenChangedEvent(stack.peek().getScreenParams()));
+            }
+        });
     }
 
     @Override

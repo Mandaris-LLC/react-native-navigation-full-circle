@@ -266,16 +266,20 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
             @Override
             public void onScreenPopAnimationEnd() {
                 setBottomTabsStyleFromCurrentScreen();
+                EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
             }
         });
-        EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
     }
 
     @Override
     public void popToRoot(ScreenParams params) {
-        getCurrentScreenStack().popToRoot(params.animateScreenTransitions);
-        setBottomTabsStyleFromCurrentScreen();
-        EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
+        getCurrentScreenStack().popToRoot(params.animateScreenTransitions, new ScreenStack.OnScreenPop() {
+            @Override
+            public void onScreenPopAnimationEnd() {
+                setBottomTabsStyleFromCurrentScreen();
+                EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
+            }
+        });
     }
 
     @Override
