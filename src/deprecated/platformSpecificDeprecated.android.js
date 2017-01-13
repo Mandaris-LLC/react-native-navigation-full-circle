@@ -363,6 +363,12 @@ function dismissAllModals(params) {
   newPlatformSpecific.dismissAllModals();
 }
 
+function showInAppNotification(params) {
+  params.navigationParams = {};
+  addNavigatorParams(params.navigationParams);
+  newPlatformSpecific.showInAppNotification(params);
+}
+
 function addNavigatorParams(screen, navigator = null, idx = '') {
   screen.navigatorID = navigator ? navigator.navigatorID : _.uniqueId('navigatorID') + '_nav' + idx;
   screen.screenInstanceID = _.uniqueId('screenInstanceID');
@@ -549,6 +555,7 @@ export default {
   showModal,
   dismissModal,
   dismissAllModals,
+  showInAppNotification,
   navigatorSetButtons,
   navigatorSetTabBadge,
   navigatorSetTitle,
