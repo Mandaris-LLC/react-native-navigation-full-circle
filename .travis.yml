@@ -25,7 +25,6 @@ before_cache:
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 install:
-  - java -version
   - nvm install $NODE_VERSION
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - yarn config set cache-folder $YARN_CACHE
@@ -37,7 +36,7 @@ script:
   - yarn run lint
   - yarn run test-js
   - yarn run test-android
-  #- yarn run test-ios
+  - yarn run test-ios
   - yarn run release
   - set +e
 
