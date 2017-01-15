@@ -1,4 +1,3 @@
-language: objective-c
 os: osx
 osx_image: xcode8.1
 
@@ -8,9 +7,7 @@ env:
     - PATH=$PATH:$HOME/.yarn/bin
     - ANDROID_HOME=$HOME/android-sdk-macosx
     - PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-
-git:
-  depth: 10
+    - YARN_CACHE=$HOME/.yarn-cache
 
 branches:
   only:
@@ -19,37 +16,35 @@ branches:
 
 cache:
   directories:
-    - $HOME/.yarn-cache
+    - $YARN_CACHE
     - $HOME/.gradle/
     - $HOME/.m2
     - $ANDROID_HOME/licenses/
-
 before_cache:
   - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
-before_install:
-  - brew update
-  - brew cask install java
+install:
+  - java -version
   - nvm install $NODE_VERSION
   - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - yarn config set cache-folder $HOME/.yarn-cache
+  - yarn config set cache-folder $YARN_CACHE
 
-install:
-  - set -e
-  - yarn install
 
 script:
+  - set -e
+  - yarn install
   - yarn run lint
   - yarn run test-js
-  - ./scripts/installAndroidSDK.sh
   - yarn run test-android
+  #- yarn run test-ios
   - yarn run release
+  - set +e
 
 after_script:
-  - set +e
   - echo "BUILD FINISHED"
 
 notifications:
+  email: false
   slack:
     secure: SjvEQzfbIer3I88UARe7vlARAFkbCRuosrf2EhsUih17SKtpFuFj8BB+0U89xSxt8QmS4KiuIhj67TOGWnM7GDhy0S0rZCxgYD3VU2zm7cTobWueFvZ0zLFkTqa/8xi9+sZ5Xd1OU4aHGgpfONe34O9qbRP61YR5haJYYFWqVUQb0j6Z60MnvSm2kJJkjPx8iuOTiKoEgfZV3qVziKAN9oKVZsSUpp72cYQJeieKEdSwIBYTFt/G4RuxPxQ5uvGih3qTZBls66P3rydSHR73VbkXSi7edDhPYAhPEKMPidC/nN4UqHJNaGB9ua65LHlOXX7/K/frC/D5//WNnVLOuXHL7AXPZRKQsHwTdA2vjDT2NKvQfPBRVp47tEpQdTa7BHcLjhhJgpPoOVWumjoiD98JToI8Hd23V9OCAFYEkVe14Sr7HFWIm49PoxP6w89aGuYVLY39OJ9SmUbktOY1RYeXrp8sUa/wAxoH1u+W344zVrvAuknd0nx33iycwkKSnPDMGUOviN21XbYqQTLn5ob9rxsNBr/tAkXo9HTcZYqAJZZXX9lIUjEvZ1CU+xv1fxH4zfDWct/U5V6kKsv8pYpLqdZMaR/az02hfxD+tbQaoh1dl9KY5z8PYTMZW9SLqEpcSBevKo+JRyKpMok8Pld8RvtCUarfcHduSmzBAJE=

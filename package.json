@@ -28,8 +28,8 @@
     "build": ":",
     "lint": "eslint src",
     "test-js": "BABEL_ENV=test jest --coverage",
-    "test-android": "cd android && ./gradlew clean testDebugUnitTest",
-    "test-ios": ":",
+    "test-android": "node ./scripts/test.android.js",
+    "test-ios": "node ./scripts/test.ios.js",
     "test": "npm run lint && npm run test-js && npm run test-android && npm run test-ios",
     "test-watch": "BABEL_ENV=test jest --coverage --watch",
     "release": "node ./scripts/release.js"
