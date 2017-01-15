@@ -23,10 +23,17 @@ function buildProjForDetox() {
             -sdk iphonesimulator
             -derivedDataPath ./DerivedData/playground`;
 
-  if (shellUtils.exec.execSyncRead(`which xcpretty`)) {
+  if (hasXcpretty()) {
     shellUtils.exec.execSync(`${cmd} | xcpretty && exit ${PIPESTATUS[0]}`);
   } else {
     shellUtils.exec.execSync(`${cmd}`);
+  }
+}
+function hasXcpretty() {
+  try {
+    return shellUtils.exec.execSyncRead(`which xcpretty`);
+  } catch (e) {
+    return false;
   }
 }
 
