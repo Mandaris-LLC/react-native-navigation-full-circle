@@ -16,6 +16,8 @@ function buildProjForDetox() {
 
   shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb ${release ? '' : 'debug'}`);
 
+  shellUtils.exec.execSync(`echo -en 'travis_fold:start:xcodebuild'`);
+
   const cmd = `RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
             -scheme ${scheme} build
@@ -28,6 +30,8 @@ function buildProjForDetox() {
   } else {
     shellUtils.exec.execSync(`${cmd}`);
   }
+
+  shellUtils.exec.execSync(`echo -en 'travis_fold:end:xcodebuild'`);
 }
 function hasXcpretty() {
   try {
