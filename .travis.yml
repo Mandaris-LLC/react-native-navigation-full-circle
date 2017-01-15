@@ -29,17 +29,18 @@ before_cache:
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 before_install:
+  - rvm get head
   - brew update
   - brew cask install java
   - nvm install $NODE_VERSION
   - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - yarn config set cache-folder $HOME/.yarn-cache
 
 install:
   - set -e
   - yarn install
 
 script:
-  - set -x
   - yarn run lint
   - yarn run test-js
   - ./scripts/installAndroidSDK.sh
