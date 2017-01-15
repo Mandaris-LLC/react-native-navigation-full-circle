@@ -13,15 +13,15 @@ function hackReactXcodeScript() {
 
 function buildProjForDetox() {
   const scheme = release ? `playground_release_Detox` : `playground_Detox`;
-  const args = release ? '' : `GCC_PREPROCESSOR_DEFINITIONS="DEBUG=1 RCT_DEBUG=1 RCT_DEV=1 RCT_NSASSERT=1"`;
+
+  shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb ${release ? '' : 'debug'}`);
 
   shellUtils.exec.execSync(`RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
             -scheme ${scheme} build
             -project playground.xcodeproj
             -sdk iphonesimulator
-            -derivedDataPath ./DerivedData/playground
-            ${args}`);
+            -derivedDataPath ./DerivedData/playground`);
 }
 
 function e2e() {
@@ -38,6 +38,7 @@ function e2e() {
                                 --recursive
                                 --compilers js:babel-register`);
   } finally {
+    shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb`);
     shellUtils.exec.kill(`detox-server`);
     if (release) {
       shellUtils.exec.kill(`Simulator`);
