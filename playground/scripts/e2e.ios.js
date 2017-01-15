@@ -16,12 +16,18 @@ function buildProjForDetox() {
 
   shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb ${release ? '' : 'debug'}`);
 
-  shellUtils.exec.execSync(`RCT_NO_LAUNCH_PACKAGER=true
+  const cmd = `RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
             -scheme ${scheme} build
             -project playground.xcodeproj
             -sdk iphonesimulator
-            -derivedDataPath ./DerivedData/playground`);
+            -derivedDataPath ./DerivedData/playground`;
+
+  if (shellUtils.exec.execSyncRead(`which xcpretty`)) {
+    shellUtils.exec.execSync(`${cmd} | xcpretty && exit ${PIPESTATUS[0]}`);
+  } else {
+    shellUtils.exec.execSync(`${cmd}`);
+  }
 }
 
 function e2e() {
