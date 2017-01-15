@@ -29,7 +29,6 @@ before_cache:
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 before_install:
-  - rvm get head
   - brew update
   - brew cask install java
   - nvm install $NODE_VERSION
@@ -48,6 +47,7 @@ script:
   - yarn run release
 
 after_script:
+  - set +e
   - echo "BUILD FINISHED"
 
 notifications:
