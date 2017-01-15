@@ -24,7 +24,7 @@ function buildProjForDetox() {
             -derivedDataPath ./DerivedData/playground`;
 
   if (hasXcpretty()) {
-    shellUtils.exec.execSync(`${cmd} | xcpretty && exit ${PIPESTATUS[0]}`);
+    shellUtils.exec.execSync(`set -o pipefail && ${cmd} | xcpretty`);
   } else {
     shellUtils.exec.execSync(`${cmd}`);
   }
