@@ -5,7 +5,7 @@ yarn install
 
 echo "************ 1"
 
-RCT_NO_LAUNCH_PACKAGER=true cd ios && xcodebuild -scheme playground_release_Detox build -project playground.xcodeproj -sdk iphonesimulator -derivedDataPath ./DerivedData/playground
+RCT_NO_LAUNCH_PACKAGER=true cd ios && xcodebuild -scheme playground_release_Detox build -project playground.xcodeproj -sdk iphonesimulator -derivedDataPath ./DerivedData/playground | xcpretty
 cd ..
 
 echo "************ 2"

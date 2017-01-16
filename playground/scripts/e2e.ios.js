@@ -16,7 +16,7 @@ function buildProjForDetox() {
 
   shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb ${release ? '' : 'debug'}`);
 
-  shellUtils.exec.execSync(`echo -en 'travis_fold:start:xcodebuild\n'`);
+  shellUtils.exec.execSync(`echo 'travis_fold:start:xcodebuild'`);
   const cmd = `RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
             -scheme ${scheme} build
@@ -29,7 +29,7 @@ function buildProjForDetox() {
   } else {
     shellUtils.exec.execSync(`${cmd}`);
   }
-  shellUtils.exec.execSync(`echo -en 'travis_fold:end:xcodebuild\n'`);
+  shellUtils.exec.execSync(`echo 'travis_fold:end:xcodebuild'`);
 }
 function hasXcpretty() {
   try {
@@ -41,6 +41,7 @@ function hasXcpretty() {
 
 function e2e() {
   try {
+    shellUtils.exec.execSync(`echo 'travis_fold:start:detox-ios'`);
     shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
     shellUtils.exec.kill(`detox-server`);
     shellUtils.exec.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
@@ -49,19 +50,16 @@ function e2e() {
     shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
                               BABEL_ENV=test
                               ./node_modules/mocha/bin/mocha e2e
-                                --timeout 120000
+                                --timeout 240000
                                 --recursive
                                 --compilers js:babel-register`);
   } finally {
     shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb`);
     shellUtils.exec.kill(`detox-server`);
-    if (release) {
-      shellUtils.exec.kill(`Simulator`);
-      shellUtils.exec.kill(`CoreSimulator`);
-    }
     shellUtils.exec.execSync(`cat ./detox-server.log`);
     shellUtils.exec.execSync(`rm -f ./detox-server.log`);
     shellUtils.exec.execSync(`sleep 5`);
+    shellUtils.exec.execSync(`echo 'travis_fold:end:detox-ios'`);
   }
 }
 
