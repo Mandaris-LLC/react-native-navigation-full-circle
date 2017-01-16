@@ -1,6 +1,6 @@
 #import "RNNBridgeModule.h"
-#import "RNNStore.h"
 
+#import "RNN.h"
 #import "RNNControllerFactory.h"
 
 @implementation RNNBridgeModule
@@ -14,10 +14,8 @@ RCT_EXPORT_MODULE(NativeNavigation);
 
 RCT_EXPORT_METHOD(startApp:(NSDictionary*)layout)
 {
-    RCTBridge* bridge = RNNStore.sharedInstance.bridge;
-    
-    RNNStore.appDelegate.window.rootViewController = [RNNControllerFactory createRootViewController:layout];
-    [RNNStore.appDelegate.window makeKeyAndVisible];
+    RNN.appDelegate.window.rootViewController = [RNNControllerFactory createRootViewController:layout];
+    [RNN.appDelegate.window makeKeyAndVisible];
 }
 
 @end

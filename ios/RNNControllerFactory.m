@@ -1,7 +1,7 @@
 
 #import "RNNControllerFactory.h"
 
-#import "RNNStore.h"
+#import "RNN.h"
 #import "RCTRootView.h"
 
 @implementation RNNControllerFactory
@@ -11,7 +11,7 @@
     NSString* containerName = layout[@"container"][@"name"];
     NSString* containerId = layout[@"container"][@"id"];
     
-    RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:RNNStore.sharedInstance.bridge moduleName:containerName initialProperties:@{@"containerId": containerId}];
+    RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:RNN.instance.bridge moduleName:containerName initialProperties:@{@"containerId": containerId}];
     
     UIViewController* controller = [UIViewController new];
     controller.view = reactView;

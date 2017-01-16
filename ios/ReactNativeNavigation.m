@@ -1,9 +1,7 @@
 
 #import "ReactNativeNavigation.h"
-#import "RNNStore.h"
-#import "RCTBridge.h"
 #import "RNNSplashScreen.h"
-#import "RCTRootView.h"
+#import "RNN.h"
 
 @implementation ReactNativeNavigation
 
@@ -14,12 +12,12 @@
 
 +(void)bootstrap:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions
 {
-    RNNStore.appDelegate.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    RNNStore.appDelegate.window.backgroundColor = [UIColor whiteColor];
+    RNN.appDelegate.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    RNN.appDelegate.window.backgroundColor = [UIColor whiteColor];
     
     [RNNSplashScreen show];
     
-    RNNStore.sharedInstance.bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation moduleProvider:nil launchOptions:launchOptions];
+    [RNN.instance init:jsCodeLocation launchOptions:launchOptions];
 }
 
 @end

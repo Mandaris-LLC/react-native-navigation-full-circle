@@ -6,7 +6,6 @@
 
 +(void)bootstrap:(NSURL*)jsCodeLocation;
 
-+(void)bootstrap:(NSURL*)jsCodeLocation
-   launchOptions:(NSDictionary *)launchOptions;
++(void)bootstrap:(NSURL*)jsCodeLocation launchOptions:(NSDictionary *)launchOptions;
 
 @end

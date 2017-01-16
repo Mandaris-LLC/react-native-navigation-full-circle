@@ -1,7 +1,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RNNCommandsHandler : NSObject
-
+@interface RNNAssert : NSObject
 
 @end

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, View, Text} from 'react-native';
+import {View, Text} from 'react-native';
 
 import Navigation from 'react-native-navigation';
 
@@ -27,12 +27,17 @@ class WelcomeScreen extends Component {
   }
 }
 
+import {NativeModules, NativeEventEmitter} from 'react-native';
+
 export function start() {
-  Navigation.registerContainer(`com.example.WelcomeScreen`, () => WelcomeScreen);
-  Navigation.startApp({
-    container: {
-      name: 'com.example.WelcomeScreen'
-    }
+  const emitter = new NativeEventEmitter(NativeModules.RNNEventEmitter);
+  emitter.addListener('onAppLaunched', () => {
+    Navigation.registerContainer(`com.example.WelcomeScreen`, () => WelcomeScreen);
+    Navigation.startApp({
+      container: {
+        name: 'com.example.WelcomeScreen'
+      }
+    });
   });
 }
 
