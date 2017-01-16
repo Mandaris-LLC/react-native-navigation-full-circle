@@ -18,7 +18,7 @@
     
     [RNNSplashScreen show];
     
-    [RNN.instance init:jsCodeLocation launchOptions:launchOptions];
+    [RNN.instance bootstrap:jsCodeLocation launchOptions:launchOptions];
 }
 
 @end

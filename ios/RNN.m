@@ -27,7 +27,7 @@
     return sharedInstance;
 }
 
--(void)init:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions
+-(void)bootstrap:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptLoaded) name:RCTJavaScriptDidLoadNotification object:nil];
     // this will load the JS bundle

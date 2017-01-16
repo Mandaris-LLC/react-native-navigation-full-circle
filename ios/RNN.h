@@ -8,7 +8,7 @@
 
 +(instancetype)instance;
 
--(void)init:(NSURL*)jsCodeLocation launchOptions:(NSDictionary*)launchOptions;
+-(void)bootstrap:(NSURL*)jsCodeLocation launchOptions:(NSDictionary*)launchOptions;
 
 -(RCTBridge*)bridge;
 
