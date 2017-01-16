@@ -33,13 +33,7 @@ install:
 
 script:
   - set -e
-  #- yarn install
-  #- yarn run lint
-  #- yarn run test-js
-  #- yarn run test-android
-  #- yarn run test-ios
-  - ./scripts/travis.sh
-  - yarn run release
+  - node ./scripts/travis.js
   - set +e
 
 after_script:
