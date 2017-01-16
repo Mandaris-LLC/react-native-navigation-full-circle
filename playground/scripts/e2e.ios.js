@@ -31,7 +31,11 @@ function buildProjForDetox() {
     shellUtils.exec.execSync(`${cmd}`);
   }
 
+  console.log(`*********** 1`);
+
   shellUtils.exec.execSync(`echo -en 'travis_fold:end:xcodebuild\n'`);
+
+  console.log(`*********** 2`);
 }
 function hasXcpretty() {
   try {
@@ -43,9 +47,11 @@ function hasXcpretty() {
 
 function e2e() {
   try {
-    shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
-    shellUtils.exec.kill(`detox-server`);
+    console.log(`*********** 3`);
+    //shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
+    //shellUtils.exec.kill(`detox-server`);
     shellUtils.exec.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
+    console.log(`*********** 4`);
     //const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;
     //
     //shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
