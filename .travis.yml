@@ -33,7 +33,7 @@ install:
 
 script:
   - set -e
-  - node ./scripts/travis.js
+  - ./scripts/travis.sh
   - set +e
 
 after_script:
