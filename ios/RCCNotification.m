@@ -32,7 +32,7 @@
         [self.reactView.contentView.layer addObserver:self forKeyPath:@"frame" options:0 context:nil];
         [self.reactView.contentView.layer addObserver:self forKeyPath:@"bounds" options:0 context:NULL];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRNReload) name:RCTReloadNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRNReload) name:RCTReloadNotification object:nil];
         
         if ([params[@"dismissWithSwipe"] boolValue])
         {
@@ -434,7 +434,7 @@ static NSMutableArray *gShownNotificationViews = nil;
 
 +(void)dismissWithParams:(NSDictionary*)params resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject
 {
-    int count = [gShownNotificationViews count];
+    int count = (int)[gShownNotificationViews count];
     for (int i = count - 1 ; i >= 0; i--)
     {
         NotificationView *notificationView = [gShownNotificationViews objectAtIndex:i];

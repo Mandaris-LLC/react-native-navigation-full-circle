@@ -4,7 +4,7 @@
 
 @implementation RNNSplashScreen
 
-+(void)showSplashScreenWhileLoadingJS
++(void)show
 {
     CGRect screenBounds = [UIScreen mainScreen].bounds;
     UIView *splashView = nil;

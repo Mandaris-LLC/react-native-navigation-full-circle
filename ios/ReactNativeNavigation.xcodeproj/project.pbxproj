@@ -257,18 +257,18 @@
 		D8AFADB41BEE6F3F00A4592D = {
 			isa = PBXGroup;
 			children = (
-				7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */,
-				7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */,
-				7BC934691E267BAD00EFA125 /* RNNCommandsHandler.h */,
-				7BC9346A1E267BAD00EFA125 /* RNNCommandsHandler.m */,
 				7BA500731E2544B9001B9E1B /* ReactNativeNavigation.h */,
 				7BA500741E2544B9001B9E1B /* ReactNativeNavigation.m */,
 				7BA500761E254908001B9E1B /* RNNSplashScreen.h */,
 				7BA500771E254908001B9E1B /* RNNSplashScreen.m */,
-				7BBFE55F1E253F97002A6182 /* RNNStore.h */,
-				7BBFE5601E253F97002A6182 /* RNNStore.m */,
 				7BBFE5421E25330E002A6182 /* RNNBridgeModule.h */,
 				7BBFE5431E25330E002A6182 /* RNNBridgeModule.m */,
+				7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */,
+				7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */,
+				7BC934691E267BAD00EFA125 /* RNNCommandsHandler.h */,
+				7BC9346A1E267BAD00EFA125 /* RNNCommandsHandler.m */,
+				7BBFE55F1E253F97002A6182 /* RNNStore.h */,
+				7BBFE5601E253F97002A6182 /* RNNStore.m */,
 				7BBFE53F1E253144002A6182 /* old */,
 				D8AFADBE1BEE6F3F00A4592D /* Products */,
 			);
@@ -482,6 +482,7 @@
 		D8AFADC71BEE6F3F00A4592D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../react-native/React/**",
@@ -495,6 +496,7 @@
 		D8AFADC81BEE6F3F00A4592D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../react-native/React/**",

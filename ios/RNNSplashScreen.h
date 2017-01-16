@@ -2,6 +2,6 @@
 
 @interface RNNSplashScreen : NSObject
 
-+(void)showSplashScreenWhileLoadingJS;
++(void)show;
 
 @end

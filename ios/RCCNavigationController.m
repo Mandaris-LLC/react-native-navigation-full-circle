@@ -200,7 +200,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     BOOL animatedBool = animated ? [animated boolValue] : YES;
     
     NSNumber *setHidden = actionParams[@"hidden"];
-    BOOL isHiddenBool = setHidden ? [setHidden boolValue] : NO;
+//    BOOL isHiddenBool = setHidden ? [setHidden boolValue] : NO; 
     
     RCCViewController *topViewController = ((RCCViewController*)self.topViewController);
     topViewController.navigatorStyle[@"navBarHidden"] = setHidden;
@@ -213,12 +213,12 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
 {
   NSString *callbackId = objc_getAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_KEY);
   if (!callbackId) return;
-  NSString *buttonId = objc_getAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_ID);
-  [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:callbackId body:@
-   {
-     @"type": @"NavBarButtonPress",
-     @"id": buttonId ? buttonId : [NSNull null]
-   }];
+//  NSString *buttonId = objc_getAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_ID);
+//  [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:callbackId body:@
+//   {
+//     @"type": @"NavBarButtonPress",
+//     @"id": buttonId ? buttonId : [NSNull null]
+//   }];
 }
 
 -(void)setButtons:(NSArray*)buttons viewController:(UIViewController*)viewController side:(NSString*)side animated:(BOOL)animated
