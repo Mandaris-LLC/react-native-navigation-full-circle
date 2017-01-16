@@ -38,6 +38,7 @@ script:
   - yarn run test-js
   - yarn run test-android
   - yarn run test-ios
+  - cd playground && yarn run e2e release
   - yarn run release
   - set +e
 
