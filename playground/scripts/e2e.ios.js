@@ -16,7 +16,7 @@ function buildProjForDetox() {
 
   shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb ${release ? '' : 'debug'}`);
 
-  shellUtils.exec.execSync(`echo -en 'travis_fold:start:xcodebuild'`);
+  shellUtils.exec.execSync(`echo -en 'travis_fold:start:xcodebuild\n'`);
 
   const cmd = `RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
@@ -26,12 +26,12 @@ function buildProjForDetox() {
             -derivedDataPath ./DerivedData/playground`;
 
   if (hasXcpretty()) {
-    shellUtils.exec.execSync(`set -o pipefail && ${cmd} | xcpretty`);
+    shellUtils.exec.execSync(`${cmd} | xcpretty`);
   } else {
     shellUtils.exec.execSync(`${cmd}`);
   }
 
-  shellUtils.exec.execSync(`echo -en 'travis_fold:end:xcodebuild'`);
+  shellUtils.exec.execSync(`echo -en 'travis_fold:end:xcodebuild\n'`);
 }
 function hasXcpretty() {
   try {
