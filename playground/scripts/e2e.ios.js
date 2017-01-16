@@ -40,7 +40,7 @@ function hasXcpretty() {
   }
 }
 
-function e2e() {
+function e2e() { //eslint-disable-line
   try {
     shellUtils.exec.execSync(`echo 'travis_fold:start:detox-ios'`);
     shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
@@ -57,6 +57,10 @@ function e2e() {
   } finally {
     shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb`);
     shellUtils.exec.kill(`detox-server`);
+    if (process.env.CI) {
+      shellUtils.exec.kill(`Simulator`);
+      shellUtils.exec.kill(`CoreSimulator`);
+    }
     shellUtils.exec.execSync(`cat ./detox-server.log`);
     shellUtils.exec.execSync(`rm -f ./detox-server.log`);
     shellUtils.exec.execSync(`sleep 5`);
