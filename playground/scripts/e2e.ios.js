@@ -17,7 +17,6 @@ function buildProjForDetox() {
   shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb ${release ? '' : 'debug'}`);
 
   shellUtils.exec.execSync(`echo -en 'travis_fold:start:xcodebuild\n'`);
-
   const cmd = `RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
             -scheme ${scheme} build
@@ -30,12 +29,7 @@ function buildProjForDetox() {
   } else {
     shellUtils.exec.execSync(`${cmd}`);
   }
-
-  console.log(`*********** 1`);
-
   shellUtils.exec.execSync(`echo -en 'travis_fold:end:xcodebuild\n'`);
-
-  console.log(`*********** 2`);
 }
 function hasXcpretty() {
   try {
@@ -47,29 +41,27 @@ function hasXcpretty() {
 
 function e2e() {
   try {
-    console.log(`*********** 3`);
-    //shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
-    //shellUtils.exec.kill(`detox-server`);
+    shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
+    shellUtils.exec.kill(`detox-server`);
     shellUtils.exec.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
-    console.log(`*********** 4`);
-    //const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;
-    //
-    //shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
-    //                          BABEL_ENV=test
-    //                          ./node_modules/mocha/bin/mocha e2e
-    //                            --timeout 120000
-    //                            --recursive
-    //                            --compilers js:babel-register`);
+    const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;
+
+    shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
+                              BABEL_ENV=test
+                              ./node_modules/mocha/bin/mocha e2e
+                                --timeout 120000
+                                --recursive
+                                --compilers js:babel-register`);
   } finally {
-    //shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb`);
-    //shellUtils.exec.kill(`detox-server`);
-    //if (release) {
-    //  shellUtils.exec.kill(`Simulator`);
-    //  shellUtils.exec.kill(`CoreSimulator`);
-    //}
-    //shellUtils.exec.execSync(`cat ./detox-server.log`);
-    //shellUtils.exec.execSync(`rm -f ./detox-server.log`);
-    //shellUtils.exec.execSync(`sleep 5`);
+    shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb`);
+    shellUtils.exec.kill(`detox-server`);
+    if (release) {
+      shellUtils.exec.kill(`Simulator`);
+      shellUtils.exec.kill(`CoreSimulator`);
+    }
+    shellUtils.exec.execSync(`cat ./detox-server.log`);
+    shellUtils.exec.execSync(`rm -f ./detox-server.log`);
+    shellUtils.exec.execSync(`sleep 5`);
   }
 }
 
