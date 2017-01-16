@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7B11269D1E2D1D4800F9B03B /* RNNAssert.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B11269C1E2D1D4800F9B03B /* RNNAssert.m */; };
 		7B1126A01E2D263F00F9B03B /* RNNEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B11269F1E2D263F00F9B03B /* RNNEventEmitter.m */; };
 		7B1126A31E2D2B6C00F9B03B /* RNNSplashScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BA500761E254908001B9E1B /* RNNSplashScreen.h */; };
 		7B1126A41E2D2B6C00F9B03B /* ReactNativeNavigation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BA500731E2544B9001B9E1B /* ReactNativeNavigation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B1126A51E2D2B6C00F9B03B /* RNN.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BBFE55F1E253F97002A6182 /* RNN.h */; };
 		7B1126A61E2D2B6C00F9B03B /* RNNBridgeModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BBFE5421E25330E002A6182 /* RNNBridgeModule.h */; };
 		7B1126A71E2D2B6C00F9B03B /* RNNEventEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B11269E1E2D263F00F9B03B /* RNNEventEmitter.h */; };
-		7B1126A81E2D2B6C00F9B03B /* RNNAssert.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B11269B1E2D1D4800F9B03B /* RNNAssert.h */; };
 		7B1126A91E2D2B6C00F9B03B /* RNNControllerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */; };
 		7BA500751E2544B9001B9E1B /* ReactNativeNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA500741E2544B9001B9E1B /* ReactNativeNavigation.m */; };
 		7BA500781E254908001B9E1B /* RNNSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA500771E254908001B9E1B /* RNNSplashScreen.m */; };
@@ -36,8 +34,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7B11269B1E2D1D4800F9B03B /* RNNAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNAssert.h; sourceTree = "<group>"; };
-		7B11269C1E2D1D4800F9B03B /* RNNAssert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNAssert.m; sourceTree = "<group>"; };
 		7B11269E1E2D263F00F9B03B /* RNNEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNEventEmitter.h; sourceTree = "<group>"; };
 		7B11269F1E2D263F00F9B03B /* RNNEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNEventEmitter.m; sourceTree = "<group>"; };
 		7BA500731E2544B9001B9E1B /* ReactNativeNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactNativeNavigation.h; sourceTree = "<group>"; };
@@ -69,26 +65,32 @@
 			children = (
 				7BA500761E254908001B9E1B /* RNNSplashScreen.h */,
 				7BA500771E254908001B9E1B /* RNNSplashScreen.m */,
+				7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */,
+				7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		7BD721F31E2D3AA100724059 /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				7BBFE5421E25330E002A6182 /* RNNBridgeModule.h */,
+				7BBFE5431E25330E002A6182 /* RNNBridgeModule.m */,
+				7B11269E1E2D263F00F9B03B /* RNNEventEmitter.h */,
+				7B11269F1E2D263F00F9B03B /* RNNEventEmitter.m */,
+			);
+			name = Bridge;
 			sourceTree = "<group>";
 		};
 		D8AFADB41BEE6F3F00A4592D = {
 			isa = PBXGroup;
 			children = (
-				7B1E4C4B1E2D173700C3A525 /* Controllers */,
 				7BA500731E2544B9001B9E1B /* ReactNativeNavigation.h */,
 				7BA500741E2544B9001B9E1B /* ReactNativeNavigation.m */,
+				7BD721F31E2D3AA100724059 /* Bridge */,
+				7B1E4C4B1E2D173700C3A525 /* Controllers */,
 				7BBFE55F1E253F97002A6182 /* RNN.h */,
 				7BBFE5601E253F97002A6182 /* RNN.m */,
-				7BBFE5421E25330E002A6182 /* RNNBridgeModule.h */,
-				7BBFE5431E25330E002A6182 /* RNNBridgeModule.m */,
-				7B11269E1E2D263F00F9B03B /* RNNEventEmitter.h */,
-				7B11269F1E2D263F00F9B03B /* RNNEventEmitter.m */,
-				7B11269B1E2D1D4800F9B03B /* RNNAssert.h */,
-				7B11269C1E2D1D4800F9B03B /* RNNAssert.m */,
-				7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */,
-				7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */,
 				D8AFADBE1BEE6F3F00A4592D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -113,7 +115,6 @@
 				7B1126A51E2D2B6C00F9B03B /* RNN.h in Headers */,
 				7B1126A61E2D2B6C00F9B03B /* RNNBridgeModule.h in Headers */,
 				7B1126A71E2D2B6C00F9B03B /* RNNEventEmitter.h in Headers */,
-				7B1126A81E2D2B6C00F9B03B /* RNNAssert.h in Headers */,
 				7B1126A91E2D2B6C00F9B03B /* RNNControllerFactory.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,7 +177,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B1126A01E2D263F00F9B03B /* RNNEventEmitter.m in Sources */,
-				7B11269D1E2D1D4800F9B03B /* RNNAssert.m in Sources */,
 				7BA500751E2544B9001B9E1B /* ReactNativeNavigation.m in Sources */,
 				7BBFE5441E25330E002A6182 /* RNNBridgeModule.m in Sources */,
 				7BA500781E254908001B9E1B /* RNNSplashScreen.m in Sources */,

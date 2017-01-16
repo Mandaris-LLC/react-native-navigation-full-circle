@@ -6,8 +6,6 @@
 
 @interface RNN : NSObject
 
-+(id<UIApplicationDelegate>)appDelegate;
-
 +(instancetype)instance;
 
 -(void)init:(NSURL*)jsCodeLocation launchOptions:(NSDictionary*)launchOptions;

@@ -8,7 +8,8 @@
 
 @end
 
-@implementation RNN {
+@implementation RNN
+{
     RCTBridge* bridge;
 }
 
@@ -26,21 +27,16 @@
     return sharedInstance;
 }
 
-+(id<UIApplicationDelegate>)appDelegate
-{
-    return UIApplication.sharedApplication.delegate;
-}
-
 -(void)init:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBridgeFinishedLoading) name:RCTJavaScriptDidLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptLoaded) name:RCTJavaScriptDidLoadNotification object:nil];
     // this will load the JS bundle
     bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation moduleProvider:nil launchOptions:launchOptions];
 }
 
--(void)onBridgeFinishedLoading
+-(void)onJavaScriptLoaded
 {
-    [[bridge moduleForClass:[RNNEventEmitter class]] sendEventWithName:RNNEventOnAppLaunched body:nil];
+    [RNNEventEmitter sendOnAppLaunched];
 }
 
 -(RCTBridge *)bridge

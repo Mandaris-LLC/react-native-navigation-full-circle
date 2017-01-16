@@ -21,10 +21,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		2636F1CD1E11309B007ABB09 /* RNNViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2636F1CC1E11309B007ABB09 /* RNNViewControllerTests.m */; };
 		2647D65F1DB175C200B23722 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2647D65E1DB175B300B23722 /* libReactNativeNavigation.a */; };
 		7B9B39861DEB4091004A6281 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B9B39631DEB4076004A6281 /* libRCTAnimation.a */; };
-		7BC934871E268CF600EFA125 /* RNNControllerFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BC934861E268CF600EFA125 /* RNNControllerFactoryTest.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -204,11 +202,9 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		2636F1CC1E11309B007ABB09 /* RNNViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNViewControllerTests.m; sourceTree = "<group>"; };
 		2647D6591DB175B300B23722 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7B9B395C1DEB4076004A6281 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		7BC934861E268CF600EFA125 /* RNNControllerFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNControllerFactoryTest.m; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -288,8 +284,6 @@
 			isa = PBXGroup;
 			children = (
 				00E356F21AD99517003FC87E /* playgroundTests.m */,
-				2636F1CC1E11309B007ABB09 /* RNNViewControllerTests.m */,
-				7BC934861E268CF600EFA125 /* RNNControllerFactoryTest.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
 			path = playgroundTests;
@@ -745,8 +739,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* playgroundTests.m in Sources */,
-				2636F1CD1E11309B007ABB09 /* RNNViewControllerTests.m in Sources */,
-				7BC934871E268CF600EFA125 /* RNNControllerFactoryTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

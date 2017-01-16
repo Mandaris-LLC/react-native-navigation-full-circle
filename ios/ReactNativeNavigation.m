@@ -1,5 +1,6 @@
 
 #import "ReactNativeNavigation.h"
+
 #import "RNNSplashScreen.h"
 #import "RNN.h"
 
@@ -12,8 +13,8 @@
 
 +(void)bootstrap:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions
 {
-    RNN.appDelegate.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    RNN.appDelegate.window.backgroundColor = [UIColor whiteColor];
+    UIApplication.sharedApplication.delegate.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    UIApplication.sharedApplication.delegate.window.backgroundColor = [UIColor whiteColor];
     
     [RNNSplashScreen show];
     

@@ -14,8 +14,8 @@ RCT_EXPORT_MODULE(NativeNavigation);
 
 RCT_EXPORT_METHOD(startApp:(NSDictionary*)layout)
 {
-    RNN.appDelegate.window.rootViewController = [RNNControllerFactory createRootViewController:layout];
-    [RNN.appDelegate.window makeKeyAndVisible];
+    UIApplication.sharedApplication.delegate.window.rootViewController = [RNNControllerFactory createRootViewController:layout];
+    [UIApplication.sharedApplication.delegate.window makeKeyAndVisible];
 }
 
 @end
