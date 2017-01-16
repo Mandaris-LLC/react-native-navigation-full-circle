@@ -16,8 +16,7 @@ run_f () {
 
   duration=$SECONDS
   echo "travis_fold:end:$name"
-  echo -e "${green}\t\t\t --> $(($duration / 60)) minutes and $(($duration % 60)) seconds ${nocolor}"
-  echo "\n"
+  echo -e "${green}\t\t\t --> $(($duration / 60)) minutes and $(($duration % 60)) seconds ${nocolor}\n"
 }
 
 run_f "yarn install"
