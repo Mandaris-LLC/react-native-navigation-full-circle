@@ -46,24 +46,24 @@ function e2e() {
     shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
     shellUtils.exec.kill(`detox-server`);
     shellUtils.exec.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
-    const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;
-
-    shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}" 
-                              BABEL_ENV=test
-                              ./node_modules/mocha/bin/mocha e2e 
-                                --timeout 120000 
-                                --recursive
-                                --compilers js:babel-register`);
+    //const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;
+    //
+    //shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
+    //                          BABEL_ENV=test
+    //                          ./node_modules/mocha/bin/mocha e2e
+    //                            --timeout 120000
+    //                            --recursive
+    //                            --compilers js:babel-register`);
   } finally {
-    shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb`);
-    shellUtils.exec.kill(`detox-server`);
-    if (release) {
-      shellUtils.exec.kill(`Simulator`);
-      shellUtils.exec.kill(`CoreSimulator`);
-    }
-    shellUtils.exec.execSync(`cat ./detox-server.log`);
-    shellUtils.exec.execSync(`rm -f ./detox-server.log`);
-    shellUtils.exec.execSync(`sleep 5`);
+    //shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb`);
+    //shellUtils.exec.kill(`detox-server`);
+    //if (release) {
+    //  shellUtils.exec.kill(`Simulator`);
+    //  shellUtils.exec.kill(`CoreSimulator`);
+    //}
+    //shellUtils.exec.execSync(`cat ./detox-server.log`);
+    //shellUtils.exec.execSync(`rm -f ./detox-server.log`);
+    //shellUtils.exec.execSync(`sleep 5`);
   }
 }
 

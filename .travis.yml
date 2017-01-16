@@ -39,6 +39,7 @@ script:
   - yarn run test-android
   - yarn run test-ios
   - yarn run release
+  - detoxAppBuildPath="ios/DerivedData/playground/Build/Products/Release_Detox-iphonesimulator/playground.app" BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --timeout 120000 --recursive --compilers js:babel-register
   - set +e
 
 after_script:
