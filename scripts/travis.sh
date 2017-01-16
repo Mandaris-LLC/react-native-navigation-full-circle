@@ -2,10 +2,11 @@
 
 run_f () {
   cmd="${1}"
+  name=${cmd//[ ]/_}
 
-  echo "travis_fold:start:$cmd"
+  echo "travis_fold:start:$name"
   ($cmd)
-  echo "travis_fold:end:$cmd"
+  echo "travis_fold:end:$name"
 }
 
 run_f "yarn install"
