@@ -19,13 +19,14 @@ function buildProjForDetox() {
   shellUtils.exec.execSync(`echo 'travis_fold:start:xcodebuild'`);
   const cmd = `RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
-            -scheme ${scheme} build
+            -scheme ${scheme} 
+            ${release ? 'clean build' : 'build'} 
             -project playground.xcodeproj
             -sdk iphonesimulator
             -derivedDataPath ./DerivedData/playground`;
 
   if (hasXcpretty()) {
-    shellUtils.exec.execSync(`${cmd} | xcpretty`);
+    shellUtils.exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
   } else {
     shellUtils.exec.execSync(`${cmd}`);
   }
