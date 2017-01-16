@@ -29,6 +29,6 @@ end
 
 project.build_configuration_list['Release'].build_settings['GCC_PREPROCESSOR_DEFINITIONS'] = release_preprocessor_macros
 
-project.build_configuration_list['Release'].build_settings['WARNING_CFLAGS'] = ['-W-no-shorten-64-to-32','-W-no-unused-parameter','-W-no-unreachable-code','-W-no-deprecated-declarations','-W-no-extra-tokens','-W-no-unused-variable','-W-no-incompatible-pointer-types','-W-no-conditional-uninitialized','-W-no-undeclared-selector','-W-no-objc-protocol-property-synthesis']
+project.build_configuration_list['Release'].build_settings['WARNING_CFLAGS'] = ['-Wno-shorten-64-to-32','-Wno-unused-parameter','-Wno-unreachable-code','-Wno-deprecated-declarations','-Wno-extra-tokens','-Wno-unused-variable','-Wno-incompatible-pointer-types','-Wno-conditional-uninitialized','-Wno-undeclared-selector','-Wno-objc-protocol-property-synthesis']
 
 raise "Error: Unable to save Xcode project" unless project.save()
