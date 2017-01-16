@@ -14,6 +14,6 @@ echo "************ 2"
 
 echo "************ 3"
 
-detoxAppBuildPath="ios/DerivedData/playground/Build/Products/Release_Detox-iphonesimulator/playground.app" BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --timeout 120000 --recursive --compilers js:babel-register
+detoxAppBuildPath="ios/DerivedData/playground/Build/Products/Release_Detox-iphonesimulator/playground.app" BABEL_ENV=test ./node_modules/mocha/bin/mocha e2e --timeout 240000 --recursive --compilers js:babel-register
 
 echo "************ 4"
