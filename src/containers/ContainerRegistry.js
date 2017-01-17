@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {AppRegistry} from 'react-native';
+
 import * as Store from './Store';
 
 export function registerContainer(containerName, getContainerFunc) {

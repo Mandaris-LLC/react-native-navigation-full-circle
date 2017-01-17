@@ -1,7 +1,12 @@
-import {NativeModules} from 'react-native';
-const {NativeNavigation} = NativeModules;
-import * as LayoutBuilder from './LayoutBuilder';
+import LayoutTreeParser from './LayoutTreeParser';
 
-export function startApp(params) {
-  NativeNavigation.startApp(LayoutBuilder.parse(params));
+export default class Commands {
+  constructor(nativeCommandsSender, uniqueIdProvider) {
+    this.nativeCommandsSender = nativeCommandsSender;
+    this.layoutTreeParser = new LayoutTreeParser(uniqueIdProvider);
+  }
+
+  startApp(params) {
+    this.nativeCommandsSender.startApp(this.layoutTreeParser.parse(params));
+  }
 }

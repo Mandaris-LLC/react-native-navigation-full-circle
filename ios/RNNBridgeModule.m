@@ -5,7 +5,7 @@
 
 @implementation RNNBridgeModule
 
-RCT_EXPORT_MODULE(NativeNavigation);
+RCT_EXPORT_MODULE();
 
 - (dispatch_queue_t)methodQueue
 {

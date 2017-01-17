@@ -1,19 +1,16 @@
 describe('Navigation', () => {
   let Navigation;
-  let ContainerRegistry, Commands;
-  let mockNativeEventsReceiver;
+  let ContainerRegistry;
 
   beforeEach(() => {
     jest.mock('./containers/ContainerRegistry');
-    jest.mock('./commands/Commands');
     ContainerRegistry = require('./containers/ContainerRegistry');
-    Commands = require('./commands/Commands');
 
-    mockNativeEventsReceiver = {
-      onAppLaunched: jest.fn()
-    };
+    jest.mock('./adapters/UniqueIdProvider');
+    jest.mock('./adapters/NativeCommandsSender');
+    jest.mock('./adapters/NativeEventsReceiver');
 
-    jest.mock('./adapters/NativeEventsReceiver', () => () => mockNativeEventsReceiver);
+    jest.mock('./commands/Commands');
 
     Navigation = require('./Navigation');
   });
@@ -29,12 +26,14 @@ describe('Navigation', () => {
   it('startApp delegates to Commands', () => {
     const params = {};
     Navigation.startApp(params);
-    expect(Commands.startApp).toHaveBeenCalledTimes(1);
-    expect(Commands.startApp).toHaveBeenCalledWith(params);
+    expect(Navigation.commands.startApp).toHaveBeenCalledTimes(1);
+    expect(Navigation.commands.startApp).toHaveBeenCalledWith(params);
   });
 
   it('onAppLaunched delegates to NativeEventsReceiver', () => {
-    Navigation.onAppLaunched(jest.fn());
-    expect(mockNativeEventsReceiver.onAppLaunched).toHaveBeenCalledTimes(1);
+    const fn = jest.fn();
+    Navigation.onAppLaunched(fn);
+    expect(Navigation.nativeEventsReceiver.onAppLaunched).toHaveBeenCalledTimes(1);
+    expect(Navigation.nativeEventsReceiver.onAppLaunched).toHaveBeenCalledWith(fn);
   });
 });
