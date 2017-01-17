@@ -1,4 +1,11 @@
 import {NativeModules} from 'react-native';
 
-const singleton = NativeModules.RNNBridgeModule;
-export default singleton;
+export default class NativeCommandsSender {
+  constructor() {
+    this.nativeCommandsModule = NativeModules.RNNBridgeModule;
+  }
+
+  startApp(layoutTree) {
+    this.nativeCommandsModule.startApp(layoutTree);
+  }
+}

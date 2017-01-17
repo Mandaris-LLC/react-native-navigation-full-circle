@@ -1,15 +1,15 @@
 describe('Commands', () => {
   let uut;
-  const nativeCommandsSender = {
+  const mockCommandsSender = {
     startApp: jest.fn()
   };
-  const uniqueIdProvider = {
+  const mockIdProvider = {
     generate: (prefix) => `${prefix}UNIQUE`
   };
 
   beforeEach(() => {
     const Commands = require('./Commands').default;
-    uut = new Commands(nativeCommandsSender, uniqueIdProvider);
+    uut = new Commands(mockCommandsSender, mockIdProvider);
   });
 
   describe('startApp', () => {
@@ -19,7 +19,7 @@ describe('Commands', () => {
           name: 'com.example.MyScreen'
         }
       });
-      expect(nativeCommandsSender.startApp).toHaveBeenCalledTimes(1);
+      expect(mockCommandsSender.startApp).toHaveBeenCalledTimes(1);
       //TODO
     });
   });

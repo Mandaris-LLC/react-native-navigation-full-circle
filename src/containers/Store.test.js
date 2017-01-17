@@ -2,7 +2,8 @@ describe('Store', () => {
   let uut;
 
   beforeEach(() => {
-    uut = require('./Store');
+    const Store = require('./Store').default;
+    uut = new Store();
   });
 
   it('initial state', () => {

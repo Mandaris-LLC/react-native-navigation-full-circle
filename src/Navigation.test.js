@@ -1,26 +1,23 @@
 describe('Navigation', () => {
   let Navigation;
-  let ContainerRegistry;
 
   beforeEach(() => {
-    jest.mock('./containers/ContainerRegistry');
-    ContainerRegistry = require('./containers/ContainerRegistry');
-
     jest.mock('./adapters/UniqueIdProvider');
     jest.mock('./adapters/NativeCommandsSender');
     jest.mock('./adapters/NativeEventsReceiver');
 
+    jest.mock('./containers/ContainerRegistry');
     jest.mock('./commands/Commands');
 
     Navigation = require('./Navigation');
   });
 
   it('registerContainer delegates to ContainerRegistry', () => {
-    expect(ContainerRegistry.registerContainer).not.toHaveBeenCalled();
+    expect(Navigation.containerRegistry.registerContainer).not.toHaveBeenCalled();
     const fn = jest.fn();
     Navigation.registerContainer('name', fn);
-    expect(ContainerRegistry.registerContainer).toHaveBeenCalledTimes(1);
-    expect(ContainerRegistry.registerContainer).toHaveBeenCalledWith('name', fn);
+    expect(Navigation.containerRegistry.registerContainer).toHaveBeenCalledTimes(1);
+    expect(Navigation.containerRegistry.registerContainer).toHaveBeenCalledWith('name', fn);
   });
 
   it('startApp delegates to Commands', () => {

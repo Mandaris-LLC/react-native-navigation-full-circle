@@ -1,19 +1,21 @@
-import * as ContainerRegistry from './containers/ContainerRegistry';
-
-import nativeCommandsSender from './adapters/NativeCommandsSender';
+import NativeCommandsSender from './adapters/NativeCommandsSender';
 import NativeEventsReceiver from './adapters/NativeEventsReceiver';
 import UniqueIdProvider from './adapters/UniqueIdProvider';
+
+import Store from './containers/Store';
+import ContainerRegistry from './containers/ContainerRegistry';
 import Commands from './commands/Commands';
 
 class Navigation {
   constructor() {
     this.nativeEventsReceiver = new NativeEventsReceiver();
     this.uniqueIdProvider = new UniqueIdProvider();
-    this.commands = new Commands(nativeCommandsSender, this.uniqueIdProvider);
+    this.containerRegistry = new ContainerRegistry(new Store());
+    this.commands = new Commands(new NativeCommandsSender(), this.uniqueIdProvider);
   }
 
   registerContainer(containerName, getContainerFunc) {
-    ContainerRegistry.registerContainer(containerName, getContainerFunc);
+    this.containerRegistry.registerContainer(containerName, getContainerFunc);
   }
 
   startApp(params) {

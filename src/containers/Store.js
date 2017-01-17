@@ -1,22 +1,24 @@
 import _ from 'lodash';
 
-const state = {
-  propsByContainerId: {},
-  containersByName: {}
-};
+export default class Store {
+  constructor() {
+    this.propsByContainerId = {};
+    this.containersByName = {};
+  }
 
-export function setPropsForContainerId(containerId, props) {
-  _.set(state.propsByContainerId, containerId, props);
-}
+  setPropsForContainerId(containerId, props) {
+    _.set(this.propsByContainerId, containerId, props);
+  }
 
-export function getPropsForContainerId(containerId) {
-  return _.get(state.propsByContainerId, containerId, {});
-}
+  getPropsForContainerId(containerId) {
+    return _.get(this.propsByContainerId, containerId, {});
+  }
 
-export function setContainerClass(containerName, ContainerClass) {
-  state.containersByName[containerName] = ContainerClass;
-}
+  setContainerClass(containerName, ContainerClass) {
+    this.containersByName[containerName] = ContainerClass;
+  }
 
-export function getContainerClass(containerName) {
-  return state.containersByName[containerName];
+  getContainerClass(containerName) {
+    return this.containersByName[containerName];
+  }
 }
