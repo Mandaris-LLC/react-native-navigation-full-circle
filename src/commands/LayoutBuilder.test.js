@@ -2,7 +2,7 @@ describe('LayoutBuilder', () => {
   let LayoutBuilder;
 
   beforeEach(() => {
-    jest.mock('../providers/UniqueIdProvider');
+    jest.mock('../adapters/UniqueIdProvider');
     LayoutBuilder = require('./LayoutBuilder');
   });
 

@@ -27,11 +27,8 @@ class WelcomeScreen extends Component {
   }
 }
 
-import {NativeModules, NativeEventEmitter} from 'react-native';
-
 export function start() {
-  const emitter = new NativeEventEmitter(NativeModules.RNNEventEmitter);
-  emitter.addListener('onAppLaunched', () => {
+  Navigation.onAppLaunched('onAppLaunched', () => {
     Navigation.registerContainer(`com.example.WelcomeScreen`, () => WelcomeScreen);
     Navigation.startApp({
       container: {

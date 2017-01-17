@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {uniqueId} from '../providers/UniqueIdProvider';
+import {uniqueId} from '../adapters/UniqueIdProvider';
 
 export function parse(params) {
   const layout = _.merge({}, params);

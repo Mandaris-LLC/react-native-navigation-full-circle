@@ -1,33 +1,21 @@
-import _ from 'lodash';
-
 describe('Navigation', () => {
   let Navigation;
   let ContainerRegistry, Commands;
+  let mockNativeEventsReceiver;
 
   beforeEach(() => {
     jest.mock('./containers/ContainerRegistry');
     jest.mock('./commands/Commands');
     ContainerRegistry = require('./containers/ContainerRegistry');
     Commands = require('./commands/Commands');
-    Navigation = require('./Navigation');
-  });
 
-  it('exposes static commands', () => {
-    _.forEach([
-      Navigation.registerContainer,
-      Navigation.startApp,
-      Navigation.push,
-      Navigation.pop,
-      Navigation.popToRoot,
-      Navigation.newStack,
-      Navigation.showModal,
-      Navigation.dismissModal,
-      Navigation.dismissAllModals,
-      Navigation.showLightbox,
-      Navigation.dismissLightbox,
-      Navigation.showInAppNotification,
-      Navigation.dismissInAppNotification
-    ], (f) => expect(f).toBeInstanceOf(Function));
+    mockNativeEventsReceiver = {
+      onAppLaunched: jest.fn()
+    };
+
+    jest.mock('./adapters/NativeEventsReceiver', () => () => mockNativeEventsReceiver);
+
+    Navigation = require('./Navigation');
   });
 
   it('registerContainer delegates to ContainerRegistry', () => {
@@ -43,5 +31,10 @@ describe('Navigation', () => {
     Navigation.startApp(params);
     expect(Commands.startApp).toHaveBeenCalledTimes(1);
     expect(Commands.startApp).toHaveBeenCalledWith(params);
+  });
+
+  it('onAppLaunched delegates to NativeEventsReceiver', () => {
+    Navigation.onAppLaunched(jest.fn());
+    expect(mockNativeEventsReceiver.onAppLaunched).toHaveBeenCalledTimes(1);
   });
 });
