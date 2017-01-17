@@ -1,121 +1,28 @@
-xdescribe('LayoutTreeParser', () => {
-  let LayoutBuilder;
+import * as SimpleLayouts from './SimpleLayouts';
+
+describe('LayoutTreeParser', () => {
+  let uut;
 
   beforeEach(() => {
-    jest.mock('../adapters/UniqueIdProvider');
-    LayoutBuilder = require('./LayoutTreeParser');
+    const uniqueIdProvider = {generate: (p) => `${p}UNIQUE_ID`};
+    const LayoutTreeParser = require('./LayoutTreeParser').default;
+    uut = new LayoutTreeParser(uniqueIdProvider);
   });
 
-  describe('parse', () => {
-    it('deeply clones input params', () => {
-      const input = {inner: {value: 1}};
-      expect(LayoutBuilder.parse(input)).not.toBe(input);
-      expect(LayoutBuilder.parse(input).inner).not.toBe(input.inner);
-    });
+  it('returns a deep clone', () => {
+    const input = {inner: {foo: {bar: 1}}};
+    expect(uut.parse(input)).not.toBe(input);
+    expect(uut.parse(input).inner).not.toBe(input.inner);
+    expect(uut.parse(input).inner.foo).not.toBe(input.inner.foo);
+  });
 
-    it('adds uniqueId to passed container', () => {
-      expect(LayoutBuilder.parse({
-        container: {
-          name: 'com.example.MyScreen'
-        }
-      })).toEqual({
-        container: {
-          name: 'com.example.MyScreen',
-          id: 'containerUNIQUE'
-        }
-      });
-    });
+  it('adds uniqueId to containers', () => {
+    const input = {container: {}};
+    expect(uut.parse(input)).toEqual({container: {id: 'containerUNIQUE_ID'}});
+  });
 
-    it('adds uniqueId to passed sideMenu', () => {
-      expect(LayoutBuilder.parse({
-        container: {
-          name: 'com.example.MyScreen'
-        },
-        sideMenu: {
-          left: {
-            name: 'com.example.SideMenu1'
-          },
-          right: {
-            name: 'com.example.SideMenu2'
-          }
-        }
-      })).toEqual({
-        container: {
-          name: 'com.example.MyScreen',
-          id: 'containerUNIQUE'
-        },
-        sideMenu: {
-          left: {
-            name: 'com.example.SideMenu1',
-            id: 'containerUNIQUE'
-          },
-          right: {
-            name: 'com.example.SideMenu2',
-            id: 'containerUNIQUE'
-          }
-        }
-      });
-    });
-
-    it('adds uniqueId to passed tabs', () => {
-      expect(LayoutBuilder.parse({
-        tabs: [
-          {
-            container: {
-              name: 'com.example.FirstTab'
-            }
-          },
-          {
-            container: {
-              name: 'com.example.SecondTab'
-            }
-          },
-          {
-            container: {
-              name: 'com.example.FirstTab'
-            }
-          }
-        ],
-        sideMenu: {
-          left: {
-            name: 'com.example.Menu1'
-          },
-          right: {
-            name: 'com.example.Menu2'
-          }
-        }
-      })).toEqual({
-        tabs: [
-          {
-            container: {
-              name: 'com.example.FirstTab',
-              id: 'containerUNIQUE'
-            }
-          },
-          {
-            container: {
-              name: 'com.example.SecondTab',
-              id: 'containerUNIQUE'
-            }
-          },
-          {
-            container: {
-              name: 'com.example.FirstTab',
-              id: 'containerUNIQUE'
-            }
-          }
-        ],
-        sideMenu: {
-          left: {
-            name: 'com.example.Menu1',
-            id: 'containerUNIQUE'
-          },
-          right: {
-            name: 'com.example.Menu2',
-            id: 'containerUNIQUE'
-          }
-        }
-      });
-    });
+  it('parses simple structures', () => {
+    uut.parse(SimpleLayouts.singleScreenApp);
+    //TODO
   });
 });

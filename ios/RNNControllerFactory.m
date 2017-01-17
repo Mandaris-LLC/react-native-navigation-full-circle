@@ -11,7 +11,14 @@
     NSString* containerName = layout[@"container"][@"name"];
     NSString* containerId = layout[@"container"][@"id"];
     
-    RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:RNN.instance.bridge moduleName:containerName initialProperties:@{@"containerId": containerId}];
+    return [RNNControllerFactory create:containerName containerId:containerId];
+}
+
++(UIViewController*)create:(NSString*)containerName containerId:(NSString*)containerId
+{
+    RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:RNN.instance.bridge
+                                                      moduleName:containerName
+                                               initialProperties:@{@"containerId": containerId}];
     
     UIViewController* controller = [UIViewController new];
     controller.view = reactView;

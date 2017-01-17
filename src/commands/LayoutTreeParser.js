@@ -6,7 +6,7 @@ export default class LayoutTreeParser {
   }
 
   parse(params) {
-    const layout = _.merge({}, params);
+    const layout = _.cloneDeep(params);
     if (layout.container) {
       layout.container.id = this.uniqueIdProvider.generate(`container`);
     }

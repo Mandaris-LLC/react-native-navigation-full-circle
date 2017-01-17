@@ -4,7 +4,7 @@ describe('Commands', () => {
     startApp: jest.fn()
   };
   const mockIdProvider = {
-    generate: (prefix) => `${prefix}UNIQUE`
+    generate: (prefix) => `${prefix}UNIQUE_ID`
   };
 
   beforeEach(() => {
@@ -20,7 +20,12 @@ describe('Commands', () => {
         }
       });
       expect(mockCommandsSender.startApp).toHaveBeenCalledTimes(1);
-      //TODO
+      expect(mockCommandsSender.startApp).toHaveBeenCalledWith({
+        container: {
+          name: 'com.example.MyScreen',
+          id: 'containerUNIQUE_ID'
+        }
+      });
     });
   });
 });
