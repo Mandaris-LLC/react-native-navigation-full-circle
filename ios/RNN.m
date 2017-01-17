@@ -30,6 +30,10 @@
 -(void)bootstrap:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptLoaded) name:RCTJavaScriptDidLoadNotification object:nil];
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptDevReload) name:RCTReloadNotification object:nil];
+#pragma GCC diagnostic pop
     // this will load the JS bundle
     bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation moduleProvider:nil launchOptions:launchOptions];
 }
@@ -37,6 +41,11 @@
 -(void)onJavaScriptLoaded
 {
     [RNNEventEmitter sendOnAppLaunched];
+}
+
+-(void)onJavaScriptDevReload
+{
+    UIApplication.sharedApplication.delegate.window.rootViewController = nil;
 }
 
 -(RCTBridge *)bridge

@@ -8,9 +8,10 @@ import Commands from './commands/Commands';
 
 class Navigation {
   constructor() {
+    this.store = new Store();
     this.nativeEventsReceiver = new NativeEventsReceiver();
     this.uniqueIdProvider = new UniqueIdProvider();
-    this.containerRegistry = new ContainerRegistry(new Store());
+    this.containerRegistry = new ContainerRegistry(this.store);
     this.commands = new Commands(new NativeCommandsSender(), this.uniqueIdProvider);
   }
 
