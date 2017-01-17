@@ -28,7 +28,7 @@ class WelcomeScreen extends Component {
 }
 
 export function start() {
-  Navigation.onAppLaunched('onAppLaunched', () => {
+  Navigation.onAppLaunched(() => {
     Navigation.registerContainer(`com.example.WelcomeScreen`, () => WelcomeScreen);
     Navigation.startApp({
       container: {

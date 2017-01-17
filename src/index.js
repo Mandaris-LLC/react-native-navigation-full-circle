@@ -1,4 +1,4 @@
-import * as Navigation from './Navigation';
+import Navigation from './Navigation';
 
 module.exports = Navigation;
 module.exports.default = Navigation;
