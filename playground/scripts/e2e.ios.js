@@ -4,17 +4,8 @@ const fs = require('fs');
 
 const release = _.includes(process.argv, 'release');
 
-function hackReactXcodeScript() {
-  const fileToHack = `./node_modules/react-native/packager/react-native-xcode.sh`;
-  const lines = _.split(String(fs.readFileSync(fileToHack)), '\n');
-  lines[11] = release ? '' : `exit 0;`;
-  fs.writeFileSync(fileToHack, _.join(lines, '\n'));
-}
-
 function buildProjForDetox() {
-  const scheme = release ? `playground_release_Detox` : `playground_Detox`;
-
-  shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb ${release ? '' : 'debug'}`);
+  const scheme = release ? `playground_release` : `playground`;
 
   shellUtils.exec.execSync(`echo 'travis_fold:start:xcodebuild'`);
   const cmd = `RCT_NO_LAUNCH_PACKAGER=true
@@ -46,7 +37,7 @@ function e2e() { //eslint-disable-line
     shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
     shellUtils.exec.kill(`detox-server`);
     shellUtils.exec.exec(`./node_modules/.bin/detox-server > ./detox-server.log 2>&1`);
-    const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}_Detox-iphonesimulator/playground.app`;
+    const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}-iphonesimulator/playground.app`;
 
     shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
                               BABEL_ENV=test
@@ -55,7 +46,6 @@ function e2e() { //eslint-disable-line
                                 --recursive
                                 --compilers js:babel-register`);
   } finally {
-    shellUtils.exec.execSync(`./scripts/detoxDebugFix.rb`);
     shellUtils.exec.kill(`detox-server`);
     if (process.env.CI) {
       shellUtils.exec.kill(`Simulator`);
@@ -69,7 +59,6 @@ function e2e() { //eslint-disable-line
 }
 
 function run() {
-  hackReactXcodeScript();
   buildProjForDetox();
   e2e();
 }
