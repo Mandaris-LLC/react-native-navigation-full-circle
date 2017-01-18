@@ -8,7 +8,6 @@ function installNavigation() {
 }
 
 function run() {
-  shellUtils.exec.execSync(`rm yarn.lock || true`);
   shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
 
   installNavigation();
