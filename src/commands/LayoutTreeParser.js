@@ -5,22 +5,45 @@ export default class LayoutTreeParser {
     this.uniqueIdProvider = uniqueIdProvider;
   }
 
-  parse(params) {
-    const layout = _.cloneDeep(params);
-    if (layout.container) {
-      layout.container.id = this.uniqueIdProvider.generate(`container`);
-    }
-    if (layout.sideMenu) {
-      if (layout.sideMenu.left) {
-        layout.sideMenu.left.id = this.uniqueIdProvider.generate(`container`);
-      }
-      if (layout.sideMenu.right) {
-        layout.sideMenu.right.id = this.uniqueIdProvider.generate(`container`);
-      }
-    }
-    if (layout.tabs) {
-      _.forEach(layout.tabs, (t) => t.container.id = this.uniqueIdProvider.generate(`container`));
-    }
+  parseSimpleApi(params) {
+    const layout = this.createContainerStackWithContainer(params.container);
+
+    //const layout = _.cloneDeep(params);
+    //if (layout.container) {
+    //  this.generateIdFor(layout.container);
+    //}
+    //if (layout.sideMenu) {
+    //  if (layout.sideMenu.left) {
+    //    this.generateIdFor(layout.sideMenu.left);
+    //  }
+    //  if (layout.sideMenu.right) {
+    //    this.generateIdFor(layout.sideMenu.right);
+    //  }
+    //}
+    //if (layout.tabs) {
+    //  _.forEach(layout.tabs, this.generateIdFor);
+    //}
     return layout;
+  }
+
+  createContainerStackWithContainer(container) {
+    return {
+      type: 'ContainerStack',
+      id: this.uniqueIdProvider.generate(`ContainerStack`),
+      children: [
+        this.createContainer(container)
+      ]
+    };
+  }
+
+  createContainer(container) {
+    return {
+      data: {
+        ...container
+      },
+      type: 'Container',
+      id: this.uniqueIdProvider.generate(`Container`),
+      children: []
+    };
   }
 }

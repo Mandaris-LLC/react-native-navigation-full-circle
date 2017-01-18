@@ -4,6 +4,23 @@ export const singleScreenApp = {
   }
 };
 
+export const passedFunction = () => 'Hello from a function';
+
+export const singleScreenWithAditionalParams = {
+  container: {
+    name: 'com.example.MyScreen',
+    passProps: {
+      foo: {
+        number: 1,
+        string: 'Hello!'
+      },
+      bar: passedFunction
+    },
+    style: {},
+    buttons: {}
+  }
+};
+
 export const tabBasedApp = {
   tabs: [
     {
@@ -62,7 +79,7 @@ export const singleWithBothMenus = {
   }
 };
 
-export const tabBasedWithSideMenu = {
+export const tabBasedWithBothSideMenus = {
   tabs: [
     {
       container: {

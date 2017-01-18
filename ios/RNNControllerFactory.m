@@ -8,10 +8,22 @@
 
 +(UIViewController *)createRootViewController:(NSDictionary *)layout
 {
-    NSString* containerName = layout[@"container"][@"name"];
-    NSString* containerId = layout[@"container"][@"id"];
+    if ([layout[@"type"] isEqualToString:@"ContainerStack"]) {
+        UINavigationController* stack = [[UINavigationController alloc] init];
+        
+        NSString* containerName = [layout[@"children"] objectAtIndex:0][@"data"][@"name"];
+        NSString* containerId = [layout[@"children"] objectAtIndex:0][@"id"];
+        
+        [stack setViewControllers:@[[RNNControllerFactory create:containerName containerId:containerId]] animated:false];
+        
+        return stack;
+    }
     
-    return [RNNControllerFactory create:containerName containerId:containerId];
+//    NSString* containerName = layout[@"container"][@"name"];
+//    NSString* containerId = layout[@"container"][@"id"];
+    
+//    return [RNNControllerFactory create:containerName containerId:containerId];
+    return nil;
 }
 
 +(UIViewController*)create:(NSString*)containerName containerId:(NSString*)containerId

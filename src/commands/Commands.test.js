@@ -21,10 +21,18 @@ describe('Commands', () => {
       });
       expect(mockCommandsSender.startApp).toHaveBeenCalledTimes(1);
       expect(mockCommandsSender.startApp).toHaveBeenCalledWith({
-        container: {
-          name: 'com.example.MyScreen',
-          id: 'containerUNIQUE_ID'
-        }
+        type: 'ContainerStack',
+        id: 'ContainerStackUNIQUE_ID',
+        children: [
+          {
+            type: 'Container',
+            id: 'ContainerUNIQUE_ID',
+            children: [],
+            data: {
+              name: 'com.example.MyScreen'
+            }
+          }
+        ]
       });
     });
   });
