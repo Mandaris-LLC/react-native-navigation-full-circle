@@ -94,6 +94,9 @@
 				D8AFADBE1BEE6F3F00A4592D /* Products */,
 			);
 			sourceTree = "<group>";
+			tabWidth = 4;
+			usesTabs = 1;
+			wrapsLines = 1;
 		};
 		D8AFADBE1BEE6F3F00A4592D /* Products */ = {
 			isa = PBXGroup;

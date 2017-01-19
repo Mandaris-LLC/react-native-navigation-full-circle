@@ -14,34 +14,34 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  NSURL *jsCodeLocation;
+	NSURL *jsCodeLocation;
 #ifdef DEBUG
-  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+	jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
-   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+	jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
-
-
-  // **********************************************
-  // *** DON'T MISS: THIS IS HOW WE BOOTSTRAP *****
-  // **********************************************
-  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
-
-  /*
+	
+	
+	// **********************************************
+	// *** DON'T MISS: THIS IS HOW WE BOOTSTRAP *****
+	// **********************************************
+	[ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
+	
+	/*
   // original RN bootstrap - remove this part
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"com.example.WelcomeScreen"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
+	 moduleName:@"com.example.WelcomeScreen"
+	 initialProperties:nil
+	 launchOptions:launchOptions];
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   */
-
-
-  return YES;
+	
+	
+	return YES;
 }
 
 @end
