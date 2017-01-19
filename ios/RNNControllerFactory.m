@@ -4,6 +4,42 @@
 #import "RNN.h"
 #import "RCTRootView.h"
 
+@interface RNNLayoutNode : NSObject
+@property NSString* type;
+@property NSString* nodeId;
+@property NSDictionary* data;
+@property NSArray* children;
+@end
+
+@implementation RNNLayoutNode
+
++(instancetype)create:(NSDictionary *)json
+{
+	RNNLayoutNode* node = [RNNLayoutNode new];
+	node.type = json[@"type"];
+	node.nodeId = json[@"id"];
+	node.data = json[@"data"];
+	node.children = json[@"children"];
+	return node;
+}
+
+-(BOOL)isContainer
+{
+	return [self.type isEqualToString:@"Container"];
+}
+
+-(BOOL)isContainerStack
+{
+	return [self.type isEqualToString:@"ContainerStack"];
+}
+
+-(BOOL)isTabs
+{
+	return [self.type isEqualToString:@"Tabs"];
+}
+
+@end
+
 @implementation RNNControllerFactory
 
 -(UIViewController *)createRootViewController:(NSDictionary *)layout
@@ -11,45 +47,61 @@
 	return [self fromTree:layout];
 }
 
--(UIViewController*)fromTree:(NSDictionary*)node
+-(UIViewController*)fromTree:(NSDictionary*)json
 {
-	NSString* nodeType = node[@"type"];
+	RNNLayoutNode* node = [RNNLayoutNode create:json];
 	
-	NSString* nodeId = node[@"id"];
-	NSArray* children = node[@"children"];
-	NSDictionary* data = node[@"data"];
-	
-	if ([nodeType isEqualToString:@"Container"])
+	if (node.isContainer)
 	{
-		return [self createContainer:nodeId data:data];
-	} else if([nodeType isEqualToString:@"ContainerStack"])
+		return [self createContainer:node];
+	} else if(node.isContainerStack)
 	{
-		return [self createContainerStack:nodeId data:data children:children];
+		return [self createContainerStack:node];
+	} else if(node.isTabs)
+	{
+		return [self createTabs:node];
 	}
 	
 	@throw @"unknown container type";
 }
 
--(UIViewController*)createContainer:(NSString*)containerId data:(NSDictionary*)data
+-(UIViewController*)createContainer:(RNNLayoutNode*)node
 {
-	NSString* containerName = data[@"name"];
+	NSString* containerName = node.data[@"name"];
 	
 	RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:RNN.instance.bridge
 													  moduleName:containerName
-											   initialProperties:@{@"containerId": containerId}];
+											   initialProperties:@{@"containerId": node.nodeId}];
 	
 	UIViewController* controller = [UIViewController new];
 	controller.view = reactView;
 	return controller;
 }
 
--(UINavigationController*)createContainerStack:(NSString*)containerId data:(NSDictionary*)data children:(NSArray*)children
+-(UINavigationController*)createContainerStack:(RNNLayoutNode*)node
 {
 	UINavigationController* vc = [[UINavigationController alloc] init];
 	
 	NSMutableArray* controllers = [NSMutableArray new];
-	for (NSDictionary* node in children) {
-		[controllers addObject:[self fromTree:node]];
+	for (NSDictionary* child in node.children) {
+		[controllers addObject:[self fromTree:child]];
+	}
+	[vc setViewControllers:controllers];
+	
+	return vc;
+}
+
+-(UITabBarController*)createTabs:(RNNLayoutNode*)node
+{
+	UITabBarController* vc = [[UITabBarController alloc] init];
+	
+	NSMutableArray* controllers = [NSMutableArray new];
+	for (NSDictionary* child in node.children) {
+		UIViewController* childVc = [self fromTree:child];
+		
+		UITabBarItem* item = [[UITabBarItem alloc] initWithTitle:@"A Tab" image:nil tag:1];
+		[childVc setTabBarItem:item];
+		[controllers addObject:childVc];
 	}
 	[vc setViewControllers:controllers];
 	
