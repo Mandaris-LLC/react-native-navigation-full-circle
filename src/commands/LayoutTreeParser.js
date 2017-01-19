@@ -5,24 +5,8 @@ export default class LayoutTreeParser {
     this.uniqueIdProvider = uniqueIdProvider;
   }
 
-  parseSimpleApi(params) {
+  parseSimpleJSON(params) {
     const layout = this.createContainerStackWithContainer(params.container);
-
-    //const layout = _.cloneDeep(params);
-    //if (layout.container) {
-    //  this.generateIdFor(layout.container);
-    //}
-    //if (layout.sideMenu) {
-    //  if (layout.sideMenu.left) {
-    //    this.generateIdFor(layout.sideMenu.left);
-    //  }
-    //  if (layout.sideMenu.right) {
-    //    this.generateIdFor(layout.sideMenu.right);
-    //  }
-    //}
-    //if (layout.tabs) {
-    //  _.forEach(layout.tabs, this.generateIdFor);
-    //}
     return layout;
   }
 

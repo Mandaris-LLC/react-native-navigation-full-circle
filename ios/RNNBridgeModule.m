@@ -14,7 +14,7 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(startApp:(NSDictionary*)layout)
 {
-    UIApplication.sharedApplication.delegate.window.rootViewController = [RNNControllerFactory createRootViewController:layout];
+    UIApplication.sharedApplication.delegate.window.rootViewController = [[RNNControllerFactory new] createRootViewController:layout];
     [UIApplication.sharedApplication.delegate.window makeKeyAndVisible];
 }
 

@@ -4,6 +4,6 @@
 
 @interface RNNControllerFactory : NSObject
 
-+(UIViewController*)createRootViewController:(NSDictionary*)layout;
+-(UIViewController*)createRootViewController:(NSDictionary*)layout;
 
 @end

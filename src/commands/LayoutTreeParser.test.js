@@ -10,7 +10,7 @@ describe('LayoutTreeParser', () => {
   });
 
   it('parses single screen', () => {
-    expect(uut.parseSimpleApi(SimpleLayouts.singleScreenApp))
+    expect(uut.parseSimpleJSON(SimpleLayouts.singleScreenApp))
       .toEqual({
         type: 'ContainerStack',
         id: 'ContainerStack+UNIQUE_ID',
@@ -28,7 +28,7 @@ describe('LayoutTreeParser', () => {
   });
 
   it('parses single screen with props', () => {
-    expect(uut.parseSimpleApi(SimpleLayouts.singleScreenWithAditionalParams))
+    expect(uut.parseSimpleJSON(SimpleLayouts.singleScreenWithAditionalParams))
       .toEqual({
         type: 'ContainerStack',
         id: 'ContainerStack+UNIQUE_ID',
@@ -55,7 +55,7 @@ describe('LayoutTreeParser', () => {
   });
 
   xit('parses tab based', () => {
-    expect(uut.parseSimpleApi(SimpleLayouts.tabBasedApp))
+    expect(uut.parseSimpleJSON(SimpleLayouts.tabBasedApp))
       .toEqual({
         type: 'Tabs',
         id: 'Tabs+UNIQUE_ID',
