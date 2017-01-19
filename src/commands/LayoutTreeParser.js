@@ -5,9 +5,15 @@ export default class LayoutTreeParser {
     this.uniqueIdProvider = uniqueIdProvider;
   }
 
-  parseSimpleJSON(params) {
-    const layout = this.createContainerStackWithContainer(params.container);
-    return layout;
+  parseFromSimpleJSON(simpleJsonApi) {
+    if (simpleJsonApi.tabs) {
+      return {
+        type: 'Tabs',
+        id: this.uniqueIdProvider.generate(`Tabs`),
+        children: _.map(simpleJsonApi.tabs, (t) => this.createContainerStackWithContainer(t.container))
+      };
+    }
+    return this.createContainerStackWithContainer(simpleJsonApi.container);
   }
 
   createContainerStackWithContainer(container) {

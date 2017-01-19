@@ -25,7 +25,7 @@ export const tabBasedApp = {
   tabs: [
     {
       container: {
-        name: 'com.example.FirstTab'
+        name: 'com.example.ATab'
       }
     },
     {
@@ -35,7 +35,7 @@ export const tabBasedApp = {
     },
     {
       container: {
-        name: 'com.example.FirstTab'
+        name: 'com.example.ATab'
       }
     }
   ]

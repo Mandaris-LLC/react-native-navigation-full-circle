@@ -7,6 +7,6 @@ export default class Commands {
   }
 
   startApp(simpleApi) {
-    this.nativeCommandsSender.startApp(this.layoutTreeParser.parseSimpleJSON(simpleApi));
+    this.nativeCommandsSender.startApp(this.layoutTreeParser.parseFromSimpleJSON(simpleApi));
   }
 }

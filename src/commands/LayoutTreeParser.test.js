@@ -10,7 +10,7 @@ describe('LayoutTreeParser', () => {
   });
 
   it('parses single screen', () => {
-    expect(uut.parseSimpleJSON(SimpleLayouts.singleScreenApp))
+    expect(uut.parseFromSimpleJSON(SimpleLayouts.singleScreenApp))
       .toEqual({
         type: 'ContainerStack',
         id: 'ContainerStack+UNIQUE_ID',
@@ -28,7 +28,7 @@ describe('LayoutTreeParser', () => {
   });
 
   it('parses single screen with props', () => {
-    expect(uut.parseSimpleJSON(SimpleLayouts.singleScreenWithAditionalParams))
+    expect(uut.parseFromSimpleJSON(SimpleLayouts.singleScreenWithAditionalParams))
       .toEqual({
         type: 'ContainerStack',
         id: 'ContainerStack+UNIQUE_ID',
@@ -52,28 +52,56 @@ describe('LayoutTreeParser', () => {
           }
         ]
       });
+    expect(uut.parseFromSimpleJSON(SimpleLayouts.singleScreenWithAditionalParams).children[0].data.passProps.bar()).toEqual('Hello from a function');
   });
 
-  xit('parses tab based', () => {
-    expect(uut.parseSimpleJSON(SimpleLayouts.tabBasedApp))
+  it('parses tab based', () => {
+    expect(uut.parseFromSimpleJSON(SimpleLayouts.tabBasedApp))
       .toEqual({
         type: 'Tabs',
         id: 'Tabs+UNIQUE_ID',
         children: [
           {
-            container: {
-              name: 'com.example.FirstTab'
-            }
+            type: 'ContainerStack',
+            id: 'ContainerStack+UNIQUE_ID',
+            children: [
+              {
+                type: 'Container',
+                id: 'Container+UNIQUE_ID',
+                children: [],
+                data: {
+                  name: 'com.example.ATab'
+                }
+              }
+            ]
           },
           {
-            container: {
-              name: 'com.example.SecondTab'
-            }
+            type: 'ContainerStack',
+            id: 'ContainerStack+UNIQUE_ID',
+            children: [
+              {
+                type: 'Container',
+                id: 'Container+UNIQUE_ID',
+                children: [],
+                data: {
+                  name: 'com.example.SecondTab'
+                }
+              }
+            ]
           },
           {
-            container: {
-              name: 'com.example.FirstTab'
-            }
+            type: 'ContainerStack',
+            id: 'ContainerStack+UNIQUE_ID',
+            children: [
+              {
+                type: 'Container',
+                id: 'Container+UNIQUE_ID',
+                children: [],
+                data: {
+                  name: 'com.example.ATab'
+                }
+              }
+            ]
           }
         ]
       });
