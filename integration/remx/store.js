@@ -13,7 +13,7 @@ export const mutators = remx.setters({
   },
 
   setAge(age) {
-    state.merge({person: {age}});
+    state.merge({ person: { age } });
   }
 });
 

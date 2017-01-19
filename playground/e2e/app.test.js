@@ -7,7 +7,7 @@ describe('app', () => {
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 
-  xit('switch to tab based app', () => {
+  it('switch to tab based app', () => {
     elementByLabel('Switch to tab based app').tap();
     expect(elementByLabel('This is a tab screen')).toBeVisible();
   });

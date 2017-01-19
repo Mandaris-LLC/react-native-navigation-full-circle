@@ -1,9 +1,9 @@
-import {Text} from 'react-native';
-import React, {Component} from 'react';
+import { Text } from 'react-native';
+import React, { Component } from 'react';
 
-import {connect} from 'remx/react-native';
+import { connect } from 'remx/react-native';
 
-import {selectors} from './store';
+import { selectors } from './store';
 
 class MyContainer extends Component {
   constructor(props) {

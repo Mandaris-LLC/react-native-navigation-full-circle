@@ -11,8 +11,8 @@ describe('Store', () => {
   });
 
   it('holds props by containerId', () => {
-    uut.setPropsForContainerId('container1', {a: 1, b: 2});
-    expect(uut.getPropsForContainerId('container1')).toEqual({a: 1, b: 2});
+    uut.setPropsForContainerId('container1', { a: 1, b: 2 });
+    expect(uut.getPropsForContainerId('container1')).toEqual({ a: 1, b: 2 });
   });
 
   it('defensive for invalid containerId and props', () => {

@@ -4,7 +4,7 @@ describe('LayoutTreeParser', () => {
   let uut;
 
   beforeEach(() => {
-    const uniqueIdProvider = {generate: (prefix) => `${prefix}+UNIQUE_ID`};
+    const uniqueIdProvider = { generate: (prefix) => `${prefix}+UNIQUE_ID` };
     const LayoutTreeParser = require('./LayoutTreeParser').default;
     uut = new LayoutTreeParser(uniqueIdProvider);
   });
@@ -108,8 +108,8 @@ describe('LayoutTreeParser', () => {
   });
 
   xit('adds uniqueId to containers', () => {
-    const input = {container: {}};
-    expect(uut.parse(input)).toEqual({container: {id: 'Container+UNIQUE_ID'}});
+    const input = { container: {} };
+    expect(uut.parse(input)).toEqual({ container: { id: 'Container+UNIQUE_ID' } });
   });
 
   xit('parses side menus', () => {

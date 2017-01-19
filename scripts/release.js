@@ -1,3 +1,4 @@
+/*eslint-disable no-console*/
 const shellUtils = require('shell-utils');
 const p = require('path');
 const semver = require('semver');

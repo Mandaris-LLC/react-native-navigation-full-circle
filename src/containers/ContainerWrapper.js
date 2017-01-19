@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 export default class ContainerWrapper {
   static wrap(containerName, OriginalContainer, propStore) {
@@ -10,13 +10,13 @@ export default class ContainerWrapper {
         }
         this.state = {
           containerId: props.containerId,
-          allProps: {...props, ...propStore.getPropsForContainerId(props.containerId)}
+          allProps: { ...props, ...propStore.getPropsForContainerId(props.containerId) }
         };
       }
 
       componentWillReceiveProps(nextProps) {
         this.setState({
-          allProps: {...nextProps, ...propStore.getPropsForContainerId(this.state.containerId)}
+          allProps: { ...nextProps, ...propStore.getPropsForContainerId(this.state.containerId) }
         });
       }
 

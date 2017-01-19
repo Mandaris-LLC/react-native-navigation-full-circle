@@ -1,6 +1,6 @@
 describe('NativeEventsReceiver', () => {
   let uut;
-  const eventEmitterMock = {addListener: jest.fn()};
+  const eventEmitterMock = { addListener: jest.fn() };
 
   beforeEach(() => {
     require('react-native').NativeModules.RNNEventEmitter = {};

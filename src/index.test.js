@@ -1,11 +1,11 @@
-jest.mock('./Navigation', () => ({startApp: () => 'import'}));
+jest.mock('./Navigation', () => ({ startApp: () => 'import' }));
 import Navigation from './index';
 
 describe('index', () => {
   let uut;
 
   beforeEach(() => {
-    jest.mock('./Navigation', () => ({startApp: () => 'require'}));
+    jest.mock('./Navigation', () => ({ startApp: () => 'require' }));
     uut = require('./index');
   });
 

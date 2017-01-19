@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {AppRegistry, Text} from 'react-native';
+import React, { Component } from 'react';
+import { AppRegistry, Text } from 'react-native';
 import renderer from 'react-test-renderer';
 
 describe('ContainerRegistry', () => {
@@ -28,7 +28,7 @@ describe('ContainerRegistry', () => {
   it('resulting in a normal component', () => {
     uut.registerContainer('example.MyContainer.name', () => MyContainer);
     const Container = AppRegistry.registerComponent.mock.calls[0][1]();
-    const tree = renderer.create(<Container containerId="123"/>);
+    const tree = renderer.create(<Container containerId="123" />);
     expect(tree.toJSON().children).toEqual(['Hello, World!']);
   });
 });
