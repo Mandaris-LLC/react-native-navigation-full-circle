@@ -10,8 +10,8 @@ function buildProjForDetox() {
   shellUtils.exec.execSync(`echo 'travis_fold:start:xcodebuild'`);
   const cmd = `RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
-            -scheme ${scheme} 
-            ${release ? 'clean build' : 'build'} 
+            -scheme ${scheme}
+            ${release ? 'clean build' : 'build'}
             -project playground.xcodeproj
             -sdk iphonesimulator
             -derivedDataPath ./DerivedData/playground`;
@@ -42,7 +42,7 @@ function e2e() { //eslint-disable-line
     shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
                               BABEL_ENV=test
                               ./node_modules/mocha/bin/mocha e2e
-                                --timeout 240000
+                                --timeout ${10 * 60 * 1000}
                                 --recursive
                                 --compilers js:babel-register`);
   } finally {
