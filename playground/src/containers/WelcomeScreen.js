@@ -1,16 +1,33 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 
+import Navigation from 'react-native-navigation';
+
 export default class WelcomeScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
         <Text style={styles.h1}>{`React Native Navigation!`}</Text>
-        <Button>
-          <Text style={styles.h1}>{`Switch to tab based app`}</Text>
-        </Button>
+        <Button title="Switch to tab based app" onPress={this.onClickSwitchToTabs} />
       </View>
     );
+  }
+
+  onClickSwitchToTabs() {
+    Navigation.startApp({
+      tabs: [
+        {
+          container: {
+            name: 'com.example.SimpleTabScreen'
+          }
+        },
+        {
+          container: {
+            name: 'com.example.WelcomeScreen'
+          }
+        }
+      ]
+    });
   }
 }
 
