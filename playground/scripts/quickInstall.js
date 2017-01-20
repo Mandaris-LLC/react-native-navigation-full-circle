@@ -5,21 +5,38 @@ function installNavigation() {
   const navigationTar = shellUtils.exec.execSyncRead(`cd .. && npm pack`);
   shellUtils.exec.execSync(`tar -xf ../${navigationTar} -C ./node_modules/react-native-navigation --strip 1`);
   shellUtils.exec.execSync(`rm ../${navigationTar}`);
+
+  if (!process.env.CI) {
+    hardlinkNavigation();
+  }
 }
 
 function copyNodeModulesFromNavigation() {
   shellUtils.exec.execSync(`cp -rf ../node_modules ./`);
 }
 
+function removeHardlinks() {
+  shellUtils.exec.execSync(`hardlink ./node_modules/react-native-navigation/ -u || true`);
+}
+
+function removeNodeModules() {
+  shellUtils.exec.execSync(`rm -rf ./node_modules || true`);
+}
+
+function ignoreReactWarnings() {
+  shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
+}
+
+function hardlinkNavigation() {
+  shellUtils.exec.execSync(`hardlink ../ ./node_modules/react-native-navigation/ || true`);
+}
+
 function run() {
-  shellUtils.exec.execSyncSilent(`hardlink ./node_modules/react-native-navigation/ -u || true`);
-  shellUtils.exec.execSyncSilent(`rm -rf ./node_modules || true`);
+  removeHardlinks();
+  removeNodeModules();
   copyNodeModulesFromNavigation();
   installNavigation();
-  shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
-  if (!process.env.CI) {
-    shellUtils.exec.execSyncSilent(`hardlink ../ ./node_modules/react-native-navigation/ || true`);
-  }
+  ignoreReactWarnings();
 }
 
 run();
