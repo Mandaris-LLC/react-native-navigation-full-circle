@@ -8,8 +8,8 @@ function installNavigation() {
 }
 
 function run() {
+  shellUtils.exec.execSync(`cp -rf ../node_modules ./`);
   shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
-
   installNavigation();
 }
 
