@@ -7,10 +7,19 @@ function installNavigation() {
   shellUtils.exec.execSync(`rm ../${navigationTar}`);
 }
 
-function run() {
+function copyNodeModulesFromNavigation() {
   shellUtils.exec.execSync(`cp -rf ../node_modules ./`);
-  shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
+}
+
+function run() {
+  exec.execSyncSilent(`hardlink ./node_modules/react-native-navigation/ -u || true`);
+  exec.execSyncSilent(`rm -rf ./node_modules || true`);
+  copyNodeModulesFromNavigation();
   installNavigation();
+  shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
+  if (!process.env.CI) {
+    exec.execSyncSilent(`hardlink ../ ./node_modules/react-native-navigation/ || true`);
+  }
 }
 
 run();
