@@ -12,13 +12,13 @@ function copyNodeModulesFromNavigation() {
 }
 
 function run() {
-  exec.execSyncSilent(`hardlink ./node_modules/react-native-navigation/ -u || true`);
-  exec.execSyncSilent(`rm -rf ./node_modules || true`);
+  shellUtils.exec.execSyncSilent(`hardlink ./node_modules/react-native-navigation/ -u || true`);
+  shellUtils.exec.execSyncSilent(`rm -rf ./node_modules || true`);
   copyNodeModulesFromNavigation();
   installNavigation();
   shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
   if (!process.env.CI) {
-    exec.execSyncSilent(`hardlink ../ ./node_modules/react-native-navigation/ || true`);
+    shellUtils.exec.execSyncSilent(`hardlink ../ ./node_modules/react-native-navigation/ || true`);
   }
 }
 
