@@ -381,6 +381,10 @@ function showInAppNotification(params) {
   newPlatformSpecific.showInAppNotification(params);
 }
 
+function dismissInAppNotification(params) {
+  newPlatformSpecific.dismissInAppNotification(params);
+}
+
 function addNavigatorParams(screen, navigator = null, idx = '') {
   screen.navigatorID = navigator ? navigator.navigatorID : _.uniqueId('navigatorID') + '_nav' + idx;
   screen.screenInstanceID = _.uniqueId('screenInstanceID');
@@ -576,6 +580,7 @@ export default {
   dismissModal,
   dismissAllModals,
   showInAppNotification,
+  dismissInAppNotification,
   navigatorSetButtons,
   navigatorSetTabBadge,
   navigatorSetTitle,
