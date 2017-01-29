@@ -14,6 +14,6 @@ describe('NativeEventsReceiver', () => {
     uut.onAppLaunched(callback);
     expect(callback).not.toHaveBeenCalled();
     expect(eventEmitterMock.addListener).toHaveBeenCalledTimes(1);
-    expect(eventEmitterMock.addListener).toHaveBeenCalledWith('onAppLaunched', callback);
+    expect(eventEmitterMock.addListener).toHaveBeenCalledWith('RNN_onAppLaunched', callback);
   });
 });
