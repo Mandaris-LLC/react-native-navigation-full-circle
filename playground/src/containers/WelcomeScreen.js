@@ -9,6 +9,7 @@ class WelcomeScreen extends Component {
       <View style={styles.root}>
         <Text style={styles.h1}>{`React Native Navigation!`}</Text>
         <Button title="Switch to tab based app" onPress={this.onClickSwitchToTabs} />
+        <Button title="Switch to tab based app with side menus" onPress={this.onClickSwitchToTabsWithSideMenus} />
       </View>
     );
   }
@@ -27,6 +28,36 @@ class WelcomeScreen extends Component {
           }
         }
       ]
+    });
+  }
+
+  onClickSwitchToTabsWithSideMenus() {
+    Navigation.startApp({
+      tabs: [
+        {
+          container: {
+            name: 'com.example.SimpleTabScreen'
+          }
+        },
+        {
+          container: {
+            name: 'com.example.WelcomeScreen'
+          }
+        },
+        {
+          container: {
+            name: 'com.example.SimpleTabScreen'
+          }
+        }
+      ],
+      sideMenu: {
+        left: {
+          name: 'com.example.SimpleTabScreen'
+        },
+        right: {
+          name: 'com.example.SimpleTabScreen'
+        }
+      }
     });
   }
 }

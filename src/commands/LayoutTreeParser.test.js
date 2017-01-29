@@ -125,35 +125,34 @@ describe('LayoutTreeParser', () => {
   });
 
   xit('parses side menus', () => {
-    //const result2 = {
-    //  type: 'Menus',
-    //  id: 'MenusUNIQUE_ID',
-    //  children: [
-    //    {
-    //      type: 'Container',
-    //      id: 'ContainerUNIQUE_ID',
-    //      name: 'com.example.LeftSideMenu',
-    //      children: []
-    //    },
-    //    {
-    //      type: 'ContainerStack',
-    //      id: 'ContainerStackUNIQUE_ID',
-    //      children: [
-    //        {
-    //          type: 'Container',
-    //          id: 'ContainerUNIQUE_ID',
-    //          name: 'com.example.WelcomeScreen',
-    //          children: []
-    //        }
-    //      ]
-    //    },
-    //    {
-    //      type: 'Container',
-    //      id: 'ContainerUNIQUE_ID',
-    //      name: 'com.example.RightSideMenu',
-    //      children: []
-    //    }
-    //  ]
-    //};
+    expect(uut.parseFromSimpleJSON(SimpleLayouts.singleWithSideMenu))
+      .toEqual({
+        type: 'SideMenus',
+        id: 'SideMenus+UNIQUE_ID',
+        children: [
+          {
+            type: 'Container',
+            id: 'Container+UNIQUE_ID',
+            data: {
+              name: 'com.example.SideMenu'
+            },
+            children: []
+          },
+          {
+            type: 'ContainerStack',
+            id: 'ContainerStack+UNIQUE_ID',
+            children: [
+              {
+                type: 'Container',
+                id: 'Container+UNIQUE_ID',
+                data: {
+                  name: 'com.example.MyScreen'
+                },
+                children: []
+              }
+            ]
+          }
+        ]
+      });
   });
 });

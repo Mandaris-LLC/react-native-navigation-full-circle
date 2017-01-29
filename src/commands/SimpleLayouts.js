@@ -48,7 +48,7 @@ export const singleWithSideMenu = {
   sideMenu: {
     left: {
       container: {
-        name: 'com.example.MyScreen'
+        name: 'com.example.SideMenu'
       }
     }
   }
