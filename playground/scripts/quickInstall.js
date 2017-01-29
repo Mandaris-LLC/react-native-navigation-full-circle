@@ -12,7 +12,7 @@ function installNavigation() {
 }
 
 function copyNodeModulesFromNavigation() {
-  shellUtils.exec.execSync(`cp -rf ../node_modules ./`);
+  shellUtils.exec.execSync(`cp -Rf ../node_modules ./`);
 }
 
 function removeHardlinks() {

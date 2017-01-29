@@ -38,7 +38,7 @@ function calcNewVersion() {
 
 function copyNpmRc() {
   const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
-  shellUtils.exec.execSync(`cp -rf ${npmrcPath} .`);
+  shellUtils.exec.execSync(`cp -Rf ${npmrcPath} .`);
 }
 
 function tagAndPublish(newVersion) {

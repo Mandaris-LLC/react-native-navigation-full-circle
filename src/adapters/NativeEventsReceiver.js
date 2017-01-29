@@ -6,6 +6,6 @@ export default class NativeEventsReceiver {
   }
 
   onAppLaunched(callback) {
-    this.emitter.addListener('onAppLaunched', callback);
+    this.emitter.addListener('RNN_onAppLaunched', callback);
   }
 }
