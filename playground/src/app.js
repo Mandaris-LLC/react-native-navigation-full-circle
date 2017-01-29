@@ -4,6 +4,7 @@ import { registerContainers } from './containers';
 
 export function start() {
   registerContainers();
+
   Navigation.onAppLaunched(() => {
     Navigation.startApp({
       container: {

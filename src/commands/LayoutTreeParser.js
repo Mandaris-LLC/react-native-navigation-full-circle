@@ -28,9 +28,7 @@ export default class LayoutTreeParser {
 
   createContainer(container) {
     return {
-      data: {
-        ...container
-      },
+      data: _.merge({}, container),
       type: 'Container',
       id: this.uniqueIdProvider.generate(`Container`),
       children: []

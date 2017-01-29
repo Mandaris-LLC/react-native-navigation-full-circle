@@ -9,6 +9,23 @@ describe('LayoutTreeParser', () => {
     uut = new LayoutTreeParser(uniqueIdProvider);
   });
 
+  it('adds uniqueId to containers', () => {
+    const input = { container: {} };
+    expect(uut.parseFromSimpleJSON(input))
+      .toEqual({
+        type: 'ContainerStack',
+        id: 'ContainerStack+UNIQUE_ID',
+        children: [
+          {
+            type: 'Container',
+            id: 'Container+UNIQUE_ID',
+            data: {},
+            children: []
+          }
+        ]
+      });
+  });
+
   it('parses single screen', () => {
     expect(uut.parseFromSimpleJSON(SimpleLayouts.singleScreenApp))
       .toEqual({
@@ -105,11 +122,6 @@ describe('LayoutTreeParser', () => {
           }
         ]
       });
-  });
-
-  xit('adds uniqueId to containers', () => {
-    const input = { container: {} };
-    expect(uut.parse(input)).toEqual({ container: { id: 'Container+UNIQUE_ID' } });
   });
 
   xit('parses side menus', () => {
