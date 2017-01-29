@@ -6,6 +6,6 @@
 
 @interface RNNEventEmitter : RCTEventEmitter <RCTBridgeModule>
 
-+(void)sendOnAppLaunched;
+-(void)sendOnAppLaunched;
 
 @end

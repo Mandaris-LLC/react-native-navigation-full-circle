@@ -87,10 +87,10 @@
 			children = (
 				7BA500731E2544B9001B9E1B /* ReactNativeNavigation.h */,
 				7BA500741E2544B9001B9E1B /* ReactNativeNavigation.m */,
-				7BD721F31E2D3AA100724059 /* Bridge */,
-				7B1E4C4B1E2D173700C3A525 /* Controllers */,
 				7BBFE55F1E253F97002A6182 /* RNN.h */,
 				7BBFE5601E253F97002A6182 /* RNN.m */,
+				7BD721F31E2D3AA100724059 /* Bridge */,
+				7B1E4C4B1E2D173700C3A525 /* Controllers */,
 				D8AFADBE1BEE6F3F00A4592D /* Products */,
 			);
 			sourceTree = "<group>";

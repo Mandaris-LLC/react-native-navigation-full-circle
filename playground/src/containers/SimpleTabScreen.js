@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-export default class SimpleTabScreen extends Component {
+class SimpleTabScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
@@ -10,6 +10,7 @@ export default class SimpleTabScreen extends Component {
     );
   }
 }
+export default SimpleTabScreen;
 
 const styles = {
   root: {

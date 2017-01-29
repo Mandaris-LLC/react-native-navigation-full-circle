@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native';
 
 import Navigation from 'react-native-navigation';
 
-export default class WelcomeScreen extends Component {
+class WelcomeScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
@@ -30,6 +30,8 @@ export default class WelcomeScreen extends Component {
     });
   }
 }
+
+export default WelcomeScreen;
 
 const styles = {
   root: {
