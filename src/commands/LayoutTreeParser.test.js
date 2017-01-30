@@ -124,7 +124,7 @@ describe('LayoutTreeParser', () => {
       });
   });
 
-  xit('parses side menus', () => {
+  it('parses side menus', () => {
     expect(uut.parseFromSimpleJSON(SimpleLayouts.singleWithSideMenu))
       .toEqual({
         type: 'SideMenuRoot',

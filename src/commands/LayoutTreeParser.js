@@ -7,7 +7,6 @@ export default class LayoutTreeParser {
 
   parseFromSimpleJSON(simpleJsonApi) {
     // TOOD deepclone
-
     if (simpleJsonApi.sideMenu) {
       return {
         type: 'SideMenuRoot',
@@ -29,7 +28,7 @@ export default class LayoutTreeParser {
         type: 'SideMenuLeft',
         id: this.uniqueIdProvider.generate('SideMenuLeft'),
         children: [
-          this.createContainer(layout.sideMenu.left)
+          this.createContainer(layout.sideMenu.left.container)
         ]
       });
     }
