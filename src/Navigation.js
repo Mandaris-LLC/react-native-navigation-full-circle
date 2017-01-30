@@ -19,12 +19,12 @@ class Navigation {
     this.containerRegistry.registerContainer(containerName, getContainerFunc);
   }
 
-  startApp(params) {
-    this.commands.startApp(params);
+  setRoot(params) {
+    this.commands.setRoot(params);
   }
 
-  onAppLaunched(fn) {
-    this.nativeEventsReceiver.onAppLaunched(fn);
+  events() {
+    return this.nativeEventsReceiver;
   }
 }
 

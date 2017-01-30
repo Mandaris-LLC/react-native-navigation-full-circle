@@ -12,7 +12,7 @@ RCT_EXPORT_MODULE();
 	return dispatch_get_main_queue();
 }
 
-RCT_EXPORT_METHOD(startApp:(NSDictionary*)layout)
+RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout)
 {
 	UIApplication.sharedApplication.delegate.window.rootViewController = [[RNNControllerFactory new] createRootViewController:layout];
 	[UIApplication.sharedApplication.delegate.window makeKeyAndVisible];

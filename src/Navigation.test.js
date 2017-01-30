@@ -20,17 +20,15 @@ describe('Navigation', () => {
     expect(Navigation.containerRegistry.registerContainer).toHaveBeenCalledWith('name', fn);
   });
 
-  it('startApp delegates to Commands', () => {
+  it('setRoot delegates to Commands', () => {
     const params = {};
-    Navigation.startApp(params);
-    expect(Navigation.commands.startApp).toHaveBeenCalledTimes(1);
-    expect(Navigation.commands.startApp).toHaveBeenCalledWith(params);
+    Navigation.setRoot(params);
+    expect(Navigation.commands.setRoot).toHaveBeenCalledTimes(1);
+    expect(Navigation.commands.setRoot).toHaveBeenCalledWith(params);
   });
 
-  it('onAppLaunched delegates to NativeEventsReceiver', () => {
-    const fn = jest.fn();
-    Navigation.onAppLaunched(fn);
-    expect(Navigation.nativeEventsReceiver.onAppLaunched).toHaveBeenCalledTimes(1);
-    expect(Navigation.nativeEventsReceiver.onAppLaunched).toHaveBeenCalledWith(fn);
+  it('events return the events registry', () => {
+    expect(Navigation.events()).toBeDefined();
+    expect(Navigation.events().onAppLaunched).toBeInstanceOf(Function);
   });
 });

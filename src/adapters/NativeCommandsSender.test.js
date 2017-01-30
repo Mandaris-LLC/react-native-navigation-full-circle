@@ -3,7 +3,7 @@ describe('NativeCommandsSender', () => {
 
   beforeEach(() => {
     mockNativeModule = {
-      startApp: jest.fn()
+      setRoot: jest.fn()
     };
     require('react-native').NativeModules.RNNBridgeModule = mockNativeModule;
     const NativeCommandsSender = require('./NativeCommandsSender').default;
@@ -11,7 +11,7 @@ describe('NativeCommandsSender', () => {
   });
 
   it('delegates to native', () => {
-    uut.startApp();
-    expect(mockNativeModule.startApp).toHaveBeenCalledTimes(1);
+    uut.setRoot();
+    expect(mockNativeModule.setRoot).toHaveBeenCalledTimes(1);
   });
 });

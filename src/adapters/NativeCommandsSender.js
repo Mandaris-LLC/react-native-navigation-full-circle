@@ -5,7 +5,7 @@ export default class NativeCommandsSender {
     this.nativeCommandsModule = NativeModules.RNNBridgeModule;
   }
 
-  startApp(layoutTree) {
-    this.nativeCommandsModule.startApp(layoutTree);
+  setRoot(layoutTree) {
+    this.nativeCommandsModule.setRoot(layoutTree);
   }
 }

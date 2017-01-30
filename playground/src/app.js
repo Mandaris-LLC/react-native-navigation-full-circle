@@ -5,8 +5,8 @@ import { registerContainers } from './containers';
 export function start() {
   registerContainers();
 
-  Navigation.onAppLaunched(() => {
-    Navigation.startApp({
+  Navigation.events().onAppLaunched(() => {
+    Navigation.setRoot({
       container: {
         name: 'com.example.WelcomeScreen'
       }

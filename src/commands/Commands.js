@@ -6,7 +6,7 @@ export default class Commands {
     this.layoutTreeParser = new LayoutTreeParser(uniqueIdProvider);
   }
 
-  startApp(simpleApi) {
-    this.nativeCommandsSender.startApp(this.layoutTreeParser.parseFromSimpleJSON(simpleApi));
+  setRoot(simpleApi) {
+    this.nativeCommandsSender.setRoot(this.layoutTreeParser.parseFromSimpleJSON(simpleApi));
   }
 }

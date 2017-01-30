@@ -1,7 +1,7 @@
 describe('Commands', () => {
   let uut;
   const mockCommandsSender = {
-    startApp: jest.fn()
+    setRoot: jest.fn()
   };
   const mockIdProvider = {
     generate: (prefix) => `${prefix}UNIQUE_ID`
@@ -12,15 +12,15 @@ describe('Commands', () => {
     uut = new Commands(mockCommandsSender, mockIdProvider);
   });
 
-  describe('startApp', () => {
-    it('sends startApp to native after parsing into layoutTree', () => {
-      uut.startApp({
+  describe('setRoot', () => {
+    it('sends setRoot to native after parsing into layoutTree', () => {
+      uut.setRoot({
         container: {
           name: 'com.example.MyScreen'
         }
       });
-      expect(mockCommandsSender.startApp).toHaveBeenCalledTimes(1);
-      expect(mockCommandsSender.startApp).toHaveBeenCalledWith({
+      expect(mockCommandsSender.setRoot).toHaveBeenCalledTimes(1);
+      expect(mockCommandsSender.setRoot).toHaveBeenCalledWith({
         type: 'ContainerStack',
         id: 'ContainerStackUNIQUE_ID',
         children: [

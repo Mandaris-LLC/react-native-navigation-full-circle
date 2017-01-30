@@ -15,7 +15,7 @@ class WelcomeScreen extends Component {
   }
 
   onClickSwitchToTabs() {
-    Navigation.startApp({
+    Navigation.setRoot({
       tabs: [
         {
           container: {
@@ -32,7 +32,7 @@ class WelcomeScreen extends Component {
   }
 
   onClickSwitchToTabsWithSideMenus() {
-    Navigation.startApp({
+    Navigation.setRoot({
       tabs: [
         {
           container: {
