@@ -127,28 +127,40 @@ describe('LayoutTreeParser', () => {
   xit('parses side menus', () => {
     expect(uut.parseFromSimpleJSON(SimpleLayouts.singleWithSideMenu))
       .toEqual({
-        type: 'SideMenus',
-        id: 'SideMenus+UNIQUE_ID',
+        type: 'SideMenuRoot',
+        id: 'SideMenuRoot+UNIQUE_ID',
         children: [
           {
-            type: 'Container',
-            id: 'Container+UNIQUE_ID',
-            data: {
-              name: 'com.example.SideMenu'
-            },
-            children: []
-          },
-          {
-            type: 'ContainerStack',
-            id: 'ContainerStack+UNIQUE_ID',
+            type: 'SideMenuLeft',
+            id: 'SideMenuLeft+UNIQUE_ID',
             children: [
               {
                 type: 'Container',
                 id: 'Container+UNIQUE_ID',
                 data: {
-                  name: 'com.example.MyScreen'
+                  name: 'com.example.SideMenu'
                 },
                 children: []
+              }
+            ]
+          },
+          {
+            type: 'SideMenuCenter',
+            id: 'SideMenuCenter+UNIQUE_ID',
+            children: [
+              {
+                type: 'ContainerStack',
+                id: 'ContainerStack+UNIQUE_ID',
+                children: [
+                  {
+                    type: 'Container',
+                    id: 'Container+UNIQUE_ID',
+                    data: {
+                      name: 'com.example.MyScreen'
+                    },
+                    children: []
+                  }
+                ]
               }
             ]
           }

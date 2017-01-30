@@ -8,16 +8,20 @@ describe('app', () => {
   });
 
   it('switch to tab based app', () => {
-    elementByLabel('Switch to tab based app').tap();
+    elementById('btnSwitchToTabs').tap();
     expect(elementByLabel('This is a tab screen')).toBeVisible();
   });
 
-  xit('switch to tabs with side menus', () => {
-    elementByLabel('Switch to tab based app with side menus').tap();
+  it('switch to tabs with side menus', () => {
+    elementById('btnSwitchToTabsWithMenus').tap();
     // expect(elementByLabel('This is a tab screen')).toBeVisible();
   });
 });
 
 function elementByLabel(label) {
   return element(by.label(label));
+}
+
+function elementById(id) {
+  return element(by.id(id));
 }

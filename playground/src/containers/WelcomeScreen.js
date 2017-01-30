@@ -4,12 +4,24 @@ import { View, Text, Button } from 'react-native';
 import Navigation from 'react-native-navigation';
 
 class WelcomeScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <View style={styles.root}>
         <Text style={styles.h1}>{`React Native Navigation!`}</Text>
-        <Button title="Switch to tab based app" onPress={this.onClickSwitchToTabs} />
-        <Button title="Switch to tab based app with side menus" onPress={this.onClickSwitchToTabsWithSideMenus} />
+        <Button
+          testId="btnSwitchToTabs"
+          title="Switch to tab based app"
+          onPress={this.onClickSwitchToTabs}
+        />
+        <Button
+          testId="btnSwitchToTabsWithMenus"
+          title="Switch to tab based app with side menus"
+          onPress={this.onClickSwitchToTabsWithSideMenus}
+        />
       </View>
     );
   }

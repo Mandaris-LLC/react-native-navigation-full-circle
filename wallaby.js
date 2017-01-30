@@ -2,12 +2,17 @@
 'use strict';
 process.env.BABEL_ENV = 'test';
 const babelOptions = require('./package.json').babel.env.test;
-module.exports = function(wallaby) {
+module.exports = function (wallaby) {
   return {
     env: {
       type: 'node',
       runner: 'node'
     },
+
+    // workers: {
+    //   initial: 1,
+    //   regular: 1
+    // },
 
     testFramework: 'jest',
 
@@ -28,7 +33,7 @@ module.exports = function(wallaby) {
       '**/*.js': wallaby.compilers.babel(babelOptions)
     },
 
-    setup: function(w) {
+    setup: function (w) {
       require('babel-polyfill');
       w.testFramework.configure(require('./package.json').jest);
     }
