@@ -76,9 +76,9 @@
   "jest": {
     "preset": "react-native",
     "testPathDirs": [
-      "node_modules",
-      "src",
-      "integration"
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/",
+      "<rootDir>/integration/"
     ],
     "resetMocks": true,
     "resetModules": true

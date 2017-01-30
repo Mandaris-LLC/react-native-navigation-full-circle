@@ -40,27 +40,6 @@ export default class LayoutTreeParser {
       ]
     });
     return children;
-
-    // (simpleJsonApi.sideMenu, (v, k) => {
-    //       if (_.isEqual(k, 'left')) {
-    //         return {
-    //           type: 'SideMenuLeft',
-    //           id: this.uniqueIdProvider.generate('SideMenuLeft'),
-    //           children: [
-    //             this.createContainer(v)
-    //           ]
-    //         };
-    //       } else if (_.isEqual(k, 'right')) {
-    //         return {
-    //           type: 'SideMenuRight',
-    //           id: this.uniqueIdProvider.generate('SideMenuRight'),
-    //           children: [
-    //             this.createContainer(v)
-    //           ]
-    //         };
-    //       }
-    //       return undefined;
-    //     })
   }
 
   createTabs(tabs) {

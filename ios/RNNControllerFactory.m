@@ -38,6 +38,25 @@
 	return [self.type isEqualToString:@"Tabs"];
 }
 
+-(BOOL)isSideMenuRoot
+{
+	return [self.type isEqualToString:@"SideMenuRoot"];
+}
+
+-(BOOL)isSideMenuLeft
+{
+	return [self.type isEqualToString:@"SideMenuLeft"];
+}
+
+-(BOOL)isSideMenuRight
+{
+	return [self.type isEqualToString:@"SideMenuRight"];
+}
+
+-(BOOL)isSideMenuCenter
+{
+	return [self.type isEqualToString:@"SideMenuCenter"];
+}
 @end
 
 @implementation RNNControllerFactory
@@ -54,15 +73,15 @@
 	if (node.isContainer)
 	{
 		return [self createContainer:node];
-	} else if(node.isContainerStack)
+	} else if (node.isContainerStack)
 	{
 		return [self createContainerStack:node];
-	} else if(node.isTabs)
+	} else if (node.isTabs)
 	{
 		return [self createTabs:node];
 	}
 	
-	@throw @"unknown container type";
+	@throw [NSException exceptionWithName:@"UnknownControllerType" reason:[@"Unknown controller type " stringByAppendingString:node.type] userInfo:nil];
 }
 
 -(UIViewController*)createContainer:(RNNLayoutNode*)node
