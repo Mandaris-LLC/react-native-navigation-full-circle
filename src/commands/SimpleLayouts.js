@@ -60,7 +60,9 @@ export const singleWithRightSideMenu = {
   },
   sideMenu: {
     right: {
-      name: 'com.example.Menu'
+      container: {
+        name: 'com.example.SideMenu'
+      }
     }
   }
 };

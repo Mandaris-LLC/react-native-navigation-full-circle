@@ -167,4 +167,48 @@ describe('LayoutTreeParser', () => {
         ]
       });
   });
+
+  it('parses side menu right', () => {
+    expect(uut.parseFromSimpleJSON(SimpleLayouts.singleWithRightSideMenu))
+      .toEqual({
+        type: 'SideMenuRoot',
+        id: 'SideMenuRoot+UNIQUE_ID',
+        children: [
+          {
+            type: 'SideMenuCenter',
+            id: 'SideMenuCenter+UNIQUE_ID',
+            children: [
+              {
+                type: 'ContainerStack',
+                id: 'ContainerStack+UNIQUE_ID',
+                children: [
+                  {
+                    type: 'Container',
+                    id: 'Container+UNIQUE_ID',
+                    data: {
+                      name: 'com.example.MyScreen'
+                    },
+                    children: []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            type: 'SideMenuRight',
+            id: 'SideMenuRight+UNIQUE_ID',
+            children: [
+              {
+                type: 'Container',
+                id: 'Container+UNIQUE_ID',
+                data: {
+                  name: 'com.example.SideMenu'
+                },
+                children: []
+              }
+            ]
+          }
+        ]
+      });
+  });
 });

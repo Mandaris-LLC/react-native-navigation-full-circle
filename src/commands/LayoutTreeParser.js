@@ -39,6 +39,15 @@ export default class LayoutTreeParser {
         this.createContainerStackWithContainer(layout.container)
       ]
     });
+    if (layout.sideMenu.right) {
+      children.push({
+        type: 'SideMenuRight',
+        id: this.uniqueIdProvider.generate('SideMenuRight'),
+        children: [
+          this.createContainer(layout.sideMenu.right.container)
+        ]
+      });
+    }
     return children;
   }
 
