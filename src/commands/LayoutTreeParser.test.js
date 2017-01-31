@@ -26,6 +26,12 @@ describe('LayoutTreeParser', () => {
       });
   });
 
+  it('deep clones to avoid mutations', () => {
+    const obj = {};
+    const result = uut.parseFromSimpleJSON({ container: { foo: obj } });
+    expect(result.children[0].data.foo).not.toBe(obj);
+  });
+
   it('parses single screen', () => {
     expect(uut.parseFromSimpleJSON(SimpleLayouts.singleScreenApp))
       .toEqual({
@@ -69,6 +75,7 @@ describe('LayoutTreeParser', () => {
           }
         ]
       });
+    expect(uut.parseFromSimpleJSON(SimpleLayouts.singleScreenWithAditionalParams).children[0].data.passProps.bar).toBe(SimpleLayouts.passedFunction);
     expect(uut.parseFromSimpleJSON(SimpleLayouts.singleScreenWithAditionalParams).children[0].data.passProps.bar()).toEqual('Hello from a function');
   });
 

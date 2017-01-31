@@ -16,14 +16,14 @@ export default class LayoutTreeParser {
   }
 
   parseFromSimpleJSON(simpleJsonApi) {
-    // TOOD deepclone
-    if (simpleJsonApi.sideMenu) {
-      return this._createSideMenu(simpleJsonApi);
+    const input = _.cloneDeep(simpleJsonApi);
+    if (input.sideMenu) {
+      return this._createSideMenu(input);
     }
-    if (simpleJsonApi.tabs) {
-      return this._createTabs(simpleJsonApi.tabs);
+    if (input.tabs) {
+      return this._createTabs(input.tabs);
     }
-    return this._createContainerStackWithContainer(simpleJsonApi.container);
+    return this._createContainerStackWithContainer(input.container);
   }
 
   _node(node) {
