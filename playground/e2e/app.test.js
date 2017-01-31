@@ -8,20 +8,16 @@ describe('app', () => {
   });
 
   it('switch to tab based app', () => {
-    elementById('btnSwitchToTabs').tap();
+    elementByLabel('Switch to tab based app').tap();
     expect(elementByLabel('This is a tab screen')).toBeVisible();
   });
 
   xit('switch to tabs with side menus', () => {
-    elementById('btnSwitchToTabsWithMenus').tap();
+    elementByLabel('Switch to tab based app with side menus').tap();
     expect(elementByLabel('This is a tab screen')).toBeVisible();
   });
 });
 
 function elementByLabel(label) {
   return element(by.label(label));
-}
-
-function elementById(id) {
-  return element(by.id(id));
 }

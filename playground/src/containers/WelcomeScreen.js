@@ -13,12 +13,10 @@ class WelcomeScreen extends Component {
       <View style={styles.root}>
         <Text style={styles.h1}>{`React Native Navigation!`}</Text>
         <Button
-          testId="btnSwitchToTabs"
           title="Switch to tab based app"
           onPress={this.onClickSwitchToTabs}
         />
         <Button
-          testId="btnSwitchToTabsWithMenus"
           title="Switch to tab based app with side menus"
           onPress={this.onClickSwitchToTabsWithSideMenus}
         />
