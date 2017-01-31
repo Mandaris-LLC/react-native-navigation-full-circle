@@ -8,7 +8,9 @@ describe('Commands', () => {
   beforeEach(() => {
     const NativeCommandsSender = jest.genMockFromModule('../adapters/NativeCommandsSender').default;
     mockCommandsSender = new NativeCommandsSender();
+
     const mockIdProvider = { generate: (prefix) => `${prefix}+UNIQUE_ID` };
+
     const Store = require('../containers/Store').default;
     store = new Store();
 
@@ -17,7 +19,7 @@ describe('Commands', () => {
   });
 
   describe('setRoot', () => {
-    it('sends setRoot to native after parsing into layoutTree', () => {
+    it('sends setRoot to native after parsing into a correct layout tree', () => {
       uut.setRoot({
         container: {
           name: 'com.example.MyScreen'
@@ -39,6 +41,12 @@ describe('Commands', () => {
           }
         ]
       });
+    });
+
+    it('deep clones input to avoid mutation errors', () => {
+      const obj = {};
+      uut.setRoot({ container: { inner: obj } });
+      expect(mockCommandsSender.setRoot.mock.calls[0][0].children[0].data.inner).not.toBe(obj);
     });
 
     it('passProps into containers', () => {

@@ -1,23 +1,19 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import LayoutTreeParser from './LayoutTreeParser';
+import LayoutTreeCrawler from './LayoutTreeCrawler';
 
 export default class Commands {
   constructor(nativeCommandsSender, uniqueIdProvider, store) {
     this.nativeCommandsSender = nativeCommandsSender;
-    this.layoutTreeParser = new LayoutTreeParser(uniqueIdProvider);
-    this.store = store;
+    this.uniqueIdProvider = uniqueIdProvider;
+    this.layoutTreeParser = new LayoutTreeParser();
+    this.layoutTreeCrawler = new LayoutTreeCrawler(uniqueIdProvider, store);
   }
 
   setRoot(simpleApi) {
-    const layout = this.layoutTreeParser.parseFromSimpleJSON(simpleApi);
-    this._savePassProps(layout);
+    const input = _.cloneDeep(simpleApi);
+    const layout = this.layoutTreeParser.parseFromSimpleJSON(input);
+    this.layoutTreeCrawler.crawl(layout);
     this.nativeCommandsSender.setRoot(layout);
-  }
-
-  _savePassProps(node) {
-    if (node.type === 'Container') {
-      this.store.setPropsForContainerId(node.id, node.data.passProps);
-    }
-    _.forEach(node.children, (child) => this._savePassProps(child));
   }
 }

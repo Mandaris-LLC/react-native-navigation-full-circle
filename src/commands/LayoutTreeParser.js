@@ -1,85 +1,68 @@
 import * as _ from 'lodash';
-
-const Types = {
-  Container: 'Container',
-  ContainerStack: 'ContainerStack',
-  Tabs: 'Tabs',
-  SideMenuRoot: 'SideMenuRoot',
-  SideMenuCenter: 'SideMenuCenter',
-  SideMenuLeft: 'SideMenuLeft',
-  SideMenuRight: 'SideMenuRight'
-};
+import LayoutTypes from './LayoutTypes';
 
 export default class LayoutTreeParser {
-  constructor(uniqueIdProvider) {
-    this.uniqueIdProvider = uniqueIdProvider;
-  }
-
+  /**
+   * returns correct layout tree of {type, children, data?}
+   */
   parseFromSimpleJSON(simpleJsonApi) {
-    const input = _.cloneDeep(simpleJsonApi);
-    if (input.sideMenu) {
-      return this._createSideMenu(input);
+    if (simpleJsonApi.sideMenu) {
+      return this._createSideMenu(simpleJsonApi);
     }
-    if (input.tabs) {
-      return this._createTabs(input.tabs);
+    if (simpleJsonApi.tabs) {
+      return this._createTabs(simpleJsonApi.tabs);
     }
-    return this._createContainerStackWithContainer(input.container);
-  }
-
-  _node(node) {
-    node.id = this.uniqueIdProvider.generate(node.type);
-    node.children = node.children || [];
-    node.data = node.data || {};
-    return node;
+    return this._createContainerStackWithContainer(simpleJsonApi.container);
   }
 
   _createTabs(tabs) {
-    return this._node({
-      type: Types.Tabs,
+    return {
+      type: LayoutTypes.Tabs,
       children: _.map(tabs, (t) => this._createContainerStackWithContainer(t.container))
-    });
+    };
   }
 
   _createContainerStackWithContainer(container) {
-    return this._node({
-      type: Types.ContainerStack,
+    return {
+      type: LayoutTypes.ContainerStack,
       children: [this._createContainer(container)]
-    });
+    };
   }
 
   _createContainer(container) {
-    return this._node({
-      type: Types.Container,
-      data: container
-    });
+    return {
+      type: LayoutTypes.Container,
+      data: container,
+      children: []
+    };
   }
 
   _createSideMenu(layout) {
-    return this._node({
-      type: Types.SideMenuRoot,
+    return {
+      type: LayoutTypes.SideMenuRoot,
       children: this._createSideMenuChildren(layout)
-    });
+    };
   }
 
   _createSideMenuChildren(layout) {
     const children = [];
     if (layout.sideMenu.left) {
-      children.push(this._node({
-        type: Types.SideMenuLeft,
+      children.push({
+        type: LayoutTypes.SideMenuLeft,
         children: [this._createContainer(layout.sideMenu.left.container)]
-      }));
+      });
     }
-    children.push(this._node({
-      type: Types.SideMenuCenter,
+    children.push({
+      type: LayoutTypes.SideMenuCenter,
       children: [
         layout.tabs ? this._createTabs(layout.tabs) : this._createContainerStackWithContainer(layout.container)
       ]
-    }));
+    });
     if (layout.sideMenu.right) {
-      children.push(this._node({
-        type: Types.SideMenuRight,
+      children.push({
+        type: LayoutTypes.SideMenuRight,
         children: [this._createContainer(layout.sideMenu.right.container)]
-      }));
+      });
     }
     return children;
   }

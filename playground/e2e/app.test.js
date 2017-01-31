@@ -12,9 +12,15 @@ describe('app', () => {
     expect(elementByLabel('This is tab 1')).toBeVisible();
   });
 
+  it('passing props and functions', () => {
+    elementByLabel('Switch to tab based app').tap();
+    expect(elementByLabel('Hello from a function!')).toBeVisible();
+  });
+
   xit('switch to tabs with side menus', () => {
     elementByLabel('Switch to tab based app with side menus').tap();
-    // expect(elementByLabel('This is a tab screen')).toBeVisible();
+    elementByLabel('Switch to tab based app with side menus').swipeRight();
+    expect(elementByLabel('This is a side menu screen')).toBeVisible();
   });
 });
 

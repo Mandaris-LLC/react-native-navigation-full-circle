@@ -3,11 +3,20 @@ import { View, Text } from 'react-native';
 
 class SimpleScreen extends Component {
   render() {
-    const text = this.props.text || 'Simple Screen';
     return (
       <View style={styles.root}>
-        <Text style={styles.h1}>{text}</Text>
+        <Text style={styles.h1}>{this.props.text || 'Simple Screen'}</Text>
+        {this.renderTextFromFunctionInProps()}
       </View>
+    );
+  }
+
+  renderTextFromFunctionInProps() {
+    if (!this.props.myFunction) {
+      return undefined;
+    }
+    return (
+      <Text style={styles.h1}>{this.props.myFunction()}</Text>
     );
   }
 }

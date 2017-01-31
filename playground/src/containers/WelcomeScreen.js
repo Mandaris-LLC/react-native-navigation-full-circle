@@ -25,7 +25,8 @@ class WelcomeScreen extends Component {
           container: {
             name: 'com.example.SimpleScreen',
             passProps: {
-              text: 'This is tab 1'
+              text: 'This is tab 1',
+              myFunction: () => 'Hello from a function!'
             }
           }
         },
