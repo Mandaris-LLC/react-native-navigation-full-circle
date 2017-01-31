@@ -1,15 +1,19 @@
+import * as SimpleLayouts from './SimpleLayouts';
+
 describe('Commands', () => {
   let uut;
-  const mockCommandsSender = {
-    setRoot: jest.fn()
-  };
-  const mockIdProvider = {
-    generate: (prefix) => `${prefix}UNIQUE_ID`
-  };
+  let mockCommandsSender;
+  let store;
 
   beforeEach(() => {
+    const NativeCommandsSender = jest.genMockFromModule('../adapters/NativeCommandsSender').default;
+    mockCommandsSender = new NativeCommandsSender();
+    const mockIdProvider = { generate: (prefix) => `${prefix}+UNIQUE_ID` };
+    const Store = require('../containers/Store').default;
+    store = new Store();
+
     const Commands = require('./Commands').default;
-    uut = new Commands(mockCommandsSender, mockIdProvider);
+    uut = new Commands(mockCommandsSender, mockIdProvider, store);
   });
 
   describe('setRoot', () => {
@@ -22,11 +26,12 @@ describe('Commands', () => {
       expect(mockCommandsSender.setRoot).toHaveBeenCalledTimes(1);
       expect(mockCommandsSender.setRoot).toHaveBeenCalledWith({
         type: 'ContainerStack',
-        id: 'ContainerStackUNIQUE_ID',
+        id: 'ContainerStack+UNIQUE_ID',
+        data: {},
         children: [
           {
             type: 'Container',
-            id: 'ContainerUNIQUE_ID',
+            id: 'Container+UNIQUE_ID',
             children: [],
             data: {
               name: 'com.example.MyScreen'
@@ -34,6 +39,12 @@ describe('Commands', () => {
           }
         ]
       });
+    });
+
+    it('passProps into containers', () => {
+      expect(store.getPropsForContainerId('Container+UNIQUE_ID')).toEqual({});
+      uut.setRoot(SimpleLayouts.singleScreenWithAditionalParams);
+      expect(store.getPropsForContainerId('Container+UNIQUE_ID')).toEqual(SimpleLayouts.passProps);
     });
   });
 });

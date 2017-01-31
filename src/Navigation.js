@@ -12,7 +12,7 @@ class Navigation {
     this.nativeEventsReceiver = new NativeEventsReceiver();
     this.uniqueIdProvider = new UniqueIdProvider();
     this.containerRegistry = new ContainerRegistry(this.store);
-    this.commands = new Commands(new NativeCommandsSender(), this.uniqueIdProvider);
+    this.commands = new Commands(new NativeCommandsSender(), this.uniqueIdProvider, this.store);
   }
 
   registerContainer(containerName, getContainerFunc) {

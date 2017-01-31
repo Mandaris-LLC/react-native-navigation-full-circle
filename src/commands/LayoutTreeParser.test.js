@@ -22,7 +22,8 @@ describe('LayoutTreeParser', () => {
             data: {},
             children: []
           }
-        ]
+        ],
+        data: {}
       });
   });
 
@@ -37,6 +38,7 @@ describe('LayoutTreeParser', () => {
       .toEqual({
         type: 'ContainerStack',
         id: 'ContainerStack+UNIQUE_ID',
+        data: {},
         children: [
           {
             type: 'Container',
@@ -55,6 +57,7 @@ describe('LayoutTreeParser', () => {
       .toEqual({
         type: 'ContainerStack',
         id: 'ContainerStack+UNIQUE_ID',
+        data: {},
         children: [
           {
             type: 'Container',
@@ -62,21 +65,17 @@ describe('LayoutTreeParser', () => {
             children: [],
             data: {
               name: 'com.example.MyScreen',
-              passProps: {
-                foo: {
-                  number: 1,
-                  string: 'Hello!'
-                },
-                bar: SimpleLayouts.passedFunction
-              },
+              passProps: SimpleLayouts.passProps,
               style: {},
               buttons: {}
             }
           }
         ]
       });
-    expect(uut.parseFromSimpleJSON(SimpleLayouts.singleScreenWithAditionalParams).children[0].data.passProps.bar).toBe(SimpleLayouts.passedFunction);
-    expect(uut.parseFromSimpleJSON(SimpleLayouts.singleScreenWithAditionalParams).children[0].data.passProps.bar()).toEqual('Hello from a function');
+    const parsedPropsFn = uut.parseFromSimpleJSON(SimpleLayouts.singleScreenWithAditionalParams)
+      .children[0].data.passProps.fnProp;
+    expect(parsedPropsFn).toBe(SimpleLayouts.passProps.fnProp);
+    expect(parsedPropsFn()).toEqual('Hello from a function');
   });
 
   it('parses tab based', () => {
@@ -84,10 +83,12 @@ describe('LayoutTreeParser', () => {
       .toEqual({
         type: 'Tabs',
         id: 'Tabs+UNIQUE_ID',
+        data: {},
         children: [
           {
             type: 'ContainerStack',
             id: 'ContainerStack+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Container',
@@ -102,6 +103,7 @@ describe('LayoutTreeParser', () => {
           {
             type: 'ContainerStack',
             id: 'ContainerStack+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Container',
@@ -116,6 +118,7 @@ describe('LayoutTreeParser', () => {
           {
             type: 'ContainerStack',
             id: 'ContainerStack+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Container',
@@ -136,10 +139,12 @@ describe('LayoutTreeParser', () => {
       .toEqual({
         type: 'SideMenuRoot',
         id: 'SideMenuRoot+UNIQUE_ID',
+        data: {},
         children: [
           {
             type: 'SideMenuLeft',
             id: 'SideMenuLeft+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Container',
@@ -154,10 +159,12 @@ describe('LayoutTreeParser', () => {
           {
             type: 'SideMenuCenter',
             id: 'SideMenuCenter+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'ContainerStack',
                 id: 'ContainerStack+UNIQUE_ID',
+                data: {},
                 children: [
                   {
                     type: 'Container',
@@ -180,14 +187,17 @@ describe('LayoutTreeParser', () => {
       .toEqual({
         type: 'SideMenuRoot',
         id: 'SideMenuRoot+UNIQUE_ID',
+        data: {},
         children: [
           {
             type: 'SideMenuCenter',
             id: 'SideMenuCenter+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'ContainerStack',
                 id: 'ContainerStack+UNIQUE_ID',
+                data: {},
                 children: [
                   {
                     type: 'Container',
@@ -204,6 +214,7 @@ describe('LayoutTreeParser', () => {
           {
             type: 'SideMenuRight',
             id: 'SideMenuRight+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Container',
@@ -224,10 +235,12 @@ describe('LayoutTreeParser', () => {
       .toEqual({
         type: 'SideMenuRoot',
         id: 'SideMenuRoot+UNIQUE_ID',
+        data: {},
         children: [
           {
             type: 'SideMenuLeft',
             id: 'SideMenuLeft+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Container',
@@ -242,10 +255,12 @@ describe('LayoutTreeParser', () => {
           {
             type: 'SideMenuCenter',
             id: 'SideMenuCenter+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'ContainerStack',
                 id: 'ContainerStack+UNIQUE_ID',
+                data: {},
                 children: [
                   {
                     type: 'Container',
@@ -262,6 +277,7 @@ describe('LayoutTreeParser', () => {
           {
             type: 'SideMenuRight',
             id: 'SideMenuRight+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Container',
@@ -282,10 +298,12 @@ describe('LayoutTreeParser', () => {
       .toEqual({
         type: 'SideMenuRoot',
         id: 'SideMenuRoot+UNIQUE_ID',
+        data: {},
         children: [
           {
             type: 'SideMenuLeft',
             id: 'SideMenuLeft+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Container',
@@ -300,14 +318,17 @@ describe('LayoutTreeParser', () => {
           {
             type: 'SideMenuCenter',
             id: 'SideMenuCenter+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Tabs',
                 id: 'Tabs+UNIQUE_ID',
+                data: {},
                 children: [
                   {
                     type: 'ContainerStack',
                     id: 'ContainerStack+UNIQUE_ID',
+                    data: {},
                     children: [
                       {
                         type: 'Container',
@@ -322,6 +343,7 @@ describe('LayoutTreeParser', () => {
                   {
                     type: 'ContainerStack',
                     id: 'ContainerStack+UNIQUE_ID',
+                    data: {},
                     children: [
                       {
                         type: 'Container',
@@ -340,6 +362,7 @@ describe('LayoutTreeParser', () => {
           {
             type: 'SideMenuRight',
             id: 'SideMenuRight+UNIQUE_ID',
+            data: {},
             children: [
               {
                 type: 'Container',

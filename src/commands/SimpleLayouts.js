@@ -4,18 +4,17 @@ export const singleScreenApp = {
   }
 };
 
-export const passedFunction = () => 'Hello from a function';
+export const passProps = {
+  strProp: 'string prop',
+  numProp: 12345,
+  objProp: { inner: { foo: 'bar' } },
+  fnProp: () => 'Hello from a function'
+};
 
 export const singleScreenWithAditionalParams = {
   container: {
     name: 'com.example.MyScreen',
-    passProps: {
-      foo: {
-        number: 1,
-        string: 'Hello!'
-      },
-      bar: passedFunction
-    },
+    passProps: passProps,
     style: {},
     buttons: {}
   }

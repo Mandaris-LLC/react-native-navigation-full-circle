@@ -29,6 +29,7 @@ export default class LayoutTreeParser {
   _node(node) {
     node.id = this.uniqueIdProvider.generate(node.type);
     node.children = node.children || [];
+    node.data = node.data || {};
     return node;
   }
 

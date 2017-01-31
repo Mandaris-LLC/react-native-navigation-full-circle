@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-class SimpleTabScreen extends Component {
+class SimpleScreen extends Component {
   render() {
+    const text = this.props.text || 'Simple Screen';
     return (
       <View style={styles.root}>
-        <Text style={styles.h1}>{`This is a tab screen`}</Text>
+        <Text style={styles.h1}>{text}</Text>
       </View>
     );
   }
 }
-export default SimpleTabScreen;
+export default SimpleScreen;
 
 const styles = {
   root: {

@@ -12,14 +12,8 @@ class WelcomeScreen extends Component {
     return (
       <View style={styles.root}>
         <Text style={styles.h1}>{`React Native Navigation!`}</Text>
-        <Button
-          title="Switch to tab based app"
-          onPress={this.onClickSwitchToTabs}
-        />
-        <Button
-          title="Switch to tab based app with side menus"
-          onPress={this.onClickSwitchToTabsWithSideMenus}
-        />
+        <Button title="Switch to tab based app" onPress={this.onClickSwitchToTabs} />
+        <Button title="Switch to tab based app with side menus" onPress={this.onClickSwitchToTabsWithSideMenus} />
       </View>
     );
   }
@@ -29,12 +23,18 @@ class WelcomeScreen extends Component {
       tabs: [
         {
           container: {
-            name: 'com.example.SimpleTabScreen'
+            name: 'com.example.SimpleScreen',
+            passProps: {
+              text: 'This is tab 1'
+            }
           }
         },
         {
           container: {
-            name: 'com.example.WelcomeScreen'
+            name: 'com.example.SimpleScreen',
+            passProps: {
+              text: 'This is tab 2'
+            }
           }
         }
       ]
@@ -46,7 +46,7 @@ class WelcomeScreen extends Component {
       tabs: [
         {
           container: {
-            name: 'com.example.SimpleTabScreen'
+            name: 'com.example.SimpleScreen'
           }
         },
         {
@@ -56,16 +56,16 @@ class WelcomeScreen extends Component {
         },
         {
           container: {
-            name: 'com.example.SimpleTabScreen'
+            name: 'com.example.SimpleScreen'
           }
         }
       ],
       sideMenu: {
         left: {
-          name: 'com.example.SimpleTabScreen'
+          name: 'com.example.SimpleScreen'
         },
         right: {
-          name: 'com.example.SimpleTabScreen'
+          name: 'com.example.SimpleScreen'
         }
       }
     });

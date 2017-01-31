@@ -9,12 +9,12 @@ describe('app', () => {
 
   it('switch to tab based app', () => {
     elementByLabel('Switch to tab based app').tap();
-    expect(elementByLabel('This is a tab screen')).toBeVisible();
+    expect(elementByLabel('This is tab 1')).toBeVisible();
   });
 
   xit('switch to tabs with side menus', () => {
     elementByLabel('Switch to tab based app with side menus').tap();
-    expect(elementByLabel('This is a tab screen')).toBeVisible();
+    // expect(elementByLabel('This is a tab screen')).toBeVisible();
   });
 });
 
