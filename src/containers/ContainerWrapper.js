@@ -5,18 +5,18 @@ export default class ContainerWrapper {
     return class extends Component {
       constructor(props) {
         super(props);
-        if (!props.containerId) {
-          throw new Error(`Container ${containerName} does not have a containerId!`);
+        if (!props.id) {
+          throw new Error(`Container ${containerName} does not have an id!`);
         }
         this.state = {
-          containerId: props.containerId,
-          allProps: { ...props, ...propStore.getPropsForContainerId(props.containerId) }
+          id: props.id,
+          allProps: { ...props, ...propStore.getPropsForContainerId(props.id) }
         };
       }
 
       componentWillReceiveProps(nextProps) {
         this.setState({
-          allProps: { ...nextProps, ...propStore.getPropsForContainerId(this.state.containerId) }
+          allProps: { ...nextProps, ...propStore.getPropsForContainerId(this.state.id) }
         });
       }
 
@@ -24,7 +24,7 @@ export default class ContainerWrapper {
         return (
           <OriginalContainer
             {...this.state.allProps}
-            containerId={this.state.containerId}
+            id={this.state.id}
           />
         );
       }

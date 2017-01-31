@@ -31,7 +31,7 @@ describe('ContainerWrapper', () => {
     render() {
       const Child = this.ChildClass;
       return (
-        <Child containerId="container1" {...this.state.propsFromState} />
+        <Child id="container1" {...this.state.propsFromState} />
       );
     }
   }
@@ -42,24 +42,24 @@ describe('ContainerWrapper', () => {
     store = new Store();
   });
 
-  it('must have containerId as prop', () => {
+  it('must have id as prop', () => {
     const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
     expect(() => {
       renderer.create(<NavigationContainer />);
-    }).toThrow(new Error('Container example.MyContainer does not have a containerId!'));
+    }).toThrow(new Error('Container example.MyContainer does not have an id!'));
   });
 
   it('wraps the container and saves to store', () => {
     const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
     expect(NavigationContainer).not.toBeInstanceOf(MyContainer);
-    const tree = renderer.create(<NavigationContainer containerId={'container1'} />);
+    const tree = renderer.create(<NavigationContainer id={'container1'} />);
     expect(tree.toJSON().children).toEqual(['Hello, World!']);
     expect(myContainerRef).toBeInstanceOf(MyContainer);
   });
 
   it('injects props from wrapper into original container', () => {
     const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
-    renderer.create(<NavigationContainer containerId={'container1'} myProp={'yo'} />);
+    renderer.create(<NavigationContainer id={'container1'} myProp={'yo'} />);
     expect(myContainerRef.props.myProp).toEqual('yo');
   });
 
@@ -74,8 +74,8 @@ describe('ContainerWrapper', () => {
   it('pulls props from the store and injects them into the inner container', () => {
     store.setPropsForContainerId('container123', { numberProp: 1, stringProp: 'hello', objectProp: { a: 2 } });
     const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
-    renderer.create(<NavigationContainer containerId={'container123'} />);
-    expect(myContainerRef.props).toEqual({ containerId: 'container123', numberProp: 1, stringProp: 'hello', objectProp: { a: 2 } });
+    renderer.create(<NavigationContainer id={'container123'} />);
+    expect(myContainerRef.props).toEqual({ id: 'container123', numberProp: 1, stringProp: 'hello', objectProp: { a: 2 } });
   });
 
   it('updates props from store into inner container', () => {
@@ -89,11 +89,11 @@ describe('ContainerWrapper', () => {
     expect(myContainerRef.props.myProp).toEqual('hello');
   });
 
-  it('protects containerId from change', () => {
+  it('protects id from change', () => {
     const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
     renderer.create(<TestParent ChildClass={NavigationContainer} />);
-    expect(myContainerRef.props.containerId).toEqual('container1');
-    testParentRef.setState({ propsFromState: { containerId: 'ERROR' } });
-    expect(myContainerRef.props.containerId).toEqual('container1');
+    expect(myContainerRef.props.id).toEqual('container1');
+    testParentRef.setState({ propsFromState: { id: 'ERROR' } });
+    expect(myContainerRef.props.id).toEqual('container1');
   });
 });

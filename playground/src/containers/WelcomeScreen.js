@@ -6,6 +6,7 @@ import Navigation from 'react-native-navigation';
 class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
+    this.onClickPush = this.onClickPush.bind(this);
   }
 
   render() {
@@ -13,7 +14,9 @@ class WelcomeScreen extends Component {
       <View style={styles.root}>
         <Text style={styles.h1}>{`React Native Navigation!`}</Text>
         <Button title="Switch to tab based app" onPress={this.onClickSwitchToTabs} />
-        <Button title="Switch to tab based app with side menus" onPress={this.onClickSwitchToTabsWithSideMenus} />
+        <Button title="Switch to app with side menus" onPress={this.onClickSwitchToSideMenus} />
+        <Button title="Push" onPress={this.onClickPush} />
+        <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
     );
   }
@@ -42,7 +45,7 @@ class WelcomeScreen extends Component {
     });
   }
 
-  onClickSwitchToTabsWithSideMenus() {
+  onClickSwitchToSideMenus() {
     Navigation.setRoot({
       tabs: [
         {
@@ -52,7 +55,7 @@ class WelcomeScreen extends Component {
         },
         {
           container: {
-            name: 'com.example.WelcomeScreen'
+            name: 'com.example.SimpleScreen'
           }
         },
         {
@@ -63,11 +66,24 @@ class WelcomeScreen extends Component {
       ],
       sideMenu: {
         left: {
-          name: 'com.example.SimpleScreen'
+          container: {
+            name: 'com.example.SimpleScreen'
+          }
         },
         right: {
-          name: 'com.example.SimpleScreen'
+          container: {
+            name: 'com.example.SimpleScreen'
+          }
         }
+      }
+    });
+  }
+
+  onClickPush() {
+    Navigation.on(this.props.id).push({
+      name: 'com.example.SimpleScreen',
+      passProps: {
+        text: 'Pushed screen'
       }
     });
   }
@@ -85,6 +101,11 @@ const styles = {
   h1: {
     fontSize: 24,
     textAlign: 'center',
-    margin: 10
+    margin: 30
+  },
+  footer: {
+    fontSize: 10,
+    color: '#888',
+    marginTop: 80
   }
 };

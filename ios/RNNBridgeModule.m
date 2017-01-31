@@ -14,8 +14,16 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout)
 {
+	[self assertReady];
 	UIApplication.sharedApplication.delegate.window.rootViewController = [[RNNControllerFactory new] createRootViewController:layout];
 	[UIApplication.sharedApplication.delegate.window makeKeyAndVisible];
+}
+
+-(void)assertReady
+{
+	if (!RNN.instance.isReadyToReceiveCommands) {
+		@throw [NSException exceptionWithName:@"BridgeNotLoadedError" reason:@"Bridge not yet loaded! Send commands after Navigation.events().onAppLaunched() has been called." userInfo:nil];
+	}
 }
 
 @end

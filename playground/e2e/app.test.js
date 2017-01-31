@@ -13,6 +13,11 @@ describe('app', () => {
     expect(elementByLabel('Hello from a function!')).toBeVisible();
   });
 
+  xit('push screen', () => {
+    elementByLabel('Push').tap();
+    expect(elementByLabel('Pushed screen')).toBeVisible();
+  });
+
   xit('switch to tabs with side menus', () => {
     elementByLabel('Switch to tab based app with side menus').tap();
     elementByLabel('Switch to tab based app with side menus').swipeRight();

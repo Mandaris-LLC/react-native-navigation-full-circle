@@ -14,6 +14,6 @@ export default class Commands {
     const input = _.cloneDeep(simpleApi);
     const layout = this.layoutTreeParser.parseFromSimpleJSON(input);
     this.layoutTreeCrawler.crawl(layout);
-    this.nativeCommandsSender.setRoot(layout);
+    return this.nativeCommandsSender.setRoot(layout);
   }
 }

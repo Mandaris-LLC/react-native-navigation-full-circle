@@ -6,10 +6,11 @@
 
 @interface RNN : NSObject
 
+@property (readonly) BOOL isReadyToReceiveCommands;
+@property (readonly) RCTBridge* bridge;
+
 +(instancetype)instance;
 
 -(void)bootstrap:(NSURL*)jsCodeLocation launchOptions:(NSDictionary*)launchOptions;
-
--(RCTBridge*)bridge;
 
 @end

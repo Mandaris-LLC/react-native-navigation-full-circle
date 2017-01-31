@@ -90,7 +90,7 @@
 	
 	RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:RNN.instance.bridge
 													  moduleName:containerName
-											   initialProperties:@{@"containerId": node.nodeId}];
+											   initialProperties:@{@"id": node.nodeId}];
 	
 	UIViewController* controller = [UIViewController new];
 	controller.view = reactView;

@@ -20,9 +20,11 @@ describe('Navigation', () => {
     expect(Navigation.containerRegistry.registerContainer).toHaveBeenCalledWith('name', fn);
   });
 
-  it('setRoot delegates to Commands', () => {
+  it('setRoot delegates to Commands', async () => {
+    Navigation.commands.setRoot.mockReturnValue(Promise.resolve('result'));
     const params = {};
-    Navigation.setRoot(params);
+    const result = await Navigation.setRoot(params);
+    expect(result).toEqual('result');
     expect(Navigation.commands.setRoot).toHaveBeenCalledTimes(1);
     expect(Navigation.commands.setRoot).toHaveBeenCalledWith(params);
   });

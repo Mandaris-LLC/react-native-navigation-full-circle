@@ -7,12 +7,11 @@
 
 @interface RNN()
 @property RNNEventEmitter* eventEmitter;
+@property (readwrite) RCTBridge* bridge;
+@property (readwrite) BOOL isReadyToReceiveCommands;
 @end
 
 @implementation RNN
-{
-	RCTBridge* bridge;
-}
 
 +(instancetype)instance
 {
@@ -39,7 +38,7 @@
 	
 	[self registerForJsEvents];
 	// this will load the JS bundle
-	bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation moduleProvider:nil launchOptions:launchOptions];
+	self.bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation moduleProvider:nil launchOptions:launchOptions];
 }
 
 -(void)registerForJsEvents
@@ -54,17 +53,13 @@
 
 -(void)onJavaScriptLoaded
 {
+	self.isReadyToReceiveCommands = true;
 	[self.eventEmitter sendOnAppLaunched];
 }
 
 -(void)onJavaScriptDevReload
 {
 	UIApplication.sharedApplication.delegate.window.rootViewController = nil;
-}
-
--(RCTBridge *)bridge
-{
-	return bridge;
 }
 
 @end

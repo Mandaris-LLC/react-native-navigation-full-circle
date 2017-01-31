@@ -54,5 +54,11 @@ describe('Commands', () => {
       uut.setRoot(SimpleLayouts.singleScreenWithAditionalParams);
       expect(store.getPropsForContainerId('Container+UNIQUE_ID')).toEqual(SimpleLayouts.passProps);
     });
+
+    it('returns a promise with the resolved layout', async () => {
+      mockCommandsSender.setRoot.mockReturnValue(Promise.resolve('the resolved layout'));
+      const result = await uut.setRoot({ container: { name: 'com.example.MyScreen' } });
+      expect(result).toEqual('the resolved layout');
+    });
   });
 });

@@ -20,7 +20,7 @@ class Navigation {
   }
 
   setRoot(params) {
-    this.commands.setRoot(params);
+    return this.commands.setRoot(params);
   }
 
   events() {
