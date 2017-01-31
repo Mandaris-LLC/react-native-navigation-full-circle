@@ -211,4 +211,140 @@ describe('LayoutTreeParser', () => {
         ]
       });
   });
+
+  it('parses both side menus', () => {
+    expect(uut.parseFromSimpleJSON(SimpleLayouts.singleWithBothMenus))
+      .toEqual({
+        type: 'SideMenuRoot',
+        id: 'SideMenuRoot+UNIQUE_ID',
+        children: [
+          {
+            type: 'SideMenuLeft',
+            id: 'SideMenuLeft+UNIQUE_ID',
+            children: [
+              {
+                type: 'Container',
+                id: 'Container+UNIQUE_ID',
+                data: {
+                  name: 'com.example.Menu1'
+                },
+                children: []
+              }
+            ]
+          },
+          {
+            type: 'SideMenuCenter',
+            id: 'SideMenuCenter+UNIQUE_ID',
+            children: [
+              {
+                type: 'ContainerStack',
+                id: 'ContainerStack+UNIQUE_ID',
+                children: [
+                  {
+                    type: 'Container',
+                    id: 'Container+UNIQUE_ID',
+                    data: {
+                      name: 'com.example.MyScreen'
+                    },
+                    children: []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            type: 'SideMenuRight',
+            id: 'SideMenuRight+UNIQUE_ID',
+            children: [
+              {
+                type: 'Container',
+                id: 'Container+UNIQUE_ID',
+                data: {
+                  name: 'com.example.Menu2'
+                },
+                children: []
+              }
+            ]
+          }
+        ]
+      });
+  });
+
+  it('parses tabs with side menus', () => {
+    expect(uut.parseFromSimpleJSON(SimpleLayouts.tabBasedWithBothSideMenus))
+      .toEqual({
+        type: 'SideMenuRoot',
+        id: 'SideMenuRoot+UNIQUE_ID',
+        children: [
+          {
+            type: 'SideMenuLeft',
+            id: 'SideMenuLeft+UNIQUE_ID',
+            children: [
+              {
+                type: 'Container',
+                id: 'Container+UNIQUE_ID',
+                data: {
+                  name: 'com.example.Menu1'
+                },
+                children: []
+              }
+            ]
+          },
+          {
+            type: 'SideMenuCenter',
+            id: 'SideMenuCenter+UNIQUE_ID',
+            children: [
+              {
+                type: 'Tabs',
+                id: 'Tabs+UNIQUE_ID',
+                children: [
+                  {
+                    type: 'ContainerStack',
+                    id: 'ContainerStack+UNIQUE_ID',
+                    children: [
+                      {
+                        type: 'Container',
+                        id: 'Container+UNIQUE_ID',
+                        data: {
+                          name: 'com.example.FirstTab'
+                        },
+                        children: []
+                      }
+                    ]
+                  },
+                  {
+                    type: 'ContainerStack',
+                    id: 'ContainerStack+UNIQUE_ID',
+                    children: [
+                      {
+                        type: 'Container',
+                        id: 'Container+UNIQUE_ID',
+                        data: {
+                          name: 'com.example.SecondTab'
+                        },
+                        children: []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            type: 'SideMenuRight',
+            id: 'SideMenuRight+UNIQUE_ID',
+            children: [
+              {
+                type: 'Container',
+                id: 'Container+UNIQUE_ID',
+                data: {
+                  name: 'com.example.Menu2'
+                },
+                children: []
+              }
+            ]
+          }
+        ]
+      });
+  });
 });

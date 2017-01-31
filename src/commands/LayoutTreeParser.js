@@ -1,5 +1,15 @@
 import * as _ from 'lodash';
 
+const Types = {
+  Container: 'Container',
+  ContainerStack: 'ContainerStack',
+  Tabs: 'Tabs',
+  SideMenuRoot: 'SideMenuRoot',
+  SideMenuCenter: 'SideMenuCenter',
+  SideMenuLeft: 'SideMenuLeft',
+  SideMenuRight: 'SideMenuRight'
+};
+
 export default class LayoutTreeParser {
   constructor(uniqueIdProvider) {
     this.uniqueIdProvider = uniqueIdProvider;
@@ -8,73 +18,68 @@ export default class LayoutTreeParser {
   parseFromSimpleJSON(simpleJsonApi) {
     // TOOD deepclone
     if (simpleJsonApi.sideMenu) {
-      return {
-        type: 'SideMenuRoot',
-        id: this.uniqueIdProvider.generate('SideMenuRoot'),
-        children: this.createSideMenuChildren(simpleJsonApi)
-      };
+      return this._createSideMenu(simpleJsonApi);
     }
     if (simpleJsonApi.tabs) {
-      return this.createTabs(simpleJsonApi.tabs);
+      return this._createTabs(simpleJsonApi.tabs);
     }
-
-    return this.createContainerStackWithContainer(simpleJsonApi.container);
+    return this._createContainerStackWithContainer(simpleJsonApi.container);
   }
 
-  createSideMenuChildren(layout) {
+  _node(node) {
+    node.id = this.uniqueIdProvider.generate(node.type);
+    node.children = node.children || [];
+    return node;
+  }
+
+  _createTabs(tabs) {
+    return this._node({
+      type: Types.Tabs,
+      children: _.map(tabs, (t) => this._createContainerStackWithContainer(t.container))
+    });
+  }
+
+  _createContainerStackWithContainer(container) {
+    return this._node({
+      type: Types.ContainerStack,
+      children: [this._createContainer(container)]
+    });
+  }
+
+  _createContainer(container) {
+    return this._node({
+      type: Types.Container,
+      data: container
+    });
+  }
+
+  _createSideMenu(layout) {
+    return this._node({
+      type: Types.SideMenuRoot,
+      children: this._createSideMenuChildren(layout)
+    });
+  }
+
+  _createSideMenuChildren(layout) {
     const children = [];
     if (layout.sideMenu.left) {
-      children.push({
-        type: 'SideMenuLeft',
-        id: this.uniqueIdProvider.generate('SideMenuLeft'),
-        children: [
-          this.createContainer(layout.sideMenu.left.container)
-        ]
-      });
+      children.push(this._node({
+        type: Types.SideMenuLeft,
+        children: [this._createContainer(layout.sideMenu.left.container)]
+      }));
     }
-    children.push({
-      type: 'SideMenuCenter',
-      id: this.uniqueIdProvider.generate('SideMenuCenter'),
+    children.push(this._node({
+      type: Types.SideMenuCenter,
       children: [
-        this.createContainerStackWithContainer(layout.container)
+        layout.tabs ? this._createTabs(layout.tabs) : this._createContainerStackWithContainer(layout.container)
       ]
-    });
+    }));
     if (layout.sideMenu.right) {
-      children.push({
-        type: 'SideMenuRight',
-        id: this.uniqueIdProvider.generate('SideMenuRight'),
-        children: [
-          this.createContainer(layout.sideMenu.right.container)
-        ]
-      });
+      children.push(this._node({
+        type: Types.SideMenuRight,
+        children: [this._createContainer(layout.sideMenu.right.container)]
+      }));
     }
     return children;
-  }
-
-  createTabs(tabs) {
-    return {
-      type: 'Tabs',
-      id: this.uniqueIdProvider.generate(`Tabs`),
-      children: _.map(tabs, (t) => this.createContainerStackWithContainer(t.container))
-    };
-  }
-
-  createContainerStackWithContainer(container) {
-    return {
-      type: 'ContainerStack',
-      id: this.uniqueIdProvider.generate(`ContainerStack`),
-      children: [
-        this.createContainer(container)
-      ]
-    };
-  }
-
-  createContainer(container) {
-    return {
-      data: container,
-      type: 'Container',
-      id: this.uniqueIdProvider.generate(`Container`),
-      children: []
-    };
   }
 }

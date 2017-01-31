@@ -73,10 +73,14 @@ export const singleWithBothMenus = {
   },
   sideMenu: {
     left: {
-      name: 'com.example.Menu1'
+      container: {
+        name: 'com.example.Menu1'
+      }
     },
     right: {
-      name: 'com.example.Menu2'
+      container: {
+        name: 'com.example.Menu2'
+      }
     }
   }
 };
@@ -92,19 +96,18 @@ export const tabBasedWithBothSideMenus = {
       container: {
         name: 'com.example.SecondTab'
       }
-    },
-    {
-      container: {
-        name: 'com.example.FirstTab'
-      }
     }
   ],
   sideMenu: {
     left: {
-      name: 'com.example.Menu1'
+      container: {
+        name: 'com.example.Menu1'
+      }
     },
     right: {
-      name: 'com.example.Menu2'
+      container: {
+        name: 'com.example.Menu2'
+      }
     }
   }
 };
