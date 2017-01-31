@@ -7,13 +7,9 @@ describe('app', () => {
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 
-  it('switch to tab based app', () => {
+  it('switch to tab based app, passProps and functions', () => {
     elementByLabel('Switch to tab based app').tap();
     expect(elementByLabel('This is tab 1')).toBeVisible();
-  });
-
-  it('passing props and functions', () => {
-    elementByLabel('Switch to tab based app').tap();
     expect(elementByLabel('Hello from a function!')).toBeVisible();
   });
 
