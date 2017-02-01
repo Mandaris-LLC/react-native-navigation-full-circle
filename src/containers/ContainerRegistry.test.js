@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { AppRegistry, Text } from 'react-native';
 import renderer from 'react-test-renderer';
 
+import ContainerRegistry from './ContainerRegistry';
+import Store from './Store';
+
 describe('ContainerRegistry', () => {
   let uut;
 
@@ -13,8 +16,6 @@ describe('ContainerRegistry', () => {
 
   beforeEach(() => {
     AppRegistry.registerComponent = jest.fn(AppRegistry.registerComponent);
-    const ContainerRegistry = require('./ContainerRegistry').default;
-    const Store = require('./Store').default;
     uut = new ContainerRegistry(new Store());
   });
 

@@ -1,19 +1,21 @@
+import UniqueIdProvider from './UniqueIdProvider';
+
 describe('UniqueIdProvider', () => {
   let uut;
 
   beforeEach(() => {
-    const UniqueIdProvider = require('./UniqueIdProvider').default;
     uut = new UniqueIdProvider();
   });
 
-  it('provides uniqueId', () => {
+  it('provides uniqueId with optional prefix', () => {
     expect(uut.generate()).toEqual('1');
     expect(uut.generate()).toEqual('2');
+    expect(uut.generate('prefix')).toEqual('prefix3');
+    expect(uut.generate('prefix')).toEqual('prefix4');
+    expect(uut.generate('other')).toEqual('other5');
   });
 
-  it('provides with prefix', () => {
-    expect(uut.generate('prefix')).toEqual('prefix1');
-    expect(uut.generate('prefix')).toEqual('prefix2');
-    expect(uut.generate('other')).toEqual('other3');
+  it('id is unique across instances', () => {
+    expect(uut.generate()).not.toEqual('1');
   });
 });

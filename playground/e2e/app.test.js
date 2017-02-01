@@ -13,7 +13,7 @@ describe('app', () => {
     expect(elementByLabel('Hello from a function!')).toBeVisible();
   });
 
-  xit('push screen', () => {
+  it('push screen', () => {
     elementByLabel('Push').tap();
     expect(elementByLabel('Pushed screen')).toBeVisible();
   });

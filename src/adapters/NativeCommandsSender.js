@@ -9,4 +9,10 @@ export default class NativeCommandsSender {
     this.nativeCommandsModule.setRoot(layoutTree);
     return Promise.resolve(layoutTree);
   }
+
+  push(onContainerId, layout) {
+    this.nativeCommandsModule.push(onContainerId, layout);
+    return Promise.resolve(layout);
+  }
 }
+

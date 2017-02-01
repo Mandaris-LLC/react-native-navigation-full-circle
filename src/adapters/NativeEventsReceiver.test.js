@@ -1,10 +1,12 @@
+import { NativeModules } from 'react-native';
+import NativeEventsReceiver from './NativeEventsReceiver';
+
 describe('NativeEventsReceiver', () => {
   let uut;
   const eventEmitterMock = { addListener: jest.fn() };
 
   beforeEach(() => {
-    require('react-native').NativeModules.RNNEventEmitter = {};
-    const NativeEventsReceiver = require('./NativeEventsReceiver').default;
+    NativeModules.RNNEventEmitter = {};
     uut = new NativeEventsReceiver();
     uut.emitter = eventEmitterMock;
   });

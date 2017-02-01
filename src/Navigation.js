@@ -4,7 +4,10 @@ import UniqueIdProvider from './adapters/UniqueIdProvider';
 
 import Store from './containers/Store';
 import ContainerRegistry from './containers/ContainerRegistry';
-import Commands from './commands/Commands';
+import AppCommands from './commands/AppCommands';
+import ContainerCommands from './commands/ContainerCommands';
+import LayoutTreeParser from './commands/LayoutTreeParser';
+import LayoutTreeCrawler from './commands/LayoutTreeCrawler';
 
 class Navigation {
   constructor() {
@@ -12,7 +15,10 @@ class Navigation {
     this.nativeEventsReceiver = new NativeEventsReceiver();
     this.uniqueIdProvider = new UniqueIdProvider();
     this.containerRegistry = new ContainerRegistry(this.store);
-    this.commands = new Commands(new NativeCommandsSender(), this.uniqueIdProvider, this.store);
+    this.layoutTreeParser = new LayoutTreeParser();
+    this.layoutTreeCrawler = new LayoutTreeCrawler(this.uniqueIdProvider, this.store);
+    this.nativeCommandsSender = new NativeCommandsSender();
+    this.appCommands = new AppCommands(this.nativeCommandsSender, this.layoutTreeParser, this.layoutTreeCrawler);
   }
 
   registerContainer(containerName, getContainerFunc) {
@@ -20,11 +26,15 @@ class Navigation {
   }
 
   setRoot(params) {
-    return this.commands.setRoot(params);
+    return this.appCommands.setRoot(params);
   }
 
   events() {
     return this.nativeEventsReceiver;
+  }
+
+  on(containerId) {
+    return new ContainerCommands(containerId, this.nativeCommandsSender, this.layoutTreeParser, this.layoutTreeCrawler);
   }
 }
 

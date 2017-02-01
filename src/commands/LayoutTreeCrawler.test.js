@@ -1,16 +1,15 @@
 import LayoutTypes from './LayoutTypes';
+import LayoutTreeCrawler from './LayoutTreeCrawler';
+import Store from '../containers/Store';
+import UniqueIdProvider from '../adapters/UniqueIdProvider.mock';
 
 describe('LayoutTreeCrawler', () => {
   let uut;
   let store;
 
   beforeEach(() => {
-    const LayoutTreeCrawler = require('./LayoutTreeCrawler').default;
-    const uniqueIdProvider = { generate: (prefix) => `${prefix}+UNIQUE_ID` };
-    const Store = require('../containers/Store').default;
     store = new Store();
-
-    uut = new LayoutTreeCrawler(uniqueIdProvider, store);
+    uut = new LayoutTreeCrawler(new UniqueIdProvider(), store);
   });
 
   it('crawls a layout tree and adds unique id to each node', () => {

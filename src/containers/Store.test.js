@@ -1,8 +1,9 @@
+import Store from './Store';
+
 describe('Store', () => {
   let uut;
 
   beforeEach(() => {
-    const Store = require('./Store').default;
     uut = new Store();
   });
 

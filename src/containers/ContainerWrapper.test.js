@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { AppRegistry, Text } from 'react-native';
 import renderer from 'react-test-renderer';
 
+import ContainerWrapper from './ContainerWrapper';
+import Store from './Store';
+
 describe('ContainerWrapper', () => {
-  let ContainerWrapper;
   let myContainerRef;
   let testParentRef;
   let store;
@@ -37,8 +39,6 @@ describe('ContainerWrapper', () => {
   }
 
   beforeEach(() => {
-    ContainerWrapper = require('./ContainerWrapper').default;
-    const Store = require('./Store').default;
     store = new Store();
   });
 

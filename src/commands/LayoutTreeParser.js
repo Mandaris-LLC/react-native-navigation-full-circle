@@ -12,28 +12,28 @@ export default class LayoutTreeParser {
     if (simpleJsonApi.tabs) {
       return this._createTabs(simpleJsonApi.tabs);
     }
-    return this._createContainerStackWithContainer(simpleJsonApi.container);
+    return this._createContainerStackWithContainerData(simpleJsonApi.container);
+  }
+
+  createContainer(data) {
+    return {
+      type: LayoutTypes.Container,
+      data,
+      children: []
+    };
   }
 
   _createTabs(tabs) {
     return {
       type: LayoutTypes.Tabs,
-      children: _.map(tabs, (t) => this._createContainerStackWithContainer(t.container))
+      children: _.map(tabs, (t) => this._createContainerStackWithContainerData(t.container))
     };
   }
 
-  _createContainerStackWithContainer(container) {
+  _createContainerStackWithContainerData(containerData) {
     return {
       type: LayoutTypes.ContainerStack,
-      children: [this._createContainer(container)]
-    };
-  }
-
-  _createContainer(container) {
-    return {
-      type: LayoutTypes.Container,
-      data: container,
-      children: []
+      children: [this.createContainer(containerData)]
     };
   }
 
@@ -49,19 +49,19 @@ export default class LayoutTreeParser {
     if (layout.sideMenu.left) {
       children.push({
         type: LayoutTypes.SideMenuLeft,
-        children: [this._createContainer(layout.sideMenu.left.container)]
+        children: [this.createContainer(layout.sideMenu.left.container)]
       });
     }
     children.push({
       type: LayoutTypes.SideMenuCenter,
       children: [
-        layout.tabs ? this._createTabs(layout.tabs) : this._createContainerStackWithContainer(layout.container)
+        layout.tabs ? this._createTabs(layout.tabs) : this._createContainerStackWithContainerData(layout.container)
       ]
     });
     if (layout.sideMenu.right) {
       children.push({
         type: LayoutTypes.SideMenuRight,
-        children: [this._createContainer(layout.sideMenu.right.container)]
+        children: [this.createContainer(layout.sideMenu.right.container)]
       });
     }
     return children;

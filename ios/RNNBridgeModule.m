@@ -19,6 +19,15 @@ RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout)
 	[UIApplication.sharedApplication.delegate.window makeKeyAndVisible];
 }
 
+RCT_EXPORT_METHOD(push:(NSString*)containerId layout:(NSDictionary*)layout)
+{
+	[self assertReady];
+	//TODO make this not shitty
+	UIViewController* newVc = [[RNNControllerFactory new] createRootViewController:layout];
+	id vc = [UIApplication.sharedApplication.delegate.window.rootViewController childViewControllers][0];
+	[[vc navigationController]pushViewController:newVc animated:true];
+}
+
 -(void)assertReady
 {
 	if (!RNN.instance.isReadyToReceiveCommands) {

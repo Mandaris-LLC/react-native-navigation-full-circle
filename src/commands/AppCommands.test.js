@@ -1,21 +1,22 @@
 import * as SimpleLayouts from './SimpleLayouts';
+import LayoutTreeParser from './LayoutTreeParser';
+import LayoutTreeCrawler from './LayoutTreeCrawler';
+import Store from '../containers/Store';
+import UniqueIdProvider from '../adapters/UniqueIdProvider.mock';
+import NativeCommandsSender from '../adapters/NativeCommandsSender.mock';
 
-describe('Commands', () => {
+import AppCommands from './AppCommands';
+
+describe('AppCommands', () => {
   let uut;
   let mockCommandsSender;
   let store;
 
   beforeEach(() => {
-    const NativeCommandsSender = jest.genMockFromModule('../adapters/NativeCommandsSender').default;
     mockCommandsSender = new NativeCommandsSender();
-
-    const mockIdProvider = { generate: (prefix) => `${prefix}+UNIQUE_ID` };
-
-    const Store = require('../containers/Store').default;
     store = new Store();
 
-    const Commands = require('./Commands').default;
-    uut = new Commands(mockCommandsSender, mockIdProvider, store);
+    uut = new AppCommands(mockCommandsSender, new LayoutTreeParser(), new LayoutTreeCrawler(new UniqueIdProvider(), store));
   });
 
   describe('setRoot', () => {
