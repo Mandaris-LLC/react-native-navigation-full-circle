@@ -1,63 +1,7 @@
 
 #import "RNNControllerFactory.h"
-
-#import "RNN.h"
-#import "RCTRootView.h"
-
-@interface RNNLayoutNode : NSObject
-@property NSString* type;
-@property NSString* nodeId;
-@property NSDictionary* data;
-@property NSArray* children;
-@end
-
-@implementation RNNLayoutNode
-
-+(instancetype)create:(NSDictionary *)json
-{
-	RNNLayoutNode* node = [RNNLayoutNode new];
-	node.type = json[@"type"];
-	node.nodeId = json[@"id"];
-	node.data = json[@"data"];
-	node.children = json[@"children"];
-	return node;
-}
-
--(BOOL)isContainer
-{
-	return [self.type isEqualToString:@"Container"];
-}
-
--(BOOL)isContainerStack
-{
-	return [self.type isEqualToString:@"ContainerStack"];
-}
-
--(BOOL)isTabs
-{
-	return [self.type isEqualToString:@"Tabs"];
-}
-
--(BOOL)isSideMenuRoot
-{
-	return [self.type isEqualToString:@"SideMenuRoot"];
-}
-
--(BOOL)isSideMenuLeft
-{
-	return [self.type isEqualToString:@"SideMenuLeft"];
-}
-
--(BOOL)isSideMenuRight
-{
-	return [self.type isEqualToString:@"SideMenuRight"];
-}
-
--(BOOL)isSideMenuCenter
-{
-	return [self.type isEqualToString:@"SideMenuCenter"];
-}
-@end
+#import "RNNLayoutNode.h"
+#import "RNNRootViewController.h"
 
 @implementation RNNControllerFactory
 
@@ -86,15 +30,7 @@
 
 -(UIViewController*)createContainer:(RNNLayoutNode*)node
 {
-	NSString* containerName = node.data[@"name"];
-	
-	RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:RNN.instance.bridge
-													  moduleName:containerName
-											   initialProperties:@{@"id": node.nodeId}];
-	
-	UIViewController* controller = [UIViewController new];
-	controller.view = reactView;
-	return controller;
+	return [[RNNRootViewController alloc]initWithNode:node];
 }
 
 -(UINavigationController*)createContainerStack:(RNNLayoutNode*)node

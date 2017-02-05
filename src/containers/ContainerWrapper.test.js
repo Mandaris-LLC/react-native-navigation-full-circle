@@ -1,3 +1,4 @@
+/* eslint-disable consistent-this, react/no-multi-comp */
 import React, { Component } from 'react';
 import { AppRegistry, Text } from 'react-native';
 import renderer from 'react-test-renderer';
@@ -14,7 +15,7 @@ describe('ContainerWrapper', () => {
   class MyContainer extends Component {
     constructor(props) {
       super(props);
-      myContainerRef = this; //eslint-disable-line
+      myContainerRef = this;
     }
 
     render() {
@@ -22,10 +23,10 @@ describe('ContainerWrapper', () => {
     }
   }
 
-  class TestParent extends Component { //eslint-disable-line
+  class TestParent extends Component {
     constructor(props) {
       super(props);
-      testParentRef = this; //eslint-disable-line
+      testParentRef = this;
       this.ChildClass = props.ChildClass;
       this.state = { propsFromState: {} };
     }
@@ -95,5 +96,31 @@ describe('ContainerWrapper', () => {
     expect(myContainerRef.props.id).toEqual('container1');
     testParentRef.setState({ propsFromState: { id: 'ERROR' } });
     expect(myContainerRef.props.id).toEqual('container1');
+  });
+
+  it('assignes key by id', () => {
+    const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
+    renderer.create(<NavigationContainer id={'container123'} />);
+    expect(myContainerRef.props.id).toEqual('container123');
+    expect(myContainerRef._reactInternalInstance._currentElement.key).toEqual('container123');
+  });
+
+  xdescribe('container lifecycle', () => {
+    const onStartCallback = jest.fn();
+    const onStopCallback = jest.fn();
+
+    class MyLifecycleContainer extends MyContainer {
+      onStart() {
+        onStartCallback();
+      }
+
+      onStop() {
+        onStopCallback();
+      }
+    }
+
+    it('', () => {
+      //
+    });
   });
 });

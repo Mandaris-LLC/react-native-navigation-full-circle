@@ -23,6 +23,11 @@ describe('app', () => {
     elementByLabel('Switch to tab based app with side menus').swipeRight();
     expect(elementByLabel('This is a side menu screen')).toBeVisible();
   });
+
+  xit('screen lifecycle', () => {
+    elementByLabel('Switch to lifecycle screen').tap();
+    expect(elementByLabel('Appeared!')).toBeVisible();
+  });
 });
 
 function elementByLabel(label) {

@@ -19,6 +19,10 @@
 		7BBFE5441E25330E002A6182 /* RNNBridgeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFE5431E25330E002A6182 /* RNNBridgeModule.m */; };
 		7BBFE5611E253F97002A6182 /* RNN.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFE5601E253F97002A6182 /* RNN.m */; };
 		7BC9346E1E26886E00EFA125 /* RNNControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */; };
+		7BEF0D181E437684003E96B0 /* RNNRootViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BEF0D161E437684003E96B0 /* RNNRootViewController.h */; };
+		7BEF0D191E437684003E96B0 /* RNNRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEF0D171E437684003E96B0 /* RNNRootViewController.m */; };
+		7BEF0D1C1E43771B003E96B0 /* RNNLayoutNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BEF0D1A1E43771B003E96B0 /* RNNLayoutNode.h */; };
+		7BEF0D1D1E43771B003E96B0 /* RNNLayoutNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEF0D1B1E43771B003E96B0 /* RNNLayoutNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +50,10 @@
 		7BBFE5601E253F97002A6182 /* RNN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNN.m; sourceTree = "<group>"; };
 		7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNControllerFactory.h; sourceTree = "<group>"; };
 		7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNControllerFactory.m; sourceTree = "<group>"; };
+		7BEF0D161E437684003E96B0 /* RNNRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNRootViewController.h; sourceTree = "<group>"; };
+		7BEF0D171E437684003E96B0 /* RNNRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNRootViewController.m; sourceTree = "<group>"; };
+		7BEF0D1A1E43771B003E96B0 /* RNNLayoutNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNLayoutNode.h; sourceTree = "<group>"; };
+		7BEF0D1B1E43771B003E96B0 /* RNNLayoutNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNLayoutNode.m; sourceTree = "<group>"; };
 		D8AFADBD1BEE6F3F00A4592D /* libReactNativeNavigation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeNavigation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -65,8 +73,12 @@
 			children = (
 				7BA500761E254908001B9E1B /* RNNSplashScreen.h */,
 				7BA500771E254908001B9E1B /* RNNSplashScreen.m */,
+				7BEF0D1A1E43771B003E96B0 /* RNNLayoutNode.h */,
+				7BEF0D1B1E43771B003E96B0 /* RNNLayoutNode.m */,
 				7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */,
 				7BC9346D1E26886E00EFA125 /* RNNControllerFactory.m */,
+				7BEF0D161E437684003E96B0 /* RNNRootViewController.h */,
+				7BEF0D171E437684003E96B0 /* RNNRootViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -116,9 +128,11 @@
 				7B1126A41E2D2B6C00F9B03B /* ReactNativeNavigation.h in Headers */,
 				7B1126A31E2D2B6C00F9B03B /* RNNSplashScreen.h in Headers */,
 				7B1126A51E2D2B6C00F9B03B /* RNN.h in Headers */,
+				7BEF0D181E437684003E96B0 /* RNNRootViewController.h in Headers */,
 				7B1126A61E2D2B6C00F9B03B /* RNNBridgeModule.h in Headers */,
 				7B1126A71E2D2B6C00F9B03B /* RNNEventEmitter.h in Headers */,
 				7B1126A91E2D2B6C00F9B03B /* RNNControllerFactory.h in Headers */,
+				7BEF0D1C1E43771B003E96B0 /* RNNLayoutNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,9 +193,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BEF0D191E437684003E96B0 /* RNNRootViewController.m in Sources */,
 				7B1126A01E2D263F00F9B03B /* RNNEventEmitter.m in Sources */,
 				7BA500751E2544B9001B9E1B /* ReactNativeNavigation.m in Sources */,
 				7BBFE5441E25330E002A6182 /* RNNBridgeModule.m in Sources */,
+				7BEF0D1D1E43771B003E96B0 /* RNNLayoutNode.m in Sources */,
 				7BA500781E254908001B9E1B /* RNNSplashScreen.m in Sources */,
 				7BBFE5611E253F97002A6182 /* RNN.m in Sources */,
 				7BC9346E1E26886E00EFA125 /* RNNControllerFactory.m in Sources */,

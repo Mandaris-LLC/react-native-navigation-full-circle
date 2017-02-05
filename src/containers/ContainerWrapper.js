@@ -25,6 +25,7 @@ export default class ContainerWrapper {
           <OriginalContainer
             {...this.state.allProps}
             id={this.state.id}
+            key={this.state.id}
           />
         );
       }

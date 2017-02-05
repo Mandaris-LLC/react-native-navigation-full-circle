@@ -15,6 +15,7 @@ class WelcomeScreen extends Component {
         <Text style={styles.h1}>{`React Native Navigation!`}</Text>
         <Button title="Switch to tab based app" onPress={this.onClickSwitchToTabs} />
         <Button title="Switch to app with side menus" onPress={this.onClickSwitchToSideMenus} />
+        <Button title="Switch to lifecycle screen" onPress={this.onClickLifecycleScreen} />
         <Button title="Push" onPress={this.onClickPush} />
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
@@ -85,6 +86,12 @@ class WelcomeScreen extends Component {
       passProps: {
         text: 'Pushed screen'
       }
+    });
+  }
+
+  onClickLifecycleScreen() {
+    Navigation.on(this.props.id).push({
+      name: 'com.example.LifecycleScreen'
     });
   }
 }
