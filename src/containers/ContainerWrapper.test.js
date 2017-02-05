@@ -50,7 +50,7 @@ describe('ContainerWrapper', () => {
     }).toThrow(new Error('Container example.MyContainer does not have an id!'));
   });
 
-  it('wraps the container and saves to store', () => {
+  it('wraps the container', () => {
     const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
     expect(NavigationContainer).not.toBeInstanceOf(MyContainer);
     const tree = renderer.create(<NavigationContainer id={'container1'} />);

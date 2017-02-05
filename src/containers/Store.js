@@ -4,6 +4,7 @@ export default class Store {
   constructor() {
     this.propsByContainerId = {};
     this.containersByName = {};
+    this.refsById = {};
   }
 
   setPropsForContainerId(containerId, props) {
@@ -14,11 +15,24 @@ export default class Store {
     return _.get(this.propsByContainerId, containerId, {});
   }
 
-  setContainerClass(containerName, ContainerClass) {
+  setContainerClassForName(containerName, ContainerClass) {
     this.containersByName[containerName] = ContainerClass;
   }
 
-  getContainerClass(containerName) {
+  getContainerClassForName(containerName) {
     return this.containersByName[containerName];
+  }
+
+  setRefForId(id, ref) {
+    this.refsById[id] = ref;
+  }
+
+  getRefForId(id) {
+    return this.refsById[id];
+  }
+
+  cleanId(id) {
+    this.refsById[id] = undefined;
+    this.propsByContainerId[id] = undefined;
   }
 }

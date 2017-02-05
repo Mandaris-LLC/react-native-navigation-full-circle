@@ -9,7 +9,7 @@ export default class ContainerRegistry {
   registerContainer(containerName, getContainerFunc) {
     const OriginalContainer = getContainerFunc();
     const NavigationContainer = ContainerWrapper.wrap(containerName, OriginalContainer, this.store);
-    this.store.setContainerClass(containerName, NavigationContainer);
+    this.store.setContainerClassForName(containerName, NavigationContainer);
     AppRegistry.registerComponent(containerName, () => NavigationContainer);
   }
 }

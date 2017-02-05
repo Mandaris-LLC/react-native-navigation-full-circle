@@ -26,8 +26,25 @@ describe('Store', () => {
     const MyComponent = class {
       //
     };
-    uut.setContainerClass('example.mycontainer', MyComponent);
-    expect(uut.getContainerClass('example.mycontainer')).toEqual(MyComponent);
+    uut.setContainerClassForName('example.mycontainer', MyComponent);
+    expect(uut.getContainerClassForName('example.mycontainer')).toEqual(MyComponent);
+  });
+
+  it('holds container refs by id', () => {
+    const ref = {};
+    uut.setRefForId('refUniqueId', ref);
+    expect(uut.getRefForId('other')).toBeUndefined();
+    expect(uut.getRefForId('refUniqueId')).toBe(ref);
+  });
+
+  it('clean by id', () => {
+    uut.setRefForId('refUniqueId', {});
+    uut.setPropsForContainerId('refUniqueId', { foo: 'bar' });
+
+    uut.cleanId('refUniqueId');
+
+    expect(uut.getRefForId('refUniqueId')).toBeUndefined();
+    expect(uut.getPropsForContainerId('refUniqueId')).toEqual({});
   });
 });
 

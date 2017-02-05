@@ -7,6 +7,7 @@ import Store from './Store';
 
 describe('ContainerRegistry', () => {
   let uut;
+  let store;
 
   class MyContainer extends Component {
     render() {
@@ -15,8 +16,9 @@ describe('ContainerRegistry', () => {
   }
 
   beforeEach(() => {
+    store = new Store();
     AppRegistry.registerComponent = jest.fn(AppRegistry.registerComponent);
-    uut = new ContainerRegistry(new Store());
+    uut = new ContainerRegistry(store);
   });
 
   it('registers container component by containerName into AppRegistry', () => {
@@ -24,6 +26,15 @@ describe('ContainerRegistry', () => {
     uut.registerContainer('example.MyContainer.name', () => MyContainer);
     expect(AppRegistry.registerComponent).toHaveBeenCalledTimes(1);
     expect(AppRegistry.registerComponent.mock.calls[0][0]).toEqual('example.MyContainer.name');
+  });
+
+  it('saves the container wrapped into the store', () => {
+    expect(store.getContainerClassForName('example.MyContainer.name')).toBeUndefined();
+    uut.registerContainer('example.MyContainer.name', () => MyContainer);
+    const Class = store.getContainerClassForName('example.MyContainer.name');
+    expect(Class).not.toBeUndefined();
+    expect(Class).not.toEqual(MyContainer);
+    expect(Object.getPrototypeOf(Class)).toEqual(Component);
   });
 
   it('resulting in a normal component', () => {

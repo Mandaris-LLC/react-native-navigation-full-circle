@@ -9,12 +9,12 @@ class LifecycleScreen extends Component {
     };
   }
 
-  onAppear() {
-    this.setState({ text: 'Appeared!' });
+  onStart() {
+    this.setState({ text: 'onStart!' });
   }
 
-  onDisappear() {
-    this.setState({ text: 'Disappeared!' });
+  onStop() {
+    this.setState({ text: 'onStop!' });
   }
 
   render() {

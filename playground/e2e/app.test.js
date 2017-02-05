@@ -26,7 +26,7 @@ describe('app', () => {
 
   xit('screen lifecycle', () => {
     elementByLabel('Switch to lifecycle screen').tap();
-    expect(elementByLabel('Appeared!')).toBeVisible();
+    expect(elementByLabel('onStart!')).toBeVisible();
   });
 });
 
