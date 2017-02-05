@@ -16,23 +16,23 @@ export default class Store {
   }
 
   setContainerClassForName(containerName, ContainerClass) {
-    this.containersByName[containerName] = ContainerClass;
+    _.set(this.containersByName, containerName, ContainerClass);
   }
 
   getContainerClassForName(containerName) {
-    return this.containersByName[containerName];
+    return _.get(this.containersByName, containerName);
   }
 
   setRefForId(id, ref) {
-    this.refsById[id] = ref;
+    _.set(this.refsById, id, ref);
   }
 
   getRefForId(id) {
-    return this.refsById[id];
+    return _.get(this.refsById, id);
   }
 
   cleanId(id) {
-    this.refsById[id] = undefined;
-    this.propsByContainerId[id] = undefined;
+    _.unset(this.refsById, id);
+    _.unset(this.propsByContainerId, id);
   }
 }

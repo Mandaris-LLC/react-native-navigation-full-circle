@@ -11,11 +11,19 @@ describe('NativeEventsReceiver', () => {
     uut.emitter = eventEmitterMock;
   });
 
-  it('register for onAppLaunched', () => {
+  it('register for appLaunched', () => {
     const callback = jest.fn();
-    uut.onAppLaunched(callback);
+    uut.appLaunched(callback);
     expect(callback).not.toHaveBeenCalled();
     expect(eventEmitterMock.addListener).toHaveBeenCalledTimes(1);
-    expect(eventEmitterMock.addListener).toHaveBeenCalledWith('RNN_onAppLaunched', callback);
+    expect(eventEmitterMock.addListener).toHaveBeenCalledWith('RNN.appLaunched', callback);
+  });
+
+  it('register for internal events', () => {
+    const callback = jest.fn();
+    uut.containerStart(callback);
+    expect(callback).not.toHaveBeenCalled();
+    expect(eventEmitterMock.addListener).toHaveBeenCalledTimes(1);
+    expect(eventEmitterMock.addListener).toHaveBeenCalledWith('RNN.containerStart', callback);
   });
 });

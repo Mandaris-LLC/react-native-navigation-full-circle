@@ -100,9 +100,24 @@ describe('ContainerWrapper', () => {
 
   it('assignes key by id', () => {
     const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
-    renderer.create(<NavigationContainer id={'container123'} />);
-    expect(myContainerRef.props.id).toEqual('container123');
-    expect(myContainerRef._reactInternalInstance._currentElement.key).toEqual('container123');
+    renderer.create(<NavigationContainer id={'container1'} />);
+    expect(myContainerRef.props.id).toEqual('container1');
+    expect(myContainerRef._reactInternalInstance._currentElement.key).toEqual('container1');
+  });
+
+  it('saves self ref into store', () => {
+    const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
+    const tree = renderer.create(<NavigationContainer id={'container1'} />);
+    expect(store.getRefForId('container1')).toBeDefined();
+    expect(store.getRefForId('container1')).toBe(tree.getInstance());
+  });
+
+  it('cleans ref from store on unMount', () => {
+    const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
+    const tree = renderer.create(<NavigationContainer id={'container1'} />);
+    expect(store.getRefForId('container1')).toBeDefined();
+    tree.unmount();
+    expect(store.getRefForId('container1')).toBeUndefined();
   });
 
   xdescribe('container lifecycle', () => {

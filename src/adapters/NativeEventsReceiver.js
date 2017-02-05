@@ -5,7 +5,11 @@ export default class NativeEventsReceiver {
     this.emitter = new NativeEventEmitter(NativeModules.RNNEventEmitter);
   }
 
-  onAppLaunched(callback) {
-    this.emitter.addListener('RNN_onAppLaunched', callback);
+  containerStart(callback) {
+    this.emitter.addListener('RNN.containerStart', callback);
+  }
+
+  appLaunched(callback) {
+    this.emitter.addListener('RNN.appLaunched', callback);
   }
 }

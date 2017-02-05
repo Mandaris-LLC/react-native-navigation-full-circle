@@ -6,9 +6,11 @@
 #import "RNNSplashScreen.h"
 
 @interface RNN()
-@property RNNEventEmitter* eventEmitter;
+
 @property (readwrite) RCTBridge* bridge;
 @property (readwrite) BOOL isReadyToReceiveCommands;
+@property (readwrite) RNNEventEmitter* eventEmitter;
+
 @end
 
 @implementation RNN

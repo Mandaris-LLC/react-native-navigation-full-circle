@@ -4,6 +4,8 @@
 #import "RNN.h"
 
 @interface RNNRootViewController()
+@property NSString* containerId;
+@property NSString* containerName;
 @end
 
 @implementation RNNRootViewController
@@ -11,24 +13,25 @@
 -(instancetype)initWithNode:(RNNLayoutNode*)node
 {
 	self = [super init];
-	NSString* containerName = node.data[@"name"];
+	self.containerId = node.nodeId;
+	self.containerName = node.data[@"name"];
 	
 	self.view = [[RCTRootView alloc] initWithBridge:RNN.instance.bridge
-													  moduleName:containerName
-											   initialProperties:@{@"id": node.nodeId}];
+										 moduleName:self.containerName
+								  initialProperties:@{@"id": self.containerId}];
 	return self;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	//send the event onAppear
+	[RNN.instance.eventEmitter sendContainerStart:self.containerId];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
-	//send the event onDisappear
+	[RNN.instance.eventEmitter sendContainerStop:self.containerId];
 }
 
 @end

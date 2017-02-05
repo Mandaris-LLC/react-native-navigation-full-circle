@@ -7,6 +7,7 @@ class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
     this.onClickPush = this.onClickPush.bind(this);
+    this.onClickLifecycleScreen = this.onClickLifecycleScreen.bind(this);
   }
 
   render() {

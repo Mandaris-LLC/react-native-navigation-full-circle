@@ -8,6 +8,8 @@ import AppCommands from './commands/AppCommands';
 import ContainerCommands from './commands/ContainerCommands';
 import LayoutTreeParser from './commands/LayoutTreeParser';
 import LayoutTreeCrawler from './commands/LayoutTreeCrawler';
+import PrivateEventsListener from './events/PrivateEventsListener';
+import PublicEventsRegistry from './events/PublicEventsRegistry';
 
 class Navigation {
   constructor() {
@@ -19,6 +21,9 @@ class Navigation {
     this.layoutTreeCrawler = new LayoutTreeCrawler(this.uniqueIdProvider, this.store);
     this.nativeCommandsSender = new NativeCommandsSender();
     this.appCommands = new AppCommands(this.nativeCommandsSender, this.layoutTreeParser, this.layoutTreeCrawler);
+    this.publicEventsRegistry = new PublicEventsRegistry(this.nativeEventsReceiver);
+    this.privateEventsListener = new PrivateEventsListener(this.nativeEventsReceiver, this.store);
+    this.privateEventsListener.listenAndHandlePrivateEvents();
   }
 
   registerContainer(containerName, getContainerFunc) {
@@ -30,7 +35,7 @@ class Navigation {
   }
 
   events() {
-    return this.nativeEventsReceiver;
+    return this.publicEventsRegistry;
   }
 
   on(containerId) {
@@ -39,4 +44,4 @@ class Navigation {
 }
 
 const singleton = new Navigation();
-module.exports = singleton;
+export default singleton;

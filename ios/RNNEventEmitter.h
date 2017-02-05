@@ -8,4 +8,8 @@
 
 -(void)sendOnAppLaunched;
 
+-(void)sendContainerStart:(NSString*)containerId;
+
+-(void)sendContainerStop:(NSString*)containerId;
+
 @end

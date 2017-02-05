@@ -6,16 +6,32 @@
 
 RCT_EXPORT_MODULE();
 
-static NSString* const onAppLaunched = @"RNN_onAppLaunched";
+static NSString* const onAppLaunched	= @"RNN.appLaunched";
+static NSString* const containerStart	= @"RNN.containerStart";
+static NSString* const containerStop	= @"RNN.containerStop";
 
--(NSArray<NSString *> *)supportedEvents
-{
-	return @[onAppLaunched];
-}
+# pragma mark public
 
 -(void)sendOnAppLaunched
 {
 	[self send:onAppLaunched body:nil];
+}
+
+-(void)sendContainerStart:(NSString *)containerId
+{
+	[self send:containerStart body:@{@"id": containerId}];
+}
+
+-(void)sendContainerStop:(NSString *)containerId
+{
+	[self send:containerStop body:@{@"id": containerId}];
+}
+
+# pragma mark private
+
+-(NSArray<NSString *> *)supportedEvents
+{
+	return @[onAppLaunched, containerStart, containerStop];
 }
 
 -(void)send:(NSString *)eventName body:(id)body

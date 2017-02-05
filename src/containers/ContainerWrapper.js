@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 
 export default class ContainerWrapper {
@@ -6,10 +7,7 @@ export default class ContainerWrapper {
       constructor(props) {
         super(props);
         this._assertId(props);
-        this.state = {
-          id: props.id,
-          allProps: { ...props, ...store.getPropsForContainerId(props.id) }
-        };
+        this._createState(props);
       }
 
       _assertId(props) {
@@ -18,9 +16,24 @@ export default class ContainerWrapper {
         }
       }
 
+      _createState(props) {
+        this.state = {
+          id: props.id,
+          allProps: _.merge({}, props, store.getPropsForContainerId(props.id))
+        };
+      }
+
+      componentWillMount() {
+        store.setRefForId(this.state.id, this);
+      }
+
+      componentWillUnmount() {
+        store.cleanId(this.state.id);
+      }
+
       componentWillReceiveProps(nextProps) {
         this.setState({
-          allProps: { ...nextProps, ...store.getPropsForContainerId(this.state.id) }
+          allProps: _.merge({}, nextProps, store.getPropsForContainerId(this.state.id))
         });
       }
 

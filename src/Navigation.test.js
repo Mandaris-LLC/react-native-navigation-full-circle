@@ -9,9 +9,8 @@ describe('Navigation', () => {
 
     jest.mock('./containers/ContainerRegistry');
     jest.mock('./commands/AppCommands');
-    jest.mock('./commands/ContainerCommands');
 
-    Navigation = require('./Navigation');
+    Navigation = require('./Navigation').default;
   });
 
   it('registerContainer delegates to ContainerRegistry', () => {
@@ -31,12 +30,18 @@ describe('Navigation', () => {
     expect(Navigation.appCommands.setRoot).toHaveBeenCalledWith(params);
   });
 
-  it('events return the events registry', () => {
-    expect(Navigation.events()).toBeDefined();
-    expect(Navigation.events().onAppLaunched).toBeInstanceOf(Function);
+  it('events return public events', () => {
+    const cb = jest.fn();
+    Navigation.events().onAppLaunched(cb);
+    expect(Navigation.nativeEventsReceiver.appLaunched).toHaveBeenCalledTimes(1);
+    expect(Navigation.nativeEventsReceiver.appLaunched).toHaveBeenCalledWith(cb);
   });
 
   it('on containerId returns an object that performs commands on a container', () => {
     expect(Navigation.on('myUniqueId').push).toBeInstanceOf(Function);
+  });
+
+  it('starts listening and handles internal events', () => {
+    expect(Navigation.nativeEventsReceiver.containerStart).toHaveBeenCalledTimes(1);
   });
 });
