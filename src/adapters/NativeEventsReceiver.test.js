@@ -19,11 +19,19 @@ describe('NativeEventsReceiver', () => {
     expect(eventEmitterMock.addListener).toHaveBeenCalledWith('RNN.appLaunched', callback);
   });
 
-  it('register for internal events', () => {
+  it('containerStart', () => {
     const callback = jest.fn();
     uut.containerStart(callback);
     expect(callback).not.toHaveBeenCalled();
     expect(eventEmitterMock.addListener).toHaveBeenCalledTimes(1);
     expect(eventEmitterMock.addListener).toHaveBeenCalledWith('RNN.containerStart', callback);
+  });
+
+  it('containerStop', () => {
+    const callback = jest.fn();
+    uut.containerStop(callback);
+    expect(callback).not.toHaveBeenCalled();
+    expect(eventEmitterMock.addListener).toHaveBeenCalledTimes(1);
+    expect(eventEmitterMock.addListener).toHaveBeenCalledWith('RNN.containerStop', callback);
   });
 });

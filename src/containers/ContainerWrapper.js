@@ -31,6 +31,18 @@ export default class ContainerWrapper {
         store.cleanId(this.state.id);
       }
 
+      onStart() {
+        if (this.originalContainerRef.onStart) {
+          this.originalContainerRef.onStart();
+        }
+      }
+
+      onStop() {
+        if (this.originalContainerRef.onStop) {
+          this.originalContainerRef.onStop();
+        }
+      }
+
       componentWillReceiveProps(nextProps) {
         this.setState({
           allProps: _.merge({}, nextProps, store.getPropsForContainerId(this.state.id))
@@ -40,6 +52,7 @@ export default class ContainerWrapper {
       render() {
         return (
           <OriginalContainer
+            ref={(r) => this.originalContainerRef = r}
             {...this.state.allProps}
             id={this.state.id}
             key={this.state.id}

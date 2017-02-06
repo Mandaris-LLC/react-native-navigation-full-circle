@@ -5,10 +5,14 @@
 
 @implementation RNNControllerFactory
 
--(UIViewController *)createRootViewController:(NSDictionary *)layout
+# pragma mark public
+
+-(UIViewController *)createLayout:(NSDictionary *)layout
 {
 	return [self fromTree:layout];
 }
+
+# pragma mark private
 
 -(UIViewController*)fromTree:(NSDictionary*)json
 {

@@ -15,6 +15,8 @@
 
 @implementation RNN
 
+# pragma mark public
+
 +(instancetype)instance
 {
 	static RNN *sharedInstance = nil;
@@ -42,6 +44,8 @@
 	// this will load the JS bundle
 	self.bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation moduleProvider:nil launchOptions:launchOptions];
 }
+
+# pragma mark private
 
 -(void)registerForJsEvents
 {

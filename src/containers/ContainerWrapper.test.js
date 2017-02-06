@@ -120,7 +120,22 @@ describe('ContainerWrapper', () => {
     expect(store.getRefForId('container1')).toBeUndefined();
   });
 
-  xdescribe('container lifecycle', () => {
+  it('holds ref to OriginalContainer', () => {
+    const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
+    const tree = renderer.create(<NavigationContainer id={'container1'} />);
+    expect(tree.getInstance().originalContainerRef).toBe(myContainerRef);
+  });
+
+  it('cleans ref to internal container on unount', () => {
+    const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
+    const tree = renderer.create(<NavigationContainer id={'container1'} />);
+    const instance = tree.getInstance();
+    expect(instance.originalContainerRef).not.toBeFalsy();
+    tree.unmount();
+    expect(instance.originalContainerRef).toBeFalsy();
+  });
+
+  describe('container lifecycle', () => {
     const onStartCallback = jest.fn();
     const onStopCallback = jest.fn();
 
@@ -134,8 +149,20 @@ describe('ContainerWrapper', () => {
       }
     }
 
-    it('', () => {
-      //
+    it('calls onStart on OriginalContainer', () => {
+      const NavigationContainer = ContainerWrapper.wrap(containerName, MyLifecycleContainer, store);
+      const tree = renderer.create(<NavigationContainer id={'container1'} />);
+      expect(onStartCallback).toHaveBeenCalledTimes(0);
+      tree.getInstance().onStart();
+      expect(onStartCallback).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls onSop on OriginalContainer', () => {
+      const NavigationContainer = ContainerWrapper.wrap(containerName, MyLifecycleContainer, store);
+      const tree = renderer.create(<NavigationContainer id={'container1'} />);
+      expect(onStopCallback).toHaveBeenCalledTimes(0);
+      tree.getInstance().onStop();
+      expect(onStopCallback).toHaveBeenCalledTimes(1);
     });
   });
 });

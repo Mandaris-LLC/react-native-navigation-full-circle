@@ -9,6 +9,10 @@ export default class NativeEventsReceiver {
     this.emitter.addListener('RNN.containerStart', callback);
   }
 
+  containerStop(callback) {
+    this.emitter.addListener('RNN.containerStop', callback);
+  }
+
   appLaunched(callback) {
     this.emitter.addListener('RNN.appLaunched', callback);
   }

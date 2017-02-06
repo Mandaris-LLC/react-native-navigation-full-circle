@@ -24,7 +24,7 @@ describe('app', () => {
     expect(elementByLabel('This is a side menu screen')).toBeVisible();
   });
 
-  xit('screen lifecycle', () => {
+  it('screen lifecycle', () => {
     elementByLabel('Switch to lifecycle screen').tap();
     expect(elementByLabel('onStart!')).toBeVisible();
   });

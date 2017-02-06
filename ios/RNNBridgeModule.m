@@ -15,15 +15,15 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout)
 {
 	[self assertReady];
-	UIApplication.sharedApplication.delegate.window.rootViewController = [[RNNControllerFactory new] createRootViewController:layout];
+	UIApplication.sharedApplication.delegate.window.rootViewController = [[RNNControllerFactory new] createLayout:layout];
 	[UIApplication.sharedApplication.delegate.window makeKeyAndVisible];
 }
 
 RCT_EXPORT_METHOD(push:(NSString*)containerId layout:(NSDictionary*)layout)
 {
 	[self assertReady];
-	//TODO make this not shitty
-	UIViewController* newVc = [[RNNControllerFactory new] createRootViewController:layout];
+	//TODO implement correctly
+	UIViewController* newVc = [[RNNControllerFactory new] createLayout:layout];
 	id vc = [UIApplication.sharedApplication.delegate.window.rootViewController childViewControllers][0];
 	[[vc navigationController]pushViewController:newVc animated:true];
 }
