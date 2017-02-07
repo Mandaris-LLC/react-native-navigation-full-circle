@@ -130,7 +130,7 @@ describe('ContainerWrapper', () => {
     const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
     const tree = renderer.create(<NavigationContainer id={'container1'} />);
     const instance = tree.getInstance();
-    expect(instance.originalContainerRef).not.toBeFalsy();
+    expect(instance.originalContainerRef).toBeInstanceOf(Component);
     tree.unmount();
     expect(instance.originalContainerRef).toBeFalsy();
   });
