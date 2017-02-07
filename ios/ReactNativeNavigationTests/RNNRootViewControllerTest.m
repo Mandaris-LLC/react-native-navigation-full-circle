@@ -18,10 +18,9 @@
 
 
 - (void)sendsEventOnAppear {
-	NSMutableDictionary* params = @{};
+	NSDictionary* params = @{};
 	RNNRootViewController* uut = [[RNNRootViewController alloc] initWithNode:[RNNLayoutNode create:params]];
 	[uut viewDidAppear:true];
-	
 }
 
 
