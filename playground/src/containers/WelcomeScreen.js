@@ -27,7 +27,7 @@ class WelcomeScreen extends Component {
       tabs: [
         {
           container: {
-            name: 'com.example.SimpleScreen',
+            name: 'navigation.playground.SimpleScreen',
             passProps: {
               text: 'This is tab 1',
               myFunction: () => 'Hello from a function!'
@@ -36,7 +36,7 @@ class WelcomeScreen extends Component {
         },
         {
           container: {
-            name: 'com.example.SimpleScreen',
+            name: 'navigation.playground.SimpleScreen',
             passProps: {
               text: 'This is tab 2'
             }
@@ -51,29 +51,29 @@ class WelcomeScreen extends Component {
       tabs: [
         {
           container: {
-            name: 'com.example.SimpleScreen'
+            name: 'navigation.playground.SimpleScreen'
           }
         },
         {
           container: {
-            name: 'com.example.SimpleScreen'
+            name: 'navigation.playground.SimpleScreen'
           }
         },
         {
           container: {
-            name: 'com.example.SimpleScreen'
+            name: 'navigation.playground.SimpleScreen'
           }
         }
       ],
       sideMenu: {
         left: {
           container: {
-            name: 'com.example.SimpleScreen'
+            name: 'navigation.playground.SimpleScreen'
           }
         },
         right: {
           container: {
-            name: 'com.example.SimpleScreen'
+            name: 'navigation.playground.SimpleScreen'
           }
         }
       }
@@ -82,7 +82,7 @@ class WelcomeScreen extends Component {
 
   onClickPush() {
     Navigation.on(this.props.id).push({
-      name: 'com.example.SimpleScreen',
+      name: 'navigation.playground.SimpleScreen',
       passProps: {
         text: 'Pushed screen'
       }
@@ -92,7 +92,7 @@ class WelcomeScreen extends Component {
   onClickLifecycleScreen() {
     Navigation.setRoot({
       container: {
-        name: 'com.example.LifecycleScreen'
+        name: 'navigation.playground.LifecycleScreen'
       }
     });
   }

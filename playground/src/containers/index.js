@@ -5,7 +5,7 @@ import SimpleScreen from './SimpleScreen';
 import LifecycleScreen from './LifecycleScreen';
 
 export function registerContainers() {
-  Navigation.registerContainer(`com.example.WelcomeScreen`, () => WelcomeScreen);
-  Navigation.registerContainer(`com.example.SimpleScreen`, () => SimpleScreen);
-  Navigation.registerContainer(`com.example.LifecycleScreen`, () => LifecycleScreen);
+  Navigation.registerContainer(`navigation.playground.WelcomeScreen`, () => WelcomeScreen);
+  Navigation.registerContainer(`navigation.playground.SimpleScreen`, () => SimpleScreen);
+  Navigation.registerContainer(`navigation.playground.LifecycleScreen`, () => LifecycleScreen);
 }

@@ -1,4 +1,4 @@
-package com.example;
+package com.reactnativenavigation.playground;
 
 import com.reactnativenavigation.controllers.SplashActivity;
 

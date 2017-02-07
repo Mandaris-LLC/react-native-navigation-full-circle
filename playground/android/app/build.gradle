@@ -1,31 +1,14 @@
 apply plugin: "com.android.application"
-
-import com.android.build.OutputFile
 apply from: "../../node_modules/react-native/react.gradle"
-
-/**
- * Set this to true to create two separate APKs instead of one:
- *   - An APK that only works on ARM devices
- *   - An APK that only works on x86 devices
- * The advantage is the size of the APK is reduced by about 4MB.
- * Upload all the APKs to the Play Store and people will download
- * the correct one based on the CPU architecture of their device.
- */
-def enableSeparateBuildPerCPUArchitecture = false
-
-/**
- * Run Proguard to shrink the Java bytecode in release builds.
- */
-def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.example"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         ndk {
@@ -35,14 +18,14 @@ android {
     splits {
         abi {
             reset()
-            enable enableSeparateBuildPerCPUArchitecture
+            enable false
             universalApk false  // If true, also generate a universal APK
             include "armeabi-v7a", "x86"
         }
     }
     buildTypes {
         release {
-            minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }

@@ -8,7 +8,7 @@ export function start() {
   Navigation.events().onAppLaunched(() => {
     Navigation.setRoot({
       container: {
-        name: 'com.example.WelcomeScreen'
+        name: 'navigation.playground.WelcomeScreen'
       }
     });
   });

@@ -3,10 +3,8 @@ def robolectricDependenciesFolder = rootProject.buildDir.path + "/robolectric-de
 configurations.create('robolectricRuntime')
 
 dependencies {
-    robolectricRuntime "org.ccil.cowan.tagsoup:tagsoup:1.2"
-    robolectricRuntime "org.robolectric:android-all:6.0.0_r1-robolectric-0"
-    robolectricRuntime "org.robolectric:shadows-core-v23:3.1.4"
-    robolectricRuntime "org.json:json:20080701"
+    robolectricRuntime "org.robolectric:android-all:6.0.1_r3-robolectric-0"
+    robolectricRuntime "org.robolectric:shadows-core:3.2.2"
 }
 
 rootProject.task(type: Copy, overwrite: true, "downloadRobolectricDependencies") {

@@ -1,4 +1,4 @@
-package com.example;
+package com.reactnativenavigation.playground;
 
 import android.support.annotation.Nullable;
 

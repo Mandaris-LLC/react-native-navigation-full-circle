@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
+
+import Navigation from 'react-native-navigation';
 
 class LifecycleScreen extends Component {
   constructor(props) {
     super(props);
+    this.onClickPush = this.onClickPush.bind(this);
     this.state = {
       text: 'nothing yet'
     };
@@ -14,15 +17,22 @@ class LifecycleScreen extends Component {
   }
 
   onStop() {
-    this.setState({ text: 'onStop!' });
+    alert('onStop!'); //eslint-disable-line
   }
 
   render() {
     return (
       <View style={styles.root}>
         <Text style={styles.h1}>{this.state.text}</Text>
+        <Button title="Push to test onStop" onPress={this.onClickPush} />
       </View>
     );
+  }
+
+  onClickPush() {
+    Navigation.on(this.props.id).push({
+      name: 'navigation.playground.SimpleScreen'
+    });
   }
 }
 export default LifecycleScreen;
