@@ -149,6 +149,13 @@ describe('ContainerWrapper', () => {
       }
     }
 
+    it('onStart and onStop are optional', () => {
+      const NavigationContainer = ContainerWrapper.wrap(containerName, MyContainer, store);
+      const tree = renderer.create(<NavigationContainer id={'container1'} />);
+      expect(() => tree.getInstance().onStart()).not.toThrow();
+      expect(() => tree.getInstance().onStop()).not.toThrow();
+    });
+
     it('calls onStart on OriginalContainer', () => {
       const NavigationContainer = ContainerWrapper.wrap(containerName, MyLifecycleContainer, store);
       const tree = renderer.create(<NavigationContainer id={'container1'} />);

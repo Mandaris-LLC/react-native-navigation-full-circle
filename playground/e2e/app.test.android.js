@@ -1,4 +1,4 @@
-describe('app', () => {
+xdescribe('app android', () => {
   beforeEach((done) => {
     global.simulator.relaunchApp(done);
   });
