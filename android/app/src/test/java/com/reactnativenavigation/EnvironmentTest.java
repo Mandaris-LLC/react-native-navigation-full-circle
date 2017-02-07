@@ -1,5 +1,10 @@
 package com.reactnativenavigation;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+
+import com.facebook.react.common.ReactConstants;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -11,5 +16,20 @@ public class EnvironmentTest {
     @Test
     public void assertJ() {
         assertThat(1 + 2).isEqualTo(3).isGreaterThan(2).isLessThan(4).isNotNegative().isPositive().isNotZero();
+    }
+
+    @Test
+    public void react() {
+        assertThat(ReactConstants.TAG).isNotEmpty();
+    }
+
+    @Test
+    public void supportV7AppCompat() {
+        assertThat(AppCompatActivity.class).isNotNull();
+    }
+
+    @Test
+    public void supportDesign() {
+        assertThat(FloatingActionButton.class).isNotNull();
     }
 }

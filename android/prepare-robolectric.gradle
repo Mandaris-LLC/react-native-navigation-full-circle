@@ -1,4 +1,4 @@
-def robolectricDependenciesFolder = rootProject.buildDir.path + "/robolectric-dependencies"
+def robolectricDependenciesFolder = new File(gradle.gradleUserHomeDir, "/robolectric-dependencies-3.2.2")
 
 configurations.create('robolectricRuntime')
 
