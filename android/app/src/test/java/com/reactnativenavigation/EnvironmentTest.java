@@ -32,4 +32,9 @@ public class EnvironmentTest {
     public void supportDesign() {
         assertThat(FloatingActionButton.class).isNotNull();
     }
+
+    @Test
+    public void androidR() {
+        assertThat(R.string.app_name).isNotZero();
+    }
 }
