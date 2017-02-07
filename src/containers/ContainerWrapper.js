@@ -6,6 +6,7 @@ export default class ContainerWrapper {
     return class extends Component {
       constructor(props) {
         super(props);
+        this._saveContainerRef = this._saveContainerRef.bind(this);
         this._assertId(props);
         this._createState(props);
       }
@@ -21,6 +22,10 @@ export default class ContainerWrapper {
           id: props.id,
           allProps: _.merge({}, props, store.getPropsForContainerId(props.id))
         };
+      }
+
+      _saveContainerRef(r) {
+        this.originalContainerRef = r;
       }
 
       componentWillMount() {
@@ -52,7 +57,7 @@ export default class ContainerWrapper {
       render() {
         return (
           <OriginalContainer
-            ref={(r) => this.originalContainerRef = r}
+            ref={this._saveContainerRef}
             {...this.state.allProps}
             id={this.state.id}
             key={this.state.id}
