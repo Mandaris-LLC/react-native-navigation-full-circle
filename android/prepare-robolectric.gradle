@@ -1,4 +1,4 @@
-def robolectricDependenciesFolder = new File(gradle.gradleUserHomeDir, "/robolectric-dependencies-3.2.2")
+def robolectricDependenciesFolder = new File(rootProject.buildDir, "robolectric-3.2.2-dependencies")
 
 configurations.create('robolectricRuntime')
 
@@ -8,17 +8,17 @@ dependencies {
 }
 
 rootProject.task(type: Copy, overwrite: true, "downloadRobolectricDependencies") {
-    println "downloadRobolectricDependencies " + robolectricDependenciesFolder
+    println "downloadRobolectricDependencies into " + robolectricDependenciesFolder
     from configurations.robolectricRuntime
     into robolectricDependenciesFolder
 }
 
 project.afterEvaluate {
-  tasks.all {
-      if (it.name.startsWith("test")) {
-          it.dependsOn(rootProject.tasks.findByName("downloadRobolectricDependencies"))
-      }
-  }
+    tasks.all {
+        if (it.name.startsWith("test")) {
+            it.dependsOn(rootProject.tasks.findByName("downloadRobolectricDependencies"))
+        }
+    }
 }
 
 android {
