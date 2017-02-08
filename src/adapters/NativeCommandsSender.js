@@ -6,6 +6,7 @@ export default class NativeCommandsSender {
   }
 
   setRoot(layoutTree) {
+    console.log(layoutTree);
     this.nativeCommandsModule.setRoot(layoutTree);
     return Promise.resolve(layoutTree);
   }
