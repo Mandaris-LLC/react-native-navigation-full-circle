@@ -1,21 +1,7 @@
 package com.reactnativenavigation.playground;
 
-import android.support.annotation.Nullable;
+import android.app.Application;
 
-import com.facebook.react.ReactPackage;
-import com.reactnativenavigation.NavigationApplication;
-
-import java.util.List;
-
-public class MainApplication extends NavigationApplication {
-    @Override
-    public boolean isDebug() {
-        return BuildConfig.DEBUG;
-    }
-
-    @Nullable
-    @Override
-    public List<ReactPackage> createAdditionalReactPackages() {
-        return null;
-    }
+public class MainApplication extends Application {
+    
 }
