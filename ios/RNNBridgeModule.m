@@ -28,6 +28,14 @@ RCT_EXPORT_METHOD(push:(NSString*)containerId layout:(NSDictionary*)layout)
 	[[vc navigationController]pushViewController:newVc animated:true];
 }
 
+RCT_EXPORT_METHOD(pop:(NSString*)containerId)
+{
+	[self assertReady];
+	//TODO implement correctly
+	id vc = [UIApplication.sharedApplication.delegate.window.rootViewController childViewControllers][0];
+	[[vc navigationController] popViewControllerAnimated:true];
+}
+
 -(void)assertReady
 {
 	if (!RNN.instance.isReadyToReceiveCommands) {

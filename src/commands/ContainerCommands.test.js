@@ -44,4 +44,18 @@ describe('ContainerCommands', () => {
       });
     });
   });
+
+  describe('pop', () => {
+    it('pops a container, passing containerId', () => {
+      uut.pop();
+      expect(mockCommandsSender.pop).toHaveBeenCalledTimes(1);
+      expect(mockCommandsSender.pop).toHaveBeenCalledWith(containerId);
+    });
+
+    it('pop returns a promise that resolves to containerId', async () => {
+      mockCommandsSender.pop.mockReturnValue(Promise.resolve(containerId));
+      const result = await uut.pop();
+      expect(result).toEqual(containerId);
+    });
+  });
 });

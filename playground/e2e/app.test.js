@@ -31,6 +31,13 @@ describe('app', () => {
     expect(elementByLabel('Alert')).toBeVisible();
     expect(elementByLabel('onStop!')).toBeVisible();
   });
+
+  it('pop screen', () => {
+    elementByLabel('Push').tap();
+    expect(elementByLabel('Pushed screen')).toBeVisible();
+    elementByLabel('Pop').tap();
+    expect(elementByLabel('React Native Navigation!')).toBeVisible();
+  });
 });
 
 function elementByLabel(label) {

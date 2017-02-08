@@ -14,4 +14,8 @@ export default class ContainerCommands {
     this.layoutTreeCrawler.crawl(layout);
     return this.nativeCommandsSender.push(this.containerId, layout);
   }
+
+  pop() {
+    return this.nativeCommandsSender.pop(this.containerId);
+  }
 }

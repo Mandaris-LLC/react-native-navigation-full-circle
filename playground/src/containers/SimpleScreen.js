@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
+
+import Navigation from 'react-native-navigation';
 
 class SimpleScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.onClickPop = this.onClickPop.bind(this);
+  }
+
   render() {
     return (
       <View style={styles.root}>
         <Text style={styles.h1}>{this.props.text || 'Simple Screen'}</Text>
         {this.renderTextFromFunctionInProps()}
+        <Button title="Pop" onPress={this.onClickPop} />
       </View>
     );
   }
@@ -18,6 +26,10 @@ class SimpleScreen extends Component {
     return (
       <Text style={styles.h1}>{this.props.myFunction()}</Text>
     );
+  }
+
+  onClickPop() {
+    Navigation.on(this.props.id).pop();
   }
 }
 export default SimpleScreen;
