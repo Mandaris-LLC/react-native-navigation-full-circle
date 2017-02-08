@@ -1,7 +1,11 @@
 package com.reactnativenavigation.playground;
 
-import android.app.Application;
+import com.reactnativenavigation.controllers.NavigationApplication;
 
-public class MainApplication extends Application {
-    
+public class MainApplication extends NavigationApplication {
+
+    @Override
+    public boolean isDebug() {
+        return BuildConfig.DEBUG;
+    }
 }
