@@ -38,7 +38,7 @@ RCT_EXPORT_METHOD(pop:(NSString*)containerId)
 
 -(void)assertReady
 {
-	if (!RNN.instance.isReadyToReceiveCommands) {
+	if (![RNN instance].isReadyToReceiveCommands) {
 		@throw [NSException exceptionWithName:@"BridgeNotLoadedError" reason:@"Bridge not yet loaded! Send commands after Navigation.events().onAppLaunched() has been called." userInfo:nil];
 	}
 }

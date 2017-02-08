@@ -12,7 +12,7 @@
 
 +(void)bootstrap:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions
 {	
-	[RNN.instance bootstrap:jsCodeLocation launchOptions:launchOptions];
+	[[RNN instance] bootstrap:jsCodeLocation launchOptions:launchOptions];
 }
 
 @end

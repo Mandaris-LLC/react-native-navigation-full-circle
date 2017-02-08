@@ -36,7 +36,7 @@ static NSString* const containerStop	= @"RNN.containerStop";
 
 -(void)send:(NSString *)eventName body:(id)body
 {
-	[[RNN.instance.bridge moduleForClass:[RNNEventEmitter class]] sendEventWithName:eventName body:body];
+	[[[RNN instance].bridge moduleForClass:[RNNEventEmitter class]] sendEventWithName:eventName body:body];
 }
 
 @end
