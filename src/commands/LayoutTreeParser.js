@@ -25,7 +25,7 @@ export default class LayoutTreeParser {
 
   _createTabs(tabs) {
     return {
-      type: LayoutTypes.Tabs,
+      type: LayoutTypes.BottomTabs,
       children: _.map(tabs, (t) => this._createContainerStackWithContainerData(t.container))
     };
   }

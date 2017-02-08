@@ -23,7 +23,7 @@
 }
 -(BOOL)isTabs
 {
-	return [self.type isEqualToString:@"Tabs"];
+	return [self.type isEqualToString:@"BottomTabs"];
 }
 -(BOOL)isSideMenuRoot
 {

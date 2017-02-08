@@ -51,7 +51,7 @@ describe('LayoutTreeParser', () => {
     it('parses tab based', () => {
       expect(uut.parseFromSimpleJSON(SimpleLayouts.tabBasedApp))
         .toEqual({
-          type: 'Tabs',
+          type: 'BottomTabs',
           children: [
             {
               type: 'ContainerStack',
@@ -240,7 +240,7 @@ describe('LayoutTreeParser', () => {
               type: 'SideMenuCenter',
               children: [
                 {
-                  type: 'Tabs',
+                  type: 'BottomTabs',
                   children: [
                     {
                       type: 'ContainerStack',

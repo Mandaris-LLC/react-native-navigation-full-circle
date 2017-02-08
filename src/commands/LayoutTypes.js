@@ -1,7 +1,7 @@
 export default {
   Container: 'Container',
   ContainerStack: 'ContainerStack',
-  Tabs: 'Tabs',
+  BottomTabs: 'BottomTabs',
   SideMenuRoot: 'SideMenuRoot',
   SideMenuCenter: 'SideMenuCenter',
   SideMenuLeft: 'SideMenuLeft',
