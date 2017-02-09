@@ -51,7 +51,10 @@ class WelcomeScreen extends Component {
       tabs: [
         {
           container: {
-            name: 'navigation.playground.SimpleScreen'
+            name: 'navigation.playground.SimpleScreen',
+            passProps: {
+              text: 'This is a side menu center screen'
+            }
           }
         },
         {
@@ -68,7 +71,10 @@ class WelcomeScreen extends Component {
       sideMenu: {
         left: {
           container: {
-            name: 'navigation.playground.SimpleScreen'
+            name: 'navigation.playground.SimpleScreen',
+            passProps: {
+              text: 'This is a side menu screen'
+            }
           }
         },
         right: {

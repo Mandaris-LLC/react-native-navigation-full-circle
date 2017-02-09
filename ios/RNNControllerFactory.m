@@ -52,14 +52,14 @@
 	}
 	
 	else if (node.isSideMenuCenter) {
-		return [self createSideMenuCenter:node];
+		return [self createSideMenuChild:node type:RNNSideMenuChildTypeCenter];
 	}
 	
 	else if (node.isSideMenuLeft) {
-		return [self createSideMenuLeft:node];
+		return [self createSideMenuChild:node type:RNNSideMenuChildTypeLeft];
 	}
 	else if (node.isSideMenuRight) {
-		return [self createSideMenuRight:node];
+		return [self createSideMenuChild:node type:RNNSideMenuChildTypeRight];
 	}
 	
 	@throw [NSException exceptionWithName:@"UnknownControllerType" reason:[@"Unknown controller type " stringByAppendingString:node.type] userInfo:nil];
@@ -101,34 +101,7 @@
 }
 
 -(UIViewController*)createSideMenu:(RNNLayoutNode*)node
-{
-	//	NSArray *childern = node.children;
-	//	id center, left, right;
-	
-	//	for (NSDictionary *child in childern) {
-	//		RNNLayoutNode *childNode = [RNNLayoutNode create:child];
-	//		UIViewController *vc = [self fromTree:child];
-	//
-	//		if ([childNode isSideMenuLeft]) {
-	//			left = vc;
-	//		}
-	//		else if ([childNode isSideMenuCenter]) {
-	//			center = vc;
-	//		}
-	//		else if ([childNode isSideMenuRight]) {
-	//			right = [self fromTree:child];
-	//		}
-	//		else {
-	//			@throw [NSException exceptionWithName:@"UnknownSideMenuType" reason:[@"Unknown side menu type for side menu root node " stringByAppendingString:childNode.type] userInfo:nil];
-	//		}
-	//	}
-	
-	//	if (!center) {
-	//		@throw [NSException exceptionWithName:@"WrongSideMenuDefinition" reason:@"Side menu without center is illigal" userInfo:nil];
-	//	}
-	//
-	//	MMDrawerController *sideMenu = [[MMDrawerController alloc] initWithCenterViewController:center leftDrawerViewController:left rightDrawerViewController:right];
-	
+{	
 	NSMutableArray* childrenVCs = [NSMutableArray new];
 	
 	
@@ -142,28 +115,14 @@
 }
 
 
--(UIViewController*)createSideMenuCenter:(RNNLayoutNode*)node {
+-(UIViewController*)createSideMenuChild:(RNNLayoutNode*)node type:(RNNSideMenuChildType)type {
 	UIViewController* child = [self fromTree:node.children[0]];
-	RNNSideMenuChildVC *center = [[RNNSideMenuChildVC alloc] initWithChild: child type:RNNSideMenuChildTypeCenter];
+	RNNSideMenuChildVC *sideMenuChild = [[RNNSideMenuChildVC alloc] initWithChild: child type:type];
 	
-	return center;
+	return sideMenuChild;
 }
 
 
--(UIViewController*)createSideMenuLeft:(RNNLayoutNode*)node {
-	UIViewController* child = [self fromTree:node.children[0]];
-	RNNSideMenuChildVC *left = [[RNNSideMenuChildVC alloc] initWithChild: child type:RNNSideMenuChildTypeLeft];
-	
-	return left;
-}
-
-
--(UIViewController*)createSideMenuRight:(RNNLayoutNode*)node {
-	UIViewController* child = [self fromTree:node.children[0]];
-	RNNSideMenuChildVC *right = [[RNNSideMenuChildVC alloc] initWithChild: child type:RNNSideMenuChildTypeRight];
-	
-	return right;
-}
 
 
 @end

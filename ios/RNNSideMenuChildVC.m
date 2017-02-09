@@ -21,6 +21,13 @@
 	self = [super init];
 	
 	self.child = child;
+	[self addChildViewController:self.child];
+	
+	[self addChildViewController:self.child];
+	[self.child.view setFrame:self.view.bounds];
+	[self.view addSubview:self.child.view];
+	[self.view bringSubviewToFront:self.child.view];
+	
 	self.type = type;
 	
 	return self;

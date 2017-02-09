@@ -18,9 +18,9 @@ describe('app', () => {
     expect(elementByLabel('Pushed screen')).toBeVisible();
   });
 
-  xit('switch to tabs with side menus', () => {
-    elementByLabel('Switch to tab based app with side menus').tap();
-    elementByLabel('Switch to tab based app with side menus').swipeRight();
+  it('switch to tabs with side menus', () => {
+    elementByLabel('Switch to app with side menus').tap();
+    elementByLabel('This is a side menu center screen').swipe('right');
     expect(elementByLabel('This is a side menu screen')).toBeVisible();
   });
 

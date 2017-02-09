@@ -100,34 +100,35 @@
 
 
 - (void)testCreateLayout_ContainerSideMenuLayoutCenterLeftRight {
-	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayout:@{@"id": @"cntId",
-																					   @"type": @"SideMenuRoot",
-																					   @"data": @{},
-																					   @"children": @[
-																							   @{@"id": @"cntI_2",
-																								 @"type": @"SideMenuCenter",
-																								 @"data": @{},
-																								 @"children": @[
-																										 @{@"id": @"cntId_3",
-																										   @"type": @"Container",
-																										   @"data": @{},
-																										   @"children": @[]}]},
-																							   @{@"id": @"cntI_4",
-																								 @"type": @"SideMenuLeft",
-																								 @"data": @{},
-																								 @"children": @[
-																										 @{@"id": @"cntId_5",
-																										   @"type": @"Container",
-																										   @"data": @{},
-																										   @"children": @[]}]},
-																							   @{@"id": @"cntI_6",
-																								 @"type": @"SideMenuRight",
-																								 @"data": @{},
-																								 @"children": @[
-																										 @{@"id": @"cntId_5",
-																										   @"type": @"Container",
-																										   @"data": @{},
-																										   @"children": @[]}]}]}];
+	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayout:
+														   @{@"id": @"cntId",
+															 @"type": @"SideMenuRoot",
+															 @"data": @{},
+															 @"children": @[
+																	 @{@"id": @"cntI_2",
+																	   @"type": @"SideMenuCenter",
+																	   @"data": @{},
+																	   @"children": @[
+																			   @{@"id": @"cntId_3",
+																				 @"type": @"Container",
+																				 @"data": @{},
+																				 @"children": @[]}]},
+																	 @{@"id": @"cntI_4",
+																	   @"type": @"SideMenuLeft",
+																	   @"data": @{},
+																	   @"children": @[
+																			   @{@"id": @"cntId_5",
+																				 @"type": @"Container",
+																				 @"data": @{},
+																				 @"children": @[]}]},
+																	 @{@"id": @"cntI_6",
+																	   @"type": @"SideMenuRight",
+																	   @"data": @{},
+																	   @"children": @[
+																			   @{@"id": @"cntId_5",
+																				 @"type": @"Container",
+																				 @"data": @{},
+																				 @"children": @[]}]}]}];
 	XCTAssertTrue([ans isMemberOfClass:[RNNSideMenuController class]]);
 	XCTAssertTrue([ans isKindOfClass:[UIViewController class]]);
 	XCTAssertTrue([ans.center isMemberOfClass:[RNNSideMenuChildVC class]]);
@@ -142,6 +143,50 @@
 	RNNSideMenuChildVC *right = (RNNSideMenuChildVC*)ans.right;
 	XCTAssertTrue(right.type == RNNSideMenuChildTypeRight);
 	XCTAssertTrue([right.child isMemberOfClass:[RNNRootViewController class]]);
+}
+
+- (void)testCreateLayout_ContainerSideMenuLayoutCenterTabBar {
+	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayout:
+														   @{@"id": @"cntId",
+															 @"type": @"SideMenuRoot",
+															 @"data": @{},
+															 @"children": @[
+																	 @{@"id": @"cntI_2",
+																	   @"type": @"SideMenuCenter",
+																	   @"data": @{},
+																	   @"children": @[
+																			   @{@"id": @"cntId_3",
+																				 @"type": @"BottomTabs",
+																				 @"data": @{},
+																				 @"children": @[
+																						 @{@"id": @"cntId_4",
+																						   @"type": @"ContainerStack",
+																						   @"data": @{},
+																						   @"children": @[
+																								   @{@"id": @"cntId_2",
+																									 @"type": @"Container",
+																									 @"data": @{},
+																									 @"children": @[]}]}]}]}]}
+														   ];
+	
+	XCTAssertTrue([ans isMemberOfClass:[RNNSideMenuController class]]);
+	XCTAssertTrue([ans isKindOfClass:[UIViewController class]]);
+	XCTAssertTrue([ans.center isMemberOfClass:[RNNSideMenuChildVC class]]);
+	
+	RNNSideMenuChildVC *center = (RNNSideMenuChildVC*)ans.center;
+	XCTAssertTrue(center.type == RNNSideMenuChildTypeCenter);
+	XCTAssertTrue([center.child isMemberOfClass:[UITabBarController class]]);
+	
+	UITabBarController *tabbBar = (UITabBarController*)center.child;
+	XCTAssertTrue(tabbBar.viewControllers.count == 1);
+	
+	UINavigationController *navController = (UINavigationController*)(tabbBar.viewControllers[0]);
+	XCTAssertTrue([navController isMemberOfClass:[UINavigationController class]]);
+	XCTAssertTrue(navController.viewControllers.count == 1);
+	
+	RNNRootViewController *rootViewController = (RNNRootViewController*)navController.viewControllers[0];
+	XCTAssertTrue([rootViewController isMemberOfClass:[RNNRootViewController class]]);
+	
 }
 
 
