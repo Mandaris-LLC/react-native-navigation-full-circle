@@ -58,6 +58,9 @@ function e2e() { //eslint-disable-line
 
 function run() {
   buildProjForDetox();
+  if (process.env.TRAVIS) {
+    console.warn('skipping e2e temporarily due to fbsimctl is currently broken'); //eslint-disable-line
+  }
   e2e();
 }
 
