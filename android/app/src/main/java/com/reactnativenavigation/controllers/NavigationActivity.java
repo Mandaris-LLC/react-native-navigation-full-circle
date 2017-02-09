@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
@@ -80,9 +79,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         onBackPressed();
     }
 
-    public void setRoot(String name, Bundle args) {
-        ReactRootView v = new ReactRootView(getApplicationContext());
-        setContentView(v);
-        v.startReactApplication(host.getReactInstanceManager(), name, args);
+    public ReactNativeHost getHost() {
+        return host;
     }
 }
