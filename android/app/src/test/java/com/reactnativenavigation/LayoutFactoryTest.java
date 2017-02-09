@@ -17,6 +17,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -87,6 +88,14 @@ public class LayoutFactoryTest {
         ViewGroup container2 = (ViewGroup) containers.get(1);
         assertViewChildren(container1, mockView1);
         assertViewChildren(container2, mockView2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsExceptionForUnknownType() {
+        when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
+        final LayoutNode node = new LayoutNode(VIEW_ID, "***unknownType***", Collections.<String, Object>emptyMap());
+
+        createLayoutFactory().create(node);
     }
 
     private LayoutFactory createLayoutFactory() {

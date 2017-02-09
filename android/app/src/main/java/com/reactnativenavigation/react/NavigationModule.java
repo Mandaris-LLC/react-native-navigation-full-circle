@@ -49,14 +49,6 @@ public class NavigationModule extends ReactContextBaseJavaModule {
                 final LayoutNode layoutTreeRoot = readableMapToLayoutNode(layoutTree);
                 final View rootView = factory.create(layoutTreeRoot);
                 NavigationActivity.instance.setContentView(rootView);
-
-//                Map<String, Object> node = new HashMap<String, Object>();
-//                node.put("id", container.getString("id"));
-//                HashMap<String, Object> data = new HashMap<>();
-//                data.put("name", container.getMap("data").getString("name"));
-//                node.put("data", data);
-//                View rootView = factory.create(node);
-//                NavigationActivity.instance.setContentView(rootView);
             }
         });
     }
@@ -88,8 +80,6 @@ public class NavigationModule extends ReactContextBaseJavaModule {
                 case Map:
                     map.put(key, readableMapToJavaMap(readableMap.getMap(key)));
                     break;
-                default:
-                    throw new IllegalArgumentException("WTF?!");
             }
         }
         return map;

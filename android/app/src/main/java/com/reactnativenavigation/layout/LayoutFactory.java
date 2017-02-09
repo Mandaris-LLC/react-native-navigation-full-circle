@@ -1,6 +1,7 @@
 package com.reactnativenavigation.layout;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import java.util.List;
@@ -21,17 +22,26 @@ public class LayoutFactory {
     public View create(LayoutNode node) {
         switch (node.type) {
             case "Container":
-                String name = (String) node.data.get("name");
-                return new Container(activity, rootViewCreator, node.id, name);
-
+                return createContainerView(node);
             case "ContainerStack":
-                ContainerStack containerStack = new ContainerStack(activity);
-                List<LayoutNode> children = node.children;
-                addChildrenNodes(containerStack, children);
-                return containerStack;
+                return createContainerStackView(node);
+            default:
+                throw new IllegalArgumentException("Invalid node type: "+node.type);
         }
+    }
 
-        return null;
+    @NonNull
+    private View createContainerStackView(LayoutNode node) {
+        ContainerStack containerStack = new ContainerStack(activity);
+        List<LayoutNode> children = node.children;
+        addChildrenNodes(containerStack, children);
+        return containerStack;
+    }
+
+    @NonNull
+    private View createContainerView(LayoutNode node) {
+        String name = (String) node.data.get("name");
+        return new Container(activity, rootViewCreator, node.id, name);
     }
 
     private void addChildrenNodes(ContainerStack containerStack, List<LayoutNode> children) {
