@@ -1,7 +1,8 @@
 
 #import "RNNControllerFactory.h"
 #import "RNNLayoutNode.h"
-#import "RNNRootViewController.h"
+
+
 
 @interface RNNControllerFactory ()
 
@@ -18,7 +19,7 @@
 	
 	self = [super init];
 	self.creator = creator;
-
+	
 	return self;
 }
 
@@ -33,21 +34,38 @@
 {
 	RNNLayoutNode* node = [RNNLayoutNode create:json];
 	
-	if (node.isContainer)
-	{
+	if ( node.isContainer) {
+		
 		return [self createContainer:node];
-	} else if (node.isContainerStack)
-	{
+	}
+	
+	else if (node.isContainerStack)	{
 		return [self createContainerStack:node];
-	} else if (node.isTabs)
-	{
+	}
+	
+	else if (node.isTabs) {
 		return [self createTabs:node];
+	}
+	
+	else if (node.isSideMenuRoot) {
+		return [self createSideMenu:node];
+	}
+	
+	else if (node.isSideMenuCenter) {
+		return [self createSideMenuCenter:node];
+	}
+	
+	else if (node.isSideMenuLeft) {
+		return [self createSideMenuLeft:node];
+	}
+	else if (node.isSideMenuRight) {
+		return [self createSideMenuRight:node];
 	}
 	
 	@throw [NSException exceptionWithName:@"UnknownControllerType" reason:[@"Unknown controller type " stringByAppendingString:node.type] userInfo:nil];
 }
 
--(UIViewController*)createContainer:(RNNLayoutNode*)node
+-(RNNRootViewController*)createContainer:(RNNLayoutNode*)node
 {
 	return [[RNNRootViewController alloc] initWithNode:node rootViewCreator:self.creator];
 }
@@ -70,7 +88,7 @@
 	UITabBarController* vc = [[UITabBarController alloc] init];
 	
 	NSMutableArray* controllers = [NSMutableArray new];
-	for (NSDictionary* child in node.children) {
+	for (NSDictionary *child in node.children) {
 		UIViewController* childVc = [self fromTree:child];
 		
 		UITabBarItem* item = [[UITabBarItem alloc] initWithTitle:@"A Tab" image:nil tag:1];
@@ -81,5 +99,68 @@
 	
 	return vc;
 }
+
+-(UIViewController*)createSideMenu:(RNNLayoutNode*)node
+{
+	//	NSArray *childern = node.children;
+	//	id center, left, right;
+	
+	//	for (NSDictionary *child in childern) {
+	//		RNNLayoutNode *childNode = [RNNLayoutNode create:child];
+	//		UIViewController *vc = [self fromTree:child];
+	//
+	//		if ([childNode isSideMenuLeft]) {
+	//			left = vc;
+	//		}
+	//		else if ([childNode isSideMenuCenter]) {
+	//			center = vc;
+	//		}
+	//		else if ([childNode isSideMenuRight]) {
+	//			right = [self fromTree:child];
+	//		}
+	//		else {
+	//			@throw [NSException exceptionWithName:@"UnknownSideMenuType" reason:[@"Unknown side menu type for side menu root node " stringByAppendingString:childNode.type] userInfo:nil];
+	//		}
+	//	}
+	
+	//	if (!center) {
+	//		@throw [NSException exceptionWithName:@"WrongSideMenuDefinition" reason:@"Side menu without center is illigal" userInfo:nil];
+	//	}
+	//
+	//	MMDrawerController *sideMenu = [[MMDrawerController alloc] initWithCenterViewController:center leftDrawerViewController:left rightDrawerViewController:right];
+	
+	NSMutableArray* childrenVCs = [NSMutableArray new];
+	
+	
+	for (NSDictionary *child in node.children) {
+		UIViewController *vc = [self fromTree:child];
+		[childrenVCs addObject:vc];
+	}
+	
+	RNNSideMenuController *sideMenu = [[RNNSideMenuController alloc] initWithControllers:childrenVCs];
+	return sideMenu;
+}
+
+-(UIViewController*)createSideMenuCenter:(RNNLayoutNode*)node {
+	UIViewController* child = [self fromTree:node.children[0]];
+	RNNSideMenuCenterVC *center = [[RNNSideMenuCenterVC alloc] initWithChild: child];
+	return center;
+}
+
+-(UIViewController*)createSideMenuLeft:(RNNLayoutNode*)node {
+	UIViewController* child = [self fromTree:node.children[0]];
+	RNNSideMenuLeftVC *left = [[RNNSideMenuLeftVC alloc] initWithChild:child];
+	
+	return left;
+}
+
+-(UIViewController*)createSideMenuRight:(RNNLayoutNode*)node {
+	UIViewController* child = [self fromTree:node.children[0]];
+	RNNSideMenuRightVC *right = [[RNNSideMenuRightVC alloc] initWithChild:child];
+	
+	return right;
+
+}
+
 
 @end
