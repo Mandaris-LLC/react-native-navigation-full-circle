@@ -98,55 +98,6 @@
 	
 }
 
-- (void)testCreateLayout_ContainerSideMenuLayoutCenterOnly {
-	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayout:@{@"id": @"cntId",
-																					   @"type": @"SideMenuRoot",
-																					   @"data": @{},
-																					   @"children": @[@{@"id": @"cntI_2",
-																										@"type": @"SideMenuCenter",
-																										@"data": @{},
-																										@"children": @[
-																												@{@"id": @"cntId_3",
-																												  @"type": @"Container",
-																												  @"data": @{},
-																												  @"children": @[]}]}]}];
-	XCTAssertTrue([ans isMemberOfClass:[RNNSideMenuController class]]);
-	XCTAssertTrue([ans isKindOfClass:[UIViewController class]]);
-	XCTAssertTrue([ans.center isMemberOfClass:[RNNSideMenuCenterVC class]]);
-	XCTAssertTrue([ans.center.child isMemberOfClass:[RNNRootViewController class]]);
-}
-
-
-- (void)testCreateLayout_ContainerSideMenuLayoutCenterAndLeft {
-	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayout:@{@"id": @"cntId",
-																					   @"type": @"SideMenuRoot",
-																					   @"data": @{},
-																					   @"children": @[
-																							   @{@"id": @"cntI_2",
-																								 @"type": @"SideMenuCenter",
-																								 @"data": @{},
-																								 @"children": @[
-																										 @{@"id": @"cntId_3",
-																										   @"type": @"Container",
-																										   @"data": @{},
-																										   @"children": @[]}]},
-																							   @{@"id": @"cntI_4",
-																								 @"type": @"SideMenuLeft",
-																								 @"data": @{},
-																								 @"children": @[
-																										 @{@"id": @"cntId_5",
-																										   @"type": @"Container",
-																										   @"data": @{},
-																										   @"children": @[]}]}]}];
-	XCTAssertTrue([ans isMemberOfClass:[RNNSideMenuController class]]);
-	XCTAssertTrue([ans isKindOfClass:[UIViewController class]]);
-	XCTAssertTrue([ans.center isMemberOfClass:[RNNSideMenuCenterVC class]]);
-	XCTAssertTrue([ans.center.child isMemberOfClass:[RNNRootViewController class]]);
-	XCTAssertTrue([ans.left isMemberOfClass:[RNNSideMenuLeftVC class]]);
-	
-	RNNSideMenuLeftVC *left = (RNNSideMenuLeftVC*)ans.left;
-	XCTAssertTrue([left.child isMemberOfClass:[RNNRootViewController class]]);
-}
 
 - (void)testCreateLayout_ContainerSideMenuLayoutCenterLeftRight {
 	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayout:@{@"id": @"cntId",
@@ -179,15 +130,17 @@
 																										   @"children": @[]}]}]}];
 	XCTAssertTrue([ans isMemberOfClass:[RNNSideMenuController class]]);
 	XCTAssertTrue([ans isKindOfClass:[UIViewController class]]);
-	XCTAssertTrue([ans.center isMemberOfClass:[RNNSideMenuCenterVC class]]);
-	XCTAssertTrue([ans.center.child isMemberOfClass:[RNNRootViewController class]]);
-	XCTAssertTrue([ans.left isMemberOfClass:[RNNSideMenuLeftVC class]]);
+	XCTAssertTrue([ans.center isMemberOfClass:[RNNSideMenuChildVC class]]);
+	RNNSideMenuChildVC *center = (RNNSideMenuChildVC*)ans.center;
+	XCTAssertTrue(center.type == RNNSideMenuChildTypeCenter);
+	XCTAssertTrue([center.child isMemberOfClass:[RNNRootViewController class]]);
 	
-	RNNSideMenuLeftVC *left = (RNNSideMenuLeftVC*)ans.left;
+	RNNSideMenuChildVC *left = (RNNSideMenuChildVC*)ans.left;
+	XCTAssertTrue(left.type == RNNSideMenuChildTypeLeft);
 	XCTAssertTrue([left.child isMemberOfClass:[RNNRootViewController class]]);
 	
-	XCTAssertTrue([ans.right isMemberOfClass:[RNNSideMenuRightVC class]]);
-	RNNSideMenuRightVC *right = (RNNSideMenuRightVC*)ans.right;
+	RNNSideMenuChildVC *right = (RNNSideMenuChildVC*)ans.right;
+	XCTAssertTrue(right.type == RNNSideMenuChildTypeRight);
 	XCTAssertTrue([right.child isMemberOfClass:[RNNRootViewController class]]);
 }
 

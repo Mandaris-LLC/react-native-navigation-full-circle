@@ -141,25 +141,28 @@
 	return sideMenu;
 }
 
+
 -(UIViewController*)createSideMenuCenter:(RNNLayoutNode*)node {
 	UIViewController* child = [self fromTree:node.children[0]];
-	RNNSideMenuCenterVC *center = [[RNNSideMenuCenterVC alloc] initWithChild: child];
+	RNNSideMenuChildVC *center = [[RNNSideMenuChildVC alloc] initWithChild: child type:RNNSideMenuChildTypeCenter];
+	
 	return center;
 }
 
+
 -(UIViewController*)createSideMenuLeft:(RNNLayoutNode*)node {
 	UIViewController* child = [self fromTree:node.children[0]];
-	RNNSideMenuLeftVC *left = [[RNNSideMenuLeftVC alloc] initWithChild:child];
+	RNNSideMenuChildVC *left = [[RNNSideMenuChildVC alloc] initWithChild: child type:RNNSideMenuChildTypeLeft];
 	
 	return left;
 }
 
+
 -(UIViewController*)createSideMenuRight:(RNNLayoutNode*)node {
 	UIViewController* child = [self fromTree:node.children[0]];
-	RNNSideMenuRightVC *right = [[RNNSideMenuRightVC alloc] initWithChild:child];
+	RNNSideMenuChildVC *right = [[RNNSideMenuChildVC alloc] initWithChild: child type:RNNSideMenuChildTypeRight];
 	
 	return right;
-
 }
 
 

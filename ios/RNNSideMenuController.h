@@ -7,15 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RNNSideMenuCenterVC.h"
-#import "RNNSideMenuLeftVC.h"
-#import "RNNSideMenuRightVC.h"
+#import "RNNSideMenuChildVC.h"
 
 @interface RNNSideMenuController : UIViewController
 
-@property (readonly) RNNSideMenuCenterVC *center;
-@property (readonly) RNNSideMenuLeftVC *left;
-@property (readonly) RNNSideMenuRightVC *right;
+@property (readonly) RNNSideMenuChildVC *center;
+@property (readonly) RNNSideMenuChildVC *left;
+@property (readonly) RNNSideMenuChildVC *right;
 
 -(instancetype)initWithControllers:(NSArray*)controllers;
 

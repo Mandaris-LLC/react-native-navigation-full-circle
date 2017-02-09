@@ -7,13 +7,13 @@
 //
 
 #import "RNNSideMenuController.h"
-#import "RNNSideMenuCenterVC.h"
+#import "RNNSideMenuChildVC.h"
 
 @interface RNNSideMenuController ()
 
-@property (readwrite) RNNSideMenuCenterVC *center;
-@property (readwrite) RNNSideMenuLeftVC *left;
-@property (readwrite) RNNSideMenuRightVC *right;
+@property (readwrite) RNNSideMenuChildVC *center;
+@property (readwrite) RNNSideMenuChildVC *left;
+@property (readwrite) RNNSideMenuChildVC *right;
 
 @end
 
@@ -31,15 +31,20 @@
 -(void)setControllers:(NSArray*)controllers {
 	for (id controller in controllers) {
 		
-		if ([controller isKindOfClass:[RNNSideMenuCenterVC class]]) {
-			self.center = controller;
+		if ([controller isKindOfClass:[RNNSideMenuChildVC class]]) {
+			RNNSideMenuChildVC *child = (RNNSideMenuChildVC*)controller;
+			
+			if (child.type == RNNSideMenuChildTypeCenter) {
+				self.center = child;
+			}
+			else if(child.type == RNNSideMenuChildTypeLeft) {
+				self.left = child;
+			}
+			else if(child.type == RNNSideMenuChildTypeRight) {
+				self.right = child;
+			}
 		}
-		else if ([controller isKindOfClass:[RNNSideMenuLeftVC class]]){
-			self.left = controller;
-		}
-		else if ([controller isKindOfClass:[RNNSideMenuRightVC class]]) {
-			self.right = controller;
-		}
+
 		else {
 			@throw [NSException exceptionWithName:@"UnknownSideMenuControllerType" reason:[@"Unknown side menu type " stringByAppendingString:[controller description]] userInfo:nil];
 		}

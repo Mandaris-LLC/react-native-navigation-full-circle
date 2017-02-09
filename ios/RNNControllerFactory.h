@@ -4,9 +4,7 @@
 #import "RNNRootViewCreator.h"
 #import "RNNRootViewController.h"
 #import "RNNSideMenuController.h"
-#import "RNNSideMenuCenterVC.h"
-#import "RNNSideMenuLeftVC.h"
-#import "RNNSideMenuRightVC.h"
+#import "RNNSideMenuChildVC.h"
 
 @interface RNNControllerFactory : NSObject
 
