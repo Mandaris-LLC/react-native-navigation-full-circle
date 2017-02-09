@@ -10,15 +10,13 @@
 
 @implementation RNNRootViewController
 
--(instancetype)initWithNode:(RNNLayoutNode*)node
+-(instancetype)initWithNode:(RNNLayoutNode*)node rootViewCreator:(id<RNNRootViewCreator>)creator
 {
 	self = [super init];
 	self.containerId = node.nodeId;
 	self.containerName = node.data[@"name"];
 	
-	self.view = [[RCTRootView alloc] initWithBridge:[RNN instance].bridge
-										 moduleName:self.containerName
-								  initialProperties:@{@"id": self.containerId}];
+	self.view = [creator createRootView:self.containerName rootViewId:self.containerId];
 	return self;
 }
 

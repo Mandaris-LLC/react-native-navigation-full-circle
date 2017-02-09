@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26916C981E4B9E7700D13680 /* RNNReactRootViewCreator.h in Headers */ = {isa = PBXBuildFile; fileRef = 26916C961E4B9E7700D13680 /* RNNReactRootViewCreator.h */; };
+		26916C991E4B9E7700D13680 /* RNNReactRootViewCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 26916C971E4B9E7700D13680 /* RNNReactRootViewCreator.m */; };
 		7B1126A01E2D263F00F9B03B /* RNNEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B11269F1E2D263F00F9B03B /* RNNEventEmitter.m */; };
 		7B1126A31E2D2B6C00F9B03B /* RNNSplashScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BA500761E254908001B9E1B /* RNNSplashScreen.h */; };
 		7B1126A41E2D2B6C00F9B03B /* ReactNativeNavigation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BA500731E2544B9001B9E1B /* ReactNativeNavigation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -14,8 +16,6 @@
 		7B1126A61E2D2B6C00F9B03B /* RNNBridgeModule.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BBFE5421E25330E002A6182 /* RNNBridgeModule.h */; };
 		7B1126A71E2D2B6C00F9B03B /* RNNEventEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B11269E1E2D263F00F9B03B /* RNNEventEmitter.h */; };
 		7B1126A91E2D2B6C00F9B03B /* RNNControllerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */; };
-		7B71261B1E4A22520066D847 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8AFADBD1BEE6F3F00A4592D /* libReactNativeNavigation.a */; };
-		7B7126221E4A23040066D847 /* RNNRootViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7126211E4A23040066D847 /* RNNRootViewControllerTest.m */; };
 		7BA500751E2544B9001B9E1B /* ReactNativeNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA500741E2544B9001B9E1B /* ReactNativeNavigation.m */; };
 		7BA500781E254908001B9E1B /* RNNSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA500771E254908001B9E1B /* RNNSplashScreen.m */; };
 		7BBFE5441E25330E002A6182 /* RNNBridgeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFE5431E25330E002A6182 /* RNNBridgeModule.m */; };
@@ -26,16 +26,6 @@
 		7BEF0D1C1E43771B003E96B0 /* RNNLayoutNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BEF0D1A1E43771B003E96B0 /* RNNLayoutNode.h */; };
 		7BEF0D1D1E43771B003E96B0 /* RNNLayoutNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEF0D1B1E43771B003E96B0 /* RNNLayoutNode.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		7B71261C1E4A22520066D847 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D8AFADB51BEE6F3F00A4592D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D8AFADBC1BEE6F3F00A4592D;
-			remoteInfo = ReactNativeNavigation;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		D8AFADBB1BEE6F3F00A4592D /* CopyFiles */ = {
@@ -50,11 +40,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		26916C941E4B9CCC00D13680 /* RNNRootViewCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNNRootViewCreator.h; sourceTree = "<group>"; };
+		26916C961E4B9E7700D13680 /* RNNReactRootViewCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNReactRootViewCreator.h; sourceTree = "<group>"; };
+		26916C971E4B9E7700D13680 /* RNNReactRootViewCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNReactRootViewCreator.m; sourceTree = "<group>"; };
 		7B11269E1E2D263F00F9B03B /* RNNEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNEventEmitter.h; sourceTree = "<group>"; };
 		7B11269F1E2D263F00F9B03B /* RNNEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNEventEmitter.m; sourceTree = "<group>"; };
-		7B7126161E4A22520066D847 /* ReactNativeNavigationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactNativeNavigationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7B71261A1E4A22520066D847 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7B7126211E4A23040066D847 /* RNNRootViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNRootViewControllerTest.m; sourceTree = "<group>"; };
 		7BA500731E2544B9001B9E1B /* ReactNativeNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactNativeNavigation.h; sourceTree = "<group>"; };
 		7BA500741E2544B9001B9E1B /* ReactNativeNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactNativeNavigation.m; sourceTree = "<group>"; };
 		7BA500761E254908001B9E1B /* RNNSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSplashScreen.h; sourceTree = "<group>"; };
@@ -73,14 +63,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		7B7126131E4A22520066D847 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7B71261B1E4A22520066D847 /* libReactNativeNavigation.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D8AFADBA1BEE6F3F00A4592D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -94,6 +76,9 @@
 		7B1E4C4B1E2D173700C3A525 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				26916C941E4B9CCC00D13680 /* RNNRootViewCreator.h */,
+				26916C961E4B9E7700D13680 /* RNNReactRootViewCreator.h */,
+				26916C971E4B9E7700D13680 /* RNNReactRootViewCreator.m */,
 				7BA500761E254908001B9E1B /* RNNSplashScreen.h */,
 				7BA500771E254908001B9E1B /* RNNSplashScreen.m */,
 				7BEF0D1A1E43771B003E96B0 /* RNNLayoutNode.h */,
@@ -104,15 +89,6 @@
 				7BEF0D171E437684003E96B0 /* RNNRootViewController.m */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		7B7126171E4A22520066D847 /* ReactNativeNavigationTests */ = {
-			isa = PBXGroup;
-			children = (
-				7B7126211E4A23040066D847 /* RNNRootViewControllerTest.m */,
-				7B71261A1E4A22520066D847 /* Info.plist */,
-			);
-			path = ReactNativeNavigationTests;
 			sourceTree = "<group>";
 		};
 		7BD721F31E2D3AA100724059 /* Bridge */ = {
@@ -135,7 +111,6 @@
 				7BBFE5601E253F97002A6182 /* RNN.m */,
 				7BD721F31E2D3AA100724059 /* Bridge */,
 				7B1E4C4B1E2D173700C3A525 /* Controllers */,
-				7B7126171E4A22520066D847 /* ReactNativeNavigationTests */,
 				D8AFADBE1BEE6F3F00A4592D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -147,7 +122,6 @@
 			isa = PBXGroup;
 			children = (
 				D8AFADBD1BEE6F3F00A4592D /* libReactNativeNavigation.a */,
-				7B7126161E4A22520066D847 /* ReactNativeNavigationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,6 +133,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26916C981E4B9E7700D13680 /* RNNReactRootViewCreator.h in Headers */,
 				7B1126A41E2D2B6C00F9B03B /* ReactNativeNavigation.h in Headers */,
 				7B1126A31E2D2B6C00F9B03B /* RNNSplashScreen.h in Headers */,
 				7B1126A51E2D2B6C00F9B03B /* RNN.h in Headers */,
@@ -173,24 +148,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		7B7126151E4A22520066D847 /* ReactNativeNavigationTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7B7126201E4A22530066D847 /* Build configuration list for PBXNativeTarget "ReactNativeNavigationTests" */;
-			buildPhases = (
-				7B7126121E4A22520066D847 /* Sources */,
-				7B7126131E4A22520066D847 /* Frameworks */,
-				7B7126141E4A22520066D847 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7B71261D1E4A22520066D847 /* PBXTargetDependency */,
-			);
-			name = ReactNativeNavigationTests;
-			productName = ReactNativeNavigationTests;
-			productReference = 7B7126161E4A22520066D847 /* ReactNativeNavigationTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		D8AFADBC1BEE6F3F00A4592D /* ReactNativeNavigation */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D8AFADC61BEE6F3F00A4592D /* Build configuration list for PBXNativeTarget "ReactNativeNavigation" */;
@@ -218,10 +175,6 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Wix;
 				TargetAttributes = {
-					7B7126151E4A22520066D847 = {
-						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
-					};
 					D8AFADBC1BEE6F3F00A4592D = {
 						CreatedOnToolsVersion = 7.1;
 					};
@@ -240,30 +193,11 @@
 			projectRoot = "";
 			targets = (
 				D8AFADBC1BEE6F3F00A4592D /* ReactNativeNavigation */,
-				7B7126151E4A22520066D847 /* ReactNativeNavigationTests */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		7B7126141E4A22520066D847 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		7B7126121E4A22520066D847 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7B7126221E4A23040066D847 /* RNNRootViewControllerTest.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D8AFADB91BEE6F3F00A4592D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -274,6 +208,7 @@
 				7BBFE5441E25330E002A6182 /* RNNBridgeModule.m in Sources */,
 				7BEF0D1D1E43771B003E96B0 /* RNNLayoutNode.m in Sources */,
 				7BA500781E254908001B9E1B /* RNNSplashScreen.m in Sources */,
+				26916C991E4B9E7700D13680 /* RNNReactRootViewCreator.m in Sources */,
 				7BBFE5611E253F97002A6182 /* RNN.m in Sources */,
 				7BC9346E1E26886E00EFA125 /* RNNControllerFactory.m in Sources */,
 			);
@@ -281,41 +216,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		7B71261D1E4A22520066D847 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D8AFADBC1BEE6F3F00A4592D /* ReactNativeNavigation */;
-			targetProxy = 7B71261C1E4A22520066D847 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		7B71261E1E4A22520066D847 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				INFOPLIST_FILE = ReactNativeNavigationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wix.ReactNativeNavigationTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		7B71261F1E4A22520066D847 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				INFOPLIST_FILE = ReactNativeNavigationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wix.ReactNativeNavigationTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		D8AFADC41BEE6F3F00A4592D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -441,14 +342,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7B7126201E4A22530066D847 /* Build configuration list for PBXNativeTarget "ReactNativeNavigationTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7B71261E1E4A22520066D847 /* Debug */,
-				7B71261F1E4A22520066D847 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		D8AFADB81BEE6F3F00A4592D /* Build configuration list for PBXProject "ReactNativeNavigation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -11,8 +11,19 @@
 
 #import "AppDelegate.h"
 
+static bool isRunningTests()
+{
+	NSDictionary* environment = [[NSProcessInfo processInfo] environment];
+	NSString* testEnabled = environment[@"TEST_ENABLED"];
+	return [testEnabled isEqualToString:@"YES"];
+}
+
 int main(int argc, char * argv[]) {
-  @autoreleasepool {
-    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-  }
+	@autoreleasepool {
+		if (isRunningTests()) {
+			return UIApplicationMain(argc, argv, nil, nil);
+		} else {
+			return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+		}
+	}
 }

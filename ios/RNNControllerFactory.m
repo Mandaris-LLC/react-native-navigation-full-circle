@@ -3,9 +3,24 @@
 #import "RNNLayoutNode.h"
 #import "RNNRootViewController.h"
 
+@interface RNNControllerFactory ()
+
+@property (nonatomic, strong) id<RNNRootViewCreator> creator;
+
+@end
+
 @implementation RNNControllerFactory
 
 # pragma mark public
+
+
+-(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator {
+	
+	self = [super init];
+	self.creator = creator;
+
+	return self;
+}
 
 -(UIViewController *)createLayout:(NSDictionary *)layout
 {
@@ -34,7 +49,7 @@
 
 -(UIViewController*)createContainer:(RNNLayoutNode*)node
 {
-	return [[RNNRootViewController alloc]initWithNode:node];
+	return [[RNNRootViewController alloc] initWithNode:node rootViewCreator:self.creator];
 }
 
 -(UINavigationController*)createContainerStack:(RNNLayoutNode*)node
