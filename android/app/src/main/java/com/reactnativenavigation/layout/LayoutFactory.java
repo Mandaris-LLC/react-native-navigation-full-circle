@@ -11,6 +11,22 @@ public class LayoutFactory {
         View createRootView(String id, String name);
     }
 
+    public static class LayoutNode {
+        public String id;
+        public String type;
+        public Map<String, Object> data;
+        public List<LayoutNode> children;
+
+        public LayoutNode() {
+        }
+
+        public LayoutNode(String id, String type, Map<String, Object> data) {
+            this.id = id;
+            this.type = type;
+            this.data = data;
+        }
+    }
+
     private Activity activity;
     private RootViewCreator rootViewCreator;
 
@@ -19,25 +35,26 @@ public class LayoutFactory {
         this.rootViewCreator = rootViewCreator;
     }
 
-    public View create(Map<String, Object> node) {
-        String id = (String) node.get("id");
-        String type = (String) node.get("type");
-
-        switch (type) {
+    public View create(LayoutNode node) {
+        switch (node.type) {
             case "Container":
-                String name = (String) ((Map<String, Object>)node.get("data")).get("name");
-                return new Container(activity, rootViewCreator, id, name);
+                String name = (String) node.data.get("name");
+                return new Container(activity, rootViewCreator, node.id, name);
 
             case "ContainerStack":
                 ContainerStack containerStack = new ContainerStack(activity);
-                List<Map<String, Object>> children = (List<Map<String, Object>>) node.get("children");
-                Map<String, Object> inner = children.get(0);
-                containerStack.addView(create(inner));
+                List<LayoutNode> children = node.children;
+                addChildrenNodes(containerStack, children);
                 return containerStack;
-
         }
 
         return null;
 //        return rootViewCreator.createRootView(id, name);
+    }
+
+    private void addChildrenNodes(ContainerStack containerStack, List<LayoutNode> children) {
+        for (LayoutNode child : children) {
+            containerStack.addView(create(child));
+        }
     }
 }
