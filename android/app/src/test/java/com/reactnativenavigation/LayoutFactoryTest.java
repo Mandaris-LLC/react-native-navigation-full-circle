@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import com.reactnativenavigation.layout.Container;
 import com.reactnativenavigation.layout.ContainerStack;
 import com.reactnativenavigation.layout.LayoutFactory;
-import com.reactnativenavigation.layout.LayoutFactory.LayoutNode;
+import com.reactnativenavigation.layout.LayoutNode;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -94,6 +93,14 @@ public class LayoutFactoryTest {
         return new LayoutFactory(Robolectric.buildActivity(Activity.class).get(), rootViewCreator);
     }
 
+    private LayoutNode createContainerNode() {
+        return createContainerNode(VIEW_ID, VIEW_NAME);
+    }
+
+    private LayoutNode createContainerNode(final String id, final String name) {
+        return new LayoutNode(id, "Container", new HashMap<String, Object>() {{ put("name", name); }});
+    }
+
     private LayoutNode getContainerStackNode(LayoutNode innerNode) {
         return getContainerStackNode(Arrays.asList(innerNode));
     }
@@ -103,14 +110,6 @@ public class LayoutFactoryTest {
         outerNode.type = "ContainerStack";
         outerNode.children = children;
         return outerNode;
-    }
-
-    private LayoutNode createContainerNode() {
-        return createContainerNode(VIEW_ID, VIEW_NAME);
-    }
-
-    private LayoutNode createContainerNode(final String id, final String name) {
-        return new LayoutNode(id, "Container", new HashMap<String, Object>() {{ put("name", name); }});
     }
 
     private List<View> assertViewChildrenCount(ViewGroup view, int count) {

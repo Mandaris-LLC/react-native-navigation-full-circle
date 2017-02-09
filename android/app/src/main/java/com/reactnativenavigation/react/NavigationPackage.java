@@ -29,4 +29,3 @@ public class NavigationPackage implements ReactPackage {
         return Collections.emptyList();
     }
 }
-
