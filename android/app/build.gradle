@@ -60,8 +60,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.2.2'
     testCompile 'org.assertj:assertj-core:2.5.0'
-    // required for robolectric
-    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
+    testCompile 'org.mockito:mockito-core:2.7.5'
 
-    testCompile 'org.mockito:mockito-core:2.+'
+    // native e2e
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 }
