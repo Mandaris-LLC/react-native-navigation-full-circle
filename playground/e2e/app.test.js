@@ -38,6 +38,11 @@ describe('app', () => {
     elementByLabel('Pop').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
+
+  it('show modal', () => {
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal screen')).toBeVisible();
+  });
 });
 
 function elementByLabel(label) {
