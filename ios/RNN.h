@@ -4,12 +4,14 @@
 
 #import "RNNEventEmitter.h"
 #import "RCTBridge.h"
+#import "RNNStore.h"
 
 @interface RNN : NSObject
 
 @property (readonly) BOOL isReadyToReceiveCommands;
 @property (readonly) RCTBridge* bridge;
 @property (readonly) RNNEventEmitter* eventEmitter;
+@property (readonly) RNNStore *store;
 
 +(instancetype)instance;
 

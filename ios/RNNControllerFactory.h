@@ -5,10 +5,11 @@
 #import "RNNRootViewController.h"
 #import "RNNSideMenuController.h"
 #import "RNNSideMenuChildVC.h"
+#import "RNNStore.h"
 
 @interface RNNControllerFactory : NSObject
 
--(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator;
+-(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator store:(RNNStore*)store;
 
 -(UIViewController*)createLayout:(NSDictionary*)layout;
 

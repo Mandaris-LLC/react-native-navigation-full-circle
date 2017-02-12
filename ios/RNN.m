@@ -11,11 +11,15 @@
 @property (readwrite) BOOL isReadyToReceiveCommands;
 @property (readwrite) RNNEventEmitter* eventEmitter;
 
+@property (readwrite) RNNStore *store;
+
 @end
 
 @implementation RNN
 
+
 # pragma mark public
+
 
 +(instancetype)instance
 {
@@ -31,9 +35,12 @@
 	return sharedInstance;
 }
 
+
 -(void)bootstrap:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions
 {
 	self.eventEmitter = [RNNEventEmitter new];
+	
+	self.store = [RNNStore new];
 	
 	UIApplication.sharedApplication.delegate.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	UIApplication.sharedApplication.delegate.window.backgroundColor = [UIColor whiteColor];
@@ -45,7 +52,9 @@
 	self.bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation moduleProvider:nil launchOptions:launchOptions];
 }
 
+
 # pragma mark private
+
 
 -(void)registerForJsEvents
 {
@@ -57,15 +66,18 @@
 #pragma GCC diagnostic pop
 }
 
+
 -(void)onJavaScriptLoaded
 {
 	self.isReadyToReceiveCommands = true;
 	[self.eventEmitter sendOnAppLaunched];
 }
 
+
 -(void)onJavaScriptDevReload
 {
 	UIApplication.sharedApplication.delegate.window.rootViewController = nil;
 }
+
 
 @end

@@ -3,6 +3,7 @@
 #import "RNN.h"
 #import "RNNControllerFactory.h"
 #import "RNNReactRootViewCreator.h"
+#import "RNNStore.h"
 
 @implementation RNNBridgeModule
 
@@ -16,8 +17,9 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout)
 {
 	[self assertReady];
-	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new]];
+	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
 	UIViewController *vc = [factory createLayout:layout];
+	
 	UIApplication.sharedApplication.delegate.window.rootViewController = vc;
 	[UIApplication.sharedApplication.delegate.window makeKeyAndVisible];
 }
@@ -26,9 +28,11 @@ RCT_EXPORT_METHOD(push:(NSString*)containerId layout:(NSDictionary*)layout)
 {
 	[self assertReady];
 	//TODO implement correctly
-	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new]];
+	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
 	UIViewController *newVc = [factory createLayout:layout];
-	id vc = [UIApplication.sharedApplication.delegate.window.rootViewController childViewControllers][0];
+	
+	id vc = [[RNN instance].store findContainerForId:containerId];
+	
 	[[vc navigationController]pushViewController:newVc animated:true];
 }
 

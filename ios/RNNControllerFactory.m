@@ -7,6 +7,7 @@
 @interface RNNControllerFactory ()
 
 @property (nonatomic, strong) id<RNNRootViewCreator> creator;
+@property (nonatomic, strong) RNNStore *store;
 
 @end
 
@@ -15,10 +16,11 @@
 # pragma mark public
 
 
--(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator {
+-(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator store:(RNNStore *)store {
 	
 	self = [super init];
 	self.creator = creator;
+	self.store = store;
 	
 	return self;
 }
@@ -34,35 +36,42 @@
 {
 	RNNLayoutNode* node = [RNNLayoutNode create:json];
 	
+	UIViewController* result;
+	
 	if ( node.isContainer) {
-		
-		return [self createContainer:node];
+		result = [self createContainer:node];
 	}
 	
 	else if (node.isContainerStack)	{
-		return [self createContainerStack:node];
+		result = [self createContainerStack:node];
 	}
 	
 	else if (node.isTabs) {
-		return [self createTabs:node];
+		result = [self createTabs:node];
 	}
 	
 	else if (node.isSideMenuRoot) {
-		return [self createSideMenu:node];
+		result = [self createSideMenu:node];
 	}
 	
 	else if (node.isSideMenuCenter) {
-		return [self createSideMenuChild:node type:RNNSideMenuChildTypeCenter];
+		result = [self createSideMenuChild:node type:RNNSideMenuChildTypeCenter];
 	}
 	
 	else if (node.isSideMenuLeft) {
-		return [self createSideMenuChild:node type:RNNSideMenuChildTypeLeft];
+		result = [self createSideMenuChild:node type:RNNSideMenuChildTypeLeft];
 	}
 	else if (node.isSideMenuRight) {
-		return [self createSideMenuChild:node type:RNNSideMenuChildTypeRight];
+		result = [self createSideMenuChild:node type:RNNSideMenuChildTypeRight];
 	}
 	
-	@throw [NSException exceptionWithName:@"UnknownControllerType" reason:[@"Unknown controller type " stringByAppendingString:node.type] userInfo:nil];
+	if (!result) {
+		@throw [NSException exceptionWithName:@"UnknownControllerType" reason:[@"Unknown controller type " stringByAppendingString:node.type] userInfo:nil];
+	}
+
+	[self.store setContainer:result containerId:node.nodeId];
+	
+	return result;
 }
 
 -(RNNRootViewController*)createContainer:(RNNLayoutNode*)node
@@ -101,7 +110,7 @@
 }
 
 -(UIViewController*)createSideMenu:(RNNLayoutNode*)node
-{	
+{
 	NSMutableArray* childrenVCs = [NSMutableArray new];
 	
 	

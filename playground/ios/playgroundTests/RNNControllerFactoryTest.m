@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) id<RNNRootViewCreator> creator;
 @property (nonatomic, strong) RNNControllerFactory *factory;
+@property (nonatomic, strong) RNNStore *store;
 
 @end
 
@@ -22,8 +23,8 @@
 - (void)setUp {
 	[super setUp];
 	self.creator = nil;
-	self.factory = [[RNNControllerFactory alloc] initWithRootViewCreator:self.creator];
-	
+	self.store = [RNNStore new];
+	self.factory = [[RNNControllerFactory alloc] initWithRootViewCreator:self.creator store:self.store];
 }
 
 - (void)tearDown {
@@ -125,7 +126,7 @@
 																	   @"type": @"SideMenuRight",
 																	   @"data": @{},
 																	   @"children": @[
-																			   @{@"id": @"cntId_5",
+																			   @{@"id": @"cntId_7",
 																				 @"type": @"Container",
 																				 @"data": @{},
 																				 @"children": @[]}]}]}];
@@ -187,6 +188,18 @@
 	RNNRootViewController *rootViewController = (RNNRootViewController*)navController.viewControllers[0];
 	XCTAssertTrue([rootViewController isMemberOfClass:[RNNRootViewController class]]);
 	
+}
+
+- (void)testCreateLayout_addContainerToStore {
+	NSString *containerId = @"cntId";
+	UIViewController *ans = [self.factory createLayout:
+							 @{@"id": containerId,
+							   @"type": @"Container",
+							   @"data": @{},
+							   @"children": @[]}];
+	
+	UIViewController *storeAns = [self.store findContainerForId:containerId];
+	XCTAssertEqualObjects(ans, storeAns);
 }
 
 
