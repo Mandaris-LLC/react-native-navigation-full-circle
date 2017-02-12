@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.reactnativenavigation">
+    <application android:theme="@style/Theme.AppCompat.Light">
+        <activity android:name=".RoboActivity" android:theme="@style/Theme.AppCompat.Light"/>
+    </application>
+</manifest>

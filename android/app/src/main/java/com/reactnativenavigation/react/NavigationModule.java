@@ -13,6 +13,7 @@ import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.reactnativenavigation.controllers.NavigationActivity;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
+import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
                         rootView.startReactApplication(NavigationActivity.instance.getHost().getReactInstanceManager(), name, opts);
                         return rootView;
                     }
-                });
+                }, new BottomTabsCreator());
 
                 final LayoutNode layoutTreeRoot = readableMapToLayoutNode(layoutTree);
                 final View rootView = factory.create(layoutTreeRoot);

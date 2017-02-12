@@ -1,13 +1,17 @@
 package com.reactnativenavigation;
 
 import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.reactnativenavigation.layout.bottomtabs.BottomTabs;
+import com.reactnativenavigation.layout.bottomtabs.BottomTabsContainer;
 import com.reactnativenavigation.layout.Container;
 import com.reactnativenavigation.layout.ContainerStack;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
+import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +30,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 @RunWith(RobolectricTestRunner.class)
 public class LayoutFactoryTest {
 
@@ -36,17 +39,19 @@ public class LayoutFactoryTest {
     private final static String OTHER_VIEW_ID = "anotherUniqueId";
     private final static String OTHER_VIEW_NAME = "anotherName";
 
+    private Activity activity;
     private View mockView;
     private LayoutFactory.RootViewCreator rootViewCreator;
 
     @Before
     public void setUp() {
-        mockView = new View(Robolectric.setupActivity(Activity.class));
+        activity = Robolectric.buildActivity(AppCompatActivity.class).get();
+        mockView = new View(activity);
         rootViewCreator = mock(LayoutFactory.RootViewCreator.class);
     }
 
     @Test
-    public void returnsContainerThatHoldsTheRootView() {
+    public void returnsContainerThatHoldsTheRootView() throws Exception {
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
         final LayoutNode node = createContainerNode();
 
@@ -57,12 +62,12 @@ public class LayoutFactoryTest {
     }
 
     @Test
-    public void returnsContainerStack() {
+    public void returnsContainerStack() throws Exception  {
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
-        final LayoutNode node = createContainerNode();
-        final LayoutNode outerNode = getContainerStackNode(node);
+        final LayoutNode containerNode = createContainerNode();
+        final LayoutNode stackNode = getContainerStackNode(containerNode);
 
-        final ViewGroup result = (ViewGroup) createLayoutFactory().create(outerNode);
+        final ViewGroup result = (ViewGroup) createLayoutFactory().create(stackNode);
 
         assertThat(result).isInstanceOf(ContainerStack.class);
         ViewGroup container = (ViewGroup) assertViewChildrenCount(result, 1).get(0);
@@ -70,17 +75,17 @@ public class LayoutFactoryTest {
     }
 
     @Test
-    public void returnsContainerStackWithMultipleViews() {
+    public void returnsContainerStackWithMultipleViews() throws Exception  {
         final View mockView1 = mock(View.class);
         final View mockView2 = mock(View.class);
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView1);
         when(rootViewCreator.createRootView(eq(OTHER_VIEW_ID), eq(OTHER_VIEW_NAME))).thenReturn(mockView2);
 
-        final LayoutNode node1 = createContainerNode(VIEW_ID, VIEW_NAME);
-        final LayoutNode node2 = createContainerNode(OTHER_VIEW_ID, OTHER_VIEW_NAME);
-        final LayoutNode outerNode = getContainerStackNode(Arrays.asList(node1, node2));
+        final LayoutNode containerNode1 = createContainerNode(VIEW_ID, VIEW_NAME);
+        final LayoutNode containerNode2 = createContainerNode(OTHER_VIEW_ID, OTHER_VIEW_NAME);
+        final LayoutNode stackNode = getContainerStackNode(Arrays.asList(containerNode1, containerNode2));
 
-        final ViewGroup result = (ViewGroup) createLayoutFactory().create(outerNode);
+        final ViewGroup result = (ViewGroup) createLayoutFactory().create(stackNode);
 
         assertThat(result).isInstanceOf(ContainerStack.class);
         List<View> containers = assertViewChildrenCount(result, 2);
@@ -90,8 +95,22 @@ public class LayoutFactoryTest {
         assertViewChildren(container2, mockView2);
     }
 
+    @Test
+    public void returnsSingleTabContent() throws Exception {
+        when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
+        final LayoutNode containerNode = createContainerNode();
+        final LayoutNode tabNode = createTabNode(containerNode);
+
+        final View result = createLayoutFactory().create(tabNode);
+
+        assertThat(result).isInstanceOf(BottomTabsContainer.class);
+        View containerView = assertViewChildrenCount((BottomTabsContainer) result, 1).get(0);
+        assertThat(containerView).isInstanceOf(Container.class);
+        assertViewChildren((Container) containerView, mockView);
+    }
+
     @Test(expected = IllegalArgumentException.class)
-    public void throwsExceptionForUnknownType() {
+    public void throwsExceptionForUnknownType() throws Exception  {
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
         final LayoutNode node = new LayoutNode(VIEW_ID, "***unknownType***", Collections.<String, Object>emptyMap());
 
@@ -99,7 +118,10 @@ public class LayoutFactoryTest {
     }
 
     private LayoutFactory createLayoutFactory() {
-        return new LayoutFactory(Robolectric.buildActivity(Activity.class).get(), rootViewCreator);
+        BottomTabs bottomTabs = mock(BottomTabs.class);
+        BottomTabsCreator bottomTabsCreator = mock(BottomTabsCreator.class);
+        when(bottomTabsCreator.create()).thenReturn(bottomTabs);
+        return new LayoutFactory(activity, rootViewCreator, bottomTabsCreator);
     }
 
     private LayoutNode createContainerNode() {
@@ -115,10 +137,17 @@ public class LayoutFactoryTest {
     }
 
     private LayoutNode getContainerStackNode(List<LayoutNode> children) {
-        LayoutNode outerNode = new LayoutNode();
-        outerNode.type = "ContainerStack";
-        outerNode.children = children;
-        return outerNode;
+        LayoutNode node = new LayoutNode();
+        node.type = "ContainerStack";
+        node.children = children;
+        return node;
+    }
+
+    private LayoutNode createTabNode(LayoutNode children) {
+        LayoutNode node = new LayoutNode();
+        node.type = "BottomTabs";
+        node.children = Arrays.asList(children);
+        return node;
     }
 
     private List<View> assertViewChildrenCount(ViewGroup view, int count) {
