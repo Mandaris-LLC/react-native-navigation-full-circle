@@ -61,42 +61,43 @@ describe('AppCommands', () => {
       const result = await uut.setRoot({ container: { name: 'com.example.MyScreen' } });
       expect(result).toEqual('the resolved layout');
     });
+  });
 
-    describe('showModal', () => {
-      it('sends command to native after parsing into a correct layout tree', () => {
-        uut.showModal({
+  describe('showModal', () => {
+    it('sends command to native after parsing into a correct layout tree', () => {
+      uut.showModal({
+        name: 'com.example.MyScreen'
+      });
+      expect(mockCommandsSender.showModal).toHaveBeenCalledTimes(1);
+      expect(mockCommandsSender.showModal).toHaveBeenCalledWith({
+        type: 'Container',
+        id: 'Container+UNIQUE_ID',
+        children: [],
+        data: {
           name: 'com.example.MyScreen'
-        });
-        expect(mockCommandsSender.showModal).toHaveBeenCalledTimes(1);
-        expect(mockCommandsSender.showModal).toHaveBeenCalledWith({
-          type: 'Container',
-          id: 'Container+UNIQUE_ID',
-          children: [],
-          data: {
-            name: 'com.example.MyScreen'
-          }
-        });
-      });
-
-      it('deep clones input to avoid mutation errors', () => {
-        const obj = {};
-        uut.showModal({ inner: obj });
-        expect(mockCommandsSender.showModal.mock.calls[0][0].data.inner).not.toBe(obj);
-      });
-
-      it('passProps into containers', () => {
-        expect(store.getPropsForContainerId('Container+UNIQUE_ID')).toEqual({});
-        uut.showModal({
-          name: 'com.example.MyScreen',
-          passProps: SimpleLayouts.passProps
-        });
-        expect(store.getPropsForContainerId('Container+UNIQUE_ID')).toEqual(SimpleLayouts.passProps);
-      });
-
-      it('returns a promise with the resolved layout', async () => {
-        mockCommandsSender.showModal.mockReturnValue(Promise.resolve('the resolved layout'));
-        const result = await uut.showModal({ container: { name: 'com.example.MyScreen' } });
-        expect(result).toEqual('the resolved layout');
+        }
       });
     });
+
+    it('deep clones input to avoid mutation errors', () => {
+      const obj = {};
+      uut.showModal({ inner: obj });
+      expect(mockCommandsSender.showModal.mock.calls[0][0].data.inner).not.toBe(obj);
+    });
+
+    it('passProps into containers', () => {
+      expect(store.getPropsForContainerId('Container+UNIQUE_ID')).toEqual({});
+      uut.showModal({
+        name: 'com.example.MyScreen',
+        passProps: SimpleLayouts.passProps
+      });
+      expect(store.getPropsForContainerId('Container+UNIQUE_ID')).toEqual(SimpleLayouts.passProps);
+    });
+
+    it('returns a promise with the resolved layout', async () => {
+      mockCommandsSender.showModal.mockReturnValue(Promise.resolve('the resolved layout'));
+      const result = await uut.showModal({ container: { name: 'com.example.MyScreen' } });
+      expect(result).toEqual('the resolved layout');
+    });
   });
+});
