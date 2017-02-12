@@ -16,6 +16,7 @@ import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
@@ -27,7 +28,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -44,12 +44,14 @@ public class LayoutFactoryTest {
 
     private Activity activity;
     private View mockView;
+    private View otherMockView;
     private LayoutFactory.RootViewCreator rootViewCreator;
 
     @Before
     public void setUp() {
         activity = Robolectric.buildActivity(AppCompatActivity.class).get();
         mockView = new View(activity);
+        otherMockView = new View(activity);
         rootViewCreator = mock(LayoutFactory.RootViewCreator.class);
     }
 
@@ -68,7 +70,7 @@ public class LayoutFactoryTest {
     public void returnsContainerStack() throws Exception {
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
         final LayoutNode containerNode = createContainerNode();
-        final LayoutNode stackNode = getContainerStackNode(containerNode);
+        final LayoutNode stackNode = createContainerStackNode(containerNode);
 
         final ViewGroup result = (ViewGroup) createLayoutFactory().create(stackNode);
 
@@ -86,7 +88,7 @@ public class LayoutFactoryTest {
 
         final LayoutNode containerNode1 = createContainerNode(VIEW_ID, VIEW_NAME);
         final LayoutNode containerNode2 = createContainerNode(OTHER_VIEW_ID, OTHER_VIEW_NAME);
-        final LayoutNode stackNode = getContainerStackNode(Arrays.asList(containerNode1, containerNode2));
+        final LayoutNode stackNode = createContainerStackNode(containerNode1, containerNode2);
 
         final ViewGroup result = (ViewGroup) createLayoutFactory().create(stackNode);
 
@@ -101,6 +103,8 @@ public class LayoutFactoryTest {
     @Test
     public void returnsSingleTabContent() throws Exception {
         BottomTabs bottomTabsMock = mock(BottomTabs.class);
+        when(bottomTabsMock.getTabsCount()).thenReturn(0);
+
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
         final LayoutNode containerNode = createContainerNode();
         final LayoutNode tabNode = createTabNode(containerNode);
@@ -108,7 +112,32 @@ public class LayoutFactoryTest {
         final View result = createLayoutFactory(bottomTabsMock).create(tabNode);
 
         assertThat(result).isInstanceOf(BottomTabsContainer.class);
+
+        ArgumentCaptor<Container> containerCaptor = ArgumentCaptor.forClass(Container.class);
+        verify(bottomTabsMock).addTab(eq("#0"), containerCaptor.capture());
+        Container container = containerCaptor.getValue();
+        View view = assertViewChildrenCount(container, 1).get(0);
+        assertThat(view).isEqualTo(mockView);
+    }
+
+    @Test
+    public void returnsTwoTabContent() throws Exception {
+        BottomTabs bottomTabsMock = mock(BottomTabs.class);
+        when(bottomTabsMock.getTabsCount()).thenReturn(0, 1);
+
+        when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
+        final LayoutNode firstTabRootNode = createContainerNode(VIEW_ID, VIEW_NAME);
+
+        when(rootViewCreator.createRootView(eq(OTHER_VIEW_ID), eq(OTHER_VIEW_NAME))).thenReturn(otherMockView);
+        final LayoutNode secondTabRootNode = createContainerStackNode(createContainerNode(OTHER_VIEW_ID, OTHER_VIEW_NAME));
+
+        final LayoutNode tabNode = createTabNode(firstTabRootNode, secondTabRootNode);
+
+        final View result = createLayoutFactory(bottomTabsMock).create(tabNode);
+
+        assertThat(result).isInstanceOf(BottomTabsContainer.class);
         verify(bottomTabsMock).addTab(eq("#0"), any(Container.class));
+        verify(bottomTabsMock).addTab(eq("#1"), any(ContainerStack.class));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -141,18 +170,14 @@ public class LayoutFactoryTest {
         return new LayoutNode(id, "Container", new HashMap<String, Object>() {{ put("name", name); }});
     }
 
-    private LayoutNode getContainerStackNode(LayoutNode innerNode) {
-        return getContainerStackNode(Arrays.asList(innerNode));
-    }
-
-    private LayoutNode getContainerStackNode(List<LayoutNode> children) {
+    private LayoutNode createContainerStackNode(LayoutNode... children) {
         LayoutNode node = new LayoutNode();
         node.type = "ContainerStack";
-        node.children = children;
+        node.children = Arrays.asList(children);
         return node;
     }
 
-    private LayoutNode createTabNode(LayoutNode children) {
+    private LayoutNode createTabNode(LayoutNode... children) {
         LayoutNode node = new LayoutNode();
         node.type = "BottomTabs";
         node.children = Arrays.asList(children);

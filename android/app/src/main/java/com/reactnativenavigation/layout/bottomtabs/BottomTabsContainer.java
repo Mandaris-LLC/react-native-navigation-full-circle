@@ -13,8 +13,8 @@ public class BottomTabsContainer extends RelativeLayout {
         createBottomTabs(bottomTabsCreator);
     }
 
-    public void setTabContent(View tabContent) {
-        bottomTabs.addTab("#0", tabContent);
+    public void addTabContent(View tabContent) {
+        bottomTabs.addTab("#" + bottomTabs.getTabsCount(), tabContent);
     }
 
     private void createBottomTabs(BottomTabsCreator bottomTabsCreator) {

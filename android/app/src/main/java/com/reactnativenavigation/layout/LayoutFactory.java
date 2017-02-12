@@ -9,6 +9,7 @@ import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import java.util.List;
 
 public class LayoutFactory {
+
     public interface RootViewCreator {
         View createRootView(String id, String name);
     }
@@ -49,7 +50,11 @@ public class LayoutFactory {
 
     private View createBottomTabs(LayoutNode node) {
         final BottomTabsContainer tabsContainer = new BottomTabsContainer(activity, bottomTabsCreator);
-        tabsContainer.setTabContent(create(node.children.get(0)));
+
+        for (LayoutNode child : node.children) {
+            final View tabContent = create(child);
+            tabsContainer.addTabContent(tabContent);
+        }
         return tabsContainer;
     }
 
