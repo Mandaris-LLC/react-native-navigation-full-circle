@@ -5,12 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.reactnativenavigation.layout.bottomtabs.BottomTabs;
-import com.reactnativenavigation.layout.bottomtabs.BottomTabsContainer;
 import com.reactnativenavigation.layout.Container;
 import com.reactnativenavigation.layout.ContainerStack;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
+import com.reactnativenavigation.layout.bottomtabs.BottomTabs;
+import com.reactnativenavigation.layout.bottomtabs.BottomTabsContainer;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 
 import org.junit.Before;
@@ -26,8 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
@@ -62,7 +65,7 @@ public class LayoutFactoryTest {
     }
 
     @Test
-    public void returnsContainerStack() throws Exception  {
+    public void returnsContainerStack() throws Exception {
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
         final LayoutNode containerNode = createContainerNode();
         final LayoutNode stackNode = getContainerStackNode(containerNode);
@@ -75,7 +78,7 @@ public class LayoutFactoryTest {
     }
 
     @Test
-    public void returnsContainerStackWithMultipleViews() throws Exception  {
+    public void returnsContainerStackWithMultipleViews() throws Exception {
         final View mockView1 = mock(View.class);
         final View mockView2 = mock(View.class);
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView1);
@@ -97,20 +100,19 @@ public class LayoutFactoryTest {
 
     @Test
     public void returnsSingleTabContent() throws Exception {
+        BottomTabs bottomTabsMock = mock(BottomTabs.class);
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
         final LayoutNode containerNode = createContainerNode();
         final LayoutNode tabNode = createTabNode(containerNode);
 
-        final View result = createLayoutFactory().create(tabNode);
+        final View result = createLayoutFactory(bottomTabsMock).create(tabNode);
 
         assertThat(result).isInstanceOf(BottomTabsContainer.class);
-        View containerView = assertViewChildrenCount((BottomTabsContainer) result, 1).get(0);
-        assertThat(containerView).isInstanceOf(Container.class);
-        assertViewChildren((Container) containerView, mockView);
+        verify(bottomTabsMock).addTab(eq("#0"), any(Container.class));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void throwsExceptionForUnknownType() throws Exception  {
+    public void throwsExceptionForUnknownType() throws Exception {
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
         final LayoutNode node = new LayoutNode(VIEW_ID, "***unknownType***", Collections.<String, Object>emptyMap());
 
@@ -118,9 +120,16 @@ public class LayoutFactoryTest {
     }
 
     private LayoutFactory createLayoutFactory() {
-        BottomTabs bottomTabs = mock(BottomTabs.class);
-        BottomTabsCreator bottomTabsCreator = mock(BottomTabsCreator.class);
-        when(bottomTabsCreator.create()).thenReturn(bottomTabs);
+        return createLayoutFactory(null);
+    }
+
+    private LayoutFactory createLayoutFactory(BottomTabs bottomTabs) {
+        BottomTabsCreator bottomTabsCreator = null;
+        if (bottomTabs != null) {
+            bottomTabsCreator = mock(BottomTabsCreator.class);
+            when(bottomTabsCreator.create()).thenReturn(bottomTabs);
+        }
+
         return new LayoutFactory(activity, rootViewCreator, bottomTabsCreator);
     }
 

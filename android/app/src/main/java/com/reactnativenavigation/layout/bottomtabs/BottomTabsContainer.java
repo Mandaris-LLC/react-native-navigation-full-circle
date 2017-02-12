@@ -13,11 +13,8 @@ public class BottomTabsContainer extends RelativeLayout {
         createBottomTabs(bottomTabsCreator);
     }
 
-    public void setTabContent(View tab) {
-        bottomTabs.addTab("#0");
-
-        LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        addView(tab, lp);
+    public void setTabContent(View tabContent) {
+        bottomTabs.addTab("#0", tabContent);
     }
 
     private void createBottomTabs(BottomTabsCreator bottomTabsCreator) {
