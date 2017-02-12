@@ -18,9 +18,6 @@ RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout)
 	[self assertReady];
 	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new]];
 	UIViewController *vc = [factory createLayout:layout];
-//	if([vc isKindOfClass:[RNNSideMenuController class]]) {
-//		vc = ((RNNSideMenuController*)vc).sideMenu;
-//	}
 	UIApplication.sharedApplication.delegate.window.rootViewController = vc;
 	[UIApplication.sharedApplication.delegate.window makeKeyAndVisible];
 }
