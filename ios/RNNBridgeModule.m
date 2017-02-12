@@ -27,21 +27,20 @@ RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout)
 RCT_EXPORT_METHOD(push:(NSString*)containerId layout:(NSDictionary*)layout)
 {
 	[self assertReady];
-	//TODO implement correctly
 	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
 	UIViewController *newVc = [factory createLayout:layout];
+	UIViewController *vc = [[RNN instance].store findContainerForId:containerId];
 	
-	id vc = [[RNN instance].store findContainerForId:containerId];
-	
-	[[vc navigationController]pushViewController:newVc animated:true];
+	[[vc navigationController] pushViewController:newVc animated:true];
 }
 
 RCT_EXPORT_METHOD(pop:(NSString*)containerId)
 {
 	[self assertReady];
-	//TODO implement correctly
-	id vc = [UIApplication.sharedApplication.delegate.window.rootViewController childViewControllers][0];
+	UIViewController *vc = [[RNN instance].store findContainerForId:containerId];
+	
 	[[vc navigationController] popViewControllerAnimated:true];
+	[[RNN instance].store removeContainer:containerId];
 }
 
 - (void)assertReady

@@ -40,16 +40,15 @@
 	XCTAssertNotEqualObjects(vc2, ans);
 }
 
-- (void)testFindContainerForId_setNilContainerId {
+- (void)testSetContainer_setNilContainerId {
 	NSString *containerId1 = nil;
 	UIViewController *vc1 = [UIViewController new];
-	[self.store setContainer:vc1 containerId:containerId1];
+	XCTAssertThrows([self.store setContainer:vc1 containerId:containerId1]);
+	XCTAssertNil([self.store findContainerForId:containerId1]);
 	
-	UIViewController *ans = [self.store findContainerForId:containerId1];
-	XCTAssertNil(ans);
 }
 
-- (void)testFindContainerForId_setDoubleContainerId {
+- (void)testSetContainer_setDoubleContainerId {
 	NSString *containerId1 = @"cntId1";
 	
 	UIViewController *vc1 = [UIViewController new];
@@ -60,6 +59,20 @@
 	UIViewController *ans = [self.store findContainerForId:containerId1];
 	XCTAssertEqualObjects(vc1, ans);
 	XCTAssertThrows([self.store setContainer:vc2 containerId:containerId1]);
+}
+
+- (void)testRemoveContainer_removeExistContainer {
+	NSString *containerId1 = @"cntId1";
+	UIViewController *vc1 = [UIViewController new];
+	
+	[self.store setContainer:vc1 containerId:containerId1];
+	
+	UIViewController *ans = [self.store findContainerForId:containerId1];
+	XCTAssertEqualObjects(vc1, ans);
+	
+	[self.store removeContainer:containerId1];
+	
+	XCTAssertNil([self.store findContainerForId:containerId1]);
 }
 
 

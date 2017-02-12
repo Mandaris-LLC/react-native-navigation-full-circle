@@ -31,16 +31,21 @@
 
 
 - (void)setContainer:(UIViewController*)viewController containerId:(NSString*)containerId {
-	if (!containerId) {
-		return;
-	}
-	
+
 	UIViewController *existingVewController = [self findContainerForId:containerId];
 	if (existingVewController) {
-		@throw [NSException exceptionWithName:@"MultipleContainerId" reason:[@"Container id already exists " stringByAppendingString:containerId] userInfo:nil];	}
+		@throw [NSException exceptionWithName:@"MultipleContainerId" reason:[@"Container id already exists " stringByAppendingString:containerId] userInfo:nil];
+	}
 	
 	[self.containerStore setObject:viewController forKey:containerId];
 }
+
+
+- (void)removeContainer:(NSString*)containerId {
+	[self.containerStore removeObjectForKey:containerId];
+}
+
+
 
 
 @end

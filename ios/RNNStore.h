@@ -14,5 +14,6 @@
 
 - (UIViewController*)findContainerForId:(NSString*)containerId;
 - (void)setContainer:(UIViewController*)viewController containerId:(NSString*)containerId;
+- (void)removeContainer:(NSString*)containerId;
 
 @end
