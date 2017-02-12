@@ -38,6 +38,16 @@ describe('app', () => {
     elementByLabel('Pop').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
+  
+});
+
+describe('reload app', () => {
+  before(function (done) {
+    simulator.reloadReactNativeApp(done);
+  });
+  it('shows welcome screen', () => {
+    expect(elementByLabel('React Native Navigation!')).toBeVisible();
+  });
 });
 
 function elementByLabel(label) {

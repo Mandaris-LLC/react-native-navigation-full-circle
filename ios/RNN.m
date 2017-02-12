@@ -76,6 +76,7 @@
 
 -(void)onJavaScriptDevReload
 {
+	self.store = [RNNStore new];
 	UIApplication.sharedApplication.delegate.window.rootViewController = nil;
 }
 
