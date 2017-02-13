@@ -18,7 +18,7 @@
 @implementation RNNStoreTest
 
 - (void)setUp {
-    [super setUp];
+	[super setUp];
 	
 	self.store = [RNNStore new];
 }
@@ -43,7 +43,7 @@
 - (void)testSetContainer_setNilContainerId {
 	NSString *containerId1 = nil;
 	UIViewController *vc1 = [UIViewController new];
-	XCTAssertThrows([self.store setContainer:vc1 containerId:containerId1]);
+	[self.store setContainer:vc1 containerId:containerId1];
 	XCTAssertNil([self.store findContainerForId:containerId1]);
 	
 }
@@ -71,10 +71,25 @@
 	XCTAssertEqualObjects(vc1, ans);
 	
 	[self.store removeContainer:containerId1];
-	
 	XCTAssertNil([self.store findContainerForId:containerId1]);
 }
 
+-(void)testPopWillRemoveVcFromStore {
+	NSString *vcId = @"cnt_vc_2";
+	
+	[self setContainerAndRelease:vcId];
+	
+	
+	XCTAssertNil([self.store findContainerForId:vcId]); // PASS
+}
 
+-(void) setContainerAndRelease:(NSString*)vcId {
+	@autoreleasepool {
+		UIViewController *vc2 = [UIViewController new];
+		[self.store setContainer:vc2 containerId:vcId];
+		
+		XCTAssertNotNil([self.store findContainerForId:vcId]); // PASS
+	}
+}
 
 @end

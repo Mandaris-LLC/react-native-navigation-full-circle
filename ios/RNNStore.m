@@ -10,7 +10,7 @@
 
 @interface RNNStore ()
 
-@property NSMutableDictionary *containerStore;
+@property NSMapTable *containerStore;
 
 @end
 
@@ -19,14 +19,14 @@
 
 -(instancetype)init {
 	self = [super init];
-	self.containerStore = [NSMutableDictionary new];
-	
+	self.containerStore = [NSMapTable strongToWeakObjectsMapTable];
 	return self;
 }
 
 
 -(UIViewController *)findContainerForId:(NSString *)containerId {
-	return [self.containerStore valueForKey:containerId];
+	return [self.containerStore objectForKey:containerId];
+	
 }
 
 
@@ -44,8 +44,6 @@
 - (void)removeContainer:(NSString*)containerId {
 	[self.containerStore removeObjectForKey:containerId];
 }
-
-
 
 
 @end

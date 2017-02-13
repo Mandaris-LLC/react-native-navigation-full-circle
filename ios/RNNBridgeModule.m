@@ -39,7 +39,7 @@ RCT_EXPORT_METHOD(pop:(NSString*)containerId)
 	[self assertReady];
 	UIViewController *vc = [[RNN instance].store findContainerForId:containerId];
 	
-	[[vc navigationController] popViewControllerAnimated:true];
+	[[vc navigationController] popViewControllerAnimated:YES];
 	[[RNN instance].store removeContainer:containerId];
 }
 

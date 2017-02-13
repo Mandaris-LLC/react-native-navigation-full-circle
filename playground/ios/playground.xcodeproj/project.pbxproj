@@ -295,8 +295,8 @@
 			isa = PBXGroup;
 			children = (
 				26070FCF1E4B8B9D003EC8B9 /* RNNControllerFactoryTest.m */,
-				00E356F01AD99517003FC87E /* Supporting Files */,
 				268692841E50572700E2C612 /* RNNStoreTest.m */,
+				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
 			path = playgroundTests;
 			sourceTree = "<group>";
