@@ -18,7 +18,7 @@ class WelcomeScreen extends Component {
         <Button title="Switch to app with side menus" onPress={this.onClickSwitchToSideMenus} />
         <Button title="Switch to lifecycle screen" onPress={this.onClickLifecycleScreen} />
         <Button title="Push" onPress={this.onClickPush} />
-        <Button title="Show Modal" onPress={this.onClickPush} />
+        <Button title="Show Modal" onPress={this.onClickShowModal} />
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
     );
@@ -105,9 +105,14 @@ class WelcomeScreen extends Component {
       }
     });
   }
-  
-  onShowModal() {
-    Navigation.on(this.props.id).show
+
+  onClickShowModal() {
+    Navigation.showModal({
+      name: 'navigation.playground.SimpleScreen',
+      passProps: {
+        text: 'Modal screen'
+      }
+    });
   }
 }
 

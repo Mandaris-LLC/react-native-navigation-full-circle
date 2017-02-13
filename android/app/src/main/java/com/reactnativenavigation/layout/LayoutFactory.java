@@ -3,35 +3,61 @@ package com.reactnativenavigation.layout;
 import android.app.Activity;
 import android.view.View;
 
+import com.reactnativenavigation.layout.bottomtabs.BottomTabsContainer;
+import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
+
 import java.util.List;
 
 public class LayoutFactory {
+
     public interface RootViewCreator {
         View createRootView(String id, String name);
     }
 
-    private Activity activity;
-    private RootViewCreator rootViewCreator;
+    private final Activity activity;
+    private final RootViewCreator rootViewCreator;
+    private final BottomTabsCreator bottomTabsCreator; // TODO: revisit this, may not be needed
 
-    public LayoutFactory(Activity activity, RootViewCreator rootViewCreator) {
+    public LayoutFactory(Activity activity, RootViewCreator rootViewCreator, BottomTabsCreator bottomTabsCreator) {
         this.activity = activity;
         this.rootViewCreator = rootViewCreator;
+        this.bottomTabsCreator = bottomTabsCreator;
     }
 
     public View create(LayoutNode node) {
         switch (node.type) {
             case "Container":
-                String name = (String) node.data.get("name");
-                return new Container(activity, rootViewCreator, node.id, name);
-
+                return createContainerView(node);
             case "ContainerStack":
-                ContainerStack containerStack = new ContainerStack(activity);
-                List<LayoutNode> children = node.children;
-                addChildrenNodes(containerStack, children);
-                return containerStack;
+                return createContainerStackView(node);
+            case "BottomTabs":
+                return createBottomTabs(node);
+            default:
+                throw new IllegalArgumentException("Invalid node type: "+node.type);
         }
+    }
 
-        return null;
+    private View createContainerView(LayoutNode node) {
+        final String name = (String) node.data.get("name");
+        return new Container(activity, rootViewCreator, node.id, name);
+    }
+
+    private View createContainerStackView(LayoutNode node) {
+        final ContainerStack containerStack = new ContainerStack(activity);
+        addChildrenNodes(containerStack, node.children);
+        return containerStack;
+    }
+
+    private View createBottomTabs(LayoutNode node) {
+        final BottomTabsContainer tabsContainer = new BottomTabsContainer(activity, bottomTabsCreator.create());
+
+        int i = 0;
+        for (LayoutNode child : node.children) {
+            final View tabContent = create(child);
+            tabsContainer.addTabContent("#" + i, tabContent);
+            i++;
+        }
+        return tabsContainer;
     }
 
     private void addChildrenNodes(ContainerStack containerStack, List<LayoutNode> children) {

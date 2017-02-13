@@ -34,6 +34,10 @@ class Navigation {
     return this.appCommands.setRoot(params);
   }
 
+  showModal(params) {
+    return this.appCommands.showModal(params);
+  }
+
   events() {
     return this.publicEventsRegistry;
   }

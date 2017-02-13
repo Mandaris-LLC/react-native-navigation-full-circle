@@ -16,7 +16,7 @@ public class ReactDevPermission {
     public static boolean shouldAskPermission() {
         return NavigationApplication.instance.isDebug() &&
                 Build.VERSION.SDK_INT >= 23 &&
-               !Settings.canDrawOverlays(NavigationApplication.instance);
+                !Settings.canDrawOverlays(NavigationApplication.instance);
     }
 
     @TargetApi(23)
@@ -28,9 +28,7 @@ public class ReactDevPermission {
             Log.w(ReactConstants.TAG, "======================================\n\n");
             Log.w(ReactConstants.TAG, msg);
             Log.w(ReactConstants.TAG, "\n\n======================================");
-            for (int i = 0; i < 5; i++) {
-                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-            }
+            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         }
     }
 }

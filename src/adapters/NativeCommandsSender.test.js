@@ -8,7 +8,8 @@ describe('NativeCommandsSender', () => {
     mockNativeModule = {
       setRoot: jest.fn(),
       push: jest.fn(),
-      pop: jest.fn()
+      pop: jest.fn(),
+      showModal: jest.fn()
     };
     NativeModules.RNNBridgeModule = mockNativeModule;
     uut = new NativeCommandsSender();
@@ -34,6 +35,12 @@ describe('NativeCommandsSender', () => {
   it('pop sends to native with containerId', async () => {
     const result = await uut.pop('theContainerId');
     expect(mockNativeModule.pop).toHaveBeenCalledTimes(1);
+    expect(result).toBeDefined();
+  });
+
+  it('showModal sends to native', async () => {
+    const result = await uut.showModal({});
+    expect(mockNativeModule.showModal).toHaveBeenCalledTimes(1);
     expect(result).toBeDefined();
   });
 });

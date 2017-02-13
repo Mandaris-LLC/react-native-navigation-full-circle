@@ -13,5 +13,12 @@ export default class AppCommands {
     this.layoutTreeCrawler.crawl(layout);
     return this.nativeCommandsSender.setRoot(layout);
   }
+
+  showModal(simpleApi) {
+    const input = _.cloneDeep(simpleApi);
+    const layout = this.layoutTreeParser.createContainer(input);
+    this.layoutTreeCrawler.crawl(layout);
+    return this.nativeCommandsSender.showModal(layout);
+  }
 }
 

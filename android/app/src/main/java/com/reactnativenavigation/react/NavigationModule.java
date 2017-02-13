@@ -13,6 +13,7 @@ import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.reactnativenavigation.controllers.NavigationActivity;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
+import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,19 +45,11 @@ public class NavigationModule extends ReactContextBaseJavaModule {
                         rootView.startReactApplication(NavigationActivity.instance.getHost().getReactInstanceManager(), name, opts);
                         return rootView;
                     }
-                });
+                }, new BottomTabsCreator());
 
                 final LayoutNode layoutTreeRoot = readableMapToLayoutNode(layoutTree);
                 final View rootView = factory.create(layoutTreeRoot);
                 NavigationActivity.instance.setContentView(rootView);
-
-//                Map<String, Object> node = new HashMap<String, Object>();
-//                node.put("id", container.getString("id"));
-//                HashMap<String, Object> data = new HashMap<>();
-//                data.put("name", container.getMap("data").getString("name"));
-//                node.put("data", data);
-//                View rootView = factory.create(node);
-//                NavigationActivity.instance.setContentView(rootView);
             }
         });
     }
@@ -88,8 +81,6 @@ public class NavigationModule extends ReactContextBaseJavaModule {
                 case Map:
                     map.put(key, readableMapToJavaMap(readableMap.getMap(key)));
                     break;
-                default:
-                    throw new IllegalArgumentException("WTF?!");
             }
         }
         return map;
