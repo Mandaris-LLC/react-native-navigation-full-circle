@@ -54,6 +54,13 @@ RCT_EXPORT_METHOD(showModal:(NSDictionary*)layout)
 	}];
 }
 
+RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId)
+{
+	[UIApplication.sharedApplication.delegate.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+		
+	}];
+}
+
 - (void)assertReady
 {
 	if (![RNN instance].isReadyToReceiveCommands) {
