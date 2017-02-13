@@ -39,9 +39,16 @@ describe('app', () => {
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 
-  xit('show modal', () => {
+  it('show modal', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal screen')).toBeVisible();
+  });
+  
+  it('dismiss modal', () => {
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal screen')).toBeVisible();
+    elementByLabel('Dismiss Modal').tap();
+    expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 });
 

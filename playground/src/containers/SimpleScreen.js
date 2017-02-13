@@ -8,6 +8,7 @@ class SimpleScreen extends Component {
     super(props);
     this.onClickPop = this.onClickPop.bind(this);
     this.onClickPush = this.onClickPush.bind(this);
+    this.onClickShowModal = this.onClickShowModal.bind(this);
     this.onClickDismissModal = this.onClickDismissModal.bind(this);
   }
 
@@ -19,6 +20,7 @@ class SimpleScreen extends Component {
         {this.renderTextFromFunctionInProps()}
         <Button title="Push" onPress={this.onClickPush} />
         <Button title="Pop" onPress={this.onClickPop} />
+        <Button title="Show Mddal" onPress={this.onClickPop} />
         <Button title="Dismiss Modal" onPress={this.onClickDismissModal} />
       </View>
     );
@@ -42,6 +44,15 @@ class SimpleScreen extends Component {
       name: 'navigation.playground.SimpleScreen',
       passProps: {
         stackPosition: this.props.stackPosition + 1
+      }
+    });
+  }
+  
+  onClickShowModal() {
+    Navigation.showModal({
+      name: 'navigation.playground.SimpleScreen',
+      passProps: {
+        text: 'Modal screen'
       }
     });
   }
