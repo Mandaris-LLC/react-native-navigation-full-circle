@@ -43,6 +43,17 @@ RCT_EXPORT_METHOD(pop:(NSString*)containerId)
 	[[RNN instance].store removeContainer:containerId];
 }
 
+RCT_EXPORT_METHOD(showModal:(NSDictionary*)layout)
+{
+	[self assertReady];
+	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
+	UIViewController *newVc = [factory createLayout:layout];
+	
+	[UIApplication.sharedApplication.delegate.window.rootViewController presentViewController:newVc animated:YES completion:^{
+		
+	}];
+}
+
 - (void)assertReady
 {
 	if (![RNN instance].isReadyToReceiveCommands) {
