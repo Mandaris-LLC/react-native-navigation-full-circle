@@ -31,12 +31,17 @@ function hardlinkNavigation() {
   shellUtils.exec.execSync(`hardlink ../ ./node_modules/react-native-navigation/ || true`);
 }
 
+function fixRN38() {
+  shellUtils.exec.execSync(`node ./scripts/fixRN38.js`);
+}
+
 function run() {
   removeHardlinks();
   removeNodeModules();
   copyNodeModulesFromNavigation();
   installNavigation();
   ignoreReactWarnings();
+  fixRN38();
 }
 
 run();
