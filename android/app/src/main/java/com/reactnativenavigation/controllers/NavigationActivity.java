@@ -41,23 +41,22 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
             }
         };
 
-        if (ReactDevPermission.shouldAskPermission()) {
-            ReactDevPermission.askPermission(this);
-            return;
-        }
-
         host.getReactInstanceManager().addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
             @Override
             public void onReactContextInitialized(ReactContext context) {
                 new NavigationEventEmitter(context).emitAppLaunched();
             }
         });
-        host.getReactInstanceManager().createReactContextInBackground();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (ReactDevPermission.shouldAskPermission()) {
+            ReactDevPermission.askPermission(this);
+        } else {
+            host.getReactInstanceManager().createReactContextInBackground();
+        }
         host.getReactInstanceManager().onHostResume(this, this);
     }
 
