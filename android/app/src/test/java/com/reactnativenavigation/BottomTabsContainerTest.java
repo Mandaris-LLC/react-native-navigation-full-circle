@@ -68,7 +68,16 @@ public class BottomTabsContainerTest {
     @Test (expected = TooManyTabsException.class)
     public void throwsExceptionWhenMoreThenFiveTabs() throws Exception {
         BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
-        for (int i = 0; i <= 6; i++) {
+        for (int i = 0; i < 6; i++) {
+            View content = new View(activity);
+            bottomTabsContainer.addTabContent("#" + i, content);
+        }
+    }
+
+    @Test
+    public void addFiveTabs() throws Exception {
+        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        for (int i = 0; i < 5; i++) {
             View content = new View(activity);
             bottomTabsContainer.addTabContent("#" + i, content);
         }
