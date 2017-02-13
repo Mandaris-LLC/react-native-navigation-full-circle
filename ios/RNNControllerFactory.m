@@ -16,7 +16,7 @@
 # pragma mark public
 
 
--(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator store:(RNNStore *)store {
+- (instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator store:(RNNStore *)store {
 	
 	self = [super init];
 	self.creator = creator;
@@ -25,14 +25,14 @@
 	return self;
 }
 
--(UIViewController *)createLayout:(NSDictionary *)layout
+- (UIViewController*)createLayoutAndSaveToStore:(NSDictionary*)layout
 {
 	return [self fromTree:layout];
 }
 
 # pragma mark private
 
--(UIViewController*)fromTree:(NSDictionary*)json
+- (UIViewController*)fromTree:(NSDictionary*)json
 {
 	RNNLayoutNode* node = [RNNLayoutNode create:json];
 	
@@ -74,12 +74,12 @@
 	return result;
 }
 
--(RNNRootViewController*)createContainer:(RNNLayoutNode*)node
+- (RNNRootViewController*)createContainer:(RNNLayoutNode*)node
 {
 	return [[RNNRootViewController alloc] initWithNode:node rootViewCreator:self.creator];
 }
 
--(UINavigationController*)createContainerStack:(RNNLayoutNode*)node
+- (UINavigationController*)createContainerStack:(RNNLayoutNode*)node
 {
 	UINavigationController* vc = [[UINavigationController alloc] init];
 	
@@ -109,7 +109,7 @@
 	return vc;
 }
 
--(UIViewController*)createSideMenu:(RNNLayoutNode*)node
+- (UIViewController*)createSideMenu:(RNNLayoutNode*)node
 {
 	NSMutableArray* childrenVCs = [NSMutableArray new];
 	
@@ -124,13 +124,12 @@
 }
 
 
--(UIViewController*)createSideMenuChild:(RNNLayoutNode*)node type:(RNNSideMenuChildType)type {
+- (UIViewController*)createSideMenuChild:(RNNLayoutNode*)node type:(RNNSideMenuChildType)type {
 	UIViewController* child = [self fromTree:node.children[0]];
 	RNNSideMenuChildVC *sideMenuChild = [[RNNSideMenuChildVC alloc] initWithChild: child type:type];
 	
 	return sideMenuChild;
 }
-
 
 
 

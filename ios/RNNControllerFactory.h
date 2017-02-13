@@ -11,6 +11,6 @@
 
 -(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator store:(RNNStore*)store;
 
--(UIViewController*)createLayout:(NSDictionary*)layout;
+-(UIViewController*)createLayoutAndSaveToStore:(NSDictionary*)layout;
 
 @end

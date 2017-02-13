@@ -18,7 +18,7 @@ RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout)
 {
 	[self assertReady];
 	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
-	UIViewController *vc = [factory createLayout:layout];
+	UIViewController *vc = [factory createLayoutAndSaveToStore:layout];
 	
 	UIApplication.sharedApplication.delegate.window.rootViewController = vc;
 	[UIApplication.sharedApplication.delegate.window makeKeyAndVisible];
@@ -28,7 +28,7 @@ RCT_EXPORT_METHOD(push:(NSString*)containerId layout:(NSDictionary*)layout)
 {
 	[self assertReady];
 	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
-	UIViewController *newVc = [factory createLayout:layout];
+	UIViewController *newVc = [factory createLayoutAndSaveToStore:layout];
 	UIViewController *vc = [[RNN instance].store findContainerForId:containerId];
 	
 	[[vc navigationController] pushViewController:newVc animated:true];
@@ -47,7 +47,7 @@ RCT_EXPORT_METHOD(showModal:(NSDictionary*)layout)
 {
 	[self assertReady];
 	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
-	UIViewController *newVc = [factory createLayout:layout];
+	UIViewController *newVc = [factory createLayoutAndSaveToStore:layout];
 	
 	[UIApplication.sharedApplication.delegate.window.rootViewController presentViewController:newVc animated:YES completion:^{
 		
