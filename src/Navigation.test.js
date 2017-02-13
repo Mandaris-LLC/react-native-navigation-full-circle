@@ -39,6 +39,15 @@ describe('Navigation', () => {
     expect(Navigation.appCommands.showModal).toHaveBeenCalledWith(params);
   });
 
+  it('dismissModal delegates to AppCommands', async () => {
+    Navigation.appCommands.dismissModal.mockReturnValue(Promise.resolve('result'));
+    const params = {};
+    const result = await Navigation.dismissModal(params);
+    expect(result).toEqual('result');
+    expect(Navigation.appCommands.dismissModal).toHaveBeenCalledTimes(1);
+    expect(Navigation.appCommands.dismissModal).toHaveBeenCalledWith(params);
+  });
+
   it('events return public events', () => {
     const cb = jest.fn();
     Navigation.events().onAppLaunched(cb);

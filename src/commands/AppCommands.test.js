@@ -100,4 +100,18 @@ describe('AppCommands', () => {
       expect(result).toEqual('the resolved layout');
     });
   });
+
+  describe('dismissModal', () => {
+    it('sends command to native', () => {
+      uut.dismissModal('myUniqueId');
+      expect(mockCommandsSender.dismissModal).toHaveBeenCalledTimes(1);
+      expect(mockCommandsSender.dismissModal).toHaveBeenCalledWith('myUniqueId');
+    });
+
+    it('returns a promise with the id', async () => {
+      mockCommandsSender.dismissModal.mockReturnValue(Promise.resolve('the id'));
+      const result = await uut.dismissModal('myUniqueId');
+      expect(result).toEqual('the id');
+    });
+  });
 });

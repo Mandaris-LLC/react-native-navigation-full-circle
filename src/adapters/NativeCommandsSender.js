@@ -24,5 +24,10 @@ export default class NativeCommandsSender {
     this.nativeCommandsModule.showModal(layout);
     return Promise.resolve(layout);
   }
+
+  dismissModal(id) {
+    this.nativeCommandsModule.dismissModal(id);
+    return Promise.resolve(id);
+  }
 }
 

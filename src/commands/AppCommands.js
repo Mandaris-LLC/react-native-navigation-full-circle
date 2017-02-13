@@ -20,5 +20,9 @@ export default class AppCommands {
     this.layoutTreeCrawler.crawl(layout);
     return this.nativeCommandsSender.showModal(layout);
   }
+
+  dismissModal(id) {
+    return this.nativeCommandsSender.dismissModal(id);
+  }
 }
 

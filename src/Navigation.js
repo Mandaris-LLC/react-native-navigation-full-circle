@@ -38,6 +38,10 @@ class Navigation {
     return this.appCommands.showModal(params);
   }
 
+  dismissModal(id) {
+    return this.appCommands.dismissModal(id);
+  }
+
   events() {
     return this.publicEventsRegistry;
   }
