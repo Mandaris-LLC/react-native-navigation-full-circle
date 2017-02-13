@@ -33,13 +33,13 @@
 }
 
 - (void)testCreateLayout_EmptyLayout {
-	XCTAssertThrows([self.factory createLayout:@{}]);
+	XCTAssertThrows([self.factory createLayoutAndSaveToStore:@{}]);
 }
 
 
 - (void)testCreateLayout_ContainerLayout {
 	
-	id ans = [self.factory createLayout:
+	id ans = [self.factory createLayoutAndSaveToStore:
 			  @{@"id": @"cntId",
 				@"type": @"Container",
 				@"data": @{},
@@ -48,7 +48,7 @@
 }
 
 - (void)testCreateLayout_ContainerStackLayout {
-	id ans = [self.factory createLayout:
+	id ans = [self.factory createLayoutAndSaveToStore:
 			  @{@"id": @"cntId",
 				@"type": @"ContainerStack",
 				@"data": @{},
@@ -57,7 +57,7 @@
 }
 
 - (void)testCreateLayout_ContainerStackLayoutRecursive {
-	UINavigationController* ans = (UINavigationController*) [self.factory createLayout:
+	UINavigationController* ans = (UINavigationController*) [self.factory createLayoutAndSaveToStore:
 															 @{@"id": @"cntId",
 															   @"type": @"ContainerStack",
 															   @"data": @{},
@@ -73,7 +73,7 @@
 }
 
 - (void)testCreateLayout_BottomTabsLayout {
-	UITabBarController* tabBar = (UITabBarController*) [self.factory createLayout:
+	UITabBarController* tabBar = (UITabBarController*) [self.factory createLayoutAndSaveToStore:
 														@{
 														  @"id": @"cntId",
 														  @"type": @"BottomTabs",
@@ -101,7 +101,7 @@
 
 
 - (void)testCreateLayout_ContainerSideMenuLayoutCenterLeftRight {
-	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayout:
+	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayoutAndSaveToStore:
 														   @{@"id": @"cntId",
 															 @"type": @"SideMenuRoot",
 															 @"data": @{},
@@ -147,7 +147,7 @@
 }
 
 - (void)testCreateLayout_ContainerSideMenuLayoutCenterTabBar {
-	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayout:
+	RNNSideMenuController *ans = (RNNSideMenuController*) [self.factory createLayoutAndSaveToStore:
 														   @{@"id": @"cntId",
 															 @"type": @"SideMenuRoot",
 															 @"data": @{},
@@ -192,7 +192,7 @@
 
 - (void)testCreateLayout_addContainerToStore {
 	NSString *containerId = @"cntId";
-	UIViewController *ans = [self.factory createLayout:
+	UIViewController *ans = [self.factory createLayoutAndSaveToStore:
 							 @{@"id": containerId,
 							   @"type": @"Container",
 							   @"data": @{},
