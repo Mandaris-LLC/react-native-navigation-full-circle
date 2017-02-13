@@ -49,11 +49,13 @@ public class LayoutFactory {
     }
 
     private View createBottomTabs(LayoutNode node) {
-        final BottomTabsContainer tabsContainer = new BottomTabsContainer(activity, bottomTabsCreator);
+        final BottomTabsContainer tabsContainer = new BottomTabsContainer(activity, bottomTabsCreator.create());
 
+        int i = 0;
         for (LayoutNode child : node.children) {
             final View tabContent = create(child);
-            tabsContainer.addTabContent(tabContent);
+            tabsContainer.addTabContent("#" + i, tabContent);
+            i++;
         }
         return tabsContainer;
     }

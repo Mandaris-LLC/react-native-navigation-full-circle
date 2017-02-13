@@ -16,18 +16,15 @@ import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -63,7 +60,7 @@ public class LayoutFactoryTest {
         final ViewGroup result = (ViewGroup) createLayoutFactory().create(node);
 
         assertThat(result).isInstanceOf(Container.class);
-        assertViewChildren(result, mockView);
+        TestUtils.assertViewChildren(result, mockView);
     }
 
     @Test
@@ -75,8 +72,8 @@ public class LayoutFactoryTest {
         final ViewGroup result = (ViewGroup) createLayoutFactory().create(stackNode);
 
         assertThat(result).isInstanceOf(ContainerStack.class);
-        ViewGroup container = (ViewGroup) assertViewChildrenCount(result, 1).get(0);
-        assertViewChildren(container, mockView);
+        ViewGroup container = (ViewGroup) TestUtils.assertViewChildrenCount(result, 1).get(0);
+        TestUtils.assertViewChildren(container, mockView);
     }
 
     @Test
@@ -93,11 +90,11 @@ public class LayoutFactoryTest {
         final ViewGroup result = (ViewGroup) createLayoutFactory().create(stackNode);
 
         assertThat(result).isInstanceOf(ContainerStack.class);
-        List<View> containers = assertViewChildrenCount(result, 2);
+        List<View> containers = TestUtils.assertViewChildrenCount(result, 2);
         ViewGroup container1 = (ViewGroup) containers.get(0);
         ViewGroup container2 = (ViewGroup) containers.get(1);
-        assertViewChildren(container1, mockView1);
-        assertViewChildren(container2, mockView2);
+        TestUtils.assertViewChildren(container1, mockView1);
+        TestUtils.assertViewChildren(container2, mockView2);
     }
 
     @Test
@@ -111,12 +108,11 @@ public class LayoutFactoryTest {
 
         final View result = createLayoutFactory(bottomTabsMock).create(tabNode);
 
-        assertThat(result).isInstanceOf(BottomTabsContainer.class);
+        verify(bottomTabsMock).add("#0");
 
-        ArgumentCaptor<Container> containerCaptor = ArgumentCaptor.forClass(Container.class);
-        verify(bottomTabsMock).addTab(eq("#0"), containerCaptor.capture());
-        Container container = containerCaptor.getValue();
-        View view = assertViewChildrenCount(container, 1).get(0);
+        assertThat(result).isInstanceOf(BottomTabsContainer.class);
+        Container container = (Container) TestUtils.assertViewChildrenCount((BottomTabsContainer) result, 1).get(0);
+        View view = TestUtils.assertViewChildrenCount(container, 1).get(0);
         assertThat(view).isEqualTo(mockView);
     }
 
@@ -136,8 +132,8 @@ public class LayoutFactoryTest {
         final View result = createLayoutFactory(bottomTabsMock).create(tabNode);
 
         assertThat(result).isInstanceOf(BottomTabsContainer.class);
-        verify(bottomTabsMock).addTab(eq("#0"), any(Container.class));
-        verify(bottomTabsMock).addTab(eq("#1"), any(ContainerStack.class));
+        verify(bottomTabsMock).add(eq("#0"));
+        verify(bottomTabsMock).add(eq("#1"));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -182,20 +178,5 @@ public class LayoutFactoryTest {
         node.type = "BottomTabs";
         node.children = Arrays.asList(children);
         return node;
-    }
-
-    private List<View> assertViewChildrenCount(ViewGroup view, int count) {
-        assertThat(view.getChildCount()).isEqualTo(count);
-
-        final List<View> children = new ArrayList<>(count);
-        for (int i = 0; i < count; i++) {
-            children.add(view.getChildAt(i));
-        }
-        return children;
-    }
-
-    private void assertViewChildren(ViewGroup view, View... children) {
-        final List<View> childViews = assertViewChildrenCount(view, children.length);
-        assertThat(childViews).isEqualTo(Arrays.asList(children));
     }
 }
