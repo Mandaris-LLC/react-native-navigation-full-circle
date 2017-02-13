@@ -46,9 +46,10 @@ describe('app', () => {
 });
 
 describe('reload app', () => {
-  before(function (done) {
+  before((done) => {
     simulator.reloadReactNativeApp(done);
   });
+
   it('shows welcome screen', () => {
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });

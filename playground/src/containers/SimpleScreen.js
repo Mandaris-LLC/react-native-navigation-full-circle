@@ -34,12 +34,12 @@ class SimpleScreen extends Component {
   onClickPop() {
     Navigation.on(this.props.id).pop();
   }
-  
+
   onClickPush() {
     Navigation.on(this.props.id).push({
       name: 'navigation.playground.SimpleScreen',
       passProps: {
-        stackPosition: this.props.stackPosition + 1,
+        stackPosition: this.props.stackPosition + 1
       }
     });
   }
