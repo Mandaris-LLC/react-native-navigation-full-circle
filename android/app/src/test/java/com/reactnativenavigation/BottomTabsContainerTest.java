@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.reactnativenavigation.layout.bottomtabs.BottomTabs;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsContainer;
+import com.reactnativenavigation.layout.bottomtabs.TooManyTabsException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -62,6 +63,15 @@ public class BottomTabsContainerTest {
         bottomTabsContainer.addTabContent(OTHER_TAB_NAME, otherTabContent);
 
         TestUtils.assertViewChildren(bottomTabsContainer, tabContent, otherTabContent);
+    }
+
+    @Test (expected = TooManyTabsException.class)
+    public void throwsExceptionWhenMoreThenFiveTabs() throws Exception {
+        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        for (int i = 0; i <= 6; i++) {
+            View content = new View(activity);
+            bottomTabsContainer.addTabContent("#" + i, content);
+        }
     }
 
     @Test

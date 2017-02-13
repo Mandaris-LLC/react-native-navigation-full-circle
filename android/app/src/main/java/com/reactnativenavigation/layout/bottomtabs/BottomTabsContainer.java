@@ -15,11 +15,13 @@ public class BottomTabsContainer extends RelativeLayout implements BottomTabs.Bo
 
     public BottomTabsContainer(Activity activity, BottomTabs bottomTabs) {
         super(activity);
-
         initBottomTabs(bottomTabs);
     }
 
     public void addTabContent(String label, View tabContent) {
+        if (tabsContent.size() > 5) {
+            throw new TooManyTabsException();
+        }
         bottomTabs.add(label);
         attachTabContent(tabContent);
         tabsContent.add(tabContent);

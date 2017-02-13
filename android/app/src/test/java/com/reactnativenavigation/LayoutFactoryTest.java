@@ -100,7 +100,7 @@ public class LayoutFactoryTest {
     @Test
     public void returnsSingleTabContent() throws Exception {
         BottomTabs bottomTabsMock = mock(BottomTabs.class);
-        when(bottomTabsMock.getTabsCount()).thenReturn(0);
+        when(bottomTabsMock.size()).thenReturn(0);
 
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
         final LayoutNode containerNode = createContainerNode();
@@ -119,7 +119,7 @@ public class LayoutFactoryTest {
     @Test
     public void returnsTwoTabContent() throws Exception {
         BottomTabs bottomTabsMock = mock(BottomTabs.class);
-        when(bottomTabsMock.getTabsCount()).thenReturn(0, 1);
+        when(bottomTabsMock.size()).thenReturn(0, 1);
 
         when(rootViewCreator.createRootView(eq(VIEW_ID), eq(VIEW_NAME))).thenReturn(mockView);
         final LayoutNode firstTabRootNode = createContainerNode(VIEW_ID, VIEW_NAME);
@@ -135,6 +135,7 @@ public class LayoutFactoryTest {
         verify(bottomTabsMock).add(eq("#0"));
         verify(bottomTabsMock).add(eq("#1"));
     }
+
 
     @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionForUnknownType() throws Exception {

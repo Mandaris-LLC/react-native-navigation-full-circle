@@ -16,7 +16,7 @@ import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 
 public class BottomTabs implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    public interface BottomTabsSelectionListener {
+    interface BottomTabsSelectionListener {
         void onTabSelected(int index);
     }
 
@@ -35,15 +35,15 @@ public class BottomTabs implements BottomNavigationView.OnNavigationItemSelected
     }
 
     public void add(String label) {
-        int tabId = getTabsCount();
+        int tabId = size();
         bottomNavigationView.getMenu().add(0, tabId, Menu.NONE, label);
     }
 
-    public int getTabsCount() {
+    public int size() {
         return bottomNavigationView.getMenu().size();
     }
 
-    public int getViewId() {
+    int getViewId() {
         return bottomNavigationView.getId();
     }
 
