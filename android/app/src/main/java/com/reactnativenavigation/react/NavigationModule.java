@@ -36,9 +36,9 @@ public class NavigationModule extends ReactContextBaseJavaModule {
         NavigationActivity.instance.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LayoutFactory factory = new LayoutFactory(NavigationActivity.instance, new LayoutFactory.RootViewCreator() {
+                LayoutFactory factory = new LayoutFactory(NavigationActivity.instance, new LayoutFactory.ReactRootViewCreator() {
                     @Override
-                    public View createRootView(String id, String name) {
+                    public View create(String id, String name) {
                         ReactRootView rootView = new ReactRootView(NavigationActivity.instance);
                         Bundle opts = new Bundle();
                         opts.putString("id", id);

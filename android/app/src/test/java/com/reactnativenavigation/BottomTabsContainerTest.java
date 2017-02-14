@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.reactnativenavigation.layout.bottomtabs.BottomTabs;
-import com.reactnativenavigation.layout.bottomtabs.BottomTabsContainer;
+import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
 import com.reactnativenavigation.layout.bottomtabs.TooManyTabsException;
 
 import org.junit.Before;
@@ -36,7 +36,7 @@ public class BottomTabsContainerTest {
     public void addsTabToBottomTabs() throws Exception {
         View tabContent = new View(activity);
 
-        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        BottomTabsLayout bottomTabsContainer = createBottomTabsContainer();
         bottomTabsContainer.addTabContent(TAB_NAME, tabContent);
 
         verify(bottomTabs).add(TAB_NAME);
@@ -46,7 +46,7 @@ public class BottomTabsContainerTest {
     public void addsTabContentToLayout() throws Exception {
         View tabContent = new View(activity);
 
-        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        BottomTabsLayout bottomTabsContainer = createBottomTabsContainer();
         bottomTabsContainer.addTabContent(TAB_NAME, tabContent);
 
         verify(bottomTabs).attach(bottomTabsContainer);
@@ -58,7 +58,7 @@ public class BottomTabsContainerTest {
         View tabContent = new View(activity);
         View otherTabContent = new View(activity);
 
-        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        BottomTabsLayout bottomTabsContainer = createBottomTabsContainer();
         bottomTabsContainer.addTabContent(TAB_NAME, tabContent);
         bottomTabsContainer.addTabContent(OTHER_TAB_NAME, otherTabContent);
 
@@ -67,7 +67,7 @@ public class BottomTabsContainerTest {
 
     @Test (expected = TooManyTabsException.class)
     public void throwsExceptionWhenMoreThenFiveTabs() throws Exception {
-        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        BottomTabsLayout bottomTabsContainer = createBottomTabsContainer();
         for (int i = 0; i < 6; i++) {
             View content = new View(activity);
             bottomTabsContainer.addTabContent("#" + i, content);
@@ -76,7 +76,7 @@ public class BottomTabsContainerTest {
 
     @Test
     public void addFiveTabs() throws Exception {
-        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        BottomTabsLayout bottomTabsContainer = createBottomTabsContainer();
         for (int i = 0; i < 5; i++) {
             View content = new View(activity);
             bottomTabsContainer.addTabContent("#" + i, content);
@@ -88,7 +88,7 @@ public class BottomTabsContainerTest {
         View tabContent = new View(activity);
         View otherTabContent = new View(activity);
 
-        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        BottomTabsLayout bottomTabsContainer = createBottomTabsContainer();
         bottomTabsContainer.addTabContent(TAB_NAME, tabContent);
         bottomTabsContainer.addTabContent(OTHER_TAB_NAME, otherTabContent);
 
@@ -98,7 +98,7 @@ public class BottomTabsContainerTest {
 
     @Test
     public void listensToTabsSwitchingEvents() throws Exception {
-        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        BottomTabsLayout bottomTabsContainer = createBottomTabsContainer();
         verify(bottomTabs).setSelectionListener(bottomTabsContainer);
     }
 
@@ -107,7 +107,7 @@ public class BottomTabsContainerTest {
         View tabContent = new View(activity);
         View otherTabContent = new View(activity);
 
-        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        BottomTabsLayout bottomTabsContainer = createBottomTabsContainer();
         bottomTabsContainer.addTabContent(TAB_NAME, tabContent);
         bottomTabsContainer.addTabContent(OTHER_TAB_NAME, otherTabContent);
         bottomTabsContainer.onTabSelected(1);
@@ -121,7 +121,7 @@ public class BottomTabsContainerTest {
         View tabContent = new View(activity);
         View otherTabContent = new View(activity);
 
-        BottomTabsContainer bottomTabsContainer = createBottomTabsContainer();
+        BottomTabsLayout bottomTabsContainer = createBottomTabsContainer();
         bottomTabsContainer.addTabContent(TAB_NAME, tabContent);
         bottomTabsContainer.addTabContent(OTHER_TAB_NAME, otherTabContent);
         bottomTabsContainer.onTabSelected(1);
@@ -131,7 +131,7 @@ public class BottomTabsContainerTest {
         assertThat(otherTabContent.getVisibility()).isEqualTo(View.GONE);
     }
 
-    private BottomTabsContainer createBottomTabsContainer() {
-        return new BottomTabsContainer(activity, bottomTabs);
+    private BottomTabsLayout createBottomTabsContainer() {
+        return new BottomTabsLayout(activity, bottomTabs);
     }
 }

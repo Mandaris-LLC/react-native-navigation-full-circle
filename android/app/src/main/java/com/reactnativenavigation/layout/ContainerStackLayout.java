@@ -3,8 +3,8 @@ package com.reactnativenavigation.layout;
 import android.content.Context;
 import android.widget.FrameLayout;
 
-public class ContainerStack extends FrameLayout {
-    public ContainerStack(Context context) {
+public class ContainerStackLayout extends FrameLayout {
+    public ContainerStackLayout(Context context) {
         super(context);
     }
 }

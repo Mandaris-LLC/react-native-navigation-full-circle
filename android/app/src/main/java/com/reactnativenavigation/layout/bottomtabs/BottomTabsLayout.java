@@ -7,13 +7,13 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottomTabsContainer extends RelativeLayout implements BottomTabs.BottomTabsSelectionListener {
+public class BottomTabsLayout extends RelativeLayout implements BottomTabs.BottomTabsSelectionListener {
 
     private List<View> tabsContent;
     private BottomTabs bottomTabs;
     private int currentTab;
 
-    public BottomTabsContainer(Activity activity, BottomTabs bottomTabs) {
+    public BottomTabsLayout(Activity activity, BottomTabs bottomTabs) {
         super(activity);
         initBottomTabs(bottomTabs);
     }

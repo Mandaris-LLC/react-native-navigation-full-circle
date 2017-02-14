@@ -12,6 +12,11 @@ public class LayoutNode {
     public LayoutNode() {
     }
 
+    public LayoutNode(String type, List<LayoutNode> children) {
+        this.type = type;
+        this.children = children;
+    }
+
     public LayoutNode(String id, String type, Map<String, Object> data) {
         this.id = id;
         this.type = type;
