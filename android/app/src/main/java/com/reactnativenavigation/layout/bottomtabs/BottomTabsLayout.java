@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.reactnativenavigation.layout.StackLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottomTabsLayout extends RelativeLayout implements BottomTabs.BottomTabsSelectionListener {
+public class BottomTabsLayout extends RelativeLayout implements BottomTabs.BottomTabsSelectionListener, StackLayout {
 
     private List<View> tabsContent;
     private BottomTabs bottomTabs;
@@ -60,4 +62,18 @@ public class BottomTabsLayout extends RelativeLayout implements BottomTabs.Botto
         tabsContent.get(tabId).setVisibility(View.GONE);
     }
 
+    @Override
+    public void push(View view) {
+
+    }
+
+    @Override
+    public void pop() {
+
+    }
+
+    @Override
+    public View asView() {
+        return this;
+    }
 }

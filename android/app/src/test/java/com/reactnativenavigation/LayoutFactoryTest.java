@@ -173,7 +173,7 @@ public class LayoutFactoryTest {
     }
 
     @Test
-    public void pushAScreenToScreenStack() throws Exception {
+    public void pushScreenToScreenStackLayout() throws Exception {
         when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
         final LayoutNode container = createContainerNode();
         final LayoutNode stackNode = createContainerStackNode(container);
@@ -185,6 +185,22 @@ public class LayoutFactoryTest {
 
         ViewGroup result = (ViewGroup) TestUtils.assertViewChildrenCount(containerStackLayout, 1).get(0);
         assertThat(result.getChildAt(0)).isEqualTo(otherMockView);
+    }
+
+    @Test
+    public void popScreenFromScreenStackLayout() {
+        when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
+        final LayoutNode container = createContainerNode();
+        final LayoutNode stackNode = createContainerStackNode(container);
+        final ContainerStackLayout containerStackLayout = (ContainerStackLayout) createLayoutFactory().create(stackNode);
+
+        when(reactRootViewCreator.create(eq(OTHER_NODE_ID), eq(OTHER_REACT_ROOT_VIEW_KEY))).thenReturn(otherMockView);
+        final LayoutNode pushedContainer = createContainerNode(OTHER_NODE_ID, OTHER_REACT_ROOT_VIEW_KEY);
+        containerStackLayout.push(createLayoutFactory().create(pushedContainer));
+
+        containerStackLayout.pop();
+        ViewGroup result = (ViewGroup) TestUtils.assertViewChildrenCount(containerStackLayout, 1).get(0);
+        assertThat(result.getChildAt(0)).isEqualTo(mockView);
     }
 
     @Test(expected = IllegalArgumentException.class)

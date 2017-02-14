@@ -13,6 +13,7 @@ import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.reactnativenavigation.controllers.NavigationActivity;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
+import com.reactnativenavigation.layout.StackLayout;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
                 final LayoutNode layoutTreeRoot = readableMapToLayoutNode(layoutTree);
                 final View rootView = factory.create(layoutTreeRoot);
-                NavigationActivity.instance.setContentView(rootView);
+                NavigationActivity.instance.setRoot((StackLayout) rootView);
             }
         });
     }
@@ -73,7 +74,17 @@ public class NavigationModule extends ReactContextBaseJavaModule {
                         }, new BottomTabsCreator());
                 final LayoutNode layoutNode = readableMapToLayoutNode(layout);
                 final View rootView = factory.create(layoutNode);
-                NavigationActivity.instance.setContentView(rootView);
+                NavigationActivity.instance.push(rootView);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void pop(String onContainerId) {
+        NavigationActivity.instance.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                NavigationActivity.instance.pop();
             }
         });
     }
