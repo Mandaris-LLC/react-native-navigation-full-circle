@@ -172,6 +172,20 @@ public class LayoutFactoryTest {
         verify(bottomTabsMock).add(eq("#1"));
     }
 
+    @Test
+    public void pushAScreenToScreenStack() throws Exception {
+        when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
+        final LayoutNode container = createContainerNode();
+        final LayoutNode stackNode = createContainerStackNode(container);
+        final ContainerStackLayout containerStackLayout = (ContainerStackLayout) createLayoutFactory().create(stackNode);
+
+        when(reactRootViewCreator.create(eq(OTHER_NODE_ID), eq(OTHER_REACT_ROOT_VIEW_KEY))).thenReturn(otherMockView);
+        final LayoutNode pushedContainer = createContainerNode(OTHER_NODE_ID, OTHER_REACT_ROOT_VIEW_KEY);
+        containerStackLayout.push(createLayoutFactory().create(pushedContainer));
+
+        ViewGroup result = (ViewGroup) TestUtils.assertViewChildrenCount(containerStackLayout, 1).get(0);
+        assertThat(result.getChildAt(0)).isEqualTo(otherMockView);
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionForUnknownType() throws Exception {

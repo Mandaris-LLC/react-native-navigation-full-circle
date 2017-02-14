@@ -36,19 +36,43 @@ public class NavigationModule extends ReactContextBaseJavaModule {
         NavigationActivity.instance.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LayoutFactory factory = new LayoutFactory(NavigationActivity.instance, new LayoutFactory.ReactRootViewCreator() {
-                    @Override
-                    public View create(String id, String name) {
-                        ReactRootView rootView = new ReactRootView(NavigationActivity.instance);
-                        Bundle opts = new Bundle();
-                        opts.putString("id", id);
-                        rootView.startReactApplication(NavigationActivity.instance.getHost().getReactInstanceManager(), name, opts);
-                        return rootView;
-                    }
-                }, new BottomTabsCreator());
+                LayoutFactory factory =
+                        new LayoutFactory(NavigationActivity.instance, new LayoutFactory.ReactRootViewCreator() {
+                            @Override
+                            public View create(String id, String name) {
+                                ReactRootView rootView = new ReactRootView(NavigationActivity.instance);
+                                Bundle opts = new Bundle();
+                                opts.putString("id", id);
+                                rootView.startReactApplication(NavigationActivity.instance.getHost().getReactInstanceManager(), name, opts);
+                                return rootView;
+                            }
+                        }, new BottomTabsCreator());
 
                 final LayoutNode layoutTreeRoot = readableMapToLayoutNode(layoutTree);
                 final View rootView = factory.create(layoutTreeRoot);
+                NavigationActivity.instance.setContentView(rootView);
+            }
+        });
+    }
+
+    @ReactMethod
+    public void push(String onContainerId, final ReadableMap layout) {
+        NavigationActivity.instance.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LayoutFactory factory =
+                        new LayoutFactory(NavigationActivity.instance, new LayoutFactory.ReactRootViewCreator() {
+                            @Override
+                            public View create(String id, String name) {
+                                ReactRootView rootView = new ReactRootView(NavigationActivity.instance);
+                                Bundle opts = new Bundle();
+                                opts.putString("id", id);
+                                rootView.startReactApplication(NavigationActivity.instance.getHost().getReactInstanceManager(), name, opts);
+                                return rootView;
+                            }
+                        }, new BottomTabsCreator());
+                final LayoutNode layoutNode = readableMapToLayoutNode(layout);
+                final View rootView = factory.create(layoutNode);
                 NavigationActivity.instance.setContentView(rootView);
             }
         });
@@ -72,7 +96,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
     private Map<String, Object> readableMapToJavaMap(ReadableMap readableMap) {
         final Map<String, Object> map = new HashMap<>();
-        for (ReadableMapKeySetIterator it = readableMap.keySetIterator(); it.hasNextKey();) {
+        for (ReadableMapKeySetIterator it = readableMap.keySetIterator(); it.hasNextKey(); ) {
             final String key = it.nextKey();
             switch (readableMap.getType(key)) {
                 case String:
