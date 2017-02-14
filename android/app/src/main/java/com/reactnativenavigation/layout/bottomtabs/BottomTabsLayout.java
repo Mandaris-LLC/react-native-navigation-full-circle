@@ -11,7 +11,7 @@ import java.util.List;
 
 public class BottomTabsLayout extends RelativeLayout implements BottomTabs.BottomTabsSelectionListener, StackLayout {
 
-    private List<View> tabsContent;
+    private List<StackLayout> tabsContent;
     private BottomTabs bottomTabs;
     private int currentTab;
 
@@ -26,7 +26,7 @@ public class BottomTabsLayout extends RelativeLayout implements BottomTabs.Botto
         }
         bottomTabs.add(label);
         attachTabContent(tabContent);
-        tabsContent.add(tabContent);
+        tabsContent.add((StackLayout) tabContent);
 
         if (tabsContent.size() > 1) {
             tabContent.setVisibility(View.GONE);
@@ -55,21 +55,21 @@ public class BottomTabsLayout extends RelativeLayout implements BottomTabs.Botto
     }
 
     private void showTab(int tabId) {
-        tabsContent.get(tabId).setVisibility(View.VISIBLE);
+        tabsContent.get(tabId).asView().setVisibility(View.VISIBLE);
     }
 
     private void hideTab(int tabId) {
-        tabsContent.get(tabId).setVisibility(View.GONE);
+        tabsContent.get(tabId).asView().setVisibility(View.GONE);
     }
 
     @Override
     public void push(View view) {
-
+        tabsContent.get(currentTab).push(view);
     }
 
     @Override
     public void pop() {
-
+        tabsContent.get(currentTab).pop();
     }
 
     @Override

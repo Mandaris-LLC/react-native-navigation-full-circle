@@ -139,7 +139,7 @@ public class LayoutFactoryTest {
         when(bottomTabsMock.size()).thenReturn(0);
 
         when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
-        final LayoutNode containerNode = createContainerNode();
+        final LayoutNode containerNode = createContainerStackNode(createContainerNode());
         final LayoutNode tabNode = createBottomTabNode(containerNode);
 
         final View result = createLayoutFactory(bottomTabsMock).create(tabNode);
@@ -147,7 +147,8 @@ public class LayoutFactoryTest {
         verify(bottomTabsMock).add("#0");
 
         assertThat(result).isInstanceOf(BottomTabsLayout.class);
-        Container container = (Container) TestUtils.assertViewChildrenCount((BottomTabsLayout) result, 1).get(0);
+        ViewGroup containerStack = (ViewGroup) TestUtils.assertViewChildrenCount((BottomTabsLayout) result, 1).get(0);
+        Container container = (Container)  TestUtils.assertViewChildrenCount(containerStack, 1).get(0);
         View view = TestUtils.assertViewChildrenCount(container, 1).get(0);
         assertThat(view).isEqualTo(mockView);
     }
@@ -158,7 +159,7 @@ public class LayoutFactoryTest {
         when(bottomTabsMock.size()).thenReturn(0, 1);
 
         when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
-        final LayoutNode firstTabRootNode = createContainerNode(NODE_ID, REACT_ROOT_VIEW_KEY);
+        final LayoutNode firstTabRootNode = createContainerStackNode(createContainerNode(NODE_ID, REACT_ROOT_VIEW_KEY));
 
         when(reactRootViewCreator.create(eq(OTHER_NODE_ID), eq(OTHER_REACT_ROOT_VIEW_KEY))).thenReturn(otherMockView);
         final LayoutNode secondTabRootNode = createContainerStackNode(createContainerNode(OTHER_NODE_ID, OTHER_REACT_ROOT_VIEW_KEY));
@@ -170,6 +171,51 @@ public class LayoutFactoryTest {
         assertThat(result).isInstanceOf(BottomTabsLayout.class);
         verify(bottomTabsMock).add(eq("#0"));
         verify(bottomTabsMock).add(eq("#1"));
+    }
+
+    @Test
+    public void pushScreenToFirstBottomTab() {
+        BottomTabs bottomTabsMock = mock(BottomTabs.class);
+        when(bottomTabsMock.size()).thenReturn(0, 1);
+
+        when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
+        final LayoutNode firstTabContainerStack = createContainerStackNode(createContainerNode(NODE_ID, REACT_ROOT_VIEW_KEY));
+
+        final LayoutNode tabNode = createBottomTabNode(firstTabContainerStack);
+        final BottomTabsLayout bottomTabsContainer = (BottomTabsLayout) createLayoutFactory(bottomTabsMock).create(tabNode);
+        verify(bottomTabsMock).add(eq("#0"));
+
+        View pushedReactView = new View(activity);
+        when(reactRootViewCreator.create(eq("pushedReactViewId"), eq("pushedReactViewKey"))).thenReturn(pushedReactView);
+        View view = createLayoutFactory().create(createContainerNode("pushedReactViewId", "pushedReactViewKey"));
+        bottomTabsContainer.push(view);
+
+        ViewGroup containerStack = (ViewGroup) TestUtils.assertViewChildrenCount(bottomTabsContainer, 1).get(0);
+        ViewGroup container = (ViewGroup) TestUtils.assertViewChildrenCount(containerStack, 1).get(0);
+        View result = TestUtils.assertViewChildrenCount(container, 1).get(0);
+        assertThat(result).isEqualTo(pushedReactView);
+    }
+
+    @Test
+    public void popScreenFromFirstBottomTab() {
+        BottomTabs bottomTabsMock = mock(BottomTabs.class);
+        when(bottomTabsMock.size()).thenReturn(0, 1);
+
+        when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
+        final LayoutNode firstTabContainerStack = createContainerStackNode(createContainerNode(NODE_ID, REACT_ROOT_VIEW_KEY));
+
+        final LayoutNode tabNode = createBottomTabNode(firstTabContainerStack);
+        final BottomTabsLayout bottomTabsContainer = (BottomTabsLayout) createLayoutFactory(bottomTabsMock).create(tabNode);
+        verify(bottomTabsMock).add(eq("#0"));
+
+        pushContainer(bottomTabsContainer, "pushedReactViewId", "pushedReactViewKey", new View(activity));
+
+        bottomTabsContainer.pop();
+
+        ViewGroup containerStack = (ViewGroup) TestUtils.assertViewChildrenCount(bottomTabsContainer, 1).get(0);
+        ViewGroup container = (ViewGroup) TestUtils.assertViewChildrenCount(containerStack, 1).get(0);
+        View result = TestUtils.assertViewChildrenCount(container, 1).get(0);
+        assertThat(result).isEqualTo(mockView);
     }
 
     @Test
@@ -222,6 +268,12 @@ public class LayoutFactoryTest {
     }
 
     private void pushContainer(ContainerStackLayout containerStackLayout, String screenId, String reactRootViewKey, View rootView) {
+        when(reactRootViewCreator.create(eq(screenId), eq(reactRootViewKey))).thenReturn(rootView);
+        View pushedContainer = createLayoutFactory().create(createContainerNode(screenId, reactRootViewKey));
+        containerStackLayout.push(pushedContainer);
+    }
+
+    private void pushContainer(BottomTabsLayout containerStackLayout, String screenId, String reactRootViewKey, View rootView) {
         when(reactRootViewCreator.create(eq(screenId), eq(reactRootViewKey))).thenReturn(rootView);
         View pushedContainer = createLayoutFactory().create(createContainerNode(screenId, reactRootViewKey));
         containerStackLayout.push(pushedContainer);
