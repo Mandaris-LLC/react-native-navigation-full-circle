@@ -125,6 +125,15 @@ public class LayoutFactoryTest {
     }
 
     @Test
+    public void hasRightMenu() throws Exception {
+        when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
+        LayoutNode sideMenuRight = createSideMenuRightNode();
+        final LayoutNode sideMenu = createSideMenuContainerNode(Arrays.asList(sideMenuRight));
+        final ViewGroup result = (ViewGroup) createLayoutFactory().create(sideMenu);
+        assertThat(result.getChildAt(0)).isInstanceOf(Container.class);
+    }
+
+    @Test
     public void returnsSingleTabContent() throws Exception {
         BottomTabs bottomTabsMock = mock(BottomTabs.class);
         when(bottomTabsMock.size()).thenReturn(0);
@@ -193,6 +202,11 @@ public class LayoutFactoryTest {
     private LayoutNode createSideMenuLeftNode() {
         List<LayoutNode> children = Arrays.asList(createContainerNode());
         return new LayoutNode("SideMenuLeft", children);
+    }
+
+    private LayoutNode createSideMenuRightNode() {
+        List<LayoutNode> children = Arrays.asList(createContainerNode());
+        return new LayoutNode("SideMenuRight", children);
     }
 
     private LayoutNode createContainerNode(final String id, final String name) {
