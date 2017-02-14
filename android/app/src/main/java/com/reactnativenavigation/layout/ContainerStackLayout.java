@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import java.util.Stack;
+
 public class ContainerStackLayout extends FrameLayout implements StackLayout {
 
-    private View removedView;
+    private Stack<View> backStack = new Stack<>();
 
     public ContainerStackLayout(Context context) {
         super(context);
@@ -15,13 +17,13 @@ public class ContainerStackLayout extends FrameLayout implements StackLayout {
     @Override
     public void push(View view) {
         addView(view);
-        removedView = getChildAt(0);
-        removeView(removedView);
+        backStack.push(getChildAt(0));
+        removeView(getChildAt(0));
     }
 
     @Override
     public void pop() {
-        addView(removedView);
+        addView(backStack.pop());
         removeView(getChildAt(0));
     }
 

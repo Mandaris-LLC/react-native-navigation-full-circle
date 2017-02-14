@@ -188,6 +188,46 @@ public class LayoutFactoryTest {
     }
 
     @Test
+    public void pushTwoScreensToStackLayout() throws Exception {
+        when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
+        final LayoutNode container = createContainerNode();
+        final LayoutNode stackNode = createContainerStackNode(container);
+        final ContainerStackLayout containerStackLayout = (ContainerStackLayout) createLayoutFactory().create(stackNode);
+
+        View first = new View(activity);
+        pushContainer(containerStackLayout, OTHER_NODE_ID, OTHER_REACT_ROOT_VIEW_KEY, first);
+
+        View second = new View(activity);
+        pushContainer(containerStackLayout, "secondPushedScreenId", "secondPushedScreenKey", second);
+
+        ViewGroup result = (ViewGroup) TestUtils.assertViewChildrenCount(containerStackLayout, 1).get(0);
+        assertThat(result.getChildAt(0)).isEqualTo(second);
+    }
+
+    @Test
+    public void popTwoScreensFromStackLayout() throws Exception {
+        when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
+        final LayoutNode container = createContainerNode();
+        final LayoutNode stackNode = createContainerStackNode(container);
+        final ContainerStackLayout containerStackLayout = (ContainerStackLayout) createLayoutFactory().create(stackNode);
+
+        pushContainer(containerStackLayout, OTHER_NODE_ID, OTHER_REACT_ROOT_VIEW_KEY, new View(activity));
+        pushContainer(containerStackLayout, "secondPushedScreenId", "secondPushedScreenKey", new View(activity));
+
+        containerStackLayout.pop();
+        containerStackLayout.pop();
+
+        ViewGroup result = (ViewGroup) TestUtils.assertViewChildrenCount(containerStackLayout, 1).get(0);
+        assertThat(result.getChildAt(0)).isEqualTo(mockView);
+    }
+
+    private void pushContainer(ContainerStackLayout containerStackLayout, String screenId, String reactRootViewKey, View rootView) {
+        when(reactRootViewCreator.create(eq(screenId), eq(reactRootViewKey))).thenReturn(rootView);
+        View pushedContainer = createLayoutFactory().create(createContainerNode(screenId, reactRootViewKey));
+        containerStackLayout.push(pushedContainer);
+    }
+
+    @Test
     public void popScreenFromScreenStackLayout() {
         when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
         final LayoutNode container = createContainerNode();
