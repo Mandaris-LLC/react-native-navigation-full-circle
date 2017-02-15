@@ -12,6 +12,7 @@ import android.support.test.uiautomator.UiSelector;
 
 import com.facebook.react.ReactNativeHost;
 import com.reactnativenavigation.controllers.NavigationActivity;
+import com.reactnativenavigation.views.NavigationSplashView;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,6 +23,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
 
@@ -78,7 +80,7 @@ public class ApplicationLifecycleTest {
         rule.launchActivity(null);
     }
 
-    private void acceptPermissionIfNeeded() throws Exception {
+    private void acceptOverlayPermissionIfNeeded() throws Exception {
         if (Settings.canDrawOverlays(getInstrumentation().getContext())) {
             return;
         }
@@ -88,12 +90,11 @@ public class ApplicationLifecycleTest {
         UiDevice.getInstance(getInstrumentation()).pressBack();
     }
 
-
     @Test
-    public void startApp_HandleOverlayPermissions_LoadsBridge_ThenShowsWelcomeScreen() throws Exception {
+    public void startApp_RequiredOverlayPermissions_LoadsBridge_ThenShowsWelcomeScreen() throws Exception {
         assumeFalse(Settings.canDrawOverlays(getInstrumentation().getContext()));
         launchActivity();
-        acceptPermissionIfNeeded();
+        acceptOverlayPermissionIfNeeded();
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
     }
 
@@ -105,6 +106,9 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    public void () {
+    public void showsSplashOnStartup() throws Exception {
+        launchActivity();
+        assertThat(rule.getActivity().getContentView()).isNotNull().isInstanceOf(NavigationSplashView.class);
+        acceptOverlayPermissionIfNeeded();
     }
 }

@@ -11,6 +11,7 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.reactnativenavigation.controllers.NavigationActivity;
+import com.reactnativenavigation.controllers.NavigationApplication;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
 import com.reactnativenavigation.layout.StackLayout;
@@ -21,10 +22,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
-    public static final String NAME = "RNNBridgeModule";
+    private static final String NAME = "RNNBridgeModule";
+    private final NavigationActivity activity;
 
-    public NavigationModule(ReactApplicationContext reactContext) {
-        super(reactContext);
+    public NavigationModule(ReactApplicationContext context, NavigationActivity activity) {
+        super(context);
+        this.activity = activity;
     }
 
     @Override
@@ -34,30 +37,35 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setRoot(final ReadableMap layoutTree) {
-        getActivity().runOnUiThread(new Runnable() {
+        NavigationApplication.instance.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LayoutFactory factory =
-                        new LayoutFactory(getActivity(), new LayoutFactory.ReactRootViewCreator() {
-                            @Override
-                            public View create(String id, String name) {
-                                ReactRootView rootView = new ReactRootView(getActivity());
-                                Bundle opts = new Bundle();
-                                opts.putString("id", id);
-                                rootView.startReactApplication(getActivity().getHost().getReactInstanceManager(), name, opts);
-                                return rootView;
-                            }
-                        }, new BottomTabsCreator());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LayoutFactory factory =
+                                new LayoutFactory(getActivity(), new LayoutFactory.ReactRootViewCreator() {
+                                    @Override
+                                    public View create(String id, String name) {
+                                        ReactRootView rootView = new ReactRootView(getActivity());
+                                        Bundle opts = new Bundle();
+                                        opts.putString("id", id);
+                                        rootView.startReactApplication(getActivity().getHost().getReactInstanceManager(), name, opts);
+                                        return rootView;
+                                    }
+                                }, new BottomTabsCreator());
 
-                final LayoutNode layoutTreeRoot = readableMapToLayoutNode(layoutTree);
-                final View rootView = factory.create(layoutTreeRoot);
-                getActivity().setContentView(rootView);
+                        final LayoutNode layoutTreeRoot = readableMapToLayoutNode(layoutTree);
+                        final View rootView = factory.create(layoutTreeRoot);
+                        getActivity().setContentView(rootView);
+                    }
+                });
             }
         });
     }
 
     private NavigationActivity getActivity() {
-        return (NavigationActivity) getCurrentActivity();
+        return activity;
     }
 
     @ReactMethod

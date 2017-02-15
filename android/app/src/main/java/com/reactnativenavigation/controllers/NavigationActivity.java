@@ -11,10 +11,10 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
-import com.reactnativenavigation.R;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 import com.reactnativenavigation.react.NavigationPackage;
 import com.reactnativenavigation.react.ReactDevPermission;
+import com.reactnativenavigation.views.NavigationSplashView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +26,8 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
+        setContentView(new NavigationSplashView(this));
+
         host = new ReactNativeHost(getApplication()) {
             @Override
             protected boolean getUseDeveloperSupport() {
@@ -37,7 +38,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
             protected List<ReactPackage> getPackages() {
                 return Arrays.asList(
                         new MainReactPackage(),
-                        new NavigationPackage()
+                        new NavigationPackage(NavigationActivity.this)
                 );
             }
         };
@@ -69,20 +70,24 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
             ReactDevPermission.askPermission(this);
         } else {
             host.getReactInstanceManager().createReactContextInBackground();
+            host.getReactInstanceManager().onHostResume(this, this);
         }
-        host.getReactInstanceManager().onHostResume(this, this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        host.getReactInstanceManager().onHostPause(this);
+        if (host.getReactInstanceManager().hasStartedCreatingInitialContext()) {
+            host.getReactInstanceManager().onHostPause(this);
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        host.getReactInstanceManager().onHostDestroy(this);
+        if (host.getReactInstanceManager().hasStartedCreatingInitialContext()) {
+            host.getReactInstanceManager().onHostDestroy(this);
+        }
     }
 
     @Override
