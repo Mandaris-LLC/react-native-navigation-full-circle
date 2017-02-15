@@ -34,57 +34,61 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setRoot(final ReadableMap layoutTree) {
-        NavigationActivity.instance.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 LayoutFactory factory =
-                        new LayoutFactory(NavigationActivity.instance, new LayoutFactory.ReactRootViewCreator() {
+                        new LayoutFactory(getActivity(), new LayoutFactory.ReactRootViewCreator() {
                             @Override
                             public View create(String id, String name) {
-                                ReactRootView rootView = new ReactRootView(NavigationActivity.instance);
+                                ReactRootView rootView = new ReactRootView(getActivity());
                                 Bundle opts = new Bundle();
                                 opts.putString("id", id);
-                                rootView.startReactApplication(NavigationActivity.instance.getHost().getReactInstanceManager(), name, opts);
+                                rootView.startReactApplication(getActivity().getHost().getReactInstanceManager(), name, opts);
                                 return rootView;
                             }
                         }, new BottomTabsCreator());
 
                 final LayoutNode layoutTreeRoot = readableMapToLayoutNode(layoutTree);
                 final View rootView = factory.create(layoutTreeRoot);
-                NavigationActivity.instance.setContentView(rootView);
+                getActivity().setContentView(rootView);
             }
         });
     }
 
+    private NavigationActivity getActivity() {
+        return (NavigationActivity) getCurrentActivity();
+    }
+
     @ReactMethod
     public void push(String onContainerId, final ReadableMap layout) {
-        NavigationActivity.instance.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 LayoutFactory factory =
-                        new LayoutFactory(NavigationActivity.instance, new LayoutFactory.ReactRootViewCreator() {
+                        new LayoutFactory(getActivity(), new LayoutFactory.ReactRootViewCreator() {
                             @Override
                             public View create(String id, String name) {
-                                ReactRootView rootView = new ReactRootView(NavigationActivity.instance);
+                                ReactRootView rootView = new ReactRootView(getActivity());
                                 Bundle opts = new Bundle();
                                 opts.putString("id", id);
-                                rootView.startReactApplication(NavigationActivity.instance.getHost().getReactInstanceManager(), name, opts);
+                                rootView.startReactApplication(getActivity().getHost().getReactInstanceManager(), name, opts);
                                 return rootView;
                             }
                         }, new BottomTabsCreator());
                 final LayoutNode layoutNode = readableMapToLayoutNode(layout);
                 final View rootView = factory.create(layoutNode);
-                ((StackLayout) NavigationActivity.instance.getContentView()).push(rootView);
+                ((StackLayout) getActivity().getContentView()).push(rootView);
             }
         });
     }
 
     @ReactMethod
     public void pop(String onContainerId) {
-        NavigationActivity.instance.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((StackLayout) NavigationActivity.instance.getContentView()).pop();
+                ((StackLayout) getActivity().getContentView()).pop();
             }
         });
     }

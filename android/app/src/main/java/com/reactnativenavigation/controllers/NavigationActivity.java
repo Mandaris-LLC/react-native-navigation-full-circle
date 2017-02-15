@@ -20,14 +20,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
-    public static NavigationActivity instance;
     private ReactNativeHost host;
     private View contentView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        instance = this;
         setContentView(R.layout.splash);
         host = new ReactNativeHost(getApplication()) {
             @Override
@@ -84,7 +82,6 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        instance = null;
         host.getReactInstanceManager().onHostDestroy(this);
     }
 
