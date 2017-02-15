@@ -3,7 +3,7 @@
     package="com.reactnativenavigation.playground">
 
     <uses-sdk
-        android:minSdkVersion="18"
+        android:minSdkVersion="23"
         tools:overrideLibrary="android.support.test.uiautomator.v18" />
 
 </manifest>
