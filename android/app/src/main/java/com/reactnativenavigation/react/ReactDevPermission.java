@@ -13,10 +13,8 @@ import com.reactnativenavigation.controllers.NavigationApplication;
 
 public class ReactDevPermission {
 
-    private static boolean hasRequestedPermissions = false;
-
     public static boolean shouldAskPermission() {
-        return !hasRequestedPermissions && NavigationApplication.instance.isDebug() &&
+        return NavigationApplication.instance.isDebug() &&
                 Build.VERSION.SDK_INT >= 23 &&
                 !Settings.canDrawOverlays(NavigationApplication.instance);
     }
@@ -24,7 +22,6 @@ public class ReactDevPermission {
     @TargetApi(23)
     public static void askPermission(Context context) {
         if (shouldAskPermission()) {
-            hasRequestedPermissions = true;
             Intent serviceIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
             context.startActivity(serviceIntent);
             String msg = "Overlay permissions needs to be granted in order for react native apps to run in dev mode";

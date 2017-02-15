@@ -1,6 +1,7 @@
 package com.reactnativenavigation.utils;
 
 import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,7 +18,7 @@ public class ViewIdGenerator {
     }
 
     private static int compatGenerateViewId() {
-        while(true) {
+        while (true) {
             final int result = viewId.get();
             // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
             int newValue = result + 1;

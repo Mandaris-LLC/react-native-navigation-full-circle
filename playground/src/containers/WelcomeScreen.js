@@ -19,6 +19,7 @@ class WelcomeScreen extends Component {
         <Button title="Switch to lifecycle screen" onPress={this.onClickLifecycleScreen} />
         <Button title="Push" onPress={this.onClickPush} />
         <Button title="Show Modal" onPress={this.onClickShowModal} />
+        <Button title="Show Redbox" onPress={this.onClickShowRedbox} />
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
     );
@@ -113,6 +114,10 @@ class WelcomeScreen extends Component {
         text: 'Modal screen'
       }
     });
+  }
+
+  onClickShowRedbox() {
+    undefined();
   }
 }
 
