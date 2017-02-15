@@ -51,7 +51,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
                 final LayoutNode layoutTreeRoot = readableMapToLayoutNode(layoutTree);
                 final View rootView = factory.create(layoutTreeRoot);
-                NavigationActivity.instance.setRoot((StackLayout) rootView);
+                NavigationActivity.instance.setContentView(rootView);
             }
         });
     }
@@ -74,7 +74,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
                         }, new BottomTabsCreator());
                 final LayoutNode layoutNode = readableMapToLayoutNode(layout);
                 final View rootView = factory.create(layoutNode);
-                NavigationActivity.instance.push(rootView);
+                ((StackLayout) NavigationActivity.instance.getContentView()).push(rootView);
             }
         });
     }
@@ -84,7 +84,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
         NavigationActivity.instance.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                NavigationActivity.instance.pop();
+                ((StackLayout) NavigationActivity.instance.getContentView()).pop();
             }
         });
     }

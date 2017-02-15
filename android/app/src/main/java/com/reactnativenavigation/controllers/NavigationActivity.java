@@ -1,6 +1,7 @@
 package com.reactnativenavigation.controllers;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -11,7 +12,6 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.R;
-import com.reactnativenavigation.layout.StackLayout;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 import com.reactnativenavigation.react.NavigationPackage;
 import com.reactnativenavigation.react.ReactDevPermission;
@@ -22,7 +22,7 @@ import java.util.List;
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
     public static NavigationActivity instance;
     private ReactNativeHost host;
-    private StackLayout root;
+    private View contentView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,17 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
                 new NavigationEventEmitter(context).emitAppLaunched();
             }
         });
+    }
+
+    @Override
+    public void setContentView(View contentView) {
+        super.setContentView(contentView);
+        this.contentView = contentView;
+    }
+
+    @Nullable
+    public View getContentView() {
+        return contentView;
     }
 
     @Override
@@ -84,18 +95,5 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     public ReactNativeHost getHost() {
         return host;
-    }
-
-    public void setRoot(StackLayout rootView) {
-        this.root = rootView;
-        setContentView(rootView.asView());
-    }
-
-    public void push(View view) {
-        root.push(view);
-    }
-
-    public void pop() {
-        root.pop();
     }
 }
