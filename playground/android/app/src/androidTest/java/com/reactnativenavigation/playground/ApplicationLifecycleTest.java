@@ -78,7 +78,10 @@ public class ApplicationLifecycleTest {
         rule.launchActivity(null);
     }
 
-    private void acceptPermission() throws Exception {
+    private void acceptPermissionIfNeeded() throws Exception {
+        if (Settings.canDrawOverlays(getInstrumentation().getContext())) {
+            return;
+        }
         UiDevice.getInstance(getInstrumentation()).findObject(new UiSelector().text("Playground")).click();
         UiDevice.getInstance(getInstrumentation()).findObject(new UiSelector().text("Permit drawing over other apps")).click();
         UiDevice.getInstance(getInstrumentation()).pressBack();
@@ -90,7 +93,7 @@ public class ApplicationLifecycleTest {
     public void startApp_HandleOverlayPermissions_LoadsBridge_ThenShowsWelcomeScreen() throws Exception {
         assumeFalse(Settings.canDrawOverlays(getInstrumentation().getContext()));
         launchActivity();
-        acceptPermission();
+        acceptPermissionIfNeeded();
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
     }
 
@@ -99,5 +102,9 @@ public class ApplicationLifecycleTest {
         assumeTrue(Settings.canDrawOverlays(getInstrumentation().getContext()));
         launchActivity();
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void () {
     }
 }

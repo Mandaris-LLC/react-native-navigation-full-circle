@@ -47,6 +47,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         host.getReactInstanceManager().addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
             @Override
             public void onReactContextInitialized(ReactContext context) {
+                // TODO should we implement this line also if context already exists onCreate?
                 new NavigationEventEmitter(context).emitAppLaunched();
             }
         });
