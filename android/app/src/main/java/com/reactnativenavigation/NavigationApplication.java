@@ -1,4 +1,4 @@
-package com.reactnativenavigation.controllers;
+package com.reactnativenavigation;
 
 import android.app.Application;
 import android.os.Handler;
@@ -17,6 +17,10 @@ public abstract class NavigationApplication extends Application {
 
     public void runOnUiThread(Runnable runnable) {
         handler.post(runnable);
+    }
+
+    public void runOnUiThreadDelayed(Runnable runnable, long delayMillis) {
+        handler.postDelayed(runnable, delayMillis);
     }
 
     public abstract boolean isDebug();

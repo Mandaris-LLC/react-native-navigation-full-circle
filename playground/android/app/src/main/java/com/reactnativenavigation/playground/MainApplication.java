@@ -1,6 +1,6 @@
 package com.reactnativenavigation.playground;
 
-import com.reactnativenavigation.controllers.NavigationApplication;
+import com.reactnativenavigation.NavigationApplication;
 
 public class MainApplication extends NavigationApplication {
 

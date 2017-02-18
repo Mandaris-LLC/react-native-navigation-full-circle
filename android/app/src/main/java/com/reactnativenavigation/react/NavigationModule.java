@@ -10,8 +10,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
-import com.reactnativenavigation.controllers.NavigationActivity;
-import com.reactnativenavigation.controllers.NavigationApplication;
+import com.reactnativenavigation.NavigationActivity;
+import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
 import com.reactnativenavigation.layout.StackLayout;
@@ -48,6 +48,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
                                     @Override
                                     public View create(String id, String name) {
                                         ReactRootView rootView = new ReactRootView(getActivity());
+                                        rootView.setId(1234567);
                                         Bundle opts = new Bundle();
                                         opts.putString("id", id);
                                         rootView.startReactApplication(getActivity().getHost().getReactInstanceManager(), name, opts);

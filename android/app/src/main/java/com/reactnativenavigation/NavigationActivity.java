@@ -1,4 +1,4 @@
-package com.reactnativenavigation.controllers;
+package com.reactnativenavigation;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -69,7 +69,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         if (ReactDevPermission.shouldAskPermission()) {
             ReactDevPermission.askPermission(this);
         } else {
-            host.getReactInstanceManager().createReactContextInBackground();
+            if (!host.getReactInstanceManager().hasStartedCreatingInitialContext()) {
+                host.getReactInstanceManager().createReactContextInBackground();
+            }
             host.getReactInstanceManager().onHostResume(this, this);
         }
     }
@@ -88,6 +90,8 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         if (host.getReactInstanceManager().hasStartedCreatingInitialContext()) {
             host.getReactInstanceManager().onHostDestroy(this);
         }
+        host.clear();
+        android.util.Log.d("DebuggingIsHell", "NavigationActivity:onDestroy() ");
     }
 
     @Override

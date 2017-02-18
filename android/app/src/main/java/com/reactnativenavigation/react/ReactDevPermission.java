@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.react.common.ReactConstants;
-import com.reactnativenavigation.controllers.NavigationApplication;
+import com.reactnativenavigation.NavigationApplication;
 
 public class ReactDevPermission {
 
