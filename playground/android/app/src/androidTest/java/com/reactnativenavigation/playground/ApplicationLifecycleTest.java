@@ -81,13 +81,13 @@ public class ApplicationLifecycleTest {
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void _3_relaunchAfterClose() throws Exception {
-//        launchActivity();
-//        uiDevice().pressBack();
-//        launchActivity();
-//        onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
-//    }
+    @Test
+    public void _3_relaunchAfterClose() throws Exception {
+        rule.launchActivity(null);
+        uiDevice().pressBack();
+        rule.launchActivity(null);
+        onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
+    }
 }
 //    xdescribe('android application lifecycle', () => {
 ////launch, pause, and resume
