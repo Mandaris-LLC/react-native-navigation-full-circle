@@ -48,7 +48,6 @@ public class NavigationModule extends ReactContextBaseJavaModule {
                                     @Override
                                     public View create(String id, String name) {
                                         ReactRootView rootView = new ReactRootView(getActivity());
-                                        rootView.setId(1234567);
                                         Bundle opts = new Bundle();
                                         opts.putString("id", id);
                                         rootView.startReactApplication(getActivity().getHost().getReactInstanceManager(), name, opts);

@@ -91,7 +91,6 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
             host.getReactInstanceManager().onHostDestroy(this);
         }
         host.clear();
-        android.util.Log.d("DebuggingIsHell", "NavigationActivity:onDestroy() ");
     }
 
     @Override

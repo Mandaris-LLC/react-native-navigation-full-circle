@@ -12,9 +12,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 class ReactIdlingResource implements IdlingResource, NotThreadSafeBridgeIdleDebugListener {
     private final NavigationActivity activity;
     private ResourceCallback callback;
+    private AtomicBoolean registered = new AtomicBoolean(false);
+    private AtomicBoolean bridgeIdle = new AtomicBoolean(false);
 
     ReactIdlingResource(NavigationActivity activity) {
-        android.util.Log.d("DebuggingIsHell", "------------------------------");
         this.activity = activity;
         NavigationApplication.instance.runOnUiThreadDelayed(new Runnable() {
             @Override
@@ -26,8 +27,6 @@ class ReactIdlingResource implements IdlingResource, NotThreadSafeBridgeIdleDebu
         }, 10);
     }
 
-    private AtomicBoolean registered = new AtomicBoolean(false);
-    private AtomicBoolean bridgeIdle = new AtomicBoolean(false);
 
     @Override
     public String getName() {
@@ -49,7 +48,6 @@ class ReactIdlingResource implements IdlingResource, NotThreadSafeBridgeIdleDebu
         }
 
         boolean idle = bridgeIdle.get();
-        android.util.Log.d("DebuggingIsHell", "idle " + idle);
         if (idle) {
             callback.onTransitionToIdle();
         }
@@ -63,13 +61,11 @@ class ReactIdlingResource implements IdlingResource, NotThreadSafeBridgeIdleDebu
 
     @Override
     public void onTransitionToBridgeIdle() {
-        android.util.Log.d("DebuggingIsHell", "IDLE");
         bridgeIdle.set(true);
     }
 
     @Override
     public void onTransitionToBridgeBusy() {
-        android.util.Log.d("DebuggingIsHell", "busy");
         bridgeIdle.set(false);
     }
 }
