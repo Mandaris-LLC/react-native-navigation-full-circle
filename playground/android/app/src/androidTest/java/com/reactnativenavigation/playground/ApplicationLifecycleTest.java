@@ -11,6 +11,8 @@ import android.support.test.uiautomator.UiSelector;
 
 import com.reactnativenavigation.views.NavigationSplashView;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,26 +32,19 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 public class ApplicationLifecycleTest {
 
-    private ReactIdlingResource reactIdlingResource;
+    private ReactIdlingResource reactIdlingResource = new ReactIdlingResource();
 
     @Rule
-    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, false, false) {
-        @Override
-        protected void afterActivityLaunched() {
-            super.afterActivityLaunched();
-            reactIdlingResource = new ReactIdlingResource(getActivity());
-            Espresso.registerIdlingResources(reactIdlingResource);
-        }
+    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class, false, false);
 
-        @Override
-        protected void afterActivityFinished() {
-            super.afterActivityFinished();
-            Espresso.unregisterIdlingResources(reactIdlingResource);
-        }
-    };
+    @Before
+    public void beforeEach() {
+        Espresso.registerIdlingResources(reactIdlingResource);
+    }
 
-    private void launchActivity() {
-        rule.launchActivity(null);
+    @After
+    public void afterEach() {
+        Espresso.unregisterIdlingResources(reactIdlingResource);
     }
 
     private UiDevice uiDevice() {
@@ -67,23 +62,16 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    public void _1_acceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
-        launchActivity();
+    public void _1_ShowSplash_AcceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
+        rule.launchActivity(null);
+        assertThat(rule.getActivity().getContentView()).isNotNull().isInstanceOf(NavigationSplashView.class);
         acceptOverlayPermissionIfNeeded();
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
     }
 
     @Test
-    public void _2_showsSplashOnStartup() throws Exception {
-        launchActivity();
-        assertThat(rule.getActivity().getContentView()).isNotNull().isInstanceOf(NavigationSplashView.class);
-        acceptOverlayPermissionIfNeeded();
-    }
-
-    @Test
-    public void _3_relaunchFromBackground() throws Exception {
-        launchActivity();
-        acceptOverlayPermissionIfNeeded();
+    public void _2_relaunchFromBackground() throws Exception {
+        rule.launchActivity(null);
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
 
         uiDevice().pressHome();
@@ -92,6 +80,14 @@ public class ApplicationLifecycleTest {
 
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
     }
+
+//    @Test
+//    public void _3_relaunchAfterClose() throws Exception {
+//        launchActivity();
+//        uiDevice().pressBack();
+//        launchActivity();
+//        onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
+//    }
 }
 //    xdescribe('android application lifecycle', () => {
 ////launch, pause, and resume

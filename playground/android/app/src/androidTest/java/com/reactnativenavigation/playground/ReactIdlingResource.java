@@ -4,24 +4,22 @@ import android.support.test.espresso.IdlingResource;
 
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.bridge.NotThreadSafeBridgeIdleDebugListener;
-import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.utils.UiThread;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 class ReactIdlingResource implements IdlingResource, NotThreadSafeBridgeIdleDebugListener {
-    private final NavigationActivity activity;
     private ResourceCallback callback;
     private AtomicBoolean registered = new AtomicBoolean(false);
     private AtomicBoolean bridgeIdle = new AtomicBoolean(false);
 
-    ReactIdlingResource(NavigationActivity activity) {
-        this.activity = activity;
-        NavigationApplication.instance.runOnUiThreadDelayed(new Runnable() {
+    ReactIdlingResource() {
+        UiThread.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (!isIdleNow()) {
-                    NavigationApplication.instance.runOnUiThreadDelayed(this, 10);
+                    UiThread.postDelayed(this, 10);
                 }
             }
         }, 10);
@@ -35,7 +33,7 @@ class ReactIdlingResource implements IdlingResource, NotThreadSafeBridgeIdleDebu
 
     @Override
     public boolean isIdleNow() {
-        ReactNativeHost host = activity.getHost();
+        ReactNativeHost host = NavigationApplication.instance.getReactNativeHost();
         boolean hasContext = host != null
                 && host.getReactInstanceManager() != null
                 && host.getReactInstanceManager().getCurrentReactContext() != null;
@@ -48,7 +46,7 @@ class ReactIdlingResource implements IdlingResource, NotThreadSafeBridgeIdleDebu
         }
 
         boolean idle = bridgeIdle.get();
-        if (idle) {
+        if (idle && callback != null) {
             callback.onTransitionToIdle();
         }
         return idle;
