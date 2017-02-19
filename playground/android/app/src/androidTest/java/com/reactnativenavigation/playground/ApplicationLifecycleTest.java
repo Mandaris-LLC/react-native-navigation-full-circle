@@ -75,6 +75,7 @@ public class ApplicationLifecycleTest {
     @Test
     public void _2_RelaunchFromBackground() throws Exception {
         rule.launchActivity(null);
+        uiDevice().waitForIdle();
 
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
         uiDevice().waitForIdle();
