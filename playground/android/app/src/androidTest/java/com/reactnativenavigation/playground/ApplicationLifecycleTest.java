@@ -39,11 +39,14 @@ public class ApplicationLifecycleTest {
 
     @Before
     public void beforeEach() {
+        reactIdlingResource.start();
         Espresso.registerIdlingResources(reactIdlingResource);
     }
 
     @After
     public void afterEach() {
+        uiDevice().waitForIdle();
+        reactIdlingResource.stop();
         Espresso.unregisterIdlingResources(reactIdlingResource);
     }
 
@@ -70,37 +73,35 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    public void _2_relaunchFromBackground() throws Exception {
+    public void _2_RelaunchFromBackground() throws Exception {
         rule.launchActivity(null);
+
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
+        uiDevice().waitForIdle();
 
         uiDevice().pressHome();
         uiDevice().pressRecentApps();
         uiDevice().findObject(new UiSelector().text("Playground")).click();
+        uiDevice().waitForIdle();
 
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
     }
 
     @Test
-    public void _3_relaunchAfterClose() throws Exception {
+    public void _3_RelaunchAfterClose() throws Exception {
         rule.launchActivity(null);
+        uiDevice().waitForIdle();
+
         uiDevice().pressBack();
+        uiDevice().waitForIdle();
+
         rule.launchActivity(null);
+        uiDevice().waitForIdle();
+
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
     }
 }
-//    xdescribe('android application lifecycle', () => {
-////launch, pause, and resume
-//
-//        it('launch already running in background', () => {
-//        //
-//        });
-//
 //        it('launch after activity killed by system', () => {
-//        //
-//        });
-//
-//        it('launch and ask react overlay permissions', () => {
 //        //
 //        });
 //

@@ -13,16 +13,29 @@ class ReactIdlingResource implements IdlingResource, NotThreadSafeBridgeIdleDebu
     private ResourceCallback callback;
     private AtomicBoolean registered = new AtomicBoolean(false);
     private AtomicBoolean bridgeIdle = new AtomicBoolean(false);
+    private AtomicBoolean shouldRun = new AtomicBoolean(false);
 
     ReactIdlingResource() {
+    }
+
+    public void start() {
+        shouldRun.set(true);
         UiThread.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!isIdleNow()) {
-                    UiThread.postDelayed(this, 10);
+                if (shouldRun.get()) {
+                    isIdleNow();
+                    UiThread.postDelayed(this, 100);
                 }
             }
-        }, 10);
+        }, 100);
+    }
+
+    public void stop() {
+        shouldRun.set(false);
+        ReactNativeHost host = NavigationApplication.instance.getReactNativeHost();
+        if (host != null && host.getReactInstanceManager().getCurrentReactContext() != null)
+            host.getReactInstanceManager().getCurrentReactContext().getCatalystInstance().removeBridgeIdleDebugListener(this);
     }
 
 
