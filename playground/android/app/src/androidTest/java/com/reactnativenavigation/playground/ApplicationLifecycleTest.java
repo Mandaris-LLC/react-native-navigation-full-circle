@@ -7,6 +7,8 @@ import android.support.test.filters.SdkSuppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 
 import com.reactnativenavigation.views.NavigationSplashView;
@@ -14,6 +16,7 @@ import com.reactnativenavigation.views.NavigationSplashView;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,9 +30,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 @SdkSuppress(minSdkVersion = 23)
 @TargetApi(23)
-@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 public class ApplicationLifecycleTest {
 
     private ReactIdlingResource reactIdlingResource = new ReactIdlingResource();
@@ -38,16 +41,114 @@ public class ApplicationLifecycleTest {
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class, false, false);
 
     @Before
-    public void beforeEach() {
+    public void beforeEach() throws Exception {
+        uiDevice().wakeUp();
+
         reactIdlingResource.start();
         Espresso.registerIdlingResources(reactIdlingResource);
+
+        rule.launchActivity(null);
     }
 
     @After
     public void afterEach() {
-        uiDevice().waitForIdle();
         reactIdlingResource.stop();
         Espresso.unregisterIdlingResources(reactIdlingResource);
+        uiDevice().waitForIdle();
+    }
+
+    @Test
+    public void _1_showSplash_AcceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
+        assertThat(rule.getActivity().getContentView()).isNotNull().isInstanceOf(NavigationSplashView.class);
+        acceptOverlayPermissionIfNeeded();
+        assertWelcomeShown();
+    }
+
+    @Test
+    public void _2_relaunchFromBackground() throws Exception {
+        assertWelcomeShown();
+
+        uiDevice().pressHome();
+        uiDevice().pressRecentApps();
+        uiDevice().findObject(new UiSelector().text("Playground")).click();
+        uiDevice().waitForIdle();
+
+        assertWelcomeShown();
+    }
+
+
+    @Test
+    public void _3_relaunchAfterClose() throws Exception {
+        assertWelcomeShown();
+
+        uiDevice().pressBack();
+        uiDevice().waitForIdle();
+
+        rule.launchActivity(null);
+        uiDevice().waitForIdle();
+
+        onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    @Ignore
+    public void relaunchAfterActivityKilledBySystem() throws Exception {
+        //TODO this test should be compiled in its own APK and run separately.
+        assertWelcomeShown();
+
+        setSettingsNoBackgroundProcesses();
+        openCalculator();
+
+        uiDevice().pressRecentApps();
+        uiDevice().findObject(new UiSelector().text("Playground")).click();
+        uiDevice().waitForIdle();
+
+        assertWelcomeShown();
+
+        setSettingsNormalProcesses();
+    }
+
+    private void setSettingsNoBackgroundProcesses() throws Exception {
+        uiDevice().pressHome();
+        uiDevice().waitForIdle();
+        uiDevice().findObject(new UiSelector().description("Apps")).clickAndWaitForNewWindow();
+        new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Settings");
+        uiDevice().findObject(new UiSelector().text("Settings")).click();
+        new UiScrollable(new UiSelector().scrollable(true)).flingToEnd(100);
+        uiDevice().findObject(new UiSelector().text("Developer options")).click();
+        new UiScrollable(new UiSelector().scrollable(true)).flingToEnd(100);
+        uiDevice().findObject(new UiSelector().text("Background process limit")).click();
+        uiDevice().findObject(new UiSelector().text("No background processes")).click();
+        uiDevice().pressHome();
+        uiDevice().waitForIdle();
+    }
+
+    private void openCalculator() throws Exception {
+        uiDevice().pressHome();
+        uiDevice().waitForIdle();
+        uiDevice().findObject(new UiSelector().description("Apps")).clickAndWaitForNewWindow();
+        new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Calculator");
+        uiDevice().findObject(new UiSelector().text("Calculator")).click();
+    }
+
+    private void setSettingsNormalProcesses() throws UiObjectNotFoundException {
+        uiDevice().pressHome();
+        uiDevice().waitForIdle();
+        uiDevice().findObject(new UiSelector().description("Apps")).clickAndWaitForNewWindow();
+        new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Settings");
+        uiDevice().findObject(new UiSelector().text("Settings")).click();
+        new UiScrollable(new UiSelector().scrollable(true)).flingToEnd(100);
+        uiDevice().findObject(new UiSelector().text("Developer options")).click();
+        new UiScrollable(new UiSelector().scrollable(true)).flingToEnd(100);
+        uiDevice().findObject(new UiSelector().text("Background process limit")).click();
+        uiDevice().findObject(new UiSelector().text("Standard limit")).click();
+        uiDevice().pressHome();
+        uiDevice().waitForIdle();
+    }
+
+    private void assertWelcomeShown() {
+        onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
+        uiDevice().waitForIdle();
     }
 
     private UiDevice uiDevice() {
@@ -58,53 +159,14 @@ public class ApplicationLifecycleTest {
         if (Settings.canDrawOverlays(getInstrumentation().getContext())) {
             return;
         }
+        uiDevice().waitForIdle();
         uiDevice().findObject(new UiSelector().text("Playground")).click();
         uiDevice().findObject(new UiSelector().text("Permit drawing over other apps")).click();
         uiDevice().pressBack();
         uiDevice().pressBack();
     }
 
-    @Test
-    public void _1_ShowSplash_AcceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
-        rule.launchActivity(null);
-        assertThat(rule.getActivity().getContentView()).isNotNull().isInstanceOf(NavigationSplashView.class);
-        acceptOverlayPermissionIfNeeded();
-        onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void _2_RelaunchFromBackground() throws Exception {
-        rule.launchActivity(null);
-        uiDevice().waitForIdle();
-
-        onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
-        uiDevice().waitForIdle();
-
-        uiDevice().pressHome();
-        uiDevice().pressRecentApps();
-        uiDevice().findObject(new UiSelector().text("Playground")).click();
-        uiDevice().waitForIdle();
-
-        onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void _3_RelaunchAfterClose() throws Exception {
-        rule.launchActivity(null);
-        uiDevice().waitForIdle();
-
-        uiDevice().pressBack();
-        uiDevice().waitForIdle();
-
-        rule.launchActivity(null);
-        uiDevice().waitForIdle();
-
-        onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
-    }
 }
-//        it('launch after activity killed by system', () => {
-//        //
-//        });
 //
 //        it('launch after reactContext killed by system', () => {
 //        //
