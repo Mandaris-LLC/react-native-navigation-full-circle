@@ -1,8 +1,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "RCTEventEmitter.h"
-#import "RCTBridgeModule.h"
+#import <React/RCTEventEmitter.h>
+#import <React/RCTBridgeModule.h>
 
 @interface RNNEventEmitter : RCTEventEmitter <RCTBridgeModule>
 

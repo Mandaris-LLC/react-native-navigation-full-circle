@@ -8,7 +8,7 @@
 
 #import "RNNReactRootViewCreator.h"
 #import "RNN.h"
-#import "RCTRootView.h"
+#import <React/RCTRootView.h>
 
 @implementation RNNReactRootViewCreator
 

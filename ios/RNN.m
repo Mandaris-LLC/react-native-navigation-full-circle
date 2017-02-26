@@ -2,7 +2,7 @@
 #import "RNN.h"
 #import "RNNEventEmitter.h"
 
-#import "RCTBridge.h"
+#import <React/RCTBridge.h>
 #import "RNNSplashScreen.h"
 
 @interface RNN()
@@ -62,7 +62,7 @@
 	
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptDevReload) name:RCTReloadNotification object:self.bridge];
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptDevReload) name:RCTReloadNotification object:self.bridge];
 #pragma GCC diagnostic pop
 }
 

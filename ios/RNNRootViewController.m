@@ -1,6 +1,6 @@
 
 #import "RNNRootViewController.h"
-#import "RCTRootView.h"
+#import <React/RCTRootView.h>
 #import "RNN.h"
 
 @interface RNNRootViewController()

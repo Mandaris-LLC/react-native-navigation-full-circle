@@ -3,7 +3,7 @@
 #import <UIKit/UIKit.h>
 
 #import "RNNEventEmitter.h"
-#import "RCTBridge.h"
+#import <React/RCTBridge.h>
 #import "RNNStore.h"
 
 @interface RNN : NSObject
