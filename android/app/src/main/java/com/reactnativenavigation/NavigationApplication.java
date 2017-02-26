@@ -29,7 +29,7 @@ public abstract class NavigationApplication extends Application implements React
         instance = this;
         host = new ReactNativeHost(this) {
             @Override
-            protected boolean getUseDeveloperSupport() {
+            public boolean getUseDeveloperSupport() {
                 return isDebug();
             }
 
