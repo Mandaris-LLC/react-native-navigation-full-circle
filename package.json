@@ -42,7 +42,7 @@
     "lodash": "4.x.x"
   },
   "devDependencies": {
-    "react-native": "0.38.0",
+    "react-native": "0.41.2",
     "react": "15.4.2",
     "react-test-renderer": "15.4.2",
     "babel-cli": "6.x.x",
