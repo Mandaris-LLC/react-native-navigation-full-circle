@@ -43,7 +43,7 @@ describe('app', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal screen')).toBeVisible();
   });
-  
+
   it('dismiss modal', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal screen')).toBeVisible();
@@ -52,7 +52,7 @@ describe('app', () => {
   });
 });
 
-describe('reload app', () => {
+xdescribe('reload app', () => {
   before((done) => {
     simulator.reloadReactNativeApp(done);
   });

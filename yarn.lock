@@ -1407,8 +1407,8 @@ detox-server@1.x.x:
     ws "^1.1.0"
 
 detox@4.x.x:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/detox/-/detox-4.3.0.tgz#41ffe5a0a2359fbc7d070a41a946875149c6ba4d"
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/detox/-/detox-4.1.4.tgz#5e24de40febaba00da0a0a32e76a0ba0dedff0c9"
   dependencies:
     child-process-promise "^2.2.0"
     commander "^2.9.0"
