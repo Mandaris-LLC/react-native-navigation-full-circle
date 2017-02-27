@@ -56,26 +56,28 @@ public class ApplicationLifecycleTest {
         rule.launchActivity(null);
         assertThat(rule.getActivity().getContentView()).isNotNull().isInstanceOf(NavigationSplashView.class);
         acceptOverlayPermissionIfNeeded();
-        assertWelcomeShown();
+        assertMainShown();
     }
 
     @Test
     public void _2_relaunchFromBackground() throws Exception {
         rule.launchActivity(null);
-        assertWelcomeShown();
+        acceptOverlayPermissionIfNeeded();
+        assertMainShown();
 
         uiDevice().pressHome();
         uiDevice().pressRecentApps();
         uiDevice().findObject(new UiSelector().text("Playground")).click();
         uiDevice().waitForIdle();
 
-        assertWelcomeShown();
+        assertMainShown();
     }
 
     @Test
     public void _3_relaunchAfterClose() throws Exception {
         rule.launchActivity(null);
-        assertWelcomeShown();
+        acceptOverlayPermissionIfNeeded();
+        assertMainShown();
 
         uiDevice().pressBack();
         uiDevice().waitForIdle();
@@ -83,10 +85,24 @@ public class ApplicationLifecycleTest {
         rule.launchActivity(null);
         uiDevice().waitForIdle();
 
-        assertWelcomeShown();
+        assertMainShown();
     }
 
-    private void assertWelcomeShown() {
+    @Test
+    public void _4_deviceOrientationDoesNotDestroyActivity() throws Exception {
+        MainActivity mainActivity = rule.launchActivity(null);
+        acceptOverlayPermissionIfNeeded();
+        assertMainShown();
+
+        uiDevice().setOrientationRight();
+        uiDevice().waitForIdle();
+
+        Thread.sleep(5000);
+        assertMainShown();
+        assertThat(rule.getActivity()).isSameAs(mainActivity);
+    }
+
+    private void assertMainShown() {
         onView(withText("React Native Navigation!")).check(matches(isDisplayed()));
         uiDevice().waitForIdle();
     }
@@ -105,5 +121,4 @@ public class ApplicationLifecycleTest {
         uiDevice().pressBack();
         uiDevice().pressBack();
     }
-
 }
