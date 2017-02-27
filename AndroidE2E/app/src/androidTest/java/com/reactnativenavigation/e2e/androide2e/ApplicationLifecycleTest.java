@@ -4,7 +4,9 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.Until;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +18,13 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 @SdkSuppress(minSdkVersion = 23)
 @TargetApi(23)
 public class ApplicationLifecycleTest {
+
+    public static final String PACKAGE_NAME = "com.reactnativenavigation.playground";
+
     @Test
     public void showSplash_AcceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
         launchTheApp();
+
 //        assertThat(rule.getActivity().getContentView()).isNotNull().isInstanceOf(NavigationSplashView.class);
 //        acceptOverlayPermissionIfNeeded();
 //        assertMainShown();
@@ -40,10 +46,10 @@ public class ApplicationLifecycleTest {
         uiDevice().wakeUp();
         uiDevice().pressHome();
         uiDevice().waitForIdle();
-        Intent intent = getInstrumentation().getTargetContext().getPackageManager().getLaunchIntentForPackage("com.reactnativenavigation.playground");
+        Intent intent = getInstrumentation().getTargetContext().getPackageManager().getLaunchIntentForPackage(PACKAGE_NAME);
         assertThat(intent).isNotNull();
         getInstrumentation().getTargetContext().startActivity(intent);
-        uiDevice().waitForIdle();
+        uiDevice().wait(Until.hasObject(By.pkg("com.reactnativenavigation.playground").depth(0)), 5000);
     }
 
     private UiDevice uiDevice() {

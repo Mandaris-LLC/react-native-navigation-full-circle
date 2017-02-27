@@ -16,6 +16,9 @@ function e2e() {
 }
 
 function run() {
+  if (process.env.CI) {
+    return;
+  }
   shellUtils.exec.execSync(`echo 'travis_fold:start:android-e2e'`);
   try {
     e2e();

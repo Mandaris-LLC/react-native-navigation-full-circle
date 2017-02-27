@@ -7,7 +7,7 @@
     "start": "adb reverse tcp:8081 tcp:8081; watchman watch-del-all; react-native start",
     "xcode": "open ios/playground.xcodeproj",
     "android": "cd android && ./gradlew installDebug",
-    "uninstall-android": "cd android && ./gradlew clean uninstallAll",
+    "uninstall-android": "cd android && ./gradlew uninstallAll",
     "xcodeunit": "node ./scripts/unit.ios.js",
     "e2e-android": "node ./scripts/e2e.android.js",
     "e2e-ios": "node ./scripts/e2e.ios.js"
