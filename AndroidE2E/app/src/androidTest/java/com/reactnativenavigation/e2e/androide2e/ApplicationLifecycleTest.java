@@ -2,11 +2,9 @@ package com.reactnativenavigation.e2e.androide2e;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiSelector;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,25 +19,24 @@ public class ApplicationLifecycleTest {
     @Test
     public void showSplash_AcceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
         launchTheApp();
-        Thread.sleep(2000);
 //        assertThat(rule.getActivity().getContentView()).isNotNull().isInstanceOf(NavigationSplashView.class);
 //        acceptOverlayPermissionIfNeeded();
 //        assertMainShown();
     }
 
-    private void acceptOverlayPermissionIfNeeded() throws Exception {
-        if (Settings.canDrawOverlays(getInstrumentation().getTargetContext())) {
-            return;
-        }
-        uiDevice().waitForIdle();
-        uiDevice().findObject(new UiSelector().text("Playground")).click();
-        uiDevice().findObject(new UiSelector().text("Permit drawing over other apps")).click();
-        uiDevice().pressBack();
-        uiDevice().pressBack();
-    }
+//    private void acceptOverlayPermissionIfNeeded() throws Exception {
+//        if (Settings.canDrawOverlays(getInstrumentation().getTargetContext())) {
+//            return;
+//        }
+//        uiDevice().waitForIdle();
+//        uiDevice().findObject(new UiSelector().text("Playground")).click();
+//        uiDevice().findObject(new UiSelector().text("Permit drawing over other apps")).click();
+//        uiDevice().pressBack();
+//        uiDevice().pressBack();
+//    }
+//        uiDevice().findObject(new UiSelector().description("Apps")).clickAndWaitForNewWindow();
 
     private void launchTheApp() throws Exception {
-//        uiDevice().findObject(new UiSelector().description("Apps")).clickAndWaitForNewWindow();
         uiDevice().wakeUp();
         uiDevice().pressHome();
         uiDevice().waitForIdle();

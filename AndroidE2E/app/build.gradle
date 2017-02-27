@@ -24,20 +24,3 @@ dependencies {
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 }
-
-task reinstallNavigation {
-    shell("cd ../../playground/ && yarn run uninstall-android && yarn run android");
-}
-
-def shell(cmd) {
-    exec {
-        executable "sh"
-        args "-c", "$cmd"
-    }
-}
-
-tasks.whenTaskAdded { task ->
-    if (task.name == 'connectedAndroidTest') {
-        task.dependsOn reinstallNavigation
-    }
-}
