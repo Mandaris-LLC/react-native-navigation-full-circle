@@ -1,9 +1,13 @@
 package com.reactnativenavigation.e2e.androide2e;
 
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
+import android.support.test.uiautomator.Until;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,11 +22,11 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @RunWith(AndroidJUnit4.class)
-@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ApplicationLifecycleTest {
 
     private static final String PACKAGE_NAME = "com.reactnativenavigation.playground";
-    private static final int TIMEOUT = 2000;
+    private static final long TIMEOUT = 3000;
 
     @Before
     public void beforeEach() {
@@ -38,7 +42,6 @@ public class ApplicationLifecycleTest {
     public void _1_showSplash_AcceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
         launchTheApp();
 //        assertThat(uiDevice().wait(Until.hasObject(By.desc("NavigationSplashView")), TIMEOUT)).isTrue();
-        acceptOverlayPermissionIfNeeded();
         assertMainShown();
     }
 
@@ -49,7 +52,7 @@ public class ApplicationLifecycleTest {
 
         uiDevice().pressHome();
         uiDevice().pressRecentApps();
-        uiDevice().findObject(new UiSelector().text("Playground")).click();
+        elementByText("Playground").click();
         assertMainShown();
     }
 
@@ -64,14 +67,31 @@ public class ApplicationLifecycleTest {
         assertMainShown();
     }
 
+    @Test
+    public void _4_deviceOrientationDoesNotDestroyActivity() throws Exception {
+        launchTheApp();
+        assertMainShown();
+
+        elementByText("PUSH").click();
+        assertExists(By.text("Pushed screen"));
+
+        uiDevice().setOrientationLeft();
+        Thread.sleep(100);
+
+        assertExists(By.text("Pushed screen"));
+    }
+
     private void assertMainShown() {
-        assertThat(uiDevice().findObject(new UiSelector().text("React Native Navigation!")).exists()).isTrue();
+        assertExists(By.text("React Native Navigation!"));
     }
 
     private void acceptOverlayPermissionIfNeeded() throws Exception {
-        if (uiDevice().findObject(new UiSelector().text("Draw over other apps")).exists()) {
-            uiDevice().findObject(new UiSelector().text("Playground")).click();
-            uiDevice().findObject(new UiSelector().text("Permit drawing over other apps")).click();
+        if (elementByText("Draw over other apps").exists()) {
+            if (!elementByText("Playground").exists()) {
+                scrollToText("Playground");
+            }
+            elementByText("Playground").click();
+            elementByText("Permit drawing over other apps").click();
             uiDevice().pressBack();
             uiDevice().pressBack();
         }
@@ -80,13 +100,29 @@ public class ApplicationLifecycleTest {
     private void launchTheApp() throws Exception {
         uiDevice().wakeUp();
         uiDevice().pressHome();
-        uiDevice().findObject(new UiSelector().description("Apps")).clickAndWaitForNewWindow();
-        new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView("Playground");
-        uiDevice().findObject(new UiSelector().text("Playground")).clickAndWaitForNewWindow();
+        elementByDesc("Apps").clickAndWaitForNewWindow();
+        scrollToText("Playground");
+        elementByText("Playground").clickAndWaitForNewWindow();
+        acceptOverlayPermissionIfNeeded();
     }
 
     private UiDevice uiDevice() {
         return UiDevice.getInstance(getInstrumentation());
     }
 
+    private UiObject elementByText(String text) {
+        return uiDevice().findObject(new UiSelector().text(text));
+    }
+
+    private UiObject elementByDesc(String text) {
+        return uiDevice().findObject(new UiSelector().description(text));
+    }
+
+    private void scrollToText(String txt) throws Exception {
+        new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView(txt);
+    }
+
+    private void assertExists(BySelector selector) {
+        assertThat(uiDevice().wait(Until.hasObject(selector), TIMEOUT)).isTrue();
+    }
 }
