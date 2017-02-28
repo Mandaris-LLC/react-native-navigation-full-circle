@@ -16,8 +16,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
-import java.io.IOException;
-
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -29,12 +27,13 @@ public class ApplicationLifecycleTest {
     private static final long TIMEOUT = 3000;
 
     @Before
-    public void beforeEach() {
-        //
+    public void beforeEach() throws Exception {
+        uiDevice().wakeUp();
+        uiDevice().setOrientationNatural();
     }
 
     @After
-    public void afterEach() throws IOException {
+    public void afterEach() throws Exception {
         uiDevice().executeShellCommand("am force-stop " + PACKAGE_NAME);
     }
 
@@ -53,6 +52,7 @@ public class ApplicationLifecycleTest {
         uiDevice().pressHome();
         uiDevice().pressRecentApps();
         elementByText("Playground").click();
+
         assertMainShown();
     }
 
@@ -71,7 +71,6 @@ public class ApplicationLifecycleTest {
     public void _4_deviceOrientationDoesNotDestroyActivity() throws Exception {
         launchTheApp();
         assertMainShown();
-
         elementByText("PUSH").click();
         assertExists(By.text("Pushed screen"));
 
@@ -79,6 +78,19 @@ public class ApplicationLifecycleTest {
         Thread.sleep(100);
 
         assertExists(By.text("Pushed screen"));
+    }
+
+    @Test
+    public void _5_relaunchAfterActivityKilledBySystem() throws Exception {
+        launchTheApp();
+        assertMainShown();
+
+        uiDevice().pressHome();
+        uiDevice().executeShellCommand("am kill " + PACKAGE_NAME);
+
+        uiDevice().pressRecentApps();
+        elementByText("Playground").click();
+        assertMainShown();
     }
 
     private void assertMainShown() {
@@ -98,11 +110,8 @@ public class ApplicationLifecycleTest {
     }
 
     private void launchTheApp() throws Exception {
-        uiDevice().wakeUp();
-        uiDevice().pressHome();
-        elementByDesc("Apps").clickAndWaitForNewWindow();
-        scrollToText("Playground");
-        elementByText("Playground").clickAndWaitForNewWindow();
+        uiDevice().executeShellCommand("am start -n " + PACKAGE_NAME + "/.MainActivity");
+        uiDevice().waitForIdle();
         acceptOverlayPermissionIfNeeded();
     }
 
@@ -112,10 +121,6 @@ public class ApplicationLifecycleTest {
 
     private UiObject elementByText(String text) {
         return uiDevice().findObject(new UiSelector().text(text));
-    }
-
-    private UiObject elementByDesc(String text) {
-        return uiDevice().findObject(new UiSelector().description(text));
     }
 
     private void scrollToText(String txt) throws Exception {
