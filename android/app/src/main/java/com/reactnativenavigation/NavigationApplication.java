@@ -14,10 +14,12 @@ import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 import com.reactnativenavigation.react.NavigationPackage;
 import com.reactnativenavigation.react.ReactDevPermission;
+import com.reactnativenavigation.utils.UiThread;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class NavigationApplication extends Application implements ReactApplication {
     public static NavigationApplication instance;
@@ -44,6 +46,7 @@ public abstract class NavigationApplication extends Application implements React
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             private AtomicBoolean creating = new AtomicBoolean(true);
+            private AtomicLong startTime = new AtomicLong();
 
             @Override
             public void onActivityCreated(final Activity activity, Bundle bundle) {
@@ -65,11 +68,21 @@ public abstract class NavigationApplication extends Application implements React
                 }
 
                 if (!host.getReactInstanceManager().hasStartedCreatingInitialContext()) {
+                    startTime.set(System.currentTimeMillis());
                     host.getReactInstanceManager().addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
                         @Override
-                        public void onReactContextInitialized(ReactContext context) {
+                        public void onReactContextInitialized(final ReactContext context) {
                             host.getReactInstanceManager().removeReactInstanceEventListener(this);
-                            new NavigationEventEmitter(context).emitAppLaunched();
+
+                            long millisPassed = System.currentTimeMillis() - startTime.get();
+                            long diff = 1000 - millisPassed;
+
+                            UiThread.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    new NavigationEventEmitter(context).emitAppLaunched();
+                                }
+                            }, diff);
                         }
                     });
                     host.getReactInstanceManager().createReactContextInBackground();
@@ -80,7 +93,12 @@ public abstract class NavigationApplication extends Application implements React
                 host.getReactInstanceManager().onHostResume(activity, (DefaultHardwareBackBtnHandler) activity);
 
                 if (creating.compareAndSet(true, false)) {
-                    new NavigationEventEmitter(host.getReactInstanceManager().getCurrentReactContext()).emitAppLaunched();
+                    UiThread.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            new NavigationEventEmitter(host.getReactInstanceManager().getCurrentReactContext()).emitAppLaunched();
+                        }
+                    }, 1000);
                 }
             }
 

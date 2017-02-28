@@ -40,7 +40,7 @@ public class ApplicationLifecycleTest {
     @Test
     public void _1_showSplash_AcceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
         launchTheApp();
-//        assertThat(uiDevice().wait(Until.hasObject(By.desc("NavigationSplashView")), TIMEOUT)).isTrue();
+        assertExists(By.desc("NavigationSplashView"));
         assertMainShown();
     }
 
