@@ -6,6 +6,10 @@ function run() {
   }
 
   exec.execSync(`cd android && ./gradlew clean testDebugUnitTest`);
+
+  if (!process.env.CI) {
+    exec.execSync(`cd playground && yarn run e2e-android`);
+  }
 }
 
 run();
