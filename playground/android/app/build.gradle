@@ -11,8 +11,6 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 }
 
@@ -22,25 +20,4 @@ dependencies {
     compile 'com.android.support:design:25.1.1'
     compile "com.android.support:appcompat-v7:25.1.1"
     compile project(':react-native-navigation')
-
-    // native e2e
-    androidTestCompile 'org.assertj:assertj-core:2.5.0'
-    androidTestCompile 'com.android.support:support-annotations:25.1.1'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
-        exclude module: 'jsr305'
-    }
-    androidTestCompile('com.android.support.test.espresso:espresso-intents:2.2.2') {
-        exclude module: 'jsr305'
-    }
-    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {
-        exclude module: 'support-annotations'
-        exclude module: 'support-v4'
-        exclude module: 'support-v13'
-        exclude module: 'recyclerview-v7'
-        exclude module: 'design'
-        exclude module: 'jsr305'
-    }
 }
