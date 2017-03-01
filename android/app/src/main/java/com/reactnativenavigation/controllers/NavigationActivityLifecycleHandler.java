@@ -10,14 +10,18 @@ import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 import com.reactnativenavigation.react.ReactDevPermission;
 import com.reactnativenavigation.utils.UiThread;
+import com.reactnativenavigation.views.NavigationSplashView;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class NavigationActivityLifecycleHandler implements Application.ActivityLifecycleCallbacks {
+    private interface OnContextCreated {
+        void onContextCreated(long timeElapsed);
+    }
+
+    private static final int SPLASH_MINIMUM_DURATION = 1000;
+
     private final ReactInstanceManager reactInstanceManager;
-    private final AtomicBoolean creating = new AtomicBoolean(false);
-    private final AtomicLong startTime = new AtomicLong(0);
 
     public NavigationActivityLifecycleHandler(ReactInstanceManager reactInstanceManager) {
         this.reactInstanceManager = reactInstanceManager;
@@ -25,9 +29,6 @@ public class NavigationActivityLifecycleHandler implements Application.ActivityL
 
     @Override
     public void onActivityCreated(final Activity activity, Bundle bundle) {
-        if (activity instanceof NavigationActivity) {
-            handleCreated();
-        }
     }
 
     @Override
@@ -63,37 +64,43 @@ public class NavigationActivityLifecycleHandler implements Application.ActivityL
         }
     }
 
-    private void handleCreated() {
-        creating.set(true);
-    }
-
     private void handleResumed(NavigationActivity activity) {
         if (ReactDevPermission.shouldAskPermission()) {
             ReactDevPermission.askPermission(activity);
-        } else if (shouldCreateContext()) {
-            createContextAndEmitLaunched();
-            reactInstanceManager.onHostResume(activity, activity);
         } else {
             reactInstanceManager.onHostResume(activity, activity);
-            if (creating.compareAndSet(true, false)) {
-                // this should run only after activity closed and started again, but we already HAVE context
-                emitAppLaunchedAfterDelay(reactInstanceManager.getCurrentReactContext(), 1000);
-            }
+            prepareReactApp(activity);
         }
     }
 
-    private void createContextAndEmitLaunched() {
-        creating.set(false);
-        startTime.set(System.currentTimeMillis());
+    private void prepareReactApp(NavigationActivity activity) {
+        if (shouldCreateContext()) {
+            createReactContext(new OnContextCreated() {
+                @Override
+                public void onContextCreated(long timeElapsed) {
+                    emitAppLaunchedAfterDelay(SPLASH_MINIMUM_DURATION - timeElapsed);
+                }
+            });
+        } else if (waitingForAppLaunchedEvent(activity)) {
+            emitAppLaunchedAfterDelay(SPLASH_MINIMUM_DURATION);
+        }
+    }
+
+    /**
+     * @return true if we are a newly created activity, but react context already exists
+     */
+    private boolean waitingForAppLaunchedEvent(NavigationActivity activity) {
+        return activity.getContentView() instanceof NavigationSplashView;
+    }
+
+
+    private void createReactContext(final OnContextCreated onContextCreated) {
+        final AtomicLong startTime = new AtomicLong(System.currentTimeMillis());
         reactInstanceManager.addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
             @Override
             public void onReactContextInitialized(final ReactContext context) {
                 reactInstanceManager.removeReactInstanceEventListener(this);
-
-                long millisPassed = System.currentTimeMillis() - startTime.get();
-                long diff = 1000 - millisPassed;
-
-                emitAppLaunchedAfterDelay(context, diff);
+                onContextCreated.onContextCreated(System.currentTimeMillis() - startTime.get());
             }
         });
         reactInstanceManager.createReactContextInBackground();
@@ -115,11 +122,11 @@ public class NavigationActivityLifecycleHandler implements Application.ActivityL
         }
     }
 
-    private void emitAppLaunchedAfterDelay(final ReactContext context, long delay) {
+    private void emitAppLaunchedAfterDelay(long delay) {
         UiThread.postDelayed(new Runnable() {
             @Override
             public void run() {
-                new NavigationEventEmitter(context).emitAppLaunched();
+                new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext()).emitAppLaunched();
             }
         }, delay);
     }
