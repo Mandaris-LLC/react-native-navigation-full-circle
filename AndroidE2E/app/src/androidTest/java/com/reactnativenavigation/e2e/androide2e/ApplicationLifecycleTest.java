@@ -5,6 +5,7 @@ import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
@@ -48,18 +49,21 @@ public class ApplicationLifecycleTest {
     public void _2_relaunchFromBackground() throws Exception {
         launchTheApp();
         assertMainShown();
+        push();
+        assertPushedScreenShown();
 
         uiDevice().pressHome();
         uiDevice().pressRecentApps();
         elementByText("Playground").click();
 
-        assertMainShown();
+        assertPushedScreenShown();
     }
 
     @Test
     public void _3_relaunchAfterClose() throws Exception {
         launchTheApp();
-        assertMainShown();
+        push();
+        assertPushedScreenShown();
 
         uiDevice().pressBack();
 
@@ -70,20 +74,20 @@ public class ApplicationLifecycleTest {
     @Test
     public void _4_deviceOrientationDoesNotDestroyActivity() throws Exception {
         launchTheApp();
-        assertMainShown();
-        elementByText("PUSH").click();
-        assertExists(By.text("Pushed screen"));
+        push();
+        assertPushedScreenShown();
 
         uiDevice().setOrientationLeft();
         Thread.sleep(100);
 
-        assertExists(By.text("Pushed screen"));
+        assertPushedScreenShown();
     }
 
     @Test
     public void _5_relaunchAfterActivityKilledBySystem() throws Exception {
         launchTheApp();
-        assertMainShown();
+        push();
+        assertPushedScreenShown();
 
         uiDevice().pressHome();
         uiDevice().executeShellCommand("am kill " + PACKAGE_NAME);
@@ -93,8 +97,18 @@ public class ApplicationLifecycleTest {
         assertMainShown();
     }
 
+    private void push() throws UiObjectNotFoundException {
+        elementByText("PUSH").click();
+    }
+
     private void assertMainShown() {
         assertExists(By.text("React Native Navigation!"));
+    }
+
+    private void launchTheApp() throws Exception {
+        uiDevice().executeShellCommand("am start -n " + PACKAGE_NAME + "/.MainActivity");
+        uiDevice().waitForIdle();
+        acceptOverlayPermissionIfNeeded();
     }
 
     private void acceptOverlayPermissionIfNeeded() throws Exception {
@@ -107,12 +121,6 @@ public class ApplicationLifecycleTest {
             uiDevice().pressBack();
             uiDevice().pressBack();
         }
-    }
-
-    private void launchTheApp() throws Exception {
-        uiDevice().executeShellCommand("am start -n " + PACKAGE_NAME + "/.MainActivity");
-        uiDevice().waitForIdle();
-        acceptOverlayPermissionIfNeeded();
     }
 
     private UiDevice uiDevice() {
@@ -129,5 +137,9 @@ public class ApplicationLifecycleTest {
 
     private void assertExists(BySelector selector) {
         assertThat(uiDevice().wait(Until.hasObject(selector), TIMEOUT)).isTrue();
+    }
+
+    private void assertPushedScreenShown() {
+        assertExists(By.text("Pushed screen"));
     }
 }

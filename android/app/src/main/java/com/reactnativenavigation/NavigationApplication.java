@@ -45,8 +45,8 @@ public abstract class NavigationApplication extends Application implements React
         };
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            private AtomicBoolean creating = new AtomicBoolean(true);
-            private AtomicLong startTime = new AtomicLong();
+            private AtomicBoolean creating = new AtomicBoolean(false);
+            private AtomicLong startTime = new AtomicLong(0);
 
             @Override
             public void onActivityCreated(final Activity activity, Bundle bundle) {
@@ -68,6 +68,7 @@ public abstract class NavigationApplication extends Application implements React
                 }
 
                 if (!host.getReactInstanceManager().hasStartedCreatingInitialContext()) {
+                    creating.set(false);
                     startTime.set(System.currentTimeMillis());
                     host.getReactInstanceManager().addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
                         @Override
@@ -80,6 +81,7 @@ public abstract class NavigationApplication extends Application implements React
                             UiThread.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+                                    android.util.Log.d("DebuggingIsHell", "NavigationApplication:run() " + 1);
                                     new NavigationEventEmitter(context).emitAppLaunched();
                                 }
                             }, diff);
@@ -96,6 +98,7 @@ public abstract class NavigationApplication extends Application implements React
                     UiThread.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            android.util.Log.d("DebuggingIsHell", "NavigationApplication:run() " + 2);
                             new NavigationEventEmitter(host.getReactInstanceManager().getCurrentReactContext()).emitAppLaunched();
                         }
                     }, 1000);
