@@ -11,7 +11,7 @@ public class NavigationSplashView extends FrameLayout {
         super(context);
         ImageView image = new ImageView(context);
         image.setImageResource(R.drawable.logo);
-        image.setContentDescription("NavigationSplashView");
+        image.setContentDescription(getClass().getSimpleName());
         addView(image);
     }
 }
