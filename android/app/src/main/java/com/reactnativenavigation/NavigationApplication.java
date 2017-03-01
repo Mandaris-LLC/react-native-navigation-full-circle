@@ -81,7 +81,6 @@ public abstract class NavigationApplication extends Application implements React
                             UiThread.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    android.util.Log.d("DebuggingIsHell", "NavigationApplication:run() " + 1);
                                     new NavigationEventEmitter(context).emitAppLaunched();
                                 }
                             }, diff);
@@ -95,10 +94,10 @@ public abstract class NavigationApplication extends Application implements React
                 host.getReactInstanceManager().onHostResume(activity, (DefaultHardwareBackBtnHandler) activity);
 
                 if (creating.compareAndSet(true, false)) {
+                    // this should run only after activity closed and started again, but we already HAVE context
                     UiThread.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            android.util.Log.d("DebuggingIsHell", "NavigationApplication:run() " + 2);
                             new NavigationEventEmitter(host.getReactInstanceManager().getCurrentReactContext()).emitAppLaunched();
                         }
                     }, 1000);
