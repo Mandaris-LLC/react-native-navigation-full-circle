@@ -33,7 +33,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         onBackPressed();
     }
 
-    public long splashViewMinimumDuration() {
+    public long splashMinimumDuration() {
         return 1000;
     }
 }

@@ -76,11 +76,11 @@ public class NavigationActivityLifecycleHandler implements Application.ActivityL
             createReactContext(new OnContextCreated() {
                 @Override
                 public void onContextCreated(long timeElapsed) {
-                    emitAppLaunchedAfterDelay(activity.splashViewMinimumDuration() - timeElapsed);
+                    emitAppLaunchedAfterDelay(activity.splashMinimumDuration() - timeElapsed);
                 }
             });
         } else if (waitingForAppLaunchedEvent(activity)) {
-            emitAppLaunchedAfterDelay(activity.splashViewMinimumDuration());
+            emitAppLaunchedAfterDelay(activity.splashMinimumDuration());
         }
     }
 
