@@ -26,6 +26,8 @@ before_cache:
 
 install:
   - nvm install $NODE_VERSION
+  - nvm use $NODE_VERSION
+  - nvm ls
   - gem install xcpretty
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - yarn config set cache-folder $YARN_CACHE

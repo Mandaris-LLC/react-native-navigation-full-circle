@@ -19,8 +19,6 @@ public class NavigationActivityLifecycleHandler implements Application.ActivityL
         void onContextCreated(long timeElapsed);
     }
 
-    private static final int SPLASH_MINIMUM_DURATION = 1000;
-
     private final ReactInstanceManager reactInstanceManager;
 
     public NavigationActivityLifecycleHandler(ReactInstanceManager reactInstanceManager) {
@@ -73,16 +71,16 @@ public class NavigationActivityLifecycleHandler implements Application.ActivityL
         }
     }
 
-    private void prepareReactApp(NavigationActivity activity) {
+    private void prepareReactApp(final NavigationActivity activity) {
         if (shouldCreateContext()) {
             createReactContext(new OnContextCreated() {
                 @Override
                 public void onContextCreated(long timeElapsed) {
-                    emitAppLaunchedAfterDelay(SPLASH_MINIMUM_DURATION - timeElapsed);
+                    emitAppLaunchedAfterDelay(activity.splashViewMinimumDuration() - timeElapsed);
                 }
             });
         } else if (waitingForAppLaunchedEvent(activity)) {
-            emitAppLaunchedAfterDelay(SPLASH_MINIMUM_DURATION);
+            emitAppLaunchedAfterDelay(activity.splashViewMinimumDuration());
         }
     }
 

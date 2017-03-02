@@ -32,4 +32,8 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     public void invokeDefaultOnBackPressed() {
         onBackPressed();
     }
+
+    public long splashViewMinimumDuration() {
+        return 1000;
+    }
 }
