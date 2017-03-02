@@ -13,7 +13,6 @@ import android.support.test.uiautomator.Until;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -40,15 +39,20 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    public void _1_showSplash_AcceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
+    public void _1_acceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
         launchTheApp();
-
         assertMainShown();
     }
 
     @Test
-    @Ignore
-    public void _2_relaunchFromBackground() throws Exception {
+    public void _2_showSplash() throws Exception {
+        launchTheApp();
+        assertExists(By.desc("NavigationSplashView"));
+        assertMainShown();
+    }
+
+    @Test
+    public void _3_relaunchFromBackground() throws Exception {
         launchTheApp();
         assertMainShown();
         push();
@@ -62,8 +66,7 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    @Ignore
-    public void _3_relaunchAfterClose() throws Exception {
+    public void _4_relaunchAfterClose() throws Exception {
         launchTheApp();
         push();
         assertPushedScreenShown();
@@ -75,8 +78,7 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    @Ignore
-    public void _4_deviceOrientationDoesNotDestroyActivity() throws Exception {
+    public void _5_deviceOrientationDoesNotDestroyActivity() throws Exception {
         launchTheApp();
         push();
         assertPushedScreenShown();
@@ -88,8 +90,7 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    @Ignore
-    public void _5_relaunchAfterActivityKilledBySystem() throws Exception {
+    public void _6_relaunchAfterActivityKilledBySystem() throws Exception {
         launchTheApp();
         push();
         assertPushedScreenShown();
