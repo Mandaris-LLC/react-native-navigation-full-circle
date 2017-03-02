@@ -45,14 +45,7 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    public void _2_showSplash() throws Exception {
-        launchTheApp();
-        assertExists(By.desc("NavigationSplashView"));
-        assertMainShown();
-    }
-
-    @Test
-    public void _3_relaunchFromBackground() throws Exception {
+    public void _2_relaunchFromBackground() throws Exception {
         launchTheApp();
         assertMainShown();
         push();
@@ -66,7 +59,7 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    public void _4_relaunchAfterClose() throws Exception {
+    public void _3_relaunchAfterClose() throws Exception {
         launchTheApp();
         push();
         assertPushedScreenShown();
@@ -78,7 +71,7 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    public void _5_deviceOrientationDoesNotDestroyActivity() throws Exception {
+    public void _4_deviceOrientationDoesNotDestroyActivity() throws Exception {
         launchTheApp();
         push();
         assertPushedScreenShown();
@@ -90,7 +83,7 @@ public class ApplicationLifecycleTest {
     }
 
     @Test
-    public void _6_relaunchAfterActivityKilledBySystem() throws Exception {
+    public void _5_relaunchAfterActivityKilledBySystem() throws Exception {
         launchTheApp();
         push();
         assertPushedScreenShown();
