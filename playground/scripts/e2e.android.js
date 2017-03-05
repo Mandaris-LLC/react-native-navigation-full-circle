@@ -12,7 +12,7 @@ function runEmulator() {
 function e2e() {
   shellUtils.exec.execSync(`yarn run uninstall-android`);
   shellUtils.exec.execSync(`yarn run android`);
-  shellUtils.exec.execSync(`cd ../AndroidE2e/ && ./gradlew connectedDebugAndroidTest`);
+  shellUtils.exec.execSync(`cd ../AndroidE2E/ && ./gradlew connectedDebugAndroidTest`);
 }
 
 function run() {
