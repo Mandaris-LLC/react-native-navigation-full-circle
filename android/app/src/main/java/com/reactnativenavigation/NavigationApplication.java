@@ -25,6 +25,4 @@ public abstract class NavigationApplication extends Application implements React
     }
 
     public abstract boolean isDebug();
-
-
 }

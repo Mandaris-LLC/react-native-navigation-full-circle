@@ -6,13 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import com.facebook.react.common.ReactConstants;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-@RunWith(RobolectricTestRunner.class)
-public class EnvironmentTest {
+public class EnvironmentTest extends BaseTest {
     @Test
     public void assertJ() {
         assertThat(1 + 2).isEqualTo(3).isGreaterThan(2).isLessThan(4).isNotNegative().isPositive().isNotZero();
@@ -36,5 +35,11 @@ public class EnvironmentTest {
     @Test
     public void androidR() {
         assertThat(R.string.app_name).isNotZero();
+    }
+
+    @Test
+    public void ableToLoadApplication() throws Exception {
+        assertThat(RuntimeEnvironment.application).isNotNull();
+        assertThat(Robolectric.setupActivity(NavigationActivity.class)).isNotNull();
     }
 }

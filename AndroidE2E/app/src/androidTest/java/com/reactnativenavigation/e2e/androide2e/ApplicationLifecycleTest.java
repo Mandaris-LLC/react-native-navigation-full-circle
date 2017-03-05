@@ -89,6 +89,7 @@ public class ApplicationLifecycleTest {
         assertPushedScreenShown();
 
         uiDevice().pressHome();
+        uiDevice().waitForIdle();
         uiDevice().executeShellCommand("am kill " + PACKAGE_NAME);
 
         uiDevice().pressRecentApps();
