@@ -9,20 +9,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NavigationReactNativeHost extends ReactNativeHost {
-    public NavigationReactNativeHost(NavigationApplication application) {
-        super(application);
-    }
+	public NavigationReactNativeHost(NavigationApplication application) {
+		super(application);
+	}
 
-    @Override
-    public boolean getUseDeveloperSupport() {
-        return NavigationApplication.instance.isDebug();
-    }
+	@Override
+	public boolean getUseDeveloperSupport() {
+		return NavigationApplication.instance.isDebug();
+	}
 
-    @Override
-    protected List<ReactPackage> getPackages() {
-        return Arrays.asList(
-                new MainReactPackage(),
-                new NavigationPackage()
-        );
-    }
+	@Override
+	protected List<ReactPackage> getPackages() {
+		return Arrays.asList(
+				new MainReactPackage(),
+				new NavigationPackage()
+		);
+	}
 }
