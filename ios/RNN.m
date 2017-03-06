@@ -71,7 +71,10 @@
 -(void)onJavaScriptWillLoad
 {
 	self.store = [RNNStore new];
+	[self resetRootViewControllerOnlyOnJSDevReload];
+}
 
+-(void)resetRootViewControllerOnlyOnJSDevReload {
 	if(![UIApplication.sharedApplication.delegate.window.rootViewController isKindOfClass:[RNNSplashScreen class]]) {
 		UIApplication.sharedApplication.delegate.window.rootViewController = nil;
 	}

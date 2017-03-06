@@ -80,15 +80,15 @@
 	[self setContainerAndRelease:vcId];
 	
 	
-	XCTAssertNil([self.store findContainerForId:vcId]); // PASS
+	XCTAssertNil([self.store findContainerForId:vcId]);
 }
 
--(void) setContainerAndRelease:(NSString*)vcId {
+-(void)setContainerAndRelease:(NSString*)vcId {
 	@autoreleasepool {
 		UIViewController *vc2 = [UIViewController new];
 		[self.store setContainer:vc2 containerId:vcId];
 		
-		XCTAssertNotNil([self.store findContainerForId:vcId]); // PASS
+		XCTAssertNotNil([self.store findContainerForId:vcId]);
 	}
 }
 
