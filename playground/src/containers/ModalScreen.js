@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -17,26 +17,30 @@ class ModalScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <Text style={styles.h1}>Modal Screen</Text>
-        <Text style={styles.footer}>ModalStackPosition: {this.props.modalPosition || 1}</Text>
+        <Text style={styles.h1}>{`Modal Screen`}</Text>
+        <Text style={styles.footer}>{`Modal Stack Position: ${this.getModalPosition()}`}</Text>
         <Button title="Show Modal" onPress={this.onClickShowModal} />
         <Button title="Dismiss Modal" onPress={this.onClickDismissModal} />
-        <Text style={styles.footer}>ContainerId: {this.props.id}</Text>
+        <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
     );
   }
-  
+
   onClickShowModal() {
     Navigation.showModal({
       name: 'navigation.playground.ModalScreen',
       passProps: {
-        modalPosition: (this.props.modalPosition || 1) + 1
+        modalPosition: this.getModalPosition() + 1
       }
     });
   }
-  
+
   onClickDismissModal() {
     Navigation.dismissModal(this.props.id);
+  }
+
+  getModalPosition() {
+    return (this.props.modalPosition || 1);
   }
 }
 

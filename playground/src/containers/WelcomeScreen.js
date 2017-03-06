@@ -56,18 +56,24 @@ class WelcomeScreen extends Component {
           container: {
             name: 'navigation.playground.TextScreen',
             passProps: {
-              text: 'This is a side menu center screen'
+              text: 'This is a side menu center screen tab 1'
             }
           }
         },
         {
           container: {
-            name: 'navigation.playground.TextScreen'
+            name: 'navigation.playground.TextScreen',
+            passProps: {
+              text: 'This is a side menu center screen tab 2'
+            }
           }
         },
         {
           container: {
-            name: 'navigation.playground.TextScreen'
+            name: 'navigation.playground.TextScreen',
+            passProps: {
+              text: 'This is a side menu center screen tab 3'
+            }
           }
         }
       ],
@@ -76,13 +82,16 @@ class WelcomeScreen extends Component {
           container: {
             name: 'navigation.playground.TextScreen',
             passProps: {
-              text: 'This is a side menu screen'
+              text: 'This is a left side menu screen'
             }
           }
         },
         right: {
           container: {
-            name: 'navigation.playground.TextScreen'
+            name: 'navigation.playground.TextScreen',
+            passProps: {
+              text: 'This is a right side menu screen'
+            }
           }
         }
       }
@@ -105,7 +114,7 @@ class WelcomeScreen extends Component {
 
   onClickShowModal() {
     Navigation.showModal({
-      name: 'navigation.playground.ModalScreen',
+      name: 'navigation.playground.ModalScreen'
     });
   }
 

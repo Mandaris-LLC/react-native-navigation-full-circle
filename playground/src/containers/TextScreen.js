@@ -1,19 +1,27 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
   Text
 } from 'react-native';
 
-
 class TextScreen extends Component {
-  
   render() {
     return (
       <View style={styles.root}>
         <Text style={styles.h1}>{this.props.text || 'Text Screen'}</Text>
-        <Text style={styles.footer}>ContainerId: {this.props.id}</Text>
+        {this.renderTextFromFunctionInProps()}
+        <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
+    );
+  }
+
+  renderTextFromFunctionInProps() {
+    if (!this.props.myFunction) {
+      return undefined;
+    }
+    return (
+      <Text style={styles.h1}>{this.props.myFunction()}</Text>
     );
   }
 }
@@ -41,6 +49,5 @@ const styles = {
     marginTop: 10
   }
 };
-
 
 export default TextScreen;

@@ -141,6 +141,6 @@ public class ApplicationLifecycleTest {
     }
 
     private void assertPushedScreenShown() {
-        assertExists(By.text("Pushed screen"));
+        assertExists(By.text("Pushed Screen"));
     }
 }

@@ -23,10 +23,10 @@ class LifecycleScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <Text style={styles.h1}>Lifecycle Screen</Text>
+        <Text style={styles.h1}>{`Lifecycle Screen`}</Text>
         <Text style={styles.h1}>{this.state.text}</Text>
         <Button title="Push to test onStop" onPress={this.onClickPush} />
-        <Text style={styles.footer}>ContainerId: {this.props.id}</Text>
+        <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
     );
   }

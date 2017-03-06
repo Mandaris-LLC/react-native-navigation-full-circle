@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -17,26 +17,30 @@ class PushedScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <Text style={styles.h1}>Pushed Screen</Text>
-        <Text style={styles.h2}>Stack Position: {this.props.stackPosition || 1}</Text>
+        <Text style={styles.h1}>{`Pushed Screen`}</Text>
+        <Text style={styles.h2}>{`Stack Position: ${this.getStackPosition()}`}</Text>
         <Button title="Push" onPress={this.onClickPush} />
         <Button title="Pop" onPress={this.onClickPop} />
-        <Text style={styles.footer}>ContainerId: {this.props.id}</Text>
+        <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
     );
   }
-  
+
   onClickPush() {
     Navigation.on(this.props.id).push({
       name: 'navigation.playground.PushedScreen',
       passProps: {
-        stackPosition: (this.props.stackPosition || 1) + 1
+        stackPosition: this.getStackPosition() + 1
       }
     });
   }
-  
+
   onClickPop() {
     Navigation.on(this.props.id).pop();
+  }
+
+  getStackPosition() {
+    return this.props.stackPosition || 1;
   }
 }
 

@@ -15,13 +15,13 @@ describe('app', () => {
 
   it('push screen', () => {
     elementByLabel('Push').tap();
-    expect(elementByLabel('Pushed screen')).toBeVisible();
+    expect(elementByLabel('Pushed Screen')).toBeVisible();
   });
 
   it('switch to tabs with side menus', () => {
     elementByLabel('Switch to app with side menus').tap();
-    elementByLabel('This is a side menu center screen').swipe('right');
-    expect(elementByLabel('This is a side menu screen')).toBeVisible();
+    elementByLabel('This is a side menu center screen tab 1').swipe('right');
+    expect(elementByLabel('This is a left side menu screen')).toBeVisible();
   });
 
   it('screen lifecycle', () => {
@@ -34,29 +34,29 @@ describe('app', () => {
 
   it('pop screen', () => {
     elementByLabel('Push').tap();
-    expect(elementByLabel('Pushed screen')).toBeVisible();
+    expect(elementByLabel('Pushed Screen')).toBeVisible();
     elementByLabel('Pop').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 
   it('show modal', () => {
     elementByLabel('Show Modal').tap();
-    expect(elementByLabel('Modal screen')).toBeVisible();
+    expect(elementByLabel('Modal Screen')).toBeVisible();
   });
 
   it('dismiss modal', () => {
     elementByLabel('Show Modal').tap();
-    expect(elementByLabel('Modal screen')).toBeVisible();
+    expect(elementByLabel('Modal Screen')).toBeVisible();
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
-  
-  it.only('show multiple modals', () => {
+
+  xit('show multiple modals', () => {
     elementByLabel('Show Modal').tap();
-    expect(elementByLabel('ModalStackPosition: 1')).toBeVisible();
+    expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
     elementByLabel('Show Modal').tap();
-    expect(elementByLabel('ModalStackPosition: 2s')).toBeVisible();
-  })
+    expect(elementByLabel('Modal Stack Position: 2')).toBeVisible();
+  });
 });
 
 describe('reload app', () => {
