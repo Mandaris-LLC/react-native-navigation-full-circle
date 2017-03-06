@@ -52,7 +52,7 @@ describe('app', () => {
   });
 });
 
-xdescribe('reload app', () => {
+describe('reload app', () => {
   before((done) => {
     simulator.reloadReactNativeApp(done);
   });
