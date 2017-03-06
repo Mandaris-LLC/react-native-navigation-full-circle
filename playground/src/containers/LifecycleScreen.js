@@ -23,15 +23,17 @@ class LifecycleScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
+        <Text style={styles.h1}>Lifecycle Screen</Text>
         <Text style={styles.h1}>{this.state.text}</Text>
         <Button title="Push to test onStop" onPress={this.onClickPush} />
+        <Text style={styles.footer}>ContainerId: {this.props.id}</Text>
       </View>
     );
   }
 
   onClickPush() {
     Navigation.on(this.props.id).push({
-      name: 'navigation.playground.SimpleScreen'
+      name: 'navigation.playground.TextScreen'
     });
   }
 }
@@ -48,5 +50,10 @@ const styles = {
     fontSize: 24,
     textAlign: 'center',
     margin: 10
+  },
+  footer: {
+    fontSize: 10,
+    color: '#888',
+    marginTop: 10
   }
 };

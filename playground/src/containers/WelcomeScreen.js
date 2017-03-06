@@ -30,7 +30,7 @@ class WelcomeScreen extends Component {
       tabs: [
         {
           container: {
-            name: 'navigation.playground.SimpleScreen',
+            name: 'navigation.playground.TextScreen',
             passProps: {
               text: 'This is tab 1',
               myFunction: () => 'Hello from a function!'
@@ -39,7 +39,7 @@ class WelcomeScreen extends Component {
         },
         {
           container: {
-            name: 'navigation.playground.SimpleScreen',
+            name: 'navigation.playground.TextScreen',
             passProps: {
               text: 'This is tab 2'
             }
@@ -54,7 +54,7 @@ class WelcomeScreen extends Component {
       tabs: [
         {
           container: {
-            name: 'navigation.playground.SimpleScreen',
+            name: 'navigation.playground.TextScreen',
             passProps: {
               text: 'This is a side menu center screen'
             }
@@ -62,19 +62,19 @@ class WelcomeScreen extends Component {
         },
         {
           container: {
-            name: 'navigation.playground.SimpleScreen'
+            name: 'navigation.playground.TextScreen'
           }
         },
         {
           container: {
-            name: 'navigation.playground.SimpleScreen'
+            name: 'navigation.playground.TextScreen'
           }
         }
       ],
       sideMenu: {
         left: {
           container: {
-            name: 'navigation.playground.SimpleScreen',
+            name: 'navigation.playground.TextScreen',
             passProps: {
               text: 'This is a side menu screen'
             }
@@ -82,7 +82,7 @@ class WelcomeScreen extends Component {
         },
         right: {
           container: {
-            name: 'navigation.playground.SimpleScreen'
+            name: 'navigation.playground.TextScreen'
           }
         }
       }
@@ -91,11 +91,7 @@ class WelcomeScreen extends Component {
 
   onClickPush() {
     Navigation.on(this.props.id).push({
-      name: 'navigation.playground.SimpleScreen',
-      passProps: {
-        text: 'Pushed screen',
-        stackPosition: 1
-      }
+      name: 'navigation.playground.PushedScreen'
     });
   }
 
@@ -109,10 +105,7 @@ class WelcomeScreen extends Component {
 
   onClickShowModal() {
     Navigation.showModal({
-      name: 'navigation.playground.SimpleScreen',
-      passProps: {
-        text: 'Modal screen'
-      }
+      name: 'navigation.playground.ModalScreen',
     });
   }
 
@@ -138,6 +131,6 @@ const styles = {
   footer: {
     fontSize: 10,
     color: '#888',
-    marginTop: 80
+    marginTop: 10
   }
 };

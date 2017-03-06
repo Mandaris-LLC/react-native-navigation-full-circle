@@ -1,11 +1,16 @@
 import Navigation from 'react-native-navigation';
 
 import WelcomeScreen from './WelcomeScreen';
-import SimpleScreen from './SimpleScreen';
+import TextScreen from './TextScreen';
+import PushedScreen from './PushedScreen';
 import LifecycleScreen from './LifecycleScreen';
+import ModalScreen from './ModalScreen';
+
 
 export function registerContainers() {
   Navigation.registerContainer(`navigation.playground.WelcomeScreen`, () => WelcomeScreen);
-  Navigation.registerContainer(`navigation.playground.SimpleScreen`, () => SimpleScreen);
+  Navigation.registerContainer(`navigation.playground.ModalScreen`, () => ModalScreen);
   Navigation.registerContainer(`navigation.playground.LifecycleScreen`, () => LifecycleScreen);
+  Navigation.registerContainer(`navigation.playground.TextScreen`, () => TextScreen);
+  Navigation.registerContainer(`navigation.playground.PushedScreen`, () => PushedScreen);
 }

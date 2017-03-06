@@ -50,6 +50,13 @@ describe('app', () => {
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
+  
+  it.only('show multiple modals', () => {
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('ModalStackPosition: 1')).toBeVisible();
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('ModalStackPosition: 2s')).toBeVisible();
+  })
 });
 
 describe('reload app', () => {
