@@ -61,6 +61,15 @@ describe('app', () => {
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
+  
+  it('dismiss unknown screen id', () => {
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
+    elementByLabel('Dismiss Unknown Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
+    elementByLabel('Dismiss Modal').tap();
+    expect(elementByLabel('React Native Navigation!')).toBeVisible();
+  });
 
   xit('dismiss modal by id', () => {
     elementByLabel('Show Modal').tap();

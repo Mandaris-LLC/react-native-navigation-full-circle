@@ -61,15 +61,17 @@ RCT_EXPORT_METHOD(showModal:(NSDictionary*)layout)
 
 RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId)
 {
-	UIViewController *root = UIApplication.sharedApplication.delegate.window.rootViewController;
-	while(root.presentedViewController) {
-		root = root.presentedViewController;
-	}
-
+	UIViewController *root = [[RNN instance].store findContainerForId:containerId];
 	
-	[root dismissViewControllerAnimated:YES completion:^{
+	//	while(root.presentedViewController) {
+	//		root = root.presentedViewController;
+	//	}
+	if (root) {
 		
-	}];
+		[root dismissViewControllerAnimated:YES completion:^{
+			
+		}];
+	}
 }
 
 - (void)assertReady
