@@ -63,7 +63,7 @@
 	
 	if (splashView != nil)
 	{
-		UIViewController *splashVC = [[UIViewController alloc] init];
+		RNNSplashScreen *splashVC = [[RNNSplashScreen alloc] init];
 		splashVC.view = splashView;
 		
 		id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;

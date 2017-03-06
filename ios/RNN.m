@@ -40,8 +40,6 @@
 {
 	self.eventEmitter = [RNNEventEmitter new];
 	
-	self.store = [RNNStore new];
-	
 	UIApplication.sharedApplication.delegate.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	UIApplication.sharedApplication.delegate.window.backgroundColor = [UIColor whiteColor];
 	
@@ -59,11 +57,7 @@
 -(void)registerForJsEvents
 {
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptLoaded) name:RCTJavaScriptDidLoadNotification object:self.bridge];
-	
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptDevReload) name:RCTReloadNotification object:self.bridge];
-#pragma GCC diagnostic pop
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptWillLoad) name:RCTJavaScriptWillStartLoadingNotification	object:self.bridge];
 }
 
 
@@ -74,10 +68,13 @@
 }
 
 
--(void)onJavaScriptDevReload
+-(void)onJavaScriptWillLoad
 {
 	self.store = [RNNStore new];
-	UIApplication.sharedApplication.delegate.window.rootViewController = nil;
+
+	if(![UIApplication.sharedApplication.delegate.window.rootViewController isKindOfClass:[RNNSplashScreen class]]) {
+		UIApplication.sharedApplication.delegate.window.rootViewController = nil;
+	}
 }
 
 

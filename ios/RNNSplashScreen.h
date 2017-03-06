@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface RNNSplashScreen : NSObject
+@interface RNNSplashScreen : UIViewController
 
 +(void)show;
 
