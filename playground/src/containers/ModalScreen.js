@@ -13,6 +13,7 @@ class ModalScreen extends Component {
     super(props);
     this.onClickShowModal = this.onClickShowModal.bind(this);
     this.onClickDismissModal = this.onClickDismissModal.bind(this);
+    this.onClickDismissPreviousModal = this.onClickDismissPreviousModal.bind(this);
   }
   render() {
     return (
@@ -21,6 +22,7 @@ class ModalScreen extends Component {
         <Text style={styles.footer}>{`Modal Stack Position: ${this.getModalPosition()}`}</Text>
         <Button title="Show Modal" onPress={this.onClickShowModal} />
         <Button title="Dismiss Modal" onPress={this.onClickDismissModal} />
+        {this.props.previousModalId ? (<Button title="Dismiss Previous Modal" onPress={this.onClickDismissPreviousModal} />) : undefined}
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
     );
@@ -30,13 +32,18 @@ class ModalScreen extends Component {
     Navigation.showModal({
       name: 'navigation.playground.ModalScreen',
       passProps: {
-        modalPosition: this.getModalPosition() + 1
+        modalPosition: this.getModalPosition() + 1,
+        previousModalId: this.props.id
       }
     });
   }
 
   onClickDismissModal() {
     Navigation.dismissModal(this.props.id);
+  }
+
+  onClickDismissPreviousModal() {
+    Navigation.dismissModal(this.props.previousModalId);
   }
 
   getModalPosition() {

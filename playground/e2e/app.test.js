@@ -56,6 +56,21 @@ describe('app', () => {
     expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 2')).toBeVisible();
+    elementByLabel('Dismiss Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
+    elementByLabel('Dismiss Modal').tap();
+    expect(elementByLabel('React Native Navigation!')).toBeVisible();
+  });
+
+  xit('dismiss modal by id', () => {
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 2')).toBeVisible();
+    elementByLabel('Dismiss Previous Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 2')).toBeVisible();
+    elementByLabel('Dismiss Modal').tap();
+    expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 });
 
