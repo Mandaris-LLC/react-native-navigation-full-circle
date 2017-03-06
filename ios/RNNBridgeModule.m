@@ -49,14 +49,25 @@ RCT_EXPORT_METHOD(showModal:(NSDictionary*)layout)
 	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
 	UIViewController *newVc = [factory createLayoutAndSaveToStore:layout];
 	
-	[UIApplication.sharedApplication.delegate.window.rootViewController presentViewController:newVc animated:YES completion:^{
+	UIViewController *root = UIApplication.sharedApplication.delegate.window.rootViewController;
+	while(root.presentedViewController) {
+		root = root.presentedViewController;
+	}
+	
+	[root presentViewController:newVc animated:YES completion:^{
 		
 	}];
 }
 
 RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId)
 {
-	[UIApplication.sharedApplication.delegate.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+	UIViewController *root = UIApplication.sharedApplication.delegate.window.rootViewController;
+	while(root.presentedViewController) {
+		root = root.presentedViewController;
+	}
+
+	
+	[root dismissViewControllerAnimated:YES completion:^{
 		
 	}];
 }
