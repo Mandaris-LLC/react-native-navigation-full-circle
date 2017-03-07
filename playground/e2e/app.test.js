@@ -13,11 +13,6 @@ describe('app', () => {
     expect(elementByLabel('Hello from a function!')).toBeVisible();
   });
 
-  it('push screen', () => {
-    elementByLabel('Push').tap();
-    expect(elementByLabel('Pushed Screen')).toBeVisible();
-  });
-
   it('switch to tabs with side menus', () => {
     elementByLabel('Switch to app with side menus').tap();
     elementByLabel('This is a side menu center screen tab 1').swipe('right');
@@ -31,6 +26,17 @@ describe('app', () => {
     expect(elementByLabel('Alert')).toBeVisible();
     expect(elementByLabel('onStop!')).toBeVisible();
   });
+});
+
+describe('screen stack', () => {
+  beforeEach((done) => {
+    global.simulator.relaunchApp(done);
+  });
+
+  it('push screen', () => {
+    elementByLabel('Push').tap();
+    expect(elementByLabel('Pushed Screen')).toBeVisible();
+  });
 
   it('pop screen', () => {
     elementByLabel('Push').tap();
@@ -39,7 +45,7 @@ describe('app', () => {
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
   
-  it.only('pop screen deep in the stack', () => {
+  it('pop screen deep in the stack', () => {
     elementByLabel('Push').tap();
     expect(elementByLabel('Stack Position: 1')).toBeVisible();
     elementByLabel('Push').tap();
@@ -48,21 +54,27 @@ describe('app', () => {
     expect(elementByLabel('Stack Position: 2')).toBeVisible();
     elementByLabel('Pop').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
-  
   });
+});
 
+
+describe('modal', () => {
+  beforeEach((done) => {
+    global.simulator.relaunchApp(done);
+  });
+  
   it('show modal', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Screen')).toBeVisible();
   });
-
+  
   it('dismiss modal', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Screen')).toBeVisible();
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
-
+  
   it('show multiple modals', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
@@ -73,7 +85,7 @@ describe('app', () => {
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
-
+  
   it('dismiss unknown screen id', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
@@ -82,7 +94,7 @@ describe('app', () => {
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
-
+  
   it('dismiss modal by id which is not the top most', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
@@ -93,7 +105,7 @@ describe('app', () => {
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
-
+  
   it('dismiss all previous modals by id when they are below top presented modal', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
@@ -101,14 +113,14 @@ describe('app', () => {
     expect(elementByLabel('Modal Stack Position: 2')).toBeVisible();
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 3')).toBeVisible();
-
+    
     elementByLabel('Dismiss ALL Previous Modals').tap();
     expect(elementByLabel('Modal Stack Position: 3')).toBeVisible();
-
+    
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
-
+  
   it('dismiss some modal by id deep in the stack', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
@@ -116,17 +128,17 @@ describe('app', () => {
     expect(elementByLabel('Modal Stack Position: 2')).toBeVisible();
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 3')).toBeVisible();
-
+    
     elementByLabel('Dismiss First In Stack').tap();
     expect(elementByLabel('Modal Stack Position: 3')).toBeVisible();
-
+    
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('Modal Stack Position: 2')).toBeVisible();
-
+    
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
-
+  
   it('dismissAllModals', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
