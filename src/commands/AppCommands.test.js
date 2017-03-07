@@ -114,4 +114,18 @@ describe('AppCommands', () => {
       expect(result).toEqual('the id');
     });
   });
+
+  describe('dismissAllModals', () => {
+    it('sends command to native', () => {
+      uut.dismissAllModals();
+      expect(mockCommandsSender.dismissAllModals).toHaveBeenCalledTimes(1);
+      expect(mockCommandsSender.dismissAllModals).toHaveBeenCalledWith();
+    });
+
+    it('returns a promise with the id', async () => {
+      mockCommandsSender.dismissAllModals.mockReturnValue(Promise.resolve('the id'));
+      const result = await uut.dismissAllModals();
+      expect(result).toEqual('the id');
+    });
+  });
 });

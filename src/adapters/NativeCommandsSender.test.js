@@ -10,7 +10,8 @@ describe('NativeCommandsSender', () => {
       push: jest.fn(),
       pop: jest.fn(),
       showModal: jest.fn(),
-      dismissModal: jest.fn()
+      dismissModal: jest.fn(),
+      dismissAllModals: jest.fn()
     };
     NativeModules.RNNBridgeModule = mockNativeModule;
     uut = new NativeCommandsSender();
@@ -49,5 +50,11 @@ describe('NativeCommandsSender', () => {
     const result = await uut.dismissModal('id');
     expect(mockNativeModule.dismissModal).toHaveBeenCalledTimes(1);
     expect(result).toEqual('id');
+  });
+
+  it('dismissAllModals', async () => {
+    const result = await uut.dismissAllModals();
+    expect(mockNativeModule.dismissAllModals).toHaveBeenCalledTimes(1);
+    expect(result).toBe(true);
   });
 });

@@ -62,4 +62,11 @@ describe('Navigation', () => {
   it('starts listening and handles internal events', () => {
     expect(Navigation.nativeEventsReceiver.containerStart).toHaveBeenCalledTimes(1);
   });
+
+  it('dismissAllModals', async () => {
+    Navigation.appCommands.dismissAllModals.mockReturnValue(Promise.resolve('result'));
+    const result = await Navigation.dismissAllModals();
+    expect(Navigation.appCommands.dismissAllModals).toHaveBeenCalledTimes(1);
+    expect(result).toEqual('result');
+  });
 });

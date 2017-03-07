@@ -42,6 +42,10 @@ class Navigation {
     return this.appCommands.dismissModal(id);
   }
 
+  dismissAllModals() {
+    return this.appCommands.dismissAllModals();
+  }
+
   events() {
     return this.publicEventsRegistry;
   }

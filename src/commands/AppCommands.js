@@ -24,5 +24,9 @@ export default class AppCommands {
   dismissModal(id) {
     return this.nativeCommandsSender.dismissModal(id);
   }
+
+  dismissAllModals() {
+    return this.nativeCommandsSender.dismissAllModals();
+  }
 }
 

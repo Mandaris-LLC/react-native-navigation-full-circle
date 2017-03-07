@@ -29,5 +29,10 @@ export default class NativeCommandsSender {
     this.nativeCommandsModule.dismissModal(id);
     return Promise.resolve(id);
   }
+
+  dismissAllModals() {
+    this.nativeCommandsModule.dismissAllModals();
+    return Promise.resolve(true);
+  }
 }
 
