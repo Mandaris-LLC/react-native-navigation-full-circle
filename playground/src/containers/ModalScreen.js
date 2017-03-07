@@ -31,7 +31,7 @@ class ModalScreen extends Component {
         {this.props.previousModalIds ? (<Button title="Dismiss ALL Previous Modals" onPress={this.onClickDismissAllPreviousModals} />) : undefined}
         {this.props.previousModalIds ? (<Button title="Dismiss First In Stack" onPress={this.onClickDismissFirstInStack} />) : undefined}
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
-        
+
       </View>
     );
   }
@@ -53,26 +53,23 @@ class ModalScreen extends Component {
   onClickDismissPreviousModal() {
     Navigation.dismissModal(this.getPreviousModalId());
   }
-  
+
   onClickDismissUnknownModal() {
     Navigation.dismissModal('unknown');
   }
-  
+
   onClickDismissAllPreviousModals() {
     _.forEach(this.props.previousModalIds, (id) => Navigation.dismissModal(id));
   }
-  
-  
+
   onClickDismissFirstInStack() {
-    console.log('RANG', 'getFirstInStackModalId', _.head(this.props.previousModalIds));;
     Navigation.dismissModal(_.head(this.props.previousModalIds));
   }
 
-  
   getModalPosition() {
     return (this.props.modalPosition || 1);
   }
-  
+
   getPreviousModalId() {
     return _.last(this.props.previousModalIds);
   }
