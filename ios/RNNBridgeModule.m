@@ -40,7 +40,14 @@ RCT_EXPORT_METHOD(pop:(NSString*)containerId)
 	[self assertReady];
 	UIViewController *vc = [[RNN instance].store findContainerForId:containerId];
 	
-	[[vc navigationController] popViewControllerAnimated:YES];
+	if([[vc navigationController] topViewController] == vc ) {
+		[[vc navigationController] popViewControllerAnimated:YES];
+	}
+	else {
+		NSMutableArray * vcs = [vc navigationController].viewControllers.mutableCopy;
+		[vcs removeObject:vc];
+		[[vc navigationController] setViewControllers:vcs animated:NO];
+	}
 	[[RNN instance].store removeContainer:containerId];
 }
 

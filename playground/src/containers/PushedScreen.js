@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -13,6 +14,7 @@ class PushedScreen extends Component {
     super(props);
     this.onClickPush = this.onClickPush.bind(this);
     this.onClickPop = this.onClickPop.bind(this);
+    this.onClickPopPrevious = this.onClickPopPrevious.bind(this);
   }
   render() {
     return (
@@ -21,24 +23,30 @@ class PushedScreen extends Component {
         <Text style={styles.h2}>{`Stack Position: ${this.getStackPosition()}`}</Text>
         <Button title="Push" onPress={this.onClickPush} />
         <Button title="Pop" onPress={this.onClickPop} />
+        <Button title="Pop Previous" onPress={this.onClickPopPrevious} />
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
     );
   }
-
+  
   onClickPush() {
     Navigation.on(this.props.id).push({
       name: 'navigation.playground.PushedScreen',
       passProps: {
-        stackPosition: this.getStackPosition() + 1
+        stackPosition: this.getStackPosition() + 1,
+        previousScreenIds: _.concat([], this.props.previousScreenIds || [], this.props.id)
       }
     });
   }
-
+  
   onClickPop() {
     Navigation.on(this.props.id).pop();
   }
-
+  
+  onClickPopPrevious() {
+    Navigation.on(_.last(this.props.previousScreenIds)).pop();
+  }
+  
   getStackPosition() {
     return this.props.stackPosition || 1;
   }

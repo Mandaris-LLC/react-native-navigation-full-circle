@@ -38,6 +38,18 @@ describe('app', () => {
     elementByLabel('Pop').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
+  
+  it.only('pop screen deep in the stack', () => {
+    elementByLabel('Push').tap();
+    expect(elementByLabel('Stack Position: 1')).toBeVisible();
+    elementByLabel('Push').tap();
+    expect(elementByLabel('Stack Position: 2')).toBeVisible();
+    elementByLabel('Pop Previous').tap();
+    expect(elementByLabel('Stack Position: 2')).toBeVisible();
+    elementByLabel('Pop').tap();
+    expect(elementByLabel('React Native Navigation!')).toBeVisible();
+  
+  });
 
   it('show modal', () => {
     elementByLabel('Show Modal').tap();
