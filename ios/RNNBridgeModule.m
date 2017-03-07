@@ -4,6 +4,7 @@
 #import "RNNControllerFactory.h"
 #import "RNNReactRootViewCreator.h"
 #import "RNNStore.h"
+#import "RNNModalManager.h"
 
 @implementation RNNBridgeModule
 
@@ -48,46 +49,16 @@ RCT_EXPORT_METHOD(showModal:(NSDictionary*)layout)
 	[self assertReady];
 	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
 	UIViewController *newVc = [factory createLayoutAndSaveToStore:layout];
-	
-	UIViewController *root = [self topPresentedVC];
-	[root presentViewController:newVc animated:YES completion:^{
-		
-	}];
+	[[[RNNModalManager alloc] initWithStore:[RNN instance].store] showModal:newVc];
 }
 
 RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId)
 {
-	UIViewController *modalToDismiss = [[RNN instance].store findContainerForId:containerId];
-	
-	if (modalToDismiss) {
-		UIViewController *topVC = [self topPresentedVC];
-		
-		if (modalToDismiss == topVC) {
-			[modalToDismiss dismissViewControllerAnimated:YES completion:^{
-				[self removeNextModal];
-
-			}];
-		}
-		else {
-			[[RNN instance].store.modalsToDismissArray addObject:containerId];
-		}
-	}
+	[self assertReady];
+	[[[RNNModalManager alloc] initWithStore:[RNN instance].store] dismissModal:containerId];
 }
 
--(void)removeNextModal {
-	NSString *nextContainerId = [[RNN instance].store.modalsToDismissArray lastObject];
-	UIViewController *vc = [[RNN instance].store findContainerForId:nextContainerId];
-	
-	if (vc) {
-		UIViewController *topVC = [self topPresentedVC];
-		if (vc == topVC) {
-			[vc dismissViewControllerAnimated:YES completion:^{
-				[[RNN instance].store.modalsToDismissArray removeObject:nextContainerId];
-				[self removeNextModal];
-			}];
-		}
-	}
-}
+
 
 - (void)assertReady
 {
@@ -96,13 +67,9 @@ RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId)
 	}
 }
 
--(UIViewController*)topPresentedVC {
-	UIViewController *root = UIApplication.sharedApplication.delegate.window.rootViewController;
-	while(root.presentedViewController) {
-		root = root.presentedViewController;
-	}
-	return root;
-}
+
+
+
 
 @end
 
