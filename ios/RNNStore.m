@@ -12,6 +12,7 @@
 
 @property NSMapTable *containerStore;
 
+
 @end
 
 @implementation RNNStore
@@ -20,6 +21,7 @@
 -(instancetype)init {
 	self = [super init];
 	self.containerStore = [NSMapTable strongToWeakObjectsMapTable];
+	self.modalsToDismissArray = [NSMutableArray new];
 	return self;
 }
 

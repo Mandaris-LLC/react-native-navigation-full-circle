@@ -81,6 +81,21 @@ describe('app', () => {
     elementByLabel('Dismiss Modal').tap();
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
+  
+  it('dismiss all previous modals by id when they are below top presented modal', () => {
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 2')).toBeVisible();
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 3')).toBeVisible();
+    
+    elementByLabel('Dismiss ALL Previous Modals').tap();
+    expect(elementByLabel('Modal Stack Position: 3')).toBeVisible();
+    
+    elementByLabel('Dismiss Modal').tap();
+    expect(elementByLabel('React Native Navigation!')).toBeVisible();
+  });
 });
 
 describe('reload app', () => {

@@ -64,13 +64,23 @@ RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId)
 		
 		if (root == topVC) {
 			[root dismissViewControllerAnimated:YES completion:nil];
-			[[RNN instance].store.modalToDismiss dismissViewControllerAnimated:YES completion:nil];
-			[RNN instance].store.modalToDismiss = nil;
-			
+			[self removeNextModal];
 		}
 		else {
-			[RNN instance].store.modalToDismiss = root;
+			[[RNN instance].store.modalsToDismissArray addObject:containerId];
 		}
+	}
+}
+
+-(void)removeNextModal {
+	NSString *nextContainerId = [[RNN instance].store.modalsToDismissArray lastObject];
+	UIViewController *vc = [[RNN instance].store findContainerForId:nextContainerId];
+	
+	if (vc) {
+		[vc dismissViewControllerAnimated:YES completion:^{
+			[[RNN instance].store.modalsToDismissArray removeObject:nextContainerId];
+			[self removeNextModal];
+		}];
 	}
 }
 

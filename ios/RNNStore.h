@@ -12,7 +12,7 @@
 
 @interface RNNStore : NSObject
 
-@property UIViewController *modalToDismiss;
+@property NSMutableArray *modalsToDismissArray;
 
 - (UIViewController*)findContainerForId:(NSString*)containerId;
 - (void)setContainer:(UIViewController*)viewController containerId:(NSString*)containerId;

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -15,6 +16,7 @@ class ModalScreen extends Component {
     this.onClickDismissModal = this.onClickDismissModal.bind(this);
     this.onClickDismissPreviousModal = this.onClickDismissPreviousModal.bind(this);
     this.onClickDismissUnknownModal = this.onClickDismissUnknownModal.bind(this);
+    this.onClickDismissAllPreviousModals = this.onClickDismissAllPreviousModals.bind(this);
   }
   render() {
     return (
@@ -24,7 +26,8 @@ class ModalScreen extends Component {
         <Button title="Show Modal" onPress={this.onClickShowModal} />
         <Button title="Dismiss Modal" onPress={this.onClickDismissModal} />
         <Button title="Dismiss Unknown Modal" onPress={this.onClickDismissUnknownModal} />
-        {this.props.previousModalId ? (<Button title="Dismiss Previous Modal" onPress={this.onClickDismissPreviousModal} />) : undefined}
+        {this.getPreviousModalId() ? (<Button title="Dismiss Previous Modal" onPress={this.onClickDismissPreviousModal} />) : undefined}
+        {this.props.previousModalIds ? (<Button title="Dismiss ALL Previous Modals" onPress={this.onClickDismissAllPreviousModals} />) : undefined}
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
         
       </View>
@@ -36,7 +39,7 @@ class ModalScreen extends Component {
       name: 'navigation.playground.ModalScreen',
       passProps: {
         modalPosition: this.getModalPosition() + 1,
-        previousModalId: this.props.id
+        previousModalIds: _.concat([], this.props.previousModalIds, this.props.id)
       }
     });
   }
@@ -46,14 +49,23 @@ class ModalScreen extends Component {
   }
 
   onClickDismissPreviousModal() {
-    Navigation.dismissModal(this.props.previousModalId);
+    Navigation.dismissModal(this.getPreviousModalId());
   }
+  
   onClickDismissUnknownModal() {
     Navigation.dismissModal('unknown');
+  }
+  
+  onClickDismissAllPreviousModals() {
+    _.forEach(this.props.previousModalIds, (id) => Navigation.dismissModal(id));
   }
 
   getModalPosition() {
     return (this.props.modalPosition || 1);
+  }
+  
+  getPreviousModalId() {
+    return _.last(this.props.previousModalIds);
   }
 }
 
