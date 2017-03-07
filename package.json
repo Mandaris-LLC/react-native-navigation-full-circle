@@ -29,7 +29,7 @@
     "test-js": "eslint src integration scripts playground/src playground/e2e playground/scripts && BABEL_ENV=test jest --coverage",
     "test-android": "node ./scripts/test.android.js",
     "test-ios": "node ./scripts/test.ios.js",
-    "test": "npm run lint && npm run test-js && npm run test-android && npm run test-ios",
+    "test": "yarn run test-js && yarn run test-android && yarn run test-ios",
     "test-watch": "BABEL_ENV=test jest --coverage --watch",
     "release": "node ./scripts/release.js"
   },
