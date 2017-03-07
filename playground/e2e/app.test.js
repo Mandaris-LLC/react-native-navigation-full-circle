@@ -71,7 +71,7 @@ describe('app', () => {
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 
-  xit('dismiss modal by id', () => {
+  it('dismiss modal by id which is not the top most', () => {
     elementByLabel('Show Modal').tap();
     expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
     elementByLabel('Show Modal').tap();

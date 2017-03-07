@@ -49,11 +49,7 @@ RCT_EXPORT_METHOD(showModal:(NSDictionary*)layout)
 	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
 	UIViewController *newVc = [factory createLayoutAndSaveToStore:layout];
 	
-	UIViewController *root = UIApplication.sharedApplication.delegate.window.rootViewController;
-	while(root.presentedViewController) {
-		root = root.presentedViewController;
-	}
-	
+	UIViewController *root = [self topPresentedVC];
 	[root presentViewController:newVc animated:YES completion:^{
 		
 	}];
@@ -63,14 +59,18 @@ RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId)
 {
 	UIViewController *root = [[RNN instance].store findContainerForId:containerId];
 	
-	//	while(root.presentedViewController) {
-	//		root = root.presentedViewController;
-	//	}
 	if (root) {
+		UIViewController *topVC = [self topPresentedVC];
 		
-		[root dismissViewControllerAnimated:YES completion:^{
+		if (root == topVC) {
+			[root dismissViewControllerAnimated:YES completion:nil];
+			[[RNN instance].store.modalToDismiss dismissViewControllerAnimated:YES completion:nil];
+			[RNN instance].store.modalToDismiss = nil;
 			
-		}];
+		}
+		else {
+			[RNN instance].store.modalToDismiss = root;
+		}
 	}
 }
 
@@ -79,6 +79,14 @@ RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId)
 	if (![RNN instance].isReadyToReceiveCommands) {
 		@throw [NSException exceptionWithName:@"BridgeNotLoadedError" reason:@"Bridge not yet loaded! Send commands after Navigation.events().onAppLaunched() has been called." userInfo:nil];
 	}
+}
+
+-(UIViewController*)topPresentedVC {
+	UIViewController *root = UIApplication.sharedApplication.delegate.window.rootViewController;
+	while(root.presentedViewController) {
+		root = root.presentedViewController;
+	}
+	return root;
 }
 
 @end
