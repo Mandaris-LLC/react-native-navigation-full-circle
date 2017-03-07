@@ -18,6 +18,7 @@ class ModalScreen extends Component {
     this.onClickDismissUnknownModal = this.onClickDismissUnknownModal.bind(this);
     this.onClickDismissAllPreviousModals = this.onClickDismissAllPreviousModals.bind(this);
     this.onClickDismissFirstInStack = this.onClickDismissFirstInStack.bind(this);
+    this.onClickDismissAllModals = this.onClickDismissAllModals.bind(this);
   }
   render() {
     return (
@@ -27,6 +28,7 @@ class ModalScreen extends Component {
         <Button title="Show Modal" onPress={this.onClickShowModal} />
         <Button title="Dismiss Modal" onPress={this.onClickDismissModal} />
         <Button title="Dismiss Unknown Modal" onPress={this.onClickDismissUnknownModal} />
+        <Button title="Dismiss All Modals" onPress={this.onClickDismissAllModals} />
         {this.getPreviousModalId() ? (<Button title="Dismiss Previous Modal" onPress={this.onClickDismissPreviousModal} />) : undefined}
         {this.props.previousModalIds ? (<Button title="Dismiss ALL Previous Modals" onPress={this.onClickDismissAllPreviousModals} />) : undefined}
         {this.props.previousModalIds ? (<Button title="Dismiss First In Stack" onPress={this.onClickDismissFirstInStack} />) : undefined}
@@ -64,6 +66,10 @@ class ModalScreen extends Component {
 
   onClickDismissFirstInStack() {
     Navigation.dismissModal(_.head(this.props.previousModalIds));
+  }
+  
+  onClickDismissAllModals() {
+    Navigation.dismissAllModals();
   }
 
   getModalPosition() {

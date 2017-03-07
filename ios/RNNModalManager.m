@@ -25,7 +25,15 @@
 	[self removePendingNextModalIfOnTop];
 }
 
+-(void)dismissAllModals {
+	UIViewController *root = UIApplication.sharedApplication.delegate.window.rootViewController;
+	[root dismissViewControllerAnimated:YES completion:nil];
+	[self.store.modalsToDismissArray removeAllObjects];
+}
+
+
 #pragma mark - private
+
 
 -(void)removePendingNextModalIfOnTop {
 	NSString *containerId = [self.store.modalsToDismissArray lastObject];

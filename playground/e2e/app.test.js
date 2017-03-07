@@ -115,8 +115,13 @@ describe('app', () => {
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 
-  xit('dismissAllModals', () => {
-    //
+  it('dismissAllModals', () => {
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
+    elementByLabel('Show Modal').tap();
+    expect(elementByLabel('Modal Stack Position: 2')).toBeVisible();
+    elementByLabel('Dismiss All Modals').tap();
+    expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 });
 

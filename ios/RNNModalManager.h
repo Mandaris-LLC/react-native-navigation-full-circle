@@ -9,5 +9,6 @@
 
 -(void)showModal:(UIViewController*)viewController;
 -(void)dismissModal:(NSString*)containerId;
+-(void)dismissAllModals;
 
 @end

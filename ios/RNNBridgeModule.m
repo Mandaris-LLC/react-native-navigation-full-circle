@@ -58,6 +58,12 @@ RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId)
 	[[[RNNModalManager alloc] initWithStore:[RNN instance].store] dismissModal:containerId];
 }
 
+RCT_EXPORT_METHOD(dismissAllModals)
+{
+	[self assertReady];
+	[[[RNNModalManager alloc] initWithStore:[RNN instance].store] dismissAllModals];
+}
+
 
 
 - (void)assertReady
