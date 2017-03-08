@@ -9,14 +9,11 @@
 
 @interface RNN() <RCTBridgeDelegate>
 
-
-
 @end
 
 @implementation RNN {
 	NSURL *_jsCodeLocation;
 	RCTBridge *_bridge;
-	RNNEventEmitter *_eventEmitter;
 	RNNStore *_store;
 }
 
@@ -37,7 +34,6 @@
 
 -(void)bootstrap:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions {
 	_jsCodeLocation = jsCodeLocation;
-	_eventEmitter = [RNNEventEmitter new];
 	
 	UIApplication.sharedApplication.delegate.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	UIApplication.sharedApplication.delegate.window.backgroundColor = [UIColor whiteColor];
@@ -56,33 +52,38 @@
 	return _jsCodeLocation;
 }
 
--(NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge {
-	
-	RNNControllerFactory *controllerFactory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:_store];
-	RNNCommandsHandler *commandsHandler = [[RNNCommandsHandler alloc]initWithStore:_store controllerFactory:controllerFactory];
-	
-	RNNBridgeModule *bridgeModule = [[RNNBridgeModule alloc] initWithCommandsHandler:commandsHandler];
-	RNNEventEmitter *eventEmitter = [[RNNEventEmitter alloc] initWithBridge:bridge];
-	
-	return @[bridgeModule,eventEmitter];
-}
-
-# pragma mark - private
-
--(void)registerForJsEvents {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptLoaded) name:RCTJavaScriptDidLoadNotification object:_bridge];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJavaScriptWillLoad) name:RCTJavaScriptWillStartLoadingNotification	object:_bridge];
-}
-
-
 -(void)onJavaScriptWillLoad {
 	_store = [RNNStore new];
 	[self resetRootViewControllerOnlyOnJSDevReload];
 }
 
+-(NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge {
+	RNNEventEmitter *eventEmitter = [[RNNEventEmitter alloc] init];
+	
+	RNNControllerFactory *controllerFactory = [[RNNControllerFactory alloc] initWithRootViewCreator:[[RNNReactRootViewCreator alloc]initWithBridge:bridge] store:_store eventEmitter:eventEmitter];
+	RNNCommandsHandler *commandsHandler = [[RNNCommandsHandler alloc]initWithStore:_store controllerFactory:controllerFactory];
+	
+	RNNBridgeModule *bridgeModule = [[RNNBridgeModule alloc] initWithCommandsHandler:commandsHandler];
+	
+	return @[bridgeModule,eventEmitter];
+}
+
 -(void)onJavaScriptLoaded {
-	_store.isReadyToReceiveCommands = true;
-	[_eventEmitter sendOnAppLaunched];
+	_store.isReadyToReceiveCommands = YES;
+	[[_bridge moduleForClass:[RNNEventEmitter class]] sendOnAppLaunched];
+}
+
+# pragma mark - private
+
+-(void)registerForJsEvents {
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(onJavaScriptLoaded)
+												 name:RCTJavaScriptDidLoadNotification
+											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(onJavaScriptWillLoad)
+												 name:RCTJavaScriptWillStartLoadingNotification
+											   object:nil];
 }
 
 -(void)resetRootViewControllerOnlyOnJSDevReload {

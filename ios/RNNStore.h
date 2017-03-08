@@ -2,11 +2,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-
 @interface RNNStore : NSObject
 
-@property NSMutableArray *modalsToDismissArray;
-@property BOOL isReadyToReceiveCommands;
+@property (nonatomic, strong) NSMutableArray *modalsToDismissArray;
+@property (atomic) BOOL isReadyToReceiveCommands;
 
 - (UIViewController*)findContainerForId:(NSString*)containerId;
 - (void)setContainer:(UIViewController*)viewController containerId:(NSString*)containerId;

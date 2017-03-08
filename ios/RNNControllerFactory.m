@@ -1,26 +1,28 @@
 
 #import "RNNControllerFactory.h"
 #import "RNNLayoutNode.h"
+#import "RNNRootViewController.h"
+#import "RNNSideMenuController.h"
+#import "RNNSideMenuChildVC.h"
 
 
-
-@interface RNNControllerFactory ()
-
-@property (nonatomic, strong) id<RNNRootViewCreator> creator;
-@property (nonatomic, strong) RNNStore *store;
-
-@end
-
-@implementation RNNControllerFactory
+@implementation RNNControllerFactory {
+	id<RNNRootViewCreator> _creator;
+	RNNStore *_store;
+	RNNEventEmitter *_eventEmitter;
+}
 
 # pragma mark public
 
 
-- (instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator store:(RNNStore *)store {
+- (instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator
+								  store:(RNNStore *)store
+						   eventEmitter:(RNNEventEmitter*)eventEmitter {
 	
 	self = [super init];
-	self.creator = creator;
-	self.store = store;
+	_creator = creator;
+	_store = store;
+	_eventEmitter = eventEmitter;
 	
 	return self;
 }
@@ -67,13 +69,13 @@
 		@throw [NSException exceptionWithName:@"UnknownControllerType" reason:[@"Unknown controller type " stringByAppendingString:node.type] userInfo:nil];
 	}
 
-	[self.store setContainer:result containerId:node.nodeId];
+	[_store setContainer:result containerId:node.nodeId];
 	
 	return result;
 }
 
 - (RNNRootViewController*)createContainer:(RNNLayoutNode*)node {
-	return [[RNNRootViewController alloc] initWithNode:node rootViewCreator:self.creator];
+	return [[RNNRootViewController alloc] initWithNode:node rootViewCreator:_creator eventEmitter:_eventEmitter];
 }
 
 - (UINavigationController*)createContainerStack:(RNNLayoutNode*)node {

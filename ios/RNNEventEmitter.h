@@ -6,8 +6,6 @@
 
 @interface RNNEventEmitter : RCTEventEmitter <RCTBridgeModule>
 
--(instancetype)initWithBridge:(RCTBridge*)bridge;
-
 -(void)sendOnAppLaunched;
 
 -(void)sendContainerStart:(NSString*)containerId;

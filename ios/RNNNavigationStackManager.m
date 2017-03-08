@@ -1,18 +1,13 @@
 #import "RNNNavigationStackManager.h"
 
-@interface RNNNavigationStackManager ()
-
-@property RNNStore *store;
-
-@end
-
-
-@implementation RNNNavigationStackManager
+@implementation RNNNavigationStackManager {
+	RNNStore *_store;
+}
 
 
 -(instancetype)initWithStore:(RNNStore*)store {
 	self = [super init];
-	self.store = store;
+	_store = store;
 	return self;
 }
 

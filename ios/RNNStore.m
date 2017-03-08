@@ -3,23 +3,21 @@
 
 @interface RNNStore ()
 
-@property NSMapTable *containerStore;
-
 @end
 
-@implementation RNNStore
-
+@implementation RNNStore {
+	NSMapTable* _containerStore;
+}
 
 -(instancetype)init {
 	self = [super init];
-	self.containerStore = [NSMapTable strongToWeakObjectsMapTable];
+	_containerStore = [NSMapTable strongToWeakObjectsMapTable];
 	self.modalsToDismissArray = [NSMutableArray new];
 	return self;
 }
 
-
 -(UIViewController *)findContainerForId:(NSString *)containerId {
-	return [self.containerStore objectForKey:containerId];
+	return [_containerStore objectForKey:containerId];
 }
 
 - (void)setContainer:(UIViewController*)viewController containerId:(NSString*)containerId {
@@ -28,11 +26,11 @@
 		@throw [NSException exceptionWithName:@"MultipleContainerId" reason:[@"Container id already exists " stringByAppendingString:containerId] userInfo:nil];
 	}
 	
-	[self.containerStore setObject:viewController forKey:containerId];
+	[_containerStore setObject:viewController forKey:containerId];
 }
 
 - (void)removeContainer:(NSString*)containerId {
-	[self.containerStore removeObjectForKey:containerId];
+	[_containerStore removeObjectForKey:containerId];
 }
 
 

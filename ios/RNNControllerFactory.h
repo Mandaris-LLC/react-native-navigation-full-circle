@@ -2,14 +2,14 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "RNNRootViewCreator.h"
-#import "RNNRootViewController.h"
-#import "RNNSideMenuController.h"
-#import "RNNSideMenuChildVC.h"
 #import "RNNStore.h"
+#import "RNNEventEmitter.h"
 
 @interface RNNControllerFactory : NSObject
 
--(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator store:(RNNStore*)store;
+-(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator
+								 store:(RNNStore*)store
+						  eventEmitter:(RNNEventEmitter*)eventEmitter;
 
 -(UIViewController*)createLayoutAndSaveToStore:(NSDictionary*)layout;
 

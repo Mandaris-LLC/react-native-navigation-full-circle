@@ -1,13 +1,9 @@
-//
-//  RNNControllerFactoryTest.m
-//  playground
-//
-//  Created by Ran Greenberg on 08/02/2017.
-//  Copyright © 2017 Wix. All rights reserved.
-//
 
 #import <XCTest/XCTest.h>
 #import "RNNControllerFactory.h"
+#import "RNNRootViewController.h"
+#import "RNNSideMenuController.h"
+#import "RNNSideMenuChildVC.h"
 
 
 @interface RNNControllerFactoryTest : XCTestCase
@@ -24,7 +20,7 @@
 	[super setUp];
 	self.creator = nil;
 	self.store = [RNNStore new];
-	self.factory = [[RNNControllerFactory alloc] initWithRootViewCreator:self.creator store:self.store];
+	self.factory = [[RNNControllerFactory alloc] initWithRootViewCreator:self.creator store:self.store eventEmitter:nil];
 }
 
 - (void)tearDown {

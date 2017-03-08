@@ -5,4 +5,6 @@
 
 @interface RNNReactRootViewCreator : NSObject <RNNRootViewCreator>
 
+-(instancetype)initWithBridge:(RCTBridge*)bridge;
+
 @end

@@ -1,17 +1,13 @@
 #import "RNNModalManager.h"
 
-@interface RNNModalManager ()
-
-@property RNNStore *store;
-
-@end
-
-@implementation RNNModalManager
+@implementation RNNModalManager {
+	RNNStore *_store;
+}
 
 
 -(instancetype)initWithStore:(RNNStore*)store {
 	self = [super init];
-	self.store = store;
+	_store = store;
 	return self;
 }
 
@@ -21,14 +17,14 @@
 }
 
 -(void)dismissModal:(NSString *)containerId {
-	[self.store.modalsToDismissArray addObject:containerId];
+	[_store.modalsToDismissArray addObject:containerId];
 	[self removePendingNextModalIfOnTop];
 }
 
 -(void)dismissAllModals {
 	UIViewController *root = UIApplication.sharedApplication.delegate.window.rootViewController;
 	[root dismissViewControllerAnimated:YES completion:nil];
-	[self.store.modalsToDismissArray removeAllObjects];
+	[_store.modalsToDismissArray removeAllObjects];
 }
 
 
@@ -36,9 +32,9 @@
 
 
 -(void)removePendingNextModalIfOnTop {
-	NSString *containerId = [self.store.modalsToDismissArray lastObject];
+	NSString *containerId = [_store.modalsToDismissArray lastObject];
 	
-	UIViewController *modalToDismiss = [self.store findContainerForId:containerId];
+	UIViewController *modalToDismiss = [_store findContainerForId:containerId];
 	
 	if(!modalToDismiss) {
 		return;
@@ -46,7 +42,7 @@
 	
 	if (modalToDismiss == [self topPresentedVC]) {
 		[modalToDismiss dismissViewControllerAnimated:YES completion:^{
-			[self.store.modalsToDismissArray removeObject:containerId];
+			[_store.modalsToDismissArray removeObject:containerId];
 			[self removePendingNextModalIfOnTop];
 		}];
 	}
