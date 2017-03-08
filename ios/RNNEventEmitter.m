@@ -1,14 +1,22 @@
-
 #import "RNNEventEmitter.h"
-#import "RNN.h"
 
-@implementation RNNEventEmitter
+@implementation RNNEventEmitter {
+	RCTBridge *_bridge;
+}
 
 RCT_EXPORT_MODULE();
 
 static NSString* const onAppLaunched	= @"RNN.appLaunched";
 static NSString* const containerStart	= @"RNN.containerStart";
 static NSString* const containerStop	= @"RNN.containerStop";
+
+-(instancetype)initWithBridge:(RCTBridge*)bridge {
+	self = [super init];
+	
+	_bridge = bridge;
+	
+	return self;
+}
 
 -(NSArray<NSString *> *)supportedEvents
 {
@@ -36,7 +44,7 @@ static NSString* const containerStop	= @"RNN.containerStop";
 
 -(void)send:(NSString *)eventName body:(id)body
 {
-	[[[RNN instance].bridge moduleForClass:[RNNEventEmitter class]] sendEventWithName:eventName body:body];
+	[[_bridge moduleForClass:[RNNEventEmitter class]] sendEventWithName:eventName body:body];
 }
 
 @end
