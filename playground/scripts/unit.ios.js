@@ -12,11 +12,11 @@ function testProject() {
             -destination 'platform=iOS Simulator,name=iPhone SE'
             `;
 
-  if (hasXcpretty()) {
-    shellUtils.exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
-  } else {
-    shellUtils.exec.execSync(`${cmd}`);
-  }
+  // if (hasXcpretty()) {
+  //   shellUtils.exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
+  // } else {
+  shellUtils.exec.execSync(`${cmd}`);
+  // }
   shellUtils.exec.execSync(`echo 'travis_fold:end:xcodeunit'`);
 }
 function hasXcpretty() {
