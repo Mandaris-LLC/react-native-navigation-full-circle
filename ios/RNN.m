@@ -1,43 +1,37 @@
 
 #import "RNN.h"
-#import "RNNEventEmitter.h"
-
 #import <React/RCTBridge.h>
-#import "RNNSplashScreen.h"
 
+#import "RNNEventEmitter.h"
+#import "RNNSplashScreen.h"
 #import "RNNBridgeModule.h"
 #import "RNNReactRootViewCreator.h"
 
 @interface RNN() <RCTBridgeDelegate>
 
 @property NSURL* jsCodeLocation;
-@property (readwrite) RCTBridge* bridge;
-@property (readwrite) RNNEventEmitter* eventEmitter;
-
-@property (readwrite) RNNStore *store;
+@property RCTBridge* bridge;
+@property RNNEventEmitter* eventEmitter;
+@property RNNStore *store;
 
 @end
 
 @implementation RNN
 
-
-# pragma mark public
-
-
-+(instancetype)instance
-{
-	static RNN *sharedInstance = nil;
++(instancetype) sharedInstance {
+	static RNN *instance = nil;
 	static dispatch_once_t onceToken = 0;
 	dispatch_once(&onceToken,^{
-		if (sharedInstance == nil)
+		if (instance == nil)
 		{
-			sharedInstance = [[RNN alloc] init];
+			instance = [[RNN alloc] init];
 		}
 	});
 	
-	return sharedInstance;
+	return instance;
 }
 
+# pragma mark public
 
 -(void)bootstrap:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions {
 	self.jsCodeLocation = jsCodeLocation;
@@ -63,7 +57,7 @@
 -(NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge {
 	
 	RNNControllerFactory *controllerFactory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:self.store];
-	RNNCommandsHandler* commandsHandler = [[RNNCommandsHandler alloc]initWithStore:[RNN instance].store controllerFactory:controllerFactory];
+	RNNCommandsHandler* commandsHandler = [[RNNCommandsHandler alloc]initWithStore:self.store controllerFactory:controllerFactory];
 	
 	RNNBridgeModule* bridgeModule = [[RNNBridgeModule alloc] initWithCommandsHandler:commandsHandler];
 	return @[bridgeModule];
