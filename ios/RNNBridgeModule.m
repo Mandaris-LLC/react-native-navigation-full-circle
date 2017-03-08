@@ -16,6 +16,8 @@ RCT_EXPORT_MODULE();
 	return dispatch_get_main_queue();
 }
 
+#pragma mark - JS interface
+
 RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout)
 {
 	[self assertReady];
@@ -64,7 +66,7 @@ RCT_EXPORT_METHOD(dismissAllModals)
 	[[[RNNModalManager alloc] initWithStore:[RNN instance].store] dismissAllModals];
 }
 
-
+#pragma mark - private
 
 - (void)assertReady
 {
@@ -72,10 +74,6 @@ RCT_EXPORT_METHOD(dismissAllModals)
 		@throw [NSException exceptionWithName:@"BridgeNotLoadedError" reason:@"Bridge not yet loaded! Send commands after Navigation.events().onAppLaunched() has been called." userInfo:nil];
 	}
 }
-
-
-
-
 
 @end
 
