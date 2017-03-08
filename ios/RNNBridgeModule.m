@@ -5,6 +5,7 @@
 #import "RNNReactRootViewCreator.h"
 #import "RNNStore.h"
 #import "RNNModalManager.h"
+#import "RNNNavigationStackManager.h"
 
 @implementation RNNBridgeModule
 
@@ -31,23 +32,15 @@ RCT_EXPORT_METHOD(push:(NSString*)containerId layout:(NSDictionary*)layout)
 	RNNControllerFactory *factory = [[RNNControllerFactory alloc] initWithRootViewCreator:[RNNReactRootViewCreator new] store:[RNN instance].store];
 	UIViewController *newVc = [factory createLayoutAndSaveToStore:layout];
 	UIViewController *vc = [[RNN instance].store findContainerForId:containerId];
-	
-	[[vc navigationController] pushViewController:newVc animated:true];
+
+	[[[RNNNavigationStackManager alloc] initWithStore:[RNN instance].store] push:newVc onTop:vc animated:YES];
 }
 
 RCT_EXPORT_METHOD(pop:(NSString*)containerId)
 {
 	[self assertReady];
 	UIViewController *vc = [[RNN instance].store findContainerForId:containerId];
-	
-	if([[vc navigationController] topViewController] == vc ) {
-		[[vc navigationController] popViewControllerAnimated:YES];
-	}
-	else {
-		NSMutableArray * vcs = [vc navigationController].viewControllers.mutableCopy;
-		[vcs removeObject:vc];
-		[[vc navigationController] setViewControllers:vcs animated:NO];
-	}
+	[[[RNNNavigationStackManager alloc] initWithStore:[RNN instance].store] pop:vc animated:YES];
 	[[RNN instance].store removeContainer:containerId];
 }
 

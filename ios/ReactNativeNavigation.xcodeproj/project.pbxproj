@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		261F0E641E6EC94900989DE2 /* RNNModalManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 261F0E621E6EC94900989DE2 /* RNNModalManager.h */; };
 		261F0E651E6EC94900989DE2 /* RNNModalManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 261F0E631E6EC94900989DE2 /* RNNModalManager.m */; };
+		261F0E6A1E6F028A00989DE2 /* RNNNavigationStackManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 261F0E681E6F028A00989DE2 /* RNNNavigationStackManager.h */; };
+		261F0E6B1E6F028A00989DE2 /* RNNNavigationStackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 261F0E691E6F028A00989DE2 /* RNNNavigationStackManager.m */; };
 		263905AE1E4C6F440023D7D3 /* MMDrawerBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2639058A1E4C6F440023D7D3 /* MMDrawerBarButtonItem.h */; };
 		263905AF1E4C6F440023D7D3 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2639058B1E4C6F440023D7D3 /* MMDrawerBarButtonItem.m */; };
 		263905B01E4C6F440023D7D3 /* MMDrawerController+Subclass.h in Headers */ = {isa = PBXBuildFile; fileRef = 2639058C1E4C6F440023D7D3 /* MMDrawerController+Subclass.h */; };
@@ -84,6 +86,8 @@
 /* Begin PBXFileReference section */
 		261F0E621E6EC94900989DE2 /* RNNModalManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNModalManager.h; sourceTree = "<group>"; };
 		261F0E631E6EC94900989DE2 /* RNNModalManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNModalManager.m; sourceTree = "<group>"; };
+		261F0E681E6F028A00989DE2 /* RNNNavigationStackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNNavigationStackManager.h; sourceTree = "<group>"; };
+		261F0E691E6F028A00989DE2 /* RNNNavigationStackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationStackManager.m; sourceTree = "<group>"; };
 		2639058A1E4C6F440023D7D3 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		2639058B1E4C6F440023D7D3 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		2639058C1E4C6F440023D7D3 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
@@ -227,6 +231,8 @@
 			children = (
 				261F0E621E6EC94900989DE2 /* RNNModalManager.h */,
 				261F0E631E6EC94900989DE2 /* RNNModalManager.m */,
+				261F0E681E6F028A00989DE2 /* RNNNavigationStackManager.h */,
+				261F0E691E6F028A00989DE2 /* RNNNavigationStackManager.m */,
 				26916C941E4B9CCC00D13680 /* RNNRootViewCreator.h */,
 				26916C961E4B9E7700D13680 /* RNNReactRootViewCreator.h */,
 				26916C971E4B9E7700D13680 /* RNNReactRootViewCreator.m */,
@@ -291,6 +297,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				261F0E6A1E6F028A00989DE2 /* RNNNavigationStackManager.h in Headers */,
 				26916C981E4B9E7700D13680 /* RNNReactRootViewCreator.h in Headers */,
 				263905B01E4C6F440023D7D3 /* MMDrawerController+Subclass.h in Headers */,
 				7B1126A41E2D2B6C00F9B03B /* ReactNativeNavigation.h in Headers */,
@@ -387,6 +394,7 @@
 				263905C51E4C6F440023D7D3 /* SidebarFacebookAnimation.m in Sources */,
 				7BEF0D191E437684003E96B0 /* RNNRootViewController.m in Sources */,
 				263905C31E4C6F440023D7D3 /* SidebarAnimation.m in Sources */,
+				261F0E6B1E6F028A00989DE2 /* RNNNavigationStackManager.m in Sources */,
 				263905BF1E4C6F440023D7D3 /* RCCTheSideBarManagerViewController.m in Sources */,
 				7B1126A01E2D263F00F9B03B /* RNNEventEmitter.m in Sources */,
 				263905CB1E4C6F440023D7D3 /* SidebarLuvocracyAnimation.m in Sources */,

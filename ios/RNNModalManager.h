@@ -6,7 +6,6 @@
 
 -(instancetype)initWithStore:(RNNStore*)store;
 
-
 -(void)showModal:(UIViewController*)viewController;
 -(void)dismissModal:(NSString*)containerId;
 -(void)dismissAllModals;
