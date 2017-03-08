@@ -10,6 +10,14 @@ function runWithXcprettyIfPossible(cmd) {
   }
 }
 
+function hasXcpretty() {
+  try {
+    return shellUtils.exec.execSyncRead(`which xcpretty`);
+  } catch (e) {
+    return false;
+  }
+}
+
 function testProject() {
   shellUtils.exec.execSync(`echo 'travis_fold:start:xcodeunit'`);
   runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
@@ -26,13 +34,6 @@ function testProject() {
             -project playground.xcodeproj
             -destination 'platform=iOS Simulator,name=iPhone 7'`);
   shellUtils.exec.execSync(`echo 'travis_fold:end:xcodeunit'`);
-}
-function hasXcpretty() {
-  try {
-    return shellUtils.exec.execSyncRead(`which xcpretty`);
-  } catch (e) {
-    return false;
-  }
 }
 
 function run() {
