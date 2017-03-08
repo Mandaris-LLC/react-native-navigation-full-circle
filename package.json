@@ -61,7 +61,6 @@
     "detox": "4.x.x",
     "detox-server": "1.x.x",
     "shell-utils": "1.x.x"
-
   },
   "babel": {
     "env": {
