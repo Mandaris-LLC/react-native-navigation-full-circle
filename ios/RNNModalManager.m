@@ -17,14 +17,14 @@
 }
 
 -(void)dismissModal:(NSString *)containerId {
-	[_store.modalsToDismissArray addObject:containerId];
+	[[_store pendingModalIdsToDismiss] addObject:containerId];
 	[self removePendingNextModalIfOnTop];
 }
 
 -(void)dismissAllModals {
 	UIViewController *root = UIApplication.sharedApplication.delegate.window.rootViewController;
 	[root dismissViewControllerAnimated:YES completion:nil];
-	[_store.modalsToDismissArray removeAllObjects];
+	[[_store pendingModalIdsToDismiss] removeAllObjects];
 }
 
 
@@ -32,7 +32,7 @@
 
 
 -(void)removePendingNextModalIfOnTop {
-	NSString *containerId = [_store.modalsToDismissArray lastObject];
+	NSString *containerId = [[_store pendingModalIdsToDismiss] lastObject];
 	
 	UIViewController *modalToDismiss = [_store findContainerForId:containerId];
 	
@@ -42,7 +42,7 @@
 	
 	if (modalToDismiss == [self topPresentedVC]) {
 		[modalToDismiss dismissViewControllerAnimated:YES completion:^{
-			[_store.modalsToDismissArray removeObject:containerId];
+			[[_store pendingModalIdsToDismiss] removeObject:containerId];
 			[self removePendingNextModalIfOnTop];
 		}];
 	}

@@ -4,11 +4,15 @@
 
 @interface RNNStore : NSObject
 
-@property (nonatomic, strong) NSMutableArray *modalsToDismissArray;
-@property (atomic) BOOL isReadyToReceiveCommands;
+-(UIViewController*) findContainerForId:(NSString*)containerId;
+-(void) setContainer:(UIViewController*)viewController containerId:(NSString*)containerId;
+-(void) removeContainer:(NSString*)containerId;
 
-- (UIViewController*)findContainerForId:(NSString*)containerId;
-- (void)setContainer:(UIViewController*)viewController containerId:(NSString*)containerId;
-- (void)removeContainer:(NSString*)containerId;
+-(void) setReadyToReceiveCommands:(BOOL)isReady;
+-(BOOL) isReadyToReceiveCommands;
+
+-(NSMutableArray*) pendingModalIdsToDismiss;
+
+-(void) clean;
 
 @end

@@ -7,12 +7,15 @@
 
 @implementation RNNStore {
 	NSMapTable* _containerStore;
+	NSMutableArray* _pendingModalIdsToDismiss;
+	BOOL _isReadyToReceiveCommands;
 }
 
 -(instancetype)init {
 	self = [super init];
+	_isReadyToReceiveCommands = false;
 	_containerStore = [NSMapTable strongToWeakObjectsMapTable];
-	self.modalsToDismissArray = [NSMutableArray new];
+	_pendingModalIdsToDismiss = [NSMutableArray new];
 	return self;
 }
 
@@ -33,5 +36,22 @@
 	[_containerStore removeObjectForKey:containerId];
 }
 
+-(void)setReadyToReceiveCommands:(BOOL)isReady {
+	_isReadyToReceiveCommands = isReady;
+}
+
+-(BOOL)isReadyToReceiveCommands {
+	return _isReadyToReceiveCommands;
+}
+
+-(NSMutableArray *)pendingModalIdsToDismiss {
+	return _pendingModalIdsToDismiss;
+}
+
+-(void)clean {
+	_isReadyToReceiveCommands = false;
+	[_pendingModalIdsToDismiss removeAllObjects];
+	[_containerStore removeAllObjects];
+}
 
 @end

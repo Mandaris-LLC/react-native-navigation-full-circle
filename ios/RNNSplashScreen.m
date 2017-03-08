@@ -4,14 +4,16 @@
 
 @implementation RNNSplashScreen
 
-+(void)show
-{
++(void)show {
+	
+	UIApplication.sharedApplication.delegate.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	UIApplication.sharedApplication.delegate.window.backgroundColor = [UIColor whiteColor];
+	
 	CGRect screenBounds = [UIScreen mainScreen].bounds;
 	UIView *splashView = nil;
 	
 	NSString* launchStoryBoard = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UILaunchStoryboardName"];
-	if (launchStoryBoard != nil)
-	{//load the splash from the storyboard that's defined in the info.plist as the LaunchScreen
+	if (launchStoryBoard != nil) {//load the splash from the storyboard that's defined in the info.plist as the LaunchScreen
 		@try
 		{
 			splashView = [[NSBundle mainBundle] loadNibNamed:launchStoryBoard owner:self options:nil][0];
@@ -25,8 +27,7 @@
 			splashView = nil;
 		}
 	}
-	else
-	{//load the splash from the DEfault image or from LaunchImage in the xcassets
+	else {//load the splash from the DEfault image or from LaunchImage in the xcassets
 		CGFloat screenHeight = screenBounds.size.height;
 		
 		NSString* imageName = @"Default";
@@ -39,8 +40,7 @@
 		
 		//xcassets LaunchImage files
 		UIImage *image = [UIImage imageNamed:imageName];
-		if (image == nil)
-		{
+		if (image == nil) {
 			imageName = @"LaunchImage";
 			
 			if (screenHeight == 480)
@@ -55,14 +55,12 @@
 			image = [UIImage imageNamed:imageName];
 		}
 		
-		if (image != nil)
-		{
+		if (image != nil) {
 			splashView = [[UIImageView alloc] initWithImage:image];
 		}
 	}
 	
-	if (splashView != nil)
-	{
+	if (splashView != nil) {
 		RNNSplashScreen *splashVC = [[RNNSplashScreen alloc] init];
 		splashVC.view = splashView;
 		
