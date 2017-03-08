@@ -8,7 +8,6 @@
 
 @interface RNN : NSObject
 
-@property (readonly) BOOL isReadyToReceiveCommands;
 @property (readonly) RCTBridge* bridge;
 @property (readonly) RNNEventEmitter* eventEmitter;
 @property (readonly) RNNStore *store;

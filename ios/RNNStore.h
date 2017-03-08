@@ -6,6 +6,7 @@
 @interface RNNStore : NSObject
 
 @property NSMutableArray *modalsToDismissArray;
+@property BOOL isReadyToReceiveCommands;
 
 - (UIViewController*)findContainerForId:(NSString*)containerId;
 - (void)setContainer:(UIViewController*)viewController containerId:(NSString*)containerId;

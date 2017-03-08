@@ -3,6 +3,10 @@
 
 #import <React/RCTBridgeModule.h>
 
+#import "RNNCommandsHandler.h"
+
 @interface RNNBridgeModule : NSObject <RCTBridgeModule>
+
+-(instancetype)initWithCommandsHandler:(RNNCommandsHandler*)commandsHandler;
 
 @end

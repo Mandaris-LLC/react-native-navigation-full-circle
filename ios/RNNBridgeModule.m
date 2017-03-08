@@ -1,6 +1,8 @@
 #import "RNNBridgeModule.h"
 
-#import "RNNCommandsHandler.h"
+@interface RNNBridgeModule ()
+@property RNNCommandsHandler* commandsHandler;
+@end
 
 @implementation RNNBridgeModule
 
@@ -10,30 +12,36 @@ RCT_EXPORT_MODULE();
 	return dispatch_get_main_queue();
 }
 
+-(instancetype)initWithCommandsHandler:(RNNCommandsHandler *)commandsHandler {
+	self = [super init];
+	self.commandsHandler = commandsHandler;
+	return self;
+}
+
 #pragma mark - JS interface
 
 RCT_EXPORT_METHOD(setRoot:(NSDictionary*)layout) {
-	[[RNNCommandsHandler new] setRoot:layout];
+	[self.commandsHandler setRoot:layout];
 }
 
 RCT_EXPORT_METHOD(push:(NSString*)containerId layout:(NSDictionary*)layout) {
-	[[RNNCommandsHandler new] push:containerId layout:layout];
+	[self.commandsHandler push:containerId layout:layout];
 }
 
 RCT_EXPORT_METHOD(pop:(NSString*)containerId) {
-	[[RNNCommandsHandler new] pop:containerId];
+	[self.commandsHandler pop:containerId];
 }
 
 RCT_EXPORT_METHOD(showModal:(NSDictionary*)layout) {
-	[[RNNCommandsHandler new] showModal:layout];
+	[self.commandsHandler showModal:layout];
 }
 
 RCT_EXPORT_METHOD(dismissModal:(NSString*)containerId) {
-	[[RNNCommandsHandler new] dismissModal:containerId];
+	[self.commandsHandler dismissModal:containerId];
 }
 
 RCT_EXPORT_METHOD(dismissAllModals) {
-	[[RNNCommandsHandler new] dismissAllModals];
+	[self.commandsHandler dismissAllModals];
 }
 
 @end

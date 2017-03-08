@@ -1,8 +1,12 @@
-
-
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#import "RNNControllerFactory.h"
+#import "RNNStore.h"
 
 @interface RNNCommandsHandler : NSObject
+
+-(instancetype) initWithStore:(RNNStore*)store controllerFactory:(RNNControllerFactory*)controllerFactory;
 
 -(void) setRoot:(NSDictionary*)layout;
 

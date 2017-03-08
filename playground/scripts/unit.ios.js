@@ -9,7 +9,7 @@ function testProject() {
             test
             -scheme "playground"
             -project playground.xcodeproj
-            -destination 'platform=iOS Simulator,name=iPhone SE'
+            -destination 'platform=iOS Simulator,name=iPhone 7'
             `;
 
   // if (hasXcpretty()) {

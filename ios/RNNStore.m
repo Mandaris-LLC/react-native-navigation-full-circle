@@ -5,7 +5,6 @@
 
 @property NSMapTable *containerStore;
 
-
 @end
 
 @implementation RNNStore
