@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "lodash": "4.x.x"
+
   },
   "devDependencies": {
     "react-native": "0.41.2",
