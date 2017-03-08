@@ -19,6 +19,7 @@ run_f () {
   echo -e "${green}\t\t\t --> $(($duration / 60)) minutes and $(($duration % 60)) seconds ${nocolor}\n"
 }
 
+run_f "system_profiler"
 run_f "yarn install"
 run_f "yarn run test-js"
 run_f "yarn run test-android"
