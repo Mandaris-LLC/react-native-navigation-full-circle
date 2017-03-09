@@ -17,7 +17,6 @@
 	[modalManager dismissAllModals];
 	
 	XCTAssertTrue([[store pendingModalIdsToDismiss] count] == 0);
-	
 }
 
 @end

@@ -1,6 +1,5 @@
 
 #import "RNNReactRootViewCreator.h"
-#import "RNN.h"
 #import <React/RCTRootView.h>
 
 @implementation RNNReactRootViewCreator {

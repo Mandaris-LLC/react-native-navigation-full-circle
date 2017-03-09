@@ -1,7 +1,6 @@
 
 #import "RNNRootViewController.h"
 #import <React/RCTRootView.h>
-#import "RNN.h"
 
 @interface RNNRootViewController()
 @property NSString* containerId;
@@ -32,6 +31,5 @@
 	[super viewDidDisappear:animated];
 	[self.eventEmitter sendContainerStop:self.containerId];
 }
-
 
 @end

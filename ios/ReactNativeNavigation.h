@@ -4,8 +4,6 @@
 
 @interface ReactNativeNavigation : NSObject
 
-+(void)bootstrap:(NSURL*)jsCodeLocation;
-
 +(void)bootstrap:(NSURL*)jsCodeLocation launchOptions:(NSDictionary *)launchOptions;
 
 @end
