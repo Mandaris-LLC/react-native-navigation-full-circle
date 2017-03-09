@@ -7,12 +7,16 @@
 @implementation RNNCommandsHandler {
 	RNNControllerFactory *_controllerFactory;
 	RNNStore *_store;
+	RNNNavigationStackManager* _navigationStackManager;
+	RNNModalManager* _modalManager;
 }
 
 -(instancetype) initWithStore:(RNNStore*)store controllerFactory:(RNNControllerFactory*)controllerFactory {
 	self = [super init];
 	_store = store;
 	_controllerFactory = controllerFactory;
+	_navigationStackManager = [[RNNNavigationStackManager alloc] initWithStore:_store];
+	_modalManager = [[RNNModalManager alloc] initWithStore:_store];
 	return self;
 }
 
@@ -28,42 +32,29 @@
 
 -(void) push:(NSString*)containerId layout:(NSDictionary*)layout {
 	[self assertReady];
-	
 	UIViewController *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
-	
-	// find on who to push
-	UIViewController *vc = [_store findContainerForId:containerId];
-	
-	// do the actual pushing
-	[[[RNNNavigationStackManager alloc] initWithStore:_store] push:newVc onTop:vc animated:YES];
+	[_navigationStackManager push:newVc onTop:containerId];
 }
 
 -(void) pop:(NSString*)containerId {
 	[self assertReady];
-	
-	// find who to pop
-	UIViewController *vc = [_store findContainerForId:containerId];
-	
-	// do the popping
-	[[[RNNNavigationStackManager alloc] initWithStore:_store] pop:vc animated:YES];
-	[_store removeContainer:containerId];
+	[_navigationStackManager pop:containerId];
 }
 
 -(void) showModal:(NSDictionary*)layout {
 	[self assertReady];
-	
 	UIViewController *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
-	[[[RNNModalManager alloc] initWithStore:_store] showModal:newVc];
+	[_modalManager showModal:newVc];
 }
 
 -(void) dismissModal:(NSString*)containerId {
 	[self assertReady];
-	[[[RNNModalManager alloc] initWithStore:_store] dismissModal:containerId];
+	[_modalManager dismissModal:containerId];
 }
 
 -(void) dismissAllModals {
 	[self assertReady];
-	[[[RNNModalManager alloc] initWithStore:_store] dismissAllModals];
+	[_modalManager dismissAllModals];
 }
 
 #pragma mark - private

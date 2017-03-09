@@ -4,31 +4,28 @@
 	RNNStore *_store;
 }
 
-
 -(instancetype)initWithStore:(RNNStore*)store {
 	self = [super init];
 	_store = store;
 	return self;
 }
 
--(void)push:(UIViewController*)newTop onTop:(UIViewController*)currentTop animated:(BOOL)animated{
-	
-	[[currentTop navigationController] pushViewController:newTop animated:animated];
+-(void)push:(UIViewController *)newTop onTop:(NSString *)containerId {
+	UIViewController *vc = [_store findContainerForId:containerId];
+	[[vc navigationController] pushViewController:newTop animated:true];
 }
 
-
--(void)pop:(UIViewController*)vc animated:(BOOL)animated{
-	
-	if([[vc navigationController] topViewController] == vc ) {
-		[[vc navigationController] popViewControllerAnimated:animated];
-	}
-	else {
-		NSMutableArray * vcs = [vc navigationController].viewControllers.mutableCopy;
+-(void)pop:(NSString *)containerId {
+	UIViewController* vc = [_store findContainerForId:containerId];
+	UINavigationController* nvc = [vc navigationController];
+	if ([nvc topViewController] == vc) {
+		[nvc popViewControllerAnimated:true];
+	} else {
+		NSMutableArray * vcs = nvc.viewControllers.mutableCopy;
 		[vcs removeObject:vc];
-		[[vc navigationController] setViewControllers:vcs animated:animated];
+		[nvc setViewControllers:vcs animated:true];
 	}
+	[_store removeContainer:containerId];
 }
-
-
 
 @end

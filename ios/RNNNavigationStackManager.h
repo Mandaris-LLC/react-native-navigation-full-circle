@@ -6,7 +6,7 @@
 
 -(instancetype)initWithStore:(RNNStore*)store;
 
--(void)push:(UIViewController*)newTop onTop:(UIViewController*)currentTop animated:(BOOL)animated;
--(void)pop:(UIViewController*)vc animated:(BOOL)animated;
+-(void)push:(UIViewController*)newTop onTop:(NSString*)containerId;
+-(void)pop:(NSString*)containerId;
 
 @end
