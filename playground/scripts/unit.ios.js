@@ -22,14 +22,14 @@ function testProject() {
   shellUtils.exec.execSync(`echo 'travis_fold:start:xcodeunit'`);
   runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
-            build
+            build build-for-testing
             -scheme "playground"
             -project playground.xcodeproj
             -sdk iphonesimulator
             -configuration Debug`);
   runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
           cd ios && xcodebuild
-            test
+            test-without-building
             -scheme "playground"
             -project playground.xcodeproj
             -destination 'platform=iOS Simulator,name=iPhone 7'`);
