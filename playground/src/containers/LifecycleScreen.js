@@ -17,7 +17,11 @@ class LifecycleScreen extends Component {
   }
 
   onStop() {
-    alert('onStop!'); //eslint-disable-line
+    alert('onStop'); //eslint-disable-line
+  }
+
+  componentWillUnmount() {
+    alert('componentWillUnmount'); //eslint-disable-line
   }
 
   render() {

@@ -20,11 +20,19 @@ describe('app', () => {
   });
 
   it('screen lifecycle', () => {
-    elementByLabel('Switch to lifecycle screen').tap();
+    elementByLabel('Push lifecycle screen').tap();
     expect(elementByLabel('onStart!')).toBeVisible();
     elementByLabel('Push to test onStop').tap();
     expect(elementByLabel('Alert')).toBeVisible();
-    expect(elementByLabel('onStop!')).toBeVisible();
+    expect(elementByLabel('onStop')).toBeVisible();
+  });
+
+  it('unmount is called on pop', () => {
+    elementByLabel('Push lifecycle screen').tap();
+    expect(elementByLabel('onStart!')).toBeVisible();
+    element(by.traits(['button']).and(by.label('Back'))).tap();
+    expect(elementByLabel('onStop')).toBeVisible();
+    expect(elementByLabel('componentWillUnmount')).toBeVisible();
   });
 });
 
@@ -148,12 +156,17 @@ describe('modal', () => {
   });
 });
 
-describe('reload app', () => {
-  before((done) => {
+describe.only('reload app', () => {
+  beforeEach((done) => {
     simulator.reloadReactNativeApp(done);
   });
 
-  it('shows welcome screen', () => {
+  it('push a screen to ensure its not there after reload', () => {
+    elementByLabel('Push').tap();
+    expect(elementByLabel('Pushed Screen')).toBeVisible();
+  });
+
+  it('show welcome screen after reload', () => {
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 });

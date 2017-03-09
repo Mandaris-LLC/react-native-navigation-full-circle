@@ -8,6 +8,7 @@ class WelcomeScreen extends Component {
     super(props);
     this.onClickPush = this.onClickPush.bind(this);
     this.onClickShowModal = this.onClickShowModal.bind(this);
+    this.onClickLifecycleScreen = this.onClickLifecycleScreen.bind(this);
   }
 
   render() {
@@ -16,7 +17,7 @@ class WelcomeScreen extends Component {
         <Text style={styles.h1}>{`React Native Navigation!`}</Text>
         <Button title="Switch to tab based app" onPress={this.onClickSwitchToTabs} />
         <Button title="Switch to app with side menus" onPress={this.onClickSwitchToSideMenus} />
-        <Button title="Switch to lifecycle screen" onPress={this.onClickLifecycleScreen} />
+        <Button title="Push lifecycle screen" onPress={this.onClickLifecycleScreen} />
         <Button title="Push" onPress={this.onClickPush} />
         <Button title="Show Modal" onPress={this.onClickShowModal} />
         <Button title="Show Redbox" onPress={this.onClickShowRedbox} />
@@ -105,10 +106,8 @@ class WelcomeScreen extends Component {
   }
 
   onClickLifecycleScreen() {
-    Navigation.setRoot({
-      container: {
-        name: 'navigation.playground.LifecycleScreen'
-      }
+    Navigation.on(this.props.id).push({
+      name: 'navigation.playground.LifecycleScreen'
     });
   }
 

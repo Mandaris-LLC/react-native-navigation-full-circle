@@ -44,6 +44,7 @@ function e2e() { //eslint-disable-line
                               ./node_modules/mocha/bin/mocha e2e
                                 --timeout ${10 * 60 * 1000}
                                 --recursive
+                                --bail
                                 --compilers js:babel-register`);
   } finally {
     shellUtils.exec.kill(`detox-server`);
