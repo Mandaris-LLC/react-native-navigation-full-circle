@@ -156,7 +156,7 @@ describe('modal', () => {
   });
 });
 
-describe.only('reload app', () => {
+describe('reload app', () => {
   beforeEach((done) => {
     simulator.reloadReactNativeApp(done);
   });
