@@ -28,7 +28,7 @@ class PushedScreen extends Component {
       </View>
     );
   }
-  
+
   onClickPush() {
     Navigation.on(this.props.id).push({
       name: 'navigation.playground.PushedScreen',
@@ -38,15 +38,15 @@ class PushedScreen extends Component {
       }
     });
   }
-  
+
   onClickPop() {
     Navigation.on(this.props.id).pop();
   }
-  
+
   onClickPopPrevious() {
     Navigation.on(_.last(this.props.previousScreenIds)).pop();
   }
-  
+
   getStackPosition() {
     return this.props.stackPosition || 1;
   }

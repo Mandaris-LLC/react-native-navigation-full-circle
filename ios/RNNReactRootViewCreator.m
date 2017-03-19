@@ -2,6 +2,18 @@
 #import "RNNReactRootViewCreator.h"
 #import <React/RCTRootView.h>
 
+@interface RNNReactRootView : RCTRootView
+
+@end
+
+@implementation RNNReactRootView
+
+-(void) dealloc {
+	
+}
+
+@end
+
 @implementation RNNReactRootViewCreator {
 	RCTBridge *_bridge;
 }
@@ -20,7 +32,7 @@
 		@throw [NSException exceptionWithName:@"MissingViewId" reason:@"Missing view id" userInfo:nil];
 	}
 	
-	UIView *view = [[RCTRootView alloc] initWithBridge:_bridge
+	UIView *view = [[RNNReactRootView alloc] initWithBridge:_bridge
 										 moduleName:name
 								  initialProperties:@{@"id": rootViewId}];
 	return view;

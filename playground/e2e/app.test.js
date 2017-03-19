@@ -169,6 +169,10 @@ describe('reload app', () => {
   it('show welcome screen after reload', () => {
     expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
+
+  it('show modal then reload will not cause a leak', () => {
+    elementByLabel('Show Modal').tap();
+  });
 });
 
 function elementByLabel(label) {

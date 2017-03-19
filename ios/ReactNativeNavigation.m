@@ -1,7 +1,8 @@
 
 #import "ReactNativeNavigation.h"
- 
+
 #import <React/RCTBridge.h>
+#import <React/RCTUIManager.h>
 
 #import "RNNEventEmitter.h"
 #import "RNNSplashScreen.h"
@@ -75,8 +76,8 @@
 # pragma mark - js events
 
 -(void)onJavaScriptWillLoad {
-	[_store clean];
 	[self resetRootViewControllerOnlyOnJSDevReload];
+	[_store clean];
 }
 
 -(void)onJavaScriptLoaded {
@@ -102,9 +103,13 @@
 }
 
 -(void)resetRootViewControllerOnlyOnJSDevReload {
+#ifdef DEBUG
+	
 	if(![UIApplication.sharedApplication.delegate.window.rootViewController isKindOfClass:[RNNSplashScreen class]]) {
 		UIApplication.sharedApplication.delegate.window.rootViewController = nil;
 	}
+	
+#endif
 }
 
 
