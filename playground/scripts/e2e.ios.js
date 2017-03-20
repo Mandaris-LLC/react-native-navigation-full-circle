@@ -34,8 +34,6 @@ function e2e() { //eslint-disable-line
   try {
     shellUtils.exec.execSync(`echo 'travis_fold:start:detox-ios'`);
     shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
-    shellUtils.exec.kill(`detox-server`);
-    shellUtils.exec.exec(`./node_modules/.bin/detox-server`);
     const detoxAppBuildPath = `ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}-iphonesimulator/playground.app`;
 
     shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
@@ -45,7 +43,6 @@ function e2e() { //eslint-disable-line
                                 --recursive
                                 --bail`);
   } finally {
-    shellUtils.exec.kill(`detox-server`);
     if (process.env.CI) {
       shellUtils.exec.kill(`Simulator`);
       shellUtils.exec.kill(`CoreSimulator`);
