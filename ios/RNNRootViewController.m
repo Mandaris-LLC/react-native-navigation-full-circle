@@ -36,9 +36,20 @@
 }
 
 /**
- *	fix for #877
+ *	fix for #877, #878
  */
 -(void)onJsReload {
+	[self cleanReactLeftovers];
+}
+
+/**
+ * fix for #880
+ */
+-(void)dealloc {
+	[self cleanReactLeftovers];
+}
+
+-(void)cleanReactLeftovers {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] removeObserver:self.view];
 	self.view = nil;

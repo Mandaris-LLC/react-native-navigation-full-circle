@@ -79,7 +79,6 @@
 # pragma mark - js events
 
 -(void)onJavaScriptWillLoad {
-	[self releaseBeforeJSReload];
 	[_store clean];
 }
 
@@ -104,26 +103,5 @@
 												 name:RCTJavaScriptWillStartLoadingNotification
 											   object:nil];
 }
-
--(void)releaseBeforeJSReload {
-#ifdef DEBUG
-//	if(![UIApplication.sharedApplication.delegate.window.rootViewController isKindOfClass:[RNNSplashScreen class]]) {
-//		[self releaseBeforeJsReload:UIApplication.sharedApplication.delegate.window.rootViewController];
-//	}
-#endif
-}
-
-//-(void)releaseBeforeJsReload:(UIViewController*)vc {
-//	if(!vc) return;
-//	
-//	for (UIViewController* child in vc.childViewControllers) {
-//		[self releaseBeforeJsReload:child];
-//	}
-//	[self releaseBeforeJsReload:vc.presentedViewController];
-//	
-//	[NSNotificationCenter.defaultCenter removeObserver:vc];
-//	[NSNotificationCenter.defaultCenter removeObserver:vc.view];
-//	vc.view = nil;
-//}
 
 @end

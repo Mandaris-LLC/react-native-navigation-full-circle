@@ -69,12 +69,7 @@ class ModalScreen extends Component {
   }
 
   onClickDismissAllModals() {
-    // Navigation.dismissAllModals();
-    Navigation.setRoot({
-      container: {
-        name: 'navigation.playground.WelcomeScreen'
-      }
-    });
+    Navigation.dismissAllModals();
   }
 
   getModalPosition() {
