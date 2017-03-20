@@ -14,15 +14,6 @@
   },
   "//": "use react-native-navigation: 2.x.x --> we are manually installing it from a script for quicker workflow. Along with detox and shell-utils",
   "dependencies": {},
-  "detox": {
-    "session": {
-      "server": "ws://localhost:8099",
-      "sessionId": "playground"
-    },
-    "ios-simulator": {
-      "device": "iPhone 7"
-    }
-  },
   "babel": {
     "env": {
       "test": {
