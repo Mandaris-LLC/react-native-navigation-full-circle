@@ -58,8 +58,8 @@
     "jest-cli": "18.x.x",
     "remx": "0.1.x",
     "semver": "5.x.x",
-    "detox": "4.x.x",
-    "detox-server": "1.x.x",
+    "detox": "5.x.x",
+    "mocha": "*",
     "shell-utils": "1.x.x"
   },
   "babel": {

@@ -1399,21 +1399,23 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
-detox-server@1.x.x:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/detox-server/-/detox-server-1.1.0.tgz#4d3c9a2a54fa2ed963d6c3a12dfb417226dc38ca"
+detox-server@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/detox-server/-/detox-server-1.2.1.tgz#42caf4434fab93f3cca7242d066f08175c8f1ef8"
   dependencies:
     lodash "^4.13.1"
+    npmlog "^4.0.2"
     ws "^1.1.0"
 
-detox@4.x.x:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/detox/-/detox-4.3.1.tgz#430a3ab6c468a8e52dc8d196fa71204541fc5896"
+detox@5.x.x:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/detox/-/detox-5.0.4.tgz#aff96e21aa4b9718994912b6beaa3011cf2bdab5"
   dependencies:
     child-process-promise "^2.2.0"
     commander "^2.9.0"
+    detox-server "^1.2.1"
+    get-port "^2.1.0"
     lodash "^4.14.1"
-    mocha "^3.2.0"
     npmlog "^4.0.2"
     react-native-invoke "^0.2.1"
     ws "^1.1.1"
@@ -1999,6 +2001,12 @@ generate-object-property@^1.1.0:
 get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
+
+get-port@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/get-port/-/get-port-2.1.0.tgz#8783f9dcebd1eea495a334e1a6a251e78887ab1a"
+  dependencies:
+    pinkie-promise "^2.0.0"
 
 getpass@^0.1.1:
   version "0.1.6"
@@ -3186,7 +3194,7 @@ mobx@2.x.x:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-2.7.0.tgz#cf3d82d18c0ca7f458d8f2a240817b3dc7e54a01"
 
-mocha@^3.2.0:
+mocha@*:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/mocha/-/mocha-3.2.0.tgz#7dc4f45e5088075171a68896814e6ae9eb7a85e3"
   dependencies:
