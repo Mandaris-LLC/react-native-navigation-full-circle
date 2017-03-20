@@ -8,10 +8,6 @@
 
 @implementation RNNReactRootView
 
--(void)dealloc {
-	
-}
-
 @end
 
 @implementation RNNReactRootViewCreator {

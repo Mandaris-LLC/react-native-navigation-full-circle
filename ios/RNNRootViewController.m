@@ -17,7 +17,10 @@
 	
 	self.view = [creator createRootView:self.containerName rootViewId:self.containerId];
 	
-//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onJsReload) name:RCTJavaScriptWillStartLoadingNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(onJsReload)
+												 name:RCTJavaScriptWillStartLoadingNotification
+											   object:nil];
 	
 	return self;
 }
@@ -32,17 +35,13 @@
 	[self.eventEmitter sendContainerStop:self.containerId];
 }
 
-///**
-// * fix for 
-// */
-//-(void)onJsReload {
-//	[[NSNotificationCenter defaultCenter] removeObserver:self];
-//	[[NSNotificationCenter defaultCenter] removeObserver:self.view];
-//	self.view = nil;
-//}
-
--(void)dealloc {
-	
+/**
+ *	fix for #877
+ */
+-(void)onJsReload {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self.view];
+	self.view = nil;
 }
 
 @end

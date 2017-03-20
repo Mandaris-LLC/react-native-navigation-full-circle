@@ -17,8 +17,11 @@
 @implementation ReactNativeNavigation {
 	NSURL* _jsCodeLocation;
 	NSDictionary* _launchOptions;
-	RNNStore* _store;
 	RCTBridge* _bridge;
+	
+	RNNStore* _store;
+	
+	RNNCommandsHandler* _commandsHandler;
 }
 
 # pragma mark - public API
@@ -67,8 +70,8 @@
 	
 	id<RNNRootViewCreator> rootViewCreator = [[RNNReactRootViewCreator alloc] initWithBridge:bridge];
 	RNNControllerFactory *controllerFactory = [[RNNControllerFactory alloc] initWithRootViewCreator:rootViewCreator store:_store eventEmitter:eventEmitter];
-	RNNCommandsHandler *commandsHandler = [[RNNCommandsHandler alloc] initWithStore:_store controllerFactory:controllerFactory];
-	RNNBridgeModule *bridgeModule = [[RNNBridgeModule alloc] initWithCommandsHandler:commandsHandler];
+	_commandsHandler = [[RNNCommandsHandler alloc] initWithStore:_store controllerFactory:controllerFactory];
+	RNNBridgeModule *bridgeModule = [[RNNBridgeModule alloc] initWithCommandsHandler:_commandsHandler];
 	
 	return @[bridgeModule,eventEmitter];
 }
@@ -76,7 +79,7 @@
 # pragma mark - js events
 
 -(void)onJavaScriptWillLoad {
-	[self resetRootViewControllerOnlyOnJSDevReload];
+	[self releaseBeforeJSReload];
 	[_store clean];
 }
 
@@ -102,16 +105,25 @@
 											   object:nil];
 }
 
--(void)resetRootViewControllerOnlyOnJSDevReload {
+-(void)releaseBeforeJSReload {
 #ifdef DEBUG
-	
-	if(![UIApplication.sharedApplication.delegate.window.rootViewController isKindOfClass:[RNNSplashScreen class]]) {
-		UIApplication.sharedApplication.delegate.window.rootViewController = nil;
-	}
-	
+//	if(![UIApplication.sharedApplication.delegate.window.rootViewController isKindOfClass:[RNNSplashScreen class]]) {
+//		[self releaseBeforeJsReload:UIApplication.sharedApplication.delegate.window.rootViewController];
+//	}
 #endif
 }
 
-
+//-(void)releaseBeforeJsReload:(UIViewController*)vc {
+//	if(!vc) return;
+//	
+//	for (UIViewController* child in vc.childViewControllers) {
+//		[self releaseBeforeJsReload:child];
+//	}
+//	[self releaseBeforeJsReload:vc.presentedViewController];
+//	
+//	[NSNotificationCenter.defaultCenter removeObserver:vc];
+//	[NSNotificationCenter.defaultCenter removeObserver:vc.view];
+//	vc.view = nil;
+//}
 
 @end

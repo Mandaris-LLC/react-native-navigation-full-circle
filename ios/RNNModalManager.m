@@ -27,7 +27,6 @@
 	[[_store pendingModalIdsToDismiss] removeAllObjects];
 }
 
-
 #pragma mark - private
 
 
