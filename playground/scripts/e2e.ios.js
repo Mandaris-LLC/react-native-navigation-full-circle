@@ -16,16 +16,16 @@ function buildProjForDetox() {
             -sdk iphonesimulator
             -derivedDataPath ./DerivedData/playground`;
 
-  if (hasXcpretty()) {
+  if (isInstalled(`xcpretty`)) {
     shellUtils.exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
   } else {
     shellUtils.exec.execSync(`${cmd}`);
   }
   shellUtils.exec.execSync(`echo 'travis_fold:end:xcodebuild'`);
 }
-function hasXcpretty() {
+function isInstalled(what) {
   try {
-    return shellUtils.exec.execSyncRead(`which xcpretty`);
+    return shellUtils.exec.execSyncRead(`which ${what}`);
   } catch (e) {
     return false;
   }
@@ -56,7 +56,14 @@ function e2e() { //eslint-disable-line
   }
 }
 
+function installFbsimctlIfNeeded() {
+  if (!isInstalled(`fbsimctl`)) {
+    shellUtils.exec.execSync(`brew tap facebook/fb && brew install fbsimctl`);
+  }
+}
+
 function run() {
+  installFbsimctlIfNeeded();
   buildProjForDetox();
   e2e();
 }
