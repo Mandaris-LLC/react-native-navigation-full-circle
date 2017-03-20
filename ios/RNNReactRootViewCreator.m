@@ -8,7 +8,7 @@
 
 @implementation RNNReactRootView
 
--(void) dealloc {
+-(void)dealloc {
 	
 }
 

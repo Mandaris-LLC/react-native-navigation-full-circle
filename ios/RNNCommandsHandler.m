@@ -24,6 +24,9 @@
 
 -(void) setRoot:(NSDictionary*)layout {
 	[self assertReady];
+
+	[_modalManager dismissAllModals];
+	
 	UIViewController *vc = [_controllerFactory createLayoutAndSaveToStore:layout];
 	
 	UIApplication.sharedApplication.delegate.window.rootViewController = vc;

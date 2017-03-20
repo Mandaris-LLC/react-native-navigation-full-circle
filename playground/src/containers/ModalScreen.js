@@ -67,9 +67,14 @@ class ModalScreen extends Component {
   onClickDismissFirstInStack() {
     Navigation.dismissModal(_.head(this.props.previousModalIds));
   }
-  
+
   onClickDismissAllModals() {
-    Navigation.dismissAllModals();
+    // Navigation.dismissAllModals();
+    Navigation.setRoot({
+      container: {
+        name: 'navigation.playground.WelcomeScreen'
+      }
+    });
   }
 
   getModalPosition() {
