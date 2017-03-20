@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const shellUtils = require('shell-utils');
-const fs = require('fs');
 
 const release = _.includes(process.argv, 'release');
 
@@ -42,7 +41,7 @@ function e2e() { //eslint-disable-line
     shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
                               BABEL_ENV=test
                               ./node_modules/mocha/bin/mocha e2e
-                                --timeout ${10 * 60 * 1000}
+                                --timeout ${2 * 60 * 1000}
                                 --recursive
                                 --bail`);
   } finally {
