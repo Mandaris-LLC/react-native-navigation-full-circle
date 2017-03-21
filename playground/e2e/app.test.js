@@ -1,4 +1,4 @@
-describe('app', () => {
+describe('top level api', () => {
   beforeEach(async () => {
     await device.relaunchApp();
   });

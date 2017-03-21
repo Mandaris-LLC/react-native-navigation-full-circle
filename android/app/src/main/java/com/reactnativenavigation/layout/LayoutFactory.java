@@ -8,7 +8,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
-import com.reactnativenavigation.utils.ViewIdGenerator;
+import com.reactnativenavigation.utils.CompatUtils;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class LayoutFactory {
 
 	private View createSideMenuLeft(LayoutNode node) {
 		View view = create(node.children.get(0));
-		view.setId(ViewIdGenerator.generate());
+		view.setId(CompatUtils.generateViewId());
 		DrawerLayout.LayoutParams lp = new DrawerLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		lp.gravity = Gravity.LEFT;
 		view.setLayoutParams(lp);
@@ -72,7 +72,7 @@ public class LayoutFactory {
 
 	private View createSideMenuRight(LayoutNode node) {
 		View view = create(node.children.get(0));
-		view.setId(ViewIdGenerator.generate());
+		view.setId(CompatUtils.generateViewId());
 		DrawerLayout.LayoutParams lp = new DrawerLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		lp.gravity = Gravity.RIGHT;
 		view.setLayoutParams(lp);
@@ -82,14 +82,14 @@ public class LayoutFactory {
 	private View createContainerView(LayoutNode node) {
 		final String name = (String) node.data.get("name");
 		Container container = new Container(activity, reactRootViewCreator, node.id, name);
-		container.setId(ViewIdGenerator.generate());
+		container.setId(CompatUtils.generateViewId());
 		return container;
 
 	}
 
 	private View createContainerStackView(LayoutNode node) {
 		final ContainerStackLayout containerStack = new ContainerStackLayout(activity);
-		containerStack.setId(ViewIdGenerator.generate());
+		containerStack.setId(CompatUtils.generateViewId());
 		addChildrenNodes(containerStack, node.children);
 		return containerStack;
 	}
