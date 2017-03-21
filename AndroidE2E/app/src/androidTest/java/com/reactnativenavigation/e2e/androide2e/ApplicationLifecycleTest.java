@@ -67,8 +67,4 @@ public class ApplicationLifecycleTest extends BaseTest {
 		elementByText("Playground").click();
 		assertMainShown();
 	}
-
-	private void assertMainShown() {
-		assertExists(By.text("React Native Navigation!"));
-	}
 }
