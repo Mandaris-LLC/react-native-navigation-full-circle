@@ -13,13 +13,14 @@ import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.layout.LayoutFactory;
-import com.reactnativenavigation.layout.LayoutNode;
+import com.reactnativenavigation.layout.parse.LayoutNode;
 import com.reactnativenavigation.layout.StackLayout;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import com.reactnativenavigation.utils.UiThread;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
@@ -98,19 +99,18 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 	}
 
 	private LayoutNode readableMapToLayoutNode(ReadableMap readableMap) {
-		final LayoutNode layoutNode = new LayoutNode();
-		layoutNode.id = readableMap.getString("id");
-		layoutNode.type = readableMap.getString("type");
-		layoutNode.data = readableMapToJavaMap(readableMap.getMap("data"));
+		String id = readableMap.getString("id");
+		LayoutNode.Type type = LayoutNode.Type.fromString(readableMap.getString("type"));
+		Map<String, Object> data = readableMapToJavaMap(readableMap.getMap("data"));
 
 		ReadableArray childrenNodes = readableMap.getArray("children");
-		layoutNode.children = new ArrayList<>(childrenNodes.size());
+		List<LayoutNode> children = new ArrayList<>(childrenNodes.size());
 		for (int i = 0; i < childrenNodes.size(); i++) {
 			ReadableMap child = childrenNodes.getMap(i);
-			layoutNode.children.add(readableMapToLayoutNode(child));
+			children.add(readableMapToLayoutNode(child));
 		}
 
-		return layoutNode;
+		return new LayoutNode(id, type, data, children);
 	}
 
 	private Map<String, Object> readableMapToJavaMap(ReadableMap readableMap) {

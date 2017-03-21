@@ -8,6 +8,7 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
+import com.reactnativenavigation.layout.parse.LayoutNode;
 import com.reactnativenavigation.utils.CompatUtils;
 
 import java.util.List;
@@ -30,19 +31,19 @@ public class LayoutFactory {
 
 	public View create(LayoutNode node) {
 		switch (node.type) {
-			case "Container":
+			case Container:
 				return createContainerView(node);
-			case "ContainerStack":
+			case ContainerStack:
 				return createContainerStackView(node);
-			case "BottomTabs":
+			case BottomTabs:
 				return createBottomTabs(node);
-			case "SideMenuRoot":
+			case SideMenuRoot:
 				return createSideMenuRoot(node);
-			case "SideMenuCenter":
+			case SideMenuCenter:
 				return createSideMenuContent(node);
-			case "SideMenuLeft":
+			case SideMenuLeft:
 				return createSideMenuLeft(node);
-			case "SideMenuRight":
+			case SideMenuRight:
 				return createSideMenuRight(node);
 			default:
 				throw new IllegalArgumentException("Invalid node type: " + node.type);
