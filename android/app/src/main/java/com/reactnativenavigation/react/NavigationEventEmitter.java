@@ -7,6 +7,9 @@ import com.facebook.react.bridge.WritableMap;
 import static com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
 public class NavigationEventEmitter {
+	private static String onAppLaunched = "RNN.appLaunched";
+	private static String containerStart = "RNN.containerStart";
+	private static String containerStop = "RNN.containerStop";
 
 	public static NavigationEventEmitter emit(ReactContext context) {
 		return new NavigationEventEmitter(context);
@@ -19,7 +22,7 @@ public class NavigationEventEmitter {
 	}
 
 	public void appLaunched() {
-		emit("RNN.appLaunched");
+		emit(onAppLaunched);
 	}
 
 	private void emit(String eventName) {
