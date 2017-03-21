@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import java.lang.reflect.Field;
 
 public class ReflectionUtils {
-
 	public static void setField(Object obj, String name, Object value) {
 		try {
 			Field field = getField(obj.getClass(), name);
