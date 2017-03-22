@@ -4,6 +4,7 @@ import android.view.View;
 
 import org.junit.Test;
 import org.robolectric.Robolectric;
+import org.robolectric.android.controller.ActivityController;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -19,5 +20,7 @@ public class NavigationActivityTest extends BaseTest {
 
 	@Test
 	public void reportsLifecycleEventsToDelegate() throws Exception {
+		ActivityController<NavigationActivity> activityController = Robolectric.buildActivity(NavigationActivity.class);
+		activityController.create();
 	}
 }

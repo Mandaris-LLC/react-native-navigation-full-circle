@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.reactnativenavigation">
+          package="com.reactnativenavigation">
 
-    <application android:theme="@style/Theme.AppCompat.Light"></application>
+    <application
+        android:name=".mocks.TestApplication"
+        android:theme="@style/Theme.AppCompat.Light">
+    </application>
 </manifest>
