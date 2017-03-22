@@ -16,6 +16,8 @@
 
 -(void) popTo:(NSString*)containerId toContainerId:(NSString*)toContainerId;
 
+-(void) popToRoot:(NSString*)containerId;
+
 -(void) showModal:(NSDictionary*)layout;
 
 -(void) dismissModal:(NSString*)containerId;

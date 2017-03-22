@@ -49,6 +49,11 @@
 	[_navigationStackManager popTo:containerId toContainerId:toContainerId];
 }
 
+-(void) popToRoot:(NSString*)containerId {
+	[self assertReady];
+	[_navigationStackManager popToRoot:containerId];
+}
+
 -(void) showModal:(NSDictionary*)layout {
 	[self assertReady];
 	UIViewController *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];

@@ -40,4 +40,10 @@
 	}
 }
 
+-(void) popToRoot:(NSString*)containerId {
+	UIViewController* vc = [_store findContainerForId:containerId];
+	UINavigationController* nvc = [vc navigationController];
+	[nvc popToRootViewControllerAnimated:YES];
+}
+
 @end

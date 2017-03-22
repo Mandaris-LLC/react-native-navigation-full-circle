@@ -72,6 +72,14 @@ describe('screen stack', () => {
     await elementByLabel('Pop To Stack Position 1').tap();
     await expect(elementByLabel('Stack Position: 1')).toBeVisible();
   });
+
+  it('pop to root', async () => {
+    await elementByLabel('Push').tap();
+    await elementByLabel('Push').tap();
+    await elementByLabel('Push').tap();
+    await elementByLabel('Pop To Root').tap();
+    await expect(elementByLabel('React Native Navigation!')).toBeVisible();
+  });
 });
 
 describe('modal', () => {

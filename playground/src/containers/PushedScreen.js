@@ -16,6 +16,7 @@ class PushedScreen extends Component {
     this.onClickPop = this.onClickPop.bind(this);
     this.onClickPopPrevious = this.onClickPopPrevious.bind(this);
     this.onClickPopToFirstPosition = this.onClickPopToFirstPosition.bind(this);
+    this.onClickPopToRoot = this.onClickPopToRoot.bind(this);
   }
   render() {
     const stackPosition = this.getStackPosition();
@@ -26,6 +27,7 @@ class PushedScreen extends Component {
         <Button title="Push" onPress={this.onClickPush} />
         <Button title="Pop" onPress={this.onClickPop} />
         <Button title="Pop Previous" onPress={this.onClickPopPrevious} />
+        <Button title="Pop To Root" onPress={this.onClickPopToRoot} />
         {stackPosition > 2 && <Button title="Pop To Stack Position 1" onPress={this.onClickPopToFirstPosition} />}
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
@@ -52,6 +54,10 @@ class PushedScreen extends Component {
 
   onClickPopToFirstPosition() {
     Navigation.on(this.props.id).popTo(this.props.previousScreenIds[0]);
+  }
+
+  onClickPopToRoot() {
+    Navigation.on(this.props.id).popToRoot();
   }
 
   getStackPosition() {
