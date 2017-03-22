@@ -30,6 +30,10 @@ RCT_EXPORT_METHOD(pop:(NSString*)containerId) {
 	[_commandsHandler pop:containerId];
 }
 
+RCT_EXPORT_METHOD(popTo:(NSString*)containerId toContainerId:(NSString*)toContainerId) {
+	[_commandsHandler popTo:containerId toContainerId:toContainerId];
+}
+
 RCT_EXPORT_METHOD(showModal:(NSDictionary*)layout) {
 	[_commandsHandler showModal:layout];
 }
