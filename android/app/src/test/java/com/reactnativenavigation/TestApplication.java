@@ -1,6 +1,7 @@
 package com.reactnativenavigation;
 
 import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
+import com.reactnativenavigation.mocks.TestDevPermissionRequest;
 import com.reactnativenavigation.mocks.TestReactNativeHost;
 
 public class TestApplication extends NavigationApplication {
@@ -12,8 +13,9 @@ public class TestApplication extends NavigationApplication {
 
 	@Override
 	protected Config createConfig() {
-		TestReactNativeHost host = new TestReactNativeHost(this, isDebug());
-		ActivityLifecycleDelegate delegate = new ActivityLifecycleDelegate(host.getReactInstanceManager());
-		return new Config(host, delegate);
+		Config config = new Config();
+		config.reactNativeHost = new TestReactNativeHost(this, isDebug());
+		config.activityLifecycleDelegate = new ActivityLifecycleDelegate(config.reactNativeHost.getReactInstanceManager(), new TestDevPermissionRequest());
+		return config;
 	}
 }

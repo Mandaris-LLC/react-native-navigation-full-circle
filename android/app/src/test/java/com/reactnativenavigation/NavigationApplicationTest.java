@@ -28,12 +28,11 @@ public class NavigationApplicationTest extends BaseTest {
 
 	@Test
 	public void holdsConfiguration() throws Exception {
-		assertThat(NavigationApplication.instance.config).isInstanceOf(NavigationApplication.Config.class);
+		assertThat(NavigationApplication.instance.getConfig()).isInstanceOf(NavigationApplication.Config.class);
 	}
 
 	@Test
 	public void configProvidesActivityLifecycleDelegate() throws Exception {
-		NavigationApplication.Config config = NavigationApplication.instance.config;
-		assertThat(config.activityLifecycleDelegate).isInstanceOf(ActivityLifecycleDelegate.class);
+		assertThat(NavigationApplication.instance.getConfig().activityLifecycleDelegate).isInstanceOf(ActivityLifecycleDelegate.class);
 	}
 }

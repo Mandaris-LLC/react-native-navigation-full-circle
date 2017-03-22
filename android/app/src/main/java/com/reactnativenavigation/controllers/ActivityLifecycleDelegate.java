@@ -5,18 +5,20 @@ import android.app.Activity;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
+import com.reactnativenavigation.react.DevPermissionRequest;
 import com.reactnativenavigation.react.NavigationEventEmitter;
-import com.reactnativenavigation.react.ReactDevPermission;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ActivityLifecycleDelegate {
 
 	private final ReactInstanceManager reactInstanceManager;
+	private final DevPermissionRequest devPermissionRequest;
 	private final AtomicBoolean appLaunchEmitted = new AtomicBoolean(false);
 
-	public ActivityLifecycleDelegate(ReactInstanceManager reactInstanceManager) {
+	public ActivityLifecycleDelegate(ReactInstanceManager reactInstanceManager, DevPermissionRequest devPermissionRequest) {
 		this.reactInstanceManager = reactInstanceManager;
+		this.devPermissionRequest = devPermissionRequest;
 	}
 
 	public void onActivityCreated(Activity activity) {
@@ -24,8 +26,8 @@ public class ActivityLifecycleDelegate {
 	}
 
 	public void onActivityResumed(Activity activity, DefaultHardwareBackBtnHandler backBtnHandler) {
-		if (ReactDevPermission.shouldAskPermission()) {
-			ReactDevPermission.askPermission(activity);
+		if (devPermissionRequest.shouldAskPermission()) {
+			devPermissionRequest.askPermission();
 		} else {
 			reactInstanceManager.onHostResume(activity, backBtnHandler);
 			prepareReactApp();

@@ -8,22 +8,18 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
+import com.reactnativenavigation.react.DevPermissionRequestImpl;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 
 public abstract class NavigationApplication extends Application implements ReactApplication {
 	public static NavigationApplication instance;
 
 	public static class Config {
-		public final ReactNativeHost reactNativeHost;
-		public final ActivityLifecycleDelegate activityLifecycleDelegate;
-
-		public Config(ReactNativeHost reactNativeHost, ActivityLifecycleDelegate activityLifecycleDelegate) {
-			this.reactNativeHost = reactNativeHost;
-			this.activityLifecycleDelegate = activityLifecycleDelegate;
-		}
+		public ReactNativeHost reactNativeHost;
+		public ActivityLifecycleDelegate activityLifecycleDelegate;
 	}
 
-	public Config config;
+	private Config config;
 
 	@Override
 	public void onCreate() {
@@ -34,7 +30,7 @@ public abstract class NavigationApplication extends Application implements React
 		registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 			@Override
 			public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-				config.activityLifecycleDelegate.onActivityCreated(activity);
+				getConfig().activityLifecycleDelegate.onActivityCreated(activity);
 			}
 
 			@Override
@@ -44,12 +40,12 @@ public abstract class NavigationApplication extends Application implements React
 
 			@Override
 			public void onActivityResumed(Activity activity) {
-				config.activityLifecycleDelegate.onActivityResumed(activity, (DefaultHardwareBackBtnHandler) activity);
+				getConfig().activityLifecycleDelegate.onActivityResumed(activity, (DefaultHardwareBackBtnHandler) activity);
 			}
 
 			@Override
 			public void onActivityPaused(Activity activity) {
-				config.activityLifecycleDelegate.onActivityPaused(activity);
+				getConfig().activityLifecycleDelegate.onActivityPaused(activity);
 			}
 
 			@Override
@@ -64,14 +60,18 @@ public abstract class NavigationApplication extends Application implements React
 
 			@Override
 			public void onActivityDestroyed(Activity activity) {
-				config.activityLifecycleDelegate.onActivityDestroyed(activity);
+				getConfig().activityLifecycleDelegate.onActivityDestroyed(activity);
 			}
 		});
 	}
 
+	public final Config getConfig() {
+		return config;
+	}
+
 	@Override
 	public ReactNativeHost getReactNativeHost() {
-		return config.reactNativeHost;
+		return getConfig().reactNativeHost;
 	}
 
 	public abstract boolean isDebug();
@@ -82,8 +82,9 @@ public abstract class NavigationApplication extends Application implements React
 	 * @return the Config
 	 */
 	protected Config createConfig() {
-		ReactNativeHost reactNativeHost = new NavigationReactNativeHost(this, isDebug());
-		ActivityLifecycleDelegate activityLifecycleDelegate = new ActivityLifecycleDelegate(reactNativeHost.getReactInstanceManager());
-		return new Config(reactNativeHost, activityLifecycleDelegate);
+		Config config = new Config();
+		config.reactNativeHost = new NavigationReactNativeHost(this, isDebug());
+		config.activityLifecycleDelegate = new ActivityLifecycleDelegate(config.reactNativeHost.getReactInstanceManager(), new DevPermissionRequestImpl());
+		return config;
 	}
 }
