@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "quickinstall": "node ./scripts/quickInstall.js",
-    "start": "adb reverse tcp:8081 tcp:8081; watchman watch-del-all; react-native start",
+    "start": "adb reverse tcp:8081 tcp:8081; watchman watch-del-all; node ./node_modules/react-native/local-cli/cli.js start",
     "xcode": "open ios/playground.xcodeproj",
     "android": "cd android && ./gradlew installDebug",
     "uninstall-android": "cd android && ./gradlew uninstallAll",
