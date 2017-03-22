@@ -18,4 +18,8 @@ export default class ContainerCommands {
   pop() {
     return this.nativeCommandsSender.pop(this.containerId);
   }
+
+  popTo(toContainerId) {
+    return this.nativeCommandsSender.popTo(this.containerId, toContainerId);
+  }
 }

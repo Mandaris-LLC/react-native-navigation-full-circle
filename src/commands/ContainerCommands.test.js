@@ -58,4 +58,18 @@ describe('ContainerCommands', () => {
       expect(result).toEqual(containerId);
     });
   });
+
+  describe('popTo', () => {
+    it('pops all containers until the passed Id is top', () => {
+      uut.popTo('someOtherContainerId');
+      expect(mockCommandsSender.popTo).toHaveBeenCalledTimes(1);
+      expect(mockCommandsSender.popTo).toHaveBeenCalledWith(containerId, 'someOtherContainerId');
+    });
+
+    it('returns a promise that resolves to targetId', async () => {
+      mockCommandsSender.popTo.mockReturnValue(Promise.resolve(containerId));
+      const result = await uut.popTo('someOtherContainerId');
+      expect(result).toEqual(containerId);
+    });
+  });
 });
