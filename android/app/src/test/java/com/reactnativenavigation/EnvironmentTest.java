@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.facebook.react.common.ReactConstants;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
@@ -38,6 +39,7 @@ public class EnvironmentTest extends BaseTest {
 	}
 
 	@Test
+	@Ignore
 	public void ableToLoadApplication() throws Exception {
 		assertThat(RuntimeEnvironment.application).isNotNull();
 		assertThat(Robolectric.setupActivity(NavigationActivity.class)).isNotNull();

@@ -23,19 +23,18 @@ public abstract class NavigationApplication extends Application implements React
 		}
 	}
 
-	private Config config;
+	public Config config;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
-
 		config = createConfig();
 
 		registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 			@Override
 			public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-				config().activityLifecycleDelegate.onActivityCreated(activity);
+				config.activityLifecycleDelegate.onActivityCreated(activity);
 			}
 
 			@Override
@@ -45,12 +44,12 @@ public abstract class NavigationApplication extends Application implements React
 
 			@Override
 			public void onActivityResumed(Activity activity) {
-				config().activityLifecycleDelegate.onActivityResumed(activity, (DefaultHardwareBackBtnHandler) activity);
+				config.activityLifecycleDelegate.onActivityResumed(activity, (DefaultHardwareBackBtnHandler) activity);
 			}
 
 			@Override
 			public void onActivityPaused(Activity activity) {
-				config().activityLifecycleDelegate.onActivityPaused(activity);
+				config.activityLifecycleDelegate.onActivityPaused(activity);
 			}
 
 			@Override
@@ -65,21 +64,17 @@ public abstract class NavigationApplication extends Application implements React
 
 			@Override
 			public void onActivityDestroyed(Activity activity) {
-				config().activityLifecycleDelegate.onActivityDestroyed(activity);
+				config.activityLifecycleDelegate.onActivityDestroyed(activity);
 			}
 		});
 	}
 
 	@Override
 	public ReactNativeHost getReactNativeHost() {
-		return config().reactNativeHost;
+		return config.reactNativeHost;
 	}
 
 	public abstract boolean isDebug();
-
-	public Config config() {
-		return config;
-	}
 
 	/**
 	 * override this to inject your own configuration

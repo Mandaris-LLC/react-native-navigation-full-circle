@@ -43,9 +43,9 @@ public abstract class BaseTest {
 		device().wait(Until.gone(By.textContains("Please wait")), 1000 * 60 * 3);
 	}
 
-    public void assertMainShown() {
-        assertExists(By.text("React Native Navigation!"));
-    }
+	public void assertMainShown() {
+		assertExists(By.text("React Native Navigation!"));
+	}
 
 	public void acceptOverlayPermissionIfNeeded() throws Exception {
 		if (elementByText("Draw over other apps").exists()) {
@@ -71,7 +71,7 @@ public abstract class BaseTest {
 		assertThat(device().wait(Until.hasObject(selector), TIMEOUT)).isTrue();
 	}
 
-    public void swipeRight() {
-        device().swipe(5, 152, 500, 152, 15);
-    }
+	public void swipeRight() {
+		device().swipe(5, 152, 500, 152, 15);
+	}
 }

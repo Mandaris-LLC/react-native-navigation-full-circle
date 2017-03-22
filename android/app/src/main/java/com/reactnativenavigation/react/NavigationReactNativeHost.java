@@ -10,7 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NavigationReactNativeHost extends ReactNativeHost {
-	private boolean isDebug;
+
+	private final boolean isDebug;
 
 	public NavigationReactNativeHost(Application application, boolean isDebug) {
 		super(application);
