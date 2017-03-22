@@ -2,7 +2,7 @@
           package="com.reactnativenavigation">
 
     <application
-        android:name=".mocks.TestApplication"
+        android:name=".TestApplication"
         android:theme="@style/Theme.AppCompat.Light">
     </application>
 </manifest>

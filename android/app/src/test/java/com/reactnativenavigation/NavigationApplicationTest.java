@@ -1,6 +1,7 @@
 package com.reactnativenavigation;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
 
 import org.junit.Test;
 import org.robolectric.RuntimeEnvironment;
@@ -21,7 +22,18 @@ public class NavigationApplicationTest extends BaseTest {
 	}
 
 	@Test
-	public void singleInstance() throws Exception {
+	public void singleGlobalInstance() throws Exception {
 		assertThat(RuntimeEnvironment.application).isSameAs(NavigationApplication.instance);
+	}
+
+	@Test
+	public void providesConfiguration() throws Exception {
+		assertThat(NavigationApplication.instance.config()).isInstanceOf(NavigationApplication.Config.class);
+	}
+
+	@Test
+	public void configProvidesActivityLifecycleDelegate() throws Exception {
+		NavigationApplication.Config config = NavigationApplication.instance.config();
+		assertThat(config.activityLifecycleDelegate).isInstanceOf(ActivityLifecycleDelegate.class);
 	}
 }

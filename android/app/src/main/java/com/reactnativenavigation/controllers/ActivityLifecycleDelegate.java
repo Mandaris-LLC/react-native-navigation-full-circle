@@ -12,24 +12,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ActivityLifecycleDelegate {
 
-	private final Activity activity;
-	private final DefaultHardwareBackBtnHandler backBtnHandler;
 	private final ReactInstanceManager reactInstanceManager;
 	private final AtomicBoolean appLaunchEmitted = new AtomicBoolean(false);
 
-	public ActivityLifecycleDelegate(Activity activity,
-	                                 DefaultHardwareBackBtnHandler backBtnHandler,
-	                                 ReactInstanceManager reactInstanceManager) {
-		this.activity = activity;
-		this.backBtnHandler = backBtnHandler;
+	public ActivityLifecycleDelegate(ReactInstanceManager reactInstanceManager) {
 		this.reactInstanceManager = reactInstanceManager;
 	}
 
-	public void onActivityCreated() {
+	public void onActivityCreated(Activity activity) {
 		appLaunchEmitted.set(false);
 	}
 
-	public void onActivityResumed() {
+	public void onActivityResumed(Activity activity, DefaultHardwareBackBtnHandler backBtnHandler) {
 		if (ReactDevPermission.shouldAskPermission()) {
 			ReactDevPermission.askPermission(activity);
 		} else {
@@ -38,13 +32,13 @@ public class ActivityLifecycleDelegate {
 		}
 	}
 
-	public void onActivityPaused() {
+	public void onActivityPaused(Activity activity) {
 		if (reactInstanceManager.hasStartedCreatingInitialContext()) {
 			reactInstanceManager.onHostPause(activity);
 		}
 	}
 
-	public void onActivityDestroyed() {
+	public void onActivityDestroyed(Activity activity) {
 		if (reactInstanceManager.hasStartedCreatingInitialContext()) {
 			reactInstanceManager.onHostDestroy(activity);
 		}

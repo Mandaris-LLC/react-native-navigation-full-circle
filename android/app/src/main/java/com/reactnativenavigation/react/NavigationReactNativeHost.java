@@ -1,26 +1,30 @@
 package com.reactnativenavigation.react;
 
+import android.app.Application;
+
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-import com.reactnativenavigation.NavigationApplication;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class NavigationReactNativeHost extends ReactNativeHost {
-	public NavigationReactNativeHost(NavigationApplication application) {
+	private boolean isDebug;
+
+	public NavigationReactNativeHost(Application application, boolean isDebug) {
 		super(application);
+		this.isDebug = isDebug;
 	}
 
 	@Override
 	public boolean getUseDeveloperSupport() {
-		return NavigationApplication.instance.isDebug();
+		return isDebug;
 	}
 
 	@Override
 	protected List<ReactPackage> getPackages() {
-		return Arrays.asList(
+		return Arrays.<ReactPackage>asList(
 				new MainReactPackage(),
 				new NavigationPackage()
 		);
