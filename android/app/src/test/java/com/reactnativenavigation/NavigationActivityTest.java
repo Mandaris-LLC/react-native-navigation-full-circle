@@ -16,4 +16,8 @@ public class NavigationActivityTest extends BaseTest {
 		activity.setContentView(view);
 		assertThat(activity.getContentView()).isSameAs(view);
 	}
+
+	@Test
+	public void reportsLifecycleEventsToDelegate() throws Exception {
+	}
 }

@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
-import com.reactnativenavigation.controllers.NavigationActivityLifecycleHandler;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 
 public abstract class NavigationApplication extends Application implements ReactApplication {
@@ -16,7 +15,6 @@ public abstract class NavigationApplication extends Application implements React
 		super.onCreate();
 		instance = this;
 		host = new NavigationReactNativeHost(this);
-		registerActivityLifecycleCallbacks(new NavigationActivityLifecycleHandler(host.getReactInstanceManager()));
 	}
 
 	@Override
