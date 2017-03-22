@@ -25,6 +25,11 @@ export default class NativeCommandsSender {
     return Promise.resolve(targetContainerId);
   }
 
+  popToRoot(containerId) {
+    this.nativeCommandsModule.popToRoot(containerId);
+    return Promise.resolve(containerId);
+  }
+
   showModal(layout) {
     this.nativeCommandsModule.showModal(layout);
     return Promise.resolve(layout);

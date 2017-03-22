@@ -10,6 +10,7 @@ describe('NativeCommandsSender', () => {
       push: jest.fn(),
       pop: jest.fn(),
       popTo: jest.fn(),
+      popToRoot: jest.fn(),
       showModal: jest.fn(),
       dismissModal: jest.fn(),
       dismissAllModals: jest.fn()
@@ -44,6 +45,12 @@ describe('NativeCommandsSender', () => {
   it('popTo sends to native with containerId and targetId', async () => {
     const result = await uut.popTo('theContainerId', 'targetId');
     expect(mockNativeModule.popTo).toHaveBeenCalledTimes(1);
+    expect(result).toBeDefined();
+  });
+
+  it('popToRoot', async () => {
+    const result = await uut.popToRoot('theContainerId');
+    expect(mockNativeModule.popToRoot).toHaveBeenCalledTimes(1);
     expect(result).toBeDefined();
   });
 
