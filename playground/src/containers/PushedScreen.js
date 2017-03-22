@@ -26,7 +26,7 @@ class PushedScreen extends Component {
         <Button title="Push" onPress={this.onClickPush} />
         <Button title="Pop" onPress={this.onClickPop} />
         <Button title="Pop Previous" onPress={this.onClickPopPrevious} />
-        {stackPosition === 3 && <Button title="Pop To Stack Position 1" onPress={this.onClickPopToFirstPosition} />}
+        {stackPosition > 2 && <Button title="Pop To Stack Position 1" onPress={this.onClickPopToFirstPosition} />}
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>
     );
