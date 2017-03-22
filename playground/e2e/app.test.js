@@ -71,7 +71,7 @@ describe('screen stack', () => {
     await expect(elementByLabel('Stack Position: 3')).toBeVisible();
     await elementByLabel('Pop To Stack Position 1').tap();
     await expect(elementByLabel('Stack Position: 1')).toBeVisible();
-  })
+  });
 });
 
 describe('modal', () => {
