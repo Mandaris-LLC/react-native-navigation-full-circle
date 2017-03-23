@@ -35,7 +35,7 @@
     "test-unit-ios": "node ./scripts/test.unit.ios.js",
     "test-e2e-android": "node ./scripts/test.e2e.android.js",
     "test-e2e-ios": "node ./scripts/test.e2e.ios.js",
-    "test": "yarn run test-js && yarn run test-unit-android && yarn run test-e2e-android && yarn run test-unit-ios && yarn run test-e2e-ios",
+    "test-all": "node ./scripts/test.all.js",
     "test-watch": "BABEL_ENV=test jest --coverage --watch",
     "release": "node ./scripts/release.js"
   },
