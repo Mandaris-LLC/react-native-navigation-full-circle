@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../../node_modules/react-native/react.gradle"
 
 android {
     compileSdkVersion 25
