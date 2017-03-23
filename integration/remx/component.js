@@ -1,36 +1,38 @@
-import { Text } from 'react-native';
 import React, { Component } from 'react';
+import { Text } from 'react-native';
 
 import { connect } from 'remx/react-native';
 
-import { selectors } from './store';
+import * as store from './store';
 
 class MyContainer extends Component {
   constructor(props) {
     super(props);
-    this.renders = 0;
   }
 
   render() {
-    this.renders++;
+    if (this.props.renderCountIncrement) {
+      this.props.renderCountIncrement();
+    }
     if (this.props.printAge) {
-      return this.renderAge();
+      return this.renderText(this.props.age);
     } else {
-      return this.renderName();
+      return this.renderText(this.props.name);
     }
   }
 
-  renderName() {
+  renderText(txt) {
     return (
-      <Text>{selectors.getName()}</Text>
-    );
-  }
-
-  renderAge() {
-    return (
-      <Text>{selectors.getAge()}</Text>
+      <Text>{txt}</Text>
     );
   }
 }
 
-export default connect(MyContainer);
+function mapStateToProps(ownProps) {
+  return {
+    name: store.getters.getName(),
+    age: store.getters.getAge()
+  };
+}
+
+export default connect(mapStateToProps)(MyContainer);

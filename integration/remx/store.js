@@ -7,7 +7,7 @@ export const state = remx.state({
   }
 });
 
-export const mutators = remx.setters({
+export const setters = remx.setters({
   setName(newName) {
     state.person.name = newName;
   },
@@ -17,7 +17,7 @@ export const mutators = remx.setters({
   }
 });
 
-export const selectors = remx.getters({
+export const getters = remx.getters({
   getName() {
     return _.get(state, ['person', 'name']);
   },

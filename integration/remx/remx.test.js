@@ -1,5 +1,5 @@
-require('react-native');
 import React from 'react';
+require('react-native');
 import renderer from 'react-test-renderer';
 
 describe('remx support', () => {
@@ -7,40 +7,43 @@ describe('remx support', () => {
   let store;
 
   beforeEach(() => {
+    jest.resetModules();
     MyConnectedContainer = require('./component').default;
     store = require('./store');
   });
 
   it('renders normally', () => {
-    const tree = renderer.create(<MyConnectedContainer/>);
+    const tree = renderer.create(<MyConnectedContainer />);
     expect(tree.toJSON().children).toEqual(['no name']);
   });
 
   it('rerenders as a result of an underlying state change (by selector)', () => {
-    const tree = renderer.create(<MyConnectedContainer/>);
+    const renderCountIncrement = jest.fn();
+    const tree = renderer.create(<MyConnectedContainer renderCountIncrement={renderCountIncrement} />);
     const instance = tree.getInstance();
 
     expect(tree.toJSON().children).toEqual(['no name']);
-    expect(instance.renders).toEqual(1);
+    expect(renderCountIncrement).toHaveBeenCalledTimes(1);
 
-    store.mutators.setName('Bob');
-    expect(store.selectors.getName()).toEqual('Bob');
+    store.setters.setName('Bob');
+    expect(store.getters.getName()).toEqual('Bob');
     expect(tree.toJSON().children).toEqual(['Bob']);
 
-    expect(instance.renders).toEqual(2);
+    expect(renderCountIncrement).toHaveBeenCalledTimes(2);
   });
 
   it('rerenders as a result of an underlying state change with a new key using merge', () => {
-    const tree = renderer.create(<MyConnectedContainer printAge={true}/>);
+    const renderCountIncrement = jest.fn();
+    const tree = renderer.create(<MyConnectedContainer printAge={true} renderCountIncrement={renderCountIncrement} />);
     const instance = tree.getInstance();
 
     expect(tree.toJSON().children).toEqual(null);
-    expect(instance.renders).toEqual(1);
+    expect(renderCountIncrement).toHaveBeenCalledTimes(1);
 
-    store.mutators.setAge(30);
-    expect(store.selectors.getAge()).toEqual(30);
+    store.setters.setAge(30);
+    expect(store.getters.getAge()).toEqual(30);
     expect(tree.toJSON().children).toEqual([30]);
 
-    expect(instance.renders).toEqual(2);
+    expect(renderCountIncrement).toHaveBeenCalledTimes(2);
   });
 });
