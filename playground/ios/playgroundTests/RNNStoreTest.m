@@ -1,10 +1,3 @@
-//
-//  RNNStoreTest.m
-//  playground
-//
-//  Created by Ran Greenberg on 12/02/2017.
-//  Copyright © 2017 Wix. All rights reserved.
-//
 
 #import <XCTest/XCTest.h>
 #import "RNNStore.m"
