@@ -16,7 +16,7 @@ function hasXcpretty() {
   }
 }
 
-function testProject() {
+function run() {
   try {
     shellUtils.exec.execSync(`echo 'travis_fold:start:xcodeunit'`);
     runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
@@ -35,10 +35,6 @@ function testProject() {
   } finally {
     shellUtils.exec.execSync(`echo 'travis_fold:end:xcodeunit'`);
   }
-}
-
-function run() {
-  testProject();
 }
 
 run();
