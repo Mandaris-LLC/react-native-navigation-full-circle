@@ -1,3 +1,3 @@
 # Navigation Playground
 
-An example project using `react-native-navigation`.
+An local playground project using `react-native-navigation`.

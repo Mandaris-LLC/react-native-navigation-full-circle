@@ -3194,7 +3194,7 @@ mobx@2.x.x:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/mobx/-/mobx-2.7.0.tgz#cf3d82d18c0ca7f458d8f2a240817b3dc7e54a01"
 
-mocha@*:
+mocha@3.x.x:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/mocha/-/mocha-3.2.0.tgz#7dc4f45e5088075171a68896814e6ae9eb7a85e3"
   dependencies:
@@ -3903,9 +3903,9 @@ regjsparser@^0.1.4:
   dependencies:
     jsesc "~0.5.0"
 
-remx@0.1.x:
-  version "0.1.42"
-  resolved "https://registry.yarnpkg.com/remx/-/remx-0.1.42.tgz#7f426099fb88f26efff6fef22c7766634c19be8b"
+remx@1.x.x:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/remx/-/remx-1.0.2.tgz#db58db552f337d543f9f7e70f9f91d3ef2696923"
   dependencies:
     lodash "4.x.x"
     mobx "2.x.x"

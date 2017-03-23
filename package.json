@@ -26,6 +26,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": ":",
+    "start": "adb reverse tcp:8081 tcp:8081; watchman watch-del-all; node ./node_modules/react-native/local-cli/cli.js start",
     "test-js": "eslint src integration scripts playground/src playground/e2e playground/scripts && BABEL_ENV=test jest --coverage",
     "test-android": "node ./scripts/test.android.js",
     "test-ios": "node ./scripts/test.ios.js",
@@ -56,10 +57,10 @@
     "eslint-plugin-react-native": "2.x.x",
     "jest": "18.x.x",
     "jest-cli": "18.x.x",
-    "remx": "0.1.x",
+    "remx": "1.x.x",
     "semver": "5.x.x",
     "detox": "5.x.x",
-    "mocha": "*",
+    "mocha": "3.x.x",
     "shell-utils": "1.x.x"
   },
   "babel": {
