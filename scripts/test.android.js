@@ -5,7 +5,7 @@ function unitTests() {
 }
 
 function e2e() {
-  if (!process.env.CI) {
+  if (process.env.CI) {
     console.log(`e2e disabled on CI`); //eslint-disable-line
     return;
   }
