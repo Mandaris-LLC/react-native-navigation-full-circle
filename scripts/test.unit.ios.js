@@ -17,24 +17,19 @@ function hasXcpretty() {
 }
 
 function run() {
-  try {
-    shellUtils.exec.execSync(`echo 'travis_fold:start:xcodeunit'`);
-    runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
+  runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             build build-for-testing
             -scheme "playground"
             -project playground.xcodeproj
             -sdk iphonesimulator
             -configuration Debug`);
-    runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
+  runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             test-without-building
             -scheme "playground"
             -project playground.xcodeproj
             -destination 'platform=iOS Simulator,name=iPhone 7'`);
-  } finally {
-    shellUtils.exec.execSync(`echo 'travis_fold:end:xcodeunit'`);
-  }
 }
 
 run();

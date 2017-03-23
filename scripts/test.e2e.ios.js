@@ -6,7 +6,6 @@ const release = _.includes(process.argv, 'release');
 function buildProjForDetox() {
   const scheme = release ? `playground_release` : `playground`;
 
-  shellUtils.exec.execSync(`echo 'travis_fold:start:xcodebuild'`);
   const cmd = `RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             -scheme ${scheme}
@@ -20,7 +19,6 @@ function buildProjForDetox() {
   } else {
     shellUtils.exec.execSync(`${cmd}`);
   }
-  shellUtils.exec.execSync(`echo 'travis_fold:end:xcodebuild'`);
 }
 function isInstalled(what) {
   try {
@@ -32,7 +30,6 @@ function isInstalled(what) {
 
 function e2e() { //eslint-disable-line
   try {
-    shellUtils.exec.execSync(`echo 'travis_fold:start:detox-ios'`);
     shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
     const detoxAppBuildPath = `playground/ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}-iphonesimulator/playground.app`;
 
@@ -48,7 +45,6 @@ function e2e() { //eslint-disable-line
       shellUtils.exec.kill(`CoreSimulator`);
       shellUtils.exec.execSync(`sleep 5`);
     }
-    shellUtils.exec.execSync(`echo 'travis_fold:end:detox-ios'`);
   }
 }
 
