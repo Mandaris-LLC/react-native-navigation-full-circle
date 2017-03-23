@@ -9,11 +9,6 @@ module.exports = function (wallaby) {
       runner: 'node'
     },
 
-    // workers: {
-    //   initial: 1,
-    //   regular: 1
-    // },
-
     testFramework: 'jest',
 
     files: [

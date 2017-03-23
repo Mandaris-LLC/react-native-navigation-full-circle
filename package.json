@@ -1,6 +1,6 @@
 {
   "name": "react-native-navigation",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0",
   "description": "React Native Navigation - truly native navigation for iOS and Android",
   "license": "MIT",
   "nativePackage": true,
@@ -23,11 +23,11 @@
     "type": "git",
     "url": "https://github.com/wix/react-native-navigation.git"
   },
-  "main": "src/index.js",
+  "main": "lib/src/index.js",
   "scripts": {
     "build": ":",
     "start": "adb reverse tcp:8081 tcp:8081; watchman watch-del-all; node ./node_modules/react-native/local-cli/cli.js start",
-    "test-js": "eslint src integration scripts playground/src playground/e2e playground/scripts && BABEL_ENV=test jest --coverage",
+    "test-js": "eslint lib/src integration scripts playground/src playground/e2e playground/scripts && BABEL_ENV=test jest --coverage",
     "test-android": "node ./scripts/test.android.js",
     "test-ios": "node ./scripts/test.ios.js",
     "test": "yarn run test-js && yarn run test-android && yarn run test-ios",
@@ -77,7 +77,7 @@
     "preset": "react-native",
     "testPathDirs": [
       "<rootDir>/node_modules/",
-      "<rootDir>/src/",
+      "<rootDir>/lib/src/",
       "<rootDir>/integration/"
     ],
     "resetMocks": true,
