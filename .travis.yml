@@ -17,7 +17,11 @@ branches:
 cache:
   directories:
     - $YARN_CACHE
-    - $HOME/.gradle/
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.gradle/nodejs/
+    - $HOME/.android/build-cache
+    - node_modules
     - $HOME/.m2
     - $ANDROID_HOME/licenses/
     - $HOME/Library/Caches/Homebrew
