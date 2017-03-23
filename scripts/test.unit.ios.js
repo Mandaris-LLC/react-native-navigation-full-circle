@@ -17,6 +17,8 @@ function hasXcpretty() {
 }
 
 function run() {
+  shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
+  shellUtils.exec.execSync(`node ./scripts/fixRN38.js`);
   runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             build build-for-testing

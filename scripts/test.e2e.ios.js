@@ -56,6 +56,8 @@ function installFbsimctlIfNeeded() {
 }
 
 function run() {
+  shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
+  shellUtils.exec.execSync(`node ./scripts/fixRN38.js`);
   installFbsimctlIfNeeded();
   buildProjForDetox();
   e2e();
