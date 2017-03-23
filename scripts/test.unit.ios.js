@@ -1,6 +1,4 @@
-const _ = require('lodash');
 const shellUtils = require('shell-utils');
-const fs = require('fs');
 
 function runWithXcprettyIfPossible(cmd) {
   if (hasXcpretty()) {
@@ -19,21 +17,24 @@ function hasXcpretty() {
 }
 
 function testProject() {
-  shellUtils.exec.execSync(`echo 'travis_fold:start:xcodeunit'`);
-  runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
-          cd ios && xcodebuild
+  try {
+    shellUtils.exec.execSync(`echo 'travis_fold:start:xcodeunit'`);
+    runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
+          cd ./playground/ios && xcodebuild
             build build-for-testing
             -scheme "playground"
             -project playground.xcodeproj
             -sdk iphonesimulator
             -configuration Debug`);
-  runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
-          cd ios && xcodebuild
+    runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
+          cd ./playground/ios && xcodebuild
             test-without-building
             -scheme "playground"
             -project playground.xcodeproj
             -destination 'platform=iOS Simulator,name=iPhone 7'`);
-  shellUtils.exec.execSync(`echo 'travis_fold:end:xcodeunit'`);
+  } finally {
+    shellUtils.exec.execSync(`echo 'travis_fold:end:xcodeunit'`);
+  }
 }
 
 function run() {
