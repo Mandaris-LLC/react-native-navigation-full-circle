@@ -6,7 +6,8 @@ const release = _.includes(process.argv, 'release');
 function buildProjForDetox() {
   const scheme = release ? `playground_release` : `playground`;
 
-  const cmd = `cd ./playground/ios && xcodebuild
+  const cmd = `RCT_NO_LAUNCH_PACKAGER=true
+            cd ./playground/ios && xcodebuild
             -scheme ${scheme}
             ${release ? 'clean build' : 'build'}
             -project playground.xcodeproj
