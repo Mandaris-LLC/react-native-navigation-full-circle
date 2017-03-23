@@ -50,7 +50,8 @@ function e2e() { //eslint-disable-line
 
 function installFbsimctlIfNeeded() {
   if (!isInstalled(`fbsimctl`)) {
-    shellUtils.exec.execSync(`brew tap facebook/fb && brew install fbsimctl`);
+    console.log(`installing fbsimctl...`); //eslint-disable-line
+    shellUtils.exec.execSyncSilent(`brew tap facebook/fb && brew install fbsimctl`);
   }
 }
 
