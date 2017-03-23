@@ -1,32 +1,22 @@
-const shellUtils = require('shell-utils');
+const exec = require('shell-utils').exec;
 
-function runWithXcprettyIfPossible(cmd) {
-  if (hasXcpretty()) {
-    shellUtils.exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
+function runWithXcpretty(cmd) {
+  if (exec.which(`xcpretty`)) {
+    exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
   } else {
-    shellUtils.exec.execSync(`${cmd}`);
-  }
-}
-
-function hasXcpretty() {
-  try {
-    return shellUtils.exec.execSyncRead(`which xcpretty`);
-  } catch (e) {
-    return false;
+    exec.execSync(`${cmd}`);
   }
 }
 
 function run() {
-  shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
-  shellUtils.exec.execSync(`node ./scripts/fixRN38.js`);
-  runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
+  runWithXcpretty(`RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             build build-for-testing
             -scheme "playground"
             -project playground.xcodeproj
             -sdk iphonesimulator
             -configuration Debug`);
-  runWithXcprettyIfPossible(`RCT_NO_LAUNCH_PACKAGER=true
+  runWithXcpretty(`RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             test-without-building
             -scheme "playground"

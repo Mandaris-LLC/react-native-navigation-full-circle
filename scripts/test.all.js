@@ -1,10 +1,10 @@
-const shellUtils = require('shell-utils');
+const exec = require('shell-utils').exec;
 
 function run() {
-  shellUtils.exec.execSync(`yarn run test-js`);
-  shellUtils.exec.execSync(`yarn run test-unit-android && yarn run test-unit-ios`);
-  shellUtils.exec.exec(`yarn run test-e2e-android`);
-  shellUtils.exec.exec(`yarn run test-e2e-ios`);
+  exec.execSync(`yarn run test-js`);
+  exec.execSync(`yarn run test-unit-android && yarn run test-unit-ios`);
+  exec.exec(`yarn run test-e2e-android`);
+  exec.exec(`yarn run test-e2e-ios`);
 }
 
 run();

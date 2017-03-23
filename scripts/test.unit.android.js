@@ -1,10 +1,6 @@
 const exec = require('shell-utils').exec;
+run();
 
 function run() {
-  if (process.env.CI) {
-    exec.execSync(`./scripts/installAndroidSDK.sh`);
-  }
   exec.execSync(`cd lib/android && ./gradlew clean testDebugUnitTest`);
 }
-
-run();

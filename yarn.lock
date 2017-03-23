@@ -4124,8 +4124,8 @@ shell-quote@1.6.1:
     jsonify "~0.0.0"
 
 shell-utils@1.x.x:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/shell-utils/-/shell-utils-1.0.1.tgz#f65f40d05999c49569c0928355e9ede15ad2ce07"
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/shell-utils/-/shell-utils-1.0.2.tgz#20b38d7d3f80deaeaeca364204da4e007bc4f59d"
   dependencies:
     lodash "4.x.x"
 

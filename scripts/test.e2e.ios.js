@@ -1,39 +1,31 @@
 const _ = require('lodash');
-const shellUtils = require('shell-utils');
+const exec = require('shell-utils').exec;
 
 const release = _.includes(process.argv, 'release');
 
 function buildProjForDetox() {
   const scheme = release ? `playground_release` : `playground`;
 
-  const cmd = `RCT_NO_LAUNCH_PACKAGER=true
-          cd ./playground/ios && xcodebuild
+  const cmd = `cd ./playground/ios && xcodebuild
             -scheme ${scheme}
             ${release ? 'clean build' : 'build'}
             -project playground.xcodeproj
             -sdk iphonesimulator
             -derivedDataPath ./DerivedData/playground`;
 
-  if (isInstalled(`xcpretty`)) {
-    shellUtils.exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
+  if (exec.which(`xcpretty`)) {
+    exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
   } else {
-    shellUtils.exec.execSync(`${cmd}`);
-  }
-}
-function isInstalled(what) {
-  try {
-    return shellUtils.exec.execSyncRead(`which ${what}`);
-  } catch (e) {
-    return false;
+    exec.execSync(`${cmd}`);
   }
 }
 
 function e2e() { //eslint-disable-line
   try {
-    shellUtils.exec.execSyncSilent(`watchman watch-del-all || true`);
+    exec.execSyncSilent(`watchman watch-del-all || true`);
     const detoxAppBuildPath = `playground/ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}-iphonesimulator/playground.app`;
 
-    shellUtils.exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
+    exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
                               BABEL_ENV=test
                               ./node_modules/mocha/bin/mocha e2e
                                 --timeout ${2 * 60 * 1000}
@@ -41,24 +33,17 @@ function e2e() { //eslint-disable-line
                                 --bail`);
   } finally {
     if (process.env.CI) {
-      shellUtils.exec.kill(`Simulator`);
-      shellUtils.exec.kill(`CoreSimulator`);
-      shellUtils.exec.execSync(`sleep 5`);
+      exec.kill(`Simulator`);
+      exec.kill(`CoreSimulator`);
+      exec.execSync(`sleep 5`);
     }
   }
 }
 
-function installFbsimctlIfNeeded() {
-  if (!isInstalled(`fbsimctl`)) {
-    console.log(`installing fbsimctl...`); //eslint-disable-line
-    shellUtils.exec.execSyncSilent(`brew tap facebook/fb && brew install fbsimctl`);
-  }
-}
-
 function run() {
-  shellUtils.exec.execSync(`./scripts/ignoreReactWarnings.rb`);
-  shellUtils.exec.execSync(`node ./scripts/fixRN38.js`);
-  installFbsimctlIfNeeded();
+  if (!exec.which(`fbsimctl`)) {
+    throw new Error(`fbsimctl must be installed: "brew tap facebook/fb && brew install fbsimctl"`);
+  }
   buildProjForDetox();
   e2e();
 }

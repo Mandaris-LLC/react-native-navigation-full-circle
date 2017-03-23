@@ -25,15 +25,20 @@ before_cache:
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 install:
+  - set -e
+  # node
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
   - export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
-  - nvm ls
-  - gem install xcpretty
+  # yarn
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - yarn config set cache-folder $YARN_CACHE
-
+  # android sdk
+  - node ./scripts/installAndroidSdk.js
+  # fbsimctl
+  - brew tap facebook/fb && brew install fbsimctl
+  - set +e
 
 script:
   - set -e
