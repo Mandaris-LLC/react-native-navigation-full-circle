@@ -1,12 +1,11 @@
-playground
-integration
-
-
-
-
-
-
-
+AndroidE2E/
+coverage/
+e2e/
+integration/
+playground/
+scripts/
+.travis.yml
+wallaby.js
 
 
 #################

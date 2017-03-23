@@ -5,10 +5,10 @@ function run() {
     exec.execSync(`./scripts/installAndroidSDK.sh`);
   }
 
-  exec.execSync(`cd android && ./gradlew clean testDebugUnitTest`);
+  exec.execSync(`cd lib/android && ./gradlew clean testDebugUnitTest`);
 
   if (!process.env.CI) {
-    exec.execSync(`cd playground && yarn run e2e-android`);
+    // exec.execSync(`cd playground && yarn run e2e-android`);
   }
 }
 
