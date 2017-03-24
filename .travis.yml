@@ -41,9 +41,9 @@ install:
   # android sdk
   - ./scripts/installAndroidSDK.sh
   # android emulator
-  - echo yes | android update sdk --no-ui --all --filter "sys-img-armeabi-v7a-google_apis-25"
-  - echo no | android create avd --name AVD -t android-25 --abi google_apis/armeabi-v7a
-  - android list avd
+  #- echo yes | android update sdk --no-ui --all --filter "sys-img-armeabi-v7a-google_apis-25"
+  #- echo no | android create avd --name AVD -t android-25 --abi google_apis/armeabi-v7a
+  #- android list avd
   # fbsimctl
   - brew tap facebook/fb && brew install fbsimctl
 
