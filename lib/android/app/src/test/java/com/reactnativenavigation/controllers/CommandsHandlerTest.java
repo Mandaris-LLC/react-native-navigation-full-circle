@@ -13,7 +13,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 public class CommandsHandlerTest extends BaseTest {
 
 	@Test
-	public void setRootCreatesTheLayout_SetsOnActivity() throws Exception {
+	public void setRootCreatesTheLayout_SetContentView() throws Exception {
 		CommandsHandler uut = new CommandsHandler();
 		JSONObject json = new JSONObject("{" +
 				"id: containerId123," +

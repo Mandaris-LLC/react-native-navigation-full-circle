@@ -1,20 +1,18 @@
 package com.reactnativenavigation.layout;
 
-import android.content.Context;
-import android.util.Log;
+import android.app.Activity;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 
 public class Container extends FrameLayout {
-	private static final String TAG = "Container";
-	private String id;
+	private final String id;
 
-	public Container(Context context, LayoutFactory.ReactRootViewCreator reactRootViewCreator, String id, String name) {
-		super(context);
+	public Container(Activity activity, LayoutFactory.ReactRootViewCreator reactRootViewCreator, String id, String name) {
+		super(activity);
 		this.id = id;
-		addView(reactRootViewCreator.create(id, name));
+		addView(reactRootViewCreator.create(activity, id, name));
 	}
 
 	public String getContainerId() {
@@ -23,7 +21,6 @@ public class Container extends FrameLayout {
 
 	//    @Override
 //    protected void onAttachedToWindow() {
-//        Log.d(TAG, "onAttachedToWindow: " + id);
 //        super.onAttachedToWindow();
 //        NavigationEventEmitter.emit(NavigationApplication.instance.getReactNativeHost().getReactInstanceManager().getCurrentReactContext())
 //                .containerStart(id);
@@ -31,7 +28,6 @@ public class Container extends FrameLayout {
 
 	@Override
 	protected void onDetachedFromWindow() {
-		Log.d(TAG, "onDetachedFromWindow: " + id);
 		super.onDetachedFromWindow();
 		NavigationEventEmitter.emit(NavigationApplication.instance.getReactNativeHost().getReactInstanceManager().getCurrentReactContext())
 				.containerStop(id);

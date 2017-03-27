@@ -15,17 +15,17 @@ import java.util.List;
 public class LayoutFactory {
 
 	public interface ReactRootViewCreator {
-		View create(String id, String name);
+		View create(Activity activity, String id, String name);
 	}
 
 	private final Activity activity;
 	private final ReactRootViewCreator reactRootViewCreator;
 	private final BottomTabsCreator bottomTabsCreator; // TODO: revisit this, may not be needed
 
-	public LayoutFactory(Activity activity, ReactRootViewCreator reactRootViewCreator, BottomTabsCreator bottomTabsCreator) {
+	public LayoutFactory(Activity activity, ReactRootViewCreator reactRootViewCreator) {
 		this.activity = activity;
 		this.reactRootViewCreator = reactRootViewCreator;
-		this.bottomTabsCreator = bottomTabsCreator;
+		this.bottomTabsCreator = new BottomTabsCreator();
 	}
 
 	public View create(LayoutNode node) {
