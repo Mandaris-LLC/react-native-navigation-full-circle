@@ -29,7 +29,7 @@ public class CommandsHandler {
 					}
 				}, new BottomTabsCreator());
 
-		final LayoutNode layoutTreeRoot = LayoutNode.fromTree(layoutTree);
+		final LayoutNode layoutTreeRoot = LayoutNode.parse(layoutTree);
 		final View rootView = factory.create(layoutTreeRoot);
 		activity.setContentView(rootView);
 	}
@@ -46,7 +46,7 @@ public class CommandsHandler {
 						return rootView;
 					}
 				}, new BottomTabsCreator());
-		final LayoutNode layoutNode = LayoutNode.fromTree(layoutTree);
+		final LayoutNode layoutNode = LayoutNode.parse(layoutTree);
 		final View rootView = factory.create(layoutNode);
 		((StackLayout) activity.getContentView()).push(rootView);
 	}

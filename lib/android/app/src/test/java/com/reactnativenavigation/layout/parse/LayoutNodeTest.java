@@ -34,7 +34,7 @@ public class LayoutNodeTest extends BaseTest {
 				"data: {dataKey: dataValue}, " +
 				"children: [{id: childId1, type: Container}]}");
 
-		LayoutNode result = LayoutNode.fromTree(tree);
+		LayoutNode result = LayoutNode.parse(tree);
 
 		assertThat(result).isNotNull();
 		assertThat(result.id).isEqualTo("node1");

@@ -1,5 +1,7 @@
 package com.reactnativenavigation.layout.parse;
 
+import android.support.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,9 +23,35 @@ public class LayoutNode {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public static LayoutNode parse(JSONObject layoutTree) {
+		String id = layoutTree.optString("id");
+		LayoutNode.Type type = LayoutNode.Type.fromString(layoutTree.optString("type"));
+		JSONObject data = parseData(layoutTree);
+		List<LayoutNode> children = parseChildren(layoutTree);
+		return new LayoutNode(id, type, data, children);
+	}
+
+	@NonNull
+	private static List<LayoutNode> parseChildren(JSONObject layoutTree) {
+		List<LayoutNode> children = new ArrayList<>();
+		if (layoutTree.has("children")) {
+			JSONArray rawChildren = layoutTree.optJSONArray("children");
+			for (int i = 0; i < rawChildren.length(); i++) {
+				children.add(LayoutNode.parse(rawChildren.optJSONObject(i)));
+			}
+		}
+		return children;
+	}
+
+	private static JSONObject parseData(JSONObject layoutTree) {
+		return layoutTree.has("data") ? layoutTree.optJSONObject("data") : new JSONObject();
+	}
+
 	public final String id;
 	public final Type type;
 	public final JSONObject data;
+
 	public final List<LayoutNode> children;
 
 	public LayoutNode(String id, Type type) {
@@ -35,28 +63,5 @@ public class LayoutNode {
 		this.type = type;
 		this.data = data;
 		this.children = children;
-	}
-
-	@SuppressWarnings("unchecked")
-	public static LayoutNode fromTree(JSONObject layoutTree) {
-		String id = layoutTree.optString("id");
-		LayoutNode.Type type = LayoutNode.Type.fromString(layoutTree.optString("type"));
-
-		JSONObject data;
-		if (layoutTree.has("data")) {
-			data = layoutTree.optJSONObject("data");
-		} else {
-			data = new JSONObject();
-		}
-
-		List<LayoutNode> children = new ArrayList<>();
-		if (layoutTree.has("children")) {
-			JSONArray rawChildren = layoutTree.optJSONArray("children");
-			for (int i = 0; i < rawChildren.length(); i++) {
-				children.add(LayoutNode.fromTree(rawChildren.optJSONObject(i)));
-			}
-		}
-
-		return new LayoutNode(id, type, data, children);
 	}
 }
