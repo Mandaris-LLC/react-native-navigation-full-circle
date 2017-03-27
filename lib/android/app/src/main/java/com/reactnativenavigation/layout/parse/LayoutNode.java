@@ -1,9 +1,10 @@
 package com.reactnativenavigation.layout.parse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LayoutNode {
 	public enum Type {
@@ -22,15 +23,14 @@ public class LayoutNode {
 
 	public final String id;
 	public final Type type;
-	public final Map<String, Object> data;
-
+	public final JSONObject data;
 	public final List<LayoutNode> children;
 
 	public LayoutNode(String id, Type type) {
-		this(id, type, new HashMap<String, Object>(), new ArrayList<LayoutNode>());
+		this(id, type, new JSONObject(), new ArrayList<LayoutNode>());
 	}
 
-	public LayoutNode(String id, Type type, Map<String, Object> data, List<LayoutNode> children) {
+	public LayoutNode(String id, Type type, JSONObject data, List<LayoutNode> children) {
 		this.id = id;
 		this.type = type;
 		this.data = data;
@@ -38,22 +38,22 @@ public class LayoutNode {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static LayoutNode fromTree(Map<String, Object> layoutTree) {
-		String id = (String) layoutTree.get("id");
-		LayoutNode.Type type = LayoutNode.Type.fromString((String) layoutTree.get("type"));
+	public static LayoutNode fromTree(JSONObject layoutTree) {
+		String id = layoutTree.optString("id");
+		LayoutNode.Type type = LayoutNode.Type.fromString(layoutTree.optString("type"));
 
-		Map<String, Object> data;
-		if (layoutTree.containsKey("data")) {
-			data = (Map<String, Object>) layoutTree.get("data");
+		JSONObject data;
+		if (layoutTree.has("data")) {
+			data = layoutTree.optJSONObject("data");
 		} else {
-			data = new HashMap<>();
+			data = new JSONObject();
 		}
 
 		List<LayoutNode> children = new ArrayList<>();
-		if (layoutTree.containsKey("children")) {
-			List<Object> rawChildren = (List<Object>) layoutTree.get("children");
-			for (Object rawChild : rawChildren) {
-				children.add(LayoutNode.fromTree((Map<String, Object>) rawChild));
+		if (layoutTree.has("children")) {
+			JSONArray rawChildren = layoutTree.optJSONArray("children");
+			for (int i = 0; i < rawChildren.length(); i++) {
+				children.add(LayoutNode.fromTree(rawChildren.optJSONObject(i)));
 			}
 		}
 

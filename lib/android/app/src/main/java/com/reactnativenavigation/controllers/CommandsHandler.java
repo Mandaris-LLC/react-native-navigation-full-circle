@@ -12,11 +12,11 @@ import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import com.reactnativenavigation.layout.parse.LayoutNode;
 import com.reactnativenavigation.utils.UiThread;
 
-import java.util.Map;
+import org.json.JSONObject;
 
 public class CommandsHandler {
 
-	public void setRoot(final NavigationActivity activity, final Map<String, Object> layoutTree) {
+	public void setRoot(final NavigationActivity activity, final JSONObject layoutTree) {
 		LayoutFactory factory =
 				new LayoutFactory(activity, new LayoutFactory.ReactRootViewCreator() {
 					@Override
@@ -34,7 +34,7 @@ public class CommandsHandler {
 		activity.setContentView(rootView);
 	}
 
-	public void push(final NavigationActivity activity, String onContainerId, final Map<String, Object> layoutTree) {
+	public void push(final NavigationActivity activity, String onContainerId, JSONObject layoutTree) {
 		LayoutFactory factory =
 				new LayoutFactory(activity, new LayoutFactory.ReactRootViewCreator() {
 					@Override

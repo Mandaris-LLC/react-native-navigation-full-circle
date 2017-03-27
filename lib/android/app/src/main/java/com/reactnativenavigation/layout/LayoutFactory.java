@@ -81,7 +81,7 @@ public class LayoutFactory {
 	}
 
 	private View createContainerView(LayoutNode node) {
-		final String name = (String) node.data.get("name");
+		final String name = node.data.optString("name");
 		Container container = new Container(activity, reactRootViewCreator, node.id, name);
 		container.setId(CompatUtils.generateViewId());
 		return container;

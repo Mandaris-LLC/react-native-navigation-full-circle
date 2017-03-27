@@ -11,6 +11,8 @@ import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
 import com.reactnativenavigation.layout.parse.LayoutNode;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,7 +20,6 @@ import org.robolectric.Robolectric;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -170,7 +171,7 @@ public class LayoutFactoryTest extends BaseTest {
 	}
 
 	@Test
-	public void pushScreenToFirstBottomTab() {
+	public void pushScreenToFirstBottomTab() throws Exception {
 		BottomTabs bottomTabsMock = mock(BottomTabs.class);
 		when(bottomTabsMock.size()).thenReturn(0, 1);
 
@@ -193,7 +194,7 @@ public class LayoutFactoryTest extends BaseTest {
 	}
 
 	@Test
-	public void popScreenFromFirstBottomTab() {
+	public void popScreenFromFirstBottomTab() throws Exception {
 		BottomTabs bottomTabsMock = mock(BottomTabs.class);
 		when(bottomTabsMock.size()).thenReturn(0, 1);
 
@@ -263,20 +264,20 @@ public class LayoutFactoryTest extends BaseTest {
 		assertThat(result.getChildAt(0)).isEqualTo(mockView);
 	}
 
-	private void pushContainer(ContainerStackLayout containerStackLayout, String screenId, String reactRootViewKey, View rootView) {
+	private void pushContainer(ContainerStackLayout containerStackLayout, String screenId, String reactRootViewKey, View rootView) throws Exception {
 		when(reactRootViewCreator.create(eq(screenId), eq(reactRootViewKey))).thenReturn(rootView);
 		View pushedContainer = createLayoutFactory().create(createContainerNode(screenId, reactRootViewKey));
 		containerStackLayout.push(pushedContainer);
 	}
 
-	private void pushContainer(BottomTabsLayout containerStackLayout, String screenId, String reactRootViewKey, View rootView) {
+	private void pushContainer(BottomTabsLayout containerStackLayout, String screenId, String reactRootViewKey, View rootView) throws Exception {
 		when(reactRootViewCreator.create(eq(screenId), eq(reactRootViewKey))).thenReturn(rootView);
 		View pushedContainer = createLayoutFactory().create(createContainerNode(screenId, reactRootViewKey));
 		containerStackLayout.push(pushedContainer);
 	}
 
 	@Test
-	public void popScreenFromScreenStackLayout() {
+	public void popScreenFromScreenStackLayout() throws Exception {
 		when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
 		final LayoutNode container = createContainerNode();
 		final LayoutNode stackNode = createContainerStackNode(container);
@@ -295,7 +296,7 @@ public class LayoutFactoryTest extends BaseTest {
 	@Ignore
 	public void throwsExceptionForUnknownType() throws Exception {
 		when(reactRootViewCreator.create(eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
-		final LayoutNode node = new LayoutNode(NODE_ID, null, Collections.<String, Object>emptyMap(), Collections.<LayoutNode>emptyList());
+		final LayoutNode node = new LayoutNode(NODE_ID, null, new JSONObject(), Collections.<LayoutNode>emptyList());
 
 		createLayoutFactory().create(node);
 	}
@@ -314,24 +315,22 @@ public class LayoutFactoryTest extends BaseTest {
 		return new LayoutFactory(activity, reactRootViewCreator, bottomTabsCreator);
 	}
 
-	private LayoutNode createContainerNode() {
+	private LayoutNode createContainerNode() throws Exception {
 		return createContainerNode(NODE_ID, REACT_ROOT_VIEW_KEY);
 	}
 
-	private LayoutNode createSideMenuLeftNode() {
+	private LayoutNode createSideMenuLeftNode() throws Exception {
 		List<LayoutNode> children = Arrays.asList(createContainerNode());
 		return new LayoutNode("SideMenuLeft", LayoutNode.Type.SideMenuLeft, null, children);
 	}
 
-	private LayoutNode createSideMenuRightNode() {
+	private LayoutNode createSideMenuRightNode() throws Exception {
 		List<LayoutNode> children = Arrays.asList(createContainerNode());
 		return new LayoutNode("SideMenuRight", LayoutNode.Type.SideMenuRight, null, children);
 	}
 
-	private LayoutNode createContainerNode(final String id, final String name) {
-		return new LayoutNode(id, LayoutNode.Type.Container, new HashMap<String, Object>() {{
-			put("name", name);
-		}}, null);
+	private LayoutNode createContainerNode(final String id, final String name) throws JSONException {
+		return new LayoutNode(id, LayoutNode.Type.Container, new JSONObject().put("name", name), null);
 	}
 
 	private LayoutNode createSideMenuContainerNode(List<LayoutNode> children) {

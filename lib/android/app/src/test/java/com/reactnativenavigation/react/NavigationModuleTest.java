@@ -8,13 +8,13 @@ import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.controllers.CommandsHandler;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.robolectric.Robolectric;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -63,8 +63,8 @@ public class NavigationModuleTest extends BaseTest {
 		JavaOnlyMap input = new JavaOnlyMap();
 		input.putString("key", "value");
 		uut.setRoot(input);
-		ArgumentCaptor<Object> captor = ArgumentCaptor.forClass(HashMap.class);
-		verify(NavigationApplication.instance.getConfig().commandsHandler, times(1)).setRoot((NavigationActivity) any(), (HashMap<String, Object>) captor.capture());
+		ArgumentCaptor<JSONObject> captor = ArgumentCaptor.forClass(JSONObject.class);
+		verify(NavigationApplication.instance.getConfig().commandsHandler, times(1)).setRoot((NavigationActivity) any(), captor.capture());
 		assertThat(captor.getAllValues()).hasSize(1);
 		assertThat(captor.getValue()).isNotNull();
 	}
