@@ -11,7 +11,7 @@ import com.reactnativenavigation.utils.UiThread;
 public class NavigationModule extends ReactContextBaseJavaModule {
 	private static final String NAME = "RNNBridgeModule";
 
-	public NavigationModule(ReactApplicationContext reactContext) {
+	public NavigationModule(final ReactApplicationContext reactContext) {
 		super(reactContext);
 	}
 

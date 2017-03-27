@@ -2,6 +2,7 @@ package com.reactnativenavigation.controllers;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.NavigationActivity;
+import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.layout.Container;
 
 import org.json.JSONObject;
@@ -14,7 +15,7 @@ public class CommandsHandlerTest extends BaseTest {
 
 	@Test
 	public void setRootCreatesTheLayout_SetContentView() throws Exception {
-		CommandsHandler uut = new CommandsHandler();
+		CommandsHandler uut = NavigationApplication.instance.getConfig().commandsHandler;
 		JSONObject json = new JSONObject("{" +
 				"id: containerId123," +
 				"type: Container" +

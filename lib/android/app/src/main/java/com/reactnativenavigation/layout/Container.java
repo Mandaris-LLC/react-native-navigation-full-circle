@@ -5,11 +5,12 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationEventEmitter;
+import com.reactnativenavigation.react.ReactRootViewCreator;
 
 public class Container extends FrameLayout {
 	private final String id;
 
-	public Container(Activity activity, LayoutFactory.ReactRootViewCreator reactRootViewCreator, String id, String name) {
+	public Container(Activity activity, ReactRootViewCreator reactRootViewCreator, String id, String name) {
 		super(activity);
 		this.id = id;
 		addView(reactRootViewCreator.create(activity, id, name));

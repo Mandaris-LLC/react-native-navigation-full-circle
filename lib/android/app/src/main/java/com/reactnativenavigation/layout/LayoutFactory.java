@@ -8,15 +8,12 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
+import com.reactnativenavigation.react.ReactRootViewCreator;
 import com.reactnativenavigation.utils.CompatUtils;
 
 import java.util.List;
 
 public class LayoutFactory {
-
-	public interface ReactRootViewCreator {
-		View create(Activity activity, String id, String name);
-	}
 
 	private final Activity activity;
 	private final ReactRootViewCreator reactRootViewCreator;

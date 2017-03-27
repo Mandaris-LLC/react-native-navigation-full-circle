@@ -8,6 +8,7 @@ import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
 import com.reactnativenavigation.controllers.CommandsHandler;
 import com.reactnativenavigation.react.DevPermissionRequestImpl;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
+import com.reactnativenavigation.react.NavigationReactRootViewCreator;
 
 public abstract class NavigationApplication extends Application implements ReactApplication {
 	public static NavigationApplication instance;
@@ -47,7 +48,7 @@ public abstract class NavigationApplication extends Application implements React
 		Config config = new Config();
 		config.reactNativeHost = new NavigationReactNativeHost(this, isDebug());
 		config.activityLifecycleDelegate = new ActivityLifecycleDelegate(config.reactNativeHost.getReactInstanceManager(), new DevPermissionRequestImpl());
-		config.commandsHandler = new CommandsHandler();
+		config.commandsHandler = new CommandsHandler(new NavigationReactRootViewCreator());
 		return config;
 	}
 }

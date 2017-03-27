@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.NavigationApplication;
-import com.reactnativenavigation.layout.LayoutFactory.ReactRootViewCreator;
 
 public class NavigationReactRootViewCreator implements ReactRootViewCreator {
 	@Override
