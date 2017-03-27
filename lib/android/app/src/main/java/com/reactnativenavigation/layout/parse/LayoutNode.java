@@ -36,4 +36,27 @@ public class LayoutNode {
 		this.data = data;
 		this.children = children;
 	}
+
+	@SuppressWarnings("unchecked")
+	public static LayoutNode fromTree(Map<String, Object> layoutTree) {
+		String id = (String) layoutTree.get("id");
+		LayoutNode.Type type = LayoutNode.Type.fromString((String) layoutTree.get("type"));
+
+		Map<String, Object> data;
+		if (layoutTree.containsKey("data")) {
+			data = (Map<String, Object>) layoutTree.get("data");
+		} else {
+			data = new HashMap<>();
+		}
+
+		List<LayoutNode> children = new ArrayList<>();
+		if (layoutTree.containsKey("children")) {
+			List<Object> rawChildren = (List<Object>) layoutTree.get("children");
+			for (Object rawChild : rawChildren) {
+				children.add(LayoutNode.fromTree((Map<String, Object>) rawChild));
+			}
+		}
+
+		return new LayoutNode(id, type, data, children);
+	}
 }

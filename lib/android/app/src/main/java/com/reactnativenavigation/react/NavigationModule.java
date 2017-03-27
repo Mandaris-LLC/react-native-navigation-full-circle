@@ -29,17 +29,17 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				NavigationApplication.instance.getConfig().commandsHandler.setRoot(activity(), layoutTree);
+				NavigationApplication.instance.getConfig().commandsHandler.setRoot(activity(), ArgsParser.parse(layoutTree));
 			}
 		});
 	}
 
 	@ReactMethod
-	public void push(final String onContainerId, final ReadableMap layout) {
+	public void push(final String onContainerId, final ReadableMap layoutTree) {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				NavigationApplication.instance.getConfig().commandsHandler.push(activity(), onContainerId, layout);
+				NavigationApplication.instance.getConfig().commandsHandler.push(activity(), onContainerId, ArgsParser.parse(layoutTree));
 			}
 		});
 	}
