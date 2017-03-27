@@ -15,10 +15,13 @@ public class Container extends FrameLayout {
 		super(context);
 		this.id = id;
 		addView(reactRootViewCreator.create(id, name));
-
 	}
 
-//    @Override
+	public String getContainerId() {
+		return id;
+	}
+
+	//    @Override
 //    protected void onAttachedToWindow() {
 //        Log.d(TAG, "onAttachedToWindow: " + id);
 //        super.onAttachedToWindow();

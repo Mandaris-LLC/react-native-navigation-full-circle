@@ -9,7 +9,6 @@ import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabs;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
-import com.reactnativenavigation.layout.parse.LayoutNode;
 
 import org.json.JSONException;
 import org.json.JSONObject;

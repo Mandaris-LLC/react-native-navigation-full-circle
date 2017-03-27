@@ -8,7 +8,6 @@ import android.view.ViewGroup.LayoutParams;
 
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
-import com.reactnativenavigation.layout.parse.LayoutNode;
 import com.reactnativenavigation.utils.CompatUtils;
 
 import java.util.List;

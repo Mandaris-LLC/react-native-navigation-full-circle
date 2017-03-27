@@ -1,4 +1,4 @@
-package com.reactnativenavigation.layout.parse;
+package com.reactnativenavigation.layout;
 
 import android.support.annotation.NonNull;
 
