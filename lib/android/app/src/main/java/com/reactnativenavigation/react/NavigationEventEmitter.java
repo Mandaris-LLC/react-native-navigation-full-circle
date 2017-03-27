@@ -26,28 +26,28 @@ public class NavigationEventEmitter {
 	}
 
 	private void emit(String eventName) {
-        emit(eventName, Arguments.createMap());
-    }
+		emit(eventName, Arguments.createMap());
+	}
 
-    private void emit(String eventName, WritableMap data) {
-        emitter.emit(eventName, data);
-    }
+	private void emit(String eventName, WritableMap data) {
+		emitter.emit(eventName, data);
+	}
 
-    private void emit(String eventName, String param) {
-        emitter.emit(eventName, param);
-    }
+	private void emit(String eventName, String param) {
+		emitter.emit(eventName, param);
+	}
 
-    public void containerStop(String id) {
-        WritableMap data = Arguments.createMap();
-        data.putString("id", id);
+	public void containerStop(String id) {
+		WritableMap data = Arguments.createMap();
+		data.putString("id", id);
 //        emit(containerStop, data);
-        emit(containerStop, id);
-    }
+		emit(containerStop, id);
+	}
 
-    public void containerStart(String id) {
-        WritableMap data = Arguments.createMap();
-        data.putString("id", id);
+	public void containerStart(String id) {
+		WritableMap data = Arguments.createMap();
+		data.putString("id", id);
 //        emit(containerStart, data);
-        emit(containerStart, id);
-    }
+		emit(containerStart, id);
+	}
 }

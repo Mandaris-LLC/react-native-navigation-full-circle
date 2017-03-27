@@ -5,6 +5,7 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
+import com.reactnativenavigation.controllers.CommandsHandler;
 import com.reactnativenavigation.react.DevPermissionRequestImpl;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 
@@ -14,6 +15,7 @@ public abstract class NavigationApplication extends Application implements React
 	public static class Config {
 		public ReactNativeHost reactNativeHost;
 		public ActivityLifecycleDelegate activityLifecycleDelegate;
+		public CommandsHandler commandsHandler;
 	}
 
 	private Config config;
@@ -45,6 +47,7 @@ public abstract class NavigationApplication extends Application implements React
 		Config config = new Config();
 		config.reactNativeHost = new NavigationReactNativeHost(this, isDebug());
 		config.activityLifecycleDelegate = new ActivityLifecycleDelegate(config.reactNativeHost.getReactInstanceManager(), new DevPermissionRequestImpl());
+		config.commandsHandler = new CommandsHandler();
 		return config;
 	}
 }

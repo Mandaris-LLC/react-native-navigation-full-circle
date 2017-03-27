@@ -8,13 +8,13 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 
 public class Container extends FrameLayout {
-    private static final String TAG = "Container";
-    private String id;
+	private static final String TAG = "Container";
+	private String id;
 
-    public Container(Context context, LayoutFactory.ReactRootViewCreator reactRootViewCreator, String id, String name) {
+	public Container(Context context, LayoutFactory.ReactRootViewCreator reactRootViewCreator, String id, String name) {
 		super(context);
-        this.id = id;
-        addView(reactRootViewCreator.create(id, name));
+		this.id = id;
+		addView(reactRootViewCreator.create(id, name));
 
 	}
 
@@ -26,11 +26,11 @@ public class Container extends FrameLayout {
 //                .containerStart(id);
 //    }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        Log.d(TAG, "onDetachedFromWindow: " + id);
-        super.onDetachedFromWindow();
-        NavigationEventEmitter.emit(NavigationApplication.instance.getReactNativeHost().getReactInstanceManager().getCurrentReactContext())
-                .containerStop(id);
-    }
+	@Override
+	protected void onDetachedFromWindow() {
+		Log.d(TAG, "onDetachedFromWindow: " + id);
+		super.onDetachedFromWindow();
+		NavigationEventEmitter.emit(NavigationApplication.instance.getReactNativeHost().getReactInstanceManager().getCurrentReactContext())
+				.containerStop(id);
+	}
 }

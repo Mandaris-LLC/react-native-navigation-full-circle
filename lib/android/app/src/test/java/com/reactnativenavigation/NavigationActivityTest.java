@@ -2,6 +2,7 @@ package com.reactnativenavigation;
 
 import android.view.View;
 
+import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
 
 import org.junit.Test;
@@ -16,7 +17,6 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class NavigationActivityTest extends BaseTest {
-
 
 	@Test
 	public void holdsContentView() throws Exception {
@@ -50,5 +50,13 @@ public class NavigationActivityTest extends BaseTest {
 		activityController.destroy();
 		verify(activityLifecycleDelegate, times(1)).onActivityDestroyed(activityController.get());
 		verifyNoMoreInteractions(activityLifecycleDelegate);
+	}
+
+	@Test
+	public void defaultBackBtnHandler() throws Exception {
+		NavigationActivity navigationActivity = Robolectric.setupActivity(NavigationActivity.class);
+		assertThat(navigationActivity).isInstanceOf(DefaultHardwareBackBtnHandler.class);
+		navigationActivity.invokeDefaultOnBackPressed();
+		assertThat(navigationActivity.isFinishing()).isTrue();
 	}
 }

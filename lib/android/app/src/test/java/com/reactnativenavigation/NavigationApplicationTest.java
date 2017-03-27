@@ -1,6 +1,7 @@
 package com.reactnativenavigation;
 
 import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactNativeHost;
 import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
 
 import org.junit.Test;
@@ -32,7 +33,8 @@ public class NavigationApplicationTest extends BaseTest {
 	}
 
 	@Test
-	public void configProvidesActivityLifecycleDelegate() throws Exception {
+	public void config() throws Exception {
+		assertThat(NavigationApplication.instance.getConfig().reactNativeHost).isInstanceOf(ReactNativeHost.class);
 		assertThat(NavigationApplication.instance.getConfig().activityLifecycleDelegate).isInstanceOf(ActivityLifecycleDelegate.class);
 	}
 }
