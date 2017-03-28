@@ -3,6 +3,7 @@
 // **********************************************
 // *** DON'T MISS: THE NEXT LINE IS IMPORTANT ***
 // **********************************************
+#import <React/RCTBundleURLProvider.h>
 #import <ReactNativeNavigation/ReactNativeNavigation.h>
 
 // IMPORTANT: if you're getting an Xcode error that RCCManager.h isn't found, you've probably ran "npm install"
@@ -14,17 +15,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	NSURL *jsCodeLocation;
-#ifdef DEBUG
-	jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
-#else
-	jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-#endif
-	
-	
 	// **********************************************
 	// *** DON'T MISS: THIS IS HOW WE BOOTSTRAP *****
 	// **********************************************
+	NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 	[ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
 	
 	/*
