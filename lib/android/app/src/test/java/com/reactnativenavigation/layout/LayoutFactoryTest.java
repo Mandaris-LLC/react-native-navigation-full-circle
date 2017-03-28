@@ -12,12 +12,10 @@ import com.reactnativenavigation.react.ReactRootViewCreator;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.robolectric.Robolectric;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
