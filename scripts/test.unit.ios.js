@@ -15,13 +15,16 @@ function run() {
             -scheme "playground"
             -project playground.xcodeproj
             -sdk iphonesimulator
-            -configuration Debug`);
+            -configuration Debug
+            -derivedDataPath ./DerivedData/playground`);
   runWithXcpretty(`RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             test-without-building
             -scheme "playground"
             -project playground.xcodeproj
-            -destination 'platform=iOS Simulator,name=iPhone 7'`);
+            -sdk iphonesimulator
+            -destination 'platform=iOS Simulator,name=iPhone 7'
+            -derivedDataPath ./DerivedData/playground`);
 }
 
 run();
