@@ -9,7 +9,6 @@ import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
 import com.reactnativenavigation.layout.bottomtabs.TooManyTabsException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.robolectric.Robolectric;
 
@@ -17,7 +16,6 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-@Ignore
 public class BottomTabsContainerTest extends BaseTest {
 
 	private static final String TAB_NAME = "myTab";

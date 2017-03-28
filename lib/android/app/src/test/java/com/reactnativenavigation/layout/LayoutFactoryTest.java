@@ -204,15 +204,6 @@ public class LayoutFactoryTest extends BaseTest {
 		assertThat(result.getChildAt(0)).isEqualTo(mockView);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	@Ignore
-	public void throwsExceptionForUnknownType() throws Exception {
-		when(reactRootViewCreator.create(any(Activity.class), eq(NODE_ID), eq(REACT_ROOT_VIEW_KEY))).thenReturn(mockView);
-		final LayoutNode node = new LayoutNode(NODE_ID, null, new JSONObject(), Collections.<LayoutNode>emptyList());
-
-		createLayoutFactory().create(node);
-	}
-
 	private LayoutFactory createLayoutFactory() {
 		return new LayoutFactory(activity, reactRootViewCreator);
 	}
