@@ -37,7 +37,7 @@ function runDetoxUsingMocha() {
 function e2e() { //eslint-disable-line
   try {
     if (process.env.CI) {
-      exec.exec(`yarn run start`);
+      exec.execSync(`yarn run start &`);
       exec.execSync(`sleep 5`);
     }
     runDetoxUsingMocha();
