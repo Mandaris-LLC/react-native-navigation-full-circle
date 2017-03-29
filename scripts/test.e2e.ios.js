@@ -36,14 +36,9 @@ function runDetoxUsingMocha() {
 
 function e2e() { //eslint-disable-line
   try {
-    if (process.env.CI) {
-      exec.execSync(`yarn run start &`);
-      exec.execSync(`sleep 5`);
-    }
     runDetoxUsingMocha();
   } finally {
     if (process.env.CI) {
-      exec.kill(`react-native/local-cli/cli.js start`);
       exec.kill(`Simulator`);
       exec.kill(`CoreSimulator`);
       exec.execSync(`sleep 5`);
