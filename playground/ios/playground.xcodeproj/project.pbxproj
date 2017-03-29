@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		26070FD01E4B8B9D003EC8B9 /* RNNControllerFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26070FCF1E4B8B9D003EC8B9 /* RNNControllerFactoryTest.m */; };
 		261F0E671E6EE9EC00989DE2 /* RNNModalManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 261F0E661E6EE9EC00989DE2 /* RNNModalManagerTest.m */; };
+		266DDDF71E8BCE9900C6F13C /* RNNNavigationStackManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 266DDDF61E8BCE9900C6F13C /* RNNNavigationStackManagerTest.m */; };
 		268692851E50572700E2C612 /* RNNStoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 268692841E50572700E2C612 /* RNNStoreTest.m */; };
 		26DB71671E82C65600A69712 /* RNNCommandsHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26DB71661E82C65600A69712 /* RNNCommandsHandlerTest.m */; };
 		7B8F30491E84151300110AEC /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8F2FDE1E840F3600110AEC /* libcxxreact.a */; };
@@ -236,6 +237,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		26070FCF1E4B8B9D003EC8B9 /* RNNControllerFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNControllerFactoryTest.m; sourceTree = "<group>"; };
 		261F0E661E6EE9EC00989DE2 /* RNNModalManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNModalManagerTest.m; sourceTree = "<group>"; };
+		266DDDF61E8BCE9900C6F13C /* RNNNavigationStackManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationStackManagerTest.m; sourceTree = "<group>"; };
 		268692841E50572700E2C612 /* RNNStoreTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNStoreTest.m; sourceTree = "<group>"; };
 		26DB71661E82C65600A69712 /* RNNCommandsHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNCommandsHandlerTest.m; sourceTree = "<group>"; };
 		7B8F2FC41E840F1A00110AEC /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = ../../lib/ios/ReactNativeNavigation.xcodeproj; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				268692841E50572700E2C612 /* RNNStoreTest.m */,
 				261F0E661E6EE9EC00989DE2 /* RNNModalManagerTest.m */,
 				26DB71661E82C65600A69712 /* RNNCommandsHandlerTest.m */,
+				266DDDF61E8BCE9900C6F13C /* RNNNavigationStackManagerTest.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
 			path = playgroundTests;
@@ -823,6 +826,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				268692851E50572700E2C612 /* RNNStoreTest.m in Sources */,
+				266DDDF71E8BCE9900C6F13C /* RNNNavigationStackManagerTest.m in Sources */,
 				26DB71671E82C65600A69712 /* RNNCommandsHandlerTest.m in Sources */,
 				261F0E671E6EE9EC00989DE2 /* RNNModalManagerTest.m in Sources */,
 				26070FD01E4B8B9D003EC8B9 /* RNNControllerFactoryTest.m in Sources */,

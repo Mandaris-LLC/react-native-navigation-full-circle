@@ -44,9 +44,9 @@
 	[_navigationStackManager pop:containerId];
 }
 
--(void) popTo:(NSString*)containerId toContainerId:(NSString*)toContainerId {
+-(void) popTo:(NSString*)containerId fromContainerId:(NSString*)fromContainerId; {
 	[self assertReady];
-	[_navigationStackManager popTo:containerId toContainerId:toContainerId];
+	[_navigationStackManager popTo:containerId fromContainerId:fromContainerId];
 }
 
 -(void) popToRoot:(NSString*)containerId {

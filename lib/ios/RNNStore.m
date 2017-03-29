@@ -36,6 +36,13 @@
 	[_containerStore removeObjectForKey:containerId];
 }
 
+- (void)removeContainerByViewControllerInstance:(UIViewController*)containerInstance {
+	NSString *foundKey = [self containerKeyForInstance:containerInstance];
+	if (foundKey) {
+		[self removeContainer:foundKey];
+	}
+}
+
 -(void)setReadyToReceiveCommands:(BOOL)isReady {
 	_isReadyToReceiveCommands = isReady;
 }
@@ -52,6 +59,16 @@
 	_isReadyToReceiveCommands = false;
 	[_pendingModalIdsToDismiss removeAllObjects];
 	[_containerStore removeAllObjects];
+}
+
+-(NSString*)containerKeyForInstance:(UIViewController*)instance {
+	for (NSString *key in _containerStore) {
+		UIViewController *value = [_containerStore objectForKey:key];
+		if (value == instance) {
+			return key;
+		}
+	}
+	return nil;
 }
 
 @end

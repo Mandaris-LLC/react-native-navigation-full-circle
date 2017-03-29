@@ -28,15 +28,17 @@
 	[_store removeContainer:containerId];
 }
 
--(void) popTo:(NSString*)containerId toContainerId:(NSString*)toContainerId {
-	UIViewController *vc = [_store findContainerForId:containerId];
+-(void)popTo:(NSString*)toContainerId fromContainerId:(NSString*)fromContainerId {
+	UIViewController *vc = [_store findContainerForId:fromContainerId];
 	UINavigationController *nvc = [vc navigationController];
 	
 	UIViewController *toVC = [_store findContainerForId:toContainerId];
 	
 	if (vc && toVC) {
-		[nvc popToViewController:toVC animated:YES];
-		// TODO - remove the poped vcs from store
+		NSArray *popedVCs = [nvc popToViewController:toVC animated:YES];
+		for (UIViewController *popedVC in popedVCs) {
+			[_store removeContainerByViewControllerInstance:popedVC];
+		}
 	}
 }
 

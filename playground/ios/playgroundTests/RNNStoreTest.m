@@ -76,6 +76,21 @@
 	XCTAssertNil([self.store findContainerForId:vcId]);
 }
 
+
+-(void)testRemoveContainerByInstance {
+	NSString *containerId1 = @"cntId1";
+	UIViewController *vc1 = [UIViewController new];
+	
+	[self.store setContainer:vc1 containerId:containerId1];
+	[self.store removeContainerByViewControllerInstance:vc1];
+	
+	XCTAssertNil([self.store findContainerForId:@"cntId1"]);
+}
+
+
+#pragma mark - private
+
+
 -(void)setContainerAndRelease:(NSString*)vcId {
 	@autoreleasepool {
 		UIViewController *vc2 = [UIViewController new];
@@ -84,5 +99,7 @@
 		XCTAssertNotNil([self.store findContainerForId:vcId]);
 	}
 }
+
+
 
 @end

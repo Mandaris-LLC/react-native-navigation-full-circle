@@ -14,7 +14,7 @@
 
 -(void) pop:(NSString*)containerId;
 
--(void) popTo:(NSString*)containerId toContainerId:(NSString*)toContainerId;
+-(void) popTo:(NSString*)containerId fromContainerId:(NSString*)fromContainerId;
 
 -(void) popToRoot:(NSString*)containerId;
 
