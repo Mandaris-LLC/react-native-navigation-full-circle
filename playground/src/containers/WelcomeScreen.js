@@ -113,7 +113,9 @@ class WelcomeScreen extends Component {
 
   onClickShowModal() {
     Navigation.showModal({
-      name: 'navigation.playground.ModalScreen'
+      container: {
+        name: 'navigation.playground.ModalScreen'
+      }
     });
   }
 
