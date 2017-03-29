@@ -22,6 +22,8 @@
 												 name:RCTJavaScriptWillStartLoadingNotification
 											   object:nil];
 	
+	self.navigationItem.title = node.data[@"navigationStyle"][@"title"];
+	
 	return self;
 }
 
