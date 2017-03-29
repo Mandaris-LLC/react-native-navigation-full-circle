@@ -35,17 +35,22 @@
 	UIViewController *toVC = [_store findContainerForId:toContainerId];
 	
 	if (vc && toVC) {
-		NSArray *popedVCs = [nvc popToViewController:toVC animated:YES];
-		for (UIViewController *popedVC in popedVCs) {
-			[_store removeContainerByViewControllerInstance:popedVC];
-		}
+		NSArray *poppedVCs = [nvc popToViewController:toVC animated:YES];
+		[self removePopedViewControllers:poppedVCs];
 	}
 }
 
 -(void) popToRoot:(NSString*)containerId {
 	UIViewController* vc = [_store findContainerForId:containerId];
 	UINavigationController* nvc = [vc navigationController];
-	[nvc popToRootViewControllerAnimated:YES];
+	NSArray* poppedVCs = [nvc popToRootViewControllerAnimated:YES];
+	[self removePopedViewControllers:poppedVCs];
+}
+
+-(void)removePopedViewControllers:(NSArray*)viewControllers {
+	for (UIViewController *popedVC in viewControllers) {
+		[_store removeContainerByViewControllerInstance:popedVC];
+	}
 }
 
 @end

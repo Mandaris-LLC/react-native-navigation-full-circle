@@ -1,5 +1,4 @@
 #import <XCTest/XCTest.h>
-//#import <objc/runtime.h>
 #import "RNNStore.h"
 #import "RNNNavigationStackManager.h"
 
@@ -13,10 +12,21 @@
 	return self.willReturnVCs;
 }
 
+-(NSArray<UIViewController *> *)popToRootViewControllerAnimated:(BOOL)animated {
+	return self.willReturnVCs;
+}
+
 @end
 
 
 @interface RNNNavigationStackManagerTest : XCTestCase
+
+@property (nonatomic, strong) RNNStore *store;
+@property (nonatomic, strong) RNNNavigationStackManager *uut;
+@property (nonatomic, strong) MockUINavigationController *nvc;
+@property (nonatomic, strong) UIViewController *vc1;
+@property (nonatomic, strong) UIViewController *vc2;
+@property (nonatomic, strong) UIViewController *vc3;
 
 @end
 
@@ -24,80 +34,53 @@
 
 - (void)setUp {
     [super setUp];
+	self.store = [RNNStore new];
+	self.uut = [[RNNNavigationStackManager alloc] initWithStore:self.store];
+	
+	self.nvc = [[MockUINavigationController alloc] init];
+	self.vc1 = [UIViewController new];
+	self.vc2 = [UIViewController new];
+	self.vc3 = [UIViewController new];
+	NSArray *vcArray = @[self.vc1, self.vc2, self.vc3];
+	[self.nvc setViewControllers:vcArray];
+	
+	[self.store setContainer:self.vc1 containerId:@"vc1"];
+	[self.store setContainer:self.vc2 containerId:@"vc2"];
+	[self.store setContainer:self.vc3 containerId:@"vc3"];
+	
 	
 }
 
 
-- (void)testPop {
-	RNNStore *store = [RNNStore new];
-	RNNNavigationStackManager *uut = [[RNNNavigationStackManager alloc] initWithStore:store];
+- (void)testPop_removeTopVCFromStore {
+	[self.uut pop:@"vc3"];
 	
-	UINavigationController *nvc = [[UINavigationController alloc] init];
-	
-	UIViewController *vc1 = [UIViewController new];
-	UIViewController *vc2 = [UIViewController new];
+	XCTAssertNil([self.store findContainerForId:@"vc3"]);
+	XCTAssertNotNil([self.store findContainerForId:@"vc2"]);
+	XCTAssertNotNil([self.store findContainerForId:@"vc1"]);
+}
 
+- (void)testPopToSpecificVC_removeAllPopedVCFromStore {
+	self.nvc.willReturnVCs = @[self.vc2, self.vc3];
+	[self.uut popTo:@"vc1" fromContainerId:@"vc3"];
 	
-	NSArray *vcArray = @[vc1, vc2];
-	[nvc setViewControllers:vcArray];
-	[store setContainer:vc1 containerId:@"vc1"];
-	[store setContainer:vc2 containerId:@"vc2"];
-	[uut pop:@"vc2"];
-	
-	XCTAssertNil([store findContainerForId:@"vc2"]);
-	XCTAssertNotNil([store findContainerForId:@"vc1"]);
+	XCTAssertNil([self.store findContainerForId:@"vc2"]);
+	XCTAssertNil([self.store findContainerForId:@"vc3"]);
+	XCTAssertNotNil([self.store findContainerForId:@"vc1"]);
 	
 }
 
-- (void)testPopTo_singleVc {
-	RNNStore *store = [RNNStore new];
-	RNNNavigationStackManager *uut = [[RNNNavigationStackManager alloc] initWithStore:store];
+- (void)testPopToRoot_removeAllTopVCsFromStore {
+	self.nvc.willReturnVCs = @[self.vc2, self.vc3];
+	[self.uut popToRoot:@"vc3"];
 	
-	UIViewController *vc1 = [UIViewController new];
-	UIViewController *vc2 = [UIViewController new];
-	UIViewController *vc3 = [UIViewController new];
-	MockUINavigationController *nvc = [[MockUINavigationController alloc] initWithRootViewController:vc1];
-	[nvc pushViewController:vc2 animated:NO];
-	[nvc pushViewController:vc3 animated:NO];
-	nvc.willReturnVCs = @[vc2, vc3];
-	
-	[store setContainer:vc1 containerId:@"vc1"];
-	[store setContainer:vc2 containerId:@"vc2"];
-	[store setContainer:vc3 containerId:@"vc3"];
-	[uut popTo:@"vc1" fromContainerId:@"vc3"];
-	
-	XCTAssertNil([store findContainerForId:@"vc2"]);
-	XCTAssertNotNil([store findContainerForId:@"vc1"]);
-	
+	XCTAssertNil([self.store findContainerForId:@"vc2"]);
+	XCTAssertNil([self.store findContainerForId:@"vc3"]);
+	XCTAssertNotNil([self.store findContainerForId:@"vc1"]);
+
 }
 
 
-//- (void)testPopTo {
-//	RNNStore *store = [RNNStore new];
-//	RNNNavigationStackManager *uut = [[RNNNavigationStackManager alloc] initWithStore:store];
-//	
-//	UINavigationController *nvc = [[UINavigationController alloc] init];
-//	
-//	UIViewController *vc1 = [UIViewController new];
-//	UIViewController *vc2 = [UIViewController new];
-//	UIViewController *vc3 = [UIViewController new];
-//	UIViewController *vc4 = [UIViewController new];
-//	
-//	NSArray *vcArray = @[vc1, vc2, vc3, vc4];
-//	[nvc setViewControllers:vcArray];
-//	[store setContainer:vc1 containerId:@"vc1"];
-//	[store setContainer:vc2 containerId:@"vc2"];
-//	[store setContainer:vc3 containerId:@"vc3"];
-//	[store setContainer:vc4 containerId:@"vc4"];
-//	[store setContainer:nvc containerId:@"nvc"];
-//	
-//	[uut popTo:@"vc1" fromContainerId:@"vc4"];
-//	
-//	XCTAssertNil([store findContainerForId:@"vc4"]);
-//	XCTAssertNil([store findContainerForId:@"vc3"]);
-//	XCTAssertNil([store findContainerForId:@"vc2"]);
-//	
-//}
 
 
 @end

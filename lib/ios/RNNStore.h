@@ -9,6 +9,8 @@
 -(void) removeContainer:(NSString*)containerId;
 -(void) removeContainerByViewControllerInstance:(UIViewController*)containerInstance;
 
+-(NSString*)containerKeyForInstance:(UIViewController*)instance;
+
 -(void) setReadyToReceiveCommands:(BOOL)isReady;
 -(BOOL) isReadyToReceiveCommands;
 
