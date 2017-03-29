@@ -10,6 +10,10 @@ import {
 import Navigation from 'react-native-navigation';
 
 class PushedScreen extends Component {
+  static navigationStyle = {
+    title: 'Static Title'
+  }
+
   constructor(props) {
     super(props);
     this.onClickPush = this.onClickPush.bind(this);

@@ -13,14 +13,14 @@ module.exports = function (wallaby) {
 
     files: [
       'package.json',
-      'src/**/*.js',
-      '!src/**/*.test.js',
+      'lib/src/**/*.js',
+      '!lib/src/**/*.test.js',
       'integration/**/*.js',
       '!integration/**/*.test.js'
     ],
 
     tests: [
-      'src/**/*.test.js',
+      'lib/src/**/*.test.js',
       'integration/**/*.test.js'
     ],
 

@@ -186,6 +186,17 @@ describe('reload app', async () => {
   });
 });
 
+describe('screen style - static', () => {
+  beforeEach(async () => {
+    await device.relaunchApp();
+  });
+
+  it('declare a static style object on container component', async () => {
+    await elementByLabel('Push').tap();
+    await expect(elementByLabel('Static Title')).toBeVisible();
+  });
+});
+
 function elementByLabel(label) {
   return element(by.label(label));
 }

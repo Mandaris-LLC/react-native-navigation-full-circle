@@ -279,7 +279,7 @@ babel-core@6.x.x, babel-core@^6.0.0, babel-core@^6.21.0, babel-core@^6.23.0, bab
     slash "^1.0.0"
     source-map "^0.5.0"
 
-babel-eslint@7.1.1:
+babel-eslint@7.1.1, babel-eslint@7.x.x:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-7.1.1.tgz#8a6a884f085aa7060af69cfc77341c2f99370fb2"
   dependencies:

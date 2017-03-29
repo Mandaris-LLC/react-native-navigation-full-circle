@@ -53,6 +53,7 @@
     "babel-cli": "6.x.x",
     "babel-core": "6.x.x",
     "babel-polyfill": "6.x.x",
+    "babel-eslint": "7.x.x",
     "babel-preset-react-native": "1.x.x",
     "babel-register": "6.x.x",
     "babel-jest": "18.x.x",
