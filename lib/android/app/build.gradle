@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply from: '../prepare-robolectric.gradle'
-apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 25
@@ -48,24 +47,7 @@ android {
     }
 }
 
-task unitTest(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
-
-    doLast {
-        println "See code coverage at file://${jacoco.reportsDir}/unitTest/html/index.html"
-    }
-}
+task unitTest(dependsOn: 'testDebugUnitTest') {}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
