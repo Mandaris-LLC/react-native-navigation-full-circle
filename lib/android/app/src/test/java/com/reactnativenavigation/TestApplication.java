@@ -15,6 +15,6 @@ public class TestApplication extends NavigationApplication {
 	@Override
 	protected void init() {
 		reactNativeHost = mock(NavigationReactNativeHost.class);
-		activityLifecycleDelegate = mock(ActivityLifecycleDelegate.class);
+		activityLifecycle = mock(ActivityLifecycleDelegate.class);
 	}
 }

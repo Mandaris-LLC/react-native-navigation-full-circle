@@ -1,10 +1,8 @@
 package com.reactnativenavigation.controllers;
 
-import android.app.Activity;
-
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
+import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.react.DevPermissionRequest;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 
@@ -21,26 +19,26 @@ public class ActivityLifecycleDelegate {
 		this.devPermissionRequest = devPermissionRequest;
 	}
 
-	public void onActivityCreated(Activity activity) {
+	public void onActivityCreated(NavigationActivity activity) {
 		appLaunchEmitted.set(false);
 	}
 
-	public void onActivityResumed(Activity activity, DefaultHardwareBackBtnHandler backBtnHandler) {
+	public void onActivityResumed(NavigationActivity activity) {
 		if (devPermissionRequest.shouldAskPermission()) {
 			devPermissionRequest.askPermission();
 		} else {
-			reactInstanceManager.onHostResume(activity, backBtnHandler);
+			reactInstanceManager.onHostResume(activity, activity);
 			prepareReactApp();
 		}
 	}
 
-	public void onActivityPaused(Activity activity) {
+	public void onActivityPaused(NavigationActivity activity) {
 		if (reactInstanceManager.hasStartedCreatingInitialContext()) {
 			reactInstanceManager.onHostPause(activity);
 		}
 	}
 
-	public void onActivityDestroyed(Activity activity) {
+	public void onActivityDestroyed(NavigationActivity activity) {
 		if (reactInstanceManager.hasStartedCreatingInitialContext()) {
 			reactInstanceManager.onHostDestroy(activity);
 		}

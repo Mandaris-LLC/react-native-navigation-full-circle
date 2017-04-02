@@ -7,14 +7,13 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
 import com.reactnativenavigation.controllers.CommandsHandler;
-import com.reactnativenavigation.react.DevPermissionRequestImpl;
+import com.reactnativenavigation.react.DevPermissionRequest;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
-import com.reactnativenavigation.react.ReactRootViewCreatorImpl;
 
 public abstract class NavigationApplication extends Application implements ReactApplication {
 
 	NavigationReactNativeHost reactNativeHost;
-	ActivityLifecycleDelegate activityLifecycleDelegate;
+	ActivityLifecycleDelegate activityLifecycle;
 
 	@Override
 	public void onCreate() {
@@ -30,12 +29,11 @@ public abstract class NavigationApplication extends Application implements React
 	public abstract boolean isDebug();
 
 	void init() {
-		ReactRootViewCreatorImpl reactRootViewCreator = new ReactRootViewCreatorImpl();
-		CommandsHandler commandsHandler = new CommandsHandler(reactRootViewCreator);
+		CommandsHandler commandsHandler = new CommandsHandler(this);
 		reactNativeHost = new NavigationReactNativeHost(this, isDebug(), commandsHandler);
 
 		ReactInstanceManager reactInstanceManager = reactNativeHost.getReactInstanceManager();
-		DevPermissionRequestImpl devPermissionRequest = new DevPermissionRequestImpl(this, isDebug());
-		activityLifecycleDelegate = new ActivityLifecycleDelegate(reactInstanceManager, devPermissionRequest);
+		DevPermissionRequest devPermissionRequest = new DevPermissionRequest(this, isDebug());
+		activityLifecycle = new ActivityLifecycleDelegate(reactInstanceManager, devPermissionRequest);
 	}
 }

@@ -13,25 +13,25 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app().activityLifecycleDelegate.onActivityCreated(this);
+		app().activityLifecycle.onActivityCreated(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		app().activityLifecycleDelegate.onActivityResumed(this, this);
+		app().activityLifecycle.onActivityResumed(this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		app().activityLifecycleDelegate.onActivityPaused(this);
+		app().activityLifecycle.onActivityPaused(this);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		app().activityLifecycleDelegate.onActivityDestroyed(this);
+		app().activityLifecycle.onActivityDestroyed(this);
 	}
 
 	@Override

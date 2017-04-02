@@ -6,9 +6,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-import com.reactnativenavigation.layout.bottomtabs.BottomTabsCreator;
+import com.facebook.react.ReactNativeHost;
+import com.reactnativenavigation.layout.bottomtabs.BottomTabs;
 import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
-import com.reactnativenavigation.react.ReactRootViewCreator;
 import com.reactnativenavigation.utils.CompatUtils;
 
 import java.util.List;
@@ -16,13 +16,11 @@ import java.util.List;
 public class LayoutFactory {
 
 	private final Activity activity;
-	private final ReactRootViewCreator reactRootViewCreator;
-	private final BottomTabsCreator bottomTabsCreator; // TODO: revisit this, may not be needed
+	private ReactNativeHost reactNativeHost;
 
-	public LayoutFactory(Activity activity, ReactRootViewCreator reactRootViewCreator) {
+	public LayoutFactory(Activity activity, ReactNativeHost reactNativeHost) {
 		this.activity = activity;
-		this.reactRootViewCreator = reactRootViewCreator;
-		this.bottomTabsCreator = new BottomTabsCreator();
+		this.reactNativeHost = reactNativeHost;
 	}
 
 	public View create(LayoutNode node) {
@@ -78,7 +76,7 @@ public class LayoutFactory {
 
 	private View createContainerView(LayoutNode node) {
 		final String name = node.data.optString("name");
-		Container container = new Container(activity, reactRootViewCreator, node.id, name);
+		Container container = new Container(activity, reactNativeHost, node.id, name);
 		container.setId(CompatUtils.generateViewId());
 		return container;
 
@@ -92,7 +90,7 @@ public class LayoutFactory {
 	}
 
 	private View createBottomTabs(LayoutNode node) {
-		final BottomTabsLayout tabsContainer = new BottomTabsLayout(activity, bottomTabsCreator.create());
+		final BottomTabsLayout tabsContainer = new BottomTabsLayout(activity, new BottomTabs());
 		for (int i = 0; i < node.children.size(); i++) {
 			final View tabContent = create(node.children.get(i));
 			tabsContainer.addTabContent("#" + i, tabContent);

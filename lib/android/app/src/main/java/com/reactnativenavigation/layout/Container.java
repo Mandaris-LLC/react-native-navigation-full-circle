@@ -1,23 +1,34 @@
 package com.reactnativenavigation.layout;
 
 import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
 
+import com.facebook.react.ReactNativeHost;
+import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationEventEmitter;
-import com.reactnativenavigation.react.ReactRootViewCreator;
 
 public class Container extends FrameLayout {
+	private final ReactNativeHost reactNativeHost;
 	private final String id;
+	private final String name;
 
-	public Container(Activity activity, ReactRootViewCreator reactRootViewCreator, String id, String name) {
+	public Container(Activity activity, ReactNativeHost reactNativeHost, String id, String name) {
 		super(activity);
+		this.reactNativeHost = reactNativeHost;
 		this.id = id;
-		addView(reactRootViewCreator.create(activity, id, name));
+		this.name = name;
+		addView(createReactRootView());
 	}
 
-	public String getContainerId() {
-		return id;
+	private View createReactRootView() {
+		ReactRootView rootView = new ReactRootView(getContext());
+		Bundle opts = new Bundle();
+		opts.putString("id", id);
+		rootView.startReactApplication(reactNativeHost.getReactInstanceManager(), name, opts);
+		return rootView;
 	}
 
 	//    @Override
