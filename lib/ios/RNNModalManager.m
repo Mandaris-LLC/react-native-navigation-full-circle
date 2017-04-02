@@ -39,7 +39,9 @@
 		return;
 	}
 	
-	if (modalToDismiss == [self topPresentedVC]) {
+	UIViewController* topPresentedVC = [self topPresentedVC];
+	
+	if (modalToDismiss == topPresentedVC || [[topPresentedVC childViewControllers] containsObject:modalToDismiss]) {
 		[modalToDismiss dismissViewControllerAnimated:YES completion:^{
 			[[_store pendingModalIdsToDismiss] removeObject:containerId];
 			[self removePendingNextModalIfOnTop];
