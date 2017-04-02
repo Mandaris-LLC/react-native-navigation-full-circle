@@ -193,8 +193,7 @@ describe('screen style - static', () => {
 
   it('declare a navigationStyle on container component', async () => {
     await elementByLabel('Push').tap();
-    // TODO make this pass by attaching testId in native, or make detox be able to handle multiple matches
-    // await expect(elementByLabel('Static Title')).toBeVisible();
+    await expect(element(by.label('Static Title').and.by.type('UILabel'))).toBeVisible();
   });
 });
 
