@@ -4,7 +4,7 @@ import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
 import com.reactnativenavigation.controllers.CommandsHandler;
 import com.reactnativenavigation.mocks.TestDevPermissionRequest;
 import com.reactnativenavigation.mocks.TestReactNativeHost;
-import com.reactnativenavigation.react.NavigationReactRootViewCreator;
+import com.reactnativenavigation.react.ReactRootViewCreatorImpl;
 
 public class TestApplication extends NavigationApplication {
 
@@ -14,11 +14,8 @@ public class TestApplication extends NavigationApplication {
 	}
 
 	@Override
-	protected Config createConfig() {
-		Config config = new Config();
-		config.reactNativeHost = new TestReactNativeHost(this, isDebug());
-		config.activityLifecycleDelegate = new ActivityLifecycleDelegate(config.reactNativeHost.getReactInstanceManager(), new TestDevPermissionRequest());
-		config.commandsHandler = new CommandsHandler(new NavigationReactRootViewCreator());
-		return config;
+	protected void init() {
+		reactNativeHost = new TestReactNativeHost(this, isDebug(), new CommandsHandler(new ReactRootViewCreatorImpl()));
+		activityLifecycleDelegate = new ActivityLifecycleDelegate(reactNativeHost.getReactInstanceManager(), new TestDevPermissionRequest());
 	}
 }

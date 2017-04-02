@@ -30,7 +30,8 @@ public class Container extends FrameLayout {
 	@Override
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
-		NavigationEventEmitter.emit(NavigationApplication.instance.getReactNativeHost().getReactInstanceManager().getCurrentReactContext())
+		//TODO this is wrong
+		NavigationEventEmitter.emit(((NavigationApplication) getContext().getApplicationContext()).getReactNativeHost().getReactInstanceManager().getCurrentReactContext())
 				.containerStop(id);
 	}
 }

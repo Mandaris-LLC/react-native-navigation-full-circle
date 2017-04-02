@@ -13,25 +13,25 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		NavigationApplication.instance.getConfig().activityLifecycleDelegate.onActivityCreated(this);
+		app().activityLifecycleDelegate.onActivityCreated(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		NavigationApplication.instance.getConfig().activityLifecycleDelegate.onActivityResumed(this, this);
+		app().activityLifecycleDelegate.onActivityResumed(this, this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		NavigationApplication.instance.getConfig().activityLifecycleDelegate.onActivityPaused(this);
+		app().activityLifecycleDelegate.onActivityPaused(this);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		NavigationApplication.instance.getConfig().activityLifecycleDelegate.onActivityDestroyed(this);
+		app().activityLifecycleDelegate.onActivityDestroyed(this);
 	}
 
 	@Override
@@ -48,5 +48,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 	@Override
 	public void invokeDefaultOnBackPressed() {
 		onBackPressed();
+	}
+
+	private NavigationApplication app() {
+		return ((NavigationApplication) getApplication());
 	}
 }

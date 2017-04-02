@@ -5,14 +5,16 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationActivity;
-import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.controllers.CommandsHandler;
 import com.reactnativenavigation.utils.UiThread;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
 	private static final String NAME = "RNNBridgeModule";
+	private CommandsHandler commandsHandler;
 
-	public NavigationModule(final ReactApplicationContext reactContext) {
+	public NavigationModule(final ReactApplicationContext reactContext, CommandsHandler commandsHandler) {
 		super(reactContext);
+		this.commandsHandler = commandsHandler;
 	}
 
 	@Override
@@ -20,16 +22,12 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		return NAME;
 	}
 
-	public NavigationActivity activity() {
-		return (NavigationActivity) getCurrentActivity();
-	}
-
 	@ReactMethod
 	public void setRoot(final ReadableMap layoutTree) {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				NavigationApplication.instance.getConfig().commandsHandler.setRoot(activity(), ArgsParser.parse(layoutTree));
+				commandsHandler.setRoot(activity(), ArgsParser.parse(layoutTree));
 			}
 		});
 	}
@@ -39,7 +37,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				NavigationApplication.instance.getConfig().commandsHandler.push(activity(), onContainerId, ArgsParser.parse(layoutTree));
+				commandsHandler.push(activity(), onContainerId, ArgsParser.parse(layoutTree));
 			}
 		});
 	}
@@ -49,9 +47,13 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				NavigationApplication.instance.getConfig().commandsHandler.pop(activity(), onContainerId);
+				commandsHandler.pop(activity(), onContainerId);
 			}
 		});
+	}
+
+	NavigationActivity activity() {
+		return (NavigationActivity) getCurrentActivity();
 	}
 
 	private void handle(Runnable task) {

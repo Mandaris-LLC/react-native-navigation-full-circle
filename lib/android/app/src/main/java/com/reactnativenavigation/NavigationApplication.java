@@ -3,52 +3,39 @@ package com.reactnativenavigation;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
 import com.reactnativenavigation.controllers.CommandsHandler;
 import com.reactnativenavigation.react.DevPermissionRequestImpl;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
-import com.reactnativenavigation.react.NavigationReactRootViewCreator;
+import com.reactnativenavigation.react.ReactRootViewCreatorImpl;
 
 public abstract class NavigationApplication extends Application implements ReactApplication {
-	public static NavigationApplication instance;
 
-	public static class Config {
-		public ReactNativeHost reactNativeHost;
-		public ActivityLifecycleDelegate activityLifecycleDelegate;
-		public CommandsHandler commandsHandler;
-	}
-
-	private Config config;
+	NavigationReactNativeHost reactNativeHost;
+	ActivityLifecycleDelegate activityLifecycleDelegate;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		instance = this;
-		config = createConfig();
-	}
-
-	public final Config getConfig() {
-		return config;
+		init();
 	}
 
 	@Override
 	public ReactNativeHost getReactNativeHost() {
-		return getConfig().reactNativeHost;
+		return reactNativeHost;
 	}
 
 	public abstract boolean isDebug();
 
-	/**
-	 * override this to inject your own configuration
-	 *
-	 * @return the Config
-	 */
-	protected Config createConfig() {
-		Config config = new Config();
-		config.reactNativeHost = new NavigationReactNativeHost(this, isDebug());
-		config.activityLifecycleDelegate = new ActivityLifecycleDelegate(config.reactNativeHost.getReactInstanceManager(), new DevPermissionRequestImpl());
-		config.commandsHandler = new CommandsHandler(new NavigationReactRootViewCreator());
-		return config;
+	void init() {
+		ReactRootViewCreatorImpl reactRootViewCreator = new ReactRootViewCreatorImpl();
+		CommandsHandler commandsHandler = new CommandsHandler(reactRootViewCreator);
+		reactNativeHost = new NavigationReactNativeHost(this, isDebug(), commandsHandler);
+
+		ReactInstanceManager reactInstanceManager = reactNativeHost.getReactInstanceManager();
+		DevPermissionRequestImpl devPermissionRequest = new DevPermissionRequestImpl(this, isDebug());
+		activityLifecycleDelegate = new ActivityLifecycleDelegate(reactInstanceManager, devPermissionRequest);
 	}
 }
