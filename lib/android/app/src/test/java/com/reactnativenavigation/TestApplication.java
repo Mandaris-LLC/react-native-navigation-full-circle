@@ -1,10 +1,9 @@
 package com.reactnativenavigation;
 
 import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
-import com.reactnativenavigation.controllers.CommandsHandler;
-import com.reactnativenavigation.mocks.TestDevPermissionRequest;
-import com.reactnativenavigation.mocks.TestReactNativeHost;
-import com.reactnativenavigation.react.ReactRootViewCreatorImpl;
+import com.reactnativenavigation.react.NavigationReactNativeHost;
+
+import static org.mockito.Mockito.mock;
 
 public class TestApplication extends NavigationApplication {
 
@@ -15,7 +14,7 @@ public class TestApplication extends NavigationApplication {
 
 	@Override
 	protected void init() {
-		reactNativeHost = new TestReactNativeHost(this, isDebug(), new CommandsHandler(new ReactRootViewCreatorImpl()));
-		activityLifecycleDelegate = new ActivityLifecycleDelegate(reactNativeHost.getReactInstanceManager(), new TestDevPermissionRequest());
+		reactNativeHost = mock(NavigationReactNativeHost.class);
+		activityLifecycleDelegate = mock(ActivityLifecycleDelegate.class);
 	}
 }
