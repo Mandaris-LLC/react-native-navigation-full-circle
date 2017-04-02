@@ -193,7 +193,7 @@ describe('screen style - static', () => {
 
   it('declare a navigationStyle on container component', async () => {
     await elementByLabel('Push').tap();
-    await expect(element(by.label('Static Title').and.by.type('UILabel'))).toBeVisible();
+    await expect(element(by.label('Static Title').and(by.type('UILabel')))).toBeVisible();
   });
 });
 
