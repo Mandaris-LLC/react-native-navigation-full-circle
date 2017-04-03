@@ -5,23 +5,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.facebook.react.ReactNativeHost;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
-import com.facebook.react.bridge.ReactContext;
-import com.reactnativenavigation.NavigationApplication;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 
 public class Container extends FrameLayout {
-	private final ReactNativeHost reactNativeHost;
+
 	private final String id;
 	private final String name;
 	private ReactRootView rootView;
+	private final ReactInstanceManager reactInstanceManager;
 
-	public Container(Activity activity, ReactNativeHost reactNativeHost, String id, String name) {
+
+	public Container(Activity activity, String id, String name, final ReactInstanceManager reactInstanceManager) {
 		super(activity);
-		this.reactNativeHost = reactNativeHost;
+
 		this.id = id;
 		this.name = name;
+		this.reactInstanceManager = reactInstanceManager;
 		addView(createReactRootView());
 	}
 
@@ -31,6 +33,7 @@ public class Container extends FrameLayout {
 		onStop();
 	}
 
+
 	public void destroy() {
 		rootView.unmountReactApplication();
 	}
@@ -39,7 +42,7 @@ public class Container extends FrameLayout {
 		rootView = new ReactRootView(getContext());
 		Bundle opts = new Bundle();
 		opts.putString("id", id);
-		rootView.startReactApplication(reactNativeHost.getReactInstanceManager(), name, opts);
+		rootView.startReactApplication(reactInstanceManager, name, opts);
 		rootView.setEventListener(new ReactRootView.ReactRootViewEventListener() {
 			@Override
 			public void onAttachedToReactInstance(final ReactRootView reactRootView) {
@@ -51,15 +54,11 @@ public class Container extends FrameLayout {
 	}
 
 	private void onStart() {
-		new NavigationEventEmitter(reactContext()).containerStart(id);
+		new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)).containerStart(id);
 	}
 
 	private void onStop() {
-		new NavigationEventEmitter(reactContext()).containerStop(id);
+		new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)).containerStop(id);
 	}
 
-	private ReactContext reactContext() {
-		//TODO this is wrong, we should inject reactContext somehow
-		return ((NavigationApplication) getContext().getApplicationContext()).getReactNativeHost().getReactInstanceManager().getCurrentReactContext();
-	}
 }

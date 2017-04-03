@@ -12,6 +12,7 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 
 public abstract class NavigationApplication extends Application implements ReactApplication {
 
+	//TODO un mock this
 	NavigationReactNativeHost reactNativeHost;
 	ActivityLifecycleDelegate activityLifecycle;
 
@@ -28,6 +29,7 @@ public abstract class NavigationApplication extends Application implements React
 
 	public abstract boolean isDebug();
 
+	//TODO inline this
 	void init() {
 		CommandsHandler commandsHandler = new CommandsHandler(this);
 		reactNativeHost = new NavigationReactNativeHost(this, isDebug(), commandsHandler);

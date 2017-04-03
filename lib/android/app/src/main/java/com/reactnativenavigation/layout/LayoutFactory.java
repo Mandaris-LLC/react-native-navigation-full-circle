@@ -77,7 +77,7 @@ public class LayoutFactory {
 
 	private View createContainer(LayoutNode node) {
 		final String name = node.data.optString("name");
-		Container container = new Container(activity, reactNativeHost, node.id, name);
+		Container container = new Container(activity, node.id, name, reactNativeHost.getReactInstanceManager());
 		container.setId(CompatUtils.generateViewId());
 		return container;
 

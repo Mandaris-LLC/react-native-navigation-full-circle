@@ -36,6 +36,6 @@ public class ContainerStackTest extends BaseTest {
 	private Container createContainer(final NavigationActivity context) {
 		ReactNativeHost reactNativeHost = mock(ReactNativeHost.class);
 		when(reactNativeHost.getReactInstanceManager()).thenReturn(mock(ReactInstanceManager.class));
-		return new Container(context, reactNativeHost, "id", "name");
+		return new Container(context, "id", "name", reactNativeHost.getReactInstanceManager());
 	}
 }
