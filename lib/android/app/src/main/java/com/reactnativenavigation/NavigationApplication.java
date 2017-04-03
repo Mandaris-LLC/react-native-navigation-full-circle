@@ -12,14 +12,18 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 
 public abstract class NavigationApplication extends Application implements ReactApplication {
 
-	//TODO un mock this
-	NavigationReactNativeHost reactNativeHost;
+	private NavigationReactNativeHost reactNativeHost;
 	ActivityLifecycleDelegate activityLifecycle;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		init();
+		CommandsHandler commandsHandler = new CommandsHandler(this);
+		reactNativeHost = new NavigationReactNativeHost(this, isDebug(), commandsHandler);
+
+		ReactInstanceManager reactInstanceManager = reactNativeHost.getReactInstanceManager();
+		DevPermissionRequest devPermissionRequest = new DevPermissionRequest(this, isDebug());
+		activityLifecycle = new ActivityLifecycleDelegate(reactInstanceManager, devPermissionRequest);
 	}
 
 	@Override
@@ -28,14 +32,4 @@ public abstract class NavigationApplication extends Application implements React
 	}
 
 	public abstract boolean isDebug();
-
-	//TODO inline this
-	void init() {
-		CommandsHandler commandsHandler = new CommandsHandler(this);
-		reactNativeHost = new NavigationReactNativeHost(this, isDebug(), commandsHandler);
-
-		ReactInstanceManager reactInstanceManager = reactNativeHost.getReactInstanceManager();
-		DevPermissionRequest devPermissionRequest = new DevPermissionRequest(this, isDebug());
-		activityLifecycle = new ActivityLifecycleDelegate(reactInstanceManager, devPermissionRequest);
-	}
 }
