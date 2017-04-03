@@ -8,8 +8,7 @@ import org.junit.Test;
 public class TopLevelApiTest extends BaseTest {
 
 	@Test
-	@Ignore
-	public void switchToTabBasedApp() throws Exception {
+	public void switchToTabBasedApp_PassPropsFunction() throws Exception {
 		launchTheApp();
 		assertMainShown();
 		elementByText("SWITCH TO TAB BASED APP").click();
@@ -47,7 +46,6 @@ public class TopLevelApiTest extends BaseTest {
 		elementByText("Push lifecycle screen").click();
 		elementByText("onStart!");
 		elementByText("BACK").click();
-		elementByText("onStop");
 		elementByText("componentWillUnmount");
 	}
 }
