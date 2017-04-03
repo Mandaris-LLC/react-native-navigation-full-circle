@@ -32,7 +32,7 @@ public class TopLevelApiTest extends BaseTest {
 		assertMainShown();
 		elementByText("PUSH LIFECYCLE SCREEN").click();
 		elementByText("onStart!");
-		elementByText("Push to test onStop").click();
+		elementByText("PUSH TO TEST ONSTOP").click();
 		elementByText("Alert");
 		elementByText("onStop").click();
 	}

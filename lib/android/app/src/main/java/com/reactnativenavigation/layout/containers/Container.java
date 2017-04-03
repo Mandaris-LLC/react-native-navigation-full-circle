@@ -22,29 +22,39 @@ public class Container extends FrameLayout {
 		this.id = id;
 		this.name = name;
 		addView(createReactRootView());
-
 	}
 
 	private View createReactRootView() {
-		ReactRootView rootView = new ReactRootView(getContext());
+		final ReactRootView rootView = new ReactRootView(getContext());
 		Bundle opts = new Bundle();
 		opts.putString("id", id);
 		rootView.startReactApplication(reactNativeHost.getReactInstanceManager(), name, opts);
+		rootView.setEventListener(new ReactRootView.ReactRootViewEventListener() {
+			@Override
+			public void onAttachedToReactInstance(final ReactRootView reactRootView) {
+				rootView.setEventListener(null);
+				onStart();
+			}
+		});
 		return rootView;
 	}
-
-	//    @Override
-//    protected void onAttachedToWindow() {
-//        super.onAttachedToWindow();
-//        NavigationEventEmitter.emit(NavigationApplication.instance.getReactNativeHost().getReactInstanceManager().getCurrentReactContext())
-//                .containerStart(id);
-//    }
 
 	@Override
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
-		//TODO this is wrong
-		ReactContext reactContext = ((NavigationApplication) getContext().getApplicationContext()).getReactNativeHost().getReactInstanceManager().getCurrentReactContext();
-		new NavigationEventEmitter(reactContext).containerStart(id);
+		onStop();
+	}
+
+	private void onStart() {
+		new NavigationEventEmitter(reactContext()).containerStart(id);
+	}
+
+	private void onStop() {
+		new NavigationEventEmitter(reactContext()).containerStop(id);
+	}
+
+	private ReactContext reactContext() {
+		//TODO this is wrong, we should inject reactContext somehow
+		return ((NavigationApplication) getContext().getApplicationContext()).getReactNativeHost().getReactInstanceManager().getCurrentReactContext();
 	}
 }

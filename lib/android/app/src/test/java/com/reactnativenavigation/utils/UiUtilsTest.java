@@ -14,12 +14,12 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class UiUtilsTest extends BaseTest {
 	@Test
-	public void runOnPreDraw() throws Exception {
+	public void runOnPreDrawOnce() throws Exception {
 		View view = Shadow.newInstanceOf(View.class);
 		Runnable task = mock(Runnable.class);
 		verifyZeroInteractions(task);
 
-		UiUtils.runOnPreDraw(view, task);
+		UiUtils.runOnPreDrawOnce(view, task);
 		view.getViewTreeObserver().dispatchOnPreDraw();
 		verify(task, times(1)).run();
 	}
