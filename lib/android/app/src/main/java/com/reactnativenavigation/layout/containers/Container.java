@@ -22,6 +22,7 @@ public class Container extends FrameLayout {
 		this.id = id;
 		this.name = name;
 		addView(createReactRootView());
+
 	}
 
 	private View createReactRootView() {

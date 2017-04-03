@@ -22,12 +22,11 @@ public class TopLevelApiTest extends BaseTest {
 		assertMainShown();
 		elementByText("SWITCH TO APP WITH SIDE MENUS").click();
 		assertExists(By.textStartsWith("This is a side menu center screen tab 1"));
-		swipeRight();
+		swipeRightOpenSideMenu();
 		assertExists(By.text("This is a left side menu screen"));
 	}
 
 	@Test
-	@Ignore
 	public void screenLifecycle() throws Exception {
 		launchTheApp();
 		assertMainShown();
