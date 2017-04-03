@@ -31,10 +31,9 @@ public class TopLevelApiTest extends BaseTest {
 		launchTheApp();
 		assertMainShown();
 		elementByText("PUSH LIFECYCLE SCREEN").click();
-		elementByText("onStart!");
+		assertExists(By.text("onStart"));
 		elementByText("PUSH TO TEST ONSTOP").click();
-		elementByText("Alert");
-		elementByText("onStop").click();
+		assertExists(By.text("onStop"));
 	}
 
 	@Test
@@ -42,9 +41,11 @@ public class TopLevelApiTest extends BaseTest {
 	public void unmountIsCalledOnPop() throws Exception {
 		launchTheApp();
 		assertMainShown();
-		elementByText("Push lifecycle screen").click();
-		elementByText("onStart!");
-		elementByText("BACK").click();
-		elementByText("componentWillUnmount");
+		elementByText("PUSH LIFECYCLE SCREEN").click();
+		elementByText("onStart");
+		device().pressBack();
+		assertMainShown();
+		assertExists(By.text("onStop"));
+		assertExists(By.text("componentWillUnmount"));
 	}
 }

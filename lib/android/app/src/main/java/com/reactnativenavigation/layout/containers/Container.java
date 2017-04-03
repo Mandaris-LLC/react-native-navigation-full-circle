@@ -15,6 +15,7 @@ public class Container extends FrameLayout {
 	private final ReactNativeHost reactNativeHost;
 	private final String id;
 	private final String name;
+	private ReactRootView rootView;
 
 	public Container(Activity activity, ReactNativeHost reactNativeHost, String id, String name) {
 		super(activity);
@@ -24,8 +25,18 @@ public class Container extends FrameLayout {
 		addView(createReactRootView());
 	}
 
+	@Override
+	protected void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		onStop();
+	}
+
+	public void destroy() {
+		rootView.unmountReactApplication();
+	}
+
 	private View createReactRootView() {
-		final ReactRootView rootView = new ReactRootView(getContext());
+		rootView = new ReactRootView(getContext());
 		Bundle opts = new Bundle();
 		opts.putString("id", id);
 		rootView.startReactApplication(reactNativeHost.getReactInstanceManager(), name, opts);
@@ -37,12 +48,6 @@ public class Container extends FrameLayout {
 			}
 		});
 		return rootView;
-	}
-
-	@Override
-	protected void onDetachedFromWindow() {
-		super.onDetachedFromWindow();
-		onStop();
 	}
 
 	private void onStart() {

@@ -13,7 +13,7 @@ class LifecycleScreen extends Component {
   }
 
   onStart() {
-    this.setState({ text: 'onStart!' });
+    this.setState({ text: 'onStart' });
   }
 
   onStop() {

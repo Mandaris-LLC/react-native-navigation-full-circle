@@ -1,9 +1,11 @@
 package com.reactnativenavigation.layout;
 
-import android.view.View;
+import com.reactnativenavigation.layout.containers.Container;
 
 public interface StackLayout {
-	void push(View view);
+	void push(Container view);
 
 	void pop();
+
+	boolean onBackPressed();
 }
