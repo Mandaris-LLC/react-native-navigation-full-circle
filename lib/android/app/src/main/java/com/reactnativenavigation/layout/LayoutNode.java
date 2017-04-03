@@ -16,17 +16,13 @@ public class LayoutNode {
 		SideMenuRoot,
 		SideMenuCenter,
 		SideMenuLeft,
-		SideMenuRight;
-
-		public static Type fromString(String str) {
-			return valueOf(str);
-		}
+		SideMenuRight
 	}
 
 	@SuppressWarnings("unchecked")
 	public static LayoutNode parse(JSONObject layoutTree) {
 		String id = layoutTree.optString("id");
-		LayoutNode.Type type = LayoutNode.Type.fromString(layoutTree.optString("type"));
+		LayoutNode.Type type = LayoutNode.Type.valueOf(layoutTree.optString("type"));
 		JSONObject data = parseData(layoutTree);
 		List<LayoutNode> children = parseChildren(layoutTree);
 		return new LayoutNode(id, type, data, children);

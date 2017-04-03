@@ -1,4 +1,4 @@
-package com.reactnativenavigation.layout.bottomtabs;
+package com.reactnativenavigation.layout.containers;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -8,7 +8,8 @@ import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-import static android.view.View.generateViewId;
+import com.reactnativenavigation.utils.CompatUtils;
+
 import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 
 public class BottomTabs implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -50,7 +51,7 @@ public class BottomTabs implements BottomNavigationView.OnNavigationItemSelected
 
 	private void createBottomNavigation(RelativeLayout parentLayout) {
 		bottomNavigationView = new BottomNavigationView(parentLayout.getContext());
-		bottomNavigationView.setId(generateViewId());
+		bottomNavigationView.setId(CompatUtils.generateViewId());
 		bottomNavigationView.setBackgroundColor(Color.DKGRAY);
 		bottomNavigationView.setOnNavigationItemSelectedListener(this);
 	}

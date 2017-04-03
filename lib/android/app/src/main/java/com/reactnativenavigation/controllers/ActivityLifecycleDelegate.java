@@ -60,7 +60,7 @@ public class ActivityLifecycleDelegate {
 
 	private void emitAppLaunchedOnceIfNeeded() {
 		if (appLaunchEmitted.compareAndSet(false, true)) {
-			NavigationEventEmitter.emit(reactInstanceManager.getCurrentReactContext()).appLaunched();
+			new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext()).appLaunched();
 		}
 	}
 

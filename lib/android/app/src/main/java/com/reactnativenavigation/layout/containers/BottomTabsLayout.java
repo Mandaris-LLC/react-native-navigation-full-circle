@@ -1,17 +1,19 @@
-package com.reactnativenavigation.layout.bottomtabs;
+package com.reactnativenavigation.layout.containers;
 
 import android.app.Activity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.reactnativenavigation.layout.StackLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottomTabsLayout extends RelativeLayout implements BottomTabs.BottomTabsSelectionListener, StackLayout {
+public class BottomTabsLayout extends RelativeLayout implements BottomTabs.BottomTabsSelectionListener {
 
-	private List<StackLayout> tabsContent;
+	public static class TooManyTabs extends RuntimeException {
+	}
+
+
+	private List<View> tabsContent;
 	private BottomTabs bottomTabs;
 	private int currentTab;
 
@@ -21,12 +23,12 @@ public class BottomTabsLayout extends RelativeLayout implements BottomTabs.Botto
 	}
 
 	public void addTabContent(String label, View tabContent) {
-		if (tabsContent.size() == 5) {
-			throw new TooManyTabsException();
+		if (tabsContent.size() >= 5) {
+			throw new TooManyTabs();
 		}
 		bottomTabs.add(label);
 		attachTabContent(tabContent);
-		tabsContent.add((StackLayout) tabContent);
+		tabsContent.add(tabContent);
 
 		if (tabsContent.size() > 1) {
 			tabContent.setVisibility(View.GONE);
@@ -55,25 +57,10 @@ public class BottomTabsLayout extends RelativeLayout implements BottomTabs.Botto
 	}
 
 	private void showTab(int tabId) {
-		tabsContent.get(tabId).asView().setVisibility(View.VISIBLE);
+		tabsContent.get(tabId).setVisibility(View.VISIBLE);
 	}
 
 	private void hideTab(int tabId) {
-		tabsContent.get(tabId).asView().setVisibility(View.GONE);
-	}
-
-	@Override
-	public void push(View view) {
-		tabsContent.get(currentTab).push(view);
-	}
-
-	@Override
-	public void pop() {
-		tabsContent.get(currentTab).pop();
-	}
-
-	@Override
-	public View asView() {
-		return this;
+		tabsContent.get(tabId).setVisibility(View.GONE);
 	}
 }

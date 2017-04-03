@@ -1,7 +1,6 @@
 package com.reactnativenavigation.layout;
 
 import com.reactnativenavigation.BaseTest;
-import com.reactnativenavigation.layout.LayoutNode;
 
 import org.json.JSONObject;
 import org.junit.Test;
@@ -20,12 +19,12 @@ public class LayoutNodeTest extends BaseTest {
 
 	@Test
 	public void parseType() throws Exception {
-		assertThat(LayoutNode.Type.fromString("Container")).isEqualTo(LayoutNode.Type.Container);
+		assertThat(LayoutNode.Type.valueOf("Container")).isEqualTo(LayoutNode.Type.Container);
 	}
 
 	@Test(expected = RuntimeException.class)
 	public void invalidType() throws Exception {
-		LayoutNode.Type.fromString("unknown");
+		LayoutNode.Type.valueOf("some type");
 	}
 
 	@Test

@@ -7,11 +7,12 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.facebook.react.ReactNativeHost;
-import com.reactnativenavigation.layout.bottomtabs.BottomTabs;
-import com.reactnativenavigation.layout.bottomtabs.BottomTabsLayout;
+import com.reactnativenavigation.layout.containers.BottomTabs;
+import com.reactnativenavigation.layout.containers.BottomTabsLayout;
+import com.reactnativenavigation.layout.containers.Container;
+import com.reactnativenavigation.layout.containers.ContainerStack;
+import com.reactnativenavigation.layout.containers.SideMenuLayout;
 import com.reactnativenavigation.utils.CompatUtils;
-
-import java.util.List;
 
 public class LayoutFactory {
 
@@ -26,9 +27,9 @@ public class LayoutFactory {
 	public View create(LayoutNode node) {
 		switch (node.type) {
 			case Container:
-				return createContainerView(node);
+				return createContainer(node);
 			case ContainerStack:
-				return createContainerStackView(node);
+				return createContainerStack(node);
 			case BottomTabs:
 				return createBottomTabs(node);
 			case SideMenuRoot:
@@ -74,7 +75,7 @@ public class LayoutFactory {
 		return view;
 	}
 
-	private View createContainerView(LayoutNode node) {
+	private View createContainer(LayoutNode node) {
 		final String name = node.data.optString("name");
 		Container container = new Container(activity, reactNativeHost, node.id, name);
 		container.setId(CompatUtils.generateViewId());
@@ -82,10 +83,12 @@ public class LayoutFactory {
 
 	}
 
-	private View createContainerStackView(LayoutNode node) {
-		final ContainerStackLayout containerStack = new ContainerStackLayout(activity);
+	private View createContainerStack(LayoutNode node) {
+		final ContainerStack containerStack = new ContainerStack(activity);
 		containerStack.setId(CompatUtils.generateViewId());
-		addChildrenNodes(containerStack, node.children);
+		for (LayoutNode child : node.children) {
+			containerStack.addView(create(child));
+		}
 		return containerStack;
 	}
 
@@ -98,9 +101,4 @@ public class LayoutFactory {
 		return tabsContainer;
 	}
 
-	private void addChildrenNodes(ContainerStackLayout containerStack, List<LayoutNode> children) {
-		for (LayoutNode child : children) {
-			containerStack.addView(create(child));
-		}
-	}
 }

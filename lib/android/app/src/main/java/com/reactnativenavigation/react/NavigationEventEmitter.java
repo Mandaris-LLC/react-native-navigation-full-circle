@@ -11,30 +11,14 @@ public class NavigationEventEmitter {
 	private static final String containerStart = "RNN.containerStart";
 	private static final String containerStop = "RNN.containerStop";
 
-	public static NavigationEventEmitter emit(ReactContext context) {
-		return new NavigationEventEmitter(context);
-	}
-
 	private final RCTDeviceEventEmitter emitter;
 
-	private NavigationEventEmitter(ReactContext reactContext) {
+	public NavigationEventEmitter(ReactContext reactContext) {
 		this.emitter = reactContext.getJSModule(RCTDeviceEventEmitter.class);
 	}
 
 	public void appLaunched() {
 		emit(onAppLaunched);
-	}
-
-	private void emit(String eventName) {
-		emit(eventName, Arguments.createMap());
-	}
-
-	private void emit(String eventName, WritableMap data) {
-		emitter.emit(eventName, data);
-	}
-
-	private void emit(String eventName, String param) {
-		emitter.emit(eventName, param);
 	}
 
 	public void containerStop(String id) {
@@ -49,5 +33,17 @@ public class NavigationEventEmitter {
 		data.putString("id", id);
 //        emit(containerStart, data);
 		emit(containerStart, id);
+	}
+
+	private void emit(String eventName) {
+		emit(eventName, Arguments.createMap());
+	}
+
+	private void emit(String eventName, WritableMap data) {
+		emitter.emit(eventName, data);
+	}
+
+	private void emit(String eventName, String param) {
+		emitter.emit(eventName, param);
 	}
 }

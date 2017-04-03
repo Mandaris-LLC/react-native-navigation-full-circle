@@ -1,4 +1,4 @@
-package com.reactnativenavigation.layout;
+package com.reactnativenavigation.layout.containers;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactRootView;
+import com.facebook.react.bridge.ReactContext;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 
@@ -42,7 +43,7 @@ public class Container extends FrameLayout {
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
 		//TODO this is wrong
-		NavigationEventEmitter.emit(((NavigationApplication) getContext().getApplicationContext()).getReactNativeHost().getReactInstanceManager().getCurrentReactContext())
-				.containerStop(id);
+		ReactContext reactContext = ((NavigationApplication) getContext().getApplicationContext()).getReactNativeHost().getReactInstanceManager().getCurrentReactContext();
+		new NavigationEventEmitter(reactContext).containerStart(id);
 	}
 }
