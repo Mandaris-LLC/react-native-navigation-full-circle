@@ -1,7 +1,9 @@
 package com.reactnativenavigation.react;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import static com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
@@ -12,8 +14,8 @@ public class NavigationEventEmitter {
 
 	private final RCTDeviceEventEmitter emitter;
 
-	public NavigationEventEmitter(final RCTDeviceEventEmitter emitter) {
-		this.emitter = emitter;
+	public NavigationEventEmitter(ReactContext reactContext) {
+		this.emitter = reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
 	}
 
 	public void appLaunched() {

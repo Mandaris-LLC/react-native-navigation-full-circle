@@ -1,9 +1,7 @@
-package com.reactnativenavigation.controllers;
+package com.reactnativenavigation;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.react.DevPermissionRequest;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 
@@ -61,7 +59,7 @@ public class ActivityLifecycleDelegate {
 
 	private void emitAppLaunchedOnceIfNeeded() {
 		if (appLaunchEmitted.compareAndSet(false, true)) {
-			new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)).appLaunched();
+			new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext()).appLaunched();
 		}
 	}
 

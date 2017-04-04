@@ -10,8 +10,8 @@ import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
-import com.reactnativenavigation.layout.StackLayout;
 import com.reactnativenavigation.layout.containers.Container;
+import com.reactnativenavigation.layout.containers.ContainerStack;
 import com.reactnativenavigation.utils.UiThread;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
@@ -49,7 +49,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 				final LayoutNode layoutNode = LayoutNode.parse(ArgsParser.parse(layoutTree));
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager);
 				final View rootView = factory.create(layoutNode);
-				((StackLayout) activity().getContentView()).push((Container) rootView);
+				((ContainerStack) activity().getContentView()).push((Container) rootView);
 			}
 		});
 	}
@@ -59,7 +59,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				((StackLayout) activity().getContentView()).pop();
+				((ContainerStack) activity().getContentView()).pop();
 			}
 		});
 	}

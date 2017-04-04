@@ -7,7 +7,6 @@ import android.widget.FrameLayout;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 
 public class Container extends FrameLayout {
@@ -54,11 +53,11 @@ public class Container extends FrameLayout {
 	}
 
 	private void onStart() {
-		new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)).containerStart(id);
+		new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext()).containerStart(id);
 	}
 
 	private void onStop() {
-		new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)).containerStop(id);
+		new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext()).containerStop(id);
 	}
 
 }

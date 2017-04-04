@@ -3,11 +3,9 @@ package com.reactnativenavigation.layout.containers;
 import android.content.Context;
 import android.widget.FrameLayout;
 
-import com.reactnativenavigation.layout.StackLayout;
-
 import java.util.Stack;
 
-public class ContainerStack extends FrameLayout implements StackLayout {
+public class ContainerStack extends FrameLayout {
 
 	private Stack<Container> stack = new Stack<>();
 
@@ -15,8 +13,6 @@ public class ContainerStack extends FrameLayout implements StackLayout {
 		super(context);
 	}
 
-
-	@Override
 	public void push(Container view) {
 		stack.push(view);
 		addView(view);
@@ -26,7 +22,6 @@ public class ContainerStack extends FrameLayout implements StackLayout {
 		}
 	}
 
-	@Override
 	public void pop() {
 		Container top = stack.pop();
 		removeView(top);
@@ -37,7 +32,6 @@ public class ContainerStack extends FrameLayout implements StackLayout {
 		}
 	}
 
-	@Override
 	public boolean onBackPressed() {
 		if (stack.isEmpty()) {
 			return false;
