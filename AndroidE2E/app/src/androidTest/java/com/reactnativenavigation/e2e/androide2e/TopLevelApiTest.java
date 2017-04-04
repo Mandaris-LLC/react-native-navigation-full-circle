@@ -2,7 +2,6 @@ package com.reactnativenavigation.e2e.androide2e;
 
 import android.support.test.uiautomator.By;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TopLevelApiTest extends BaseTest {
@@ -37,15 +36,12 @@ public class TopLevelApiTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
 	public void unmountIsCalledOnPop() throws Exception {
 		launchTheApp();
 		assertMainShown();
 		elementByText("PUSH LIFECYCLE SCREEN").click();
 		elementByText("onStart");
 		device().pressBack();
-		assertMainShown();
-		assertExists(By.text("onStop"));
 		assertExists(By.text("componentWillUnmount"));
 	}
 }
