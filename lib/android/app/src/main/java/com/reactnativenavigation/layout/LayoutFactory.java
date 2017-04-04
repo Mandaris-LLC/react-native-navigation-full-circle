@@ -6,7 +6,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
-import com.facebook.react.ReactNativeHost;
+import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.layout.containers.BottomTabs;
 import com.reactnativenavigation.layout.containers.BottomTabsLayout;
 import com.reactnativenavigation.layout.containers.Container;
@@ -17,11 +17,11 @@ import com.reactnativenavigation.utils.CompatUtils;
 public class LayoutFactory {
 
 	private final Activity activity;
-	private ReactNativeHost reactNativeHost;
+	private ReactInstanceManager reactInstanceManager;
 
-	public LayoutFactory(Activity activity, ReactNativeHost reactNativeHost) {
+	public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager) {
 		this.activity = activity;
-		this.reactNativeHost = reactNativeHost;
+		this.reactInstanceManager = reactInstanceManager;
 	}
 
 	public View create(LayoutNode node) {
@@ -77,7 +77,7 @@ public class LayoutFactory {
 
 	private View createContainer(LayoutNode node) {
 		final String name = node.data.optString("name");
-		Container container = new Container(activity, node.id, name, reactNativeHost.getReactInstanceManager());
+		Container container = new Container(activity, node.id, name, reactInstanceManager);
 		container.setId(CompatUtils.generateViewId());
 		return container;
 

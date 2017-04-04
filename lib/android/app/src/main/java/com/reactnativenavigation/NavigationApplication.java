@@ -6,7 +6,6 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
-import com.reactnativenavigation.controllers.CommandsHandler;
 import com.reactnativenavigation.react.DevPermissionRequest;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 
@@ -18,8 +17,7 @@ public abstract class NavigationApplication extends Application implements React
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		CommandsHandler commandsHandler = new CommandsHandler(this);
-		reactNativeHost = new NavigationReactNativeHost(this, isDebug(), commandsHandler);
+		reactNativeHost = new NavigationReactNativeHost(this, isDebug());
 
 		ReactInstanceManager reactInstanceManager = reactNativeHost.getReactInstanceManager();
 		DevPermissionRequest devPermissionRequest = new DevPermissionRequest(this, isDebug());
