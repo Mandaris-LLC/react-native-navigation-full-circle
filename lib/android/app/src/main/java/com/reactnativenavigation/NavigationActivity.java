@@ -43,6 +43,14 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 		this.contentView = contentView;
 	}
 
+	public void setLayout(Layout layout) {
+		this.layout = layout;
+	}
+
+	public Layout getLayout() {
+		return layout;
+	}
+
 	@Nullable
 	public View getContentView() {
 		return contentView;
@@ -55,7 +63,9 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
 	@Override
 	public void onBackPressed() {
-		if (!(contentView instanceof LayoutStack) || !((LayoutStack) contentView).onBackPressed()) {
+		if (layout instanceof LayoutStack && ((LayoutStack) layout).onBackPressed()) {
+			// do nothing, layout pops
+		} else {
 			super.onBackPressed();
 		}
 	}

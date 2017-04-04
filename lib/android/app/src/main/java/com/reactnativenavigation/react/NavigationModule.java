@@ -37,6 +37,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager);
 				final Layout rootView = factory.create(layoutTree);
 				activity().setContentView(rootView.getView());
+				activity().setLayout(rootView);
 			}
 		});
 	}
@@ -49,7 +50,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager);
 				final Layout rootView = factory.create(layoutTree);
-				((LayoutStack) activity().getContentView()).push(rootView);
+				((LayoutStack) activity().getLayout()).push(rootView);
 			}
 		});
 	}
@@ -59,7 +60,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				((LayoutStack) activity().getContentView()).pop();
+				((LayoutStack) activity().getLayout()).pop();
 			}
 		});
 	}
