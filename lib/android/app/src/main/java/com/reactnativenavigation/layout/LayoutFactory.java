@@ -1,18 +1,12 @@
 package com.reactnativenavigation.layout;
 
 import android.app.Activity;
-import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 
 import com.facebook.react.ReactInstanceManager;
-import com.reactnativenavigation.layout.containers.BottomTabs;
 import com.reactnativenavigation.layout.containers.BottomTabsLayout;
-import com.reactnativenavigation.layout.containers.Container;
-import com.reactnativenavigation.layout.containers.ContainerStack;
+import com.reactnativenavigation.layout.containers.LayoutStack;
+import com.reactnativenavigation.layout.containers.RootLayout;
 import com.reactnativenavigation.layout.containers.SideMenuLayout;
-import com.reactnativenavigation.utils.CompatUtils;
 
 public class LayoutFactory {
 
@@ -24,7 +18,7 @@ public class LayoutFactory {
 		this.reactInstanceManager = reactInstanceManager;
 	}
 
-	public View create(LayoutNode node) {
+	public Layout create(LayoutNode node) {
 		switch (node.type) {
 			case Container:
 				return createContainer(node);
@@ -45,57 +39,55 @@ public class LayoutFactory {
 		}
 	}
 
-	private View createSideMenuRoot(LayoutNode node) {
+	private Layout createSideMenuRoot(LayoutNode node) {
 		SideMenuLayout sideMenuLayout = new SideMenuLayout(activity);
 		for (LayoutNode child : node.children) {
-			sideMenuLayout.addView(create(child));
+			Layout childLayout = create(child);
+			switch (child.type) {
+				case SideMenuCenter:
+					sideMenuLayout.addCenterLayout(childLayout);
+					break;
+				case SideMenuLeft:
+					sideMenuLayout.addLeftLayout(childLayout);
+					break;
+				case SideMenuRight:
+					sideMenuLayout.addRightLayout(childLayout);
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid node type in sideMenu: " + node.type);
+			}
 		}
 		return sideMenuLayout;
 	}
 
-	private View createSideMenuContent(LayoutNode node) {
+	private Layout createSideMenuContent(LayoutNode node) {
 		return create(node.children.get(0));
 	}
 
-	private View createSideMenuLeft(LayoutNode node) {
-		View view = create(node.children.get(0));
-		view.setId(CompatUtils.generateViewId());
-		DrawerLayout.LayoutParams lp = new DrawerLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		lp.gravity = Gravity.LEFT;
-		view.setLayoutParams(lp);
-		return view;
+	private Layout createSideMenuLeft(LayoutNode node) {
+		return create(node.children.get(0));
 	}
 
-	private View createSideMenuRight(LayoutNode node) {
-		View view = create(node.children.get(0));
-		view.setId(CompatUtils.generateViewId());
-		DrawerLayout.LayoutParams lp = new DrawerLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		lp.gravity = Gravity.RIGHT;
-		view.setLayoutParams(lp);
-		return view;
+	private Layout createSideMenuRight(LayoutNode node) {
+		return create(node.children.get(0));
 	}
 
-	private View createContainer(LayoutNode node) {
-		final String name = node.data.optString("name");
-		Container container = new Container(activity, node.id, name, reactInstanceManager);
-		container.setId(CompatUtils.generateViewId());
-		return container;
-
+	private Layout createContainer(LayoutNode node) {
+		return new RootLayout(activity, node.id, node.data.optString("name"), reactInstanceManager);
 	}
 
-	private View createContainerStack(LayoutNode node) {
-		final ContainerStack containerStack = new ContainerStack(activity);
-		containerStack.setId(CompatUtils.generateViewId());
+	private Layout createContainerStack(LayoutNode node) {
+		final LayoutStack layoutStack = new LayoutStack(activity);
 		for (LayoutNode child : node.children) {
-			containerStack.addView(create(child));
+			layoutStack.push(create(child));
 		}
-		return containerStack;
+		return layoutStack;
 	}
 
-	private View createBottomTabs(LayoutNode node) {
-		final BottomTabsLayout tabsContainer = new BottomTabsLayout(activity, new BottomTabs());
+	private Layout createBottomTabs(LayoutNode node) {
+		final BottomTabsLayout tabsContainer = new BottomTabsLayout(activity);
 		for (int i = 0; i < node.children.size(); i++) {
-			final View tabContent = create(node.children.get(i));
+			final Layout tabContent = create(node.children.get(i));
 			tabsContainer.addTabContent("#" + i, tabContent);
 		}
 		return tabsContainer;

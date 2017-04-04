@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
-import com.reactnativenavigation.layout.containers.ContainerStack;
+import com.reactnativenavigation.layout.Layout;
+import com.reactnativenavigation.layout.containers.LayoutStack;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
 	private View contentView;
+	private Layout layout;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
 	@Override
 	public void onBackPressed() {
-		if (!(contentView instanceof ContainerStack) || !((ContainerStack) contentView).onBackPressed()) {
+		if (!(contentView instanceof LayoutStack) || !((LayoutStack) contentView).onBackPressed()) {
 			super.onBackPressed();
 		}
 	}

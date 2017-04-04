@@ -1,4 +1,4 @@
-package com.reactnativenavigation.react;
+package com.reactnativenavigation.parse;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ArgsParser {
+public class JSONParser {
 	public static JSONObject parse(ReadableMap map) {
 		try {
 			ReadableMapKeySetIterator it = map.keySetIterator();

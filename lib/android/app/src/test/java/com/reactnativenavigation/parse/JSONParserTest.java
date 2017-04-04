@@ -1,8 +1,9 @@
-package com.reactnativenavigation.react;
+package com.reactnativenavigation.parse;
 
 import com.facebook.react.bridge.JavaOnlyArray;
 import com.facebook.react.bridge.JavaOnlyMap;
 import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.parse.JSONParser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,7 +11,7 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class ArgsParserTest extends BaseTest {
+public class JSONParserTest extends BaseTest {
 	@Test
 	public void parsesMap() throws Exception {
 		JavaOnlyMap input = new JavaOnlyMap();
@@ -22,7 +23,7 @@ public class ArgsParserTest extends BaseTest {
 		input.putMap("keyMap", new JavaOnlyMap());
 		input.putNull("bla");
 
-		JSONObject result = ArgsParser.parse(input);
+		JSONObject result = JSONParser.parse(input);
 
 
 		assertThat(result.keys()).containsOnly(
@@ -52,7 +53,7 @@ public class ArgsParserTest extends BaseTest {
 		input.pushMap(new JavaOnlyMap());
 		input.pushNull();
 
-		JSONArray result = ArgsParser.parse(input);
+		JSONArray result = JSONParser.parse(input);
 		assertThat(result.length()).isEqualTo(6);
 		assertThat(result.get(0)).isEqualTo("Hello");
 		assertThat(result.get(1)).isEqualTo(123);

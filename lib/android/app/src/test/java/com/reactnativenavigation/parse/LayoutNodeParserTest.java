@@ -1,13 +1,14 @@
-package com.reactnativenavigation.layout;
+package com.reactnativenavigation.parse;
 
 import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.layout.LayoutNode;
 
 import org.json.JSONObject;
 import org.junit.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class LayoutNodeTest extends BaseTest {
+public class LayoutNodeParserTest extends BaseTest {
 	@Test
 	public void dto() throws Exception {
 		LayoutNode node = new LayoutNode("the id", LayoutNode.Type.Container);
@@ -34,7 +35,7 @@ public class LayoutNodeTest extends BaseTest {
 				"data: {dataKey: dataValue}, " +
 				"children: [{id: childId1, type: Container}]}");
 
-		LayoutNode result = LayoutNode.parse(tree);
+		LayoutNode result = LayoutNodeParser.parse(tree);
 
 		assertThat(result).isNotNull();
 		assertThat(result.id).isEqualTo("node1");

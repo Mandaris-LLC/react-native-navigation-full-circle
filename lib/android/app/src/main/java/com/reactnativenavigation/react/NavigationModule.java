@@ -1,17 +1,17 @@
 package com.reactnativenavigation.react;
 
-import android.view.View;
-
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationActivity;
+import com.reactnativenavigation.layout.Layout;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
-import com.reactnativenavigation.layout.containers.Container;
-import com.reactnativenavigation.layout.containers.ContainerStack;
+import com.reactnativenavigation.layout.containers.LayoutStack;
+import com.reactnativenavigation.parse.JSONParser;
+import com.reactnativenavigation.parse.LayoutNodeParser;
 import com.reactnativenavigation.utils.UiThread;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
@@ -29,27 +29,27 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 	}
 
 	@ReactMethod
-	public void setRoot(final ReadableMap layoutTree) {
+	public void setRoot(final ReadableMap rawLayoutTree) {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				final LayoutNode layoutTreeRoot = LayoutNode.parse(ArgsParser.parse(layoutTree));
+				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager);
-				final View rootView = factory.create(layoutTreeRoot);
-				activity().setContentView(rootView);
+				final Layout rootView = factory.create(layoutTree);
+				activity().setContentView(rootView.getView());
 			}
 		});
 	}
 
 	@ReactMethod
-	public void push(final String onContainerId, final ReadableMap layoutTree) {
+	public void push(final String onContainerId, final ReadableMap rawLayoutTree) {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				final LayoutNode layoutNode = LayoutNode.parse(ArgsParser.parse(layoutTree));
+				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager);
-				final View rootView = factory.create(layoutNode);
-				((ContainerStack) activity().getContentView()).push((Container) rootView);
+				final Layout rootView = factory.create(layoutTree);
+				((LayoutStack) activity().getContentView()).push(rootView);
 			}
 		});
 	}
@@ -59,7 +59,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				((ContainerStack) activity().getContentView()).pop();
+				((LayoutStack) activity().getContentView()).pop();
 			}
 		});
 	}
