@@ -15,9 +15,9 @@ public class ActivityLifecycleDelegate {
 	private final DevPermissionRequest devPermissionRequest;
 	private final AtomicBoolean appLaunchEmitted = new AtomicBoolean(false);
 
-	public ActivityLifecycleDelegate(ReactInstanceManager reactInstanceManager, DevPermissionRequest devPermissionRequest) {
+	public ActivityLifecycleDelegate(ReactInstanceManager reactInstanceManager, boolean isDebug) {
 		this.reactInstanceManager = reactInstanceManager;
-		this.devPermissionRequest = devPermissionRequest;
+		this.devPermissionRequest = new DevPermissionRequest(isDebug);
 	}
 
 	public void onActivityCreated(NavigationActivity activity) {
@@ -25,8 +25,8 @@ public class ActivityLifecycleDelegate {
 	}
 
 	public void onActivityResumed(NavigationActivity activity) {
-		if (devPermissionRequest.shouldAskPermission()) {
-			devPermissionRequest.askPermission();
+		if (devPermissionRequest.shouldAskPermission(activity)) {
+			devPermissionRequest.askPermission(activity);
 		} else {
 			reactInstanceManager.onHostResume(activity, activity);
 			prepareReactApp();

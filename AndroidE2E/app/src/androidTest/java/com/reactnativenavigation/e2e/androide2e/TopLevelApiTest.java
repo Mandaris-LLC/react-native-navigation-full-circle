@@ -43,5 +43,9 @@ public class TopLevelApiTest extends BaseTest {
 		elementByText("onStart");
 		device().pressBack();
 		assertExists(By.text("componentWillUnmount"));
+		elementByText("OK").click();
+		assertExists(By.text("onStop"));
+		elementByText("OK").click();
+		assertMainShown();
 	}
 }
