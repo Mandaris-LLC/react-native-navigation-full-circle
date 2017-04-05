@@ -1,6 +1,6 @@
 
 #import <XCTest/XCTest.h>
-#import "RNNStore.m"
+#import "RNNStore.h"
 
 @interface RNNStoreTest : XCTestCase
 

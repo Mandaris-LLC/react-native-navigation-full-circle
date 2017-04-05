@@ -12,7 +12,7 @@ function run() {
   runWithXcpretty(`RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             build build-for-testing
-            -scheme "playground"
+            -scheme "ReactNativeNavigation"
             -project playground.xcodeproj
             -sdk iphonesimulator
             -configuration Debug
@@ -20,7 +20,7 @@ function run() {
   runWithXcpretty(`RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             test-without-building
-            -scheme "playground"
+            -scheme "ReactNativeNavigation"
             -project playground.xcodeproj
             -sdk iphonesimulator
             -destination 'platform=iOS Simulator,name=iPhone 7'

@@ -1,5 +1,5 @@
 #import <XCTest/XCTest.h>
-#import "RNNModalManager.m"
+#import "RNNModalManager.h"
 
 @interface RNNModalManagerTest : XCTestCase
 

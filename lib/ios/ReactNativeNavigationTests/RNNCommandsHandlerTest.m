@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 #import <objc/runtime.h>
-#import "RNNCommandsHandler.m"
+#import "RNNCommandsHandler.h"
 
 @interface RNNCommandsHandlerTest : XCTestCase
 

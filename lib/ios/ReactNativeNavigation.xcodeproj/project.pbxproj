@@ -61,6 +61,26 @@
 		7B1126A91E2D2B6C00F9B03B /* RNNControllerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BC9346C1E26886E00EFA125 /* RNNControllerFactory.h */; };
 		7B4928081E70415400555040 /* RNNCommandsHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B4928061E70415400555040 /* RNNCommandsHandler.h */; };
 		7B4928091E70415400555040 /* RNNCommandsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B4928071E70415400555040 /* RNNCommandsHandler.m */; };
+		7B49FEC01E95090800DEB3EA /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8AFADBD1BEE6F3F00A4592D /* libReactNativeNavigation.a */; };
+		7B49FECB1E95098500DEB3EA /* RNNControllerFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B49FEC61E95098500DEB3EA /* RNNControllerFactoryTest.m */; };
+		7B49FECC1E95098500DEB3EA /* RNNStoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B49FEC71E95098500DEB3EA /* RNNStoreTest.m */; };
+		7B49FECD1E95098500DEB3EA /* RNNModalManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B49FEC81E95098500DEB3EA /* RNNModalManagerTest.m */; };
+		7B49FECE1E95098500DEB3EA /* RNNCommandsHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B49FEC91E95098500DEB3EA /* RNNCommandsHandlerTest.m */; };
+		7B49FECF1E95098500DEB3EA /* RNNNavigationStackManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B49FECA1E95098500DEB3EA /* RNNNavigationStackManagerTest.m */; };
+		7B49FEDF1E950A7A00DEB3EA /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FED11E950A7A00DEB3EA /* libcxxreact.a */; };
+		7B49FEE01E950A7A00DEB3EA /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FED21E950A7A00DEB3EA /* libjschelpers.a */; };
+		7B49FEE11E950A7A00DEB3EA /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FED31E950A7A00DEB3EA /* libRCTActionSheet.a */; };
+		7B49FEE21E950A7A00DEB3EA /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FED41E950A7A00DEB3EA /* libRCTAnimation.a */; };
+		7B49FEE31E950A7A00DEB3EA /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FED51E950A7A00DEB3EA /* libRCTGeolocation.a */; };
+		7B49FEE41E950A7A00DEB3EA /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FED61E950A7A00DEB3EA /* libRCTImage.a */; };
+		7B49FEE51E950A7A00DEB3EA /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FED71E950A7A00DEB3EA /* libRCTLinking.a */; };
+		7B49FEE61E950A7A00DEB3EA /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FED81E950A7A00DEB3EA /* libRCTNetwork.a */; };
+		7B49FEE71E950A7A00DEB3EA /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FED91E950A7A00DEB3EA /* libRCTSettings.a */; };
+		7B49FEE81E950A7A00DEB3EA /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FEDA1E950A7A00DEB3EA /* libRCTText.a */; };
+		7B49FEE91E950A7A00DEB3EA /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FEDB1E950A7A00DEB3EA /* libRCTVibration.a */; };
+		7B49FEEA1E950A7A00DEB3EA /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FEDC1E950A7A00DEB3EA /* libRCTWebSocket.a */; };
+		7B49FEEB1E950A7A00DEB3EA /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FEDD1E950A7A00DEB3EA /* libReact.a */; };
+		7B49FEEC1E950A7A00DEB3EA /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B49FEDE1E950A7A00DEB3EA /* libyoga.a */; };
 		7BA500751E2544B9001B9E1B /* ReactNativeNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA500741E2544B9001B9E1B /* ReactNativeNavigation.m */; };
 		7BA500781E254908001B9E1B /* RNNSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA500771E254908001B9E1B /* RNNSplashScreen.m */; };
 		7BBFE5441E25330E002A6182 /* RNNBridgeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBFE5431E25330E002A6182 /* RNNBridgeModule.m */; };
@@ -70,6 +90,16 @@
 		7BEF0D1C1E43771B003E96B0 /* RNNLayoutNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BEF0D1A1E43771B003E96B0 /* RNNLayoutNode.h */; };
 		7BEF0D1D1E43771B003E96B0 /* RNNLayoutNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEF0D1B1E43771B003E96B0 /* RNNLayoutNode.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7B49FEC11E95090800DEB3EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D8AFADB51BEE6F3F00A4592D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D8AFADBC1BEE6F3F00A4592D;
+			remoteInfo = ReactNativeNavigation;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		D8AFADBB1BEE6F3F00A4592D /* CopyFiles */ = {
@@ -135,6 +165,27 @@
 		7B11269F1E2D263F00F9B03B /* RNNEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNEventEmitter.m; sourceTree = "<group>"; };
 		7B4928061E70415400555040 /* RNNCommandsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNCommandsHandler.h; sourceTree = "<group>"; };
 		7B4928071E70415400555040 /* RNNCommandsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNCommandsHandler.m; sourceTree = "<group>"; };
+		7B49FEBB1E95090800DEB3EA /* ReactNativeNavigationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactNativeNavigationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B49FEBF1E95090800DEB3EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7B49FEC61E95098500DEB3EA /* RNNControllerFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNControllerFactoryTest.m; sourceTree = "<group>"; };
+		7B49FEC71E95098500DEB3EA /* RNNStoreTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNStoreTest.m; sourceTree = "<group>"; };
+		7B49FEC81E95098500DEB3EA /* RNNModalManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNModalManagerTest.m; sourceTree = "<group>"; };
+		7B49FEC91E95098500DEB3EA /* RNNCommandsHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNCommandsHandlerTest.m; sourceTree = "<group>"; };
+		7B49FECA1E95098500DEB3EA /* RNNNavigationStackManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationStackManagerTest.m; sourceTree = "<group>"; };
+		7B49FED11E950A7A00DEB3EA /* libcxxreact.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcxxreact.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libcxxreact.a"; sourceTree = "<group>"; };
+		7B49FED21E950A7A00DEB3EA /* libjschelpers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjschelpers.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libjschelpers.a"; sourceTree = "<group>"; };
+		7B49FED31E950A7A00DEB3EA /* libRCTActionSheet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTActionSheet.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTActionSheet.a"; sourceTree = "<group>"; };
+		7B49FED41E950A7A00DEB3EA /* libRCTAnimation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTAnimation.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTAnimation.a"; sourceTree = "<group>"; };
+		7B49FED51E950A7A00DEB3EA /* libRCTGeolocation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTGeolocation.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTGeolocation.a"; sourceTree = "<group>"; };
+		7B49FED61E950A7A00DEB3EA /* libRCTImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTImage.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTImage.a"; sourceTree = "<group>"; };
+		7B49FED71E950A7A00DEB3EA /* libRCTLinking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTLinking.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTLinking.a"; sourceTree = "<group>"; };
+		7B49FED81E950A7A00DEB3EA /* libRCTNetwork.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTNetwork.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTNetwork.a"; sourceTree = "<group>"; };
+		7B49FED91E950A7A00DEB3EA /* libRCTSettings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTSettings.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTSettings.a"; sourceTree = "<group>"; };
+		7B49FEDA1E950A7A00DEB3EA /* libRCTText.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTText.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTText.a"; sourceTree = "<group>"; };
+		7B49FEDB1E950A7A00DEB3EA /* libRCTVibration.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTVibration.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTVibration.a"; sourceTree = "<group>"; };
+		7B49FEDC1E950A7A00DEB3EA /* libRCTWebSocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTWebSocket.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libRCTWebSocket.a"; sourceTree = "<group>"; };
+		7B49FEDD1E950A7A00DEB3EA /* libReact.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libReact.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libReact.a"; sourceTree = "<group>"; };
+		7B49FEDE1E950A7A00DEB3EA /* libyoga.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyoga.a; path = "../../../../Library/Developer/Xcode/DerivedData/playground-hbcxylrsfjqeuaduerohqubsbqqi/Build/Products/Debug-iphonesimulator/libyoga.a"; sourceTree = "<group>"; };
 		7BA500731E2544B9001B9E1B /* ReactNativeNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactNativeNavigation.h; sourceTree = "<group>"; };
 		7BA500741E2544B9001B9E1B /* ReactNativeNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactNativeNavigation.m; sourceTree = "<group>"; };
 		7BA500761E254908001B9E1B /* RNNSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSplashScreen.h; sourceTree = "<group>"; };
@@ -151,6 +202,28 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7B49FEB81E95090800DEB3EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B49FEDF1E950A7A00DEB3EA /* libcxxreact.a in Frameworks */,
+				7B49FEE01E950A7A00DEB3EA /* libjschelpers.a in Frameworks */,
+				7B49FEE11E950A7A00DEB3EA /* libRCTActionSheet.a in Frameworks */,
+				7B49FEE21E950A7A00DEB3EA /* libRCTAnimation.a in Frameworks */,
+				7B49FEE31E950A7A00DEB3EA /* libRCTGeolocation.a in Frameworks */,
+				7B49FEE41E950A7A00DEB3EA /* libRCTImage.a in Frameworks */,
+				7B49FEE51E950A7A00DEB3EA /* libRCTLinking.a in Frameworks */,
+				7B49FEE61E950A7A00DEB3EA /* libRCTNetwork.a in Frameworks */,
+				7B49FEE71E950A7A00DEB3EA /* libRCTSettings.a in Frameworks */,
+				7B49FEE81E950A7A00DEB3EA /* libRCTText.a in Frameworks */,
+				7B49FEE91E950A7A00DEB3EA /* libRCTVibration.a in Frameworks */,
+				7B49FEEA1E950A7A00DEB3EA /* libRCTWebSocket.a in Frameworks */,
+				7B49FEEB1E950A7A00DEB3EA /* libReact.a in Frameworks */,
+				7B49FEEC1E950A7A00DEB3EA /* libyoga.a in Frameworks */,
+				7B49FEC01E95090800DEB3EA /* libReactNativeNavigation.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D8AFADBA1BEE6F3F00A4592D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -252,6 +325,40 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		7B49FEBC1E95090800DEB3EA /* ReactNativeNavigationTests */ = {
+			isa = PBXGroup;
+			children = (
+				7B49FEC61E95098500DEB3EA /* RNNControllerFactoryTest.m */,
+				7B49FEC71E95098500DEB3EA /* RNNStoreTest.m */,
+				7B49FEC81E95098500DEB3EA /* RNNModalManagerTest.m */,
+				7B49FEC91E95098500DEB3EA /* RNNCommandsHandlerTest.m */,
+				7B49FECA1E95098500DEB3EA /* RNNNavigationStackManagerTest.m */,
+				7B49FEBF1E95090800DEB3EA /* Info.plist */,
+			);
+			path = ReactNativeNavigationTests;
+			sourceTree = "<group>";
+		};
+		7B49FED01E950A7A00DEB3EA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7B49FED11E950A7A00DEB3EA /* libcxxreact.a */,
+				7B49FED21E950A7A00DEB3EA /* libjschelpers.a */,
+				7B49FED31E950A7A00DEB3EA /* libRCTActionSheet.a */,
+				7B49FED41E950A7A00DEB3EA /* libRCTAnimation.a */,
+				7B49FED51E950A7A00DEB3EA /* libRCTGeolocation.a */,
+				7B49FED61E950A7A00DEB3EA /* libRCTImage.a */,
+				7B49FED71E950A7A00DEB3EA /* libRCTLinking.a */,
+				7B49FED81E950A7A00DEB3EA /* libRCTNetwork.a */,
+				7B49FED91E950A7A00DEB3EA /* libRCTSettings.a */,
+				7B49FEDA1E950A7A00DEB3EA /* libRCTText.a */,
+				7B49FEDB1E950A7A00DEB3EA /* libRCTVibration.a */,
+				7B49FEDC1E950A7A00DEB3EA /* libRCTWebSocket.a */,
+				7B49FEDD1E950A7A00DEB3EA /* libReact.a */,
+				7B49FEDE1E950A7A00DEB3EA /* libyoga.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7BD721F31E2D3AA100724059 /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,7 +382,9 @@
 				7BD721F31E2D3AA100724059 /* Bridge */,
 				7B1E4C4B1E2D173700C3A525 /* Controllers */,
 				263905881E4C6F440023D7D3 /* RNNSideMenu */,
+				7B49FEBC1E95090800DEB3EA /* ReactNativeNavigationTests */,
 				D8AFADBE1BEE6F3F00A4592D /* Products */,
+				7B49FED01E950A7A00DEB3EA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 			tabWidth = 4;
@@ -286,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				D8AFADBD1BEE6F3F00A4592D /* libReactNativeNavigation.a */,
+				7B49FEBB1E95090800DEB3EA /* ReactNativeNavigationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -335,6 +445,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		7B49FEBA1E95090800DEB3EA /* ReactNativeNavigationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7B49FEC51E95090800DEB3EA /* Build configuration list for PBXNativeTarget "ReactNativeNavigationTests" */;
+			buildPhases = (
+				7B49FEB71E95090800DEB3EA /* Sources */,
+				7B49FEB81E95090800DEB3EA /* Frameworks */,
+				7B49FEB91E95090800DEB3EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7B49FEC21E95090800DEB3EA /* PBXTargetDependency */,
+			);
+			name = ReactNativeNavigationTests;
+			productName = ReactNativeNavigationTests;
+			productReference = 7B49FEBB1E95090800DEB3EA /* ReactNativeNavigationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D8AFADBC1BEE6F3F00A4592D /* ReactNativeNavigation */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D8AFADC61BEE6F3F00A4592D /* Build configuration list for PBXNativeTarget "ReactNativeNavigation" */;
@@ -362,6 +490,10 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Wix;
 				TargetAttributes = {
+					7B49FEBA1E95090800DEB3EA = {
+						CreatedOnToolsVersion = 8.3;
+						ProvisioningStyle = Automatic;
+					};
 					D8AFADBC1BEE6F3F00A4592D = {
 						CreatedOnToolsVersion = 7.1;
 					};
@@ -380,11 +512,34 @@
 			projectRoot = "";
 			targets = (
 				D8AFADBC1BEE6F3F00A4592D /* ReactNativeNavigation */,
+				7B49FEBA1E95090800DEB3EA /* ReactNativeNavigationTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		7B49FEB91E95090800DEB3EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		7B49FEB71E95090800DEB3EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B49FECE1E95098500DEB3EA /* RNNCommandsHandlerTest.m in Sources */,
+				7B49FECF1E95098500DEB3EA /* RNNNavigationStackManagerTest.m in Sources */,
+				7B49FECB1E95098500DEB3EA /* RNNControllerFactoryTest.m in Sources */,
+				7B49FECD1E95098500DEB3EA /* RNNModalManagerTest.m in Sources */,
+				7B49FECC1E95098500DEB3EA /* RNNStoreTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D8AFADB91BEE6F3F00A4592D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -424,7 +579,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7B49FEC21E95090800DEB3EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D8AFADBC1BEE6F3F00A4592D /* ReactNativeNavigation */;
+			targetProxy = 7B49FEC11E95090800DEB3EA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		7B49FEC31E95090800DEB3EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				INFOPLIST_FILE = ReactNativeNavigationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-l\"c++\"",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wix.ReactNativeNavigationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7B49FEC41E95090800DEB3EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				INFOPLIST_FILE = ReactNativeNavigationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-l\"c++\"",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wix.ReactNativeNavigationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		D8AFADC41BEE6F3F00A4592D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -534,6 +733,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7B49FEC51E95090800DEB3EA /* Build configuration list for PBXNativeTarget "ReactNativeNavigationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7B49FEC31E95090800DEB3EA /* Debug */,
+				7B49FEC41E95090800DEB3EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D8AFADB81BEE6F3F00A4592D /* Build configuration list for PBXProject "ReactNativeNavigation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

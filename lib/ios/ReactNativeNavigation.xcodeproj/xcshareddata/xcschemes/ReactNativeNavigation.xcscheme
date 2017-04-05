@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7B49FEBA1E95090800DEB3EA"
+               BuildableName = "ReactNativeNavigationTests.xctest"
+               BlueprintName = "ReactNativeNavigationTests"
+               ReferencedContainer = "container:ReactNativeNavigation.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D8AFADBC1BEE6F3F00A4592D"
+            BuildableName = "libReactNativeNavigation.a"
+            BlueprintName = "ReactNativeNavigation"
+            ReferencedContainer = "container:ReactNativeNavigation.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
