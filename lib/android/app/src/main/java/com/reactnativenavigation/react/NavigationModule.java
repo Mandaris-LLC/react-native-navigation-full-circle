@@ -16,7 +16,7 @@ import com.reactnativenavigation.utils.UiThread;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
 	private static final String NAME = "RNNBridgeModule";
-	private ReactInstanceManager reactInstanceManager;
+	private final ReactInstanceManager reactInstanceManager;
 
 	public NavigationModule(final ReactApplicationContext reactContext, final ReactInstanceManager reactInstanceManager) {
 		super(reactContext);
@@ -60,6 +60,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
+
 				((StackLayout) activity().getLayout()).pop();
 			}
 		});

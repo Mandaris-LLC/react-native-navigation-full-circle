@@ -38,6 +38,10 @@ public class StackLayout implements Layout {
 		}
 	}
 
+	public void pop(String containerId) {
+
+	}
+
 	public boolean onBackPressed() {
 		if (stack.isEmpty()) {
 			return false;

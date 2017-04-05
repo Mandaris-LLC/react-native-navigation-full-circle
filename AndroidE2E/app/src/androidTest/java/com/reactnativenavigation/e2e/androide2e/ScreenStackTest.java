@@ -2,7 +2,6 @@ package com.reactnativenavigation.e2e.androide2e;
 
 import android.support.test.uiautomator.By;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ScreenStackTest extends BaseTest {
@@ -18,7 +17,6 @@ public class ScreenStackTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
 	public void popScreenDeepInTheStack() throws Exception {
 		launchTheApp();
 		assertMainShown();
@@ -27,5 +25,9 @@ public class ScreenStackTest extends BaseTest {
 		assertExists(By.text("Stack Position: 1"));
 		elementByText("PUSH").click();
 		assertExists(By.text("Stack Position: 2"));
+		elementByText("Pop Previous").click();
+		assertExists(By.text("Stack Position: 2"));
+		elementByText("Pop").click();
+		assertMainShown();
 	}
 }
