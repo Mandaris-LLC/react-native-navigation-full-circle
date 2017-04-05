@@ -3,10 +3,10 @@ package com.reactnativenavigation.layout;
 import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
-import com.reactnativenavigation.layout.containers.BottomTabsLayout;
-import com.reactnativenavigation.layout.containers.RootLayout;
-import com.reactnativenavigation.layout.containers.SideMenuLayout;
-import com.reactnativenavigation.layout.containers.StackLayout;
+import com.reactnativenavigation.layout.impl.BottomTabsLayout;
+import com.reactnativenavigation.layout.impl.RootLayout;
+import com.reactnativenavigation.layout.impl.SideMenuLayout;
+import com.reactnativenavigation.layout.impl.StackLayout;
 
 public class LayoutFactory {
 

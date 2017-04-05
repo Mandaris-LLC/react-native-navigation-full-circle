@@ -1,4 +1,4 @@
-package com.reactnativenavigation.layout.containers;
+package com.reactnativenavigation.layout.impl;
 
 import android.content.Context;
 import android.support.v4.widget.DrawerLayout;

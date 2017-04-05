@@ -9,7 +9,7 @@ import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.layout.Layout;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
-import com.reactnativenavigation.layout.containers.StackLayout;
+import com.reactnativenavigation.layout.impl.StackLayout;
 import com.reactnativenavigation.parse.JSONParser;
 import com.reactnativenavigation.parse.LayoutNodeParser;
 import com.reactnativenavigation.utils.UiThread;

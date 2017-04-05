@@ -1,4 +1,4 @@
-package com.reactnativenavigation.layout.containers;
+package com.reactnativenavigation.layout.impl;
 
 import android.app.Activity;
 import android.graphics.Color;

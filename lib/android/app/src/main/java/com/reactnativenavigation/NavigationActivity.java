@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.layout.Layout;
-import com.reactnativenavigation.layout.containers.StackLayout;
+import com.reactnativenavigation.layout.impl.StackLayout;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
 	private View contentView;
