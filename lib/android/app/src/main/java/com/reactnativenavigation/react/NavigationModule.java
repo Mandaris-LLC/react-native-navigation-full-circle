@@ -9,7 +9,7 @@ import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.layout.Layout;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
-import com.reactnativenavigation.layout.containers.LayoutStack;
+import com.reactnativenavigation.layout.containers.StackLayout;
 import com.reactnativenavigation.parse.JSONParser;
 import com.reactnativenavigation.parse.LayoutNodeParser;
 import com.reactnativenavigation.utils.UiThread;
@@ -50,7 +50,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager);
 				final Layout rootView = factory.create(layoutTree);
-				((LayoutStack) activity().getLayout()).push(rootView);
+				((StackLayout) activity().getLayout()).push(rootView);
 			}
 		});
 	}
@@ -60,7 +60,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				((LayoutStack) activity().getLayout()).pop();
+				((StackLayout) activity().getLayout()).pop();
 			}
 		});
 	}

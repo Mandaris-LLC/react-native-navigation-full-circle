@@ -1,8 +1,14 @@
 package com.reactnativenavigation.layout.containers;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 
 import com.reactnativenavigation.layout.Layout;
 import com.reactnativenavigation.utils.CompatUtils;
@@ -10,26 +16,34 @@ import com.reactnativenavigation.utils.CompatUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.RelativeLayout.ABOVE;
+import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 
-public class BottomTabsLayout implements Layout, BottomTabs.BottomTabsSelectionListener {
+public class BottomTabsLayout implements Layout, BottomNavigationView.OnNavigationItemSelectedListener {
 
 	public static class TooManyTabs extends RuntimeException {
+		//
 	}
 
 	private final RelativeLayout view;
-	private final BottomTabs bottomTabs;
-	private final List<View> tabContentViews = new ArrayList<>();
+	private final BottomNavigationView bottomNavigationView;
+	private final List<Layout> tabs = new ArrayList<>();
 	private int currentTab;
 
 	public BottomTabsLayout(Activity activity) {
 		view = new RelativeLayout(activity);
 		view.setId(CompatUtils.generateViewId());
 
-		//TODO inline everything. unneeded complexity
-		bottomTabs = new BottomTabs();
-		bottomTabs.attach(view);
-		bottomTabs.setSelectionListener(this);
+		bottomNavigationView = new BottomNavigationView(view.getContext());
+		bottomNavigationView.setId(CompatUtils.generateViewId());
+		bottomNavigationView.setBackgroundColor(Color.DKGRAY);
+		bottomNavigationView.setOnNavigationItemSelectedListener(this);
+		LayoutParams lp = new LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+		lp.addRule(ALIGN_PARENT_BOTTOM);
+		bottomNavigationView.setLayoutParams(lp);
+		view.addView(bottomNavigationView, lp);
 	}
 
 	@Override
@@ -42,38 +56,35 @@ public class BottomTabsLayout implements Layout, BottomTabs.BottomTabsSelectionL
 		//
 	}
 
+	@Override
+	public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
+		hideTab(currentTab);
+		currentTab = item.getItemId();
+		showTab(currentTab);
+		return true;
+	}
 
-	public void addTabContent(String label, Layout tabContent) {
-		if (tabContentViews.size() >= 5) {
+	public void addTab(String label, Layout tabLayout) {
+		if (tabs.size() >= 5) {
 			throw new TooManyTabs();
 		}
-		bottomTabs.add(label);
-		attachTabContent(tabContent.getView());
-		tabContentViews.add(tabContent.getView());
+		int tabId = bottomNavigationView.getMenu().size();
+		bottomNavigationView.getMenu().add(0, tabId, Menu.NONE, label);
+		LayoutParams tabParams = new LayoutParams(MATCH_PARENT, MATCH_PARENT);
+		tabParams.addRule(ABOVE, bottomNavigationView.getId());
+		view.addView(tabLayout.getView(), tabParams);
+		tabs.add(tabLayout);
 
-		if (tabContentViews.size() > 1) {
-			tabContent.getView().setVisibility(View.GONE);
+		if (tabs.size() > 1) {
+			tabLayout.getView().setVisibility(View.GONE);
 		}
-	}
-
-	@Override
-	public void onTabSelected(int index) {
-		hideTab(currentTab);
-		currentTab = index;
-		showTab(currentTab);
-	}
-
-	private void attachTabContent(View tabContent) {
-		RelativeLayout.LayoutParams tabParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-		tabParams.addRule(ABOVE, bottomTabs.getViewId());
-		view.addView(tabContent, tabParams);
 	}
 
 	private void showTab(int tabId) {
-		tabContentViews.get(tabId).setVisibility(View.VISIBLE);
+		tabs.get(tabId).getView().setVisibility(View.VISIBLE);
 	}
 
 	private void hideTab(int tabId) {
-		tabContentViews.get(tabId).setVisibility(View.GONE);
+		tabs.get(tabId).getView().setVisibility(View.GONE);
 	}
 }

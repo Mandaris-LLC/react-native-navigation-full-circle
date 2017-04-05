@@ -4,9 +4,9 @@ import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.layout.containers.BottomTabsLayout;
-import com.reactnativenavigation.layout.containers.LayoutStack;
 import com.reactnativenavigation.layout.containers.RootLayout;
 import com.reactnativenavigation.layout.containers.SideMenuLayout;
+import com.reactnativenavigation.layout.containers.StackLayout;
 
 public class LayoutFactory {
 
@@ -77,7 +77,7 @@ public class LayoutFactory {
 	}
 
 	private Layout createContainerStack(LayoutNode node) {
-		final LayoutStack layoutStack = new LayoutStack(activity);
+		final StackLayout layoutStack = new StackLayout(activity);
 		for (LayoutNode child : node.children) {
 			layoutStack.push(create(child));
 		}
@@ -87,8 +87,8 @@ public class LayoutFactory {
 	private Layout createBottomTabs(LayoutNode node) {
 		final BottomTabsLayout tabsContainer = new BottomTabsLayout(activity);
 		for (int i = 0; i < node.children.size(); i++) {
-			final Layout tabContent = create(node.children.get(i));
-			tabsContainer.addTabContent("#" + i, tabContent);
+			final Layout tabLayout = create(node.children.get(i));
+			tabsContainer.addTab("#" + i, tabLayout);
 		}
 		return tabsContainer;
 	}

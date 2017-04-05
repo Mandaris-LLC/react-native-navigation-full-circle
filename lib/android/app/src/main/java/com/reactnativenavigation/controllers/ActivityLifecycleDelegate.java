@@ -1,7 +1,8 @@
-package com.reactnativenavigation;
+package com.reactnativenavigation.controllers;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReactContext;
+import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.react.DevPermissionRequest;
 import com.reactnativenavigation.react.NavigationEventEmitter;
 

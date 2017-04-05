@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.layout.Layout;
-import com.reactnativenavigation.layout.containers.LayoutStack;
+import com.reactnativenavigation.layout.containers.StackLayout;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
 	private View contentView;
@@ -63,7 +63,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
 	@Override
 	public void onBackPressed() {
-		if (layout instanceof LayoutStack && ((LayoutStack) layout).onBackPressed()) {
+		if (layout instanceof StackLayout && ((StackLayout) layout).onBackPressed()) {
 			// do nothing, layout pops
 		} else {
 			super.onBackPressed();

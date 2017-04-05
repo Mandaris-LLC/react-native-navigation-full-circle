@@ -9,12 +9,12 @@ import com.reactnativenavigation.utils.CompatUtils;
 
 import java.util.Stack;
 
-public class LayoutStack implements Layout {
+public class StackLayout implements Layout {
 
 	private final Stack<Layout> stack = new Stack<>();
 	private final FrameLayout view;
 
-	public LayoutStack(Context context) {
+	public StackLayout(Context context) {
 		view = new FrameLayout(context);
 		view.setId(CompatUtils.generateViewId());
 	}
