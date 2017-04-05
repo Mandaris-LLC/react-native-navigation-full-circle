@@ -41,12 +41,7 @@ describe('screen stack', () => {
     await device.relaunchApp();
   });
 
-  it('push screen', async () => {
-    await elementByLabel('Push').tap();
-    await expect(elementByLabel('Pushed Screen')).toBeVisible();
-  });
-
-  it('pop screen', async () => {
+  it('push and pop screen', async () => {
     await elementByLabel('Push').tap();
     await expect(elementByLabel('Pushed Screen')).toBeVisible();
     await elementByLabel('Pop').tap();
