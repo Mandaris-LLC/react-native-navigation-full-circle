@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.layout.Layout;
-import com.reactnativenavigation.react.NavigationEventEmitter;
+import com.reactnativenavigation.react.NavigationEvent;
 import com.reactnativenavigation.utils.CompatUtils;
 
 public class RootLayout implements Layout, View.OnAttachStateChangeListener {
@@ -61,10 +61,10 @@ public class RootLayout implements Layout, View.OnAttachStateChangeListener {
 	}
 
 	private void onStart() {
-		new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext()).containerStart(id);
+		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(id);
 	}
 
 	private void onStop() {
-		new NavigationEventEmitter(reactInstanceManager.getCurrentReactContext()).containerStop(id);
+		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(id);
 	}
 }

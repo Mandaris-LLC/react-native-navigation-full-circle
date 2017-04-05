@@ -7,14 +7,14 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import static com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
-public class NavigationEventEmitter {
+public class NavigationEvent {
 	private static final String onAppLaunched = "RNN.appLaunched";
 	private static final String containerStart = "RNN.containerStart";
 	private static final String containerStop = "RNN.containerStop";
 
 	private final RCTDeviceEventEmitter emitter;
 
-	public NavigationEventEmitter(ReactContext reactContext) {
+	public NavigationEvent(ReactContext reactContext) {
 		this.emitter = reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
 	}
 
@@ -23,16 +23,10 @@ public class NavigationEventEmitter {
 	}
 
 	public void containerStop(String id) {
-		WritableMap data = Arguments.createMap();
-		data.putString("id", id);
-//        emit(containerStop, data);
 		emit(containerStop, id);
 	}
 
 	public void containerStart(String id) {
-		WritableMap data = Arguments.createMap();
-		data.putString("id", id);
-//        emit(containerStart, data);
 		emit(containerStart, id);
 	}
 
