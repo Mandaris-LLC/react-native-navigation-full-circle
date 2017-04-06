@@ -29,6 +29,7 @@
     "xcode": "open playground/ios/playground.xcodeproj",
     "install-android": "cd playground/android && ./gradlew installDebug",
     "uninstall-android": "cd playground/android && ./gradlew uninstallAll",
+    "clean": "node ./scripts/clean.js",
     "start": "node ./scripts/start.js",
     "test-js": "node ./scripts/test-js.js",
     "test-unit-android": "node ./scripts/test.unit.android.js",
