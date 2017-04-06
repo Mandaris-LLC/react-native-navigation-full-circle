@@ -18,6 +18,7 @@ public class RootLayout implements Layout, View.OnAttachStateChangeListener {
 	private final FrameLayout view;
 	private final ReactRootView reactRootView;
 	private final ReactInstanceManager reactInstanceManager;
+	private StackLayout parentStackLayout;
 
 	public RootLayout(Activity activity, String id, String name, final ReactInstanceManager reactInstanceManager) {
 		this.id = id;
@@ -66,5 +67,14 @@ public class RootLayout implements Layout, View.OnAttachStateChangeListener {
 
 	private void onStop() {
 		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(id);
+	}
+
+	public void setParentStackLayout(final StackLayout parentStackLayout) {
+		this.parentStackLayout = parentStackLayout;
+	}
+
+	@Override
+	public StackLayout getParentStackLayout() {
+		return parentStackLayout;
 	}
 }

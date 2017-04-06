@@ -55,6 +55,7 @@ dependencies {
     compile 'com.facebook.react:react-native:+'
 
     // third party
+    compile 'com.bluelinelabs:conductor:2.1.1'
     compile 'com.aurelhubert:ahbottomnavigation:1.3.3'
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
 

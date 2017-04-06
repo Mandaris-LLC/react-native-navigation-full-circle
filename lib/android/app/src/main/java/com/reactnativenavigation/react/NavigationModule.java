@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationActivity;
+import com.reactnativenavigation.controllers.Store;
 import com.reactnativenavigation.layout.Layout;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
@@ -17,10 +18,12 @@ import com.reactnativenavigation.utils.UiThread;
 public class NavigationModule extends ReactContextBaseJavaModule {
 	private static final String NAME = "RNNBridgeModule";
 	private final ReactInstanceManager reactInstanceManager;
+	private Store store;
 
-	public NavigationModule(final ReactApplicationContext reactContext, final ReactInstanceManager reactInstanceManager) {
+	public NavigationModule(final ReactApplicationContext reactContext, final ReactInstanceManager reactInstanceManager, final Store store) {
 		super(reactContext);
 		this.reactInstanceManager = reactInstanceManager;
+		this.store = store;
 	}
 
 	@Override
@@ -34,8 +37,8 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 			@Override
 			public void run() {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
-				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager);
-				final Layout rootView = factory.create(layoutTree);
+				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager, store);
+				final Layout rootView = factory.createAndSaveToStore(layoutTree);
 				activity().setContentView(rootView.getView());
 				activity().setLayout(rootView);
 			}
@@ -48,8 +51,8 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 			@Override
 			public void run() {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
-				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager);
-				final Layout rootView = factory.create(layoutTree);
+				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager, store);
+				final Layout rootView = factory.createAndSaveToStore(layoutTree);
 				((StackLayout) activity().getLayout()).push(rootView);
 			}
 		});
@@ -60,8 +63,8 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-
-				((StackLayout) activity().getLayout()).pop();
+				Layout layout = store.getLayout(onContainerId);
+				layout.getParentStackLayout().pop(layout);
 			}
 		});
 	}

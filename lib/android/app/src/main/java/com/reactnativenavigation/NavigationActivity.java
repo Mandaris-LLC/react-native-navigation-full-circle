@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.layout.Layout;
@@ -16,6 +17,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(new FrameLayout(this));
 		app().activityLifecycle.onActivityCreated(this);
 	}
 

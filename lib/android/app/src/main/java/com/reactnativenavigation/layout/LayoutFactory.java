@@ -3,6 +3,7 @@ package com.reactnativenavigation.layout;
 import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
+import com.reactnativenavigation.controllers.Store;
 import com.reactnativenavigation.layout.impl.BottomTabsLayout;
 import com.reactnativenavigation.layout.impl.RootLayout;
 import com.reactnativenavigation.layout.impl.SideMenuLayout;
@@ -12,13 +13,21 @@ public class LayoutFactory {
 
 	private final Activity activity;
 	private ReactInstanceManager reactInstanceManager;
+	private Store store;
 
-	public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager) {
+	public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager, final Store store) {
 		this.activity = activity;
 		this.reactInstanceManager = reactInstanceManager;
+		this.store = store;
 	}
 
-	public Layout create(LayoutNode node) {
+	public Layout createAndSaveToStore(LayoutNode node) {
+		Layout layout = createLayout(node);
+		store.setLayout(node.id, layout);
+		return layout;
+	}
+
+	private Layout createLayout(final LayoutNode node) {
 		switch (node.type) {
 			case Container:
 				return createContainer(node);
@@ -42,7 +51,7 @@ public class LayoutFactory {
 	private Layout createSideMenuRoot(LayoutNode node) {
 		SideMenuLayout sideMenuLayout = new SideMenuLayout(activity);
 		for (LayoutNode child : node.children) {
-			Layout childLayout = create(child);
+			Layout childLayout = createAndSaveToStore(child);
 			switch (child.type) {
 				case SideMenuCenter:
 					sideMenuLayout.addCenterLayout(childLayout);
@@ -61,15 +70,15 @@ public class LayoutFactory {
 	}
 
 	private Layout createSideMenuContent(LayoutNode node) {
-		return create(node.children.get(0));
+		return createAndSaveToStore(node.children.get(0));
 	}
 
 	private Layout createSideMenuLeft(LayoutNode node) {
-		return create(node.children.get(0));
+		return createAndSaveToStore(node.children.get(0));
 	}
 
 	private Layout createSideMenuRight(LayoutNode node) {
-		return create(node.children.get(0));
+		return createAndSaveToStore(node.children.get(0));
 	}
 
 	private Layout createContainer(LayoutNode node) {
@@ -79,7 +88,7 @@ public class LayoutFactory {
 	private Layout createContainerStack(LayoutNode node) {
 		final StackLayout layoutStack = new StackLayout(activity);
 		for (LayoutNode child : node.children) {
-			layoutStack.push(create(child));
+			layoutStack.push(createAndSaveToStore(child));
 		}
 		return layoutStack;
 	}
@@ -87,7 +96,7 @@ public class LayoutFactory {
 	private Layout createBottomTabs(LayoutNode node) {
 		final BottomTabsLayout tabsContainer = new BottomTabsLayout(activity);
 		for (int i = 0; i < node.children.size(); i++) {
-			final Layout tabLayout = create(node.children.get(i));
+			final Layout tabLayout = createAndSaveToStore(node.children.get(i));
 			tabsContainer.addTab("#" + i, tabLayout);
 		}
 		return tabsContainer;

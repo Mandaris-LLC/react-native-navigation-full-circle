@@ -50,7 +50,7 @@ describe('screen stack', () => {
 
   it('pop screen deep in the stack', async () => {
     await elementByLabel('Push').tap();
-    await expect(elementByLabel('Stack Position: 1')).toBeVisible();
+    await expect(elementByLabel('Stack Position: 1')).t\oBeVisible();
     await elementByLabel('Push').tap();
     await expect(elementByLabel('Stack Position: 2')).toBeVisible();
     await elementByLabel('Pop Previous').tap();

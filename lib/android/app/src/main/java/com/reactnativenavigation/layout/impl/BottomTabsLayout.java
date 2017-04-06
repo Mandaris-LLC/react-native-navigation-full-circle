@@ -23,6 +23,8 @@ import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 
 public class BottomTabsLayout implements Layout, BottomNavigationView.OnNavigationItemSelectedListener {
 
+	private StackLayout stackLayout;
+
 	public static class TooManyTabs extends RuntimeException {
 		//
 	}
@@ -86,5 +88,15 @@ public class BottomTabsLayout implements Layout, BottomNavigationView.OnNavigati
 
 	private void hideTab(int tabId) {
 		tabs.get(tabId).getView().setVisibility(View.GONE);
+	}
+
+	@Override
+	public void setParentStackLayout(final StackLayout stackLayout) {
+		this.stackLayout = stackLayout;
+	}
+
+	@Override
+	public StackLayout getParentStackLayout() {
+		return stackLayout;
 	}
 }

@@ -13,6 +13,7 @@ public class StackLayout implements Layout {
 
 	private final Stack<Layout> stack = new Stack<>();
 	private final FrameLayout view;
+	private StackLayout stackLayout;
 
 	public StackLayout(Context context) {
 		view = new FrameLayout(context);
@@ -20,6 +21,7 @@ public class StackLayout implements Layout {
 	}
 
 	public void push(Layout child) {
+		child.setParentStackLayout(this);
 		stack.push(child);
 		view.addView(child.getView());
 		if (stack.size() > 1) {
@@ -38,8 +40,14 @@ public class StackLayout implements Layout {
 		}
 	}
 
-	public void pop(String containerId) {
-
+	public void pop(Layout layout) {
+		if (stack.peek() == layout) {
+			pop();
+		} else {
+			stack.remove(layout);
+			view.removeView(layout.getView());
+			layout.destroy();
+		}
 	}
 
 	public boolean onBackPressed() {
@@ -59,5 +67,15 @@ public class StackLayout implements Layout {
 	@Override
 	public void destroy() {
 		//
+	}
+
+	@Override
+	public void setParentStackLayout(final StackLayout stackLayout) {
+		this.stackLayout = stackLayout;
+	}
+
+	@Override
+	public StackLayout getParentStackLayout() {
+		return stackLayout;
 	}
 }

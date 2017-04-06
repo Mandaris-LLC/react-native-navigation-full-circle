@@ -14,6 +14,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class SideMenuLayout implements Layout {
 
 	private DrawerLayout view;
+	private StackLayout stackLayout;
 
 	public SideMenuLayout(Context context) {
 		view = new DrawerLayout(context);
@@ -49,5 +50,15 @@ public class SideMenuLayout implements Layout {
 	public void addCenterLayout(final Layout childLayout) {
 		View child = childLayout.getView();
 		view.addView(child);
+	}
+
+	@Override
+	public void setParentStackLayout(final StackLayout stackLayout) {
+		this.stackLayout = stackLayout;
+	}
+
+	@Override
+	public StackLayout getParentStackLayout() {
+		return stackLayout;
 	}
 }
