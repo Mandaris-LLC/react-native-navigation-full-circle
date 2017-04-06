@@ -17,15 +17,8 @@ branches:
 cache:
   directories:
     - $YARN_CACHE
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.gradle/nodejs/
-    - $HOME/.android/build-cache
     - $HOME/.m2
     - $ANDROID_HOME/licenses/
-before_cache:
-  - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
 install:
   # node
