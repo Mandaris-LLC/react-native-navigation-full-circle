@@ -54,11 +54,6 @@ dependencies {
     // node_modules
     compile 'com.facebook.react:react-native:+'
 
-    // third party
-    compile 'com.bluelinelabs:conductor:2.1.1'
-    compile 'com.aurelhubert:ahbottomnavigation:1.3.3'
-    compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
-
     // tests
     testCompile 'junit:junit:4.12'
     testCompile 'org.assertj:assertj-core:2.5.0'
