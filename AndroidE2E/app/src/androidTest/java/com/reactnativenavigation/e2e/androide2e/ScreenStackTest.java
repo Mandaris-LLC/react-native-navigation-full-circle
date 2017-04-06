@@ -27,7 +27,7 @@ public class ScreenStackTest extends BaseTest {
 		assertExists(By.text("Stack Position: 2"));
 		elementByText("POP PREVIOUS").click();
 		assertExists(By.text("Stack Position: 2"));
-		elementByText("Pop").click();
+		elementByText("POP").click();
 		assertMainShown();
 	}
 }

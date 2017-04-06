@@ -32,6 +32,6 @@ public class EnvironmentTest extends BaseTest {
 
 	@Test
 	public void androidR() {
-		assertThat(R.string.app_name).isNotZero();
+		assertThat(R.string.bottom_sheet_behavior).isNotZero();
 	}
 }
