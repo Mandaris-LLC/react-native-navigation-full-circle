@@ -14,7 +14,8 @@ function buildProjForDetox() {
             -project playground.xcodeproj
             -sdk iphonesimulator
             -configuration ${conf}
-            -derivedDataPath ./DerivedData/playground`;
+            -derivedDataPath ./DerivedData/playground
+            ONLY_ACTIVE_ARCH=YES`;
 
   if (exec.which(`xcpretty`)) {
     exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
