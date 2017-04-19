@@ -2,7 +2,7 @@ const exec = require('shell-utils').exec;
 
 function run() {
   if (process.env.CI) {
-    console.log(`e2e disabled on CI`); //eslint-disable-line
+    console.log(`android e2e disabled on CI for now`); //eslint-disable-line
     return;
   }
 

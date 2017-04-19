@@ -18,25 +18,25 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(new FrameLayout(this));
-		app().activityLifecycle.onActivityCreated(this);
+		app().getInitializer().onActivityCreated(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		app().activityLifecycle.onActivityResumed(this);
+		app().getInitializer().onActivityResumed(this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		app().activityLifecycle.onActivityPaused(this);
+		app().getInitializer().onActivityPaused(this);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		app().activityLifecycle.onActivityDestroyed(this);
+		app().getInitializer().onActivityDestroyed(this);
 	}
 
 	@Override

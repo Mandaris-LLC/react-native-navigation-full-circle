@@ -4,22 +4,23 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
-import com.reactnativenavigation.controllers.ActivityLifecycleDelegate;
 import com.reactnativenavigation.controllers.Store;
+import com.reactnativenavigation.react.DevPermissionRequest;
+import com.reactnativenavigation.react.NavigationReactInitializer;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 
 public abstract class NavigationApplication extends Application implements ReactApplication {
 
 	private Store store;
 	private NavigationReactNativeHost reactNativeHost;
-	ActivityLifecycleDelegate activityLifecycle;
+	private NavigationReactInitializer initializer;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		store = new Store();
 		reactNativeHost = new NavigationReactNativeHost(this, isDebug(), store);
-		activityLifecycle = new ActivityLifecycleDelegate(reactNativeHost.getReactInstanceManager(), isDebug());
+		initializer = new NavigationReactInitializer(reactNativeHost.getReactInstanceManager(), new DevPermissionRequest(isDebug()));
 	}
 
 	@Override
@@ -28,4 +29,8 @@ public abstract class NavigationApplication extends Application implements React
 	}
 
 	public abstract boolean isDebug();
+
+	NavigationReactInitializer getInitializer() {
+		return initializer;
+	}
 }

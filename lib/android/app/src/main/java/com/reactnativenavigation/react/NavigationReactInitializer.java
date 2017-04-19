@@ -1,22 +1,20 @@
-package com.reactnativenavigation.controllers;
+package com.reactnativenavigation.react;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReactContext;
 import com.reactnativenavigation.NavigationActivity;
-import com.reactnativenavigation.react.DevPermissionRequest;
-import com.reactnativenavigation.react.NavigationEvent;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ActivityLifecycleDelegate {
+public class NavigationReactInitializer {
 
 	private final ReactInstanceManager reactInstanceManager;
 	private final DevPermissionRequest devPermissionRequest;
 	private final AtomicBoolean appLaunchEmitted = new AtomicBoolean(false);
 
-	public ActivityLifecycleDelegate(ReactInstanceManager reactInstanceManager, boolean isDebug) {
+	public NavigationReactInitializer(ReactInstanceManager reactInstanceManager, final DevPermissionRequest devPermissionRequest) {
 		this.reactInstanceManager = reactInstanceManager;
-		this.devPermissionRequest = new DevPermissionRequest(isDebug);
+		this.devPermissionRequest = devPermissionRequest;
 	}
 
 	public void onActivityCreated(NavigationActivity activity) {
