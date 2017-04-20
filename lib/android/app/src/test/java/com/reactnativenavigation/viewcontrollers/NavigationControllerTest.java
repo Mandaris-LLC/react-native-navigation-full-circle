@@ -86,5 +86,6 @@ public class NavigationControllerTest extends BaseTest {
 		assertThat(uut.size()).isEqualTo(2);
 		assertThat(uut.handleBack()).isTrue();
 		assertThat(uut.size()).isEqualTo(1);
+		assertThat(uut.handleBack()).isFalse();
 	}
 }

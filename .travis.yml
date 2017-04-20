@@ -8,6 +8,7 @@ env:
     - ANDROID_HOME=$HOME/android-sdk-macosx
     - PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
     - YARN_CACHE=$HOME/.yarn-cache
+    - CODE_SIGNING_REQUIRED=NO
 
 branches:
   only:
