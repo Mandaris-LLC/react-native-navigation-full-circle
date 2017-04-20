@@ -3,6 +3,9 @@ const exec = require('shell-utils').exec;
 const p = require('path');
 const semver = require('semver');
 
+const VERSION_TAG = 'alpha';
+const VERSION_INC = 'prerelease';
+
 function validateEnv() {
   if (!process.env.CI || !process.env.TRAVIS) {
     throw new Error(`releasing is only available from Travis CI`);
@@ -31,9 +34,12 @@ function setupGit() {
 }
 
 function calcNewVersion() {
-  const nextTaggedVersion = exec.execSyncRead(`npm view ${process.env.npm_package_name}@next version`);
-  console.log(`next tagged version is: ${nextTaggedVersion}`);
-  return semver.inc(nextTaggedVersion, 'prerelease');
+  const currentVersion = exec.execSyncRead(`npm view ${process.env.npm_package_name}@${VERSION_TAG} version`);
+  console.log(`${VERSION_TAG} version: ${currentVersion}`);
+  const packageVersion = process.env.npm_package_version;
+  console.log(`package version: ${packageVersion}`);
+  const greater = semver.gt(currentVersion, packageVersion) ? currentVersion : packageVersion;
+  return semver.inc(greater, VERSION_INC);
 }
 
 function copyNpmRc() {
@@ -45,7 +51,7 @@ function tagAndPublish(newVersion) {
   console.log(`new version is: ${newVersion}`);
   exec.execSync(`npm version ${newVersion} -m "v${newVersion} [ci skip]"`);
   exec.execSyncSilent(`git push deploy --tags`);
-  exec.execSync(`npm publish --tag next`);
+  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
 }
 
 function run() {

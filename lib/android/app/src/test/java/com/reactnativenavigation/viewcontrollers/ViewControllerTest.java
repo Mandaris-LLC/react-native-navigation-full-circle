@@ -14,6 +14,10 @@ public class ViewControllerTest extends BaseTest {
 	public void holdsAView() throws Exception {
 		ViewController uut = new ViewController();
 		assertThat(uut.getView()).isNull();
-		uut.setView(Shadow.newInstanceOf(View.class));
+		View view = Shadow.newInstanceOf(View.class);
+		uut.setView(view);
+		assertThat(uut.getView()).isEqualTo(view);
 	}
+
+
 }
