@@ -61,5 +61,5 @@ public class SideMenuLayout implements Layout {
 	public StackLayout getParentStackLayout() {
 		return stackLayout;
 	}
-	
+
 }
