@@ -12,9 +12,9 @@ public class NavigationReactInitializer {
 	private final DevPermissionRequest devPermissionRequest;
 	private final AtomicBoolean appLaunchEmitted = new AtomicBoolean(false);
 
-	public NavigationReactInitializer(ReactInstanceManager reactInstanceManager, final DevPermissionRequest devPermissionRequest) {
+	public NavigationReactInitializer(ReactInstanceManager reactInstanceManager, boolean isDebug) {
 		this.reactInstanceManager = reactInstanceManager;
-		this.devPermissionRequest = devPermissionRequest;
+		this.devPermissionRequest = new DevPermissionRequest(isDebug);
 	}
 
 	public void onActivityCreated(NavigationActivity activity) {
