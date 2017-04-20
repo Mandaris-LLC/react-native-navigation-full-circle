@@ -19,7 +19,7 @@ public class NavigationControllerTest extends BaseTest {
 		ViewController c1 = new ViewController();
 		ViewController c2 = new ViewController();
 		ViewController c3 = new ViewController();
-		assertThat(new NavigationController(c1, c2, c3).getChildControllers()).containsExactly(c1, c2, c3);
+		assertThat(new NavigationController(c1, c2, c3).getChildControllers()).containsExactly(c3, c2, c1);
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class NavigationControllerTest extends BaseTest {
 		ViewController c2 = new ViewController();
 		uut.push(c1);
 		uut.push(c2);
-		assertThat(uut.getChildControllers()).containsExactly(c1, c2);
+		assertThat(uut.getChildControllers()).containsExactly(c2, c1);
 		uut.pop();
 		assertThat(uut.getChildControllers()).containsExactly(c1);
 		uut.pop();

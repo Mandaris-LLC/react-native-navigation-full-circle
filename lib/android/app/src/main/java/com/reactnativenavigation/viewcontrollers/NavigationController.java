@@ -1,9 +1,10 @@
 package com.reactnativenavigation.viewcontrollers;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 public class NavigationController extends ViewController {
-	private Stack<ViewController> childControllers = new Stack<>();
+
+	private ArrayDeque<ViewController> childControllers = new ArrayDeque<>();
 
 	public NavigationController(ViewController... childControllers) {
 		for (ViewController childController : childControllers) {
@@ -11,7 +12,7 @@ public class NavigationController extends ViewController {
 		}
 	}
 
-	public Stack<ViewController> getChildControllers() {
+	public ArrayDeque<ViewController> getChildControllers() {
 		return childControllers;
 	}
 
