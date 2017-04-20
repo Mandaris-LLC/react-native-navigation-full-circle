@@ -8,40 +8,59 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class NavigationControllerTest extends BaseTest {
 
+	private NavigationController uut;
+	private ViewController child1;
+	private ViewController child2;
+	private ViewController child3;
+
+	@Override
+	public void beforeEach() {
+		super.beforeEach();
+		uut = new NavigationController();
+		child1 = new ViewController();
+		child2 = new ViewController();
+		child3 = new ViewController();
+	}
+
 	@Test
 	public void isAViewController() throws Exception {
-		assertThat(new NavigationController()).isInstanceOf(ViewController.class);
+		assertThat(uut).isInstanceOf(ViewController.class);
 	}
 
 	@Test
 	public void holdsAStackOfViewControllers() throws Exception {
-		assertThat(new NavigationController().getChildControllers()).isEmpty();
-		ViewController c1 = new ViewController();
-		ViewController c2 = new ViewController();
-		ViewController c3 = new ViewController();
-		assertThat(new NavigationController(c1, c2, c3).getChildControllers()).containsExactly(c3, c2, c1);
+		assertThat(uut.getChildControllers()).isEmpty();
+		assertThat(new NavigationController(child1, child2, child3).getChildControllers()).containsExactly(child3, child2, child1);
+		assertThat(new NavigationController(child1, child2, child3).getChildControllers().peek()).isEqualTo(child3);
 	}
 
 	@Test
 	public void push() throws Exception {
-		NavigationController uut = new NavigationController();
-		ViewController c1 = new ViewController();
 		assertThat(uut.getChildControllers()).isEmpty();
-		uut.push(c1);
-		assertThat(uut.getChildControllers()).containsExactly(c1);
+		uut.push(child1);
+		assertThat(uut.getChildControllers()).containsExactly(child1);
 	}
 
 	@Test
 	public void pop() throws Exception {
-		NavigationController uut = new NavigationController();
-		ViewController c1 = new ViewController();
-		ViewController c2 = new ViewController();
-		uut.push(c1);
-		uut.push(c2);
-		assertThat(uut.getChildControllers()).containsExactly(c2, c1);
+		uut.push(child1);
+		uut.push(child2);
+		assertThat(uut.getChildControllers()).containsExactly(child2, child1);
 		uut.pop();
-		assertThat(uut.getChildControllers()).containsExactly(c1);
+		assertThat(uut.getChildControllers()).containsExactly(child1);
 		uut.pop();
 		assertThat(uut.getChildControllers()).isEmpty();
 	}
+
+	@Test
+	public void stackOperations() throws Exception {
+		assertThat(uut.peek()).isNull();
+		assertThat(uut.size()).isZero();
+		assertThat(uut.isEmpty()).isTrue();
+		uut.push(child1);
+		assertThat(uut.peek()).isEqualTo(child1);
+		assertThat(uut.size()).isEqualTo(1);
+		assertThat(uut.isEmpty()).isFalse();
+	}
+
 }

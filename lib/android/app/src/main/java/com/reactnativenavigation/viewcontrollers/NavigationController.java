@@ -23,4 +23,16 @@ public class NavigationController extends ViewController {
 	public void pop() {
 		childControllers.pop();
 	}
+
+	public ViewController peek() {
+		return childControllers.peek();
+	}
+
+	public int size() {
+		return childControllers.size();
+	}
+
+	public boolean isEmpty() {
+		return childControllers.isEmpty();
+	}
 }
