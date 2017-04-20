@@ -19,11 +19,6 @@ cache:
     - $YARN_CACHE
     - $HOME/.m2
 
-before_install:
-  - export IOS_SIMULATOR_UDID=`instruments -s devices | grep "iPhone 7" | awk -F '[ ]' '{print $4}' | awk -F '[\[]' '{print $2}' | sed 's/.$//'`
-  - echo $IOS_SIMULATOR_UDID
-  - open -a "simulator" --args -CurrentDeviceUDID $IOS_SIMULATOR_UDID
-
 install:
   # node
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
@@ -53,4 +48,3 @@ after_script:
 notifications:
   slack:
     secure: SjvEQzfbIer3I88UARe7vlARAFkbCRuosrf2EhsUih17SKtpFuFj8BB+0U89xSxt8QmS4KiuIhj67TOGWnM7GDhy0S0rZCxgYD3VU2zm7cTobWueFvZ0zLFkTqa/8xi9+sZ5Xd1OU4aHGgpfONe34O9qbRP61YR5haJYYFWqVUQb0j6Z60MnvSm2kJJkjPx8iuOTiKoEgfZV3qVziKAN9oKVZsSUpp72cYQJeieKEdSwIBYTFt/G4RuxPxQ5uvGih3qTZBls66P3rydSHR73VbkXSi7edDhPYAhPEKMPidC/nN4UqHJNaGB9ua65LHlOXX7/K/frC/D5//WNnVLOuXHL7AXPZRKQsHwTdA2vjDT2NKvQfPBRVp47tEpQdTa7BHcLjhhJgpPoOVWumjoiD98JToI8Hd23V9OCAFYEkVe14Sr7HFWIm49PoxP6w89aGuYVLY39OJ9SmUbktOY1RYeXrp8sUa/wAxoH1u+W344zVrvAuknd0nx33iycwkKSnPDMGUOviN21XbYqQTLn5ob9rxsNBr/tAkXo9HTcZYqAJZZXX9lIUjEvZ1CU+xv1fxH4zfDWct/U5V6kKsv8pYpLqdZMaR/az02hfxD+tbQaoh1dl9KY5z8PYTMZW9SLqEpcSBevKo+JRyKpMok8Pld8RvtCUarfcHduSmzBAJE=
-
