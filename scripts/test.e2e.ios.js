@@ -30,7 +30,7 @@ function runDetoxUsingMocha() {
   exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
                               BABEL_ENV=test
                               ./node_modules/mocha/bin/mocha e2e
-                                --timeout ${2 * 60 * 1000}
+                                --timeout ${5 * 60 * 1000}
                                 --recursive
                                 --bail`);
 }
