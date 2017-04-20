@@ -8,7 +8,7 @@ public class NavigationController extends ViewController {
 
 	public NavigationController(ViewController... childControllers) {
 		for (ViewController childController : childControllers) {
-			this.childControllers.push(childController);
+			push(childController);
 		}
 	}
 
@@ -18,6 +18,7 @@ public class NavigationController extends ViewController {
 
 	public void push(final ViewController child) {
 		childControllers.push(child);
+		child.setNavigationController(this);
 	}
 
 	public void pop() {

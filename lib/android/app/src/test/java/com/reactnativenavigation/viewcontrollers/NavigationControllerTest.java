@@ -63,4 +63,13 @@ public class NavigationControllerTest extends BaseTest {
 		assertThat(uut.isEmpty()).isFalse();
 	}
 
+	@Test
+	public void pushAssignsRefToSelfOnPushedController() throws Exception {
+		assertThat(child1.getNavigationController()).isNull();
+		uut.push(child1);
+		assertThat(child1.getNavigationController()).isEqualTo(uut);
+
+		NavigationController anotherNavController = new NavigationController(child2);
+		assertThat(child2.getNavigationController()).isEqualTo(anotherNavController);
+	}
 }
