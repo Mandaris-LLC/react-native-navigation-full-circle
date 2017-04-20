@@ -20,7 +20,7 @@ cache:
     - $HOME/.m2
 
 before_install:
-  - export IOS_SIMULATOR_UDID=`instruments -s devices | grep "iPhone 7" | awk -F '[ ]' '{print $4}' | awk -F '[\[]' '{print $2}' | sed 's/.$//'`
+  - export IOS_SIMULATOR_UDID=`instruments -s devices | grep "iPhone 7 (10.3" | awk -F '[ ]' '{print $4}' | awk -F '[\[]' '{print $2}' | sed 's/.$//'`
   - echo $IOS_SIMULATOR_UDID
   - open -a "simulator" --args -CurrentDeviceUDID $IOS_SIMULATOR_UDID
 
