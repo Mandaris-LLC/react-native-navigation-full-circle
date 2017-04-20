@@ -33,4 +33,9 @@ public class ViewControllerTest extends BaseTest {
 		NavigationController nav = new NavigationController(uut);
 		assertThat(uut.getNavigationController()).isEqualTo(nav);
 	}
+
+	@Test
+	public void handleBackDefaultFalse() throws Exception {
+		assertThat(uut.handleBack()).isFalse();
+	}
 }

@@ -72,4 +72,19 @@ public class NavigationControllerTest extends BaseTest {
 		NavigationController anotherNavController = new NavigationController(child2);
 		assertThat(child2.getNavigationController()).isEqualTo(anotherNavController);
 	}
+
+	@Test
+	public void handleBack_PopsUnlessSingleChild() throws Exception {
+		assertThat(uut.isEmpty()).isTrue();
+		assertThat(uut.handleBack()).isFalse();
+
+		uut.push(child1);
+		assertThat(uut.size()).isEqualTo(1);
+		assertThat(uut.handleBack()).isFalse();
+
+		uut.push(child2);
+		assertThat(uut.size()).isEqualTo(2);
+		assertThat(uut.handleBack()).isTrue();
+		assertThat(uut.size()).isEqualTo(1);
+	}
 }

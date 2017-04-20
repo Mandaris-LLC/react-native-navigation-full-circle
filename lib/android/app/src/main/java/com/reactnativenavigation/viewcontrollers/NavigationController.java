@@ -17,8 +17,8 @@ public class NavigationController extends ViewController {
 	}
 
 	public void push(final ViewController child) {
-		childControllers.push(child);
 		child.setNavigationController(this);
+		childControllers.push(child);
 	}
 
 	public void pop() {
@@ -35,5 +35,15 @@ public class NavigationController extends ViewController {
 
 	public boolean isEmpty() {
 		return childControllers.isEmpty();
+	}
+
+	@Override
+	public boolean handleBack() {
+		if (size() > 1) {
+			pop();
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -23,4 +23,8 @@ public class ViewController {
 	void setNavigationController(final NavigationController navigationController) {
 		this.navigationController = navigationController;
 	}
+
+	public boolean handleBack() {
+		return false;
+	}
 }

@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.reactnativenavigation.layout.impl.StackLayout;
 
+//TODO delete
 public interface Layout {
 	void setParentStackLayout(StackLayout stackLayout);
 
