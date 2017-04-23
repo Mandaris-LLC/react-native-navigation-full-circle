@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.mocks.SimpleViewController;
 
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class ViewControllerTest extends BaseTest {
 	public void beforeEach() {
 		super.beforeEach();
 		activity = newActivity();
-		uut = new ViewController(activity);
+		uut = new SimpleViewController(activity);
 	}
 
 	@Test

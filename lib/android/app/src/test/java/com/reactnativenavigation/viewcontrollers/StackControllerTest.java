@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.mocks.SimpleViewController;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -25,9 +26,9 @@ public class StackControllerTest extends BaseTest {
 		super.beforeEach();
 		activity = newActivity();
 		uut = new StackController(activity);
-		child1 = new ViewController(activity);
-		child2 = new ViewController(activity);
-		child3 = new ViewController(activity);
+		child1 = new SimpleViewController(activity);
+		child2 = new SimpleViewController(activity);
+		child3 = new SimpleViewController(activity);
 	}
 
 	@Test

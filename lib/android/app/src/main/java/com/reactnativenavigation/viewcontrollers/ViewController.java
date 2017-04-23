@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-public class ViewController {
+public abstract class ViewController {
 	private final Activity activity;
 	private final View view;
 	private StackController stackController;
@@ -14,9 +14,7 @@ public class ViewController {
 		this.view = onCreateView();
 	}
 
-	protected View onCreateView() {
-		return new View(getActivity());
-	}
+	protected abstract View onCreateView();
 
 	public boolean handleBack() {
 		return false;
