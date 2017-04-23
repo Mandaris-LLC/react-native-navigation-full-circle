@@ -20,9 +20,9 @@ run_f () {
 }
 
 run_f "yarn install"
-run_f "yarn run test-js"
-run_f "yarn run test-unit-android"
+# run_f "yarn run test-js"
+# run_f "yarn run test-unit-android"
 run_f "yarn run test-unit-ios -- release"
-run_f "yarn run test-e2e-android"
+# run_f "yarn run test-e2e-android"
 run_f "yarn run test-e2e-ios -- release"
 run_f "yarn run release"
