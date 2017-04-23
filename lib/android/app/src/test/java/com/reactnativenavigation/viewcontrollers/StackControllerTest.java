@@ -1,14 +1,21 @@
 package com.reactnativenavigation.viewcontrollers;
 
+import android.app.Activity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
 import com.reactnativenavigation.BaseTest;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class NavigationControllerTest extends BaseTest {
+@Ignore
+public class StackControllerTest extends BaseTest {
 
-	private NavigationController uut;
+	private Activity activity;
+	private StackController uut;
 	private ViewController child1;
 	private ViewController child2;
 	private ViewController child3;
@@ -16,10 +23,11 @@ public class NavigationControllerTest extends BaseTest {
 	@Override
 	public void beforeEach() {
 		super.beforeEach();
-		uut = new NavigationController();
-		child1 = new ViewController();
-		child2 = new ViewController();
-		child3 = new ViewController();
+		activity = newActivity();
+		uut = new StackController(activity);
+		child1 = new ViewController(activity);
+		child2 = new ViewController(activity);
+		child3 = new ViewController(activity);
 	}
 
 	@Test
@@ -30,8 +38,9 @@ public class NavigationControllerTest extends BaseTest {
 	@Test
 	public void holdsAStackOfViewControllers() throws Exception {
 		assertThat(uut.getChildControllers()).isEmpty();
-		assertThat(new NavigationController(child1, child2, child3).getChildControllers()).containsExactly(child3, child2, child1);
-		assertThat(new NavigationController(child1, child2, child3).getChildControllers().peek()).isEqualTo(child3);
+		uut.setChildControllers(child1, child2, child3);
+		assertThat(uut.getChildControllers()).containsExactly(child3, child2, child1);
+		assertThat(uut.getChildControllers().peek()).isEqualTo(child3);
 	}
 
 	@Test
@@ -65,12 +74,13 @@ public class NavigationControllerTest extends BaseTest {
 
 	@Test
 	public void pushAssignsRefToSelfOnPushedController() throws Exception {
-		assertThat(child1.getNavigationController()).isNull();
+		assertThat(child1.getParentStackController()).isNull();
 		uut.push(child1);
-		assertThat(child1.getNavigationController()).isEqualTo(uut);
+		assertThat(child1.getParentStackController()).isEqualTo(uut);
 
-		NavigationController anotherNavController = new NavigationController(child2);
-		assertThat(child2.getNavigationController()).isEqualTo(anotherNavController);
+		StackController anotherNavController = new StackController(activity);
+		anotherNavController.setChildControllers(child2);
+		assertThat(child2.getParentStackController()).isEqualTo(anotherNavController);
 	}
 
 	@Test
@@ -87,5 +97,20 @@ public class NavigationControllerTest extends BaseTest {
 		assertThat(uut.handleBack()).isTrue();
 		assertThat(uut.size()).isEqualTo(1);
 		assertThat(uut.handleBack()).isFalse();
+	}
+
+	@Test
+	public void constructsSelfWithFrameLayout() throws Exception {
+		assertThat(uut.getView())
+				.isNotNull()
+				.isInstanceOf(ViewGroup.class)
+				.isInstanceOf(FrameLayout.class);
+	}
+
+	@Test
+	public void pushAddsToViewTree() throws Exception {
+		assertThat(uut.getView().getChildCount()).isZero();
+		uut.push(child1);
+		assertThat(uut.getView().getChildCount()).isEqualTo(1);
 	}
 }

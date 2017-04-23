@@ -1,8 +1,11 @@
 package com.reactnativenavigation;
 
+import android.app.Activity;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -17,5 +20,9 @@ public abstract class BaseTest {
 	@After
 	public void afterEach() {
 		//
+	}
+
+	public Activity newActivity() {
+		return Robolectric.setupActivity(Activity.class);
 	}
 }
