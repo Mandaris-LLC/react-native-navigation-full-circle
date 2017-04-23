@@ -6,12 +6,11 @@ import android.view.View;
 
 public abstract class ViewController {
 	private final Activity activity;
-	private final View view;
+	private View view;
 	private StackController stackController;
 
 	public ViewController(Activity activity) {
 		this.activity = activity;
-		this.view = onCreateView();
 	}
 
 	protected abstract View onCreateView();
@@ -34,6 +33,9 @@ public abstract class ViewController {
 	}
 
 	public View getView() {
+		if (view == null) {
+			view = onCreateView();
+		}
 		return view;
 	}
 }

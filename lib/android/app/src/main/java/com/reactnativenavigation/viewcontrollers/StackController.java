@@ -1,7 +1,6 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -35,8 +34,14 @@ public class StackController extends ViewController {
 		getView().addView(child.getView());
 	}
 
+	public boolean canPop() {
+		return childControllers.size() > 1;
+	}
+
 	public void pop() {
-		childControllers.pop();
+		if (canPop()) {
+			childControllers.pop();
+		}
 	}
 
 	public ViewController peek() {
@@ -53,7 +58,7 @@ public class StackController extends ViewController {
 
 	@Override
 	public boolean handleBack() {
-		if (size() > 1) {
+		if (canPop()) {
 			pop();
 			return true;
 		} else {
@@ -62,7 +67,7 @@ public class StackController extends ViewController {
 	}
 
 	@Override
-	protected View onCreateView() {
+	protected ViewGroup onCreateView() {
 		return new FrameLayout(getActivity());
 	}
 }

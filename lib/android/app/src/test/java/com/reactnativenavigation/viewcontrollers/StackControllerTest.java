@@ -7,12 +7,10 @@ import android.widget.FrameLayout;
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-@Ignore
 public class StackControllerTest extends BaseTest {
 
 	private Activity activity;
@@ -58,8 +56,6 @@ public class StackControllerTest extends BaseTest {
 		assertThat(uut.getChildControllers()).containsExactly(child2, child1);
 		uut.pop();
 		assertThat(uut.getChildControllers()).containsExactly(child1);
-		uut.pop();
-		assertThat(uut.getChildControllers()).isEmpty();
 	}
 
 	@Test
@@ -98,6 +94,29 @@ public class StackControllerTest extends BaseTest {
 		assertThat(uut.handleBack()).isTrue();
 		assertThat(uut.size()).isEqualTo(1);
 		assertThat(uut.handleBack()).isFalse();
+	}
+
+	@Test
+	public void popDoesNothingWhenZeroOrOneChild() throws Exception {
+		assertThat(uut.getChildControllers().size()).isZero();
+		uut.pop();
+		assertThat(uut.getChildControllers().size()).isZero();
+
+		uut.push(child1);
+		uut.pop();
+		assertThat(uut.getChildControllers().size()).isEqualTo(1);
+	}
+
+	@Test
+	public void canPopWhenSizeIsMoreThanOne() throws Exception {
+		assertThat(uut.getChildControllers().size()).isZero();
+		assertThat(uut.canPop()).isFalse();
+		uut.push(child1);
+		assertThat(uut.getChildControllers().size()).isEqualTo(1);
+		assertThat(uut.canPop()).isFalse();
+		uut.push(child2);
+		assertThat(uut.getChildControllers().size()).isEqualTo(2);
+		assertThat(uut.canPop()).isTrue();
 	}
 
 	@Test
