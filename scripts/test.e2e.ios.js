@@ -7,7 +7,7 @@ function buildProjForDetox() {
   const scheme = release ? `playground_release` : `playground`;
   const conf = release ? `Release` : `Debug`;
 
-  const cmd = `RCT_NO_LAUNCH_PACKAGER=true
+  exec.execSync(`RCT_NO_LAUNCH_PACKAGER=true
             cd ./playground/ios && xcodebuild
             build
             -scheme ${scheme}
@@ -15,13 +15,7 @@ function buildProjForDetox() {
             -sdk iphonesimulator
             -configuration ${conf}
             -derivedDataPath ./DerivedData/playground
-            ONLY_ACTIVE_ARCH=YES`;
-
-  if (exec.which(`xcpretty`)) {
-    exec.execSync(`${cmd} | xcpretty && exit \${PIPESTATUS[0]}`);
-  } else {
-    exec.execSync(`${cmd}`);
-  }
+            ONLY_ACTIVE_ARCH=YES && echo $?`);
 }
 
 function runDetoxUsingMocha() {
