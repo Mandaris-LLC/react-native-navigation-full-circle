@@ -89,17 +89,4 @@ public class StackController extends ViewController {
 	protected ViewGroup onCreateView() {
 		return new FrameLayout(getActivity());
 	}
-
-//	public ViewController getChildController(final int index) {
-//		Iterator<ViewController> it = childControllers.descendingIterator();
-//		int currentIndex = 0;
-//		while (it.hasNext()) {
-//			ViewController controller = it.next();
-//			if (currentIndex == index) {
-//				return controller;
-//			}
-//			currentIndex++;
-//		}
-//		return null;
-//	}
 }

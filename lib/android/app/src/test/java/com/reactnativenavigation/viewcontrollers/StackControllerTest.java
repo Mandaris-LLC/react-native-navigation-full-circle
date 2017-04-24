@@ -172,17 +172,6 @@ public class StackControllerTest extends BaseTest {
 		assertHasSingleChildViewOfController(child2);
 	}
 
-//	@Test
-//	public void getControllerAtIndex() throws Exception {
-//		uut.push(child1);
-//		uut.push(child2);
-//		uut.push(child3);
-//		assertThat(uut.getChildController(0)).isEqualTo(child1);
-//		assertThat(uut.getChildController(1)).isEqualTo(child2);
-//		assertThat(uut.getChildController(2)).isEqualTo(child3);
-//		assertThat(uut.getChildController(3)).isNull();
-//	}
-
 	private void assertHasSingleChildViewOfController(ViewController childController) {
 		assertThat(uut.getView().getChildCount()).isEqualTo(1);
 		assertThat(uut.getView().getChildAt(0)).isEqualTo(childController.getView());
