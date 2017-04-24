@@ -9,7 +9,7 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
-	private ViewController layout;
+	private ViewController viewController;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,13 +37,13 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 	}
 
 
-	public void setLayout(ViewController layout) {
-		this.layout = layout;
-		setContentView(layout.getView());
+	public void setViewController(ViewController viewController) {
+		this.viewController = viewController;
+		setContentView(viewController.getView());
 	}
 
-	public ViewController getLayout() {
-		return layout;
+	public ViewController getViewController() {
+		return viewController;
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
 	@Override
 	public void onBackPressed() {
-		if (!layout.handleBack()) {
+		if (!viewController.handleBack()) {
 			super.onBackPressed();
 		}
 	}

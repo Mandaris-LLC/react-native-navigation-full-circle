@@ -6,7 +6,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationActivity;
-import com.reactnativenavigation.controllers.Store;
+import com.reactnativenavigation.Store;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
 import com.reactnativenavigation.parse.JSONParser;
@@ -38,7 +38,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager, store);
 				final ViewController rootView = factory.createAndSaveToStore(layoutTree);
-				activity().setLayout(rootView);
+				activity().setViewController(rootView);
 			}
 		});
 	}

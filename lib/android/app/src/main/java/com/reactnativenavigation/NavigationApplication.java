@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
-import com.reactnativenavigation.controllers.Store;
 import com.reactnativenavigation.react.NavigationReactInitializer;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 

@@ -5,7 +5,7 @@ import android.app.Application;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-import com.reactnativenavigation.controllers.Store;
+import com.reactnativenavigation.Store;
 
 import java.util.Arrays;
 import java.util.List;

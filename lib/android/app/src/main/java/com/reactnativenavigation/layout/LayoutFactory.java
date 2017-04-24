@@ -3,7 +3,7 @@ package com.reactnativenavigation.layout;
 import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
-import com.reactnativenavigation.controllers.Store;
+import com.reactnativenavigation.Store;
 import com.reactnativenavigation.layout.impl.RootLayout;
 import com.reactnativenavigation.viewcontrollers.StackController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
@@ -11,8 +11,8 @@ import com.reactnativenavigation.viewcontrollers.ViewController;
 public class LayoutFactory {
 
 	private final Activity activity;
-	private ReactInstanceManager reactInstanceManager;
-	private Store store;
+	private final ReactInstanceManager reactInstanceManager;
+	private final Store store;
 
 	public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager, final Store store) {
 		this.activity = activity;

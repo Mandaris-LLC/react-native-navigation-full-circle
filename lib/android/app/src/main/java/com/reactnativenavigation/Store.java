@@ -1,4 +1,4 @@
-package com.reactnativenavigation.controllers;
+package com.reactnativenavigation;
 
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
@@ -8,8 +8,8 @@ import java.util.Map;
 public class Store {
 	private Map<String, ViewController> viewControllersById = new HashMap<>();
 
-	public void setViewController(String id, ViewController layout) {
-		viewControllersById.put(id, layout);
+	public void setViewController(String id, ViewController viewController) {
+		viewControllersById.put(id, viewController);
 	}
 
 	public ViewController getViewController(String id) {
