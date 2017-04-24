@@ -21,21 +21,21 @@ cache:
     - $HOME/.m2
 
 install:
-  # node
+        # node:
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
   - export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
-  # yarn
+        # yarn:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - yarn config set cache-folder $YARN_CACHE
-  # android sdk
+        # android sdk:
   - ./scripts/installAndroidSDK.sh
-  # android emulator
+        # android emulator:
   #- echo yes | android update sdk --no-ui --all --filter "sys-img-armeabi-v7a-google_apis-25"
   #- echo no | android create avd --name AVD -t android-25 --abi google_apis/armeabi-v7a
   #- android list avd
-  # fbsimctl
+        # fbsimctl:
   - brew tap facebook/fb && brew install fbsimctl
 
 script:
