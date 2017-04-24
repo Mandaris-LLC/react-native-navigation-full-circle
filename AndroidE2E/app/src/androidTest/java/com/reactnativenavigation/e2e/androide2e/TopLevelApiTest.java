@@ -39,6 +39,7 @@ public class TopLevelApiTest extends BaseTest {
 	}
 
 	@Test
+	@Ignore
 	public void unmountIsCalledOnPop() throws Exception {
 		launchTheApp();
 		assertMainShown();

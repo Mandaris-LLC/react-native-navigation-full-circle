@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.Store;
-import com.reactnativenavigation.layout.impl.RootLayout;
+import com.reactnativenavigation.layout.impl.ReactRootViewController;
 import com.reactnativenavigation.viewcontrollers.StackController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
@@ -82,7 +82,7 @@ public class LayoutFactory {
 //	}
 
 	private ViewController createContainer(LayoutNode node) {
-		return new RootLayout(activity, node.id, node.data.optString("name"), reactInstanceManager);
+		return new ReactRootViewController(activity, node.id, node.data.optString("name"), reactInstanceManager);
 	}
 
 	private ViewController createContainerStack(LayoutNode node) {

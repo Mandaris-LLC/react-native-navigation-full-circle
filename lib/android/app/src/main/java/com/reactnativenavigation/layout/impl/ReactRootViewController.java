@@ -9,13 +9,13 @@ import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.react.NavigationEvent;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
-public class RootLayout extends ViewController implements View.OnAttachStateChangeListener {
+public class ReactRootViewController extends ViewController implements View.OnAttachStateChangeListener {
 
 	private final String id;
 	private final String name;
 	private final ReactInstanceManager reactInstanceManager;
 
-	public RootLayout(final Activity activity, final String id, final String name, final ReactInstanceManager reactInstanceManager) {
+	public ReactRootViewController(final Activity activity, final String id, final String name, final ReactInstanceManager reactInstanceManager) {
 		super(activity);
 		this.id = id;
 		this.name = name;

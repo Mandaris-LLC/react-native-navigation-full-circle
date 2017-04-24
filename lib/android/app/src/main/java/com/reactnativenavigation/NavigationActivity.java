@@ -42,10 +42,6 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 		setContentView(viewController.getView());
 	}
 
-	public ViewController getViewController() {
-		return viewController;
-	}
-
 	@Override
 	public void invokeDefaultOnBackPressed() {
 		onBackPressed();
