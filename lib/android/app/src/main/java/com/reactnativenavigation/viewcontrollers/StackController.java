@@ -29,9 +29,13 @@ public class StackController extends ViewController {
 	}
 
 	public void push(final ViewController child) {
+		ViewController previousTop = peek();
 		child.setParentStackController(this);
 		childControllers.push(child);
 		getView().addView(child.getView());
+		if (previousTop != null) {
+			getView().removeView(previousTop.getView());
+		}
 	}
 
 	public boolean canPop() {
@@ -40,7 +44,10 @@ public class StackController extends ViewController {
 
 	public void pop() {
 		if (canPop()) {
-			childControllers.pop();
+			ViewController poppedController = childControllers.pop();
+			getView().removeView(poppedController.getView());
+			ViewController previousTop = peek();
+			getView().addView(previousTop.getView());
 		}
 	}
 

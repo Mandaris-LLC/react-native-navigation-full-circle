@@ -133,4 +133,24 @@ public class StackControllerTest extends BaseTest {
 		uut.push(child1);
 		assertThat(uut.getView().getChildCount()).isEqualTo(1);
 	}
+
+	@Test
+	public void pushRemovesPreviousFromTree() throws Exception {
+		assertThat(uut.getView().getChildCount()).isZero();
+		uut.push(child1);
+		assertThat(uut.getView().getChildCount()).isEqualTo(1);
+		uut.push(child2);
+		assertThat(uut.getView().getChildCount()).isEqualTo(1);
+	}
+
+	@Test
+	public void popReplacesViewWithPrevious() throws Exception {
+		uut.push(child1);
+		uut.push(child2);
+		assertThat(uut.getView().getChildCount()).isEqualTo(1);
+		assertThat(uut.getView().getChildAt(0)).isEqualTo(child2.getView());
+		uut.pop();
+		assertThat(uut.getView().getChildCount()).isEqualTo(1);
+		assertThat(uut.getView().getChildAt(0)).isEqualTo(child1.getView());
+	}
 }
