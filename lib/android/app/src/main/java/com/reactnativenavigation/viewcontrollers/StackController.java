@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import java.util.ArrayDeque;
+import com.reactnativenavigation.utils.Stack;
+import com.reactnativenavigation.utils.StackImpl;
 
 public class StackController extends ViewController {
-	private ArrayDeque<ViewController> childControllers = new ArrayDeque<>();
+	private Stack<ViewController> childControllers = new StackImpl<>();
 
 	public StackController(final Activity activity) {
 		super(activity);
@@ -18,7 +19,7 @@ public class StackController extends ViewController {
 		return (ViewGroup) super.getView();
 	}
 
-	public ArrayDeque<ViewController> getChildControllers() {
+	public Stack<ViewController> getChildControllers() {
 		return childControllers;
 	}
 
