@@ -30,9 +30,11 @@ public class StackController extends ViewController {
 
 	public void push(final ViewController child) {
 		ViewController previousTop = peek();
+
 		child.setParentStackController(this);
 		childControllers.push(child);
 		getView().addView(child.getView());
+
 		if (previousTop != null) {
 			getView().removeView(previousTop.getView());
 		}
@@ -43,11 +45,21 @@ public class StackController extends ViewController {
 	}
 
 	public void pop() {
-		if (canPop()) {
-			ViewController poppedController = childControllers.pop();
-			getView().removeView(poppedController.getView());
-			ViewController previousTop = peek();
-			getView().addView(previousTop.getView());
+		if (!canPop()) {
+			return;
+		}
+		ViewController poppedController = childControllers.pop();
+		getView().removeView(poppedController.getView());
+
+		ViewController previousTop = peek();
+		getView().addView(previousTop.getView());
+	}
+
+	public void pop(final ViewController childController) {
+		if (peek() == childController) {
+			pop();
+		} else {
+			childControllers.remove(childController);
 		}
 	}
 
@@ -77,4 +89,17 @@ public class StackController extends ViewController {
 	protected ViewGroup onCreateView() {
 		return new FrameLayout(getActivity());
 	}
+
+//	public ViewController getChildController(final int index) {
+//		Iterator<ViewController> it = childControllers.descendingIterator();
+//		int currentIndex = 0;
+//		while (it.hasNext()) {
+//			ViewController controller = it.next();
+//			if (currentIndex == index) {
+//				return controller;
+//			}
+//			currentIndex++;
+//		}
+//		return null;
+//	}
 }

@@ -24,9 +24,9 @@ public class StackControllerTest extends BaseTest {
 		super.beforeEach();
 		activity = newActivity();
 		uut = new StackController(activity);
-		child1 = new SimpleViewController(activity);
-		child2 = new SimpleViewController(activity);
-		child3 = new SimpleViewController(activity);
+		child1 = new SimpleViewController(activity, "child1");
+		child2 = new SimpleViewController(activity, "child2");
+		child3 = new SimpleViewController(activity, "child3");
 	}
 
 	@Test
@@ -38,24 +38,24 @@ public class StackControllerTest extends BaseTest {
 	public void holdsAStackOfViewControllers() throws Exception {
 		assertThat(uut.getChildControllers()).isEmpty();
 		uut.setChildControllers(child1, child2, child3);
-		assertThat(uut.getChildControllers()).containsExactly(child3, child2, child1);
-		assertThat(uut.getChildControllers().peek()).isEqualTo(child3);
+		assertThat(uut.getChildControllers()).containsOnly(child3, child2, child1);
+		assertThat(uut.peek()).isEqualTo(child3);
 	}
 
 	@Test
 	public void push() throws Exception {
 		assertThat(uut.getChildControllers()).isEmpty();
 		uut.push(child1);
-		assertThat(uut.getChildControllers()).containsExactly(child1);
+		assertThat(uut.getChildControllers()).containsOnly(child1);
 	}
 
 	@Test
 	public void pop() throws Exception {
 		uut.push(child1);
 		uut.push(child2);
-		assertThat(uut.getChildControllers()).containsExactly(child2, child1);
+		assertThat(uut.getChildControllers()).containsOnly(child2, child1);
 		uut.pop();
-		assertThat(uut.getChildControllers()).containsExactly(child1);
+		assertThat(uut.getChildControllers()).containsOnly(child1);
 	}
 
 	@Test
@@ -98,24 +98,24 @@ public class StackControllerTest extends BaseTest {
 
 	@Test
 	public void popDoesNothingWhenZeroOrOneChild() throws Exception {
-		assertThat(uut.getChildControllers().size()).isZero();
+		assertThat(uut.getChildControllers()).isEmpty();
 		uut.pop();
-		assertThat(uut.getChildControllers().size()).isZero();
+		assertThat(uut.getChildControllers()).isEmpty();
 
 		uut.push(child1);
 		uut.pop();
-		assertThat(uut.getChildControllers().size()).isEqualTo(1);
+		assertThat(uut.getChildControllers()).containsOnly(child1);
 	}
 
 	@Test
 	public void canPopWhenSizeIsMoreThanOne() throws Exception {
-		assertThat(uut.getChildControllers().size()).isZero();
+		assertThat(uut.getChildControllers()).isEmpty();
 		assertThat(uut.canPop()).isFalse();
 		uut.push(child1);
-		assertThat(uut.getChildControllers().size()).isEqualTo(1);
+		assertThat(uut.getChildControllers()).containsOnly(child1);
 		assertThat(uut.canPop()).isFalse();
 		uut.push(child2);
-		assertThat(uut.getChildControllers().size()).isEqualTo(2);
+		assertThat(uut.getChildControllers()).containsOnly(child1, child2);
 		assertThat(uut.canPop()).isTrue();
 	}
 
@@ -131,26 +131,60 @@ public class StackControllerTest extends BaseTest {
 	public void pushAddsToViewTree() throws Exception {
 		assertThat(uut.getView().getChildCount()).isZero();
 		uut.push(child1);
-		assertThat(uut.getView().getChildCount()).isEqualTo(1);
+		assertHasSingleChildViewOfController(child1);
 	}
 
 	@Test
 	public void pushRemovesPreviousFromTree() throws Exception {
 		assertThat(uut.getView().getChildCount()).isZero();
 		uut.push(child1);
-		assertThat(uut.getView().getChildCount()).isEqualTo(1);
+		assertHasSingleChildViewOfController(child1);
 		uut.push(child2);
-		assertThat(uut.getView().getChildCount()).isEqualTo(1);
+		assertHasSingleChildViewOfController(child2);
 	}
 
 	@Test
 	public void popReplacesViewWithPrevious() throws Exception {
 		uut.push(child1);
 		uut.push(child2);
-		assertThat(uut.getView().getChildCount()).isEqualTo(1);
-		assertThat(uut.getView().getChildAt(0)).isEqualTo(child2.getView());
+		assertHasSingleChildViewOfController(child2);
 		uut.pop();
+		assertHasSingleChildViewOfController(child1);
+	}
+
+	@Test
+	public void popSpecificWhenTopIsRegularPop() throws Exception {
+		uut.push(child1);
+		uut.push(child2);
+		uut.pop(child2);
+		assertThat(uut.getChildControllers()).containsOnly(child1);
+		assertHasSingleChildViewOfController(child1);
+	}
+
+	@Test
+	public void popSpecificDeepInStack() throws Exception {
+		uut.push(child1);
+		uut.push(child2);
+		assertHasSingleChildViewOfController(child2);
+
+		uut.pop(child1);
+		assertThat(uut.getChildControllers()).containsOnly(child2);
+		assertHasSingleChildViewOfController(child2);
+	}
+
+//	@Test
+//	public void getControllerAtIndex() throws Exception {
+//		uut.push(child1);
+//		uut.push(child2);
+//		uut.push(child3);
+//		assertThat(uut.getChildController(0)).isEqualTo(child1);
+//		assertThat(uut.getChildController(1)).isEqualTo(child2);
+//		assertThat(uut.getChildController(2)).isEqualTo(child3);
+//		assertThat(uut.getChildController(3)).isNull();
+//	}
+
+	private void assertHasSingleChildViewOfController(ViewController childController) {
 		assertThat(uut.getView().getChildCount()).isEqualTo(1);
-		assertThat(uut.getView().getChildAt(0)).isEqualTo(child1.getView());
+		assertThat(uut.getView().getChildAt(0)).isEqualTo(childController.getView());
 	}
 }

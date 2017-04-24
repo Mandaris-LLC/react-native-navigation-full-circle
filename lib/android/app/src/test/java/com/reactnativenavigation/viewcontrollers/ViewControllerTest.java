@@ -19,7 +19,7 @@ public class ViewControllerTest extends BaseTest {
 	public void beforeEach() {
 		super.beforeEach();
 		activity = newActivity();
-		uut = new SimpleViewController(activity);
+		uut = new SimpleViewController(activity, "uut");
 	}
 
 	@Test

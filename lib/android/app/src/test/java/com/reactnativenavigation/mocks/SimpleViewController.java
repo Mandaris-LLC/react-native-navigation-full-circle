@@ -6,12 +6,20 @@ import android.view.View;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class SimpleViewController extends ViewController {
-	public SimpleViewController(final Activity activity) {
+	private final String name;
+
+	public SimpleViewController(final Activity activity, String name) {
 		super(activity);
+		this.name = name;
 	}
 
 	@Override
 	protected View onCreateView() {
 		return new View(getActivity());
+	}
+
+	@Override
+	public String toString() {
+		return "SimpleViewController " + name;
 	}
 }
