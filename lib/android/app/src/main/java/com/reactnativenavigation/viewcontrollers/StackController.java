@@ -1,38 +1,23 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.reactnativenavigation.utils.Stack;
-import com.reactnativenavigation.utils.StackImpl;
+import java.util.ArrayDeque;
 
 public class StackController extends ViewController {
-	private Stack<ViewController> childControllers = new StackImpl<>();
+	private final ArrayDeque<ViewController> childControllers = new ArrayDeque<>();
 
 	public StackController(final Activity activity) {
 		super(activity);
 	}
 
-	@Override
-	public ViewGroup getView() {
-		return (ViewGroup) super.getView();
-	}
-
-	public Stack<ViewController> getChildControllers() {
-		return childControllers;
-	}
-
-	public void setChildControllers(ViewController... childControllers) {
-		for (ViewController childController : childControllers) {
-			push(childController);
-		}
-	}
-
 	public void push(final ViewController child) {
 		ViewController previousTop = peek();
 
-		child.setParentStackController(this);
+		child.setStackController(this);
 		childControllers.push(child);
 		getView().addView(child.getView());
 
@@ -87,7 +72,22 @@ public class StackController extends ViewController {
 	}
 
 	@Override
+	public ViewGroup getView() {
+		return (ViewGroup) super.getView();
+	}
+
+	@Override
 	protected ViewGroup onCreateView() {
 		return new FrameLayout(getActivity());
+	}
+
+	@Nullable
+	@Override
+	public StackController getStackController() {
+		return this;
+	}
+
+	ArrayDeque<ViewController> getStack() {
+		return childControllers;
 	}
 }

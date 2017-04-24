@@ -51,7 +51,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager, store);
 				final ViewController rootView = factory.createAndSaveToStore(layoutTree);
-				store.getViewController(onContainerId).getParentStackController().push(rootView);
+				store.getViewController(onContainerId).getStackController().push(rootView);
 			}
 		});
 	}
@@ -62,7 +62,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 			@Override
 			public void run() {
 				ViewController layout = store.getViewController(onContainerId);
-				layout.getParentStackController().pop(layout);
+				layout.getStackController().pop(layout);
 			}
 		});
 	}

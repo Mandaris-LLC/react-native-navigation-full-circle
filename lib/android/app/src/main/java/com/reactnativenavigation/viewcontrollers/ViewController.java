@@ -24,11 +24,11 @@ public abstract class ViewController {
 	}
 
 	@Nullable
-	public StackController getParentStackController() {
+	public StackController getStackController() {
 		return stackController;
 	}
 
-	void setParentStackController(final StackController stackController) {
+	void setStackController(final StackController stackController) {
 		this.stackController = stackController;
 	}
 

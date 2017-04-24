@@ -36,26 +36,28 @@ public class StackControllerTest extends BaseTest {
 
 	@Test
 	public void holdsAStackOfViewControllers() throws Exception {
-		assertThat(uut.getChildControllers()).isEmpty();
-		uut.setChildControllers(child1, child2, child3);
-		assertThat(uut.getChildControllers()).containsOnly(child3, child2, child1);
+		assertThat(uut.getStack()).isEmpty();
+		uut.push(child1);
+		uut.push(child2);
+		uut.push(child3);
+		assertThat(uut.getStack()).containsOnly(child3, child2, child1);
 		assertThat(uut.peek()).isEqualTo(child3);
 	}
 
 	@Test
 	public void push() throws Exception {
-		assertThat(uut.getChildControllers()).isEmpty();
+		assertThat(uut.getStack()).isEmpty();
 		uut.push(child1);
-		assertThat(uut.getChildControllers()).containsOnly(child1);
+		assertThat(uut.getStack()).containsOnly(child1);
 	}
 
 	@Test
 	public void pop() throws Exception {
 		uut.push(child1);
 		uut.push(child2);
-		assertThat(uut.getChildControllers()).containsOnly(child2, child1);
+		assertThat(uut.getStack()).containsOnly(child2, child1);
 		uut.pop();
-		assertThat(uut.getChildControllers()).containsOnly(child1);
+		assertThat(uut.getStack()).containsOnly(child1);
 	}
 
 	@Test
@@ -71,13 +73,13 @@ public class StackControllerTest extends BaseTest {
 
 	@Test
 	public void pushAssignsRefToSelfOnPushedController() throws Exception {
-		assertThat(child1.getParentStackController()).isNull();
+		assertThat(child1.getStackController()).isNull();
 		uut.push(child1);
-		assertThat(child1.getParentStackController()).isEqualTo(uut);
+		assertThat(child1.getStackController()).isEqualTo(uut);
 
 		StackController anotherNavController = new StackController(activity);
-		anotherNavController.setChildControllers(child2);
-		assertThat(child2.getParentStackController()).isEqualTo(anotherNavController);
+		anotherNavController.push(child2);
+		assertThat(child2.getStackController()).isEqualTo(anotherNavController);
 	}
 
 	@Test
@@ -98,24 +100,24 @@ public class StackControllerTest extends BaseTest {
 
 	@Test
 	public void popDoesNothingWhenZeroOrOneChild() throws Exception {
-		assertThat(uut.getChildControllers()).isEmpty();
+		assertThat(uut.getStack()).isEmpty();
 		uut.pop();
-		assertThat(uut.getChildControllers()).isEmpty();
+		assertThat(uut.getStack()).isEmpty();
 
 		uut.push(child1);
 		uut.pop();
-		assertThat(uut.getChildControllers()).containsOnly(child1);
+		assertThat(uut.getStack()).containsOnly(child1);
 	}
 
 	@Test
 	public void canPopWhenSizeIsMoreThanOne() throws Exception {
-		assertThat(uut.getChildControllers()).isEmpty();
+		assertThat(uut.getStack()).isEmpty();
 		assertThat(uut.canPop()).isFalse();
 		uut.push(child1);
-		assertThat(uut.getChildControllers()).containsOnly(child1);
+		assertThat(uut.getStack()).containsOnly(child1);
 		assertThat(uut.canPop()).isFalse();
 		uut.push(child2);
-		assertThat(uut.getChildControllers()).containsOnly(child1, child2);
+		assertThat(uut.getStack()).containsOnly(child1, child2);
 		assertThat(uut.canPop()).isTrue();
 	}
 
@@ -157,7 +159,7 @@ public class StackControllerTest extends BaseTest {
 		uut.push(child1);
 		uut.push(child2);
 		uut.pop(child2);
-		assertThat(uut.getChildControllers()).containsOnly(child1);
+		assertThat(uut.getStack()).containsOnly(child1);
 		assertHasSingleChildViewOfController(child1);
 	}
 
@@ -168,8 +170,13 @@ public class StackControllerTest extends BaseTest {
 		assertHasSingleChildViewOfController(child2);
 
 		uut.pop(child1);
-		assertThat(uut.getChildControllers()).containsOnly(child2);
+		assertThat(uut.getStack()).containsOnly(child2);
 		assertHasSingleChildViewOfController(child2);
+	}
+
+	@Test
+	public void getStackControllerReturnsSelf() throws Exception {
+		assertThat(uut.getStackController()).isEqualTo(uut);
 	}
 
 	private void assertHasSingleChildViewOfController(ViewController childController) {
