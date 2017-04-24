@@ -5,7 +5,8 @@ import android.app.Activity;
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.controllers.Store;
 import com.reactnativenavigation.layout.impl.RootLayout;
-import com.reactnativenavigation.layout.impl.StackLayout;
+import com.reactnativenavigation.viewcontrollers.StackController;
+import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class LayoutFactory {
 
@@ -19,13 +20,13 @@ public class LayoutFactory {
 		this.store = store;
 	}
 
-	public Layout createAndSaveToStore(LayoutNode node) {
-		Layout layout = createLayout(node);
-		store.setLayout(node.id, layout);
-		return layout;
+	public ViewController createAndSaveToStore(LayoutNode node) {
+		ViewController viewController = create(node);
+		store.setViewController(node.id, viewController);
+		return viewController;
 	}
 
-	private Layout createLayout(final LayoutNode node) {
+	private ViewController create(final LayoutNode node) {
 		switch (node.type) {
 			case Container:
 				return createContainer(node);
@@ -80,16 +81,16 @@ public class LayoutFactory {
 //		return createAndSaveToStore(node.children.get(0));
 //	}
 
-	private Layout createContainer(LayoutNode node) {
+	private ViewController createContainer(LayoutNode node) {
 		return new RootLayout(activity, node.id, node.data.optString("name"), reactInstanceManager);
 	}
 
-	private Layout createContainerStack(LayoutNode node) {
-		final StackLayout layoutStack = new StackLayout(activity);
+	private ViewController createContainerStack(LayoutNode node) {
+		StackController stackController = new StackController(activity);
 		for (LayoutNode child : node.children) {
-			layoutStack.push(createAndSaveToStore(child));
+			stackController.push(createAndSaveToStore(child));
 		}
-		return layoutStack;
+		return stackController;
 	}
 
 //	private Layout createBottomTabs(LayoutNode node) {

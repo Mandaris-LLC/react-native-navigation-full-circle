@@ -7,13 +7,12 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.controllers.Store;
-import com.reactnativenavigation.layout.Layout;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
-import com.reactnativenavigation.layout.impl.StackLayout;
 import com.reactnativenavigation.parse.JSONParser;
 import com.reactnativenavigation.parse.LayoutNodeParser;
 import com.reactnativenavigation.utils.UiThread;
+import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
 	private static final String NAME = "RNNBridgeModule";
@@ -38,8 +37,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 			public void run() {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager, store);
-				final Layout rootView = factory.createAndSaveToStore(layoutTree);
-				activity().setContentView(rootView.getView());
+				final ViewController rootView = factory.createAndSaveToStore(layoutTree);
 				activity().setLayout(rootView);
 			}
 		});
@@ -52,8 +50,8 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 			public void run() {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				LayoutFactory factory = new LayoutFactory(activity(), reactInstanceManager, store);
-				final Layout rootView = factory.createAndSaveToStore(layoutTree);
-				((StackLayout) activity().getLayout()).push(rootView);
+				final ViewController rootView = factory.createAndSaveToStore(layoutTree);
+				store.getViewController(onContainerId).getParentStackController().push(rootView);
 			}
 		});
 	}
@@ -63,8 +61,8 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				Layout layout = store.getLayout(onContainerId);
-				layout.getParentStackLayout().pop(layout);
+				ViewController layout = store.getViewController(onContainerId);
+				layout.getParentStackController().pop(layout);
 			}
 		});
 	}
