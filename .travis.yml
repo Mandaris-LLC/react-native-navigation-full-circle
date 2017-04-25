@@ -47,4 +47,4 @@ after_script:
   - echo "BUILD FINISHED"
 
 notifications:
-  slack: rn-navigation:ziXYK4a0y09Dxl7n3KbrrIYG
+  slack: rn-navigation:$SLACK_TOKEN
