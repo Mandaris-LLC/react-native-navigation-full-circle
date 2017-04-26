@@ -10,4 +10,5 @@ function run() {
   exec.execSync(`rm -rf playground/ios/DerivedData/`);
   exec.execSync(`cd lib/android && ./gradlew clean`);
   exec.execSync(`cd playground/android && ./gradlew clean`);
+  exec.execSync(`cd AndroidE2E && ./gradlew clean`);
 }
