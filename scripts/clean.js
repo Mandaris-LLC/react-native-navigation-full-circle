@@ -3,7 +3,7 @@ const exec = require('shell-utils').exec;
 run();
 
 function run() {
-  exec.execSync('lsof -t -i tcp:8081 | xargs kill || true');
+  exec.killPort(8081);
   exec.execSync(`watchman watch-del-all || true`);
   exec.execSync(`adb reverse tcp:8081 tcp:8081 || true`);
   exec.execSync(`rm -rf lib/ios/DerivedData/`);
