@@ -9,6 +9,7 @@ env:
     - PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
     - YARN_CACHE=$HOME/.yarn-cache
     - CODE_SIGNING_REQUIRED=NO
+    - RCT_NO_LAUNCH_PACKAGER=true
 
 branches:
   only:
