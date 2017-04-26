@@ -15,7 +15,7 @@ function buildProjForDetox() {
             -sdk iphonesimulator
             -configuration ${conf}
             -derivedDataPath ./DerivedData/playground
-            ONLY_ACTIVE_ARCH=YES && echo $?`);
+            ONLY_ACTIVE_ARCH=YES`);
 }
 
 function runDetoxUsingMocha() {

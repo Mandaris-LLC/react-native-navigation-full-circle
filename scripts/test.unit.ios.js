@@ -13,7 +13,7 @@ function run() {
             -sdk iphonesimulator
             -configuration ${conf}
             -derivedDataPath ./DerivedData/playground
-            ONLY_ACTIVE_ARCH=YES && echo $?`);
+            ONLY_ACTIVE_ARCH=YES`);
   exec.execSync(`RCT_NO_LAUNCH_PACKAGER=true
           cd ./playground/ios && xcodebuild
             test-without-building
@@ -23,7 +23,7 @@ function run() {
             -configuration ${conf}
             -destination 'platform=iOS Simulator,name=iPhone 7'
             -derivedDataPath ./DerivedData/playground
-            ONLY_ACTIVE_ARCH=YES && echo $?`);
+            ONLY_ACTIVE_ARCH=YES`);
 }
 
 run();
