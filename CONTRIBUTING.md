@@ -69,4 +69,4 @@ brew tap facebook/fb && brew install fbsimctl
 
 `yarn run test-e2e-android [-- release]`: runs the android e2e suite (with uiautomator) in debug/release on running devices/emulators
 
-`yarn run test-all`: runs all tests
+`yarn run test-all`: runs all tests in parallel
