@@ -7,7 +7,7 @@ before(async () => {
     configurations: {
       ios: {
         binaryPath: process.env.detoxAppBuildPath,
-        type: 'simulator',
+        type: 'ios.simulator',
         name: 'iPhone 7'
       }
     }
