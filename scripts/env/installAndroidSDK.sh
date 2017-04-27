@@ -19,4 +19,4 @@ curl --location https://dl.google.com/android/android-sdk_r24.4.1-macosx.zip | t
 # copy licenses
 echo "Copying Android licenses"
 mkdir -p "${ANDROID_HOME}"/licenses
-cp "$scriptdir/android-sdk-licenses/*" "${ANDROID_HOME}"/licenses
+cp "$scriptdir/android-sdk-licenses/"* "${ANDROID_HOME}"/licenses
