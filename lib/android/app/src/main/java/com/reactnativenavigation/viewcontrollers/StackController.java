@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 import java.util.ArrayDeque;
 
 public class StackController extends ViewController {
-	private final ArrayDeque<ViewController> childControllers = new ArrayDeque<>();
+	private final ArrayDeque<ViewController> stack = new ArrayDeque<>();
 
 	public StackController(final Activity activity) {
 		super(activity);
@@ -18,7 +18,7 @@ public class StackController extends ViewController {
 		ViewController previousTop = peek();
 
 		child.setStackController(this);
-		childControllers.push(child);
+		stack.push(child);
 		getView().addView(child.getView());
 
 		if (previousTop != null) {
@@ -27,14 +27,14 @@ public class StackController extends ViewController {
 	}
 
 	public boolean canPop() {
-		return childControllers.size() > 1;
+		return stack.size() > 1;
 	}
 
 	public void pop() {
 		if (!canPop()) {
 			return;
 		}
-		ViewController poppedController = childControllers.pop();
+		ViewController poppedController = stack.pop();
 		getView().removeView(poppedController.getView());
 
 		ViewController previousTop = peek();
@@ -45,20 +45,20 @@ public class StackController extends ViewController {
 		if (peek() == childController) {
 			pop();
 		} else {
-			childControllers.remove(childController);
+			stack.remove(childController);
 		}
 	}
 
 	public ViewController peek() {
-		return childControllers.peek();
+		return stack.peek();
 	}
 
 	public int size() {
-		return childControllers.size();
+		return stack.size();
 	}
 
 	public boolean isEmpty() {
-		return childControllers.isEmpty();
+		return stack.isEmpty();
 	}
 
 	@Override
@@ -88,6 +88,15 @@ public class StackController extends ViewController {
 	}
 
 	ArrayDeque<ViewController> getStack() {
-		return childControllers;
+		return stack;
+	}
+
+	public void popTo(final ViewController viewController) {
+		if (!stack.contains(viewController)) {
+			return;
+		}
+		while (peek() != viewController) {
+			pop();
+		}
 	}
 }

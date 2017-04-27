@@ -30,4 +30,16 @@ public class ScreenStackTest extends BaseTest {
 		elementByText("POP").click();
 		assertMainShown();
 	}
+
+	@Test
+	public void popToId() throws Exception {
+		launchTheApp();
+		assertMainShown();
+		elementByText("PUSH").click();
+		elementByText("PUSH").click();
+		elementByText("PUSH").click();
+		assertExists(By.text("Stack Position: 3"));
+		elementByText("POP TO STACK POSITION 1").click();
+		assertExists(By.text("Stack Position: 1"));
+	}
 }

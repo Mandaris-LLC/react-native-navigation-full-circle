@@ -27,29 +27,4 @@ public class TopLevelApiTest extends BaseTest {
 		swipeRightOpenSideMenu();
 		assertExists(By.text("This is a left side menu screen"));
 	}
-
-	@Test
-	public void screenLifecycle() throws Exception {
-		launchTheApp();
-		assertMainShown();
-		elementByText("PUSH LIFECYCLE SCREEN").click();
-		assertExists(By.text("onStart"));
-		elementByText("PUSH TO TEST ONSTOP").click();
-		assertExists(By.text("onStop"));
-	}
-
-	@Test
-	@Ignore
-	public void unmountIsCalledOnPop() throws Exception {
-		launchTheApp();
-		assertMainShown();
-		elementByText("PUSH LIFECYCLE SCREEN").click();
-		elementByText("onStart");
-		device().pressBack();
-		assertExists(By.text("componentWillUnmount"));
-		elementByText("OK").click();
-		assertExists(By.text("onStop"));
-		elementByText("OK").click();
-		assertMainShown();
-	}
 }
