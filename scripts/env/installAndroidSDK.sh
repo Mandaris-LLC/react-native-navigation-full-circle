@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 
 scriptdir="$(dirname "${BASH_SOURCE[0]}")"
 
