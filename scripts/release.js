@@ -42,7 +42,7 @@ function calcNewVersion() {
   return semver.inc(greater, VERSION_INC);
 }
 
-function copyNpmRc() {
+function createNpmRc() {
   const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
   exec.execSync(`cp -Rf ${npmrcPath} .`);
 }
@@ -59,7 +59,7 @@ function run() {
     return;
   }
   setupGit();
-  copyNpmRc();
+  createNpmRc();
   tagAndPublish(calcNewVersion());
 }
 
