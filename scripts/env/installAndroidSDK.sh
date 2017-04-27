@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+scriptdir = "${BASH_SOURCE[${#BASH_SOURCE[@]} - 1]}"
+
 export ANDROID_HOME=$HOME/android-sdk-macosx
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 
@@ -13,7 +15,4 @@ curl --location https://dl.google.com/android/android-sdk_r24.4.1-macosx.zip | t
 # copy licenses
 echo "Copying Android licenses"
 mkdir -p "${ANDROID_HOME}"/licenses
-scriptdir=$_
-[[ $scriptdir != $0 ]] && echo "Script is being sourced" || echo "Script is being run"
-echo "\$BASH_SOURCE ${BASH_SOURCE[@]}"
 cp "$scriptdir/android-sdk-licenses/*" "${ANDROID_HOME}"/licenses
