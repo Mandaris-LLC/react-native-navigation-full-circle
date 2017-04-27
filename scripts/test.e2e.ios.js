@@ -7,9 +7,9 @@ function buildProjForDetox() {
   const scheme = release ? `playground_release` : `playground`;
   const conf = release ? `Release` : `Debug`;
 
-  exec.execSync(`RCT_NO_LAUNCH_PACKAGER=true
-            cd ./playground/ios && xcodebuild
-            build
+  exec.execSync(`cd ./playground/ios &&
+            RCT_NO_LAUNCH_PACKAGER=true
+            xcodebuild build
             -scheme ${scheme}
             -project playground.xcodeproj
             -sdk iphonesimulator
