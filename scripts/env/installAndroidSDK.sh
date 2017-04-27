@@ -1,9 +1,5 @@
 #!/bin/bash -e
 
-set -x
-
-env
-
 scriptdir="$(dirname "${BASH_SOURCE[0]}")"
 
 export ANDROID_HOME=$HOME/android-sdk-macosx
