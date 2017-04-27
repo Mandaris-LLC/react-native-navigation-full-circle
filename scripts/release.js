@@ -2,6 +2,7 @@
 const exec = require('shell-utils').exec;
 const p = require('path');
 const semver = require('semver');
+const fs = require('fs');
 
 const VERSION_TAG = 'alpha';
 const VERSION_INC = 'prerelease';
@@ -43,8 +44,11 @@ function calcNewVersion() {
 }
 
 function createNpmRc() {
-  const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
-  exec.execSync(`cp -Rf ${npmrcPath} .`);
+  const content = `
+email=\${NPM_EMAIL}
+//registry.npmjs.org/:_authToken=\${NPM_TOKEN}
+`;
+  fs.writeFileSync(`.npmrc`, content);
 }
 
 function tagAndPublish(newVersion) {
