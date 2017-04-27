@@ -1,4 +1,7 @@
-#!/bin/sh -e
+#!/bin/bash -e
+
+export ANDROID_HOME=$HOME/android-sdk-macosx
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 
 # fix for https://code.google.com/p/android/issues/detail?id=223424
 mkdir -p ~/.android

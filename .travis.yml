@@ -3,10 +3,6 @@ osx_image: xcode8.3
 
 env:
   global:
-    - NODE_VERSION=stable
-    - PATH=$PATH:$HOME/.yarn/bin
-    - ANDROID_HOME=$HOME/android-sdk-macosx
-    - PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
     - YARN_CACHE=$HOME/.yarn-cache
     - CODE_SIGNING_REQUIRED=NO
     - RCT_NO_LAUNCH_PACKAGER=true
@@ -23,15 +19,12 @@ cache:
 
 install:
         # node:
-  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-  - export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-  - nvm install $NODE_VERSION
-  - nvm use $NODE_VERSION
+  - source ./scripts/env/installNode.sh
         # yarn:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - source ./scripts/env/installYarn.sh
   - yarn config set cache-folder $YARN_CACHE
         # android sdk:
-  - ./scripts/installAndroidSDK.sh
+  - source ./scripts/env/installAndroidSDK.sh
         # android emulator:
   #- echo yes | android update sdk --no-ui --all --filter "sys-img-armeabi-v7a-google_apis-25"
   #- echo no | android create avd --name AVD -t android-25 --abi google_apis/armeabi-v7a
