@@ -3,7 +3,7 @@
 `lib/android`: android sources and unit tests</br>
 `lib/ios`: iOS sources and unit tests</br>
 `lib/src`: javascript sources and unit tests</br>
-`lib/src/index.js`: the entry point for `import Navigation from 'react-native-navigation`
+`lib/src/index.js`: the entry point for `import Navigation from 'react-native-navigation'`
 
 * `e2e`: [detox](https://github.com/wix/detox) iOS e2e tests (in the future, once detox supports it, we will have android e2e here as well)
 
