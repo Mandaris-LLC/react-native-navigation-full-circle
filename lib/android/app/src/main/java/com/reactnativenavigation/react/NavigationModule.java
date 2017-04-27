@@ -76,6 +76,16 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		});
 	}
 
+	@ReactMethod
+	public void popToRoot(final String onContainerId) {
+		handle(new Runnable() {
+			@Override
+			public void run() {
+				store.getViewController(onContainerId).getStackController().popToRoot();
+			}
+		});
+	}
+
 	private NavigationActivity activity() {
 		return (NavigationActivity) getCurrentActivity();
 	}

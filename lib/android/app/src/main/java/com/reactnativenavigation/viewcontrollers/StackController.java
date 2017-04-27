@@ -99,4 +99,10 @@ public class StackController extends ViewController {
 			pop();
 		}
 	}
+
+	public void popToRoot() {
+		while (canPop()) {
+			pop();
+		}
+	}
 }

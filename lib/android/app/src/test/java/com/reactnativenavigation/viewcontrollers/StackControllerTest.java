@@ -203,6 +203,28 @@ public class StackControllerTest extends BaseTest {
 		assertThat(uut.size()).isEqualTo(2);
 	}
 
+	@Test
+	public void popToRoot_PopsEverythingAboveFirstController() throws Exception {
+		uut.push(child1);
+		uut.push(child2);
+		uut.push(child3);
+
+		assertThat(uut.size()).isEqualTo(3);
+		assertThat(uut.peek()).isEqualTo(child3);
+
+		uut.popToRoot();
+
+		assertThat(uut.size()).isEqualTo(1);
+		assertThat(uut.peek()).isEqualTo(child1);
+	}
+
+	@Test
+	public void popToRoot_EmptyStackDoesNothing() throws Exception {
+		assertThat(uut.isEmpty()).isTrue();
+		uut.popToRoot();
+		assertThat(uut.isEmpty()).isTrue();
+	}
+
 	private void assertHasSingleChildViewOfController(ViewController childController) {
 		assertThat(uut.getView().getChildCount()).isEqualTo(1);
 		assertThat(uut.getView().getChildAt(0)).isEqualTo(childController.getView());
