@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-scriptdir="${BASH_SOURCE[${#BASH_SOURCE[@]} - 1]}"
+scriptdir="$(dirname "${BASH_SOURCE[0]}")"
 
 export ANDROID_HOME=$HOME/android-sdk-macosx
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
