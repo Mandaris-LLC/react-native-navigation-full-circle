@@ -61,13 +61,13 @@ First add `react-native-navigation` as an npm dependency: `yarn add react-native
 
 	    @Override
 	    public List<ReactPackage> createAdditionalReactPackages() {
-		// Add the packages you require here like so... (Tested on RN 0.42)
+		// Add additional packages you require here
 		return Arrays.<ReactPackage>asList(
-           	    new <InsertPackageName()>;
+           	    new InsertPackageName() // For example: new VectorIconsPackage()
        		);
 		// No need to add RnnPackage and MainReactPackage
-		// Simply return null if you do not have additional packages    
-	        return null;
+		// Simply return null if you do not have additional packages:
+		// return null;
 	    }
 	}
 	```
