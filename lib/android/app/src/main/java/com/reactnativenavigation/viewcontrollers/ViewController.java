@@ -5,15 +5,17 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public abstract class ViewController {
 	public interface LifecycleListener {
-		void onCreate(ViewController viewController);
+		void onCreate();
 
-		void onStart(ViewController viewController);
+		void onStart();
 
-		void onStop(ViewController viewController);
+		void onStop();
 
-		void onDestroy(ViewController viewController);
+		void onDestroy();
 	}
 
 	private enum LifecycleState {
@@ -23,14 +25,14 @@ public abstract class ViewController {
 	private final Activity activity;
 	private View view;
 	private StackController stackController;
-	private LifecycleState lifecycleState;
+	private AtomicReference<LifecycleState> lifecycleState = new AtomicReference<>(LifecycleState.Destroyed);
 	private LifecycleListener lifecycleListener;
 
 	public ViewController(Activity activity) {
 		this.activity = activity;
 	}
 
-	protected abstract View onCreateView();
+	protected abstract View createView();
 
 	public boolean handleBack() {
 		return false;
@@ -52,6 +54,7 @@ public abstract class ViewController {
 	public View getView() {
 		if (view == null) {
 			view = createView();
+			attachLifecycle();
 		}
 		return view;
 	}
@@ -60,24 +63,27 @@ public abstract class ViewController {
 		this.lifecycleListener = lifecycleListener;
 	}
 
-	private View createView() {
-		View view = onCreateView();
-		lifecycleState = LifecycleState.Created;
-		view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+	private void attachLifecycle() {
+		view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 			@Override
-			public boolean onPreDraw() {
-				if (lifecycleListener != null) {
-					if (lifecycleState != LifecycleState.Started) {
-						lifecycleState = LifecycleState.Started;
-						lifecycleListener.onStart(ViewController.this);
+			public void onGlobalLayout() {
+				if (lifecycleListener == null) {
+					return;
+				}
+				if (view.getVisibility() == View.VISIBLE) {
+					if (lifecycleState.compareAndSet(LifecycleState.Created, LifecycleState.Started)) {
+						lifecycleListener.onStart();
+					}
+				} else {
+					if (lifecycleState.compareAndSet(LifecycleState.Started, LifecycleState.Stopped)) {
+						lifecycleListener.onStop();
 					}
 				}
-				return true;
 			}
 		});
+		lifecycleState.set(LifecycleState.Created);
 		if (lifecycleListener != null) {
-			lifecycleListener.onCreate(this);
+			lifecycleListener.onCreate();
 		}
-		return view;
 	}
 }

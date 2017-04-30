@@ -77,7 +77,7 @@ public class StackController extends ViewController {
 	}
 
 	@Override
-	protected ViewGroup onCreateView() {
+	protected ViewGroup createView() {
 		return new FrameLayout(getActivity());
 	}
 

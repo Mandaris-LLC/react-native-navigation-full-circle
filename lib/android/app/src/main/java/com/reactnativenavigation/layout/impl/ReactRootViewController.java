@@ -46,7 +46,7 @@ public class ReactRootViewController extends ViewController implements View.OnAt
 	}
 
 	@Override
-	protected View onCreateView() {
+	protected View createView() {
 		ReactRootView reactRootView = new ReactRootView(getActivity());
 		reactRootView.addOnAttachStateChangeListener(this);
 		Bundle opts = new Bundle();

@@ -41,7 +41,7 @@ public class ViewControllerTest extends BaseTest {
 		final View otherView = new View(activity);
 		ViewController myController = new ViewController(activity) {
 			@Override
-			protected View onCreateView() {
+			protected View createView() {
 				return otherView;
 			}
 		};
@@ -78,15 +78,40 @@ public class ViewControllerTest extends BaseTest {
 		public void onCreateView_CalledAsSoonAsPossible() throws Exception {
 			verifyZeroInteractions(uut);
 			controller.getView();
-			verify(uut, times(1)).onCreate(controller);
+			verify(uut, times(1)).onCreate();
 		}
 
 		@Test
-		public void onStart_CalledBeforeFirstDraw() throws Exception {
+		public void onStart_CalledWhenVisible() throws Exception {
 			verifyZeroInteractions(uut);
-			controller.getView().getViewTreeObserver().dispatchOnPreDraw();
-			controller.getView().getViewTreeObserver().dispatchOnPreDraw();
-			verify(uut, times(1)).onStart(controller);
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			verify(uut, times(1)).onStart();
+		}
+
+		@Test
+		public void onStop_CalledWhenInvisible() throws Exception {
+			verifyZeroInteractions(uut);
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			controller.getView().setVisibility(View.GONE);
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			verify(uut, times(1)).onStop();
+		}
+
+		@Test
+		public void onStart_OnStop_Cycle() throws Exception {
+			verifyZeroInteractions(uut);
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			verify(uut, times(1)).onStart();
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			controller.getView().setVisibility(View.INVISIBLE);
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			verify(uut, times(1)).onStop();
+			controller.getView().setVisibility(View.VISIBLE);
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			controller.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+			verify(uut, times(1)).onStart();
 		}
 	}
 

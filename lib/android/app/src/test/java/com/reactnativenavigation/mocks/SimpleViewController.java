@@ -14,7 +14,7 @@ public class SimpleViewController extends ViewController {
 	}
 
 	@Override
-	protected View onCreateView() {
+	protected View createView() {
 		return new View(getActivity());
 	}
 
