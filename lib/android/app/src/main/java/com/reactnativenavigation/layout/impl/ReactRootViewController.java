@@ -6,10 +6,9 @@ import android.view.View;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
-import com.reactnativenavigation.react.NavigationEvent;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
-public class ReactRootViewController extends ViewController implements View.OnAttachStateChangeListener {
+public class ReactRootViewController extends ViewController {
 
 	private final String id;
 	private final String name;
@@ -27,28 +26,27 @@ public class ReactRootViewController extends ViewController implements View.OnAt
 //		reactRootView.unmountReactApplication();
 //	}
 
-	@Override
-	public void onViewAttachedToWindow(final View v) {
-		//
-	}
-
-	@Override
-	public void onViewDetachedFromWindow(final View v) {
-		onStop();
-	}
-
-	private void onStart() {
-		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(id);
-	}
-
-	private void onStop() {
-		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(id);
-	}
+//	@Override
+//	public void onViewAttachedToWindow(final View v) {
+//		//
+//	}
+//
+//	@Override
+//	public void onViewDetachedFromWindow(final View v) {
+//		onStop();
+//	}
+//
+//	private void onStart() {
+//		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(id);
+//	}
+//
+//	private void onStop() {
+//		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(id);
+//	}
 
 	@Override
 	protected View createView() {
 		ReactRootView reactRootView = new ReactRootView(getActivity());
-		reactRootView.addOnAttachStateChangeListener(this);
 		Bundle opts = new Bundle();
 		opts.putString("id", this.id);
 		reactRootView.startReactApplication(this.reactInstanceManager, this.name, opts);

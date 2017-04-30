@@ -6,7 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class ScreenLifecycleTest extends BaseTest {
-
+	@Ignore
 	@Test
 	public void onStartOnStop() throws Exception {
 		launchTheApp();
