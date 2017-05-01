@@ -1,6 +1,7 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -11,6 +12,7 @@ public class Navigator extends ViewController {
 		super(activity);
 	}
 
+	@NonNull
 	@Override
 	protected View createView() {
 		FrameLayout view = new FrameLayout(getActivity());

@@ -40,7 +40,6 @@ public class NavigatorTest extends BaseTest {
 	public void setsItselfAsContentView() throws Exception {
 		assertThat(Shadows.shadowOf(activity).getContentView()).isNull();
 		uut.onActivityCreated();
-		assertThat(Shadows.shadowOf(activity).getContentView()).isEqualTo(uut.getView());
-
+		assertThat(Shadows.shadowOf(activity).getContentView()).isNotNull().isEqualTo(uut.getView());
 	}
 }
