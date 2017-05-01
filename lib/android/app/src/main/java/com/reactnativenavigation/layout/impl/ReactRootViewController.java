@@ -13,6 +13,7 @@ public class ReactRootViewController extends ViewController {
 	private final String id;
 	private final String name;
 	private final ReactInstanceManager reactInstanceManager;
+	private boolean attachedToReactInstance = false;
 
 	public ReactRootViewController(final Activity activity, final String id, final String name, final ReactInstanceManager reactInstanceManager) {
 		super(activity);
@@ -44,6 +45,16 @@ public class ReactRootViewController extends ViewController {
 //		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(id);
 //	}
 
+//	@Override
+//	public void onStart() {
+//		super.onStart();
+//		if (attachedToReactInstance) {
+//			new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(id);
+//		} else {
+//			throw new RuntimeException("Not yet attached to react");
+//		}
+//	}
+
 	@Override
 	protected View createView() {
 		ReactRootView reactRootView = new ReactRootView(getActivity());
@@ -54,7 +65,7 @@ public class ReactRootViewController extends ViewController {
 			@Override
 			public void onAttachedToReactInstance(final ReactRootView reactRootView) {
 				reactRootView.setEventListener(null);
-				onStart();
+				attachedToReactInstance = true;
 			}
 		});
 		return reactRootView;

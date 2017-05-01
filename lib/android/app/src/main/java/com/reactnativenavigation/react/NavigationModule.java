@@ -14,6 +14,7 @@ import com.reactnativenavigation.layout.LayoutNode;
 import com.reactnativenavigation.parse.JSONParser;
 import com.reactnativenavigation.parse.LayoutNodeParser;
 import com.reactnativenavigation.utils.UiThread;
+import com.reactnativenavigation.viewcontrollers.Navigator;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
@@ -39,7 +40,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 			public void run() {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				final ViewController viewController = newLayoutFactory().createAndSaveToStore(layoutTree);
-				activity().setViewController(viewController);
+				navigator().setRoot(viewController);
 			}
 		});
 	}
@@ -88,6 +89,10 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
 	private NavigationActivity activity() {
 		return (NavigationActivity) getCurrentActivity();
+	}
+
+	private Navigator navigator() {
+		return activity().getNavigator();
 	}
 
 	@NonNull

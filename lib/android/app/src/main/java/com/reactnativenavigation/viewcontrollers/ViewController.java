@@ -35,25 +35,7 @@ public abstract class ViewController {
 	public View getView() {
 		if (view == null) {
 			view = createView();
-			onCreate();
 		}
 		return view;
 	}
-
-	public void onCreate() {
-
-	}
-
-	public void onStart() {
-
-	}
-
-	public void onStop() {
-
-	}
-
-	public void onDestroy() {
-
-	}
-
 }

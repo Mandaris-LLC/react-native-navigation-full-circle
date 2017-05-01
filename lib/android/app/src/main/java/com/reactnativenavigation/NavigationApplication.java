@@ -1,13 +1,15 @@
 package com.reactnativenavigation;
 
+import android.app.Activity;
 import android.app.Application;
+import android.os.Bundle;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.reactnativenavigation.react.NavigationReactInitializer;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 
-public abstract class NavigationApplication extends Application implements ReactApplication {
+public abstract class NavigationApplication extends Application implements ReactApplication, Application.ActivityLifecycleCallbacks {
 
 	private Store store;
 	private NavigationReactNativeHost reactNativeHost;
@@ -19,6 +21,7 @@ public abstract class NavigationApplication extends Application implements React
 		store = new Store();
 		reactNativeHost = new NavigationReactNativeHost(this, isDebug(), store);
 		initializer = new NavigationReactInitializer(reactNativeHost.getReactInstanceManager(), isDebug());
+		registerActivityLifecycleCallbacks(this);
 	}
 
 	@Override
@@ -28,7 +31,43 @@ public abstract class NavigationApplication extends Application implements React
 
 	public abstract boolean isDebug();
 
-	NavigationReactInitializer getInitializer() {
-		return initializer;
+	@Override
+	public void onActivityCreated(final Activity activity, final Bundle savedInstanceState) {
+		if (activity instanceof NavigationActivity) {
+			initializer.onActivityCreated((NavigationActivity) activity);
+		}
+	}
+
+	@Override
+	public void onActivityStarted(final Activity activity) {
+	}
+
+	@Override
+	public void onActivityResumed(final Activity activity) {
+		if (activity instanceof NavigationActivity) {
+			initializer.onActivityResumed((NavigationActivity) activity);
+		}
+	}
+
+	@Override
+	public void onActivityPaused(final Activity activity) {
+		if (activity instanceof NavigationActivity) {
+			initializer.onActivityPaused((NavigationActivity) activity);
+		}
+	}
+
+	@Override
+	public void onActivityStopped(final Activity activity) {
+	}
+
+	@Override
+	public void onActivitySaveInstanceState(final Activity activity, final Bundle outState) {
+	}
+
+	@Override
+	public void onActivityDestroyed(final Activity activity) {
+		if (activity instanceof NavigationActivity) {
+			initializer.onActivityDestroyed((NavigationActivity) activity);
+		}
 	}
 }

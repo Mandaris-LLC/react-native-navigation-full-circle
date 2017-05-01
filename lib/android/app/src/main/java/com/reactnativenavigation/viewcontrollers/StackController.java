@@ -15,12 +15,12 @@ public class StackController extends ViewController {
 	}
 
 	public void push(final ViewController child) {
-		ViewController previousTop = peek();
+		final ViewController previousTop = peek();
 
 		child.setStackController(this);
 		stack.push(child);
-		getView().addView(child.getView());
 
+		getView().addView(child.getView());
 		if (previousTop != null) {
 			getView().removeView(previousTop.getView());
 		}
