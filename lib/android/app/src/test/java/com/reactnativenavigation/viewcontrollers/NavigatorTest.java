@@ -9,19 +9,20 @@ import org.junit.Test;
 import org.robolectric.Shadows;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.mockito.Mockito.spy;
 
 public class NavigatorTest extends BaseTest {
 	private Activity activity;
 	private Navigator uut;
-	private SimpleViewController viewController;
+	private ViewController child1;
+	private ViewController child2;
 
 	@Override
 	public void beforeEach() {
 		super.beforeEach();
 		activity = newActivity();
-		viewController = spy(new SimpleViewController(activity, "simpleViewController"));
 		uut = new Navigator(activity);
+		child1 = new SimpleViewController(activity, "child1");
+		child2 = new SimpleViewController(activity, "child2");
 	}
 
 
@@ -42,4 +43,24 @@ public class NavigatorTest extends BaseTest {
 		uut.onActivityCreated();
 		assertThat(Shadows.shadowOf(activity).getContentView()).isNotNull().isEqualTo(uut.getView());
 	}
+
+	@Test
+	public void setRoot_AddsChildControllerView() throws Exception {
+		assertThat(uut.getView().getChildCount()).isZero();
+		uut.setRoot(child1);
+		assertHasSingleChildViewOf(child1);
+	}
+
+	@Test
+	public void setRoot_ReplacesExistingChildControllerView() throws Exception {
+		uut.setRoot(child1);
+		uut.setRoot(child2);
+		assertHasSingleChildViewOf(child2);
+	}
+
+	private void assertHasSingleChildViewOf(ViewController vc) {
+		assertThat(uut.getView().getChildCount()).isEqualTo(1);
+		assertThat(uut.getView().getChildAt(0)).isEqualTo(vc.getView()).isNotNull();
+	}
+
 }

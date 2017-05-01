@@ -2,6 +2,7 @@ package com.reactnativenavigation.layout.impl;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.facebook.react.ReactInstanceManager;
@@ -55,6 +56,7 @@ public class ReactRootViewController extends ViewController {
 //		}
 //	}
 
+	@NonNull
 	@Override
 	protected View createView() {
 		ReactRootView reactRootView = new ReactRootView(getActivity());

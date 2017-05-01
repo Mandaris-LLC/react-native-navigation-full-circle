@@ -15,8 +15,13 @@ public class Navigator extends ViewController {
 	@NonNull
 	@Override
 	protected View createView() {
-		FrameLayout view = new FrameLayout(getActivity());
-		return view;
+		return new FrameLayout(getActivity());
+	}
+
+	@NonNull
+	@Override
+	public FrameLayout getView() {
+		return (FrameLayout) super.getView();
 	}
 
 	public boolean isActivityResumed() {
@@ -24,10 +29,8 @@ public class Navigator extends ViewController {
 	}
 
 	public void setRoot(final ViewController viewController) {
-		getActivity().setContentView(viewController.getView());
-		if (activityResumed) {
-//			viewController.onStart();
-		}
+		getView().removeAllViews();
+		getView().addView(viewController.getView());
 	}
 
 	public void onActivityCreated() {
