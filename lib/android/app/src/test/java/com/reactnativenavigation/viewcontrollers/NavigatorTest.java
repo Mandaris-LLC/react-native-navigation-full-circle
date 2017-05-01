@@ -52,11 +52,13 @@ public class NavigatorTest extends BaseTest {
 	}
 
 	@Test
-	public void setRoot_ReplacesExistingChildControllerView() throws Exception {
+	public void setRoot_ReplacesExistingChildControllerViews() throws Exception {
 		uut.setRoot(child1);
 		uut.setRoot(child2);
 		assertHasSingleChildViewOf(child2);
 	}
+
+
 
 	private void assertHasSingleChildViewOf(ViewController vc) {
 		assertThat(uut.getView().getChildCount()).isEqualTo(1);
