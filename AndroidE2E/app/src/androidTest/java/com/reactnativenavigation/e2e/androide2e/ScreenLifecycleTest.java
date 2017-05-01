@@ -5,8 +5,9 @@ import android.support.test.uiautomator.By;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class ScreenLifecycleTest extends BaseTest {
-	@Ignore
+
 	@Test
 	public void onStartOnStop() throws Exception {
 		launchTheApp();
@@ -17,7 +18,6 @@ public class ScreenLifecycleTest extends BaseTest {
 		assertExists(By.text("onStop"));
 	}
 
-	@Ignore
 	@Test
 	public void unmountIsCalledWhenPopped() throws Exception {
 		launchTheApp();

@@ -5,10 +5,10 @@ import android.support.test.uiautomator.By;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class TopLevelApiTest extends BaseTest {
 
 	@Test
-	@Ignore
 	public void switchToTabBasedApp_PassPropsFunction() throws Exception {
 		launchTheApp();
 		assertMainShown();
@@ -18,7 +18,6 @@ public class TopLevelApiTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
 	public void switchToTabsWithSideMenu() throws Exception {
 		launchTheApp();
 		assertMainShown();
