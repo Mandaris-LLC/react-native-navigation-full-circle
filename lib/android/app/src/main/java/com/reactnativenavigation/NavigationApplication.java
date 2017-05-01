@@ -11,15 +11,13 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 
 public abstract class NavigationApplication extends Application implements ReactApplication, Application.ActivityLifecycleCallbacks {
 
-	private Store store;
 	private NavigationReactNativeHost reactNativeHost;
 	private NavigationReactInitializer initializer;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		store = new Store();
-		reactNativeHost = new NavigationReactNativeHost(this, isDebug(), store);
+		reactNativeHost = new NavigationReactNativeHost(this, isDebug());
 		initializer = new NavigationReactInitializer(reactNativeHost.getReactInstanceManager(), isDebug());
 		registerActivityLifecycleCallbacks(this);
 	}

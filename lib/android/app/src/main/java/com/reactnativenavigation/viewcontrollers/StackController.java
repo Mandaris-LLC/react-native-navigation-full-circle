@@ -11,8 +11,8 @@ import java.util.ArrayDeque;
 public class StackController extends ViewController {
 	private final ArrayDeque<ViewController> stack = new ArrayDeque<>();
 
-	public StackController(final Activity activity) {
-		super(activity);
+	public StackController(final Activity activity, String id) {
+		super(activity, id);
 	}
 
 	public void push(final ViewController child) {

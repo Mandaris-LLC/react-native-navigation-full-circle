@@ -3,7 +3,6 @@ package com.reactnativenavigation.layout;
 import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
-import com.reactnativenavigation.Store;
 import com.reactnativenavigation.layout.impl.ReactRootViewController;
 import com.reactnativenavigation.viewcontrollers.StackController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
@@ -12,21 +11,13 @@ public class LayoutFactory {
 
 	private final Activity activity;
 	private final ReactInstanceManager reactInstanceManager;
-	private final Store store;
 
-	public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager, final Store store) {
+	public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager) {
 		this.activity = activity;
 		this.reactInstanceManager = reactInstanceManager;
-		this.store = store;
 	}
 
-	public ViewController createAndSaveToStore(LayoutNode node) {
-		ViewController viewController = create(node);
-		store.setViewController(node.id, viewController);
-		return viewController;
-	}
-
-	private ViewController create(final LayoutNode node) {
+	public ViewController create(final LayoutNode node) {
 		switch (node.type) {
 			case Container:
 				return createContainer(node);
@@ -86,9 +77,9 @@ public class LayoutFactory {
 	}
 
 	private ViewController createContainerStack(LayoutNode node) {
-		StackController stackController = new StackController(activity);
+		StackController stackController = new StackController(activity, node.id);
 		for (LayoutNode child : node.children) {
-			stackController.push(createAndSaveToStore(child));
+			stackController.push(create(child));
 		}
 		return stackController;
 	}

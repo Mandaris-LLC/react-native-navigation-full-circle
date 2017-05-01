@@ -58,8 +58,6 @@ public class NavigatorTest extends BaseTest {
 		assertHasSingleChildViewOf(child2);
 	}
 
-
-
 	private void assertHasSingleChildViewOf(ViewController vc) {
 		assertThat(uut.getView().getChildCount()).isEqualTo(1);
 		assertThat(uut.getView().getChildAt(0)).isEqualTo(vc.getView()).isNotNull();

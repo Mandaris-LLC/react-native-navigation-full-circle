@@ -9,9 +9,11 @@ public abstract class ViewController {
 	private View view;
 	private final Activity activity;
 	private StackController stackController;
+	private String id;
 
-	public ViewController(Activity activity) {
+	public ViewController(Activity activity, String id) {
 		this.activity = activity;
+		this.id = id;
 	}
 
 	@NonNull
@@ -40,5 +42,9 @@ public abstract class ViewController {
 			view = createView();
 		}
 		return view;
+	}
+
+	public String getId() {
+		return id;
 	}
 }

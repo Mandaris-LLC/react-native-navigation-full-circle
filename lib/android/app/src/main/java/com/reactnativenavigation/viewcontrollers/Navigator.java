@@ -9,7 +9,7 @@ public class Navigator extends ViewController {
 	private boolean activityResumed = false;
 
 	public Navigator(final Activity activity) {
-		super(activity);
+		super(activity, "navigator");
 	}
 
 	@NonNull

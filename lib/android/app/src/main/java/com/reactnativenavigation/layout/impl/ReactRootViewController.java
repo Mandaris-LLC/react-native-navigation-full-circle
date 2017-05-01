@@ -11,14 +11,12 @@ import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class ReactRootViewController extends ViewController {
 
-	private final String id;
 	private final String name;
 	private final ReactInstanceManager reactInstanceManager;
 	private boolean attachedToReactInstance = false;
 
 	public ReactRootViewController(final Activity activity, final String id, final String name, final ReactInstanceManager reactInstanceManager) {
-		super(activity);
-		this.id = id;
+		super(activity, id);
 		this.name = name;
 		this.reactInstanceManager = reactInstanceManager;
 	}
@@ -61,7 +59,7 @@ public class ReactRootViewController extends ViewController {
 	protected View createView() {
 		ReactRootView reactRootView = new ReactRootView(getActivity());
 		Bundle opts = new Bundle();
-		opts.putString("id", this.id);
+		opts.putString("id", getId());
 		reactRootView.startReactApplication(this.reactInstanceManager, this.name, opts);
 		reactRootView.setEventListener(new ReactRootView.ReactRootViewEventListener() {
 			@Override

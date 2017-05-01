@@ -23,7 +23,7 @@ public class StackControllerTest extends BaseTest {
 	public void beforeEach() {
 		super.beforeEach();
 		activity = newActivity();
-		uut = new StackController(activity);
+		uut = new StackController(activity, "uut");
 		child1 = new SimpleViewController(activity, "child1");
 		child2 = new SimpleViewController(activity, "child2");
 		child3 = new SimpleViewController(activity, "child3");
@@ -77,7 +77,7 @@ public class StackControllerTest extends BaseTest {
 		uut.push(child1);
 		assertThat(child1.getStackController()).isEqualTo(uut);
 
-		StackController anotherNavController = new StackController(activity);
+		StackController anotherNavController = new StackController(activity, "another");
 		anotherNavController.push(child2);
 		assertThat(child2.getStackController()).isEqualTo(anotherNavController);
 	}
