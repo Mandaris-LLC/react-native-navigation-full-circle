@@ -6,7 +6,6 @@ import android.widget.FrameLayout;
 
 public class Navigator extends ViewController {
 	private boolean activityResumed = false;
-	private ViewController pendingViewControllerStart;
 
 	public Navigator(final Activity activity) {
 		super(activity);
@@ -26,8 +25,6 @@ public class Navigator extends ViewController {
 		getActivity().setContentView(viewController.getView());
 		if (activityResumed) {
 //			viewController.onStart();
-		} else {
-			pendingViewControllerStart = viewController;
 		}
 	}
 
@@ -37,10 +34,6 @@ public class Navigator extends ViewController {
 
 	public void onActivityResumed() {
 		activityResumed = true;
-		if (pendingViewControllerStart != null) {
-//			pendingViewControllerStart.onStart();
-			pendingViewControllerStart = null;
-		}
 	}
 
 	public void onActivityPaused() {

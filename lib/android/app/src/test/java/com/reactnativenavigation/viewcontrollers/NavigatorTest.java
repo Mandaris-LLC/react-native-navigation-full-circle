@@ -6,6 +6,7 @@ import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
 
 import org.junit.Test;
+import org.robolectric.Shadows;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.spy;
@@ -25,7 +26,7 @@ public class NavigatorTest extends BaseTest {
 
 
 	@Test
-	public void isActivityRusumed() throws Exception {
+	public void isActivityResumed() throws Exception {
 		assertThat(uut.isActivityResumed()).isFalse();
 		uut.onActivityCreated();
 		assertThat(uut.isActivityResumed()).isFalse();
@@ -33,5 +34,13 @@ public class NavigatorTest extends BaseTest {
 		assertThat(uut.isActivityResumed()).isTrue();
 		uut.onActivityPaused();
 		assertThat(uut.isActivityResumed()).isFalse();
+	}
+
+	@Test
+	public void setsItselfAsContentView() throws Exception {
+		assertThat(Shadows.shadowOf(activity).getContentView()).isNull();
+		uut.onActivityCreated();
+		assertThat(Shadows.shadowOf(activity).getContentView()).isEqualTo(uut.getView());
+
 	}
 }
