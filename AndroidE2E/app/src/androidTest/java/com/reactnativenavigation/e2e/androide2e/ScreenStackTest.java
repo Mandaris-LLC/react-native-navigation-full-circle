@@ -2,10 +2,8 @@ package com.reactnativenavigation.e2e.androide2e;
 
 import android.support.test.uiautomator.By;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 public class ScreenStackTest extends BaseTest {
 
 	@Test

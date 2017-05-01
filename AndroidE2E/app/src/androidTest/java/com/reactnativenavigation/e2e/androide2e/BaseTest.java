@@ -48,7 +48,7 @@ public abstract class BaseTest {
 	}
 
 	public void acceptOverlayPermissionIfNeeded() throws Exception {
-		if (elementByText("Draw over other apps").waitForExists(300)) {
+		if (isRequestingOverlayPermission()) {
 			if (!elementByText("Playground").exists()) {
 				scrollToText("Playground");
 			}
@@ -59,8 +59,16 @@ public abstract class BaseTest {
 		}
 	}
 
+	private boolean isRequestingOverlayPermission() {
+		return device().wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), 300);
+	}
+
 	public UiObject elementByText(String text) {
 		return device().findObject(new UiSelector().text(text));
+	}
+
+	public UiObject elementByTextContains(String text) {
+		return device().findObject(new UiSelector().textContains(text));
 	}
 
 	public void scrollToText(String txt) throws Exception {
