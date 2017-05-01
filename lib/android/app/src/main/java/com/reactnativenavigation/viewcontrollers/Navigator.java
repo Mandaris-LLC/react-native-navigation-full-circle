@@ -5,11 +5,13 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.reactnativenavigation.utils.CompatUtils;
+
 public class Navigator extends ViewController {
 	private boolean activityResumed = false;
 
 	public Navigator(final Activity activity) {
-		super(activity, "navigator");
+		super(activity, "navigator" + CompatUtils.generateViewId());
 	}
 
 	@NonNull

@@ -8,6 +8,8 @@ import com.reactnativenavigation.mocks.SimpleViewController;
 import org.junit.Test;
 import org.robolectric.Shadows;
 
+import java.util.regex.Pattern;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class NavigatorTest extends BaseTest {
@@ -56,6 +58,12 @@ public class NavigatorTest extends BaseTest {
 		uut.setRoot(child1);
 		uut.setRoot(child2);
 		assertHasSingleChildViewOf(child2);
+	}
+
+	@Test
+	public void holdsUniqueId() throws Exception {
+		assertThat(uut.getId()).startsWith("navigator").matches(Pattern.compile("navigator\\d"));
+		assertThat(new Navigator(activity).getId()).isNotEqualTo(uut.getId());
 	}
 
 	private void assertHasSingleChildViewOf(ViewController vc) {
