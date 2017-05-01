@@ -48,7 +48,7 @@ public abstract class BaseTest {
 	}
 
 	public void acceptOverlayPermissionIfNeeded() throws Exception {
-		if (elementByText("Draw over other apps").waitForExists(100)) {
+		if (elementByText("Draw over other apps").waitForExists(300)) {
 			if (!elementByText("Playground").exists()) {
 				scrollToText("Playground");
 			}
