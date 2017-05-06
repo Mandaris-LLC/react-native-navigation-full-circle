@@ -209,7 +209,7 @@ Change the tab icon on a bottom tab.
 
 ```js
 this.props.navigator.setTabButton({
-  tabIndex: 0, // (optional) if missing, the badge will be added to this screen's tab
+  tabIndex: 0, // (optional) if missing, the icon will be added to this screen's tab
   icon: require('../img/one.png'), // local image asset for the tab icon unselected state (optional)
   selectedIcon: require('../img/one_selected.png'), // local image asset for the tab icon selected state (optional, iOS only)
 });
