@@ -49,10 +49,8 @@ public class BottomTabsController extends ViewController implements BottomNaviga
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
+		tabs.get(selectedIndex).getView().setVisibility(View.GONE);
 		selectedIndex = item.getItemId();
-		for (ViewController tab : tabs) {
-			tab.getView().setVisibility(View.GONE);
-		}
 		tabs.get(selectedIndex).getView().setVisibility(View.VISIBLE);
 		return true;
 	}
