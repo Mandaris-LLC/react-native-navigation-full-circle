@@ -4,6 +4,9 @@ import com.reactnativenavigation.BaseTest;
 
 import org.junit.Test;
 
+import java.util.Deque;
+import java.util.Map;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class IndexedStackTest extends BaseTest {
@@ -71,9 +74,37 @@ public class IndexedStackTest extends BaseTest {
 
 	@Test
 	public void containsId() throws Exception {
-		assertThat(uut.contains("123")).isFalse();
+		assertThat(uut.containsId("123")).isFalse();
 		uut.push("123", 123);
-		assertThat(uut.contains("123")).isTrue();
+		assertThat(uut.containsId("123")).isTrue();
+	}
 
+	@Test
+	public void remove() throws Exception {
+		assertThat(uut.remove("123")).isNull();
+
+		uut.push("123", 123);
+		uut.push("456", 456);
+
+		assertThat(uut.remove("123")).isEqualTo(123);
+	}
+
+	@Test
+	public void iterableIds() throws Exception {
+		assertThat(uut).isInstanceOf(Iterable.class);
+		assertThat(uut).isEmpty();
+		uut.push("123", 123);
+		uut.push("456", 456);
+		assertThat(uut).containsExactly("456", "123");
+	}
+
+	@Test
+	public void getIdDeque() throws Exception {
+		assertThat(uut.getIds()).isNotNull().isInstanceOf(Deque.class).isEmpty();
+	}
+
+	@Test
+	public void getMap() throws Exception {
+		assertThat(uut.getMap()).isNotNull().isInstanceOf(Map.class).isEmpty();
 	}
 }
