@@ -9,6 +9,7 @@ import com.reactnativenavigation.utils.CompatUtils;
 
 public class Navigator extends ViewController {
 	private boolean activityResumed = false;
+	private ViewController child;
 
 	public Navigator(final Activity activity) {
 		super(activity, "navigator" + CompatUtils.generateViewId());
@@ -48,5 +49,13 @@ public class Navigator extends ViewController {
 	}
 
 	public void onActivityDestroyed() {
+	}
+
+	public void push(final ViewController onViewController, final ViewController viewController) {
+
+	}
+
+	public ViewController getViewController(final String id) {
+		return null;
 	}
 }

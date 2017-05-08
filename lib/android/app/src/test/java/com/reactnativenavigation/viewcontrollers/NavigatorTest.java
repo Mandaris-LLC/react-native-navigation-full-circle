@@ -5,10 +5,9 @@ import android.app.Activity;
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.robolectric.Shadows;
-
-import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -62,13 +61,29 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void holdsUniqueId() throws Exception {
-		assertThat(uut.getId()).startsWith("navigator").matches(Pattern.compile("navigator\\d"));
+		assertThat(uut.getId()).startsWith("navigator");
 		assertThat(new Navigator(activity).getId()).isNotEqualTo(uut.getId());
 	}
+
+	@Test
+	@Ignore
+	public void holdsAllViewControllersById() throws Exception {
+		StackController stackController = new StackController(activity, "stack1");
+		stackController.push(child1);
+		stackController.push(child2);
+		assertThat(uut.getViewController(child1.getId())).isNull();
+		uut.setRoot(stackController);
+		assertThat(uut.getViewController(child1.getId())).isEqualTo(child1);
+		assertThat(uut.getViewController(child2.getId())).isEqualTo(child2);
+	}
+
+//	@Test
+//	public void push_OnTopOf() throws Exception {
+//		uut.push(child2, child1);
+//	}
 
 	private void assertHasSingleChildViewOf(ViewController vc) {
 		assertThat(uut.getView().getChildCount()).isEqualTo(1);
 		assertThat(uut.getView().getChildAt(0)).isEqualTo(vc.getView()).isNotNull();
 	}
-
 }

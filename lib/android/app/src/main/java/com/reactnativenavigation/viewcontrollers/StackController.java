@@ -6,10 +6,15 @@ import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.reactnativenavigation.utils.StringUtils;
+
 import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StackController extends ViewController {
-	private final ArrayDeque<ViewController> stack = new ArrayDeque<>();
+	private final ArrayDeque<String> idStack = new ArrayDeque<>();
+	private final Map<String, ViewController> controllersById = new HashMap<>();
 
 	public StackController(final Activity activity, String id) {
 		super(activity, id);
@@ -19,7 +24,8 @@ public class StackController extends ViewController {
 		final ViewController previousTop = peek();
 
 		child.setStackController(this);
-		stack.push(child);
+		idStack.push(child.getId());
+		controllersById.put(child.getId(), child);
 
 		getView().addView(child.getView());
 		if (previousTop != null) {
@@ -28,14 +34,15 @@ public class StackController extends ViewController {
 	}
 
 	public boolean canPop() {
-		return stack.size() > 1;
+		return idStack.size() > 1;
 	}
 
 	public void pop() {
 		if (!canPop()) {
 			return;
 		}
-		ViewController poppedController = stack.pop();
+		String poppedId = idStack.pop();
+		ViewController poppedController = controllersById.remove(poppedId);
 		getView().removeView(poppedController.getView());
 
 		ViewController previousTop = peek();
@@ -43,23 +50,28 @@ public class StackController extends ViewController {
 	}
 
 	public void pop(final ViewController childController) {
-		if (peek() == childController) {
+		if (StringUtils.isEqual(peekId(), childController.getId())) {
 			pop();
 		} else {
-			stack.remove(childController);
+			idStack.remove(childController.getId());
+			controllersById.remove(childController.getId());
 		}
 	}
 
 	public ViewController peek() {
-		return stack.peek();
+		return controllersById.get(peekId());
+	}
+
+	public String peekId() {
+		return idStack.peek();
 	}
 
 	public int size() {
-		return stack.size();
+		return idStack.size();
 	}
 
 	public boolean isEmpty() {
-		return stack.isEmpty();
+		return idStack.isEmpty();
 	}
 
 	@Override
@@ -90,15 +102,11 @@ public class StackController extends ViewController {
 		return this;
 	}
 
-	ArrayDeque<ViewController> getStack() {
-		return stack;
-	}
-
 	public void popTo(final ViewController viewController) {
-		if (!stack.contains(viewController)) {
+		if (!idStack.contains(viewController.getId())) {
 			return;
 		}
-		while (peek() != viewController) {
+		while (!StringUtils.isEqual(peekId(), viewController.getId())) {
 			pop();
 		}
 	}
@@ -107,5 +115,13 @@ public class StackController extends ViewController {
 		while (canPop()) {
 			pop();
 		}
+	}
+
+	public ViewController getChildById(final String id) {
+		return controllersById.get(id);
+	}
+
+	ArrayDeque<String> getStack() {
+		return idStack;
 	}
 }
