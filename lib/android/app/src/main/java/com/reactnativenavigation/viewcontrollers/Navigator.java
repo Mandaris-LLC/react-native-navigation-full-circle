@@ -8,8 +8,9 @@ import android.widget.FrameLayout;
 import com.reactnativenavigation.utils.CompatUtils;
 
 public class Navigator extends ViewController {
+
+	private ViewController root;
 	private boolean activityResumed = false;
-	private ViewController child;
 
 	public Navigator(final Activity activity) {
 		super(activity, "navigator" + CompatUtils.generateViewId());
@@ -27,13 +28,12 @@ public class Navigator extends ViewController {
 		return (FrameLayout) super.getView();
 	}
 
+	/*
+	 * Activity lifecycle
+	 */
+
 	public boolean isActivityResumed() {
 		return activityResumed;
-	}
-
-	public void setRoot(final ViewController viewController) {
-		getView().removeAllViews();
-		getView().addView(viewController.getView());
 	}
 
 	public void onActivityCreated() {
@@ -49,13 +49,21 @@ public class Navigator extends ViewController {
 	}
 
 	public void onActivityDestroyed() {
+		//
+	}
+
+	/*
+	 * Navigation methods
+	 */
+
+	public void setRoot(final ViewController viewController) {
+		getView().removeAllViews();
+
+		root = viewController;
+		getView().addView(viewController.getView());
 	}
 
 	public void push(final ViewController onViewController, final ViewController viewController) {
 
-	}
-
-	public ViewController getViewController(final String id) {
-		return null;
 	}
 }
