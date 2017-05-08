@@ -1,12 +1,12 @@
-package com.reactnativenavigation.utils;
+package com.reactnativenavigation.viewcontrollers;
+
+import com.reactnativenavigation.utils.StringUtils;
 
 import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
-public class IdStack<E> implements Iterable<String> {
+public class IndexedStack<E> implements Iterable<String> {
 
 	private final ArrayDeque<String> deque = new ArrayDeque<>();
 	private final HashMap<String, E> map = new HashMap<>();
@@ -63,16 +63,12 @@ public class IdStack<E> implements Iterable<String> {
 		return map.remove(id);
 	}
 
+	public boolean isTop(final String id) {
+		return StringUtils.isEqual(id, peekId());
+	}
+
 	@Override
 	public Iterator<String> iterator() {
 		return deque.iterator();
-	}
-
-	public Deque<String> getIds() {
-		return deque;
-	}
-
-	public Map<String, E> getMap() {
-		return map;
 	}
 }

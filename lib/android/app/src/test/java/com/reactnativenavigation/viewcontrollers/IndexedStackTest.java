@@ -1,22 +1,20 @@
-package com.reactnativenavigation.utils;
+package com.reactnativenavigation.viewcontrollers;
 
 import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.viewcontrollers.IndexedStack;
 
 import org.junit.Test;
-
-import java.util.Deque;
-import java.util.Map;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class IndexedStackTest extends BaseTest {
 
-	private IdStack<Integer> uut;
+	private IndexedStack<Integer> uut;
 
 	@Override
 	public void beforeEach() {
 		super.beforeEach();
-		uut = new IdStack<>();
+		uut = new IndexedStack<>();
 	}
 
 	@Test
@@ -99,12 +97,11 @@ public class IndexedStackTest extends BaseTest {
 	}
 
 	@Test
-	public void getIdDeque() throws Exception {
-		assertThat(uut.getIds()).isNotNull().isInstanceOf(Deque.class).isEmpty();
-	}
-
-	@Test
-	public void getMap() throws Exception {
-		assertThat(uut.getMap()).isNotNull().isInstanceOf(Map.class).isEmpty();
+	public void isTop() throws Exception {
+		assertThat(uut.isTop("123")).isFalse();
+		uut.push("123", 123);
+		assertThat(uut.isTop("123")).isTrue();
+		uut.push("456", 456);
+		assertThat(uut.isTop("123")).isFalse();
 	}
 }
