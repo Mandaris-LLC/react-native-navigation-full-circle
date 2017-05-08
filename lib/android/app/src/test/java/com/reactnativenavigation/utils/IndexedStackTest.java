@@ -8,12 +8,12 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class IndexedStackTest extends BaseTest {
 
-	private IndexedStack<String, Integer> uut;
+	private IdStack<Integer> uut;
 
 	@Override
 	public void beforeEach() {
 		super.beforeEach();
-		uut = new IndexedStack<>();
+		uut = new IdStack<>();
 	}
 
 	@Test
@@ -44,5 +44,36 @@ public class IndexedStackTest extends BaseTest {
 		uut.push("123", 123);
 		uut.push("456", 456);
 		assertThat(uut.pop()).isEqualTo(456);
+	}
+
+	@Test
+	public void peekId() throws Exception {
+		assertThat(uut.peekId()).isNull();
+		uut.push("123", 123);
+		assertThat(uut.peekId()).isEqualTo("123");
+	}
+
+	@Test
+	public void clear() throws Exception {
+		uut.push("123", 123);
+		uut.push("456", 456);
+		uut.clear();
+		assertThat(uut.isEmpty()).isTrue();
+	}
+
+	@Test
+	public void getById() throws Exception {
+		assertThat(uut.get("123")).isNull();
+		uut.push("123", 123);
+		uut.push("456", 456);
+		assertThat(uut.get("123")).isEqualTo(123);
+	}
+
+	@Test
+	public void containsId() throws Exception {
+		assertThat(uut.contains("123")).isFalse();
+		uut.push("123", 123);
+		assertThat(uut.contains("123")).isTrue();
+
 	}
 }
