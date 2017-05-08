@@ -3,12 +3,12 @@ package com.reactnativenavigation.utils;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 
-public class IdStack<E> {
+public class IndexedStack<K, E> {
 
-	private final ArrayDeque<String> deque = new ArrayDeque<>();
-	private final HashMap<String, E> map = new HashMap<>();
+	private final ArrayDeque<K> deque = new ArrayDeque<>();
+	private final HashMap<K, E> map = new HashMap<>();
 
-	public void push(String id, E item) {
+	public void push(K id, E item) {
 		deque.push(id);
 		map.put(id, item);
 	}
@@ -21,7 +21,7 @@ public class IdStack<E> {
 		if (deque.isEmpty()) {
 			return null;
 		}
-		String popped = deque.pop();
+		K popped = deque.pop();
 		E removed = map.remove(popped);
 		return removed;
 	}
