@@ -37,7 +37,6 @@ public class BottomTabsController extends ViewController implements BottomNaviga
 		bottomNavigationView.setOnNavigationItemSelectedListener(this);
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
 		lp.addRule(ALIGN_PARENT_BOTTOM);
-		bottomNavigationView.setLayoutParams(lp);
 		root.addView(bottomNavigationView, lp);
 		return root;
 	}

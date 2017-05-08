@@ -4,8 +4,12 @@ import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.layout.impl.ReactRootViewController;
+import com.reactnativenavigation.viewcontrollers.BottomTabsController;
 import com.reactnativenavigation.viewcontrollers.StackController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LayoutFactory {
 
@@ -24,8 +28,8 @@ public class LayoutFactory {
 			case ContainerStack:
 			default:
 				return createContainerStack(node);
-//			case BottomTabs:
-//				return createBottomTabs(node);
+			case BottomTabs:
+				return createBottomTabs(node);
 //			case SideMenuRoot:
 //				return createSideMenuRoot(node);
 //			case SideMenuCenter:
@@ -84,12 +88,13 @@ public class LayoutFactory {
 		return stackController;
 	}
 
-//	private Layout createBottomTabs(LayoutNode node) {
-//		final BottomTabsLayout tabsContainer = new BottomTabsLayout(activity);
-//		for (int i = 0; i < node.children.size(); i++) {
-//			final Layout tabLayout = createAndSaveToStore(node.children.get(i));
-//			tabsContainer.addTab("#" + i, tabLayout);
-//		}
-//		return tabsContainer;
-//	}
+	private ViewController createBottomTabs(LayoutNode node) {
+		final BottomTabsController tabsContainer = new BottomTabsController(activity, node.id);
+		List<ViewController> tabs = new ArrayList<>();
+		for (int i = 0; i < node.children.size(); i++) {
+			tabs.add(create(node.children.get(i)));
+		}
+		tabsContainer.setTabs(tabs);
+		return tabsContainer;
+	}
 }
