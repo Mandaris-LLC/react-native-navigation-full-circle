@@ -63,7 +63,9 @@ public class Navigator extends ViewController {
 		getView().addView(viewController.getView());
 	}
 
-	public void push(final ViewController onViewController, final ViewController viewController) {
-
+	public void push(final String onId, final ViewController viewController) {
+		if (root instanceof StackController) {
+			((StackController) root).push(viewController);
+		}
 	}
 }

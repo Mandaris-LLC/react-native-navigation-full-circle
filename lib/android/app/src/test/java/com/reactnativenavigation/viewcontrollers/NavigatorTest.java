@@ -1,6 +1,7 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.view.ViewGroup;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
@@ -48,14 +49,14 @@ public class NavigatorTest extends BaseTest {
 	public void setRoot_AddsChildControllerView() throws Exception {
 		assertThat(uut.getView().getChildCount()).isZero();
 		uut.setRoot(child1);
-		assertHasSingleChildViewOf(child1);
+		assertHasSingleChildViewOf(uut, child1);
 	}
 
 	@Test
 	public void setRoot_ReplacesExistingChildControllerViews() throws Exception {
 		uut.setRoot(child1);
 		uut.setRoot(child2);
-		assertHasSingleChildViewOf(child2);
+		assertHasSingleChildViewOf(uut, child2);
 	}
 
 	@Test
@@ -64,8 +65,30 @@ public class NavigatorTest extends BaseTest {
 		assertThat(new Navigator(activity).getId()).isNotEqualTo(uut.getId());
 	}
 
-	private void assertHasSingleChildViewOf(ViewController vc) {
-		assertThat(uut.getView().getChildCount()).isEqualTo(1);
-		assertThat(uut.getView().getChildAt(0)).isEqualTo(vc.getView()).isNotNull();
+	@Test
+	public void push() throws Exception {
+		StackController stackController = new StackController(activity, "stack1");
+		stackController.push(child1);
+		uut.setRoot(stackController);
+
+		assertHasSingleChildViewOf(uut, stackController);
+		assertHasSingleChildViewOf(stackController, child1);
+
+		uut.push(child1.getId(), child2);
+
+		assertHasSingleChildViewOf(uut, stackController);
+		assertHasSingleChildViewOf(stackController, child2);
+	}
+
+	@Test
+	public void push_InvalidPushWithoutAStack_DoesNothing() throws Exception {
+		uut.setRoot(child1);
+		uut.push(child1.getId(), child2);
+		assertHasSingleChildViewOf(uut, child1);
+	}
+
+	private void assertHasSingleChildViewOf(ViewController parent, ViewController child) {
+		assertThat(((ViewGroup) parent.getView()).getChildCount()).isEqualTo(1);
+		assertThat(((ViewGroup) parent.getView()).getChildAt(0)).isEqualTo(child.getView()).isNotNull();
 	}
 }

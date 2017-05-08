@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 public abstract class ViewController {
-	private View view;
 	private final Activity activity;
+	private final String id;
+	private View view;
 	private StackController stackController;
-	private String id;
 
 	public ViewController(Activity activity, String id) {
 		this.activity = activity;
