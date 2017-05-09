@@ -3,6 +3,7 @@ package com.reactnativenavigation.viewcontrollers;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.BaseTest;
@@ -26,6 +27,23 @@ public class ParentControllerTest extends BaseTest {
 		activity = newActivity();
 	}
 
+	@Test
+	public void holdsViewGroup() throws Exception {
+		ParentController uut = new ParentController(activity, "uut") {
+			@Override
+			public Collection<ViewController> getChildControllers() {
+				return Collections.emptyList();
+			}
+
+			@NonNull
+			@Override
+			protected View createView() {
+				return new FrameLayout(activity);
+			}
+		};
+
+		assertThat(uut.getView()).isInstanceOf(ViewGroup.class);
+	}
 
 	@Test
 	public void findControllerById_ReturnsSelfIfSameId() throws Exception {

@@ -43,12 +43,6 @@ public class BottomTabsController extends ParentController implements BottomNavi
 		return root;
 	}
 
-	@NonNull
-	@Override
-	public RelativeLayout getView() {
-		return (RelativeLayout) super.getView();
-	}
-
 	@Override
 	public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
 		selectTabAtIndex(item.getItemId());

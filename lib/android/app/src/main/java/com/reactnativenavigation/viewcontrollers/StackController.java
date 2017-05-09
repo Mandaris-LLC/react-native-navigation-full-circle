@@ -74,12 +74,6 @@ public class StackController extends ParentController {
 
 	@NonNull
 	@Override
-	public ViewGroup getView() {
-		return (ViewGroup) super.getView();
-	}
-
-	@NonNull
-	@Override
 	protected ViewGroup createView() {
 		return new FrameLayout(getActivity());
 	}
