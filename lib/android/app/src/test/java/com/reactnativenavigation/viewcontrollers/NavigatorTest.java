@@ -133,6 +133,24 @@ public class NavigatorTest extends BaseTest {
 	}
 
 	@Test
+	public void popSpecific() throws Exception {
+		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
+		StackController stack1 = new StackController(activity, "stack1");
+		StackController stack2 = new StackController(activity, "stack2");
+		stack1.push(child1);
+		stack2.push(child2);
+		stack2.push(child3);
+		SimpleViewController child4 = new SimpleViewController(activity, "child4");
+		stack2.push(child4);
+		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
+		uut.setRoot(bottomTabsController);
+
+		uut.popSpecific(child2.getId());
+
+		assertThat(stack2.getChildControllers()).containsOnly(child4, child3);
+	}
+
+	@Test
 	public void popTo_FromCorrectStackUpToChild() throws Exception {
 		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
 		StackController stack1 = new StackController(activity, "stack1");

@@ -158,7 +158,7 @@ public class StackControllerTest extends BaseTest {
 	public void popSpecificWhenTopIsRegularPop() throws Exception {
 		uut.push(child1);
 		uut.push(child2);
-		uut.pop(child2);
+		uut.popSpecific(child2);
 		assertContainsOnlyId(child1.getId());
 		assertHasSingleChildViewOfController(child1);
 	}
@@ -169,7 +169,7 @@ public class StackControllerTest extends BaseTest {
 		uut.push(child2);
 		assertHasSingleChildViewOfController(child2);
 
-		uut.pop(child1);
+		uut.popSpecific(child1);
 		assertContainsOnlyId(child2.getId());
 		assertHasSingleChildViewOfController(child2);
 	}

@@ -80,7 +80,17 @@ public class Navigator extends ParentController {
 		if (from != null) {
 			StackController parentStackController = from.getParentStackController();
 			if (parentStackController != null) {
-				parentStackController.pop(from);
+				parentStackController.pop();
+			}
+		}
+	}
+
+	public void popSpecific(final String id) {
+		ViewController from = findControllerById(id);
+		if (from != null) {
+			StackController parentStackController = from.getParentStackController();
+			if (parentStackController != null) {
+				parentStackController.popSpecific(from);
 			}
 		}
 	}

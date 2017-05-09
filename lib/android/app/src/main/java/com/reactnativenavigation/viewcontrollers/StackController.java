@@ -42,7 +42,7 @@ public class StackController extends ParentController {
 		getView().addView(previousTop.getView());
 	}
 
-	public void pop(final ViewController childController) {
+	public void popSpecific(final ViewController childController) {
 		if (stack.isTop(childController.getId())) {
 			pop();
 		} else {
