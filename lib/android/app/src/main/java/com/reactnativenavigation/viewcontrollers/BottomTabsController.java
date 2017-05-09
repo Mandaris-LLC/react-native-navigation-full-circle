@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.reactnativenavigation.utils.CompatUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -21,8 +22,8 @@ import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 
 public class BottomTabsController extends ParentController implements BottomNavigationView.OnNavigationItemSelectedListener {
 	private BottomNavigationView bottomNavigationView;
-	private int selectedIndex = 0;
 	private List<ViewController> tabs = new ArrayList<>();
+	private int selectedIndex = 0;
 
 	public BottomTabsController(final Activity activity, final String id) {
 		super(activity, id);
@@ -50,10 +51,14 @@ public class BottomTabsController extends ParentController implements BottomNavi
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
-		tabs.get(selectedIndex).getView().setVisibility(View.GONE);
-		selectedIndex = item.getItemId();
-		tabs.get(selectedIndex).getView().setVisibility(View.VISIBLE);
+		selectTabAtIndex(item.getItemId());
 		return true;
+	}
+
+	public void selectTabAtIndex(final int newIndex) {
+		tabs.get(selectedIndex).getView().setVisibility(View.GONE);
+		selectedIndex = newIndex;
+		tabs.get(selectedIndex).getView().setVisibility(View.VISIBLE);
 	}
 
 	public void setTabs(final List<ViewController> tabs) {
@@ -63,15 +68,18 @@ public class BottomTabsController extends ParentController implements BottomNavi
 		this.tabs = tabs;
 		getView();
 		for (int i = 0; i < tabs.size(); i++) {
-			ViewController tab = tabs.get(i);
-			bottomNavigationView.getMenu().add(0, i, Menu.NONE, String.valueOf(i));
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-			params.addRule(ABOVE, bottomNavigationView.getId());
-			getView().addView(tab.getView(), params);
-			if (i > 0) {
-				tab.getView().setVisibility(View.GONE);
-			}
+			String title = String.valueOf(i);
+			createTab(tabs.get(i), i, title);
 		}
+		selectTabAtIndex(0);
+	}
+
+	private void createTab(ViewController tab, final int index, final String title) {
+		bottomNavigationView.getMenu().add(0, index, Menu.NONE, title);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+		params.addRule(ABOVE, bottomNavigationView.getId());
+		tab.getView().setVisibility(View.GONE);
+		getView().addView(tab.getView(), params);
 	}
 
 	public int getSelectedIndex() {
@@ -79,7 +87,7 @@ public class BottomTabsController extends ParentController implements BottomNavi
 	}
 
 	@Override
-	public Iterable<ViewController> getChildControllers() {
+	public Collection<ViewController> getChildControllers() {
 		return tabs;
 	}
 }

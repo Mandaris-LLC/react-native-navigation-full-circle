@@ -3,22 +3,19 @@ package com.reactnativenavigation.viewcontrollers;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
 
-import org.assertj.core.api.Condition;
+import org.assertj.core.api.iterable.Extractor;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class BottomTabsControllerTest extends BaseTest {
 
@@ -60,34 +57,28 @@ public class BottomTabsControllerTest extends BaseTest {
 		List<ViewController> tabs = createTabs();
 		uut.setTabs(tabs);
 		assertThat(uut.getView().getChildCount()).isEqualTo(6);
-		assertThat(uut.getView().getChildAt(1).getVisibility()).isEqualTo(View.VISIBLE);
-		assertThat(uut.getView().getChildAt(2).getVisibility()).isEqualTo(View.GONE);
-		assertThat(uut.getView().getChildAt(3).getVisibility()).isEqualTo(View.GONE);
-		assertThat(uut.getView().getChildAt(4).getVisibility()).isEqualTo(View.GONE);
-		assertThat(uut.getView().getChildAt(5).getVisibility()).isEqualTo(View.GONE);
+		assertThat(uut.getChildControllers()).extracting(new Extractor<ViewController, Integer>() {
+			@Override
+			public Integer extract(final ViewController input) {
+				return input.getView().getVisibility();
+			}
+		}).containsExactly(View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE);
 	}
 
 	@Test
-	public void onTabSelected_SelectsTab() throws Exception {
+	public void selectTabAtIndex() throws Exception {
 		uut.setTabs(createTabs());
 		assertThat(uut.getSelectedIndex()).isZero();
 
-		MenuItem menuItem = mock(MenuItem.class);
-		when(menuItem.getItemId()).thenReturn(3);
-		assertThat(uut.onNavigationItemSelected(menuItem)).isTrue();
+		uut.selectTabAtIndex(3);
 
 		assertThat(uut.getSelectedIndex()).isEqualTo(3);
-		assertThat(uut.getChildControllers()).areExactly(1, new Condition<ViewController>() {
+		assertThat(uut.getChildControllers()).extracting(new Extractor<ViewController, Integer>() {
 			@Override
-			public boolean matches(final ViewController value) {
-				return value.getView().getVisibility() == View.VISIBLE;
+			public Integer extract(final ViewController input) {
+				return input.getView().getVisibility();
 			}
-		});
-//		assertThat(uut.getView().getChildAt(1).getVisibility()).isEqualTo(View.GONE);
-//		assertThat(uut.getView().getChildAt(2).getVisibility()).isEqualTo(View.GONE);
-//		assertThat(uut.getView().getChildAt(3).getVisibility()).isEqualTo(View.GONE);
-//		assertThat(uut.getView().getChildAt(4).getVisibility()).isEqualTo(View.VISIBLE);
-//		assertThat(uut.getView().getChildAt(5).getVisibility()).isEqualTo(View.GONE);
+		}).containsExactly(View.GONE, View.GONE, View.GONE, View.VISIBLE, View.GONE);
 	}
 
 	@Test

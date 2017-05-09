@@ -2,12 +2,14 @@ package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 
+import java.util.Collection;
+
 public abstract class ParentController extends ViewController {
 	public ParentController(final Activity activity, final String id) {
 		super(activity, id);
 	}
 
-	public abstract Iterable<ViewController> getChildControllers();
+	public abstract Collection<ViewController> getChildControllers();
 
 	public ViewController findControllerById(final String id) {
 		ViewController fromSuper = super.findControllerById(id);

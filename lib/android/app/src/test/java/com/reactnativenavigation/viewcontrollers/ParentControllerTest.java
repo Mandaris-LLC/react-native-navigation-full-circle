@@ -11,6 +11,7 @@ import com.reactnativenavigation.mocks.SimpleViewController;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -30,7 +31,7 @@ public class ParentControllerTest extends BaseTest {
 	public void findControllerById_ReturnsSelfIfSameId() throws Exception {
 		ParentController uut = new ParentController(activity, "uut") {
 			@Override
-			public Iterable<ViewController> getChildControllers() {
+			public Collection<ViewController> getChildControllers() {
 				return Collections.emptyList();
 			}
 
@@ -56,7 +57,7 @@ public class ParentControllerTest extends BaseTest {
 
 		ParentController uut = new ParentController(activity, "uut") {
 			@Override
-			public Iterable<ViewController> getChildControllers() {
+			public Collection<ViewController> getChildControllers() {
 				return Arrays.<ViewController>asList(someInnerStack);
 			}
 

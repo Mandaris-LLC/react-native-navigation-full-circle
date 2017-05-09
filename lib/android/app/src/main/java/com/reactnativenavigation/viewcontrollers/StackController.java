@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.util.Collection;
+
 public class StackController extends ParentController {
 	private final IndexedStack<ViewController> stack = new IndexedStack<>();
 
@@ -108,7 +110,7 @@ public class StackController extends ParentController {
 	}
 
 	@Override
-	public Iterable<ViewController> getChildControllers() {
+	public Collection<ViewController> getChildControllers() {
 		return stack.values();
 	}
 }
