@@ -46,10 +46,10 @@ public class ViewControllerTest extends BaseTest {
 
 	@Test
 	public void holdsAReferenceToStackControllerOrNull() throws Exception {
-		assertThat(uut.getStackController()).isNull();
+		assertThat(uut.getParentStackController()).isNull();
 		StackController nav = new StackController(activity, "stack");
 		nav.push(uut);
-		assertThat(uut.getStackController()).isEqualTo(nav);
+		assertThat(uut.getParentStackController()).isEqualTo(nav);
 	}
 
 	@Test

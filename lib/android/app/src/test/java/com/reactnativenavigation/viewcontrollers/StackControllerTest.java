@@ -73,13 +73,13 @@ public class StackControllerTest extends BaseTest {
 
 	@Test
 	public void pushAssignsRefToSelfOnPushedController() throws Exception {
-		assertThat(child1.getStackController()).isNull();
+		assertThat(child1.getParentStackController()).isNull();
 		uut.push(child1);
-		assertThat(child1.getStackController()).isEqualTo(uut);
+		assertThat(child1.getParentStackController()).isEqualTo(uut);
 
 		StackController anotherNavController = new StackController(activity, "another");
 		anotherNavController.push(child2);
-		assertThat(child2.getStackController()).isEqualTo(anotherNavController);
+		assertThat(child2.getParentStackController()).isEqualTo(anotherNavController);
 	}
 
 	@Test
@@ -176,7 +176,7 @@ public class StackControllerTest extends BaseTest {
 
 	@Test
 	public void getStackControllerReturnsSelf() throws Exception {
-		assertThat(uut.getStackController()).isEqualTo(uut);
+		assertThat(uut.getParentStackController()).isEqualTo(uut);
 	}
 
 	@Test

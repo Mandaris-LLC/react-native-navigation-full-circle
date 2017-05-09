@@ -11,7 +11,7 @@ public abstract class ViewController {
 	private final Activity activity;
 	private final String id;
 	private View view;
-	private StackController stackController;
+	private StackController parentStackController;
 
 	public ViewController(Activity activity, String id) {
 		this.activity = activity;
@@ -30,12 +30,12 @@ public abstract class ViewController {
 	}
 
 	@Nullable
-	public StackController getStackController() {
-		return stackController;
+	public StackController getParentStackController() {
+		return parentStackController;
 	}
 
-	void setStackController(final StackController stackController) {
-		this.stackController = stackController;
+	void setParentStackController(final StackController parentStackController) {
+		this.parentStackController = parentStackController;
 	}
 
 	@NonNull

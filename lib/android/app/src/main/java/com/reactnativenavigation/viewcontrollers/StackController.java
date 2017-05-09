@@ -18,7 +18,7 @@ public class StackController extends ParentController {
 	public void push(final ViewController child) {
 		final ViewController previousTop = peek();
 
-		child.setStackController(this);
+		child.setParentStackController(this);
 		stack.push(child.getId(), child);
 
 		getView().addView(child.getView());
@@ -80,7 +80,7 @@ public class StackController extends ParentController {
 
 	@Nullable
 	@Override
-	public StackController getStackController() {
+	public StackController getParentStackController() {
 		return this;
 	}
 

@@ -7,7 +7,10 @@ import android.widget.FrameLayout;
 
 import com.reactnativenavigation.utils.CompatUtils;
 
-public class Navigator extends ViewController {
+import java.util.Collection;
+import java.util.Collections;
+
+public class Navigator extends ParentController {
 
 	private ViewController root;
 	private boolean activityResumed = false;
@@ -22,10 +25,9 @@ public class Navigator extends ViewController {
 		return new FrameLayout(getActivity());
 	}
 
-	@NonNull
 	@Override
-	public FrameLayout getView() {
-		return (FrameLayout) super.getView();
+	public Collection<ViewController> getChildControllers() {
+		return Collections.singletonList(root);
 	}
 
 	/*
@@ -64,8 +66,12 @@ public class Navigator extends ViewController {
 	}
 
 	public void push(final String onId, final ViewController viewController) {
-		if (root instanceof StackController) {
-			((StackController) root).push(viewController);
-		}
+		ViewController found = root.findControllerById(onId);
+		if (found == null) return;
+
+		StackController parentStackController = found.getParentStackController();
+		if (parentStackController == null) return;
+
+		parentStackController.push(viewController);
 	}
 }
