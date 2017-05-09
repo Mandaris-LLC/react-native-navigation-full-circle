@@ -8,23 +8,21 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationActivity;
-import com.reactnativenavigation.Store;
 import com.reactnativenavigation.layout.LayoutFactory;
 import com.reactnativenavigation.layout.LayoutNode;
 import com.reactnativenavigation.parse.JSONParser;
 import com.reactnativenavigation.parse.LayoutNodeParser;
 import com.reactnativenavigation.utils.UiThread;
+import com.reactnativenavigation.viewcontrollers.Navigator;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
 	private static final String NAME = "RNNBridgeModule";
 	private final ReactInstanceManager reactInstanceManager;
-	private final Store store;
 
-	public NavigationModule(final ReactApplicationContext reactContext, final ReactInstanceManager reactInstanceManager, final Store store) {
+	public NavigationModule(final ReactApplicationContext reactContext, final ReactInstanceManager reactInstanceManager) {
 		super(reactContext);
 		this.reactInstanceManager = reactInstanceManager;
-		this.store = store;
 	}
 
 	@Override
@@ -38,8 +36,8 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 			@Override
 			public void run() {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
-				final ViewController viewController = newLayoutFactory().createAndSaveToStore(layoutTree);
-				activity().setViewController(viewController);
+				final ViewController viewController = newLayoutFactory().create(layoutTree);
+				navigator().setRoot(viewController);
 			}
 		});
 	}
@@ -50,8 +48,8 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 			@Override
 			public void run() {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
-				final ViewController viewController = newLayoutFactory().createAndSaveToStore(layoutTree);
-				store.getViewController(onContainerId).getStackController().push(viewController);
+				final ViewController viewController = newLayoutFactory().create(layoutTree);
+//				store.getViewController(onContainerId).getStackController().push(viewController);
 			}
 		});
 	}
@@ -61,7 +59,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				store.getViewController(onContainerId).getStackController().pop(store.getViewController(onContainerId));
+//				store.getViewController(onContainerId).getStackController().pop(store.getViewController(onContainerId));
 			}
 		});
 	}
@@ -71,7 +69,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				store.getViewController(onContainerId).getStackController().popTo(store.getViewController(toContainerId));
+//				store.getViewController(onContainerId).getStackController().popTo(store.getViewController(toContainerId));
 			}
 		});
 	}
@@ -81,7 +79,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				store.getViewController(onContainerId).getStackController().popToRoot();
+//				store.getViewController(onContainerId).getStackController().popToRoot();
 			}
 		});
 	}
@@ -90,9 +88,13 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		return (NavigationActivity) getCurrentActivity();
 	}
 
+	private Navigator navigator() {
+		return activity().getNavigator();
+	}
+
 	@NonNull
 	private LayoutFactory newLayoutFactory() {
-		return new LayoutFactory(activity(), reactInstanceManager, store);
+		return new LayoutFactory(activity(), reactInstanceManager);
 	}
 
 	private void handle(Runnable task) {

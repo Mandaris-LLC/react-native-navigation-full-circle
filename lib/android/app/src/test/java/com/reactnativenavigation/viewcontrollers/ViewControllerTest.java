@@ -35,7 +35,7 @@ public class ViewControllerTest extends BaseTest {
 	@Test
 	public void canOverrideViewCreation() throws Exception {
 		final View otherView = new View(activity);
-		ViewController myController = new ViewController(activity) {
+		ViewController myController = new ViewController(activity, "vc") {
 			@Override
 			protected View createView() {
 				return otherView;
@@ -46,14 +46,25 @@ public class ViewControllerTest extends BaseTest {
 
 	@Test
 	public void holdsAReferenceToStackControllerOrNull() throws Exception {
-		assertThat(uut.getStackController()).isNull();
-		StackController nav = new StackController(activity);
+		assertThat(uut.getParentStackController()).isNull();
+		StackController nav = new StackController(activity, "stack");
 		nav.push(uut);
-		assertThat(uut.getStackController()).isEqualTo(nav);
+		assertThat(uut.getParentStackController()).isEqualTo(nav);
 	}
 
 	@Test
 	public void handleBackDefaultFalse() throws Exception {
 		assertThat(uut.handleBack()).isFalse();
+	}
+
+	@Test
+	public void holdsId() throws Exception {
+		assertThat(uut.getId()).isEqualTo("uut");
+	}
+
+	@Test
+	public void findControllerById_ReturnsSelfIfSameId() throws Exception {
+		assertThat(uut.findControllerById("123")).isNull();
+		assertThat(uut.findControllerById(uut.getId())).isEqualTo(uut);
 	}
 }

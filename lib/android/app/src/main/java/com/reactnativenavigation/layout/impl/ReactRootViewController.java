@@ -2,6 +2,7 @@ package com.reactnativenavigation.layout.impl;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.facebook.react.ReactInstanceManager;
@@ -10,13 +11,12 @@ import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class ReactRootViewController extends ViewController {
 
-	private final String id;
 	private final String name;
 	private final ReactInstanceManager reactInstanceManager;
+	private boolean attachedToReactInstance = false;
 
 	public ReactRootViewController(final Activity activity, final String id, final String name, final ReactInstanceManager reactInstanceManager) {
-		super(activity);
-		this.id = id;
+		super(activity, id);
 		this.name = name;
 		this.reactInstanceManager = reactInstanceManager;
 	}
@@ -44,17 +44,28 @@ public class ReactRootViewController extends ViewController {
 //		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(id);
 //	}
 
+//	@Override
+//	public void onStart() {
+//		super.onStart();
+//		if (attachedToReactInstance) {
+//			new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(id);
+//		} else {
+//			throw new RuntimeException("Not yet attached to react");
+//		}
+//	}
+
+	@NonNull
 	@Override
 	protected View createView() {
 		ReactRootView reactRootView = new ReactRootView(getActivity());
 		Bundle opts = new Bundle();
-		opts.putString("id", this.id);
+		opts.putString("id", getId());
 		reactRootView.startReactApplication(this.reactInstanceManager, this.name, opts);
 		reactRootView.setEventListener(new ReactRootView.ReactRootViewEventListener() {
 			@Override
 			public void onAttachedToReactInstance(final ReactRootView reactRootView) {
 				reactRootView.setEventListener(null);
-				onStart();
+				attachedToReactInstance = true;
 			}
 		});
 		return reactRootView;

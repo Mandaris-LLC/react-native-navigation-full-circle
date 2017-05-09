@@ -3,38 +3,33 @@ package com.reactnativenavigation.layout;
 import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
-import com.reactnativenavigation.Store;
 import com.reactnativenavigation.layout.impl.ReactRootViewController;
+import com.reactnativenavigation.viewcontrollers.BottomTabsController;
 import com.reactnativenavigation.viewcontrollers.StackController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LayoutFactory {
 
 	private final Activity activity;
 	private final ReactInstanceManager reactInstanceManager;
-	private final Store store;
 
-	public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager, final Store store) {
+	public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager) {
 		this.activity = activity;
 		this.reactInstanceManager = reactInstanceManager;
-		this.store = store;
 	}
 
-	public ViewController createAndSaveToStore(LayoutNode node) {
-		ViewController viewController = create(node);
-		store.setViewController(node.id, viewController);
-		return viewController;
-	}
-
-	private ViewController create(final LayoutNode node) {
+	public ViewController create(final LayoutNode node) {
 		switch (node.type) {
 			case Container:
 				return createContainer(node);
 			case ContainerStack:
 			default:
 				return createContainerStack(node);
-//			case BottomTabs:
-//				return createBottomTabs(node);
+			case BottomTabs:
+				return createBottomTabs(node);
 //			case SideMenuRoot:
 //				return createSideMenuRoot(node);
 //			case SideMenuCenter:
@@ -86,19 +81,20 @@ public class LayoutFactory {
 	}
 
 	private ViewController createContainerStack(LayoutNode node) {
-		StackController stackController = new StackController(activity);
+		StackController stackController = new StackController(activity, node.id);
 		for (LayoutNode child : node.children) {
-			stackController.push(createAndSaveToStore(child));
+			stackController.push(create(child));
 		}
 		return stackController;
 	}
 
-//	private Layout createBottomTabs(LayoutNode node) {
-//		final BottomTabsLayout tabsContainer = new BottomTabsLayout(activity);
-//		for (int i = 0; i < node.children.size(); i++) {
-//			final Layout tabLayout = createAndSaveToStore(node.children.get(i));
-//			tabsContainer.addTab("#" + i, tabLayout);
-//		}
-//		return tabsContainer;
-//	}
+	private ViewController createBottomTabs(LayoutNode node) {
+		final BottomTabsController tabsContainer = new BottomTabsController(activity, node.id);
+		List<ViewController> tabs = new ArrayList<>();
+		for (int i = 0; i < node.children.size(); i++) {
+			tabs.add(create(node.children.get(i)));
+		}
+		tabsContainer.setTabs(tabs);
+		return tabsContainer;
+	}
 }

@@ -1,26 +1,27 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import java.util.ArrayDeque;
+import java.util.Collection;
 
-public class StackController extends ViewController {
-	private final ArrayDeque<ViewController> stack = new ArrayDeque<>();
+public class StackController extends ParentController {
+	private final IndexedStack<ViewController> stack = new IndexedStack<>();
 
-	public StackController(final Activity activity) {
-		super(activity);
+	public StackController(final Activity activity, String id) {
+		super(activity, id);
 	}
 
 	public void push(final ViewController child) {
-		ViewController previousTop = peek();
+		final ViewController previousTop = peek();
 
-		child.setStackController(this);
-		stack.push(child);
+		child.setParentStackController(this);
+		stack.push(child.getId(), child);
+
 		getView().addView(child.getView());
-
 		if (previousTop != null) {
 			getView().removeView(previousTop.getView());
 		}
@@ -42,10 +43,10 @@ public class StackController extends ViewController {
 	}
 
 	public void pop(final ViewController childController) {
-		if (peek() == childController) {
+		if (stack.isTop(childController.getId())) {
 			pop();
 		} else {
-			stack.remove(childController);
+			stack.remove(childController.getId());
 		}
 	}
 
@@ -71,11 +72,7 @@ public class StackController extends ViewController {
 		}
 	}
 
-	@Override
-	public ViewGroup getView() {
-		return (ViewGroup) super.getView();
-	}
-
+	@NonNull
 	@Override
 	protected ViewGroup createView() {
 		return new FrameLayout(getActivity());
@@ -83,19 +80,15 @@ public class StackController extends ViewController {
 
 	@Nullable
 	@Override
-	public StackController getStackController() {
+	public StackController getParentStackController() {
 		return this;
 	}
 
-	ArrayDeque<ViewController> getStack() {
-		return stack;
-	}
-
 	public void popTo(final ViewController viewController) {
-		if (!stack.contains(viewController)) {
+		if (!stack.containsId(viewController.getId())) {
 			return;
 		}
-		while (peek() != viewController) {
+		while (!stack.isTop(viewController.getId())) {
 			pop();
 		}
 	}
@@ -104,5 +97,14 @@ public class StackController extends ViewController {
 		while (canPop()) {
 			pop();
 		}
+	}
+
+	boolean containsId(String id) {
+		return stack.containsId(id);
+	}
+
+	@Override
+	public Collection<ViewController> getChildControllers() {
+		return stack.values();
 	}
 }

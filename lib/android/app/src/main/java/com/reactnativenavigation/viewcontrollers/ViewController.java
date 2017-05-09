@@ -1,18 +1,24 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-public abstract class ViewController {
-	private View view;
-	private final Activity activity;
-	private StackController stackController;
+import com.reactnativenavigation.utils.StringUtils;
 
-	public ViewController(Activity activity) {
+public abstract class ViewController {
+	private final Activity activity;
+	private final String id;
+	private View view;
+	private StackController parentStackController;
+
+	public ViewController(Activity activity, String id) {
 		this.activity = activity;
+		this.id = id;
 	}
 
+	@NonNull
 	protected abstract View createView();
 
 	public boolean handleBack() {
@@ -24,36 +30,27 @@ public abstract class ViewController {
 	}
 
 	@Nullable
-	public StackController getStackController() {
-		return stackController;
+	public StackController getParentStackController() {
+		return parentStackController;
 	}
 
-	void setStackController(final StackController stackController) {
-		this.stackController = stackController;
+	void setParentStackController(final StackController parentStackController) {
+		this.parentStackController = parentStackController;
 	}
 
+	@NonNull
 	public View getView() {
 		if (view == null) {
 			view = createView();
-			onCreate();
 		}
 		return view;
 	}
 
-	public void onCreate() {
-
+	public String getId() {
+		return id;
 	}
 
-	public void onStart() {
-
+	public ViewController findControllerById(final String id) {
+		return StringUtils.isEqual(this.id, id) ? this : null;
 	}
-
-	public void onStop() {
-
-	}
-
-	public void onDestroy() {
-
-	}
-
 }
