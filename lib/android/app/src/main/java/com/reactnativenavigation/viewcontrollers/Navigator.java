@@ -27,7 +27,7 @@ public class Navigator extends ParentController {
 
 	@Override
 	public Collection<ViewController> getChildControllers() {
-		return Collections.singletonList(root);
+		return root == null ? Collections.<ViewController>emptyList() : Collections.singletonList(root);
 	}
 
 	/*
@@ -65,13 +65,23 @@ public class Navigator extends ParentController {
 		getView().addView(viewController.getView());
 	}
 
-	public void push(final String onId, final ViewController viewController) {
-		ViewController found = root.findControllerById(onId);
+	public void push(final String fromId, final ViewController viewController) {
+		ViewController found = findControllerById(fromId);
 		if (found == null) return;
 
 		StackController parentStackController = found.getParentStackController();
 		if (parentStackController == null) return;
 
 		parentStackController.push(viewController);
+	}
+
+	public void pop(final String fromId) {
+		ViewController found = findControllerById(fromId);
+		if (found == null) return;
+
+		StackController parentStackController = found.getParentStackController();
+		if (parentStackController == null) return;
+
+		parentStackController.pop();
 	}
 }

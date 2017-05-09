@@ -18,6 +18,7 @@ public class NavigatorTest extends BaseTest {
 	private Navigator uut;
 	private ViewController child1;
 	private ViewController child2;
+	private ViewController child3;
 
 	@Override
 	public void beforeEach() {
@@ -26,6 +27,7 @@ public class NavigatorTest extends BaseTest {
 		uut = new Navigator(activity);
 		child1 = new SimpleViewController(activity, "child1");
 		child2 = new SimpleViewController(activity, "child2");
+		child3 = new SimpleViewController(activity, "child3");
 	}
 
 
@@ -97,13 +99,36 @@ public class NavigatorTest extends BaseTest {
 		stack1.push(child1);
 		stack2.push(child2);
 		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
-
 		uut.setRoot(bottomTabsController);
+
 		SimpleViewController newChild = new SimpleViewController(activity, "new child");
 		uut.push(child2.getId(), newChild);
 
 		assertThat(stack1.getChildControllers()).doesNotContain(newChild);
 		assertThat(stack2.getChildControllers()).contains(newChild);
+	}
+
+	@Test
+	public void pop_InvalidDoesNothing() throws Exception {
+		uut.pop("123");
+		uut.setRoot(child1);
+		uut.pop(child1.getId());
+	}
+
+	@Test
+	public void pop_FromCorrectStackByFindingChildId() throws Exception {
+		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
+		StackController stack1 = new StackController(activity, "stack1");
+		StackController stack2 = new StackController(activity, "stack2");
+		stack1.push(child1);
+		stack2.push(child2);
+		stack2.push(child3);
+		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
+		uut.setRoot(bottomTabsController);
+
+		uut.pop(child2.getId());
+
+		assertThat(stack2.getChildControllers()).containsOnly(child2);
 	}
 
 	private void assertHasSingleChildViewOf(ViewController parent, ViewController child) {
