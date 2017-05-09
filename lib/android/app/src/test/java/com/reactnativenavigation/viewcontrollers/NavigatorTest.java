@@ -1,11 +1,13 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.mocks.TestStackAnimator;
+import com.reactnativenavigation.utils.CompatUtils;
 
 import org.junit.Test;
 import org.robolectric.Shadows;
@@ -20,6 +22,8 @@ public class NavigatorTest extends BaseTest {
 	private ViewController child1;
 	private ViewController child2;
 	private ViewController child3;
+	private ViewController child4;
+	private ViewController child5;
 
 	@Override
 	public void beforeEach() {
@@ -29,6 +33,8 @@ public class NavigatorTest extends BaseTest {
 		child1 = new SimpleViewController(activity, "child1");
 		child2 = new SimpleViewController(activity, "child2");
 		child3 = new SimpleViewController(activity, "child3");
+		child4 = new SimpleViewController(activity, "child4");
+		child5 = new SimpleViewController(activity, "child5");
 	}
 
 
@@ -72,7 +78,7 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void push() throws Exception {
-		StackController stackController = new StackController(activity, "stack1", new TestStackAnimator());
+		StackController stackController = newStack();
 		stackController.push(child1);
 		uut.setRoot(stackController);
 
@@ -94,9 +100,9 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void push_OnCorrectStackByFindingChildId() throws Exception {
-		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
-		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
+		BottomTabsController bottomTabsController = newTabs();
+		StackController stack1 = newStack();
+		StackController stack2 = newStack();
 		stack1.push(child1);
 		stack2.push(child2);
 		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
@@ -114,17 +120,18 @@ public class NavigatorTest extends BaseTest {
 		uut.pop("123");
 		uut.setRoot(child1);
 		uut.pop(child1.getId());
+		assertThat(uut.getChildControllers()).hasSize(1);
 	}
 
 	@Test
 	public void pop_FromCorrectStackByFindingChildId() throws Exception {
-		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
-		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
+		BottomTabsController bottomTabsController = newTabs();
+		StackController stack1 = newStack();
+		StackController stack2 = newStack();
 		stack1.push(child1);
 		stack2.push(child2);
 		stack2.push(child3);
-		stack2.push(new SimpleViewController(activity, "child4"));
+		stack2.push(child4);
 		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
 		uut.setRoot(bottomTabsController);
 
@@ -135,13 +142,12 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void popSpecific() throws Exception {
-		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
-		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
+		BottomTabsController bottomTabsController = newTabs();
+		StackController stack1 = newStack();
+		StackController stack2 = newStack();
 		stack1.push(child1);
 		stack2.push(child2);
 		stack2.push(child3);
-		SimpleViewController child4 = new SimpleViewController(activity, "child4");
 		stack2.push(child4);
 		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
 		uut.setRoot(bottomTabsController);
@@ -153,14 +159,14 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void popTo_FromCorrectStackUpToChild() throws Exception {
-		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
-		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
+		BottomTabsController bottomTabsController = newTabs();
+		StackController stack1 = newStack();
+		StackController stack2 = newStack();
 		stack1.push(child1);
 		stack2.push(child2);
 		stack2.push(child3);
-		stack2.push(new SimpleViewController(activity, "child4"));
-		stack2.push(new SimpleViewController(activity, "child5"));
+		stack2.push(child4);
+		stack2.push(child5);
 		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
 		uut.setRoot(bottomTabsController);
 
@@ -171,14 +177,14 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void popToRoot() throws Exception {
-		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
-		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
+		BottomTabsController bottomTabsController = newTabs();
+		StackController stack1 = newStack();
+		StackController stack2 = newStack();
 		stack1.push(child1);
 		stack2.push(child2);
 		stack2.push(child3);
-		stack2.push(new SimpleViewController(activity, "child4"));
-		stack2.push(new SimpleViewController(activity, "child5"));
+		stack2.push(child4);
+		stack2.push(child5);
 
 		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
 		uut.setRoot(bottomTabsController);
@@ -188,8 +194,18 @@ public class NavigatorTest extends BaseTest {
 		assertThat(stack2.getChildControllers()).containsOnly(child2);
 	}
 
+	@NonNull
+	private BottomTabsController newTabs() {
+		return new BottomTabsController(activity, "tabsController");
+	}
+
 	private void assertHasSingleChildViewOf(ViewController parent, ViewController child) {
 		assertThat(((ViewGroup) parent.getView()).getChildCount()).isEqualTo(1);
 		assertThat(((ViewGroup) parent.getView()).getChildAt(0)).isEqualTo(child.getView()).isNotNull();
+	}
+
+	@NonNull
+	private StackController newStack() {
+		return new StackController(activity, "stack" + CompatUtils.generateViewId(), new TestStackAnimator());
 	}
 }
