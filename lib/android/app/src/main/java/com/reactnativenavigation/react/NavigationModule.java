@@ -49,7 +49,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 			public void run() {
 				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				final ViewController viewController = newLayoutFactory().create(layoutTree);
-//				store.getViewController(onContainerId).getStackController().push(viewController);
+				navigator().push(onContainerId, viewController);
 			}
 		});
 	}
