@@ -8,6 +8,7 @@ import android.view.View;
 import com.reactnativenavigation.utils.StringUtils;
 
 public abstract class ViewController {
+
 	private final Activity activity;
 	private final String id;
 	private View view;
@@ -50,7 +51,12 @@ public abstract class ViewController {
 		return id;
 	}
 
-	public ViewController findControllerById(final String id) {
-		return StringUtils.isEqual(this.id, id) ? this : null;
+	public boolean isSameId(final String id) {
+		return StringUtils.isEqual(this.id, id);
+	}
+
+	@Nullable
+	public ViewController findControllerById(String id) {
+		return isSameId(id) ? this : null;
 	}
 }

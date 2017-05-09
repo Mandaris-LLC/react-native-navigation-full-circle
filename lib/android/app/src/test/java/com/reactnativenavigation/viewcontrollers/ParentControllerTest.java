@@ -10,109 +10,69 @@ import com.reactnativenavigation.mocks.SimpleViewController;
 
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class ParentControllerTest extends BaseTest {
 
 	private Activity activity;
+	private List<ViewController> children;
+	private ParentController uut;
 
 	@Override
 	public void beforeEach() {
 		super.beforeEach();
 		activity = newActivity();
+		children = new ArrayList<>();
+		uut = new ParentController(activity, "uut") {
+
+			@NonNull
+			@Override
+			protected ViewGroup createView() {
+				return new FrameLayout(activity);
+			}
+
+			@NonNull
+			@Override
+			public Collection<ViewController> getChildControllers() {
+				return children;
+			}
+		};
 	}
 
 	@Test
 	public void holdsViewGroup() throws Exception {
-		ParentController uut = new ParentController(activity, "uut") {
-			@Override
-			public Collection<ViewController> getChildControllers() {
-				return Collections.emptyList();
-			}
-
-			@NonNull
-			@Override
-			protected ViewGroup createView() {
-				return new FrameLayout(activity);
-			}
-		};
-
 		assertThat(uut.getView()).isInstanceOf(ViewGroup.class);
 	}
 
 	@Test
-	public void findControllerById_ReturnsSelfIfSameId() throws Exception {
-		ParentController uut = new ParentController(activity, "uut") {
-			@Override
-			public Collection<ViewController> getChildControllers() {
-				return Collections.emptyList();
-			}
-
-			@NonNull
-			@Override
-			protected ViewGroup createView() {
-				return new FrameLayout(activity);
-			}
-		};
-
-		assertThat(uut.findControllerById("123")).isNull();
-		assertThat(uut.findControllerById(uut.getId())).isEqualTo(uut);
+	public void mustHaveChildControllers() throws Exception {
+		assertThat(uut.getChildControllers()).isNotNull();
 	}
 
 	@Test
-	public void findControllerById_DeeplyInOneOfTheChildren() throws Exception {
-		ViewController child1 = new SimpleViewController(activity, "child1");
-		ViewController child2 = new SimpleViewController(activity, "child2");
+	public void findControllerById_ChildById() throws Exception {
+		SimpleViewController child1 = new SimpleViewController(activity, "child1");
+		SimpleViewController child2 = new SimpleViewController(activity, "child2");
+		children.add(child1);
+		children.add(child2);
 
-		final StackController someInnerStack = new StackController(activity, "stack1");
-		someInnerStack.push(child1);
-		someInnerStack.push(child2);
-
-		ParentController uut = new ParentController(activity, "uut") {
-			@Override
-			public Collection<ViewController> getChildControllers() {
-				return Arrays.<ViewController>asList(someInnerStack);
-			}
-
-			@NonNull
-			@Override
-			protected ViewGroup createView() {
-				return new FrameLayout(activity);
-			}
-		};
-
-		assertThat(uut.findControllerById("stack1")).isEqualTo(someInnerStack);
+		assertThat(uut.findControllerById("uut")).isEqualTo(uut);
 		assertThat(uut.findControllerById("child1")).isEqualTo(child1);
-		assertThat(uut.findControllerById("child2")).isEqualTo(child2);
 	}
 
 	@Test
-	public void findParentStackControllerForChildId() throws Exception {
-		ViewController child1 = new SimpleViewController(activity, "child1");
-		ViewController child2 = new SimpleViewController(activity, "child2");
+	public void findControllerById_Recursive() throws Exception {
+		StackController stackController = new StackController(activity, "stack");
+		SimpleViewController child1 = new SimpleViewController(activity, "child1");
+		SimpleViewController child2 = new SimpleViewController(activity, "child2");
+		stackController.push(child1);
+		stackController.push(child2);
+		children.add(stackController);
 
-		final StackController someInnerStack = new StackController(activity, "stack1");
-		someInnerStack.push(child1);
-		someInnerStack.push(child2);
-
-		ParentController uut = new ParentController(activity, "uut") {
-			@Override
-			public Collection<ViewController> getChildControllers() {
-				return Arrays.<ViewController>asList(someInnerStack);
-			}
-
-			@NonNull
-			@Override
-			protected ViewGroup createView() {
-				return new FrameLayout(activity);
-			}
-		};
-
-		assertThat(uut.findParentStackControllerForChildId("not existing child")).isNull();
-		assertThat(uut.findParentStackControllerForChildId("child2")).isEqualTo(someInnerStack);
+		assertThat(uut.findControllerById("child2")).isEqualTo(child2);
 	}
 }

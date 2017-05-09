@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.Collection;
 
 public abstract class ParentController extends ViewController {
+
 	public ParentController(final Activity activity, final String id) {
 		super(activity, id);
 	}
@@ -22,26 +23,20 @@ public abstract class ParentController extends ViewController {
 	@Override
 	protected abstract ViewGroup createView();
 
+	@NonNull
 	public abstract Collection<ViewController> getChildControllers();
 
 	@Nullable
+	@Override
 	public ViewController findControllerById(final String id) {
 		ViewController fromSuper = super.findControllerById(id);
-		if (fromSuper != null) {
-			return fromSuper;
-		}
+		if (fromSuper != null) return fromSuper;
 
 		for (ViewController child : getChildControllers()) {
-			ViewController found = child.findControllerById(id);
-			if (found != null) return found;
+			ViewController fromChild = child.findControllerById(id);
+			if (fromChild != null) return fromChild;
 		}
 
 		return null;
-	}
-
-	@Nullable
-	public StackController findParentStackControllerForChildId(final String childId) {
-		ViewController found = findControllerById(childId);
-		return found != null ? found.getParentStackController() : null;
 	}
 }

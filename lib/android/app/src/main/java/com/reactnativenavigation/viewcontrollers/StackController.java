@@ -103,6 +103,7 @@ public class StackController extends ParentController {
 		return stack.containsId(id);
 	}
 
+	@NonNull
 	@Override
 	public Collection<ViewController> getChildControllers() {
 		return stack.values();

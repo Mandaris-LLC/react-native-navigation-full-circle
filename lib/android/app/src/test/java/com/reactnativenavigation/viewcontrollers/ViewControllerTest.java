@@ -63,8 +63,15 @@ public class ViewControllerTest extends BaseTest {
 	}
 
 	@Test
-	public void findControllerById_ReturnsSelfIfSameId() throws Exception {
-		assertThat(uut.findControllerById("123")).isNull();
-		assertThat(uut.findControllerById(uut.getId())).isEqualTo(uut);
+	public void isSameId() throws Exception {
+		assertThat(uut.isSameId("")).isFalse();
+		assertThat(uut.isSameId(null)).isFalse();
+		assertThat(uut.isSameId("uut")).isTrue();
+	}
+
+	@Test
+	public void findControllerById_SelfOrNull() throws Exception {
+		assertThat(uut.findControllerById("456")).isNull();
+		assertThat(uut.findControllerById("uut")).isEqualTo(uut);
 	}
 }
