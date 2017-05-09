@@ -2,7 +2,7 @@ package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.utils.CompatUtils;
@@ -21,7 +21,7 @@ public class Navigator extends ParentController {
 
 	@NonNull
 	@Override
-	protected View createView() {
+	protected ViewGroup createView() {
 		return new FrameLayout(getActivity());
 	}
 

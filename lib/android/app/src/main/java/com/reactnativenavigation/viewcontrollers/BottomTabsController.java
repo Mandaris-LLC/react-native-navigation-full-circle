@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.utils.CompatUtils;
@@ -31,7 +32,7 @@ public class BottomTabsController extends ParentController implements BottomNavi
 
 	@NonNull
 	@Override
-	protected RelativeLayout createView() {
+	protected ViewGroup createView() {
 		RelativeLayout root = new RelativeLayout(getActivity());
 		bottomNavigationView = new BottomNavigationView(getActivity());
 		bottomNavigationView.setId(CompatUtils.generateViewId());

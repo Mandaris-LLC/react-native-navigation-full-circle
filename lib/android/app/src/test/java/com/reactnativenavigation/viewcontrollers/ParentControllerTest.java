@@ -2,7 +2,6 @@ package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -37,7 +36,7 @@ public class ParentControllerTest extends BaseTest {
 
 			@NonNull
 			@Override
-			protected View createView() {
+			protected ViewGroup createView() {
 				return new FrameLayout(activity);
 			}
 		};
@@ -55,7 +54,7 @@ public class ParentControllerTest extends BaseTest {
 
 			@NonNull
 			@Override
-			protected View createView() {
+			protected ViewGroup createView() {
 				return new FrameLayout(activity);
 			}
 		};
@@ -81,7 +80,7 @@ public class ParentControllerTest extends BaseTest {
 
 			@NonNull
 			@Override
-			protected View createView() {
+			protected ViewGroup createView() {
 				return new FrameLayout(activity);
 			}
 		};
@@ -108,7 +107,7 @@ public class ParentControllerTest extends BaseTest {
 
 			@NonNull
 			@Override
-			protected View createView() {
+			protected ViewGroup createView() {
 				return new FrameLayout(activity);
 			}
 		};
