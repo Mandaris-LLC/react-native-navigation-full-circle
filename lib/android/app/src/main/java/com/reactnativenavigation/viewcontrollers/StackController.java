@@ -6,13 +6,21 @@ import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.reactnativenavigation.anim.StackAnimator;
+
 import java.util.Collection;
 
 public class StackController extends ParentController {
 	private final IndexedStack<ViewController> stack = new IndexedStack<>();
+	private StackAnimator animator;
 
 	public StackController(final Activity activity, String id) {
+		this(activity, id, new StackAnimator());
+	}
+
+	public StackController(final Activity activity, String id, StackAnimator animator) {
 		super(activity, id);
+		this.animator = animator;
 	}
 
 	public void push(final ViewController child) {
@@ -22,8 +30,14 @@ public class StackController extends ParentController {
 		stack.push(child.getId(), child);
 
 		getView().addView(child.getView());
+
 		if (previousTop != null) {
-			getView().removeView(previousTop.getView());
+			animator.animatePush(child.getView(), new Runnable() {
+				@Override
+				public void run() {
+					getView().removeView(previousTop.getView());
+				}
+			});
 		}
 	}
 

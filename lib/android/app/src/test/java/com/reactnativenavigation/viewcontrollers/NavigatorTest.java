@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
+import com.reactnativenavigation.mocks.TestStackAnimator;
 
 import org.junit.Test;
 import org.robolectric.Shadows;
@@ -71,7 +72,7 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void push() throws Exception {
-		StackController stackController = new StackController(activity, "stack1");
+		StackController stackController = new StackController(activity, "stack1", new TestStackAnimator());
 		stackController.push(child1);
 		uut.setRoot(stackController);
 
@@ -94,8 +95,8 @@ public class NavigatorTest extends BaseTest {
 	@Test
 	public void push_OnCorrectStackByFindingChildId() throws Exception {
 		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1");
-		StackController stack2 = new StackController(activity, "stack2");
+		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
+		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
 		stack1.push(child1);
 		stack2.push(child2);
 		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
@@ -118,8 +119,8 @@ public class NavigatorTest extends BaseTest {
 	@Test
 	public void pop_FromCorrectStackByFindingChildId() throws Exception {
 		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1");
-		StackController stack2 = new StackController(activity, "stack2");
+		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
+		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
 		stack1.push(child1);
 		stack2.push(child2);
 		stack2.push(child3);
@@ -135,8 +136,8 @@ public class NavigatorTest extends BaseTest {
 	@Test
 	public void popSpecific() throws Exception {
 		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1");
-		StackController stack2 = new StackController(activity, "stack2");
+		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
+		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
 		stack1.push(child1);
 		stack2.push(child2);
 		stack2.push(child3);
@@ -153,8 +154,8 @@ public class NavigatorTest extends BaseTest {
 	@Test
 	public void popTo_FromCorrectStackUpToChild() throws Exception {
 		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1");
-		StackController stack2 = new StackController(activity, "stack2");
+		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
+		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
 		stack1.push(child1);
 		stack2.push(child2);
 		stack2.push(child3);
@@ -171,8 +172,8 @@ public class NavigatorTest extends BaseTest {
 	@Test
 	public void popToRoot() throws Exception {
 		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
-		StackController stack1 = new StackController(activity, "stack1");
-		StackController stack2 = new StackController(activity, "stack2");
+		StackController stack1 = new StackController(activity, "stack1", new TestStackAnimator());
+		StackController stack2 = new StackController(activity, "stack2", new TestStackAnimator());
 		stack1.push(child1);
 		stack2.push(child2);
 		stack2.push(child3);
