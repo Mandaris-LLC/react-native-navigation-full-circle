@@ -123,10 +123,29 @@ public class NavigatorTest extends BaseTest {
 		stack1.push(child1);
 		stack2.push(child2);
 		stack2.push(child3);
+		stack2.push(new SimpleViewController(activity, "child4"));
 		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
 		uut.setRoot(bottomTabsController);
 
 		uut.pop(child2.getId());
+
+		assertThat(stack2.getChildControllers()).containsOnly(child2, child3);
+	}
+
+	@Test
+	public void popTo_FromCorrectStackUpToChild() throws Exception {
+		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
+		StackController stack1 = new StackController(activity, "stack1");
+		StackController stack2 = new StackController(activity, "stack2");
+		stack1.push(child1);
+		stack2.push(child2);
+		stack2.push(child3);
+		stack2.push(new SimpleViewController(activity, "child4"));
+		stack2.push(new SimpleViewController(activity, "child5"));
+		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
+		uut.setRoot(bottomTabsController);
+
+		uut.popTo(child2.getId(), child2.getId());
 
 		assertThat(stack2.getChildControllers()).containsOnly(child2);
 	}

@@ -69,7 +69,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-//				store.getViewController(onContainerId).getStackController().popTo(store.getViewController(toContainerId));
+				navigator().popTo(onContainerId, toContainerId);
 			}
 		});
 	}
