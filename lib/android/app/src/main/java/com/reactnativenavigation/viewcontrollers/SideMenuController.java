@@ -1,4 +1,4 @@
-package com.reactnativenavigation.layout.impl;
+package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -6,9 +6,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.reactnativenavigation.viewcontrollers.ParentController;
-import com.reactnativenavigation.viewcontrollers.ViewController;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -3,8 +3,7 @@ package com.reactnativenavigation.layout;
 import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
-import com.reactnativenavigation.layout.impl.ReactRootViewController;
-import com.reactnativenavigation.layout.impl.SideMenuController;
+import com.reactnativenavigation.viewcontrollers.SideMenuController;
 import com.reactnativenavigation.viewcontrollers.BottomTabsController;
 import com.reactnativenavigation.viewcontrollers.StackController;
 import com.reactnativenavigation.viewcontrollers.ViewController;

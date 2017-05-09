@@ -1,4 +1,4 @@
-package com.reactnativenavigation.layout.impl;
+package com.reactnativenavigation.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
