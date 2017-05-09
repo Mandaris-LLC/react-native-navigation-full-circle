@@ -5,7 +5,6 @@ import android.support.test.uiautomator.By;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 public class TopLevelApiTest extends BaseTest {
 
 	@Test
@@ -17,6 +16,7 @@ public class TopLevelApiTest extends BaseTest {
 		assertExists(By.text("Hello from a function!"));
 	}
 
+	@Ignore
 	@Test
 	public void switchToTabsWithSideMenu() throws Exception {
 		launchTheApp();
