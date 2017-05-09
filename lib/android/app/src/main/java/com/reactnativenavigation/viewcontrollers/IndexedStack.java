@@ -3,6 +3,7 @@ package com.reactnativenavigation.viewcontrollers;
 import com.reactnativenavigation.utils.StringUtils;
 
 import java.util.ArrayDeque;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -70,5 +71,10 @@ public class IndexedStack<E> implements Iterable<String> {
 	@Override
 	public Iterator<String> iterator() {
 		return deque.iterator();
+	}
+
+
+	public Collection<E> values() {
+		return map.values();
 	}
 }

@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.utils.CompatUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -18,10 +19,10 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.RelativeLayout.ABOVE;
 import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 
-public class BottomTabsController extends ViewController implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class BottomTabsController extends ParentController implements BottomNavigationView.OnNavigationItemSelectedListener {
 	private BottomNavigationView bottomNavigationView;
 	private int selectedIndex = 0;
-	private List<ViewController> tabs;
+	private List<ViewController> tabs = new ArrayList<>();
 
 	public BottomTabsController(final Activity activity, final String id) {
 		super(activity, id);
@@ -73,11 +74,12 @@ public class BottomTabsController extends ViewController implements BottomNaviga
 		}
 	}
 
-	public List<ViewController> getTabs() {
-		return tabs;
-	}
-
 	public int getSelectedIndex() {
 		return selectedIndex;
+	}
+
+	@Override
+	public Iterable<ViewController> getChildControllers() {
+		return tabs;
 	}
 }

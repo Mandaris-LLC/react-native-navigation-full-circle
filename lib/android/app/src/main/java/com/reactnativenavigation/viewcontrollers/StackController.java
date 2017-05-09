@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-public class StackController extends ViewController {
+public class StackController extends ParentController {
 	private final IndexedStack<ViewController> stack = new IndexedStack<>();
 
 	public StackController(final Activity activity, String id) {
@@ -103,11 +103,12 @@ public class StackController extends ViewController {
 		}
 	}
 
-	public ViewController getChildById(final String id) {
-		return stack.get(id);
-	}
-
 	boolean containsId(String id) {
 		return stack.containsId(id);
+	}
+
+	@Override
+	public Iterable<ViewController> getChildControllers() {
+		return stack.values();
 	}
 }

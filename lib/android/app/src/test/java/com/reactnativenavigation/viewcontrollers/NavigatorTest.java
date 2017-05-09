@@ -9,6 +9,8 @@ import com.reactnativenavigation.mocks.SimpleViewController;
 import org.junit.Test;
 import org.robolectric.Shadows;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class NavigatorTest extends BaseTest {
@@ -85,6 +87,22 @@ public class NavigatorTest extends BaseTest {
 		uut.setRoot(child1);
 		uut.push(child1.getId(), child2);
 		assertHasSingleChildViewOf(uut, child1);
+	}
+
+	@Test
+	public void push_OnCorrectStackByFindingChildId() throws Exception {
+		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
+		StackController stack1 = new StackController(activity, "stack1");
+		StackController stack2 = new StackController(activity, "stack1");
+		stack1.push(child1);
+		stack2.push(child2);
+		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
+
+		uut.setRoot(bottomTabsController);
+		SimpleViewController newChild = new SimpleViewController(activity, "new child");
+		uut.push(child2.getId(), newChild);
+
+
 	}
 
 	private void assertHasSingleChildViewOf(ViewController parent, ViewController child) {

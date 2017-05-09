@@ -226,10 +226,19 @@ public class StackControllerTest extends BaseTest {
 	}
 
 	@Test
-	public void holdsChildrenById() throws Exception {
-		assertThat(uut.getChildById(child1.getId())).isNull();
+	public void findControllerById_ReturnsSelfOrChildrenById() throws Exception {
+		assertThat(uut.findControllerById("123")).isNull();
+		assertThat(uut.findControllerById(uut.getId())).isEqualTo(uut);
 		uut.push(child1);
-		assertThat(uut.getChildById(child1.getId())).isEqualTo(child1);
+		assertThat(uut.findControllerById(child1.getId())).isEqualTo(child1);
+	}
+
+	@Test
+	public void findControllerById_Deeply() throws Exception {
+		StackController stack = new StackController(activity, "stack2");
+		stack.push(child2);
+		uut.push(stack);
+		assertThat(uut.findControllerById(child2.getId())).isEqualTo(child2);
 	}
 
 	private void assertHasSingleChildViewOfController(ViewController childController) {

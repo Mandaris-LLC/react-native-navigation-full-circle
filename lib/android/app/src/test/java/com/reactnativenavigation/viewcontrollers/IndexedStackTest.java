@@ -1,7 +1,6 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import com.reactnativenavigation.BaseTest;
-import com.reactnativenavigation.viewcontrollers.IndexedStack;
 
 import org.junit.Test;
 
@@ -103,5 +102,13 @@ public class IndexedStackTest extends BaseTest {
 		assertThat(uut.isTop("123")).isTrue();
 		uut.push("456", 456);
 		assertThat(uut.isTop("123")).isFalse();
+	}
+
+	@Test
+	public void values() throws Exception {
+		assertThat(uut.values()).isNotNull().isEmpty();
+		uut.push("123", 123);
+		uut.push("456", 456);
+		assertThat(uut.values()).isNotNull().containsExactlyInAnyOrder(123, 456);
 	}
 }

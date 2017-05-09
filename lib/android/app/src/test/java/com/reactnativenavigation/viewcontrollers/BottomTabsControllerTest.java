@@ -10,9 +10,10 @@ import android.widget.RelativeLayout;
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
 
+import org.assertj.core.api.Condition;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -26,6 +27,8 @@ public class BottomTabsControllerTest extends BaseTest {
 	private ViewController child1;
 	private ViewController child2;
 	private ViewController child3;
+	private ViewController child4;
+	private ViewController child5;
 
 	@Override
 	public void beforeEach() {
@@ -35,6 +38,8 @@ public class BottomTabsControllerTest extends BaseTest {
 		child1 = new SimpleViewController(activity, "child1");
 		child2 = new SimpleViewController(activity, "child2");
 		child3 = new SimpleViewController(activity, "child3");
+		child4 = new SimpleViewController(activity, "child4");
+		child5 = new SimpleViewController(activity, "child5");
 	}
 
 	@Test
@@ -72,21 +77,32 @@ public class BottomTabsControllerTest extends BaseTest {
 		assertThat(uut.onNavigationItemSelected(menuItem)).isTrue();
 
 		assertThat(uut.getSelectedIndex()).isEqualTo(3);
-		assertThat(uut.getTabs().get(0).getView().getVisibility()).isEqualTo(View.GONE);
-		assertThat(uut.getTabs().get(1).getView().getVisibility()).isEqualTo(View.GONE);
-		assertThat(uut.getTabs().get(2).getView().getVisibility()).isEqualTo(View.GONE);
-		assertThat(uut.getTabs().get(3).getView().getVisibility()).isEqualTo(View.VISIBLE);
-		assertThat(uut.getTabs().get(4).getView().getVisibility()).isEqualTo(View.GONE);
+		assertThat(uut.getChildControllers()).areExactly(1, new Condition<ViewController>() {
+			@Override
+			public boolean matches(final ViewController value) {
+				return value.getView().getVisibility() == View.VISIBLE;
+			}
+		});
+//		assertThat(uut.getView().getChildAt(1).getVisibility()).isEqualTo(View.GONE);
+//		assertThat(uut.getView().getChildAt(2).getVisibility()).isEqualTo(View.GONE);
+//		assertThat(uut.getView().getChildAt(3).getVisibility()).isEqualTo(View.GONE);
+//		assertThat(uut.getView().getChildAt(4).getVisibility()).isEqualTo(View.VISIBLE);
+//		assertThat(uut.getView().getChildAt(5).getVisibility()).isEqualTo(View.GONE);
+	}
+
+	@Test
+	public void findControllerById_ReturnsSelfOrChildren() throws Exception {
+		assertThat(uut.findControllerById("123")).isNull();
+		assertThat(uut.findControllerById(uut.getId())).isEqualTo(uut);
+		StackController inner = new StackController(activity, "inner");
+		inner.push(child1);
+		assertThat(uut.findControllerById(child1.getId())).isNull();
+		uut.setTabs(Arrays.<ViewController>asList(inner));
+		assertThat(uut.findControllerById(child1.getId())).isEqualTo(child1);
 	}
 
 	@NonNull
 	private List<ViewController> createTabs() {
-		List<ViewController> tabs = new ArrayList<>();
-		tabs.add(new SimpleViewController(activity, "1"));
-		tabs.add(new SimpleViewController(activity, "2"));
-		tabs.add(new SimpleViewController(activity, "3"));
-		tabs.add(new SimpleViewController(activity, "4"));
-		tabs.add(new SimpleViewController(activity, "5"));
-		return tabs;
+		return Arrays.asList(child1, child2, child3, child4, child5);
 	}
 }
