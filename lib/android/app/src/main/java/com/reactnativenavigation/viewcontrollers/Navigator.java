@@ -95,6 +95,16 @@ public class Navigator extends ParentController {
 		}
 	}
 
+	public void popToRoot(final String id) {
+		ViewController from = findControllerById(id);
+		if (from != null) {
+			StackController parentStackController = from.getParentStackController();
+			if (parentStackController != null) {
+				parentStackController.popToRoot();
+			}
+		}
+	}
+
 	public void popTo(final String fromId, final String toId) {
 		ViewController from = findControllerById(fromId);
 		ViewController to = findControllerById(toId);

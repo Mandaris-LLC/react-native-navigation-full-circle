@@ -168,6 +168,25 @@ public class NavigatorTest extends BaseTest {
 		assertThat(stack2.getChildControllers()).containsOnly(child2);
 	}
 
+	@Test
+	public void popToRoot() throws Exception {
+		BottomTabsController bottomTabsController = new BottomTabsController(activity, "tabsController");
+		StackController stack1 = new StackController(activity, "stack1");
+		StackController stack2 = new StackController(activity, "stack2");
+		stack1.push(child1);
+		stack2.push(child2);
+		stack2.push(child3);
+		stack2.push(new SimpleViewController(activity, "child4"));
+		stack2.push(new SimpleViewController(activity, "child5"));
+
+		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
+		uut.setRoot(bottomTabsController);
+
+		uut.popToRoot(child3.getId());
+
+		assertThat(stack2.getChildControllers()).containsOnly(child2);
+	}
+
 	private void assertHasSingleChildViewOf(ViewController parent, ViewController child) {
 		assertThat(((ViewGroup) parent.getView()).getChildCount()).isEqualTo(1);
 		assertThat(((ViewGroup) parent.getView()).getChildAt(0)).isEqualTo(child.getView()).isNotNull();
