@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
 import com.reactnativenavigation.layout.impl.ReactRootViewController;
+import com.reactnativenavigation.layout.impl.SideMenuController;
 import com.reactnativenavigation.viewcontrollers.BottomTabsController;
 import com.reactnativenavigation.viewcontrollers.StackController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
@@ -26,55 +27,54 @@ public class LayoutFactory {
 			case Container:
 				return createContainer(node);
 			case ContainerStack:
-			default:
 				return createContainerStack(node);
 			case BottomTabs:
 				return createBottomTabs(node);
-//			case SideMenuRoot:
-//				return createSideMenuRoot(node);
-//			case SideMenuCenter:
-//				return createSideMenuContent(node);
-//			case SideMenuLeft:
-//				return createSideMenuLeft(node);
-//			case SideMenuRight:
-//				return createSideMenuRight(node);
-//			default:
-//				throw new IllegalArgumentException("Invalid node type: " + node.type);
+			case SideMenuRoot:
+				return createSideMenuRoot(node);
+			case SideMenuCenter:
+				return createSideMenuContent(node);
+			case SideMenuLeft:
+				return createSideMenuLeft(node);
+			case SideMenuRight:
+				return createSideMenuRight(node);
+			default:
+				throw new IllegalArgumentException("Invalid node type: " + node.type);
 		}
 	}
 
-//	private Layout createSideMenuRoot(LayoutNode node) {
-//		SideMenuLayout sideMenuLayout = new SideMenuLayout(activity);
-//		for (LayoutNode child : node.children) {
-//			Layout childLayout = createAndSaveToStore(child);
-//			switch (child.type) {
-//				case SideMenuCenter:
-//					sideMenuLayout.addCenterLayout(childLayout);
-//					break;
-//				case SideMenuLeft:
-//					sideMenuLayout.addLeftLayout(childLayout);
-//					break;
-//				case SideMenuRight:
-//					sideMenuLayout.addRightLayout(childLayout);
-//					break;
-//				default:
-//					throw new IllegalArgumentException("Invalid node type in sideMenu: " + node.type);
-//			}
-//		}
-//		return sideMenuLayout;
-//	}
-//
-//	private Layout createSideMenuContent(LayoutNode node) {
-//		return createAndSaveToStore(node.children.get(0));
-//	}
-//
-//	private Layout createSideMenuLeft(LayoutNode node) {
-//		return createAndSaveToStore(node.children.get(0));
-//	}
-//
-//	private Layout createSideMenuRight(LayoutNode node) {
-//		return createAndSaveToStore(node.children.get(0));
-//	}
+	private ViewController createSideMenuRoot(LayoutNode node) {
+		SideMenuController sideMenuLayout = new SideMenuController(activity, node.id);
+		for (LayoutNode child : node.children) {
+			ViewController childLayout = create(child);
+			switch (child.type) {
+				case SideMenuCenter:
+					sideMenuLayout.setCenterController(childLayout);
+					break;
+				case SideMenuLeft:
+					sideMenuLayout.setLeftController(childLayout);
+					break;
+				case SideMenuRight:
+					sideMenuLayout.setRightController(childLayout);
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid node type in sideMenu: " + node.type);
+			}
+		}
+		return sideMenuLayout;
+	}
+
+	private ViewController createSideMenuContent(LayoutNode node) {
+		return create(node.children.get(0));
+	}
+
+	private ViewController createSideMenuLeft(LayoutNode node) {
+		return create(node.children.get(0));
+	}
+
+	private ViewController createSideMenuRight(LayoutNode node) {
+		return create(node.children.get(0));
+	}
 
 	private ViewController createContainer(LayoutNode node) {
 		return new ReactRootViewController(activity, node.id, node.data.optString("name"), reactInstanceManager);

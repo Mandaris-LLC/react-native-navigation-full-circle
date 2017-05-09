@@ -19,7 +19,7 @@ class PushedScreen extends Component {
     this.onClickPush = this.onClickPush.bind(this);
     this.onClickPop = this.onClickPop.bind(this);
     this.onClickPopPrevious = this.onClickPopPrevious.bind(this);
-    this.onClickPopToFirstPosition = this.onClickPopToFirstPosition.bind(this);
+    thisw.onClickPopToFirstPosition = this.onClickPopToFirstPosition.bind(this);
     this.onClickPopToRoot = this.onClickPopToRoot.bind(this);
   }
   render() {
