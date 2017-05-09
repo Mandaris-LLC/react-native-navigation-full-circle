@@ -79,7 +79,7 @@ public abstract class BaseTest {
 		assertThat(device().wait(Until.hasObject(selector), TIMEOUT)).isTrue();
 	}
 
-	public void swipeRightOpenSideMenu() {
+	public void swipeOpenLeftSideMenu() {
 		device().swipe(5, 152, 500, 152, 15);
 	}
 }
