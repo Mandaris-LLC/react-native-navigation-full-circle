@@ -90,4 +90,30 @@ public class ParentControllerTest extends BaseTest {
 		assertThat(uut.findControllerById("child1")).isEqualTo(child1);
 		assertThat(uut.findControllerById("child2")).isEqualTo(child2);
 	}
+
+	@Test
+	public void findParentStackControllerForChildId() throws Exception {
+		ViewController child1 = new SimpleViewController(activity, "child1");
+		ViewController child2 = new SimpleViewController(activity, "child2");
+
+		final StackController someInnerStack = new StackController(activity, "stack1");
+		someInnerStack.push(child1);
+		someInnerStack.push(child2);
+
+		ParentController uut = new ParentController(activity, "uut") {
+			@Override
+			public Collection<ViewController> getChildControllers() {
+				return Arrays.<ViewController>asList(someInnerStack);
+			}
+
+			@NonNull
+			@Override
+			protected View createView() {
+				return new FrameLayout(activity);
+			}
+		};
+
+		assertThat(uut.findParentStackControllerForChildId("not existing child")).isNull();
+		assertThat(uut.findParentStackControllerForChildId("child2")).isEqualTo(someInnerStack);
+	}
 }

@@ -66,22 +66,16 @@ public class Navigator extends ParentController {
 	}
 
 	public void push(final String fromId, final ViewController viewController) {
-		ViewController found = findControllerById(fromId);
-		if (found == null) return;
-
-		StackController parentStackController = found.getParentStackController();
-		if (parentStackController == null) return;
-
-		parentStackController.push(viewController);
+		StackController parentStackController = findParentStackControllerForChildId(fromId);
+		if (parentStackController != null) {
+			parentStackController.push(viewController);
+		}
 	}
 
 	public void pop(final String fromId) {
-		ViewController found = findControllerById(fromId);
-		if (found == null) return;
-
-		StackController parentStackController = found.getParentStackController();
-		if (parentStackController == null) return;
-
-		parentStackController.pop();
+		StackController parentStackController = findParentStackControllerForChildId(fromId);
+		if (parentStackController != null) {
+			parentStackController.pop();
+		}
 	}
 }
