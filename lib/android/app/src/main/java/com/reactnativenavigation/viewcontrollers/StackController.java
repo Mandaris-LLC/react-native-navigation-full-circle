@@ -15,7 +15,7 @@ public class StackController extends ParentController {
 	private StackAnimator animator;
 
 	public StackController(final Activity activity, String id) {
-		this(activity, id, new StackAnimator());
+		this(activity, id, new StackAnimator(activity));
 	}
 
 	public StackController(final Activity activity, String id, StackAnimator animator) {
@@ -32,7 +32,7 @@ public class StackController extends ParentController {
 		getView().addView(child.getView());
 
 		if (previousTop != null) {
-			animator.animatePush(child.getView(), new Runnable() {
+			animator.animatePush(child.getView(), previousTop.getView(), new Runnable() {
 				@Override
 				public void run() {
 					getView().removeView(previousTop.getView());
@@ -46,14 +46,19 @@ public class StackController extends ParentController {
 	}
 
 	public void pop() {
-		if (!canPop()) {
-			return;
-		}
-		ViewController poppedController = stack.pop();
-		getView().removeView(poppedController.getView());
+		if (!canPop()) return;
 
-		ViewController previousTop = peek();
-		getView().addView(previousTop.getView());
+		final ViewController poppedTop = stack.pop();
+		ViewController newTop = peek();
+
+		getView().addView(newTop.getView());
+
+		animator.animatePop(newTop.getView(), poppedTop.getView(), new Runnable() {
+			@Override
+			public void run() {
+				getView().removeView(poppedTop.getView());
+			}
+		});
 	}
 
 	public void popSpecific(final ViewController childController) {
