@@ -14,7 +14,7 @@ public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutL
 	private final String id;
 	private View view;
 	private StackController parentStackController;
-	private boolean appeared = false;
+	private boolean isShown = false;
 
 	public ViewController(Activity activity, String id) {
 		this.activity = activity;
@@ -73,9 +73,12 @@ public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutL
 
 	@Override
 	public void onGlobalLayout() {
-		if (!appeared && getView().isShown()) {
-			appeared = true;
+		if (!isShown && getView().isShown()) {
+			isShown = true;
 			onAppear();
+		} else if (isShown && !getView().isShown()) {
+			isShown = false;
+			onDisappear();
 		}
 	}
 }

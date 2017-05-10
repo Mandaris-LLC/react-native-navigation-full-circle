@@ -122,5 +122,18 @@ public class ViewControllerTest extends BaseTest {
 		Assertions.assertThat(spy.getView()).isNotShown();
 		verify(spy, times(1)).onDisappear();
 	}
+
+	@Test
+	public void onDisappear_CalledAtMostOnce() throws Exception {
+		ViewController spy = spy(uut);
+		Shadows.shadowOf(spy.getView()).setMyParent(mock(ViewParent.class));
+		Assertions.assertThat(spy.getView()).isShown();
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		spy.getView().setVisibility(View.GONE);
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		verify(spy, times(1)).onDisappear();
+	}
 }
 
