@@ -15,6 +15,10 @@ import org.robolectric.Shadows;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class NavigatorTest extends BaseTest {
 	private Activity activity;
@@ -192,6 +196,16 @@ public class NavigatorTest extends BaseTest {
 		uut.popToRoot(child3.getId());
 
 		assertThat(stack2.getChildControllers()).containsOnly(child2);
+	}
+
+	@Test
+	public void handleBack_DelegatesToRoot() throws Exception {
+		assertThat(uut.handleBack()).isFalse();
+		ViewController spy = spy(child1);
+		uut.setRoot(spy);
+		when(spy.handleBack()).thenReturn(true);
+		assertThat(uut.handleBack()).isTrue();
+		verify(spy, times(1)).handleBack();
 	}
 
 	@NonNull

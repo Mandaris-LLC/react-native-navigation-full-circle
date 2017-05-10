@@ -54,6 +54,11 @@ public class Navigator extends ParentController {
 		//
 	}
 
+	@Override
+	public boolean handleBack() {
+		return root != null && root.handleBack();
+	}
+
 	/*
 	 * Navigation methods
 	 */

@@ -11,6 +11,8 @@ import org.assertj.android.api.Assertions;
 import org.junit.Test;
 import org.robolectric.Shadows;
 
+import java.lang.reflect.Field;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -134,6 +136,29 @@ public class ViewControllerTest extends BaseTest {
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 		verify(spy, times(1)).onDisappear();
+	}
+
+	@Test
+	public void onDestroy_RemovesGlobalLayoutListener() throws Exception {
+		ViewController spy = spy(uut);
+		View view = spy.getView();
+		Shadows.shadowOf(view).setMyParent(mock(ViewParent.class));
+
+		spy.onDestroy();
+
+		Assertions.assertThat(view).isShown();
+		view.getViewTreeObserver().dispatchOnGlobalLayout();
+		verify(spy, times(0)).onAppear();
+		verify(spy, times(0)).onDisappear();
+	}
+
+	@Test
+	public void onDestroy_NullifiesTheView() throws Exception {
+		assertThat(uut.getView()).isNotNull();
+		uut.onDestroy();
+		Field field = ViewController.class.getDeclaredField("view");
+		field.setAccessible(true);
+		assertThat(field.get(uut)).isNull();
 	}
 }
 

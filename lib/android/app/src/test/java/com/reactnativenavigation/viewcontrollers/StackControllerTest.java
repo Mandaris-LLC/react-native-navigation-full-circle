@@ -250,9 +250,9 @@ public class StackControllerTest extends BaseTest {
 		uut.push(child2);
 		uut.push(child3);
 
-		verify(child3, times(0)).destroy();
+		verify(child3, times(0)).onDestroy();
 		uut.pop();
-		verify(child3, times(1)).destroy();
+		verify(child3, times(1)).onDestroy();
 	}
 
 	@Test
@@ -264,9 +264,9 @@ public class StackControllerTest extends BaseTest {
 		uut.push(child2);
 		uut.push(child3);
 
-		verify(child2, times(0)).destroy();
+		verify(child2, times(0)).onDestroy();
 		uut.popSpecific(child2);
-		verify(child2, times(1)).destroy();
+		verify(child2, times(1)).onDestroy();
 	}
 
 	@Test
@@ -278,11 +278,11 @@ public class StackControllerTest extends BaseTest {
 		uut.push(child2);
 		uut.push(child3);
 
-		verify(child2, times(0)).destroy();
-		verify(child3, times(0)).destroy();
+		verify(child2, times(0)).onDestroy();
+		verify(child3, times(0)).onDestroy();
 		uut.popTo(child1);
-		verify(child2, times(1)).destroy();
-		verify(child3, times(1)).destroy();
+		verify(child2, times(1)).onDestroy();
+		verify(child3, times(1)).onDestroy();
 	}
 
 	private void assertHasSingleChildViewOfController(ViewController childController) {

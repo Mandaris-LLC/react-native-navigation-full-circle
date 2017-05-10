@@ -45,6 +45,11 @@ public class BottomTabsController extends ParentController implements BottomNavi
 	}
 
 	@Override
+	public boolean handleBack() {
+		return !tabs.isEmpty() && tabs.get(selectedIndex).handleBack();
+	}
+
+	@Override
 	public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
 		selectTabAtIndex(item.getItemId());
 		return true;

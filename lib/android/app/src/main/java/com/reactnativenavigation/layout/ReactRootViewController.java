@@ -15,6 +15,7 @@ public class ReactRootViewController extends ViewController {
 	private final String name;
 	private final ReactInstanceManager reactInstanceManager;
 	private boolean attachedToReactInstance = false;
+	private ReactRootView reactRootView;
 
 	public ReactRootViewController(final Activity activity, final String id, final String name, final ReactInstanceManager reactInstanceManager) {
 		super(activity, id);
@@ -22,10 +23,12 @@ public class ReactRootViewController extends ViewController {
 		this.reactInstanceManager = reactInstanceManager;
 	}
 
-//	@Override
-//	public void destroy() {
-//		reactRootView.unmountReactApplication();
-//	}
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (reactRootView != null) reactRootView.unmountReactApplication();
+		reactRootView = null;
+	}
 
 	@Override
 	public void onAppear() {
@@ -47,7 +50,7 @@ public class ReactRootViewController extends ViewController {
 	@NonNull
 	@Override
 	protected View createView() {
-		ReactRootView reactRootView = new ReactRootView(getActivity());
+		reactRootView = new ReactRootView(getActivity());
 		Bundle opts = new Bundle();
 		opts.putString("id", getId());
 		reactRootView.startReactApplication(this.reactInstanceManager, this.name, opts);

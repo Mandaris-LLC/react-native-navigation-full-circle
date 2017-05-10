@@ -71,8 +71,8 @@ public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutL
 		//
 	}
 
-	public void destroy() {
-		getView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+	public void onDestroy() {
+		view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 		view = null;
 	}
 

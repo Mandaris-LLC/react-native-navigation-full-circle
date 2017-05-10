@@ -16,6 +16,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class BottomTabsControllerTest extends BaseTest {
 
@@ -90,6 +94,23 @@ public class BottomTabsControllerTest extends BaseTest {
 		assertThat(uut.findControllerById(child1.getId())).isNull();
 		uut.setTabs(Arrays.<ViewController>asList(inner));
 		assertThat(uut.findControllerById(child1.getId())).isEqualTo(child1);
+	}
+
+	@Test
+	public void handleBack_DelegatesToSelectedChild() throws Exception {
+		assertThat(uut.handleBack()).isFalse();
+
+		List<ViewController> tabs = createTabs();
+		ViewController spy = spy(tabs.get(2));
+		tabs.set(2, spy);
+		when(spy.handleBack()).thenReturn(true);
+		uut.setTabs(tabs);
+
+		assertThat(uut.handleBack()).isFalse();
+		uut.selectTabAtIndex(2);
+		assertThat(uut.handleBack()).isTrue();
+
+		verify(spy, times(1)).handleBack();
 	}
 
 	@NonNull
