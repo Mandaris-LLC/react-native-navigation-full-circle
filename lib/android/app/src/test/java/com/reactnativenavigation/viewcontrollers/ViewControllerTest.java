@@ -2,13 +2,20 @@ package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 import android.view.View;
+import android.view.ViewParent;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
 
+import org.assertj.android.api.Assertions;
 import org.junit.Test;
+import org.robolectric.Shadows;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class ViewControllerTest extends BaseTest {
 
@@ -74,4 +81,21 @@ public class ViewControllerTest extends BaseTest {
 		assertThat(uut.findControllerById("456")).isNull();
 		assertThat(uut.findControllerById("uut")).isEqualTo(uut);
 	}
+
+	@Test
+	public void onAppear_WhenVisibleOnScreen() throws Exception {
+		ViewController spy = spy(uut);
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		Assertions.assertThat(spy.getView()).isNotShown();
+		verify(spy, times(0)).onAppear();
+
+		Shadows.shadowOf(spy.getView()).setMyParent(mock(ViewParent.class));
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		Assertions.assertThat(spy.getView()).isShown();
+
+		verify(spy, times(1)).onAppear();
+	}
+
+
 }
+

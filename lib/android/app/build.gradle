@@ -57,5 +57,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.3'
     testCompile 'org.assertj:assertj-core:2.5.0'
+    testCompile 'com.squareup.assertj:assertj-android:1.1.1'
     testCompile 'org.mockito:mockito-core:2.7.5'
 }
