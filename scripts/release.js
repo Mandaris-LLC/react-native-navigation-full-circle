@@ -4,21 +4,22 @@ const p = require('path');
 const semver = require('semver');
 const fs = require('fs');
 
+const ONLY_ON_BRANCH = 'v2';
 const VERSION_TAG = 'alpha';
-const VERSION_INC = 'prerelease';
+const VERSION_INC = 'patch';
 
 function validateEnv() {
   if (!process.env.CI || !process.env.TRAVIS) {
     throw new Error(`releasing is only available from Travis CI`);
   }
 
-  if (process.env.TRAVIS_BRANCH !== 'master') {
-    console.log(`not publishing on branch ${process.env.TRAVIS_BRANCH}`);
+  if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
+    console.log(`not publishing as triggered by pull request ${process.env.TRAVIS_PULL_REQUEST}`);
     return false;
   }
 
-  if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
-    console.log(`not publishing as triggered by pull request ${process.env.TRAVIS_PULL_REQUEST}`);
+  if (process.env.TRAVIS_BRANCH !== ONLY_ON_BRANCH) {
+    console.log(`not publishing on branch ${process.env.TRAVIS_BRANCH}`);
     return false;
   }
 
@@ -31,7 +32,7 @@ function setupGit() {
   exec.execSyncSilent(`git config --global user.name "${process.env.GIT_USER}"`);
   const remoteUrl = new RegExp(`https?://(\\S+)`).exec(exec.execSyncRead(`git remote -v`))[1];
   exec.execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
-  exec.execSync(`git checkout master`);
+  exec.execSync(`git checkout ${ONLY_ON_BRANCH}`);
 }
 
 function calcNewVersion() {
