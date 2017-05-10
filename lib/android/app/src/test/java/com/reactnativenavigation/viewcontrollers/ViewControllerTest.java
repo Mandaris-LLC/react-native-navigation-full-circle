@@ -96,6 +96,16 @@ public class ViewControllerTest extends BaseTest {
 		verify(spy, times(1)).onAppear();
 	}
 
+	@Test
+	public void onAppear_CalledAtMostOnce() throws Exception {
+		ViewController spy = spy(uut);
+		Shadows.shadowOf(spy.getView()).setMyParent(mock(ViewParent.class));
+		Assertions.assertThat(spy.getView()).isShown();
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 
+		verify(spy, times(1)).onAppear();
+	}
 }
 
