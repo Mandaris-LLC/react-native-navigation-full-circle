@@ -64,6 +64,11 @@ public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutL
 	}
 
 	public void onAppear() {
+		//
+	}
+
+	public void onDisappear() {
+		//
 	}
 
 	@Override

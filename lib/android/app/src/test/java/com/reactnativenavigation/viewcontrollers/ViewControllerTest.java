@@ -83,7 +83,7 @@ public class ViewControllerTest extends BaseTest {
 	}
 
 	@Test
-	public void onAppear_WhenVisibleOnScreen() throws Exception {
+	public void onAppear_WhenShown() throws Exception {
 		ViewController spy = spy(uut);
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 		Assertions.assertThat(spy.getView()).isNotShown();
@@ -106,6 +106,21 @@ public class ViewControllerTest extends BaseTest {
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 
 		verify(spy, times(1)).onAppear();
+	}
+
+	@Test
+	public void onDisappear_WhenNotShown_AfterOnAppearWasCalled() throws Exception {
+		ViewController spy = spy(uut);
+		Shadows.shadowOf(spy.getView()).setMyParent(mock(ViewParent.class));
+		Assertions.assertThat(spy.getView()).isShown();
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		verify(spy, times(1)).onAppear();
+		verify(spy, times(0)).onDisappear();
+
+		spy.getView().setVisibility(View.GONE);
+		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
+		Assertions.assertThat(spy.getView()).isNotShown();
+		verify(spy, times(1)).onDisappear();
 	}
 }
 
