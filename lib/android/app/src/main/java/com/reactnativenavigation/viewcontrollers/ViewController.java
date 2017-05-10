@@ -73,12 +73,16 @@ public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutL
 
 	@Override
 	public void onGlobalLayout() {
-		if (!isShown && getView().isShown()) {
+		if (!isShown && isViewShown()) {
 			isShown = true;
 			onAppear();
-		} else if (isShown && !getView().isShown()) {
+		} else if (isShown && !isViewShown()) {
 			isShown = false;
 			onDisappear();
 		}
+	}
+
+	protected boolean isViewShown() {
+		return getView().isShown();
 	}
 }
