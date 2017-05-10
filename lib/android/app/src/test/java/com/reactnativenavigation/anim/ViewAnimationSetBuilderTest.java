@@ -32,10 +32,9 @@ public class ViewAnimationSetBuilderTest extends BaseTest {
 	@Test
 	public void optionalCompletionListener() throws Exception {
 		new ViewAnimationSetBuilder()
-				.withEndListener(mockListener)
 				.add(someView(), someAnimation())
 				.start();
-		verify(mockListener, times(1)).run();
+		verify(mockListener, times(0)).run();
 	}
 
 	@Test
