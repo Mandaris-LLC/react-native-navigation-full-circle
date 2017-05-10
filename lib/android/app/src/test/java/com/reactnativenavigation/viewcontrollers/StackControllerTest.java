@@ -8,9 +8,13 @@ import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.mocks.TestStackAnimator;
 
+import org.assertj.core.api.iterable.Extractor;
 import org.junit.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class StackControllerTest extends BaseTest {
 
@@ -176,11 +180,6 @@ public class StackControllerTest extends BaseTest {
 	}
 
 	@Test
-	public void getStackControllerReturnsSelf() throws Exception {
-		assertThat(uut.getParentStackController()).isEqualTo(uut);
-	}
-
-	@Test
 	public void popTo_PopsTopUntilControllerIsNewTop() throws Exception {
 		uut.push(child1);
 		uut.push(child2);
@@ -242,6 +241,50 @@ public class StackControllerTest extends BaseTest {
 		assertThat(uut.findControllerById(child2.getId())).isEqualTo(child2);
 	}
 
+	@Test
+	public void pop_CallsDestroyOnPoppedChild() throws Exception {
+		child1 = spy(child1);
+		child2 = spy(child2);
+		child3 = spy(child3);
+		uut.push(child1);
+		uut.push(child2);
+		uut.push(child3);
+
+		verify(child3, times(0)).destroy();
+		uut.pop();
+		verify(child3, times(1)).destroy();
+	}
+
+	@Test
+	public void popSpecific_CallsDestroyOnPoppedChild() throws Exception {
+		child1 = spy(child1);
+		child2 = spy(child2);
+		child3 = spy(child3);
+		uut.push(child1);
+		uut.push(child2);
+		uut.push(child3);
+
+		verify(child2, times(0)).destroy();
+		uut.popSpecific(child2);
+		verify(child2, times(1)).destroy();
+	}
+
+	@Test
+	public void popTo_CallsDestroyOnPoppedChild() throws Exception {
+		child1 = spy(child1);
+		child2 = spy(child2);
+		child3 = spy(child3);
+		uut.push(child1);
+		uut.push(child2);
+		uut.push(child3);
+
+		verify(child2, times(0)).destroy();
+		verify(child3, times(0)).destroy();
+		uut.popTo(child1);
+		verify(child2, times(1)).destroy();
+		verify(child3, times(1)).destroy();
+	}
+
 	private void assertHasSingleChildViewOfController(ViewController childController) {
 		assertThat(uut.getView().getChildCount()).isEqualTo(1);
 		assertThat(uut.getView().getChildAt(0)).isEqualTo(childController.getView());
@@ -249,8 +292,11 @@ public class StackControllerTest extends BaseTest {
 
 	private void assertContainsOnlyId(String... ids) {
 		assertThat(uut.size()).isEqualTo(ids.length);
-		for (String id : ids) {
-			assertThat(uut.containsId(id));
-		}
+		assertThat(uut.getChildControllers()).extracting(new Extractor<ViewController, String>() {
+			@Override
+			public String extract(final ViewController input) {
+				return input.getId();
+			}
+		}).containsOnly(ids);
 	}
 }

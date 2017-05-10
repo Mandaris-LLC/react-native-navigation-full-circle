@@ -2,7 +2,6 @@ package com.reactnativenavigation.e2e.androide2e;
 
 import android.support.test.uiautomator.By;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ScreenLifecycleTest extends BaseTest {
@@ -18,7 +17,6 @@ public class ScreenLifecycleTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
 	public void unmountIsCalledWhenPopped() throws Exception {
 		launchTheApp();
 		assertMainShown();
