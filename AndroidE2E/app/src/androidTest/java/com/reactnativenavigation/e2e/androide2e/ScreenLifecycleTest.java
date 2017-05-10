@@ -5,7 +5,6 @@ import android.support.test.uiautomator.By;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
 public class ScreenLifecycleTest extends BaseTest {
 
 	@Test
@@ -19,6 +18,7 @@ public class ScreenLifecycleTest extends BaseTest {
 	}
 
 	@Test
+	@Ignore
 	public void unmountIsCalledWhenPopped() throws Exception {
 		launchTheApp();
 		assertMainShown();

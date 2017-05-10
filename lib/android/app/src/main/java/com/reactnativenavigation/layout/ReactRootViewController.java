@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
+import com.reactnativenavigation.react.NavigationEvent;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class ReactRootViewController extends ViewController {
@@ -26,33 +27,22 @@ public class ReactRootViewController extends ViewController {
 //		reactRootView.unmountReactApplication();
 //	}
 
-//	@Override
-//	public void onViewAttachedToWindow(final View v) {
-//		//
-//	}
-//
-//	@Override
-//	public void onViewDetachedFromWindow(final View v) {
-//		onStop();
-//	}
-//
-//	private void onStart() {
-//		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(id);
-//	}
-//
-//	private void onStop() {
-//		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(id);
-//	}
+	@Override
+	public void onAppear() {
+		super.onAppear();
+		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(getId());
+	}
 
-//	@Override
-//	public void onStart() {
-//		super.onStart();
-//		if (attachedToReactInstance) {
-//			new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(id);
-//		} else {
-//			throw new RuntimeException("Not yet attached to react");
-//		}
-//	}
+	@Override
+	public void onDisappear() {
+		super.onDisappear();
+		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(getId());
+	}
+
+	@Override
+	protected boolean isViewShown() {
+		return super.isViewShown() && attachedToReactInstance;
+	}
 
 	@NonNull
 	@Override
