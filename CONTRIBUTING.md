@@ -8,7 +8,7 @@
 | `lib/src` | javascript sources and unit tests |
 | `lib/src/index.js` | the entry point for `import Navigation from 'react-native-navigation'` |
 | `e2e` | [detox](https://github.com/wix/detox) iOS e2e tests (in the future, once detox supports it, we will have android e2e here as well) |
-| `AndroidE2E` | Android e2e tests using native uiautomator |
+| `AndroidE2E` | Android e2e tests using native uiautomator (until detox for android is ready) |
 | `playground` | The end-user project all e2e tests run against. Contains its own `src`, `android` and `ios`. Does not have its own package.json, depends on the local `<root>/lib` in order not to go through npm. |
 | `integration` | misc javascript integration tests |
 | `scripts` | all scripts |
