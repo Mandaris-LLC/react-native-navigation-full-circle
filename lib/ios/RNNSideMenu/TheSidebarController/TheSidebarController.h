@@ -23,7 +23,7 @@
 
 
 #import <UIKit/UIKit.h>
-#import "Animations/SidebarAnimation.h"
+#import "SidebarAnimation.h"
 
 @protocol TheSidebarControllerDelegate;
 
