@@ -19,6 +19,8 @@ cache:
     - $HOME/.m2
 
 install:
+  - sysctl hw.ncpu
+  - sysctl hw.memsize
         # node:
   - source ./scripts/env/installNode.sh
         # yarn:
