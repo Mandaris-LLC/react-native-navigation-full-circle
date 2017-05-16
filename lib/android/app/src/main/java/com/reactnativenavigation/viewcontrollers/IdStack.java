@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class IndexedStack<E> implements Iterable<String> {
+public class IdStack<E> implements Iterable<String> {
 
 	private final ArrayDeque<String> deque = new ArrayDeque<>();
 	private final HashMap<String, E> map = new HashMap<>();

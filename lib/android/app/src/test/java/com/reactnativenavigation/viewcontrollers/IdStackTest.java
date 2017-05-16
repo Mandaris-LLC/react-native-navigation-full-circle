@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class IndexedStackTest extends BaseTest {
+public class IdStackTest extends BaseTest {
 
-	private IndexedStack<Integer> uut;
+	private IdStack<Integer> uut;
 
 	@Override
 	public void beforeEach() {
 		super.beforeEach();
-		uut = new IndexedStack<>();
+		uut = new IdStack<>();
 	}
 
 	@Test

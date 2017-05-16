@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.test.uiautomator.By;
+import android.view.KeyEvent;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -37,6 +38,8 @@ public class ApplicationLifecycleTest extends BaseTest {
 	@Test
 	public void _3_relaunchAfterClose() throws Exception {
 		launchTheApp();
+		assertMainShown();
+
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 
@@ -49,6 +52,7 @@ public class ApplicationLifecycleTest extends BaseTest {
 	@Test
 	public void _4_deviceOrientationDoesNotDestroyActivity() throws Exception {
 		launchTheApp();
+		assertMainShown();
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 
@@ -61,6 +65,7 @@ public class ApplicationLifecycleTest extends BaseTest {
 	@Test
 	public void _5_relaunchAfterActivityKilledBySystem() throws Exception {
 		launchTheApp();
+		assertMainShown();
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 
@@ -68,6 +73,17 @@ public class ApplicationLifecycleTest extends BaseTest {
 
 		device().pressRecentApps();
 		elementByText("Playground").click();
+		assertMainShown();
+	}
+
+	@Test
+	public void _6_reloadReactNativeApp() throws Exception {
+		launchTheApp();
+		assertMainShown();
+		elementByText("PUSH").click();
+		assertExists(By.text("Pushed Screen"));
+		device().pressKeyCode(KeyEvent.KEYCODE_R);
+		device().pressKeyCode(KeyEvent.KEYCODE_R);
 		assertMainShown();
 	}
 

@@ -3,6 +3,8 @@ package com.reactnativenavigation;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.viewcontrollers.Navigator;
@@ -44,6 +46,18 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 	public void onBackPressed() {
 		if (!navigator.handleBack()) {
 			super.onBackPressed();
+		}
+	}
+
+	
+	@Override
+	public boolean onKeyMultiple(final int keyCode, final int repeatCount, final KeyEvent event) {
+		Toast.makeText(this, "onKeyMultiple", Toast.LENGTH_SHORT).show();
+		if (keyCode == KeyEvent.KEYCODE_R && repeatCount == 2) {
+			Toast.makeText(this, "RR!!!!", Toast.LENGTH_SHORT).show();
+			return true;
+		} else {
+			return super.onKeyMultiple(keyCode, repeatCount, event);
 		}
 	}
 

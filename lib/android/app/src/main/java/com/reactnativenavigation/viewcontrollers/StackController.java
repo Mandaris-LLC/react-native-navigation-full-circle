@@ -10,7 +10,7 @@ import com.reactnativenavigation.anim.StackAnimator;
 import java.util.Collection;
 
 public class StackController extends ParentController {
-	private final IndexedStack<ViewController> stack = new IndexedStack<>();
+	private final IdStack<ViewController> stack = new IdStack<>();
 	private StackAnimator animator;
 
 	public StackController(final Activity activity, String id) {
