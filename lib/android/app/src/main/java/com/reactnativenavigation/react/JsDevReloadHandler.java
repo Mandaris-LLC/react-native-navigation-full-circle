@@ -3,7 +3,6 @@ package com.reactnativenavigation.react;
 import android.view.KeyEvent;
 
 import com.facebook.react.ReactInstanceManager;
-import com.facebook.react.bridge.ReactContext;
 
 public class JsDevReloadHandler {
 	private final ReactInstanceManager reactInstanceManager;
@@ -11,12 +10,6 @@ public class JsDevReloadHandler {
 
 	public JsDevReloadHandler(final ReactInstanceManager reactInstanceManager) {
 		this.reactInstanceManager = reactInstanceManager;
-		reactInstanceManager.addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
-			@Override
-			public void onReactContextInitialized(final ReactContext context) {
-				//this is too late
-			}
-		});
 	}
 
 	public boolean onKeyUp(int keyCode) {
