@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.reactnativenavigation.viewcontrollers.Navigator;
@@ -15,6 +14,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		app().getReactGateway().onActivityCreated(this);
 		navigator = new Navigator(this);
 		navigator.onActivityCreated();
 	}
@@ -22,18 +22,21 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 	@Override
 	protected void onResume() {
 		super.onResume();
+		app().getReactGateway().onActivityResumed(this);
 		navigator.onActivityResumed();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		app().getReactGateway().onActivityPaused(this);
 		navigator.onActivityPaused();
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		app().getReactGateway().onActivityDestroyed(this);
 		navigator.onActivityDestroyed();
 	}
 
@@ -49,16 +52,13 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 		}
 	}
 
-	
 	@Override
-	public boolean onKeyMultiple(final int keyCode, final int repeatCount, final KeyEvent event) {
-		Toast.makeText(this, "onKeyMultiple", Toast.LENGTH_SHORT).show();
-		if (keyCode == KeyEvent.KEYCODE_R && repeatCount == 2) {
-			Toast.makeText(this, "RR!!!!", Toast.LENGTH_SHORT).show();
-			return true;
-		} else {
-			return super.onKeyMultiple(keyCode, repeatCount, event);
-		}
+	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
+		return app().getReactGateway().onKeyUp(keyCode) || super.onKeyUp(keyCode, event);
+	}
+
+	private NavigationApplication app() {
+		return (NavigationApplication) getApplication();
 	}
 
 	public Navigator getNavigator() {

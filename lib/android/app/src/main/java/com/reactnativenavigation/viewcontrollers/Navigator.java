@@ -51,7 +51,6 @@ public class Navigator extends ParentController {
 	}
 
 	public void onActivityDestroyed() {
-		//
 	}
 
 	@Override
