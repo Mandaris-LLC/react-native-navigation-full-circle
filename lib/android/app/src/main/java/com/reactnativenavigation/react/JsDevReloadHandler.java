@@ -23,7 +23,7 @@ public class JsDevReloadHandler {
 		}
 
 		if (keyCode == KeyEvent.KEYCODE_R) {
-			if (moreThan500MillisSinceLastR()) {
+			if (lessThan500MillisSinceLastR()) {
 				reactInstanceManager.getDevSupportManager().handleReloadJS();
 				return true;
 			}
@@ -32,7 +32,7 @@ public class JsDevReloadHandler {
 		return false;
 	}
 
-	private boolean moreThan500MillisSinceLastR() {
+	private boolean lessThan500MillisSinceLastR() {
 		return firstRTimestamp != 0 && System.currentTimeMillis() - firstRTimestamp < 500;
 	}
 }

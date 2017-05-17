@@ -16,28 +16,25 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 		super.onCreate(savedInstanceState);
 		app().getReactGateway().onActivityCreated(this);
 		navigator = new Navigator(this);
-		navigator.onActivityCreated();
+		setContentView(navigator.getView());
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		app().getReactGateway().onActivityResumed(this);
-		navigator.onActivityResumed();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		app().getReactGateway().onActivityPaused(this);
-		navigator.onActivityPaused();
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		app().getReactGateway().onActivityDestroyed(this);
-		navigator.onActivityDestroyed();
 	}
 
 	@Override

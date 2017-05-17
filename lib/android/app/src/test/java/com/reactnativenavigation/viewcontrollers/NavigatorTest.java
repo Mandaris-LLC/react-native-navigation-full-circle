@@ -10,7 +10,6 @@ import com.reactnativenavigation.mocks.TestStackAnimator;
 import com.reactnativenavigation.utils.CompatUtils;
 
 import org.junit.Test;
-import org.robolectric.Shadows;
 
 import java.util.Arrays;
 
@@ -39,25 +38,6 @@ public class NavigatorTest extends BaseTest {
 		child3 = new SimpleViewController(activity, "child3");
 		child4 = new SimpleViewController(activity, "child4");
 		child5 = new SimpleViewController(activity, "child5");
-	}
-
-
-	@Test
-	public void isActivityResumed() throws Exception {
-		assertThat(uut.isActivityResumed()).isFalse();
-		uut.onActivityCreated();
-		assertThat(uut.isActivityResumed()).isFalse();
-		uut.onActivityResumed();
-		assertThat(uut.isActivityResumed()).isTrue();
-		uut.onActivityPaused();
-		assertThat(uut.isActivityResumed()).isFalse();
-	}
-
-	@Test
-	public void setsItselfAsContentView() throws Exception {
-		assertThat(Shadows.shadowOf(activity).getContentView()).isNull();
-		uut.onActivityCreated();
-		assertThat(Shadows.shadowOf(activity).getContentView()).isNotNull().isEqualTo(uut.getView());
 	}
 
 	@Test
