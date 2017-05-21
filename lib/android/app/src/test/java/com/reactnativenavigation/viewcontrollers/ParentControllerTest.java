@@ -100,4 +100,13 @@ public class ParentControllerTest extends BaseTest {
 		verify(child1, times(1)).onDisappear();
 	}
 
+	@Test
+	public void lifecycleMethodsPassDownToChildren_onDestroy() throws Exception {
+		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
+		children.add(child1);
+
+		verify(child1, times(0)).onDestroy();
+		uut.onDestroy();
+		verify(child1, times(1)).onDestroy();
+	}
 }
