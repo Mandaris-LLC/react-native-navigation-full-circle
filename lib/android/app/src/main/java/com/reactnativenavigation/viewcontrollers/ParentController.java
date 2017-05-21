@@ -39,4 +39,25 @@ public abstract class ParentController extends ViewController {
 
 		return null;
 	}
+
+	/*
+	 * lifecycle
+	 */
+
+	@Override
+	public void onAppear() {
+		super.onAppear();
+		for (ViewController child : getChildControllers()) {
+			child.onAppear();
+		}
+	}
+
+
+	@Override
+	public void onDisappear() {
+		super.onDisappear();
+		for (ViewController child : getChildControllers()) {
+			child.onDisappear();
+		}
+	}
 }

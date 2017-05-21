@@ -16,6 +16,9 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class ParentControllerTest extends BaseTest {
 
@@ -76,4 +79,25 @@ public class ParentControllerTest extends BaseTest {
 
 		assertThat(uut.findControllerById("child2")).isEqualTo(child2);
 	}
+
+	@Test
+	public void lifecycleMethodsPassDownToChildren_onAppear() throws Exception {
+		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
+		children.add(child1);
+
+		verify(child1, times(0)).onAppear();
+		uut.onAppear();
+		verify(child1, times(1)).onAppear();
+	}
+
+	@Test
+	public void lifecycleMethodsPassDownToChildren_onDisappear() throws Exception {
+		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
+		children.add(child1);
+
+		verify(child1, times(0)).onDisappear();
+		uut.onDisappear();
+		verify(child1, times(1)).onDisappear();
+	}
+
 }
