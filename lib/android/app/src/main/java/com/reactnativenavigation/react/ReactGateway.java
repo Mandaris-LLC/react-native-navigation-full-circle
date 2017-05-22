@@ -1,18 +1,13 @@
 package com.reactnativenavigation.react;
 
-import com.facebook.react.devsupport.DevSupportManager;
-import com.facebook.react.devsupport.DevSupportManagerImpl;
-import com.facebook.react.devsupport.ReactInstanceDevCommandsHandler;
-import com.facebook.react.devsupport.RedBoxHandler;
 import com.reactnativenavigation.NavigationActivity;
 import com.reactnativenavigation.NavigationApplication;
-import com.reactnativenavigation.utils.ReflectionUtils;
 
 public class ReactGateway {
 
-	public interface JsReloadListener {
-		void onJsReload();
-	}
+//	public interface JsReloadListener {
+//		void onJsReload();
+//	}
 
 	private final NavigationReactNativeHost reactNativeHost;
 	private final NavigationReactInitializer initializer;
@@ -21,21 +16,28 @@ public class ReactGateway {
 	public ReactGateway(final NavigationApplication application, final boolean isDebug) {
 		reactNativeHost = new NavigationReactNativeHost(application, isDebug);
 
-		DevSupportManager devSupportManager = reactNativeHost.getReactInstanceManager().getDevSupportManager();
-		ReactInstanceDevCommandsHandler reactInstanceCommandsHandler = (ReactInstanceDevCommandsHandler) ReflectionUtils.getDeclaredField(devSupportManager, "mReactInstanceCommandsHandler");
-		String packagerPathForJsBundle = reactNativeHost.getJSMainModuleName();
-		boolean enableOnCreate = reactNativeHost.getUseDeveloperSupport();
-		RedBoxHandler redBoxHandler = reactNativeHost.getRedBoxHandler();
-		DevSupportManagerImpl proxy = new DevSupportManagerImpl(application, reactInstanceCommandsHandler, packagerPathForJsBundle, enableOnCreate, redBoxHandler) {
-			@Override
-			public void handleReloadJS() {
-				super.handleReloadJS();
-				// onJsReload
+//		DevSupportManager devSupportManager = reactNativeHost.getReactInstanceManager().getDevSupportManager();
+//		ReactInstanceDevCommandsHandler reactInstanceCommandsHandler = (ReactInstanceDevCommandsHandler) ReflectionUtils.getDeclaredField(devSupportManager, "mReactInstanceCommandsHandler");
+//		String packagerPathForJsBundle = reactNativeHost.getJSMainModuleName();
+//		boolean enableOnCreate = reactNativeHost.getUseDeveloperSupport();
+//		RedBoxHandler redBoxHandler = reactNativeHost.getRedBoxHandler();
+//		DevSupportManagerImpl proxy = new DevSupportManagerImpl(application, reactInstanceCommandsHandler, packagerPathForJsBundle, enableOnCreate, redBoxHandler) {
+//			@Override
+//			public void handleReloadJS() {
+//				super.handleReloadJS();
+//
+//
+//				// onJsReload
 //				ReactContext currentReactContext = reactNativeHost.getReactInstanceManager().getCurrentReactContext();
-//				((NavigationActivity) currentReactContext.getCurrentActivity()).getNavigator().onDestroy();
-			}
-		};
-		ReflectionUtils.setField(reactNativeHost.getReactInstanceManager(), "mDevSupportManager", proxy);
+//				if (currentReactContext != null) {
+//					NavigationActivity activity = (NavigationActivity) currentReactContext.getCurrentActivity();
+//					if (activity != null) {
+//						activity.reset();
+//					}
+//				}
+//			}
+//		};
+//		ReflectionUtils.setField(reactNativeHost.getReactInstanceManager(), "mDevSupportManager", proxy);
 
 		initializer = new NavigationReactInitializer(reactNativeHost.getReactInstanceManager(), isDebug);
 		jsDevReloadHandler = new JsDevReloadHandler(reactNativeHost.getReactInstanceManager());
