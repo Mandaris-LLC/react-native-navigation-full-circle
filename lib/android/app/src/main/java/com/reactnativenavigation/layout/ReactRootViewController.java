@@ -24,21 +24,21 @@ public class ReactRootViewController extends ViewController {
 	}
 
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
+	public void destroy() {
+		super.destroy();
 		if (reactRootView != null) reactRootView.unmountReactApplication();
 		reactRootView = null;
 	}
 
 	@Override
-	public void onAppear() {
-		super.onAppear();
+	public void onViewAppeared() {
+		super.onViewAppeared();
 		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(getId());
 	}
 
 	@Override
-	public void onDisappear() {
-		super.onDisappear();
+	public void onViewDisappear() {
+		super.onViewDisappear();
 		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(getId());
 	}
 

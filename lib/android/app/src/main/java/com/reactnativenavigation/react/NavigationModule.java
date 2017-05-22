@@ -32,10 +32,10 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
 	@ReactMethod
 	public void setRoot(final ReadableMap rawLayoutTree) {
+		final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				final ViewController viewController = newLayoutFactory().create(layoutTree);
 				navigator().setRoot(viewController);
 			}
@@ -44,10 +44,10 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
 	@ReactMethod
 	public void push(final String onContainerId, final ReadableMap rawLayoutTree) {
+		final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 				final ViewController viewController = newLayoutFactory().create(layoutTree);
 				navigator().push(onContainerId, viewController);
 			}

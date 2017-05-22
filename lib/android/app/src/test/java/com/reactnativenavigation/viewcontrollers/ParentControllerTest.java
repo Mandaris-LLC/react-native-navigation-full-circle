@@ -85,9 +85,9 @@ public class ParentControllerTest extends BaseTest {
 		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
 		children.add(child1);
 
-		verify(child1, times(0)).onAppear();
-		uut.onAppear();
-		verify(child1, times(1)).onAppear();
+		verify(child1, times(0)).onViewAppeared();
+		uut.onViewAppeared();
+		verify(child1, times(1)).onViewAppeared();
 	}
 
 	@Test
@@ -95,9 +95,9 @@ public class ParentControllerTest extends BaseTest {
 		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
 		children.add(child1);
 
-		verify(child1, times(0)).onDisappear();
-		uut.onDisappear();
-		verify(child1, times(1)).onDisappear();
+		verify(child1, times(0)).onViewDisappear();
+		uut.onViewDisappear();
+		verify(child1, times(1)).onViewDisappear();
 	}
 
 	@Test
@@ -105,8 +105,8 @@ public class ParentControllerTest extends BaseTest {
 		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
 		children.add(child1);
 
-		verify(child1, times(0)).onDestroy();
-		uut.onDestroy();
-		verify(child1, times(1)).onDestroy();
+		verify(child1, times(0)).destroy();
+		uut.destroy();
+		verify(child1, times(1)).destroy();
 	}
 }

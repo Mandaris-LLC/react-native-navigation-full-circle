@@ -13,6 +13,7 @@ import org.robolectric.Shadows;
 
 import java.lang.reflect.Field;
 
+import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -89,13 +90,13 @@ public class ViewControllerTest extends BaseTest {
 		ViewController spy = spy(uut);
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 		Assertions.assertThat(spy.getView()).isNotShown();
-		verify(spy, times(0)).onAppear();
+		verify(spy, times(0)).onViewAppeared();
 
 		Shadows.shadowOf(spy.getView()).setMyParent(mock(ViewParent.class));
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 		Assertions.assertThat(spy.getView()).isShown();
 
-		verify(spy, times(1)).onAppear();
+		verify(spy, times(1)).onViewAppeared();
 	}
 
 	@Test
@@ -107,7 +108,7 @@ public class ViewControllerTest extends BaseTest {
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 
-		verify(spy, times(1)).onAppear();
+		verify(spy, times(1)).onViewAppeared();
 	}
 
 	@Test
@@ -116,13 +117,13 @@ public class ViewControllerTest extends BaseTest {
 		Shadows.shadowOf(spy.getView()).setMyParent(mock(ViewParent.class));
 		Assertions.assertThat(spy.getView()).isShown();
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
-		verify(spy, times(1)).onAppear();
-		verify(spy, times(0)).onDisappear();
+		verify(spy, times(1)).onViewAppeared();
+		verify(spy, times(0)).onViewDisappear();
 
 		spy.getView().setVisibility(View.GONE);
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 		Assertions.assertThat(spy.getView()).isNotShown();
-		verify(spy, times(1)).onDisappear();
+		verify(spy, times(1)).onViewDisappear();
 	}
 
 	@Test
@@ -135,23 +136,23 @@ public class ViewControllerTest extends BaseTest {
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
-		verify(spy, times(1)).onDisappear();
+		verify(spy, times(1)).onViewDisappear();
 	}
 
 	@Test
 	public void onDestroy_RemovesGlobalLayoutListener() throws Exception {
-		new SimpleViewController(activity, "ensureNotNull").onDestroy();
+		new SimpleViewController(activity, "ensureNotNull").destroy();
 
 		ViewController spy = spy(uut);
 		View view = spy.getView();
 		Shadows.shadowOf(view).setMyParent(mock(ViewParent.class));
 
-		spy.onDestroy();
+		spy.destroy();
 
 		Assertions.assertThat(view).isShown();
 		view.getViewTreeObserver().dispatchOnGlobalLayout();
-		verify(spy, times(0)).onAppear();
-		verify(spy, times(0)).onDisappear();
+		verify(spy, times(0)).onViewAppeared();
+		verify(spy, times(0)).onViewDisappear();
 
 		Field field = ViewController.class.getDeclaredField("view");
 		field.setAccessible(true);
@@ -164,11 +165,16 @@ public class ViewControllerTest extends BaseTest {
 		Shadows.shadowOf(spy.getView()).setMyParent(mock(ViewParent.class));
 		Assertions.assertThat(spy.getView()).isShown();
 		spy.getView().getViewTreeObserver().dispatchOnGlobalLayout();
-		verify(spy, times(1)).onAppear();
+		verify(spy, times(1)).onViewAppeared();
 
-		spy.onDestroy();
+		spy.destroy();
 
-		verify(spy, times(1)).onDisappear();
+		verify(spy, times(1)).onViewDisappear();
+	}
+
+	@Test
+	public void onDestroy_RemovesSelfFromParentIfExists() throws Exception {
+		fail("implement");
 	}
 }
 

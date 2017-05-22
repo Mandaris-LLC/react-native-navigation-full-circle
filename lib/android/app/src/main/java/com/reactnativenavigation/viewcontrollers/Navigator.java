@@ -39,7 +39,9 @@ public class Navigator extends ParentController {
 	 */
 
 	public void setRoot(final ViewController viewController) {
-		getView().removeAllViews();
+		if (root != null) {
+			root.destroy();
+		}
 
 		root = viewController;
 		getView().addView(viewController.getView());

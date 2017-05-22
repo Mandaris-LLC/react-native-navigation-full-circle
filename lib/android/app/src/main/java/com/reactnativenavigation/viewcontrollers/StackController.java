@@ -56,7 +56,7 @@ public class StackController extends ParentController {
 			@Override
 			public void run() {
 				getView().removeView(poppedTop.getView());
-				poppedTop.onDestroy();
+				poppedTop.destroy();
 			}
 		});
 	}
@@ -66,7 +66,7 @@ public class StackController extends ParentController {
 			pop();
 		} else {
 			stack.remove(childController.getId());
-			childController.onDestroy();
+			childController.destroy();
 		}
 	}
 
