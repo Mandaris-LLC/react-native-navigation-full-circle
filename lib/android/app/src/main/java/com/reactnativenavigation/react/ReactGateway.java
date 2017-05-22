@@ -5,40 +5,13 @@ import com.reactnativenavigation.NavigationApplication;
 
 public class ReactGateway {
 
-//	public interface JsReloadListener {
-//		void onJsReload();
-//	}
-
 	private final NavigationReactNativeHost reactNativeHost;
 	private final NavigationReactInitializer initializer;
 	private final JsDevReloadHandler jsDevReloadHandler;
 
 	public ReactGateway(final NavigationApplication application, final boolean isDebug) {
 		reactNativeHost = new NavigationReactNativeHost(application, isDebug);
-
-//		DevSupportManager devSupportManager = reactNativeHost.getReactInstanceManager().getDevSupportManager();
-//		ReactInstanceDevCommandsHandler reactInstanceCommandsHandler = (ReactInstanceDevCommandsHandler) ReflectionUtils.getDeclaredField(devSupportManager, "mReactInstanceCommandsHandler");
-//		String packagerPathForJsBundle = reactNativeHost.getJSMainModuleName();
-//		boolean enableOnCreate = reactNativeHost.getUseDeveloperSupport();
-//		RedBoxHandler redBoxHandler = reactNativeHost.getRedBoxHandler();
-//		DevSupportManagerImpl proxy = new DevSupportManagerImpl(application, reactInstanceCommandsHandler, packagerPathForJsBundle, enableOnCreate, redBoxHandler) {
-//			@Override
-//			public void handleReloadJS() {
-//				super.handleReloadJS();
-//
-//
-//				// onJsReload
-//				ReactContext currentReactContext = reactNativeHost.getReactInstanceManager().getCurrentReactContext();
-//				if (currentReactContext != null) {
-//					NavigationActivity activity = (NavigationActivity) currentReactContext.getCurrentActivity();
-//					if (activity != null) {
-//						activity.reset();
-//					}
-//				}
-//			}
-//		};
-//		ReflectionUtils.setField(reactNativeHost.getReactInstanceManager(), "mDevSupportManager", proxy);
-
+		
 		initializer = new NavigationReactInitializer(reactNativeHost.getReactInstanceManager(), isDebug);
 		jsDevReloadHandler = new JsDevReloadHandler(reactNativeHost.getReactInstanceManager());
 	}
