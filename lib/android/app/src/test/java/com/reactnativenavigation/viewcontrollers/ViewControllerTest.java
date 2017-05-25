@@ -3,6 +3,7 @@ package com.reactnativenavigation.viewcontrollers;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.LinearLayout;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
@@ -13,7 +14,6 @@ import org.robolectric.Shadows;
 
 import java.lang.reflect.Field;
 
-import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -174,7 +174,11 @@ public class ViewControllerTest extends BaseTest {
 
 	@Test
 	public void onDestroy_RemovesSelfFromParentIfExists() throws Exception {
-		fail("implement");
+		LinearLayout parent = new LinearLayout(activity);
+		parent.addView(uut.getView());
+
+		uut.destroy();
+		assertThat(parent.getChildCount()).withFailMessage("expected not to have children").isZero();
 	}
 }
 

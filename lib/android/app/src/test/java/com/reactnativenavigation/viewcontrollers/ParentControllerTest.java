@@ -81,27 +81,7 @@ public class ParentControllerTest extends BaseTest {
 	}
 
 	@Test
-	public void lifecycleMethodsPassDownToChildren_onAppear() throws Exception {
-		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
-		children.add(child1);
-
-		verify(child1, times(0)).onViewAppeared();
-		uut.onViewAppeared();
-		verify(child1, times(1)).onViewAppeared();
-	}
-
-	@Test
-	public void lifecycleMethodsPassDownToChildren_onDisappear() throws Exception {
-		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
-		children.add(child1);
-
-		verify(child1, times(0)).onViewDisappear();
-		uut.onViewDisappear();
-		verify(child1, times(1)).onViewDisappear();
-	}
-
-	@Test
-	public void lifecycleMethodsPassDownToChildren_onDestroy() throws Exception {
+	public void destory_DestorysChildren() throws Exception {
 		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
 		children.add(child1);
 
