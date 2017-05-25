@@ -81,7 +81,7 @@ public class ParentControllerTest extends BaseTest {
 	}
 
 	@Test
-	public void destory_DestorysChildren() throws Exception {
+	public void destroy_DestroysChildren() throws Exception {
 		ViewController child1 = spy(new SimpleViewController(activity, "child1"));
 		children.add(child1);
 
