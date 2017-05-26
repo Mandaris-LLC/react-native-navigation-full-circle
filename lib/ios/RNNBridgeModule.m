@@ -30,8 +30,8 @@ RCT_EXPORT_METHOD(pop:(NSString*)containerId) {
 	[_commandsHandler pop:containerId];
 }
 
-RCT_EXPORT_METHOD(popTo:(NSString*)fromContainerId toContainerId:(NSString*)toContainerId) {
-	[_commandsHandler popTo:toContainerId fromContainerId:fromContainerId];
+RCT_EXPORT_METHOD(popTo:(NSString*)containerId) {
+	[_commandsHandler popTo:containerId];
 }
 
 RCT_EXPORT_METHOD(popToRoot:(NSString*)containerId) {

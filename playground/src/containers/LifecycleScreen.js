@@ -36,7 +36,7 @@ class LifecycleScreen extends Component {
   }
 
   onClickPush() {
-    Navigation.on(this.props.id).push({
+    Navigation.push(this.props.id, {
       name: 'navigation.playground.TextScreen'
     });
   }

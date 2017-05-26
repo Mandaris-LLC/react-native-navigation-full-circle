@@ -8,7 +8,7 @@
 
 -(void)push:(UIViewController*)newTop onTop:(NSString*)containerId;
 -(void)pop:(NSString*)containerId;
--(void)popTo:(NSString*)toContainerId fromContainerId:(NSString*)fromContainerId;
+-(void)popTo:(NSString*)containerId;
 -(void)popToRoot:(NSString*)containerId;
 
 @end

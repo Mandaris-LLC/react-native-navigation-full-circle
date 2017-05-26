@@ -62,7 +62,7 @@
 
 - (void)testPopToSpecificVC_removeAllPopedVCFromStore {
 	self.nvc.willReturnVCs = @[self.vc2, self.vc3];
-	[self.uut popTo:@"vc1" fromContainerId:@"vc3"];
+	[self.uut popTo:@"vc1"];
 	
 	XCTAssertNil([self.store findContainerForId:@"vc2"]);
 	XCTAssertNil([self.store findContainerForId:@"vc3"]);

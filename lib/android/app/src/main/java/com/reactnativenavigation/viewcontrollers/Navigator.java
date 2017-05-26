@@ -87,13 +87,12 @@ public class Navigator extends ParentController {
 		}
 	}
 
-	public void popTo(final String fromId, final String toId) {
-		ViewController from = findControllerById(fromId);
-		ViewController to = findControllerById(toId);
-		if (from != null && to != null) {
-			StackController parentStackController = from.getParentStackController();
+	public void popTo(final String containerId) {
+		ViewController target = findControllerById(containerId);
+		if (target != null) {
+			StackController parentStackController = target.getParentStackController();
 			if (parentStackController != null) {
-				parentStackController.popTo(to);
+				parentStackController.popTo(target);
 			}
 		}
 	}

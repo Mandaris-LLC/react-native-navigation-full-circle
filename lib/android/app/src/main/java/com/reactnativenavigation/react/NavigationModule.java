@@ -65,21 +65,21 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 	}
 
 	@ReactMethod
-	public void popTo(final String onContainerId, final String toContainerId) {
+	public void popTo(final String containerId) {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				navigator().popTo(onContainerId, toContainerId);
+				navigator().popTo(containerId);
 			}
 		});
 	}
 
 	@ReactMethod
-	public void popToRoot(final String onContainerId) {
+	public void popToRoot(final String containerId) {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				navigator().popToRoot(onContainerId);
+				navigator().popToRoot(containerId);
 			}
 		});
 	}

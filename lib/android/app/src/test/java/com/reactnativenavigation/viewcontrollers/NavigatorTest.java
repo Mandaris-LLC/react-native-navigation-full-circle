@@ -154,7 +154,7 @@ public class NavigatorTest extends BaseTest {
 		bottomTabsController.setTabs(Arrays.<ViewController>asList(stack1, stack2));
 		uut.setRoot(bottomTabsController);
 
-		uut.popTo(child2.getId(), child2.getId());
+		uut.popTo(child2.getId());
 
 		assertThat(stack2.getChildControllers()).containsOnly(child2);
 	}

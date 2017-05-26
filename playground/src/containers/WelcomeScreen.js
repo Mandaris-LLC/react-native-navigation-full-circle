@@ -100,13 +100,13 @@ class WelcomeScreen extends Component {
   }
 
   onClickPush() {
-    Navigation.on(this.props.id).push({
+    Navigation.push(this.props.id, {
       name: 'navigation.playground.PushedScreen'
     });
   }
 
   onClickLifecycleScreen() {
-    Navigation.on(this.props.id).push({
+    Navigation.push(this.props.id, {
       name: 'navigation.playground.LifecycleScreen'
     });
   }
