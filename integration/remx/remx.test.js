@@ -42,7 +42,7 @@ describe('remx support', () => {
 
     store.setters.setAge(30);
     expect(store.getters.getAge()).toEqual(30);
-    expect(tree.toJSON().children).toEqual([30]);
+    expect(tree.toJSON().children).toEqual(['30']);
 
     expect(renderCountIncrement).toHaveBeenCalledTimes(2);
   });
