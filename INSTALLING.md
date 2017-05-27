@@ -35,6 +35,6 @@ NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBun
 
 ### Setup Android
 
-Make your Application object extend from `NavigationApplication` and implement `isDebug` as `BuildConfig.DEBUG`
+Make your Application object extend from `NavigationApplication` and implement `isDebug` as `{YOUR_PACKAGE_NAME}.BuildConfig.DEBUG`
 
 Make your Acitivty extend from `NavigationActivity`
