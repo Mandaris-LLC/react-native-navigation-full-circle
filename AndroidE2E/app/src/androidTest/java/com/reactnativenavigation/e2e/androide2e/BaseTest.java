@@ -77,6 +77,8 @@ public abstract class BaseTest {
 
 	public void assertExists(BySelector selector) {
 		assertThat(device().wait(Until.hasObject(selector), TIMEOUT)).isTrue();
+		assertThat(device().findObject(selector).getVisibleCenter().x).isPositive().isLessThan(device().getDisplayWidth());
+		assertThat(device().findObject(selector).getVisibleCenter().y).isPositive().isLessThan(device().getDisplayHeight());
 	}
 
 	public void swipeOpenLeftSideMenu() {
