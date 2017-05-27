@@ -5,8 +5,6 @@ import android.support.test.uiautomator.By;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
-
 public class ModalsTest extends BaseTest {
 	@Ignore
 	@Test
@@ -20,42 +18,119 @@ public class ModalsTest extends BaseTest {
 	@Ignore
 	@Test
 	public void dismissModal() throws Exception {
-		fail("to implement");
+		launchTheApp();
+		assertMainShown();
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Screen"));
+
+		elementByText("DISMISS MODAL").click();
+		assertMainShown();
+
 	}
 
 	@Ignore
 	@Test
 	public void showMultipleModals() throws Exception {
-		fail("to implement");
+		launchTheApp();
+		assertMainShown();
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 1"));
+
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 2"));
+
+		elementByText("DISMISS MODAL").click();
+		assertExists(By.text("Modal Stack Position: 1"));
+
+		elementByText("DISMISS MODAL").click();
+		assertMainShown();
 	}
 
 	@Ignore
 	@Test
 	public void dismissUnknownContainerId() throws Exception {
-		fail("to implement");
+		launchTheApp();
+		assertMainShown();
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 1"));
+
+		elementByText("DISMISS UNKNOWN MODAL").click();
+		assertExists(By.text("Modal Stack Position: 1"));
+
+		elementByText("DISMISS MODAL").click();
+		assertMainShown();
 	}
 
 	@Ignore
 	@Test
 	public void dismissModalByContainerIdWhenNotOnTop() throws Exception {
-		fail("to implement");
+		launchTheApp();
+		assertMainShown();
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 1"));
+
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 2"));
+
+		elementByText("DISMISS PREVIOUS MODAL").click();
+		assertExists(By.text("Modal Stack Position: 2"));
+
+		elementByText("DISMISS MODAL").click();
+		assertMainShown();
 	}
 
 	@Ignore
 	@Test
 	public void dismissAllPreviousModalsByIdWhenTheyAreBelowTopPresented() throws Exception {
-		fail("to implement");
+		launchTheApp();
+		assertMainShown();
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 1"));
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 2"));
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 3"));
+
+		elementByText("DISMISS ALL PREVIOUS MODALS").click();
+		assertExists(By.text("Modal Stack Position: 3"));
+
+		elementByText("DISMISS MODAL").click();
+		assertMainShown();
 	}
 
 	@Ignore
 	@Test
 	public void dismissSomeModalByIdDeepInTheStack() throws Exception {
-		fail("to implement");
+		launchTheApp();
+		assertMainShown();
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 1"));
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 2"));
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 3"));
+
+		elementByText("DISMISS FIRST IN THE STACK").click();
+		assertExists(By.text("Modal Stack Position: 3"));
+
+		elementByText("DISMISS MODAL").click();
+		assertExists(By.text("Modal Stack Position: 2"));
+
+		elementByText("DISMISS MODAL").click();
+		assertMainShown();
 	}
 
 	@Ignore
 	@Test
 	public void dismissAllModals() throws Exception {
-		fail("to implement");
+		launchTheApp();
+		assertMainShown();
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 1"));
+		elementByText("SHOW MODAL").click();
+		assertExists(By.text("Modal Stack Position: 2"));
+
+		elementByText("DISMISS ALL MODALS").click();
+		assertMainShown();
 	}
 }
