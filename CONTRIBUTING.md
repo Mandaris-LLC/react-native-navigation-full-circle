@@ -1,4 +1,5 @@
-# Folder Structure
+# Contributing
+## Folder Structure
 
 | Folder | Description |
 | ------ | ----------- |
@@ -13,7 +14,7 @@
 | `integration` | misc javascript integration tests |
 | `scripts` | all scripts |
 
-# Running locally
+## Running locally
 
 ### Environment requirements
 
@@ -73,3 +74,13 @@ brew tap facebook/fb && brew install fbsimctl
 | `yarn test-e2e-ios` | runs the ios e2e suite (with detox) in debug/release |
 | `yarn test-e2e-android` | runs the android e2e suite (with uiautomator) in debug/release on running devices/emulators <br> **Options:** `-- release` |
 | `yarn test-all` | runs all tests in parallel |
+
+## Workflow
+This project is driven by tests. Before implementing any feature or fixing any bug, a failing test (e2e or unit or both) should be added, depending on the environment of where the fix should be implemented. For example, for an API change, a failing e2e should be written. For a small bug fix in Android, for example, a unit test in Android should be added.
+
+This will ensure good quality throughout the life of the project and will avoid unexpected breakages.
+
+No PR will be accepted without adequate test coverage.
+
+To run the tests, use the scripts above.
+
