@@ -10,10 +10,6 @@ import {
 import Navigation from 'react-native-navigation';
 
 class PushedScreen extends Component {
-  static navigationStyle = {
-    title: 'Static Title'
-  }
-
   constructor(props) {
     super(props);
     this.onClickPush = this.onClickPush.bind(this);
@@ -22,6 +18,7 @@ class PushedScreen extends Component {
     this.onClickPopToFirstPosition = this.onClickPopToFirstPosition.bind(this);
     this.onClickPopToRoot = this.onClickPopToRoot.bind(this);
   }
+
   render() {
     const stackPosition = this.getStackPosition();
     return (
