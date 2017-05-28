@@ -20,7 +20,7 @@ describe('top level api', () => {
   });
 
   it('screen lifecycle', async () => {
-    await elementByLabel('Push lifecycle screen').tap();
+    await elementByLabel('Push Lifecycle Screen').tap();
     await expect(elementByLabel('onStart')).toBeVisible();
     await elementByLabel('Push to test onStop').tap();
     await expect(elementByLabel('Alert')).toBeVisible();
@@ -28,7 +28,7 @@ describe('top level api', () => {
   });
 
   it('unmount is called on pop', async () => {
-    await elementByLabel('Push lifecycle screen').tap();
+    await elementByLabel('Push Lifecycle Screen').tap();
     await expect(elementByLabel('onStart')).toBeVisible();
     await element(by.traits(['button']).and(by.label('Back'))).tap();
     await expect(elementByLabel('onStop')).toBeVisible();

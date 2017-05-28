@@ -9,6 +9,7 @@ class WelcomeScreen extends Component {
     this.onClickPush = this.onClickPush.bind(this);
     this.onClickShowModal = this.onClickShowModal.bind(this);
     this.onClickLifecycleScreen = this.onClickLifecycleScreen.bind(this);
+    this.onClickPushOptionsScreen = this.onClickPushOptionsScreen.bind(this);
   }
 
   render() {
@@ -17,8 +18,9 @@ class WelcomeScreen extends Component {
         <Text style={styles.h1}>{`React Native Navigation!`}</Text>
         <Button title="Switch to tab based app" onPress={this.onClickSwitchToTabs} />
         <Button title="Switch to app with side menus" onPress={this.onClickSwitchToSideMenus} />
-        <Button title="Push lifecycle screen" onPress={this.onClickLifecycleScreen} />
+        <Button title="Push Lifecycle Screen" onPress={this.onClickLifecycleScreen} />
         <Button title="Push" onPress={this.onClickPush} />
+        <Button title="Push Options Screen" onPress={this.onClickPushOptionsScreen} />
         <Button title="Show Modal" onPress={this.onClickShowModal} />
         <Button title="Show Redbox" onPress={this.onClickShowRedbox} />
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
@@ -121,6 +123,12 @@ class WelcomeScreen extends Component {
 
   onClickShowRedbox() {
     undefined();
+  }
+
+  onClickPushOptionsScreen() {
+    Navigation.push(this.props.id, {
+      name: 'navigation.playground.OptionsScreen'
+    });
   }
 }
 

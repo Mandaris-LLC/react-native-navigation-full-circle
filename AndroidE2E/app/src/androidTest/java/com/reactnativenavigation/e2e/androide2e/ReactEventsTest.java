@@ -24,6 +24,7 @@ public class ReactEventsTest extends BaseTest {
 
 		device().pressKeyCode(KeyEvent.KEYCODE_R);
 		device().pressKeyCode(KeyEvent.KEYCODE_R);
+		device().waitForIdle();
 		assertMainShown();
 	}
 
@@ -35,7 +36,7 @@ public class ReactEventsTest extends BaseTest {
 		assertExists(By.text("Pushed Screen"));
 
 		device().pressKeyCode(KeyEvent.KEYCODE_R);
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 		device().pressKeyCode(KeyEvent.KEYCODE_R);
 		assertExists(By.text("Pushed Screen"));
 	}

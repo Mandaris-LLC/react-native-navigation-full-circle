@@ -60,4 +60,4 @@ const styles = {
   }
 };
 
-export default PushedScreen;
+export default OptionsScreen;

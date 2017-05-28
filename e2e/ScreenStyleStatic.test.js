@@ -3,8 +3,8 @@ describe('screen style - static', () => {
     await device.relaunchApp();
   });
 
-  it('declare a navigationStyle on container component', async () => {
-    await element(by.label('Push')).tap();
+  it('declare a navigationOptions on container component', async () => {
+    await element(by.label('Push Options Screen')).tap();
     await expect(element(by.label('Static Title').and(by.type('UILabel')))).toBeVisible();
   });
 });

@@ -33,6 +33,6 @@ public class JsDevReloadHandler {
 	}
 
 	private boolean lessThan500MillisSinceLastR() {
-		return firstRTimestamp != 0 && System.currentTimeMillis() - firstRTimestamp < 500;
+		return firstRTimestamp != 0 && System.currentTimeMillis() - firstRTimestamp < 1000;
 	}
 }
