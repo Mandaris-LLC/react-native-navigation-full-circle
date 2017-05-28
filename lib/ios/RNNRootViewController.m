@@ -22,7 +22,7 @@
 												 name:RCTJavaScriptWillStartLoadingNotification
 											   object:nil];
 	
-	self.navigationItem.title = node.data[@"navigationStyle"][@"title"];
+	self.navigationItem.title = node.data[@"navigationOptions"][@"title"];
 	
 	return self;
 }
