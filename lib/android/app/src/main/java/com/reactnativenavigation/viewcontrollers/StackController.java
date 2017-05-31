@@ -2,16 +2,20 @@ package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.reactnativenavigation.anim.StackAnimator;
+import com.reactnativenavigation.utils.CompatUtils;
+import com.reactnativenavigation.views.TopBar;
 
 import java.util.Collection;
 
 public class StackController extends ParentController {
 	private final IdStack<ViewController> stack = new IdStack<>();
-	private StackAnimator animator;
+	private final StackAnimator animator;
+	private TopBar topBar;
 
 	public StackController(final Activity activity, String id) {
 		this(activity, id, new StackAnimator(activity));
@@ -29,7 +33,7 @@ public class StackController extends ParentController {
 		stack.push(child.getId(), child);
 
 		getView().addView(child.getView());
-
+//TODO animate only when needed
 		if (previousTop != null) {
 			animator.animatePush(child.getView(), previousTop.getView(), new Runnable() {
 				@Override
@@ -50,15 +54,19 @@ public class StackController extends ParentController {
 		final ViewController poppedTop = stack.pop();
 		ViewController newTop = peek();
 
-		getView().addView(newTop.getView());
+		final View enteringView = newTop.getView();
+		final View exitingView = poppedTop.getView();
 
-		animator.animatePop(newTop.getView(), poppedTop.getView(), new Runnable() {
-			@Override
-			public void run() {
-				getView().removeView(poppedTop.getView());
-				poppedTop.destroy();
-			}
-		});
+		getView().addView(enteringView);
+
+		//TODO animate only when needed
+//		animator.animatePop(enteringView, exitingView, new Runnable() {
+//			@Override
+//			public void run() {
+		getView().removeView(exitingView);
+		poppedTop.destroy();
+//			}
+//		});
 	}
 
 	public void popSpecific(final ViewController childController) {
@@ -110,12 +118,21 @@ public class StackController extends ParentController {
 	@NonNull
 	@Override
 	protected ViewGroup createView() {
-		return new FrameLayout(getActivity());
+		LinearLayout root = new LinearLayout(getActivity());
+		root.setOrientation(LinearLayout.VERTICAL);
+		topBar = new TopBar(getActivity());
+		topBar.setId(CompatUtils.generateViewId());
+		root.addView(topBar);
+		return root;
 	}
 
 	@NonNull
 	@Override
 	public Collection<ViewController> getChildControllers() {
 		return stack.values();
+	}
+
+	public void setTitle(final String title) {
+		topBar.setTitle(title);
 	}
 }

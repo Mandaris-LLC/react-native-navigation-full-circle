@@ -2,7 +2,6 @@ package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.view.ViewGroup;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
@@ -44,14 +43,14 @@ public class NavigatorTest extends BaseTest {
 	public void setRoot_AddsChildControllerView() throws Exception {
 		assertThat(uut.getView().getChildCount()).isZero();
 		uut.setRoot(child1);
-		assertHasSingleChildViewOf(uut, child1);
+		assertIsChildById(uut.getView(), child1.getView());
 	}
 
 	@Test
 	public void setRoot_ReplacesExistingChildControllerViews() throws Exception {
 		uut.setRoot(child1);
 		uut.setRoot(child2);
-		assertHasSingleChildViewOf(uut, child2);
+		assertIsChildById(uut.getView(), child2.getView());
 	}
 
 	@Test
@@ -66,20 +65,20 @@ public class NavigatorTest extends BaseTest {
 		stackController.push(child1);
 		uut.setRoot(stackController);
 
-		assertHasSingleChildViewOf(uut, stackController);
-		assertHasSingleChildViewOf(stackController, child1);
+		assertIsChildById(uut.getView(), stackController.getView());
+		assertIsChildById(stackController.getView(), child1.getView());
 
 		uut.push(child1.getId(), child2);
 
-		assertHasSingleChildViewOf(uut, stackController);
-		assertHasSingleChildViewOf(stackController, child2);
+		assertIsChildById(uut.getView(), stackController.getView());
+		assertIsChildById(stackController.getView(), child2.getView());
 	}
 
 	@Test
 	public void push_InvalidPushWithoutAStack_DoesNothing() throws Exception {
 		uut.setRoot(child1);
 		uut.push(child1.getId(), child2);
-		assertHasSingleChildViewOf(uut, child1);
+		assertIsChildById(uut.getView(), child1.getView());
 	}
 
 	@Test
@@ -191,11 +190,6 @@ public class NavigatorTest extends BaseTest {
 	@NonNull
 	private BottomTabsController newTabs() {
 		return new BottomTabsController(activity, "tabsController");
-	}
-
-	private void assertHasSingleChildViewOf(ViewController parent, ViewController child) {
-		assertThat(((ViewGroup) parent.getView()).getChildCount()).isEqualTo(1);
-		assertThat(((ViewGroup) parent.getView()).getChildAt(0)).isEqualTo(child.getView()).isNotNull();
 	}
 
 	@NonNull

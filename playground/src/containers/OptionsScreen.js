@@ -22,7 +22,7 @@ class OptionsScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <Text style={styles.h1}>{`Style Screen`}</Text>
+        <Text style={styles.h1}>{`Options Screen`}</Text>
         <Button title="Dynamic Options" onPress={this.onClickDynamicOptions} />
         <Text style={styles.footer}>{`this.props.id = ${this.props.id}`}</Text>
       </View>

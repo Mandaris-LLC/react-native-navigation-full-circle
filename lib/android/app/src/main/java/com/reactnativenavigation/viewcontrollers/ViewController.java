@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.utils.StringUtils;
 
 public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutListener {
@@ -46,6 +47,7 @@ public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutL
 	public View getView() {
 		if (view == null) {
 			view = createView();
+			view.setId(CompatUtils.generateViewId());
 			view.getViewTreeObserver().addOnGlobalLayoutListener(this);
 		}
 		return view;

@@ -1,8 +1,6 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleViewController;
@@ -127,36 +125,31 @@ public class StackControllerTest extends BaseTest {
 	}
 
 	@Test
-	public void constructsSelfWithFrameLayout() throws Exception {
-		assertThat(uut.getView())
-				.isNotNull()
-				.isInstanceOf(ViewGroup.class)
-				.isInstanceOf(FrameLayout.class);
-	}
-
-	@Test
 	public void pushAddsToViewTree() throws Exception {
-		assertThat(uut.getView().getChildCount()).isZero();
+		assertThat(uut.getView().findViewById(child1.getView().getId())).isNull();
 		uut.push(child1);
-		assertHasSingleChildViewOfController(child1);
+		assertThat(uut.getView().findViewById(child1.getView().getId())).isNotNull();
 	}
 
 	@Test
 	public void pushRemovesPreviousFromTree() throws Exception {
-		assertThat(uut.getView().getChildCount()).isZero();
+		assertThat(uut.getView().findViewById(child1.getView().getId())).isNull();
 		uut.push(child1);
-		assertHasSingleChildViewOfController(child1);
+		assertThat(uut.getView().findViewById(child1.getView().getId())).isNotNull();
 		uut.push(child2);
-		assertHasSingleChildViewOfController(child2);
+		assertThat(uut.getView().findViewById(child1.getView().getId())).isNull();
+		assertThat(uut.getView().findViewById(child2.getView().getId())).isNotNull();
 	}
 
 	@Test
 	public void popReplacesViewWithPrevious() throws Exception {
 		uut.push(child1);
 		uut.push(child2);
-		assertHasSingleChildViewOfController(child2);
+		assertIsChildById(uut.getView(), child2.getView());
+		assertNotChildOf(uut.getView(), child1.getView());
 		uut.pop();
-		assertHasSingleChildViewOfController(child1);
+		assertNotChildOf(uut.getView(), child2.getView());
+		assertIsChildById(uut.getView(), child1.getView());
 	}
 
 	@Test
@@ -165,18 +158,17 @@ public class StackControllerTest extends BaseTest {
 		uut.push(child2);
 		uut.popSpecific(child2);
 		assertContainsOnlyId(child1.getId());
-		assertHasSingleChildViewOfController(child1);
+		assertIsChildById(uut.getView(), child1.getView());
 	}
 
 	@Test
 	public void popSpecificDeepInStack() throws Exception {
 		uut.push(child1);
 		uut.push(child2);
-		assertHasSingleChildViewOfController(child2);
-
+		assertIsChildById(uut.getView(), child2.getView());
 		uut.popSpecific(child1);
 		assertContainsOnlyId(child2.getId());
-		assertHasSingleChildViewOfController(child2);
+		assertIsChildById(uut.getView(), child2.getView());
 	}
 
 	@Test
@@ -283,11 +275,6 @@ public class StackControllerTest extends BaseTest {
 		uut.popTo(child1);
 		verify(child2, times(1)).destroy();
 		verify(child3, times(1)).destroy();
-	}
-
-	private void assertHasSingleChildViewOfController(ViewController childController) {
-		assertThat(uut.getView().getChildCount()).isEqualTo(1);
-		assertThat(uut.getView().getChildAt(0)).isEqualTo(childController.getView());
 	}
 
 	private void assertContainsOnlyId(String... ids) {

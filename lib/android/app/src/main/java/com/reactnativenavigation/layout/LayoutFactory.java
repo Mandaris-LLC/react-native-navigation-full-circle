@@ -3,8 +3,8 @@ package com.reactnativenavigation.layout;
 import android.app.Activity;
 
 import com.facebook.react.ReactInstanceManager;
-import com.reactnativenavigation.viewcontrollers.SideMenuController;
 import com.reactnativenavigation.viewcontrollers.BottomTabsController;
+import com.reactnativenavigation.viewcontrollers.SideMenuController;
 import com.reactnativenavigation.viewcontrollers.StackController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
@@ -76,7 +76,7 @@ public class LayoutFactory {
 	}
 
 	private ViewController createContainer(LayoutNode node) {
-		return new ReactRootViewController(activity, node.id, node.data.optString("name"), reactInstanceManager);
+		return new ReactRootViewController(activity, node.id, node.data.optString("name"), node.data.optJSONObject("navigationOptions").optString("title"), reactInstanceManager);
 	}
 
 	private ViewController createContainerStack(LayoutNode node) {
