@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
-import com.reactnativenavigation.layout.Navigator;
+import com.reactnativenavigation.viewcontrollers.Navigator;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
 	private Navigator navigator;
