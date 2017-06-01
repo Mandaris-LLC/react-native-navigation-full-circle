@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.layout.Navigator;
 import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.mocks.TestStackAnimator;
 import com.reactnativenavigation.utils.CompatUtils;

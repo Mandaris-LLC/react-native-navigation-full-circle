@@ -13,7 +13,7 @@ import com.reactnativenavigation.layout.LayoutNode;
 import com.reactnativenavigation.parse.JSONParser;
 import com.reactnativenavigation.parse.LayoutNodeParser;
 import com.reactnativenavigation.utils.UiThread;
-import com.reactnativenavigation.viewcontrollers.Navigator;
+import com.reactnativenavigation.layout.Navigator;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
 public class NavigationModule extends ReactContextBaseJavaModule {

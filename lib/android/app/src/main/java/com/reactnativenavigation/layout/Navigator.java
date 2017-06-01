@@ -1,4 +1,4 @@
-package com.reactnativenavigation.viewcontrollers;
+package com.reactnativenavigation.layout;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -6,6 +6,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.utils.CompatUtils;
+import com.reactnativenavigation.viewcontrollers.ParentController;
+import com.reactnativenavigation.viewcontrollers.StackController;
+import com.reactnativenavigation.viewcontrollers.ViewController;
 
 import java.util.Collection;
 import java.util.Collections;
