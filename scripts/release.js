@@ -36,7 +36,7 @@ function setupGit() {
 }
 
 function calcNewVersion() {
-  const currentVersion = exec.execSyncRead(`npm view ${process.env.npm_package_name}@${VERSION_TAG} version`);
+  const currentVersion = exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.${VERSION_TAG}`);
   console.log(`${VERSION_TAG} version: ${currentVersion}`);
   const packageVersion = process.env.npm_package_version;
   console.log(`package version: ${packageVersion}`);
