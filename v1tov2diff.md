@@ -46,11 +46,11 @@ Here is the full comparison of features between v1 and v2 (will be updated regul
 |---------------------|--------|------------|
 | push                |  ✅     |   ✅       |
 | pop                 |  ✅     |  ✅        |
-| showModal           |  ✅     |  ✅ Only iOS  |
+| showModal           |  ✅     |  ✅ Only iOS [Contribute](CONTRIBUTING.md)   |
 | popToRoot           |   ✅     |   ✅         |
 | resetTo             |   ✅     |    [Contribute](CONTRIBUTING.md)      |
-| dismissModal        |   ✅     |     ✅  Only iOS     |
-| dismissAllModals    |   ✅     |      ✅   Only iOS   |
+| dismissModal        |   ✅     |     ✅  Only iOS [Contribute](CONTRIBUTING.md)     |
+| dismissAllModals    |   ✅     |      ✅   Only iOS  [Contribute](CONTRIBUTING.md)  |
 | showLightBox        |   ✅     |      [Contribute](CONTRIBUTING.md)      |
 | dismissLightBox     |   ✅     |       [Contribute](CONTRIBUTING.md)       |
 | handleDeepLink      |   ✅     |       [Contribute](CONTRIBUTING.md)       |
@@ -64,7 +64,7 @@ Here is the full comparison of features between v1 and v2 (will be updated regul
 | toggleNavBar        |   ✅     |      [Contribute](CONTRIBUTING.md)      |
 | Screen Visibility   |   ✅     |       ✅     |
 
-Element tranisitions, adding buttons and styles are not supported yet.  
+Element tranisitions, adding buttons and styles are not yet implemented. [Contribute](CONTRIBUTING.md) 
 
 ## Getting started with v2
 If v2 supports everything you need for your app we encourage you to use it.
@@ -185,7 +185,7 @@ Navigation.events().onAppLaunched(() => {
   });
 ```
 
-#### registerContainer(screenID, generator, store = undefined, Provider = undefined)
+#### registerContainer(screenID, generator)
 Every screen component in your app must be registered with a unique name. The component itself is a traditional React component extending React.Component.
 ```js
 Navigation.registerContainer(`navigation.playground.WelcomeScreen`, () => WelcomeScreen);
