@@ -45,8 +45,8 @@ Here is the full comparison of features between v1 and v2 (will be updated regul
 |  API              | v1     | v2         |
 |---------------------|--------|------------|
 | push                |  ✅     |   ✅       |
-| pop                 |  ✅     |  ✅ Only iOS        |
-| showModal           |  ✅     |  ✅   |
+| pop                 |  ✅     |  ✅        |
+| showModal           |  ✅     |  ✅ Only iOS  |
 | popToRoot           |   ✅     |   ✅         |
 | resetTo             |   ✅     |    [Contribute](CONTRIBUTING.md)      |
 | dismissModal        |   ✅     |     ✅  Only iOS     |
