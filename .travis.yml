@@ -19,8 +19,6 @@ cache:
     - $HOME/.m2
 
 install:
-  - sysctl hw.ncpu
-  - sysctl hw.memsize
         # node:
   - source ./scripts/env/installNode.sh
         # yarn:
@@ -28,12 +26,8 @@ install:
   - yarn config set cache-folder $YARN_CACHE
         # android sdk:
   - source ./scripts/env/installAndroidSDK.sh
-        # android emulator:
-  #- echo yes | android update sdk --no-ui --all --filter "sys-img-armeabi-v7a-google_apis-25"
-  #- echo no | android create avd --name AVD -t android-25 --abi google_apis/armeabi-v7a
-  #- android list avd
         # fbsimctl:
-  - source ./scripts/env/installFbSimCtl.sh
+  # - source ./scripts/env/installFbSimCtl.sh
 
 script:
   - set -e
