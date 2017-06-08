@@ -26,6 +26,7 @@ install:
   - yarn config set cache-folder $YARN_CACHE
         # android sdk:
   - source ./scripts/env/installAndroidSDK.sh
+  - yarn
   - yarn test-e2e-android
   #       # fbsimctl:
   # - source ./scripts/env/installFbSimCtl.sh
