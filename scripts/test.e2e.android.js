@@ -8,12 +8,13 @@ run();
 
 function run() {
   if (process.env.CI) {
-    try {
-      launchEmulator();
-      runTests();
-    } finally {
-      killEmulators();
-    }
+    console.log(`android e2e is disabled on CI`);
+    // try {
+    //   launchEmulator();
+    //   runTests();
+    // } finally {
+    //   killEmulators();
+    // }
   } else {
     runTests();
   }
@@ -27,7 +28,7 @@ function runTests() {
 
 function launchEmulator() {
   console.log(`Launching Android Emulator`);
-  exec.execSync(`cd $ANDROID_HOME/tools && ./emulator -skin 1080x1920 -no-audio @pixel`);
+  exec.execSync(`cd $ANDROID_HOME/tools && ./emulator -skin 1080x1920 -gpu host -no-audio @pixel`);
   exec.execSync(`./scripts/waitForAndroidEmulator.sh`);
 }
 
