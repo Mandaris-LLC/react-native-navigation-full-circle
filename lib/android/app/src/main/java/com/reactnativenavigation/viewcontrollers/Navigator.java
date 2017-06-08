@@ -1,14 +1,19 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.reactnativenavigation.R;
 import com.reactnativenavigation.utils.CompatUtils;
 
 import java.util.Collection;
 import java.util.Collections;
+
+import static android.view.View.MeasureSpec.EXACTLY;
+import static android.view.View.MeasureSpec.makeMeasureSpec;
 
 public class Navigator extends ParentController {
 
@@ -95,5 +100,12 @@ public class Navigator extends ParentController {
 				parentStackController.popTo(target);
 			}
 		}
+	}
+
+	public void showModal(final ViewController viewController) {
+		viewController.getView().measure(makeMeasureSpec(getView().getWidth(), EXACTLY), makeMeasureSpec(getView().getHeight(), EXACTLY));
+		Dialog dialog = new Dialog(getActivity(), R.style.Modal);
+		dialog.setContentView(viewController.getView());
+		dialog.show();
 	}
 }

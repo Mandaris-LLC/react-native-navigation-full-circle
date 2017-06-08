@@ -6,7 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class ModalsTest extends BaseTest {
-	@Ignore
+
 	@Test
 	public void showModal() throws Exception {
 		launchTheApp();

@@ -2,6 +2,12 @@
 const _ = require('lodash');
 const exec = require('shell-utils').exec;
 
+const avdName = 'pixel';
+const sdk = 'android-24';
+const apis = 'default';
+const abi = 'armeabi-v7a';
+const packageName = `system-images;${sdk};${apis};${abi}`;
+
 const release = _.includes(process.argv, 'release');
 
 run();
@@ -9,12 +15,6 @@ run();
 function run() {
   if (process.env.CI) {
     console.log(`android e2e is disabled on CI`);
-    // try {
-    //   launchEmulator();
-    //   runTests();
-    // } finally {
-    //   killEmulators();
-    // }
   } else {
     runTests();
   }
@@ -26,9 +26,16 @@ function runTests() {
   exec.execSync(`cd AndroidE2E && ./gradlew connectedDebugAndroidTest`);
 }
 
+function installEmulator() {
+  exec.execSync(`sdkmanager "emulator"`);
+  exec.execSync(`sdkmanager "${packageName}"`);
+  exec.execSync(`echo no | avdmanager create avd --force --name "${avdName}" --abi "${apis}/${abi}" --package "${packageName}" --device "pixel"`);
+  exec.execSync(`avdmanager list avd`);
+}
+
 function launchEmulator() {
   console.log(`Launching Android Emulator`);
-  exec.execSync(`cd $ANDROID_HOME/tools && ./emulator -skin 1080x1920 -gpu host -no-audio @pixel`);
+  exec.execSync(`cd $ANDROID_HOME/tools && ./emulator -skin 1080x1920 -gpu host -no-audio @${avdName}`);
   exec.execSync(`./scripts/waitForAndroidEmulator.sh`);
 }
 
