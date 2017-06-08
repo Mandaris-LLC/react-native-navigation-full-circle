@@ -26,13 +26,14 @@ install:
   - yarn config set cache-folder $YARN_CACHE
         # android sdk:
   - source ./scripts/env/installAndroidSDK.sh
-        # fbsimctl:
+  - yarn test-e2e-android
+  #       # fbsimctl:
   # - source ./scripts/env/installFbSimCtl.sh
 
 script:
-  - set -e
-  - ./scripts/travis.sh
-  - set +e
+  # - set -e
+  # - ./scripts/travis.sh
+  # - set +e
 
 after_script:
   - echo "BUILD FINISHED"
