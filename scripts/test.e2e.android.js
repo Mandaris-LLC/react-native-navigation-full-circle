@@ -9,7 +9,6 @@ run();
 function run() {
   if (process.env.CI) {
     try {
-      // console.log(`android e2e disabled on CI for now`);
       launchEmulator();
       runTests();
     } finally {
@@ -21,15 +20,14 @@ function run() {
 }
 
 function runTests() {
-  console.log('all OK');
-  // exec.execSync(`yarn run uninstall-android`);
-  // exec.execSync(`yarn run install-android ${release ? '-- release' : ''}`);
-  // exec.execSync(`cd AndroidE2E && ./gradlew connectedDebugAndroidTest`);
+  exec.execSync(`yarn run uninstall-android`);
+  exec.execSync(`yarn run install-android ${release ? '-- release' : ''}`);
+  exec.execSync(`cd AndroidE2E && ./gradlew connectedDebugAndroidTest`);
 }
 
 function launchEmulator() {
   console.log(`Launching Android Emulator`);
-  exec.execSync(`cd $ANDROID_HOME/tools && ./emulator -skin 1080x1920 -gpu host -no-audio @pixel`);
+  exec.execSync(`cd $ANDROID_HOME/tools && ./emulator -skin 1080x1920 -no-audio @pixel`);
   exec.execSync(`./scripts/waitForAndroidEmulator.sh`);
 }
 

@@ -18,12 +18,12 @@ echo "Copying Android Licenses"
 mkdir -p "${ANDROID_HOME}"/licenses
 cp "$scriptdir/android-sdk-licenses/"* "${ANDROID_HOME}"/licenses
 
-package="system-images;android-24;default;x86"
+package="system-images;android-24;default;armeabi_v7a"
 echo "Downloading emulator"
 sdkmanager "emulator"
 echo "Downloading $package"
 sdkmanager "${package}"
 echo "Creating avd"
-echo no | avdmanager create avd --force --name "pixel" --abi "default/x86" --package "${package}" --device "pixel"
+echo no | avdmanager create avd --force --name "pixel" --abi "default/armeabi_v7a" --package "${package}" --device "pixel"
 sleep 2
 avdmanager list avd
