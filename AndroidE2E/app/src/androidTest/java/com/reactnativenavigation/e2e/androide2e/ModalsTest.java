@@ -15,7 +15,6 @@ public class ModalsTest extends BaseTest {
 		assertExists(By.text("Modal Screen"));
 	}
 
-	@Ignore
 	@Test
 	public void dismissModal() throws Exception {
 		launchTheApp();
@@ -28,7 +27,6 @@ public class ModalsTest extends BaseTest {
 
 	}
 
-	@Ignore
 	@Test
 	public void showMultipleModals() throws Exception {
 		launchTheApp();
@@ -46,7 +44,6 @@ public class ModalsTest extends BaseTest {
 		assertMainShown();
 	}
 
-	@Ignore
 	@Test
 	public void dismissUnknownContainerId() throws Exception {
 		launchTheApp();
@@ -61,7 +58,6 @@ public class ModalsTest extends BaseTest {
 		assertMainShown();
 	}
 
-	@Ignore
 	@Test
 	public void dismissModalByContainerIdWhenNotOnTop() throws Exception {
 		launchTheApp();
@@ -79,7 +75,6 @@ public class ModalsTest extends BaseTest {
 		assertMainShown();
 	}
 
-	@Ignore
 	@Test
 	public void dismissAllPreviousModalsByIdWhenTheyAreBelowTopPresented() throws Exception {
 		launchTheApp();
@@ -98,7 +93,6 @@ public class ModalsTest extends BaseTest {
 		assertMainShown();
 	}
 
-	@Ignore
 	@Test
 	public void dismissSomeModalByIdDeepInTheStack() throws Exception {
 		launchTheApp();
@@ -110,7 +104,7 @@ public class ModalsTest extends BaseTest {
 		elementByText("SHOW MODAL").click();
 		assertExists(By.text("Modal Stack Position: 3"));
 
-		elementByText("DISMISS FIRST IN THE STACK").click();
+		elementByText("DISMISS FIRST IN STACK").click();
 		assertExists(By.text("Modal Stack Position: 3"));
 
 		elementByText("DISMISS MODAL").click();
