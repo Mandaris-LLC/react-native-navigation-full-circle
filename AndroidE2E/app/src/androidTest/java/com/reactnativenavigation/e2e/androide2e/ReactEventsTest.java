@@ -9,16 +9,12 @@ public class ReactEventsTest extends BaseTest {
 
 	@Test
 	public void pressingMenuOpensDevMenu() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		device().pressKeyCode(KeyEvent.KEYCODE_MENU);
 		assertExists(By.text("Debug JS Remotely"));
 	}
 
 	@Test
 	public void pressingRTwiceInSuccessionReloadsReactNative() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 
@@ -30,8 +26,6 @@ public class ReactEventsTest extends BaseTest {
 
 	@Test
 	public void pressingRTwiceWithDelayDoesNothing() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 

@@ -8,8 +8,6 @@ public class ScreenLifecycleTest extends BaseTest {
 
 	@Test
 	public void onStartOnStop() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("PUSH LIFECYCLE SCREEN").click();
 		assertExists(By.text("onStart"));
 		elementByText("PUSH TO TEST ONSTOP").click();
@@ -18,8 +16,6 @@ public class ScreenLifecycleTest extends BaseTest {
 
 	@Test
 	public void unmountIsCalledWhenPopped() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("PUSH LIFECYCLE SCREEN").click();
 		assertExists(By.text("onStart"));
 

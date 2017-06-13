@@ -8,8 +8,6 @@ public class ScreenStackTest extends BaseTest {
 
 	@Test
 	public void pushAndPopScreen() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 		elementByText("POP").click();
@@ -18,8 +16,6 @@ public class ScreenStackTest extends BaseTest {
 
 	@Test
 	public void popScreenDeepInTheStack() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 		assertExists(By.text("Stack Position: 1"));
@@ -33,8 +29,6 @@ public class ScreenStackTest extends BaseTest {
 
 	@Test
 	public void popToId() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("PUSH").click();
 		elementByText("PUSH").click();
 		elementByText("PUSH").click();
@@ -45,8 +39,6 @@ public class ScreenStackTest extends BaseTest {
 
 	@Test
 	public void popToRoot() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("PUSH").click();
 		elementByText("PUSH").click();
 		elementByText("PUSH").click();

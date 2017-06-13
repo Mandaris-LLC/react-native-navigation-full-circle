@@ -29,6 +29,8 @@ public abstract class BaseTest {
 	public void beforeEach() throws Exception {
 		device().wakeUp();
 		device().setOrientationNatural();
+		launchTheApp();
+		assertMainShown();
 	}
 
 	@After

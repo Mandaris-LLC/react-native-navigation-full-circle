@@ -5,25 +5,14 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.support.test.uiautomator.By;
 
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ApplicationLifecycleTest extends BaseTest {
 
 	@Test
-	public void _1_acceptsOverlayPermissions_ShowsWelcomeScreen() throws Exception {
-		launchTheApp();
-		assertMainShown();
-	}
-
-	@Test
-	public void _2_relaunchFromBackground() throws Exception {
-		launchTheApp();
-		assertMainShown();
+	public void relaunchFromBackground() throws Exception {
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 
@@ -35,10 +24,7 @@ public class ApplicationLifecycleTest extends BaseTest {
 	}
 
 	@Test
-	public void _3_relaunchAfterClose() throws Exception {
-		launchTheApp();
-		assertMainShown();
-
+	public void relaunchAfterClose() throws Exception {
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 
@@ -49,9 +35,7 @@ public class ApplicationLifecycleTest extends BaseTest {
 	}
 
 	@Test
-	public void _4_deviceOrientationDoesNotDestroyActivity() throws Exception {
-		launchTheApp();
-		assertMainShown();
+	public void deviceOrientationDoesNotDestroyActivity() throws Exception {
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 
@@ -62,9 +46,7 @@ public class ApplicationLifecycleTest extends BaseTest {
 	}
 
 	@Test
-	public void _5_relaunchAfterActivityKilledBySystem() throws Exception {
-		launchTheApp();
-		assertMainShown();
+	public void relaunchAfterActivityKilledBySystem() throws Exception {
 		elementByText("PUSH").click();
 		assertExists(By.text("Pushed Screen"));
 

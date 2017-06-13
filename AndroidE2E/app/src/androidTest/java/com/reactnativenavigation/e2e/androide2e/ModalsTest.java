@@ -9,16 +9,12 @@ public class ModalsTest extends BaseTest {
 
 	@Test
 	public void showModal() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("SHOW MODAL").click();
 		assertExists(By.text("Modal Screen"));
 	}
 
 	@Test
 	public void dismissModal() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("SHOW MODAL").click();
 		assertExists(By.text("Modal Screen"));
 
@@ -29,8 +25,6 @@ public class ModalsTest extends BaseTest {
 
 	@Test
 	public void showMultipleModals() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("SHOW MODAL").click();
 		assertExists(By.text("Modal Stack Position: 1"));
 
@@ -46,8 +40,6 @@ public class ModalsTest extends BaseTest {
 
 	@Test
 	public void dismissUnknownContainerId() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("SHOW MODAL").click();
 		assertExists(By.text("Modal Stack Position: 1"));
 
@@ -60,8 +52,6 @@ public class ModalsTest extends BaseTest {
 
 	@Test
 	public void dismissModalByContainerIdWhenNotOnTop() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("SHOW MODAL").click();
 		assertExists(By.text("Modal Stack Position: 1"));
 
@@ -77,8 +67,6 @@ public class ModalsTest extends BaseTest {
 
 	@Test
 	public void dismissAllPreviousModalsByIdWhenTheyAreBelowTopPresented() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("SHOW MODAL").click();
 		assertExists(By.text("Modal Stack Position: 1"));
 		elementByText("SHOW MODAL").click();
@@ -95,8 +83,6 @@ public class ModalsTest extends BaseTest {
 
 	@Test
 	public void dismissSomeModalByIdDeepInTheStack() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("SHOW MODAL").click();
 		assertExists(By.text("Modal Stack Position: 1"));
 		elementByText("SHOW MODAL").click();
@@ -117,8 +103,6 @@ public class ModalsTest extends BaseTest {
 	@Ignore
 	@Test
 	public void dismissAllModals() throws Exception {
-		launchTheApp();
-		assertMainShown();
 		elementByText("SHOW MODAL").click();
 		assertExists(By.text("Modal Stack Position: 1"));
 		elementByText("SHOW MODAL").click();
