@@ -46,10 +46,10 @@ Here is the full comparison of features between v1 and v2 (will be updated regul
 |---------------------|--------|------------|
 | push                |  ✅     |   ✅       |
 | pop                 |  ✅     |  ✅        |
-| showModal           |  ✅     |  ✅ Only iOS [Contribute](CONTRIBUTING.md)   |
+| showModal           |  ✅     |  ✅    |
 | popToRoot           |   ✅     |   ✅         |
 | resetTo             |   ✅     |    ✅        |
-| dismissModal        |   ✅     |     ✅  Only iOS [Contribute](CONTRIBUTING.md)     |
+| dismissModal        |   ✅     |     ✅       |
 | dismissAllModals    |   ✅     |      ✅   Only iOS  [Contribute](CONTRIBUTING.md)  |
 | showLightBox        |   ✅     |      [Contribute](CONTRIBUTING.md)      |
 | dismissLightBox     |   ✅     |       [Contribute](CONTRIBUTING.md)       |
