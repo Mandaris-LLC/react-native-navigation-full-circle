@@ -13,6 +13,9 @@
 
 @synthesize drawerStyle = _drawerStyle;
 
+UIViewController *leftViewController = nil;
+UIViewController *rightViewController = nil;
+
 -(UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return [self supportedControllerOrientations];
 }
@@ -124,7 +127,18 @@
         
         return;
     }
-    
+
+    // setDrawerEnabled
+    if ([performAction isEqualToString:@"setDrawerEnabled"])
+    {
+        bool enabled = [actionParams[@"enabled"] boolValue];
+        if ([actionParams[@"side"] isEqualToString:@"left"]) {
+            [super setLeftDrawerViewController: enabled ? rightViewController : nil];
+        } else if ([actionParams[@"side"] isEqualToString:@"right"]) {
+            [super setRightDrawerViewController: enabled ? rightViewController : nil];
+        }
+    }
+
     // toggle
     if ([performAction isEqualToString:@"toggle"])
     {
