@@ -2,7 +2,6 @@ package com.reactnativenavigation.e2e.androide2e;
 
 import android.support.test.uiautomator.By;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ModalsTest extends BaseTest {
@@ -100,7 +99,6 @@ public class ModalsTest extends BaseTest {
 		assertMainShown();
 	}
 
-	@Ignore
 	@Test
 	public void dismissAllModals() throws Exception {
 		elementByText("SHOW MODAL").click();

@@ -106,6 +106,16 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 		});
 	}
 
+	@ReactMethod
+	public void dismissAllModals() {
+		handle(new Runnable() {
+			@Override
+			public void run() {
+				navigator().dismissAllModals();
+			}
+		});
+	}
+
 	private NavigationActivity activity() {
 		return (NavigationActivity) getCurrentActivity();
 	}
