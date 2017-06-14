@@ -28,6 +28,7 @@ public class NavigationReactInitializer implements ReactInstanceManager.ReactIns
 			devPermissionRequest.askPermission(activity);
 		} else {
 			reactInstanceManager.onHostResume(activity, activity);
+			reactInstanceManager.addReactInstanceEventListener(this);
 			checkBundleThenPrepareReact(activity);
 		}
 	}
@@ -55,7 +56,6 @@ public class NavigationReactInitializer implements ReactInstanceManager.ReactIns
 						public void run() {
 							if (!packagerIsRunning) {
 								activity.toast("Packager is not running!");
-								activity.finish();
 							} else {
 								prepareReactAppWithWorkingBundle();
 							}
@@ -69,7 +69,6 @@ public class NavigationReactInitializer implements ReactInstanceManager.ReactIns
 	}
 
 	private void prepareReactAppWithWorkingBundle() {
-		reactInstanceManager.addReactInstanceEventListener(this);
 		if (shouldCreateContext()) {
 			reactInstanceManager.createReactContextInBackground();
 		} else if (waitingForAppLaunchEvent) {
