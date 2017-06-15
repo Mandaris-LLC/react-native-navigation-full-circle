@@ -20,6 +20,7 @@ public class NavigationReactInitializer implements ReactInstanceManager.ReactIns
 	}
 
 	public void onActivityCreated(NavigationActivity activity) {
+		reactInstanceManager.addReactInstanceEventListener(this);
 		waitingForAppLaunchEvent = true;
 	}
 
@@ -28,7 +29,6 @@ public class NavigationReactInitializer implements ReactInstanceManager.ReactIns
 			devPermissionRequest.askPermission(activity);
 		} else {
 			reactInstanceManager.onHostResume(activity, activity);
-			reactInstanceManager.addReactInstanceEventListener(this);
 			checkBundleThenPrepareReact(activity);
 		}
 	}
