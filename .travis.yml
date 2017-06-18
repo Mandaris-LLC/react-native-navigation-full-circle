@@ -14,7 +14,7 @@ branches:
   - v2
 
 git:
-  depth: 999999999999
+  depth: 9999999
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
