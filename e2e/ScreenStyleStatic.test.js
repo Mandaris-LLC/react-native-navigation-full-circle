@@ -8,6 +8,6 @@ describe('screen style - static', () => {
 
   it('declare a navigationOptions on container component', async () => {
     await elementByLabel('Push Options Screen').tap();
-    await expect(elementByLabel('Static Title').and(by.type('UILabel'))).toBeVisible();
+    await expect(element(by.label('Static Title').and(by.type('UILabel')))).toBeVisible();
   });
 });
