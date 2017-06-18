@@ -36,12 +36,11 @@ function setupGit() {
 }
 
 function calcNewVersion() {
-  const currentVersion = exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.${VERSION_TAG}`);
-  console.log(`${VERSION_TAG} version: ${currentVersion}`);
-  const packageVersion = process.env.npm_package_version;
+  const packageVersion = semver.clean(process.env.npm_package_version);
   console.log(`package version: ${packageVersion}`);
-  const greater = semver.gt(currentVersion, packageVersion) ? currentVersion : packageVersion;
-  return semver.inc(greater, VERSION_INC);
+  const commitCount = exec.execSyncRead(`git rev-list --count ${ONLY_ON_BRANCH}`);
+  console.log(`new patch: ${commitCount}`);
+  return `${semver.major(packageVersion)}.${semver.minor(packageVersion)}.${commitCount}`;
 }
 
 function createNpmRc() {
@@ -53,19 +52,20 @@ email=\${NPM_EMAIL}
 }
 
 function tagAndPublish(newVersion) {
-  console.log(`new version is: ${newVersion}`);
   exec.execSync(`npm version ${newVersion} -f -m "v${newVersion} [ci skip]"`);
   exec.execSync(`npm publish --tag ${VERSION_TAG}`);
   exec.execSyncSilent(`git push deploy --tags || true`);
 }
 
 function run() {
-  if (!validateEnv()) {
-    return;
-  }
-  setupGit();
-  createNpmRc();
-  tagAndPublish(calcNewVersion());
+  // if (!validateEnv()) {
+  //   return;
+  // }
+  // setupGit();
+  // createNpmRc();
+  const newVersion = calcNewVersion();
+  console.log(`new version is: ${newVersion}`);
+  // tagAndPublish(newVersion);
 }
 
 run();
