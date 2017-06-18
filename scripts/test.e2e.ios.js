@@ -26,19 +26,12 @@ function runDetoxUsingMocha() {
                               ./node_modules/mocha/bin/mocha e2e
                                 --timeout ${5 * 60 * 1000}
                                 --recursive
-                                --bail`);
+                                --bail
+                                ${process.env.CI ? '--cleanup' : ''}`);
 }
 
-function e2e() { //eslint-disable-line
-  try {
-    runDetoxUsingMocha();
-  } finally {
-    if (process.env.CI) {
-      exec.kill(`Simulator`);
-      exec.kill(`CoreSimulator`);
-      exec.execSync(`sleep 5`);
-    }
-  }
+function e2e() {
+  runDetoxUsingMocha();
 }
 
 function run() {
