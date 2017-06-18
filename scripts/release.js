@@ -58,14 +58,14 @@ function tagAndPublish(newVersion) {
 }
 
 function run() {
-  // if (!validateEnv()) {
-  //   return;
-  // }
-  // setupGit();
-  // createNpmRc();
+  if (!validateEnv()) {
+    return;
+  }
+  setupGit();
+  createNpmRc();
   const newVersion = calcNewVersion();
   console.log(`new version is: ${newVersion}`);
-  // tagAndPublish(newVersion);
+  tagAndPublish(newVersion);
 }
 
 run();
