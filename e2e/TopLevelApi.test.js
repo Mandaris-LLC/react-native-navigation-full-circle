@@ -1,3 +1,6 @@
+const Utils = require('./Utils');
+const elementByLabel = Utils.elementByLabel;
+
 describe('top level api', () => {
   beforeEach(async () => {
     await device.relaunchApp();
@@ -48,7 +51,3 @@ describe('reload app', async () => {
     await expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 });
-
-function elementByLabel(label) {
-  return element(by.label(label));
-}

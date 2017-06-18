@@ -1,3 +1,6 @@
+const Utils = require('./Utils');
+const elementByLabel = Utils.elementByLabel;
+
 describe('screen stack', () => {
   beforeEach(async () => {
     await device.relaunchApp();
@@ -38,7 +41,3 @@ describe('screen stack', () => {
     await expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 });
-
-function elementByLabel(label) {
-  return element(by.label(label));
-}
