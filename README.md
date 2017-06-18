@@ -41,4 +41,3 @@ For example, this package replaces the native [NavigatorIOS](https://facebook.gi
 The MIT License.
 
 See [LICENSE](LICENSE)
-
