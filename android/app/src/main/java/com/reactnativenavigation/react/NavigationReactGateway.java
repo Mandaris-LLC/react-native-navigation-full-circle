@@ -117,27 +117,27 @@ public class NavigationReactGateway implements ReactGateway {
 
 		@Override
 		protected List<ReactPackage> getPackages() {
-			List<ReactPackage> list = new ArrayList<>();
-			list.add(new MainReactPackage());
-			list.add(new NavigationReactPackage());
-			addAdditionalReactPackagesIfNeeded(list);
-			return list;
+			List<ReactPackage> result = new ArrayList<>();
+
+			List<ReactPackage> additionalReactPackages = NavigationApplication.instance.createAdditionalReactPackages();
+			if (additionalReactPackages != null)
+				result.addAll(additionalReactPackages);
+
+			if (!containsInstanceOfClass(result, MainReactPackage.class)) {
+				result.add(new MainReactPackage());
+			}
+			if (!containsInstanceOfClass(result, NavigationReactPackage.class)) {
+				result.add(new NavigationReactPackage());
+			}
+
+			return result;
 		}
 
-		private void addAdditionalReactPackagesIfNeeded(List<ReactPackage> list) {
-			List<ReactPackage> additionalReactPackages = NavigationApplication.instance.createAdditionalReactPackages();
-			if (additionalReactPackages == null) {
-				return;
+		private <T extends ReactPackage> boolean containsInstanceOfClass(List<ReactPackage> list, Class<T> packageClass) {
+			for (ReactPackage reactPackage : list) {
+				if (packageClass.isInstance(reactPackage)) return true;
 			}
-
-			for (ReactPackage reactPackage : additionalReactPackages) {
-				if (reactPackage instanceof MainReactPackage)
-					throw new RuntimeException("Do not create a new MainReactPackage. This is created for you.");
-				if (reactPackage instanceof NavigationReactPackage)
-					throw new RuntimeException("Do not create a new NavigationReactPackage. This is created for you.");
-			}
-
-			list.addAll(additionalReactPackages);
+			return false;
 		}
 
 		@Override
