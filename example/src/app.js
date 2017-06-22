@@ -29,6 +29,7 @@ if (Platform.OS === 'android') {
 // this will start our app
 Navigation.startTabBasedApp({
   tabs,
+  animationType: Platform.OS === 'ios' ? 'slide-down' : 'fade',
   tabsStyle: {
     tabBarBackgroundColor: '#003a66',
     navBarButtonColor: '#ffffff',
