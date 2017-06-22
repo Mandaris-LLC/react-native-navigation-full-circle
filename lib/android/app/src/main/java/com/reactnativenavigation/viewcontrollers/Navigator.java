@@ -35,6 +35,12 @@ public class Navigator extends ParentController {
 		return root != null && root.handleBack();
 	}
 
+	@Override
+	public void destroy() {
+		modalStack.dismissAll();
+		super.destroy();
+	}
+
 	/*
 	 * Navigation methods
 	 */

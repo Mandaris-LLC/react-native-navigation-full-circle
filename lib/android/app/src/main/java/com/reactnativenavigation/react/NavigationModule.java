@@ -130,7 +130,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 	}
 
 	private void handle(Runnable task) {
-		if (activity() == null) return;
+		if (activity() == null || activity().isFinishing()) return;
 		UiThread.post(task);
 	}
 }
