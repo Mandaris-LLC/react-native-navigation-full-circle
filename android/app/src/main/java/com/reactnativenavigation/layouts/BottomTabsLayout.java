@@ -147,6 +147,7 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
         if (getCurrentScreenStack().canPop()) {
             getCurrentScreenStack().pop(true);
             setBottomTabsStyleFromCurrentScreen();
+            alignSnackbarContainerWithBottomTabs((LayoutParams) snackbarAndFabContainer.getLayoutParams(), getCurrentScreenStack().getCurrentScreenStyleParams());
             EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
             return true;
         } else {
@@ -347,7 +348,7 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
             @Override
             public void onScreenPopAnimationEnd() {
                 setBottomTabsStyleFromCurrentScreen();
-                alignSnackbarContainerWithBottomTabs((LayoutParams) snackbarAndFabContainer.getLayoutParams(), params.styleParams);
+                alignSnackbarContainerWithBottomTabs((LayoutParams) snackbarAndFabContainer.getLayoutParams(), getCurrentScreenStack().getCurrentScreenStyleParams());
                 EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
             }
         });
@@ -507,6 +508,7 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
                 @Override
                 public void onScreenPopAnimationEnd() {
                     setBottomTabsStyleFromCurrentScreen();
+                    alignSnackbarContainerWithBottomTabs((LayoutParams) snackbarAndFabContainer.getLayoutParams(), getCurrentScreenStack().getCurrentScreenStyleParams());
                     EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));
                 }
             });
