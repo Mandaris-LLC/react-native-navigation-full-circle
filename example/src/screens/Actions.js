@@ -141,7 +141,6 @@ class Actions extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Row title={'Push'} onPress={() => this.props.navigator.push({ screen: 'example.Types.Push', title: 'New Screen', navigatorStyle: { tabBarHidden: true } })} />
         <Row title={'Set Title'} onPress={this.setTitle} />
         <Row title={'Toggle Tabs'} onPress={this.toggleTabs} />
         <Row title={'Set Tab Badge'} onPress={this.setTabBadge} />
