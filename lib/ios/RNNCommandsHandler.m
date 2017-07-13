@@ -35,7 +35,7 @@
 
 -(void) setOptions:(NSString*)containerId options:(NSDictionary*)options {
 	[self assertReady];
-	[_store findContainerForId:containerId].navigationItem.title = options[@"title"];
+	[[_store findContainerForId:containerId] setTitle:options[@"title"]];
 }
 
 -(void) push:(NSString*)containerId layout:(NSDictionary*)layout {

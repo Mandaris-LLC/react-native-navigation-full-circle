@@ -4,7 +4,7 @@ import android.support.test.uiautomator.By;
 
 import org.junit.Test;
 
-public class ScreenStyleStaticTest extends BaseTest {
+public class NavigationOptionsTest extends BaseTest {
 
 	@Test
 	public void declareNavigationStyleOnContainerComponent() throws Exception {
