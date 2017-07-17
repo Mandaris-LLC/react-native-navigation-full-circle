@@ -87,6 +87,13 @@
       "<rootDir>/lib/src/",
       "<rootDir>/integration/"
     ],
+    "collectCoverageFrom": [
+      "lib/src/**/*.js",
+      "integration/**/*.js",
+      "!lib/src/index.js",
+      "!lib/src/Navigation.js",
+      "!lib/src/adapters/**/*"
+    ],
     "resetMocks": true,
     "resetModules": true,
     "coverageThreshold": {
