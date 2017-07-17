@@ -35,13 +35,30 @@ function setupGit() {
   exec.execSync(`git checkout ${ONLY_ON_BRANCH}`);
 }
 
-function calcNewVersion() {
+function getNextVersion() {
   const packageVersion = semver.clean(process.env.npm_package_version);
   console.log(`package version: ${packageVersion}`);
-  exec.execSync(`git fetch --unshallow`);
-  const commitCount = exec.execSyncRead(`git rev-list --count ${ONLY_ON_BRANCH}`);
-  console.log(`commits in ${ONLY_ON_BRANCH}: ${commitCount}`);
-  return `${semver.major(packageVersion)}.${semver.minor(packageVersion)}.${commitCount}`;
+  const current = exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.${VERSION_TAG}`);
+  console.log(`current published version: ${current}`);
+
+  if (semver.gt(packageVersion, current)) {
+    return packageVersion;
+  } else {
+    return semver.inc(current, VERSION_INC);
+  }
+}
+
+function calcNewVersion() {
+  let candidate = getNextVersion();
+  while (isAlreadyPublished(candidate)) {
+    console.log(`${candidate} already published`);
+    candidate = semver.inc(candidate, VERSION_INC);
+  }
+  return candidate;
+}
+
+function isAlreadyPublished(version) {
+  return exec.execSyncRead(`npm view ${process.env.npm_package_name}@${version} version`).length > 0;
 }
 
 function createNpmRc() {
