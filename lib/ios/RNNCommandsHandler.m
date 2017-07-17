@@ -35,7 +35,20 @@
 
 -(void) setOptions:(NSString*)containerId options:(NSDictionary*)options {
 	[self assertReady];
-	[[_store findContainerForId:containerId] setTitle:options[@"title"]];
+	UIViewController* vc = [_store findContainerForId:containerId];
+	
+	NSString* title = options[@"title"];
+	NSString* topBarTextColor = options[@"topBarTextColor"];
+	
+	[vc setTitle:title];
+	
+	int rgb = [[topBarTextColor substringFromIndex:1] intValue];
+	UIColor* color = [UIColor colorWithRed:((float)((rgb & 0xFF0000) >> 16))/255.0 \
+									 green:((float)((rgb & 0x00FF00) >>  8))/255.0 \
+									  blue:((float)((rgb & 0x0000FF) >>  0))/255.0 \
+									 alpha:1.0];
+	vc.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: color};
+	
 }
 
 -(void) push:(NSString*)containerId layout:(NSDictionary*)layout {
