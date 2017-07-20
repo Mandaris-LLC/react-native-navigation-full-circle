@@ -70,7 +70,7 @@ email=\${NPM_EMAIL}
 }
 
 function tagAndPublish(newVersion) {
-  exec.execSync(`npm version ${newVersion} -f -m "v${newVersion} [ci skip]"`);
+  exec.execSync(`npm version ${newVersion} -m "v${newVersion} [ci skip]"`);
   exec.execSync(`npm publish --tag ${VERSION_TAG}`);
   exec.execSyncSilent(`git push deploy --tags || true`);
 }
