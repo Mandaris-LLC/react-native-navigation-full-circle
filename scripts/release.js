@@ -77,10 +77,11 @@ function tryPublishAndTag(version) {
       console.log(`Released ${theCandidate}`);
       return;
     } catch (e) {
-      const alreadyPublished = _.includes(e.message, 'You cannot publish over the previously published version');
+      const alreadyPublished = _.includes(e.toString(), 'You cannot publish over the previously published version');
       if (!alreadyPublished) {
         throw e;
       }
+      console.log(`previously published. retrying with increased ${VERSION_INC}...`);
       retry++;
       theCandidate = semver.inc(theCandidate, VERSION_INC);
     }
@@ -88,8 +89,9 @@ function tryPublishAndTag(version) {
 }
 
 function tagAndPublish(newVersion) {
+  console.log(`trying to publish ${newVersion}...`);
   exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
-  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
+  exec.execSyncRead(`npm publish --tag ${VERSION_TAG}`);
   exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   exec.execSyncSilent(`git push deploy ${newVersion} || true`);
 }
