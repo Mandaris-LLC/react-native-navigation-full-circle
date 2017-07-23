@@ -9,11 +9,11 @@ const VERSION_TAG = 'alpha';
 const VERSION_INC = 'patch';
 
 function run() {
-  // if (!validateEnv()) {
-  //   return;
-  // }
-  // setupGit();
-  // createNpmRc();
+  if (!validateEnv()) {
+    return;
+  }
+  setupGit();
+  createNpmRc();
   versionTagAndPublish();
 }
 
@@ -70,7 +70,7 @@ function findCurrentPublishedVersion() {
 function tryPublishAndTag(version) {
   let theCandidate = version;
   let retry = 0;
-  while (retry < 5) { //eslint-disable-line
+  while (retry < 5) {
     try {
       tagAndPublish(theCandidate);
       console.log(`Released ${theCandidate}`);
