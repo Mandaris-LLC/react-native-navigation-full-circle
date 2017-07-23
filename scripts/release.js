@@ -3,6 +3,7 @@ const exec = require('shell-utils').exec;
 const p = require('path');
 const semver = require('semver');
 const fs = require('fs');
+const _ = require('lodash');
 
 const ONLY_ON_BRANCH = 'v2';
 const VERSION_TAG = 'alpha';
