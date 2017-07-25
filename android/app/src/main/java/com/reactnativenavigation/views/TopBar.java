@@ -3,7 +3,6 @@ package com.reactnativenavigation.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
@@ -87,10 +86,14 @@ public class TopBar extends AppBarLayout {
         titleBar.setSubtitle(subtitle);
     }
 
-    public void setReactView(String topBarReactView, String alignment) {
-        if (!TextUtils.isEmpty(topBarReactView)) {
-            final ContentView view = new ContentView(getContext(), topBarReactView, new NavigationParams(Bundle.EMPTY));
-            if ("fill".equals(alignment)) {
+    public void setReactView(StyleParams styleParams) {
+        if (!TextUtils.isEmpty(styleParams.topBarReactView)) {
+            final ContentView view = new ContentView(getContext(),
+                    styleParams.topBarReactView,
+                    NavigationParams.EMPTY,
+                    styleParams.topBarReactViewInitialProps
+            );
+            if ("fill".equals(styleParams.topBarReactViewAlignment)) {
                 addReactViewFill(view);
             } else {
                 addCenteredReactView(view);
@@ -127,6 +130,7 @@ public class TopBar extends AppBarLayout {
             setTransparent();
         }
         titleBar.setStyle(styleParams);
+        setReactView(styleParams);
         setTopTabsStyle(styleParams);
         if (!styleParams.topBarElevationShadowEnabled) {
             disableElevationShadow();

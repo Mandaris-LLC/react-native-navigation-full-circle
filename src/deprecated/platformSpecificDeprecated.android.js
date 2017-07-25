@@ -138,6 +138,7 @@ function convertStyleParams(originalStyleObject) {
     statusBarColor: processColor(originalStyleObject.statusBarColor),
     topBarReactView: originalStyleObject.navBarCustomView,
     topBarReactViewAlignment: originalStyleObject.navBarComponentAlignment,
+    topBarReactViewInitialProps: originalStyleObject.navBarCustomViewInitialProps,
     topBarColor: processColor(originalStyleObject.navBarBackgroundColor),
     topBarTransparent: originalStyleObject.navBarTransparent,
     topBarTranslucent: originalStyleObject.navBarTranslucent,
