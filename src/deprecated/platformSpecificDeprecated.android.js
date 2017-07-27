@@ -688,6 +688,10 @@ async function isAppLaunched() {
   return await newPlatformSpecific.isAppLaunched();
 }
 
+async function getCurrentlyVisibleScreenId() {
+  return await newPlatformSpecific.getCurrentlyVisibleScreenId();
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -718,5 +722,6 @@ export default {
   dismissSnackbar,
   showContextualMenu,
   dismissContextualMenu,
-  isAppLaunched
+  isAppLaunched,
+  getCurrentlyVisibleScreenId
 };
