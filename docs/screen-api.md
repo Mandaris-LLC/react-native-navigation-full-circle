@@ -263,7 +263,10 @@ this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 ```
 
 # Screen Visibility
-Listen to screen visibility events in onNavigatorEvent handler:
+
+`const isVisible = await this.props.navigator.isCurrentlyVisibleScreen()`
+
+## Listen visibility events in onNavigatorEvent handler
 
 ```js
 export default class ExampleScreen extends Component {
