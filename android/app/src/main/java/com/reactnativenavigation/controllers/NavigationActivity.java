@@ -190,6 +190,7 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+        NavigationApplication.instance.getActivityCallbacks().onKeyUp(keyCode, event);
         return getReactGateway().onKeyUp(getCurrentFocus(), keyCode) || super.onKeyUp(keyCode, event);
     }
 
