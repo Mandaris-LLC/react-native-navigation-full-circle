@@ -4,6 +4,7 @@
 #import "RNNRootViewController.h"
 #import "RNNSideMenuController.h"
 #import "RNNSideMenuChildVC.h"
+#import "RNNNavigationOptions.h"
 
 
 @implementation RNNControllerFactory {
@@ -75,7 +76,10 @@
 }
 
 - (RNNRootViewController*)createContainer:(RNNLayoutNode*)node {
-	return [[RNNRootViewController alloc] initWithNode:node rootViewCreator:_creator eventEmitter:_eventEmitter];
+	NSString* name = node.data[@"name"];
+	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:node.data[@"navigationOptions"]];
+	NSString* containerId = node.nodeId;
+	return [[RNNRootViewController alloc] initWithName:name withOptions:options withContainerId:containerId rootViewCreator:_creator eventEmitter:_eventEmitter];
 }
 
 - (UINavigationController*)createContainerStack:(RNNLayoutNode*)node {

@@ -4,10 +4,13 @@
 #import "RNNLayoutNode.h"
 #import "RNNRootViewCreator.h"
 #import "RNNEventEmitter.h"
+#import "RNNNavigationOptions.h"
 
 @interface RNNRootViewController : UIViewController
 
--(instancetype)initWithNode:(RNNLayoutNode*)node
+-(instancetype)initWithName:(NSString*)name
+				withOptions:(RNNNavigationOptions*)options
+			withContainerId:(NSString*)containerId
 			rootViewCreator:(id<RNNRootViewCreator>)creator
 			   eventEmitter:(RNNEventEmitter*)eventEmitter;
 

@@ -1,21 +1,25 @@
 
 #import "RNNRootViewController.h"
+#import <React/RCTConvert.h>
+
 
 @interface RNNRootViewController()
 @property (nonatomic, strong) NSString* containerId;
 @property (nonatomic, strong) NSString* containerName;
 @property (nonatomic, strong) RNNEventEmitter *eventEmitter;
 @property (nonatomic) BOOL _statusBarHidden;
+@property (nonatomic, strong) RNNNavigationOptions* navigationOptions;
+
 @end
 
 @implementation RNNRootViewController
 
--(instancetype)initWithNode:(RNNLayoutNode*)node rootViewCreator:(id<RNNRootViewCreator>)creator eventEmitter:(RNNEventEmitter*)eventEmitter {
+-(instancetype)initWithName:(NSString*)name withOptions:(RNNNavigationOptions*)options withContainerId:(NSString*)containerId rootViewCreator:(id<RNNRootViewCreator>)creator eventEmitter:(RNNEventEmitter*)eventEmitter {
 	self = [super init];
-	self.containerId = node.nodeId;
-	self.containerName = node.data[@"name"];
+	self.containerId = containerId;
+	self.containerName = name;
+	self.navigationOptions = options;
 	self.eventEmitter = eventEmitter;
-	
 	self.view = [creator createRootView:self.containerName rootViewId:self.containerId];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -23,14 +27,12 @@
 												 name:RCTJavaScriptWillStartLoadingNotification
 											   object:nil];
 	
-	self.navigationItem.title = node.data[@"navigationOptions"][@"title"];
-	self._statusBarHidden = [(NSNumber*)node.data[@"navigationOptions"][@"statusBarHidden"] boolValue];
 	
 	return self;
 }
 
 - (BOOL)prefersStatusBarHidden {
-	return self._statusBarHidden; // || self.navigationController.isNavigationBarHidden;
+	return [self.navigationOptions.statusBarHidden boolValue]; // || self.navigationController.isNavigationBarHidden;
 }
 
 
@@ -44,6 +46,10 @@
 	[self.eventEmitter sendContainerStop:self.containerId];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+	[super viewWillAppear:animated];
+	[self.navigationOptions apply:self];
+}
 /**
  *	fix for #877, #878
  */
