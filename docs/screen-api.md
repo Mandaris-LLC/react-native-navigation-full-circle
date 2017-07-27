@@ -289,6 +289,34 @@ export default class ExampleScreen extends Component {
 }
 ```
 
+## Listen to visibility events globally
+
+```js
+import {ScreenVisibilityListener as RNNScreenVisibilityListener} from 'react-native-navigation';
+
+export class ScreenVisibilityListener {
+
+  constructor() {
+    this.listener = new RNNScreenVisibilityListener({
+      didAppear: ({screen, startTime, endTime, commandType}) => {
+        console.log('screenVisibility', `Screen ${screen} displayed in ${endTime - startTime} millis after [${commandType}]`);
+      }
+    });
+  }
+
+  register() {
+    this.listener.register();
+  }
+
+  unregister() {
+    if (this.listener) {
+      this.listener.unregister();
+      this.listener = null;
+    }
+  }
+}
+```
+
 # Listening to tab selected events
 In order to listen to `bottomTabSelected` event, set an `onNavigatorEventListener` on screens that are pushed to BottomTab. The event is dispatched to the top most screen pushed to the selected tab's stack.
 
