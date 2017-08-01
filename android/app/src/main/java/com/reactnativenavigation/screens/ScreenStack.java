@@ -417,10 +417,32 @@ public class ScreenStack {
         isStackVisible = true;
         stack.peek().setStyle();
         stack.peek().setVisibility(View.VISIBLE);
-        stack.peek().getScreenParams().timestamp = System.currentTimeMillis();
-        NavigationApplication.instance.getEventEmitter().sendWillAppearEvent(stack.peek().getScreenParams(), type);
-        NavigationApplication.instance.getEventEmitter().sendDidAppearEvent(stack.peek().getScreenParams(), type);
+        sendScreenAppearEvent(type, stack.peek());
     }
+
+    private void sendScreenAppearEvent(final NavigationType type, final Screen screen) {
+        if (type == NavigationType.InitialScreen) {
+            sendInitialScreenAppearEvent(type, screen);
+        } else {
+            sendScreenAppearEvent(screen, type);
+        }
+    }
+
+    private void sendInitialScreenAppearEvent(final NavigationType type, final Screen screen) {
+        screen.setOnDisplayListener(new Screen.OnDisplayListener() {
+            @Override
+            public void onDisplay() {
+                sendScreenAppearEvent(screen, type);
+            }
+        });
+    }
+
+    private void sendScreenAppearEvent(Screen screen, NavigationType type) {
+        screen.getScreenParams().timestamp = System.currentTimeMillis();
+        NavigationApplication.instance.getEventEmitter().sendWillAppearEvent(screen.getScreenParams(), type);
+        NavigationApplication.instance.getEventEmitter().sendDidAppearEvent(screen.getScreenParams(), type);
+    }
+
 
     public void hide(NavigationType type) {
         NavigationApplication.instance.getEventEmitter().sendWillDisappearEvent(stack.peek().getScreenParams(), type);
