@@ -417,14 +417,14 @@ public class ScreenStack {
         isStackVisible = true;
         stack.peek().setStyle();
         stack.peek().setVisibility(View.VISIBLE);
-        stack.peek().screenParams.timestamp = System.currentTimeMillis();
-        NavigationApplication.instance.getEventEmitter().sendWillAppearEvent(stack.peek().screenParams, type);
-        NavigationApplication.instance.getEventEmitter().sendDidAppearEvent(stack.peek().screenParams, type);
+        stack.peek().getScreenParams().timestamp = System.currentTimeMillis();
+        NavigationApplication.instance.getEventEmitter().sendWillAppearEvent(stack.peek().getScreenParams(), type);
+        NavigationApplication.instance.getEventEmitter().sendDidAppearEvent(stack.peek().getScreenParams(), type);
     }
 
     public void hide(NavigationType type) {
-        NavigationApplication.instance.getEventEmitter().sendWillDisappearEvent(stack.peek().screenParams, type);
-        NavigationApplication.instance.getEventEmitter().sendDidDisappearEvent(stack.peek().screenParams, type);
+        NavigationApplication.instance.getEventEmitter().sendWillDisappearEvent(stack.peek().getScreenParams(), type);
+        NavigationApplication.instance.getEventEmitter().sendDidDisappearEvent(stack.peek().getScreenParams(), type);
         isStackVisible = false;
         stack.peek().setVisibility(View.INVISIBLE);
     }
