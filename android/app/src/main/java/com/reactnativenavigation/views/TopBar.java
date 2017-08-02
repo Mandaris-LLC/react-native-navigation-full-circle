@@ -81,8 +81,8 @@ public class TopBar extends AppBarLayout {
         titleBar.setLeftButton(leftButton, leftButtonOnClickListener, navigatorEventId, overrideBackPressInJs);
     }
 
-    public void setTitle(String title) {
-        titleBar.setTitle(title);
+    public void setTitle(String title, StyleParams styleParams) {
+        titleBar.setTitle(title, styleParams);
     }
 
     public void setSubtitle(String subtitle) {

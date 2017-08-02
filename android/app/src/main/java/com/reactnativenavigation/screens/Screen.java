@@ -130,7 +130,7 @@ public abstract class Screen extends RelativeLayout implements Subscriber {
         if (screenParams.styleParams.hasTopBarCustomComponent()) {
             topBar.setReactView(screenParams.styleParams);
         } else {
-            topBar.setTitle(screenParams.title);
+            topBar.setTitle(screenParams.title, styleParams);
             topBar.setSubtitle(screenParams.subtitle);
         }
     }
@@ -207,7 +207,7 @@ public abstract class Screen extends RelativeLayout implements Subscriber {
     }
 
     public void setTitleBarTitle(String title) {
-        topBar.setTitle(title);
+       topBar.setTitle(title, styleParams);
     }
 
     public void setTitleBarSubtitle(String subtitle) {

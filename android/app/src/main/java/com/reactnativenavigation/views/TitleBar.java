@@ -90,6 +90,11 @@ public class TitleBar extends Toolbar {
         setVisibility(titleBarHidden ? GONE : VISIBLE);
     }
 
+    public void setTitle(String title, StyleParams styleParams) {
+        setTitle(title);
+        centerTitle(styleParams);
+    }
+
     private Activity getActivity() {
         Context context = getContext();
         while (context instanceof ContextWrapper) {
