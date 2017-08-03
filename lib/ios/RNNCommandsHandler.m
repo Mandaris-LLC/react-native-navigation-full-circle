@@ -38,8 +38,8 @@
 -(void) setOptions:(NSString*)containerId options:(NSDictionary*)options {
 	[self assertReady];
 	RNNRootViewController* vc = [_store findContainerForId:containerId];
-	[vc.navigationOptions setOptionsDynamically:options];
-	[vc.navigationOptions apply:vc];
+	[vc.navigationOptions mergeWith:options];
+	[vc.navigationOptions applyOn:vc];
 }
 
 -(void) push:(NSString*)containerId layout:(NSDictionary*)layout {

@@ -10,8 +10,8 @@
 
 -(instancetype)initWithDict:(NSDictionary *)navigationOptions;
 
--(void)apply:(UIViewController*)viewController;
--(void)setOptionsDynamically:(NSDictionary*)dynamicOptions;
+-(void)applyOn:(UIViewController*)viewController;
+-(void)mergeWith:(NSDictionary*)otherOptions;
 
 @end
 

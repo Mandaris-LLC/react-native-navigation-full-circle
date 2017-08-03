@@ -46,7 +46,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
 	[super viewWillAppear:animated];
-	[self.navigationOptions apply:self];
+	[self.navigationOptions applyOn:self];
 }
 /**
  *	fix for #877, #878

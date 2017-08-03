@@ -13,13 +13,13 @@
 	return self;
 }
 
--(void)setOptionsDynamically:(NSDictionary *)dynamicOptions {
-	for(id key in dynamicOptions) {
-		[self setValue:[dynamicOptions objectForKey:key] forKey:key];
+-(void)mergeWith:(NSDictionary *)otherOptions {
+	for (id key in otherOptions) {
+		[self setValue:[otherOptions objectForKey:key] forKey:key];
 	}
 }
 
--(void)apply:(UIViewController*)viewController{
+-(void)applyOn:(UIViewController*)viewController{
 	if (self.topBarBackgroundColor) {
 		UIColor* backgroundColor = [RCTConvert UIColor:self.topBarBackgroundColor];
 		viewController.navigationController.navigationBar.barTintColor = backgroundColor;

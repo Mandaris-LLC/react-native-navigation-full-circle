@@ -27,7 +27,7 @@
 -(void)testChangeRNNNavigationOptionsDynamically{
 	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:@{@"topBarBackgroundColor" : @(0xff0000ff)}];
 	NSDictionary* dynamicOptions = @{@"topBarTextColor" : @(0xffff00ff), @"title" : @"hello"};
-    [options setOptionsDynamically:dynamicOptions];
+    [options mergeWith:dynamicOptions];
 	XCTAssertTrue([options.title isEqual:@"hello"]);
 	
 }
@@ -35,6 +35,6 @@
 -(void)testChangeRNNNavigationOptionsWithInvalidProperties{
 	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:@{@"topBarBackgroundColor" : @(0xff0000ff)}];
 	NSDictionary* dynamicOptions = @{@"titleeeee" : @"hello"};
-	XCTAssertThrows([options setOptionsDynamically:dynamicOptions]);
+	XCTAssertThrows([options mergeWith:dynamicOptions]);
 }
 @end
