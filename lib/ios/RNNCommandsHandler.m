@@ -37,9 +37,12 @@
 
 -(void) setOptions:(NSString*)containerId options:(NSDictionary*)options {
 	[self assertReady];
-	RNNRootViewController* vc = [_store findContainerForId:containerId];
-	[vc.navigationOptions mergeWith:options];
-	[vc.navigationOptions applyOn:vc];
+	UIViewController* vc = [_store findContainerForId:containerId];
+	if([vc isKindOfClass:[RNNRootViewController class]]) {
+		RNNRootViewController* rootVc = (RNNRootViewController*)vc;
+		[rootVc.navigationOptions mergeWith:options];
+		[rootVc.navigationOptions applyOn:vc];
+	}
 }
 
 -(void) push:(NSString*)containerId layout:(NSDictionary*)layout {
