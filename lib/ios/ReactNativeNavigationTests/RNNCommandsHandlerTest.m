@@ -45,7 +45,9 @@
 	
 	for (NSString* methodName in methods) {
 		SEL s = NSSelectorFromString(methodName);
-		XCTAssertThrowsSpecificNamed([uut performSelector:s withObject:nil], NSException, @"BridgeNotLoadedError");
+		IMP imp = [uut methodForSelector:s];
+		void (*func)(id, SEL) = (void *)imp;
+		XCTAssertThrowsSpecificNamed(func(uut,s), NSException, @"BridgeNotLoadedError");
 	}
 }
 
