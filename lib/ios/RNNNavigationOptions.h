@@ -8,6 +8,7 @@
 @property (nonatomic, strong) NSNumber* statusBarHidden;
 @property (nonatomic, strong) NSString* title;
 
+-(instancetype)init;
 -(instancetype)initWithDict:(NSDictionary *)navigationOptions;
 
 -(void)applyOn:(UIViewController*)viewController;

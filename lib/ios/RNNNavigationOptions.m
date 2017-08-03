@@ -3,13 +3,17 @@
 
 @implementation RNNNavigationOptions
 
+-(instancetype)init {
+	return [self initWithDict:@{}];
+}
 
 -(instancetype)initWithDict:(NSDictionary *)navigationOptions {
-	self = [super init];
-	self.topBarBackgroundColor = [navigationOptions objectForKey:@"topBarBackgroundColor"];
-	self.statusBarHidden = [navigationOptions objectForKey:@"statusBarHidden"];
-	self.title = [navigationOptions objectForKey:@"title"];
-	self.topBarTextColor = [navigationOptions objectForKey:@"topBarTextColor"];
+	if(self = [super init]) {
+		self.topBarBackgroundColor = [navigationOptions objectForKey:@"topBarBackgroundColor"];
+		self.statusBarHidden = [navigationOptions objectForKey:@"statusBarHidden"];
+		self.title = [navigationOptions objectForKey:@"title"];
+		self.topBarTextColor = [navigationOptions objectForKey:@"topBarTextColor"];
+	}
 	return self;
 }
 
