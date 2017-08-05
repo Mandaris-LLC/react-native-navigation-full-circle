@@ -1,6 +1,19 @@
 #import "RNNNavigationOptions.h"
 #import <React/RCTConvert.h>
 
+
+
+@interface RNNNavigationOptions ()
+
+@property (nonatomic, strong, readwrite) NSNumber* topBarBackgroundColor;
+@property (nonatomic, strong, readwrite) NSNumber* topBarTextColor;
+@property (nonatomic, strong, readwrite) NSNumber* statusBarHidden;
+@property (nonatomic, strong, readwrite) NSString* title;
+@property (nonatomic, strong, readwrite) NSString* setTabBadge;
+
+
+@end
+
 @implementation RNNNavigationOptions
 
 -(instancetype)init {
@@ -13,6 +26,7 @@
 		self.statusBarHidden = [navigationOptions objectForKey:@"statusBarHidden"];
 		self.title = [navigationOptions objectForKey:@"title"];
 		self.topBarTextColor = [navigationOptions objectForKey:@"topBarTextColor"];
+		self.setTabBadge = [navigationOptions objectForKey:@"setTabBadge"];
 	}
 	return self;
 }
@@ -34,6 +48,15 @@
 	if (self.topBarTextColor) {
 		UIColor* textColor = [RCTConvert UIColor:self.topBarTextColor];
 		viewController.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:textColor};
+	}
+	if (self.setTabBadge) {
+		NSString *badge = [RCTConvert NSString:self.setTabBadge];
+		if (viewController.navigationController) {
+			viewController.navigationController.tabBarItem.badgeValue = badge;
+		}
+		else {
+			viewController.tabBarItem.badgeValue = badge;
+		}
 	}
 }
 

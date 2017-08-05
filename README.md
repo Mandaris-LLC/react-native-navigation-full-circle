@@ -103,7 +103,7 @@ Note:  v1 properties with names beginning with 'navBar' are replaced in v2 with 
 | title            |   ✅     |        	✅    | 	✅|
 | toggleDrawer        |   ✅     |        [Contribute](CONTRIBUTING.md)   | [Contribute](CONTRIBUTING.md) |
 | toggleTabs          |   ✅     |       in development    | in development|
-| setTabBadge         |    ✅    |       [Contribute](CONTRIBUTING.md)     | [Contribute](CONTRIBUTING.md)|
+| setTabBadge         |    ✅    |       ✅    | [Contribute](CONTRIBUTING.md)|
 | switchToTab         |    ✅    |      in development    |[Contribute](CONTRIBUTING.md) |
 | toggleNavBar        |   ✅     |      [Contribute](CONTRIBUTING.md)      | [Contribute](CONTRIBUTING.md)|
 
