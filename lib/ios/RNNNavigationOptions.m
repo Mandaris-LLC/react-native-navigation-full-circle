@@ -2,18 +2,6 @@
 #import <React/RCTConvert.h>
 
 
-
-@interface RNNNavigationOptions ()
-
-@property (nonatomic, strong, readwrite) NSNumber* topBarBackgroundColor;
-@property (nonatomic, strong, readwrite) NSNumber* topBarTextColor;
-@property (nonatomic, strong, readwrite) NSNumber* statusBarHidden;
-@property (nonatomic, strong, readwrite) NSString* title;
-@property (nonatomic, strong, readwrite) NSString* setTabBadge;
-
-
-@end
-
 @implementation RNNNavigationOptions
 
 -(instancetype)init {

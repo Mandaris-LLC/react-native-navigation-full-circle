@@ -3,11 +3,11 @@
 
 @interface RNNNavigationOptions : NSObject
 
-@property (nonatomic, strong, readonly) NSNumber* topBarBackgroundColor;
-@property (nonatomic, strong, readonly) NSNumber* topBarTextColor;
-@property (nonatomic, strong, readonly) NSNumber* statusBarHidden;
-@property (nonatomic, strong, readonly) NSString* title;
-@property (nonatomic, strong, readonly) NSString* setTabBadge;
+@property (nonatomic, strong) NSNumber* topBarBackgroundColor;
+@property (nonatomic, strong) NSNumber* topBarTextColor;
+@property (nonatomic, strong) NSNumber* statusBarHidden;
+@property (nonatomic, strong) NSString* title;
+@property (nonatomic, strong) NSString* setTabBadge;
 
 -(instancetype)init;
 -(instancetype)initWithDict:(NSDictionary *)navigationOptions;
