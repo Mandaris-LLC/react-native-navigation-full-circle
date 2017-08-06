@@ -9,13 +9,13 @@
 }
 
 -(instancetype)initWithDict:(NSDictionary *)navigationOptions {
-	if(self = [super init]) {
-		self.topBarBackgroundColor = [navigationOptions objectForKey:@"topBarBackgroundColor"];
-		self.statusBarHidden = [navigationOptions objectForKey:@"statusBarHidden"];
-		self.title = [navigationOptions objectForKey:@"title"];
-		self.topBarTextColor = [navigationOptions objectForKey:@"topBarTextColor"];
-		self.setTabBadge = [navigationOptions objectForKey:@"setTabBadge"];
-	}
+	self = [super init];
+	self.topBarBackgroundColor = [navigationOptions objectForKey:@"topBarBackgroundColor"];
+	self.statusBarHidden = [navigationOptions objectForKey:@"statusBarHidden"];
+	self.title = [navigationOptions objectForKey:@"title"];
+	self.topBarTextColor = [navigationOptions objectForKey:@"topBarTextColor"];
+	self.screenBackgroundColor = [navigationOptions objectForKey:@"screenBackgroundColor"];
+	self.setTabBadge = [navigationOptions objectForKey:@"setTabBadge"];
 	return self;
 }
 
@@ -25,10 +25,12 @@
 	}
 }
 
--(void)applyOn:(UIViewController*)viewController{
+-(void)applyOn:(UIViewController*)viewController {
 	if (self.topBarBackgroundColor) {
 		UIColor* backgroundColor = [RCTConvert UIColor:self.topBarBackgroundColor];
 		viewController.navigationController.navigationBar.barTintColor = backgroundColor;
+	} else {
+		viewController.navigationController.navigationBar.barTintColor = nil;
 	}
 	if (self.title) {
 		viewController.navigationItem.title = self.title;
@@ -37,12 +39,15 @@
 		UIColor* textColor = [RCTConvert UIColor:self.topBarTextColor];
 		viewController.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:textColor};
 	}
+	if (self.screenBackgroundColor) {
+		UIColor* screenColor = [RCTConvert UIColor:self.screenBackgroundColor];
+		viewController.view.backgroundColor = screenColor;
+  }
 	if (self.setTabBadge) {
 		NSString *badge = [RCTConvert NSString:self.setTabBadge];
 		if (viewController.navigationController) {
 			viewController.navigationController.tabBarItem.badgeValue = badge;
-		}
-		else {
+    } else {
 			viewController.tabBarItem.badgeValue = badge;
 		}
 	}

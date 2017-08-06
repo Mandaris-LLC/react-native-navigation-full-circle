@@ -12,8 +12,7 @@ import Navigation from 'react-native-navigation';
 class OptionsScreen extends Component {
   static navigationOptions = {
     title: 'Static Title',
-    topBarBackgroundColor: "red",
-    statusBarHidden: true
+    topBarBackgroundColor: "red"
   }
 
   constructor(props) {
@@ -44,8 +43,7 @@ const styles = {
   root: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5fcff'
+    alignItems: 'center'
   },
   h1: {
     fontSize: 24,

@@ -7,6 +7,7 @@
 @property (nonatomic, strong) NSNumber* topBarTextColor;
 @property (nonatomic, strong) NSNumber* statusBarHidden;
 @property (nonatomic, strong) NSString* title;
+@property (nonatomic, strong) NSNumber* screenBackgroundColor;
 @property (nonatomic, strong) NSString* setTabBadge;
 
 -(instancetype)init;

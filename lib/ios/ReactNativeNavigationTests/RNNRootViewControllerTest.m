@@ -92,5 +92,14 @@
 	XCTAssertTrue([self.uut.navigationController.navigationBar.titleTextAttributes[@"NSColor"] isEqual:expectedColor]);
 }
 
+-(void)testScreenBackgroundColor_validColor{
+	NSNumber* inputColor = @(0xFFFF0000);
+	self.options.screenBackgroundColor = inputColor;
+	[self.uut viewWillAppear:false];
+	UIColor* expectedColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
+	XCTAssertTrue([self.uut.view.backgroundColor isEqual:expectedColor]);
+}
+
+
 
 @end

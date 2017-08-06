@@ -118,7 +118,6 @@
 		UIViewController *vc = [self fromTree:child];
 		[childrenVCs addObject:vc];
 	}
-	
 	RNNSideMenuController *sideMenu = [[RNNSideMenuController alloc] initWithControllers:childrenVCs];
 	return sideMenu;
 }
