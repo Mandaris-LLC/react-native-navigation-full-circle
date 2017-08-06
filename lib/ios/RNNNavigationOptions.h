@@ -9,6 +9,7 @@
 @property (nonatomic, strong) NSString* title;
 @property (nonatomic, strong) NSNumber* screenBackgroundColor;
 @property (nonatomic, strong) NSString* setTabBadge;
+@property (nonatomic, strong) NSString* topBarTextFontFamily;
 
 -(instancetype)init;
 -(instancetype)initWithDict:(NSDictionary *)navigationOptions;
