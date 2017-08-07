@@ -142,6 +142,7 @@
       "unicorn/filename-case": 0,
       "unicorn/number-literal-case": 0,
       "import/order": 0,
+      "import/named": 0,
       "import/no-unassigned-import": 0,
       "import/no-unresolved": [
         2,
