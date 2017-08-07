@@ -6,19 +6,12 @@ import { connect } from 'remx/react-native';
 import * as store from './store';
 
 class MyContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     if (this.props.renderCountIncrement) {
       this.props.renderCountIncrement();
     }
-    if (this.props.printAge) {
-      return this.renderText(this.props.age);
-    } else {
-      return this.renderText(this.props.name);
-    }
+
+    return this.renderText(this.props.printAge ? this.props.age : this.props.name);
   }
 
   renderText(txt) {
@@ -28,7 +21,7 @@ class MyContainer extends Component {
   }
 }
 
-function mapStateToProps(ownProps) {
+function mapStateToProps() {
   return {
     name: store.getters.getName(),
     age: store.getters.getAge()

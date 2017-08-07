@@ -1,7 +1,6 @@
 import _ from 'lodash/math';
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
   Button
@@ -15,7 +14,7 @@ class TextScreen extends Component {
         <Text style={styles.h1}>{this.props.text || 'Text Screen'}</Text>
         {this.renderTextFromFunctionInProps()}
         <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
-        <Button title={"setTabBadge"} onPress={() => this.onButtonPress()}/>
+        <Button title={'setTabBadge'} onPress={() => this.onButtonPress()}/>
       </View>
     );
   }

@@ -48,18 +48,17 @@
     "lodash": "4.x.x"
   },
   "devDependencies": {
+    "xo": "0.18.x",
+    "eslint-config-xo": "0.18.x",
+    "eslint-config-xo-react": "0.13.x",
+    "eslint-plugin-react": "7.x.x",
     "babel-cli": "6.x.x",
     "babel-core": "6.x.x",
-    "babel-eslint": "7.x.x",
     "babel-jest": "20.x.x",
     "babel-polyfill": "6.x.x",
     "babel-preset-react-native": "2.x.x",
     "babel-register": "6.x.x",
     "detox": "5.x.x",
-    "eslint": "4.x.x",
-    "eslint-plugin-babel": "4.x.x",
-    "eslint-plugin-react": "7.x.x",
-    "eslint-plugin-react-native": "2.x.x",
     "jest": "20.x.x",
     "jest-cli": "20.x.x",
     "mocha": "3.x.x",
@@ -103,6 +102,80 @@
         "lines": 100,
         "statements": 100
       }
+    }
+  },
+  "xo": {
+    "extends": "xo-react",
+    "space": true,
+    "env": [
+      "node",
+      "jest",
+      "es6"
+    ],
+    "globals": [
+      "alert"
+    ],
+    "overrides": [
+      {
+        "files": "e2e/**/*",
+        "env": [
+          "mocha"
+        ],
+        "globals": [
+          "before",
+          "after",
+          "beforeEach",
+          "afterEach",
+          "expect",
+          "element",
+          "by",
+          "device"
+        ]
+      }
+    ],
+    "settings": {
+      "import/core-modules": [
+        "react-native-navigation"
+      ]
+    },
+    "rules": {
+      "unicorn/filename-case": 0,
+      "unicorn/number-literal-case": 0,
+      "import/order": 0,
+      "import/no-unassigned-import": 0,
+      "import/no-unresolved": [
+        2,
+        {
+          "ignore": [
+            "react-native-navigation"
+          ]
+        }
+      ],
+      "react/jsx-tag-spacing": 0,
+      "react/jsx-sort-props": 0,
+      "react/jsx-boolean-value": 0,
+      "react/prop-types": 0,
+      "react/jsx-no-bind": 0,
+      "react/jsx-handler-names": 0,
+      "react/forbid-component-props": 0,
+      "capitalized-comments": 0,
+      "no-use-before-define": [
+        2,
+        {
+          "functions": false,
+          "variables": false
+        }
+      ],
+      "promise/param-names": 0,
+      "no-return-assign": 0,
+      "arrow-parens": [
+        2,
+        "always"
+      ],
+      "object-curly-spacing": [
+        2,
+        "always"
+      ]
     }
   }
 }

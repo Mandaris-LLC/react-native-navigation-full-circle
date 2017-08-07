@@ -7,7 +7,7 @@ import LifecycleScreen from './LifecycleScreen';
 import ModalScreen from './ModalScreen';
 import OptionsScreen from './OptionsScreen';
 
-export function registerContainers() {
+function registerContainers() {
   Navigation.registerContainer(`navigation.playground.WelcomeScreen`, () => WelcomeScreen);
   Navigation.registerContainer(`navigation.playground.ModalScreen`, () => ModalScreen);
   Navigation.registerContainer(`navigation.playground.LifecycleScreen`, () => LifecycleScreen);
@@ -15,3 +15,7 @@ export function registerContainers() {
   Navigation.registerContainer(`navigation.playground.PushedScreen`, () => PushedScreen);
   Navigation.registerContainer(`navigation.playground.OptionsScreen`, () => OptionsScreen);
 }
+
+module.exports = {
+  registerContainers
+};

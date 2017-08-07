@@ -1,6 +1,6 @@
-import React from 'react';
+const React = require('react');
 require('react-native');
-import renderer from 'react-test-renderer';
+const renderer = require('react-test-renderer');
 
 describe('remx support', () => {
   let MyConnectedContainer;
@@ -20,7 +20,6 @@ describe('remx support', () => {
   it('rerenders as a result of an underlying state change (by selector)', () => {
     const renderCountIncrement = jest.fn();
     const tree = renderer.create(<MyConnectedContainer renderCountIncrement={renderCountIncrement} />);
-    const instance = tree.getInstance();
 
     expect(tree.toJSON().children).toEqual(['no name']);
     expect(renderCountIncrement).toHaveBeenCalledTimes(1);
@@ -35,7 +34,6 @@ describe('remx support', () => {
   it('rerenders as a result of an underlying state change with a new key using merge', () => {
     const renderCountIncrement = jest.fn();
     const tree = renderer.create(<MyConnectedContainer printAge={true} renderCountIncrement={renderCountIncrement} />);
-    const instance = tree.getInstance();
 
     expect(tree.toJSON().children).toEqual(null);
     expect(renderCountIncrement).toHaveBeenCalledTimes(1);

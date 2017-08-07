@@ -1,12 +1,12 @@
-/*eslint-disable no-console*/
+/* eslint-disable no-console */
 const _ = require('lodash');
 const exec = require('shell-utils').exec;
 
-const avdName = 'pixel';
-const sdk = 'android-24';
-const apis = 'default';
-const abi = 'armeabi-v7a';
-const packageName = `system-images;${sdk};${apis};${abi}`;
+// const avdName = 'pixel';
+// const sdk = 'android-24';
+// const apis = 'default';
+// const abi = 'armeabi-v7a';
+// const packageName = `system-images;${sdk};${apis};${abi}`;
 
 const release = _.includes(process.argv, 'release');
 
@@ -30,19 +30,19 @@ function runTests() {
   exec.execSync(`cd AndroidE2E && ./gradlew ${filterParam} connectedDebugAndroidTest`);
 }
 
-function installEmulator() {
-  exec.execSync(`sdkmanager "emulator"`);
-  exec.execSync(`sdkmanager "${packageName}"`);
-  exec.execSync(`echo no | avdmanager create avd --force --name "${avdName}" --abi "${apis}/${abi}" --package "${packageName}" --device "pixel"`);
-  exec.execSync(`avdmanager list avd`);
-}
+// function installEmulator() {
+//   exec.execSync(`sdkmanager "emulator"`);
+//   exec.execSync(`sdkmanager "${packageName}"`);
+//   exec.execSync(`echo no | avdmanager create avd --force --name "${avdName}" --abi "${apis}/${abi}" --package "${packageName}" --device "pixel"`);
+//   exec.execSync(`avdmanager list avd`);
+// }
 
-function launchEmulator() {
-  console.log(`Launching Android Emulator`);
-  exec.execSync(`cd $ANDROID_HOME/tools && ./emulator -skin 1080x1920 -gpu host -no-audio @${avdName}`);
-  exec.execSync(`./scripts/waitForAndroidEmulator.sh`);
-}
+// function launchEmulator() {
+//   console.log(`Launching Android Emulator`);
+//   exec.execSync(`cd $ANDROID_HOME/tools && ./emulator -skin 1080x1920 -gpu host -no-audio @${avdName}`);
+//   exec.execSync(`./scripts/waitForAndroidEmulator.sh`);
+// }
 
-function killEmulators() {
-  exec.execSync(`adb devices | grep emulator | cut -f1 | while read line; do adb -s $line emu kill; done`);
-}
+// function killEmulators() {
+//   exec.execSync(`adb devices | grep emulator | cut -f1 | while read line; do adb -s $line emu kill; done`);
+// }

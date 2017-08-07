@@ -1,4 +1,5 @@
 const Utils = require('./Utils');
+
 const elementByLabel = Utils.elementByLabel;
 
 describe('modal', () => {

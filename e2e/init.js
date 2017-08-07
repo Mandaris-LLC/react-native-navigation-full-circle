@@ -1,4 +1,3 @@
-/*eslint-disable*/
 require('babel-polyfill');
 const detox = require('detox');
 
@@ -11,7 +10,7 @@ before(async () => {
         name: 'iPhone 7'
       }
     }
-  }
+  };
   await detox.init(detoxConfig);
 });
 

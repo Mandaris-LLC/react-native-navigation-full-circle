@@ -1,6 +1,5 @@
-/*eslint-disable no-console*/
+/* eslint-disable no-console */
 const exec = require('shell-utils').exec;
-const p = require('path');
 const semver = require('semver');
 const fs = require('fs');
 const _ = require('lodash');
@@ -70,19 +69,17 @@ function findCurrentPublishedVersion() {
 
 function tryPublishAndTag(version) {
   let theCandidate = version;
-  let retry = 0;
-  while (retry < 5) {
+  for (let retry = 0; retry < 5; retry++) {
     try {
       tagAndPublish(theCandidate);
       console.log(`Released ${theCandidate}`);
       return;
-    } catch (e) {
-      const alreadyPublished = _.includes(e.toString(), 'You cannot publish over the previously published version');
+    } catch (err) {
+      const alreadyPublished = _.includes(err.toString(), 'You cannot publish over the previously published version');
       if (!alreadyPublished) {
-        throw e;
+        throw err;
       }
       console.log(`previously published. retrying with increased ${VERSION_INC}...`);
-      retry++;
       theCandidate = semver.inc(theCandidate, VERSION_INC);
     }
   }

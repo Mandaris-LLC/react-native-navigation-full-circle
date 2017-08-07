@@ -2,7 +2,7 @@ import Navigation from 'react-native-navigation';
 
 import { registerContainers } from './containers';
 
-export function start() {
+function start() {
   registerContainers();
 
   Navigation.events().onAppLaunched(() => {
@@ -13,3 +13,7 @@ export function start() {
     });
   });
 }
+
+module.exports = {
+  start
+};

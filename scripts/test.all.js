@@ -1,4 +1,4 @@
-/* eslint no-console:0 */
+/* eslint-disable no-console */
 const exec = require('shell-utils').exec;
 
 async function run() {
