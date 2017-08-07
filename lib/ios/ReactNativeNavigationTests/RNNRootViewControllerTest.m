@@ -100,6 +100,47 @@
 	XCTAssertTrue([self.uut.view.backgroundColor isEqual:expectedColor]);
 }
 
+-(void)testTopBarTextFontFamily_validFont{
+	NSString* inputFont = @"HelveticaNeue";
+	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
+	self.options.topBarTextFontFamily = inputFont;
+	[self.uut viewWillAppear:false];
+	UIFont* expectedFont = [UIFont fontWithName:inputFont size:20];
+	XCTAssertTrue([self.uut.navigationController.navigationBar.titleTextAttributes[@"NSFont"] isEqual:expectedFont]);
+}
+
+-(void)testTopBarTextFontFamily_invalidFont{
+	NSString* inputFont = @"HelveticaNeueeeee";
+	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
+	self.options.topBarTextFontFamily = inputFont;
+	XCTAssertThrows([self.uut viewWillAppear:false]);
+}
+
+-(void)testTopBarHideOnScroll_true {
+	NSNumber* hideOnScrollInput = @(1);
+	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
+	self.options.topBarHideOnScroll = hideOnScrollInput;
+	[self.uut viewWillAppear:false];
+	XCTAssertTrue(self.uut.navigationController.hidesBarsOnSwipe);
+}
+
+-(void)testTopBarButtonColor {
+	NSNumber* inputColor = @(0xFFFF0000);
+	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
+	self.options.topBarButtonColor = inputColor;
+	[self.uut viewWillAppear:false];
+	UIColor* expectedColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
+	XCTAssertTrue([self.uut.navigationController.navigationBar.tintColor isEqual:expectedColor]);
+}
+
+-(void)testTopBarTranslucent {
+	NSNumber* topBarTranslucentInput = @(0);
+	self.options.topBarTranslucent = topBarTranslucentInput;
+	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
+	[self.uut viewWillAppear:false];
+	XCTAssertFalse(self.uut.navigationController.navigationBar.translucent);
+}
+
 
 
 @end
