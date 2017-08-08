@@ -1,6 +1,6 @@
 import {Navigation, ScreenVisibilityListener} from 'react-native-navigation';
 
-import Types from './Types';
+import Types from './NavigationTypes';
 import Actions from './Actions';
 import Transitions from './Transitions';
 

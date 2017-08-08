@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import Row from '../components/Row';
 
-class Types extends Component {
+class NavigationTypes extends Component {
 
   constructor(props) {
     super(props);
@@ -120,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Types;
+export default NavigationTypes;
