@@ -1,4 +1,4 @@
-require('babel-polyfill');
+require('babel-polyfill'); // eslint-disable-line import/no-extraneous-dependencies
 const detox = require('detox');
 
 before(async () => {

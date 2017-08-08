@@ -37,7 +37,7 @@
     "test-e2e-android": "node ./scripts/test.e2e.android.js",
     "test-e2e-ios": "node ./scripts/test.e2e.ios.js",
     "test-all": "node ./scripts/test.all.js",
-    "test-watch": "BABEL_ENV=test jest --coverage --watch",
+    "test-watch": "jest --coverage --watch",
     "release": "node ./scripts/release.js"
   },
   "peerDependencies": {
@@ -52,15 +52,8 @@
     "eslint-config-xo": "0.18.x",
     "eslint-config-xo-react": "0.13.x",
     "eslint-plugin-react": "7.x.x",
-    "babel-cli": "6.x.x",
-    "babel-core": "6.x.x",
-    "babel-jest": "20.x.x",
-    "babel-polyfill": "6.x.x",
-    "babel-preset-react-native": "2.x.x",
-    "babel-register": "6.x.x",
     "detox": "5.x.x",
     "jest": "20.x.x",
-    "jest-cli": "20.x.x",
     "mocha": "3.x.x",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
@@ -74,8 +67,7 @@
       "test": {
         "presets": [
           "react-native"
-        ],
-        "retainLines": true
+        ]
       }
     }
   },

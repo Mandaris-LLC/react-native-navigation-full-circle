@@ -22,7 +22,6 @@ function runDetoxUsingMocha() {
   const detoxAppBuildPath = `playground/ios/DerivedData/playground/Build/Products/${release ? 'Release' : 'Debug'}-iphonesimulator/playground.app`;
 
   exec.execSync(`detoxAppBuildPath="${detoxAppBuildPath}"
-                              BABEL_ENV=test
                               ./node_modules/mocha/bin/mocha e2e
                                 --timeout ${5 * 60 * 1000}
                                 --recursive
