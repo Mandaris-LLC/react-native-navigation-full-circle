@@ -54,11 +54,11 @@ public class ReactContainerView extends ReactRootView implements ContainerViewCo
 
 	@Override
 	public void sendContainerStart() {
-		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStart(containerId);
+		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerDidAppear(containerId);
 	}
 
 	@Override
 	public void sendContainerStop() {
-		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerStop(containerId);
+		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).containerDidDisappear(containerId);
 	}
 }
