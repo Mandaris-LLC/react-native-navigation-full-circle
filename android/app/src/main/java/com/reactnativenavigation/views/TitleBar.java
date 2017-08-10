@@ -324,4 +324,16 @@ public class TitleBar extends Toolbar {
             leftButton.updateNavigatorEventId(screenParams.getNavigatorEventId());
         }
     }
+
+    public void destroy() {
+        unmountCustomButtons();
+    }
+
+    private void unmountCustomButtons() {
+        for (int i = 0; i < actionMenuView.getChildCount(); i++) {
+            if (actionMenuView.getChildAt(i) instanceof TitleBarButtonComponent) {
+                ((ContentView) actionMenuView.getChildAt(i)).unmountReactView();
+            }
+        }
+    }
 }
