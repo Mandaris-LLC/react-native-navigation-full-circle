@@ -1,5 +1,3 @@
-const _ = require('lodash/math');
-
 const React = require('react');
 const { Component } = require('react');
 
