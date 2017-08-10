@@ -27,6 +27,10 @@ public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutL
 	@NonNull
 	protected abstract View createView();
 
+	public void ensureViewIsCreated() {
+		getView();
+	}
+
 	public boolean handleBack() {
 		return false;
 	}
