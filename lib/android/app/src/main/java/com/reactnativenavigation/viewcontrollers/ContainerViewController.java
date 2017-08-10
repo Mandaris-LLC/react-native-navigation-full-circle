@@ -9,10 +9,12 @@ import com.reactnativenavigation.parse.NavigationOptions;
 public class ContainerViewController extends ViewController {
 
 	public interface ContainerViewCreator {
+
 		ContainerView create(Activity activity, String containerId, String containerName);
 	}
 
 	public interface ContainerView {
+
 		boolean isReady();
 
 		View asView();
@@ -22,12 +24,13 @@ public class ContainerViewController extends ViewController {
 		void sendContainerStart();
 
 		void sendContainerStop();
+
 	}
 
 	private final String containerName;
-	private final ContainerViewCreator viewCreator;
-	private final NavigationOptions initialNavigationOptions;
 
+	private final ContainerViewCreator viewCreator;
+	private final NavigationOptions navigationOptions;
 	private ContainerView containerView;
 
 	public ContainerViewController(final Activity activity,
@@ -38,7 +41,7 @@ public class ContainerViewController extends ViewController {
 		super(activity, id);
 		this.containerName = containerName;
 		this.viewCreator = viewCreator;
-		this.initialNavigationOptions = initialNavigationOptions;
+		this.navigationOptions = initialNavigationOptions;
 	}
 
 	@Override
@@ -70,5 +73,13 @@ public class ContainerViewController extends ViewController {
 	protected View createView() {
 		containerView = viewCreator.create(getActivity(), getId(), containerName);
 		return containerView.asView();
+	}
+
+	public void applyNavigationOptions(final NavigationOptions options) {
+		navigationOptions.mergeWith(options);
+	}
+
+	public NavigationOptions getNavigationOptions() {
+		return navigationOptions;
 	}
 }

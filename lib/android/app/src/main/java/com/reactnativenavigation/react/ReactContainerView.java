@@ -13,7 +13,7 @@ public class ReactContainerView extends ReactRootView implements ContainerViewCo
 	private final ReactInstanceManager reactInstanceManager;
 	private final String containerId;
 	private final String containerName;
-	private boolean attachedToReactInstance = false;
+	private boolean isAttachedToReactInstance = false;
 
 	public ReactContainerView(final Context context, ReactInstanceManager reactInstanceManager, String containerId, String containerName) {
 		super(context);
@@ -29,7 +29,7 @@ public class ReactContainerView extends ReactRootView implements ContainerViewCo
 			@Override
 			public void onAttachedToReactInstance(final ReactRootView reactRootView) {
 				reactRootView.setEventListener(null);
-				attachedToReactInstance = true;
+				isAttachedToReactInstance = true;
 			}
 		});
 		final Bundle opts = new Bundle();
@@ -39,7 +39,7 @@ public class ReactContainerView extends ReactRootView implements ContainerViewCo
 
 	@Override
 	public boolean isReady() {
-		return attachedToReactInstance;
+		return isAttachedToReactInstance;
 	}
 
 	@Override

@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.BaseTest;
-import com.reactnativenavigation.parse.NavigationOptions;
 import com.reactnativenavigation.mocks.SimpleViewController;
+import com.reactnativenavigation.mocks.TestContainerViewCreator;
 import com.reactnativenavigation.mocks.TestStackAnimator;
+import com.reactnativenavigation.parse.NavigationOptions;
 import com.reactnativenavigation.utils.CompatUtils;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -190,12 +190,22 @@ public class NavigatorTest extends BaseTest {
 	}
 
 	@Test
-	@Ignore
 	public void setOptions_CallsApplyNavigationOptions() {
-		uut.setRoot(child1);
+		ContainerViewController containerVc = new ContainerViewController(activity, "theId", "theName", new TestContainerViewCreator(), new NavigationOptions());
+		uut.setRoot(containerVc);
+		assertThat(containerVc.getNavigationOptions().title).isEmpty();
+
 		NavigationOptions options = new NavigationOptions();
-		uut.setOptions(child1.getId(), options);
-//		assertThat(child1.getNavigationOptions()).isEqualTo(options);
+		options.title = "new title";
+
+		uut.setOptions("theId", options);
+		assertThat(containerVc.getNavigationOptions().title).isEqualTo("new title");
+	}
+
+	@Test
+	public void setOptions_AffectsOnlyContainerViewControllers() {
+		uut.setRoot(child1);
+		uut.setOptions(child1.getId(), new NavigationOptions());
 	}
 
 	@NonNull

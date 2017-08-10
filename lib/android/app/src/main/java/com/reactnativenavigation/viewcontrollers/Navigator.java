@@ -57,10 +57,10 @@ public class Navigator extends ParentController {
 	}
 
 	public void setOptions(final String containerId, NavigationOptions options) {
-//		ViewController target = findControllerById(containerId);
-//		if (target != null) {
-//			target.applyNavigationOptions(options);
-//		}
+		ViewController target = findControllerById(containerId);
+		if (target instanceof ContainerViewController) {
+			((ContainerViewController) target).applyNavigationOptions(options);
+		}
 	}
 
 	public void push(final String fromId, final ViewController viewController) {

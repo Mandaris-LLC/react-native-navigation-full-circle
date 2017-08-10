@@ -19,4 +19,8 @@ public class NavigationOptions {
 
 	public String title = "";
 	public int topBarBackgroundColor = 0;
+
+	public void mergeWith(final NavigationOptions other) {
+		title = other.title;
+	}
 }
