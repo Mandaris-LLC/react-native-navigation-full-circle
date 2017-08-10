@@ -132,10 +132,6 @@ public class StackController extends ParentController {
 		return stack.values();
 	}
 
-	public void setTitle(final String title) {
-		topBar.setTitle(title);
-	}
-
 	public TopBar getTopBar() {
 		ensureViewIsCreated();
 		return topBar;

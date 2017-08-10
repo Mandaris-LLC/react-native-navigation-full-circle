@@ -22,5 +22,6 @@ public class NavigationOptions {
 
 	public void mergeWith(final NavigationOptions other) {
 		title = other.title;
+		topBarBackgroundColor = other.topBarBackgroundColor;
 	}
 }

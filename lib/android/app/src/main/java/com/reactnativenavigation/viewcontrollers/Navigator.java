@@ -59,7 +59,7 @@ public class Navigator extends ParentController {
 	public void setOptions(final String containerId, NavigationOptions options) {
 		ViewController target = findControllerById(containerId);
 		if (target instanceof ContainerViewController) {
-			((ContainerViewController) target).applyNavigationOptions(options);
+			((ContainerViewController) target).mergeNavigationOptions(options);
 		}
 	}
 

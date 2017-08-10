@@ -54,6 +54,8 @@ public class ContainerViewController extends ViewController {
 	@Override
 	public void onViewAppeared() {
 		super.onViewAppeared();
+		ensureViewIsCreated();
+		applyNavigationOptions();
 		containerView.sendContainerStart();
 	}
 
@@ -75,14 +77,15 @@ public class ContainerViewController extends ViewController {
 		return containerView.asView();
 	}
 
-	public void applyNavigationOptions(final NavigationOptions options) {
+	public void mergeNavigationOptions(final NavigationOptions options) {
 		navigationOptions.mergeWith(options);
 		applyNavigationOptions();
 	}
 
 	private void applyNavigationOptions() {
 		if (getParentStackController() != null) {
-			getParentStackController().setTitle(navigationOptions.title);
+			getParentStackController().getTopBar().setTitle(navigationOptions.title);
+			getParentStackController().getTopBar().setBackgroundColor(navigationOptions.topBarBackgroundColor);
 		}
 	}
 

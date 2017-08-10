@@ -22,16 +22,13 @@ public class TestContainerView extends View implements ContainerViewController.C
 
 	@Override
 	public void destroy() {
-
 	}
 
 	@Override
 	public void sendContainerStart() {
-
 	}
 
 	@Override
 	public void sendContainerStop() {
-
 	}
 }
