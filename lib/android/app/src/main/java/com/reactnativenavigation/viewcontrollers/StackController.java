@@ -135,4 +135,8 @@ public class StackController extends ParentController {
 	public void setTitle(final String title) {
 		topBar.setTitle(title);
 	}
+
+	public TopBar getTopBar() {
+		return topBar;
+	}
 }

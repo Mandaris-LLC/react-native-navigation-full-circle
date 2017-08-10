@@ -14,6 +14,7 @@ public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutL
 
 	private final Activity activity;
 	private final String id;
+
 	private View view;
 	private StackController parentStackController;
 	private boolean isShown = false;
