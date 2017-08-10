@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import com.reactnativenavigation.parse.NavigationOptions;
+
 public class ContainerViewController extends ViewController {
 
 	public interface ContainerViewCreator {
-		ContainerView create(Activity activity, String containerName, String containerId);
+		ContainerView create(Activity activity, String containerId, String containerName);
 	}
 
 	public interface ContainerView {
@@ -24,15 +26,19 @@ public class ContainerViewController extends ViewController {
 
 	private final String containerName;
 	private final ContainerViewCreator viewCreator;
+	private final NavigationOptions initialNavigationOptions;
+
 	private ContainerView containerView;
 
 	public ContainerViewController(final Activity activity,
 	                               final String id,
 	                               final String containerName,
-	                               final ContainerViewCreator viewCreator) {
+	                               final ContainerViewCreator viewCreator,
+	                               final NavigationOptions initialNavigationOptions) {
 		super(activity, id);
 		this.containerName = containerName;
 		this.viewCreator = viewCreator;
+		this.initialNavigationOptions = initialNavigationOptions;
 	}
 
 	@Override
@@ -62,7 +68,7 @@ public class ContainerViewController extends ViewController {
 	@NonNull
 	@Override
 	protected View createView() {
-		containerView = viewCreator.create(getActivity(), containerName, getId());
+		containerView = viewCreator.create(getActivity(), getId(), containerName);
 		return containerView.asView();
 	}
 }

@@ -83,11 +83,11 @@ public class LayoutFactory {
 		NavigationOptions navigationOptions = NavigationOptions.parse(node.data.optJSONObject("navigationOptions"));
 		ContainerViewController.ContainerViewCreator viewCreator = new ContainerViewController.ContainerViewCreator() {
 			@Override
-			public ContainerViewController.ContainerView create(final Activity activity, final String containerName, final String containerId) {
-				return new ReactContainerView(activity, reactInstanceManager, containerName, containerId);
+			public ContainerViewController.ContainerView create(final Activity activity, final String containerId, final String containerName) {
+				return new ReactContainerView(activity, reactInstanceManager, containerId, containerName);
 			}
 		};
-		return new ContainerViewController(activity, id, name, viewCreator);
+		return new ContainerViewController(activity, id, name, viewCreator, navigationOptions);
 	}
 
 	private ViewController createContainerStack(LayoutNode node) {

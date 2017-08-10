@@ -15,11 +15,11 @@ public class ReactContainerView extends ReactRootView implements ContainerViewCo
 	private final String containerName;
 	private boolean attachedToReactInstance = false;
 
-	public ReactContainerView(final Context context, ReactInstanceManager reactInstanceManager, String containerName, String containerId) {
+	public ReactContainerView(final Context context, ReactInstanceManager reactInstanceManager, String containerId, String containerName) {
 		super(context);
 		this.reactInstanceManager = reactInstanceManager;
-		this.containerName = containerName;
 		this.containerId = containerId;
+		this.containerName = containerName;
 		start();
 	}
 
