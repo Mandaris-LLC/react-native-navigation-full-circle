@@ -137,6 +137,11 @@ public class StackController extends ParentController {
 	}
 
 	public TopBar getTopBar() {
+		ensureViewIsCreated();
 		return topBar;
+	}
+
+	private void ensureViewIsCreated() {
+		getView();
 	}
 }

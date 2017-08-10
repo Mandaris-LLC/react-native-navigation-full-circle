@@ -77,6 +77,9 @@ public class ContainerViewController extends ViewController {
 
 	public void applyNavigationOptions(final NavigationOptions options) {
 		navigationOptions.mergeWith(options);
+		if (getParentStackController() != null) {
+			getParentStackController().setTitle(navigationOptions.title);
+		}
 	}
 
 	public NavigationOptions getNavigationOptions() {

@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.mocks.SimpleContainerViewController;
 import com.reactnativenavigation.mocks.SimpleViewController;
-import com.reactnativenavigation.mocks.TestContainerViewCreator;
 import com.reactnativenavigation.mocks.TestStackAnimator;
 import com.reactnativenavigation.parse.NavigationOptions;
 import com.reactnativenavigation.utils.CompatUtils;
@@ -191,7 +191,7 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void setOptions_CallsApplyNavigationOptions() {
-		ContainerViewController containerVc = new ContainerViewController(activity, "theId", "theName", new TestContainerViewCreator(), new NavigationOptions());
+		ContainerViewController containerVc = new SimpleContainerViewController(activity, "theId");
 		uut.setRoot(containerVc);
 		assertThat(containerVc.getNavigationOptions().title).isEmpty();
 
@@ -204,8 +204,22 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void setOptions_AffectsOnlyContainerViewControllers() {
-		uut.setRoot(child1);
-		uut.setOptions(child1.getId(), new NavigationOptions());
+		uut.setOptions("some unknown child id", new NavigationOptions());
+	}
+
+	@Test
+	public void setOptions_ActuallyAffectsTheTitleView() throws Exception {
+		ContainerViewController containerVc = new SimpleContainerViewController(activity, "theId");
+		StackController stackController = new StackController(activity, "stackId", new TestStackAnimator());
+		stackController.push(containerVc);
+		uut.setRoot(stackController);
+		assertThat(stackController.getTopBar().getTitle()).isEmpty();
+
+		NavigationOptions opts = new NavigationOptions();
+		opts.title = "the new title";
+		uut.setOptions("theId", opts);
+
+		assertThat(stackController.getTopBar().getTitle()).isEqualTo("the new title");
 	}
 
 	@NonNull

@@ -18,6 +18,6 @@ public class TopBar extends AppBarLayout {
 	}
 
 	public String getTitle() {
-		return titleBar.getTitle().toString();
+		return titleBar.getTitle() != null ? titleBar.getTitle().toString() : "";
 	}
 }
