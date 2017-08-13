@@ -81,8 +81,8 @@ Note:  v1 properties with names beginning with 'navBar' are replaced in v2 with 
 | topBarTranslucent     |  ✅     |   ✅     |     [Contribute](CONTRIBUTING.md)        |
 | topBarTransparent     | ✅      |   WIP @bogobogo     |     [Contribute](CONTRIBUTING.md)        |
 | topBarNoBorder        |  ✅     |    [Contribute](CONTRIBUTING.md)     |     [Contribute](CONTRIBUTING.md)        |
-| drawUnderTabBar       |  ✅     |    [Contribute](CONTRIBUTING.md)     |      [Contribute](CONTRIBUTING.md)       |
-| drawUnderTopBar       |  ✅     |    [Contribute](CONTRIBUTING.md)     |      [Contribute](CONTRIBUTING.md)       |
+| drawUnderTabBar       |  ✅     |    WIP @gran33     |      [Contribute](CONTRIBUTING.md)       |
+| drawUnderTopBar       |  ✅     |    WIP @gran33     |      [Contribute](CONTRIBUTING.md)       |
 | statusBarBlur         |  ✅     |    [Contribute](CONTRIBUTING.md)     |      [Contribute](CONTRIBUTING.md)       |
 | topBarBlur            | ✅      |    [Contribute](CONTRIBUTING.md)     |      [Contribute](CONTRIBUTING.md)       |
 | tabBarHidden  |   ✅  |   [Contribute](CONTRIBUTING.md)     |    [Contribute](CONTRIBUTING.md)        |
@@ -94,7 +94,7 @@ Note:  v1 properties with names beginning with 'navBar' are replaced in v2 with 
 | orientation     |  ✅   |  WIP @yogevbd      |   [Contribute](CONTRIBUTING.md)          |
 | statusBarHideWithTopBar        |  ✅   |    [Contribute](CONTRIBUTING.md)     |     [Contribute](CONTRIBUTING.md)       |
 | statusBarHidden       |  ✅   |    ✅       |     [Contribute](CONTRIBUTING.md)      |
-| disabledBackGesture       |   ✅  |   [Contribute](CONTRIBUTING.md)       |    / iOS specific     |
+| disabledBackGesture       |   ✅  |  WIP @gran33     |    / iOS specific     |
 | screenBackgroundImageName         |   ✅  |   [Contribute](CONTRIBUTING.md)      |    [Contribute](CONTRIBUTING.md)        |
 | rootBackgroundImageName            |  ✅   |    [Contribute](CONTRIBUTING.md)     |    [Contribute](CONTRIBUTING.md)       |
 | setButtons          |   ✅     |         [Contribute](CONTRIBUTING.md)     | [Contribute](CONTRIBUTING.md) |
@@ -104,7 +104,7 @@ Note:  v1 properties with names beginning with 'navBar' are replaced in v2 with 
 | setTabBadge         |    ✅    |       ✅    | [Contribute](CONTRIBUTING.md)|
 | switchToTab         |    ✅    |      in development    |[Contribute](CONTRIBUTING.md) |
 | toggleNavBar        |   ✅     |      WIP @gran33     | [Contribute](CONTRIBUTING.md)|
-| navBarCustomView        |   ✅     |      [Contribute](CONTRIBUTING.md)      | [Contribute](CONTRIBUTING.md)|
+| navBarCustomView        |   ✅     |     WIP @gran33     | [Contribute](CONTRIBUTING.md)|
 
 
 Element tranisitions, adding buttons and styles are not yet implemented. [Contribute](CONTRIBUTING.md)
