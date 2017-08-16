@@ -116,6 +116,7 @@ public class StyleParams {
 
     public Color snackbarButtonColor;
 
+    public int bottomTabsInitialIndex;
     public boolean bottomTabsHidden;
     public boolean bottomTabsHiddenOnScroll;
     public Color bottomTabsColor;
