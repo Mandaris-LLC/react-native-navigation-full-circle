@@ -7,6 +7,7 @@ import com.reactnativenavigation.params.AppStyle;
 import com.reactnativenavigation.params.Orientation;
 import com.reactnativenavigation.params.StatusBarTextColorScheme;
 import com.reactnativenavigation.params.StyleParams;
+import com.reactnativenavigation.utils.ViewUtils;
 
 public class StyleParamsParser {
     private Bundle params;
@@ -49,6 +50,8 @@ public class StyleParamsParser {
         result.topBarElevationShadowEnabled = getBoolean("topBarElevationShadowEnabled", getDefaultTopBarElevationShadowEnabled());
         result.titleBarTitleColor = getColor("titleBarTitleColor", getDefaultTitleBarColor());
         result.topBarTranslucent = getBoolean("topBarTranslucent", getDefaultTopBarTranslucent());
+        result.topBarBorderColor = getColor("topBarBorderColor", getDefaultTopBarBorderColor());
+        result.topBarBorderWidth = Float.parseFloat(params.getString("topBarBorderWidth", getDefaultTopBarBorderWidth()));
 
         result.titleBarSubtitleColor = getColor("titleBarSubtitleColor", getDefaultSubtitleBarColor());
         result.titleBarButtonColor = getColor("titleBarButtonColor", getTitleBarButtonColor());
@@ -235,6 +238,14 @@ public class StyleParamsParser {
 
     private boolean getDefaultTopBarTranslucent() {
         return AppStyle.appStyle != null && AppStyle.appStyle.topBarTranslucent;
+    }
+
+    private StyleParams.Color getDefaultTopBarBorderColor() {
+        return AppStyle.appStyle == null ? new StyleParams.Color() : AppStyle.appStyle.topBarBorderColor;
+    }
+
+    private String getDefaultTopBarBorderWidth() {
+        return String.valueOf(AppStyle.appStyle == null ? ViewUtils.convertDpToPixel(1) : AppStyle.appStyle.topBarBorderWidth);
     }
 
     private boolean getDefaultTitleBarHideOnScroll() {

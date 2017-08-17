@@ -155,7 +155,9 @@ public class TopBar extends AppBarLayout {
     }
 
     public void setStyle(StyleParams styleParams) {
-        if (styleParams.topBarColor.hasColor()) {
+        if (styleParams.topBarBorderColor.hasColor()) {
+            setBackground(new TopBarBorder(styleParams));
+        } else if (styleParams.topBarColor.hasColor()) {
             setBackgroundColor(styleParams.topBarColor.getColor());
         }
         if (styleParams.topBarTransparent) {

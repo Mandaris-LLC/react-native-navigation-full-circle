@@ -80,6 +80,8 @@ public class StyleParams {
     public Color contextualMenuBackgroundColor;
 
     public Color topBarColor;
+    public Color topBarBorderColor;
+    public float topBarBorderWidth;
     public String topBarReactView;
     public String topBarReactViewAlignment;
     public Bundle topBarReactViewInitialProps;
