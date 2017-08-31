@@ -1,5 +1,7 @@
 #import "RNNNavigationOptions.h"
 #import <React/RCTConvert.h>
+#import "RNNNavigationController.h"
+#import "RNNTabBarController.h"
 
 const NSInteger BLUR_STATUS_TAG = 78264801;
 const NSInteger BLUR_TOPBAR_TAG = 78264802;
@@ -9,7 +11,7 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 -(instancetype)init {
 	return [self initWithDict:@{}];
 }
-	
+
 -(instancetype)initWithDict:(NSDictionary *)navigationOptions {
 	self = [super init];
 	self.topBarBackgroundColor = [navigationOptions objectForKey:@"topBarBackgroundColor"];
@@ -24,6 +26,7 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 	self.topBarTranslucent = [navigationOptions objectForKey:@"topBarTranslucent"];
 	self.tabBadge = [navigationOptions objectForKey:@"tabBadge"];
 	self.topBarTextFontSize = [navigationOptions objectForKey:@"topBarTextFontSize"];
+	self.orientation = [navigationOptions objectForKey:@"orientation"];
 	self.leftButtons = [navigationOptions objectForKey:@"leftButtons"];
 	self.rightButtons = [navigationOptions objectForKey:@"rightButtons"];
 	self.topBarNoBorder = [navigationOptions objectForKey:@"topBarNoBorder"];
@@ -96,14 +99,14 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 	} else {
 		viewController.navigationController.navigationBar.tintColor = nil;
 	}
-      
+	
 	if (self.tabBadge) {
 		NSString *badge = [RCTConvert NSString:self.tabBadge];
 		if (viewController.navigationController) {
 			viewController.navigationController.tabBarItem.badgeValue = badge;
 		} else {
 			viewController.tabBarItem.badgeValue = badge;
-	  }
+		}
 	}
 	
 	if (self.topBarTranslucent) {
@@ -111,9 +114,9 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 			viewController.navigationController.navigationBar.translucent = YES;
 		} else {
 			viewController.navigationController.navigationBar.translucent = NO;
-		}		
+		}
 	}
-
+	
 	if (self.topBarNoBorder) {
 		if ([self.topBarNoBorder boolValue]) {
 			viewController.navigationController.navigationBar
@@ -139,11 +142,11 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 			}
 		}
 	}
-
+	
 	if (self.topBarBlur && [self.topBarBlur boolValue]) {
-
+		
 		if (![viewController.navigationController.navigationBar viewWithTag:BLUR_TOPBAR_TAG]) {
-
+			
 			[viewController.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 			viewController.navigationController.navigationBar.shadowImage = [UIImage new];
 			UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
@@ -154,7 +157,7 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 			[viewController.navigationController.navigationBar insertSubview:blur atIndex:0];
 			[viewController.navigationController.navigationBar sendSubviewToBack:blur];
 		}
-
+		
 	} else {
 		UIView *blur = [viewController.navigationController.navigationBar viewWithTag:BLUR_TOPBAR_TAG];
 		if (blur) {
@@ -163,7 +166,33 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 			[blur removeFromSuperview];
 		}
 	}
-
 }
+
+- (UIInterfaceOrientationMask)supportedOrientations {
+	NSArray* orientationsArray = [self.orientation isKindOfClass:[NSString class]] ? @[self.orientation] : self.orientation;
+	NSUInteger supportedOrientationsMask = 0;
+	if (!orientationsArray || [self.orientation isEqual:@"default"]) {
+		return [[UIApplication sharedApplication] supportedInterfaceOrientationsForWindow:[[UIApplication sharedApplication] keyWindow]];
+	} else {
+		for (NSString* orientation in orientationsArray) {
+			if ([orientation isEqualToString:@"all"]) {
+				supportedOrientationsMask = UIInterfaceOrientationMaskAll;
+				break;
+			}
+			if ([orientation isEqualToString:@"landscape"]) {
+				supportedOrientationsMask = (supportedOrientationsMask | UIInterfaceOrientationMaskLandscape);
+			}
+			if ([orientation isEqualToString:@"portrait"]) {
+				supportedOrientationsMask = (supportedOrientationsMask | UIInterfaceOrientationMaskPortrait);
+			}
+			if ([orientation isEqualToString:@"upsideDown"]) {
+				supportedOrientationsMask = (supportedOrientationsMask | UIInterfaceOrientationMaskPortraitUpsideDown);
+			}
+		}
+	}
+	
+	return supportedOrientationsMask;
+}
+
 
 @end

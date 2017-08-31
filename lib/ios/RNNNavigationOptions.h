@@ -18,6 +18,7 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 @property (nonatomic, strong) NSNumber* topBarTranslucent;
 @property (nonatomic, strong) NSString* tabBadge;
 @property (nonatomic, strong) NSNumber* topBarTextFontSize;
+@property (nonatomic, strong) id orientation;
 @property (nonatomic, strong) NSArray* leftButtons;
 @property (nonatomic, strong) NSArray* rightButtons;
 @property (nonatomic, strong) NSNumber* topBarNoBorder;
@@ -25,6 +26,9 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 @property (nonatomic, strong) NSNumber* statusBarHideWithTopBar;
 @property (nonatomic, strong) NSNumber* tabBarHidden;
 @property (nonatomic, strong) NSNumber* topBarBlur;
+
+
+- (UIInterfaceOrientationMask)supportedOrientations;
 
 -(instancetype)init;
 -(instancetype)initWithDict:(NSDictionary *)navigationOptions;

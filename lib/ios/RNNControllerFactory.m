@@ -5,7 +5,8 @@
 #import "RNNSideMenuController.h"
 #import "RNNSideMenuChildVC.h"
 #import "RNNNavigationOptions.h"
-
+#import "RNNNavigationController.h"
+#import "RNNTabBarController.h"
 
 @implementation RNNControllerFactory {
 	id<RNNRootViewCreator> _creator;
@@ -82,8 +83,8 @@
 	return [[RNNRootViewController alloc] initWithName:name withOptions:options withContainerId:containerId rootViewCreator:_creator eventEmitter:_eventEmitter];
 }
 
-- (UINavigationController*)createContainerStack:(RNNLayoutNode*)node {
-	UINavigationController* vc = [[UINavigationController alloc] init];
+- (RNNNavigationController*)createContainerStack:(RNNLayoutNode*)node {
+	RNNNavigationController* vc = [[RNNNavigationController alloc] init];
 	
 	NSMutableArray* controllers = [NSMutableArray new];
 	for (NSDictionary* child in node.children) {
@@ -94,8 +95,8 @@
 	return vc;
 }
 
--(UITabBarController*)createTabs:(RNNLayoutNode*)node {
-	UITabBarController* vc = [[UITabBarController alloc] init];
+-(RNNTabBarController*)createTabs:(RNNLayoutNode*)node {
+	RNNTabBarController* vc = [[RNNTabBarController alloc] init];
 	
 	NSMutableArray* controllers = [NSMutableArray new];
 	for (NSDictionary *child in node.children) {

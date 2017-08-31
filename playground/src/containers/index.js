@@ -5,6 +5,8 @@ const PushedScreen = require('./PushedScreen');
 const LifecycleScreen = require('./LifecycleScreen');
 const ModalScreen = require('./ModalScreen');
 const OptionsScreen = require('./OptionsScreen');
+const OrientationScreen = require('./OrientationScreen');
+const OrientationMenuScreen = require('./OrientationMenuScreen');
 const ScrollViewScreen = require('./ScrollViewScreen');
 
 function registerContainers() {
@@ -15,6 +17,8 @@ function registerContainers() {
   Navigation.registerContainer(`navigation.playground.TextScreen`, () => TextScreen);
   Navigation.registerContainer(`navigation.playground.PushedScreen`, () => PushedScreen);
   Navigation.registerContainer(`navigation.playground.OptionsScreen`, () => OptionsScreen);
+  Navigation.registerContainer(`navigation.playground.OrientationScreen`, () => OrientationScreen);
+  Navigation.registerContainer(`navigation.playground.OrientationMenuScreen`, () => OrientationMenuScreen);
 }
 
 module.exports = {

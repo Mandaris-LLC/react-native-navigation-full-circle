@@ -49,6 +49,10 @@
 	return NO;
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+	return self.navigationOptions.supportedOrientations;
+}
+
 - (BOOL)hidesBottomBarWhenPushed
 {
 	if (self.navigationOptions.tabBarHidden) {
