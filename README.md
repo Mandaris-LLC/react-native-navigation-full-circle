@@ -91,7 +91,7 @@ Note:  v1 properties with names beginning with 'navBar' are replaced in v2 with 
 | navBarSubtitleColor          |  ✅   |   [Contribute](CONTRIBUTING.md)     |      [Contribute](CONTRIBUTING.md)      |
 | navBarSubtitleFontFamily    |   ✅  |    [Contribute](CONTRIBUTING.md)    |     [Contribute](CONTRIBUTING.md)       |
 | screenBackgroundColor     | ✅    |   ✅     |     [Contribute](CONTRIBUTING.md)       |  Wix|
-| orientation     |  ✅   |  WIP @yogevbd      |   [Contribute](CONTRIBUTING.md)          |
+| orientation     |  ✅   |    ✅     |   [Contribute](CONTRIBUTING.md)          | Wix|
 | statusBarHideWithTopBar        |  ✅   |   ✅     |     [Contribute](CONTRIBUTING.md)       | @gtchance|
 | statusBarHidden       |  ✅   |    ✅       |     [Contribute](CONTRIBUTING.md)      | WIX |
 | disabledBackGesture       |   ✅  |  WIP @gran33     |    / iOS specific     |
