@@ -137,4 +137,8 @@ public class StyleParams {
     public boolean hasTopBarCustomComponent() {
         return !TextUtils.isEmpty(topBarReactView);
     }
+
+    public boolean hasCustomTitleBarHeight() {
+        return titleBarHeight != -1;
+    }
 }
