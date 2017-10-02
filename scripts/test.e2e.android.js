@@ -53,5 +53,4 @@ function runTests() {
   exec.execSync(`npm run install-android ${release ? '-- --release' : ''}`);
   const filterParam = filter ? '-Pandroid.testInstrumentationRunnerArguments.class=' + filter : '';
   exec.execSync(`cd AndroidE2E && ./gradlew ${filterParam} connectedDebugAndroidTest`);
-  process.exit(0); // eslint-disable-line
 }
