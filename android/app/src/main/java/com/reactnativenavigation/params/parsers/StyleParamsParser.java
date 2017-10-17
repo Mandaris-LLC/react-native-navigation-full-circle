@@ -114,6 +114,7 @@ public class StyleParamsParser {
         result.titleBarHideOnScroll = false;
         result.orientation = Orientation.auto;
         result.bottomTabFontFamily = new StyleParams.Font();
+        result.titleBarHeight = -1;
         return result;
     }
 
