@@ -58,6 +58,7 @@ public class StyleParamsParser {
         result.titleBarSubtitleFontSize = getInt("titleBarSubtitleFontSize", getDefaultSubtitleTextFontSize());
         result.titleBarSubtitleFontFamily = getFont("titleBarSubtitleFontFamily", getDefaultSubtitleFontFamily());
         result.titleBarButtonColor = getColor("titleBarButtonColor", getTitleBarButtonColor());
+        result.titleBarButtonFontFamily = getFont("titleBarButtonFontFamily", getDefaultTitleBarButtonFont());
         result.titleBarDisabledButtonColor = getColor("titleBarDisabledButtonColor", getTitleBarDisabledButtonColor());
         result.titleBarTitleFont = getFont("titleBarTitleFontFamily", getDefaultTitleTextFontFamily());
         result.titleBarTitleFontSize = getInt("titleBarTitleFontSize", getDefaultTitleTextFontSize());
@@ -118,6 +119,7 @@ public class StyleParamsParser {
         result.bottomTabFontFamily = new StyleParams.Font();
         result.titleBarTitleFont = new StyleParams.Font();
         result.titleBarSubtitleFontFamily = new StyleParams.Font();
+        result.titleBarButtonFontFamily = new StyleParams.Font();
         result.titleBarHeight = -1;
         return result;
     }
@@ -292,6 +294,10 @@ public class StyleParamsParser {
 
     private StyleParams.Font getDefaultSubtitleFontFamily() {
         return AppStyle.appStyle == null ? new StyleParams.Font() : AppStyle.appStyle.titleBarSubtitleFontFamily;
+    }
+
+    private StyleParams.Font getDefaultTitleBarButtonFont() {
+        return AppStyle.appStyle == null ? new StyleParams.Font() : AppStyle.appStyle.titleBarButtonFontFamily;
     }
 
     private boolean getDefaultTitleTextFontBold() {

@@ -165,6 +165,7 @@ function convertStyleParams(originalStyleObject) {
     titleBarSubtitleFontSize: originalStyleObject.navBarSubtitleFontSize,
     titleBarSubtitleFontFamily: originalStyleObject.navBarSubtitleFontFamily,
     titleBarButtonColor: processColor(originalStyleObject.navBarButtonColor),
+    titleBarButtonFontFamily: originalStyleObject.navBarButtonFontFamily,
     titleBarDisabledButtonColor: processColor(originalStyleObject.titleBarDisabledButtonColor),
     titleBarTitleFontFamily: originalStyleObject.navBarTextFontFamily,
     titleBarTitleFontSize: originalStyleObject.navBarTextFontSize,

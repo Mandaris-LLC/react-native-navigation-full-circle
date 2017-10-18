@@ -98,6 +98,7 @@ this.props.navigator.setStyle({
   // Android only
   navigationBarColor: '#000000', // change the background color of the bottom native navigation bar.
   navBarTitleTextCentered: true, // default: false. centers the title.
+  navBarButtonFontFamily: 'sans-serif-thin', // Change the font family of textual buttons
   topBarElevationShadowEnabled: false, // default: true. Disables TopBar elevation shadow on Lolipop and above
   statusBarColor: '#000000', // change the color of the status bar.
   collapsingToolBarImage: "http://lorempixel.com/400/200/", // Collapsing Toolbar image.

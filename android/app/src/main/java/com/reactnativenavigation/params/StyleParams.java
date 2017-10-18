@@ -115,6 +115,7 @@ public class StyleParams {
     public boolean titleBarTitleTextCentered;
     public int titleBarHeight;
     public boolean backButtonHidden;
+    public Font titleBarButtonFontFamily;
 
     public Color topTabTextColor;
     public Color topTabIconColor;
