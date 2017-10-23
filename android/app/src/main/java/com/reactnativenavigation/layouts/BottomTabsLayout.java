@@ -152,7 +152,7 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
 
     @Override
     public boolean onBackPressed() {
-        if (getCurrentScreenStack().handleBackPressInJs()) {
+        if (handleBackInJs()) {
             return true;
         }
 
@@ -164,6 +164,11 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean handleBackInJs() {
+        return getCurrentScreenStack().handleBackPressInJs();
     }
 
     @Override
