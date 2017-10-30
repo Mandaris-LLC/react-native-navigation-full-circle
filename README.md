@@ -41,6 +41,7 @@ v2 is written in Test Driven Development. We have a test for every feature inclu
 4) async commands
 5) currentTab 
 6) change navigationOptions to be nested
+7) topTabs in both platforms, with API implications
 
 ### Top API
 
