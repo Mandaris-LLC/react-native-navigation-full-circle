@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.events.EventBus;
@@ -364,11 +365,11 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
     }
 
     @Override
-    public void push(final ScreenParams params) {
+    public void push(final ScreenParams params, final Promise onPushComplete) {
         performOnStack(params.getNavigatorId(), new Task<ScreenStack>() {
             @Override
             public void run(ScreenStack screenStack) {
-                screenStack.push(params, createScreenLayoutParams(params));
+                screenStack.push(params, createScreenLayoutParams(params), onPushComplete);
                 if (isCurrentStack(screenStack)) {
                     setStyleFromScreen(params.styleParams);
                     EventBus.instance.post(new ScreenChangedEvent(params));
