@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -42,7 +41,6 @@ class FloatingActionButtonCoordinator {
     }
 
     public void add(final FabParams params) {
-        Log.i(TAG, "add() called with: params = [" + params + "]");
         if (hasFab()) {
             remove(new Runnable() {
                 @Override
