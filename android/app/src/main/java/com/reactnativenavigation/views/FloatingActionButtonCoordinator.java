@@ -30,7 +30,6 @@ class FloatingActionButtonCoordinator {
     private FabParams params;
     private FloatingActionButton collapsedFab;
     private FloatingActionButton expendedFab;
-    private final int crossFadeAnimationDuration;
     private final int actionSize;
     private final int margin = (int) ViewUtils.convertDpToPixel(16);
     private FloatingActionButtonAnimator fabAnimator;
@@ -39,7 +38,6 @@ class FloatingActionButtonCoordinator {
     FloatingActionButtonCoordinator(CoordinatorLayout parent) {
         this.parent = parent;
         actions = new ArrayList<>();
-        crossFadeAnimationDuration = parent.getResources().getInteger(android.R.integer.config_shortAnimTime);
         actionSize = (int) ViewUtils.convertDpToPixel(40);
     }
 
@@ -62,7 +60,7 @@ class FloatingActionButtonCoordinator {
         createCollapsedFab();
         createExpendedFab();
         setStyle();
-        fabAnimator = new FloatingActionButtonAnimator(collapsedFab, expendedFab, crossFadeAnimationDuration);
+        fabAnimator = new FloatingActionButtonAnimator(collapsedFab, expendedFab);
         fabAnimator.show();
     }
 
