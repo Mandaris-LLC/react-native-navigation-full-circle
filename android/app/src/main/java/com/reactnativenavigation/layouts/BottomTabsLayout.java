@@ -142,8 +142,13 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
     }
 
     private void showInitialScreenStack() {
-        showStackAndUpdateStyle(screenStacks[0], NavigationType.InitialScreen);
+        bottomTabs.setVisibilityByInitialScreen(getInitialScreenStack().peek().getStyleParams());
+        showStackAndUpdateStyle(getInitialScreenStack(), NavigationType.InitialScreen);
         EventBus.instance.post(new ScreenChangedEvent(screenStacks[0].peek().getScreenParams()));
+    }
+
+    private ScreenStack getInitialScreenStack() {
+        return screenStacks[AppStyle.appStyle.bottomTabsInitialIndex];
     }
 
     @Override
