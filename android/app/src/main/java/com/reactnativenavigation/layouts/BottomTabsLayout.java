@@ -352,7 +352,7 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
         performOnStack(navigatorId, new Task<ScreenStack>() {
             @Override
             public void run(ScreenStack param) {
-                bottomTabs.setCurrentItem(getScreenStackIndex(navigatorId));
+                selectBottomTabByTabIndex(getScreenStackIndex(navigatorId));
             }
         });
     }
