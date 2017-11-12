@@ -343,7 +343,9 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
     }
 
     public void selectBottomTabByTabIndex(Integer index) {
-        bottomTabs.setCurrentItem(index);
+        if (bottomTabs.getCurrentItem() != index) {
+            bottomTabs.setCurrentItem(index);
+        }
     }
 
     public void selectBottomTabByNavigatorId(final String navigatorId) {
