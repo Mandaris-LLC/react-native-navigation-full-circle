@@ -104,12 +104,12 @@ Navigation.startSingleScreenApp({
     left: { // optional, define if you want a drawer from the left
       screen: 'example.FirstSideMenu', // unique ID registered with Navigation.registerScreen
       passProps: {}, // simple serializable object that will pass as props to all top screens (optional)
-      disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
+      disableOpenGesture: false // can the drawer be opened with a swipe instead of button (optional, Android only)
     },
     right: { // optional, define if you want a drawer from the right
       screen: 'example.SecondSideMenu', // unique ID registered with Navigation.registerScreen
       passProps: {} // simple serializable object that will pass as props to all top screens (optional)
-      disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
+      disableOpenGesture: false // can the drawer be opened with a swipe instead of button (optional, Android only)
     },
     style: { // ( iOS only )
       drawerShadow: true, // optional, add this if you want a side menu drawer shadow
