@@ -6,6 +6,9 @@ matrix:
     - os: osx
       osx_image: xcode9.1
       language: objective-c
+    - os: osx
+      osx_image: xcode9
+      language: objective-c
 
 env:
   global:
