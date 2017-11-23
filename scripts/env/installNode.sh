@@ -1,3 +1,3 @@
 #!/bin/bash -e
 
-nvm install stable
+nvm install 8
