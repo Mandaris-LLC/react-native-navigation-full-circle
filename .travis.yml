@@ -1,39 +1,38 @@
-os: linux
-language: generic
-
 env:
   global:
     - RCT_NO_LAUNCH_PACKAGER=true
 
 jobs:
   include:
+
     - stage: test
-      env:
-      - TYPE=js
+      env: TYPE=js
       os: linux
       language: generic
       script:
-        - ./scripts/travis.js.sh
+        - ./scripts/travis-fold.sh "npm run test-js"
+
     - stage: test
-      env:
-      - TYPE=iOS
+      env: TYPE=iOS
       os: osx
       osx_image: xcode9
       language: objective-c
-      install:
+      before_install:
         - source ./scripts/env/env.ios.sh
       script:
-        - ./scripts/travis.ios.sh
+        - ./scripts/travis-fold.sh "npm run test-unit-ios -- --release"
+        - ./scripts/travis-fold.sh "npm run test-e2e-ios -- --release"
+
     - stage: test
-      env:
-      - TYPE=Android
+      env: TYPE=Android
       os: linux
       jdk: oraclejdk8
       language: java
-      install:
+      before_install:
         - source ./scripts/env/env.android.sh
       script:
-        - ./scripts/travis.android.sh
+        - ./scripts/travis-fold.sh "npm run test-unit-android -- --release"
+        - ./scripts/travis-fold.sh "npm run test-e2e-android -- --release"
       before_cache:
         - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
         - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -43,7 +42,11 @@ jobs:
           - $HOME/.gradle/caches/
           - $HOME/.gradle/wrapper/
           - $HOME/.android/build-cache
+
     - stage: deploy
+      env: TYPE=deploy
+      os: linux
+      language: generic
       script:
           - ./scripts/travis-fold.sh "npm run release"
 
@@ -52,8 +55,10 @@ branches:
   - master
   - v2
 
-before_install:
+install:
   - nvm install 8
+  - ./scripts/travis-fold.sh "npm install"
+  - ./scripts/travis-fold.sh "npm run clean"
 
 after_script:
   - echo "BUILD FINISHED"
