@@ -41,7 +41,7 @@ matrix:
 jobs:
   include:
     - stage: deploy
-        script:
+      script:
           - echo "deploy!" #./scripts/travis-fold.sh "npm run release"
 
 
