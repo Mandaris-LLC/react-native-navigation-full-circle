@@ -39,7 +39,9 @@ jobs:
             - $HOME/.gradle/wrapper/
             - $HOME/.android/build-cache
     - stage: deploy
-      - echo "deploy!" #./scripts/travis-fold.sh "npm run release"
+        script:
+          - echo "deploy!" #./scripts/travis-fold.sh "npm run release"
+
 
 branches:
   only:
