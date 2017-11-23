@@ -24,7 +24,7 @@ jobs:
         - source ./scripts/env/env.ios.sh
       script:
         - exit 1
-        - ./scripts/travis.ios.sh
+        # - ./scripts/travis.ios.sh
     - stage: test
       env:
       - TYPE=Android
