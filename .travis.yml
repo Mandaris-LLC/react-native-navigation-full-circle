@@ -5,6 +5,12 @@ env:
 matrix:
   include:
     - env:
+      - TYPE=js
+      language: node_js
+      node_js: 8
+      script:
+        - ./scripts/travis.js.sh
+    - env:
       - TYPE=iOS
       os: osx
       osx_image: xcode9
