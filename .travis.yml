@@ -5,49 +5,84 @@ env:
   global:
     - RCT_NO_LAUNCH_PACKAGER=true
 
+# matrix:
+#   include:
+#     - env:
+#       - TYPE=js
+#       os: linux
+#       language: generic
+#       script:
+#         - ./scripts/travis.js.sh
+#     - env:
+#       - TYPE=iOS
+#       os: osx
+#       osx_image: xcode9
+#       language: objective-c
+#       install:
+#         - source ./scripts/env/env.ios.sh
+#       script:
+#         - ./scripts/travis.ios.sh
+#     - env:
+#       - TYPE=Android
+#       os: linux
+#       jdk: oraclejdk8
+#       language: java
+#       install:
+#         - source ./scripts/env/env.android.sh
+#       script:
+#         - ./scripts/travis.android.sh
+#       before_cache:
+#         - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+#         - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+#       cache:
+#         directories:
+#           - $HOME/.m2
+#           - $HOME/.gradle/caches/
+#           - $HOME/.gradle/wrapper/
+#           - $HOME/.android/build-cache
+
 jobs:
   include:
     - stage: test
-      - env:
-        - TYPE=js
-        os: linux
-        language: generic
-        script:
-          - ./scripts/travis.js.sh
-      - env:
-        - TYPE=iOS
-        os: osx
-        osx_image: xcode9
-        language: objective-c
-        install:
-          - source ./scripts/env/env.ios.sh
-        script:
-          - ./scripts/travis.ios.sh
-      - env:
-        - TYPE=Android
-        os: linux
-        jdk: oraclejdk8
-        language: java
-        install:
-          - source ./scripts/env/env.android.sh
-        script:
-          - ./scripts/travis.android.sh
-        before_cache:
-          - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-          - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-        cache:
-          directories:
-            - $HOME/.m2
-            - $HOME/.gradle/caches/
-            - $HOME/.gradle/wrapper/
-            - $HOME/.android/build-cache
+      env:
+      - TYPE=js
+      os: linux
+      language: generic
+      script:
+        - ./scripts/travis.js.sh
+    - stage: test
+      env:
+      - TYPE=iOS
+      os: osx
+      osx_image: xcode9
+      language: objective-c
+      install:
+        - source ./scripts/env/env.ios.sh
+      script:
+        - ./scripts/travis.ios.sh
+    - stage: test
+      env:
+      - TYPE=Android
+      os: linux
+      jdk: oraclejdk8
+      language: java
+      install:
+        - source ./scripts/env/env.android.sh
+      script:
+        - ./scripts/travis.android.sh
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      cache:
+        directories:
+          - $HOME/.m2
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.android/build-cache
     - stage: deploy
-      - env:
-        - TYPE=deploy
-        os: linux
-        language: generic
-        script:
+      script:
           - echo "deploy!" #./scripts/travis-fold.sh "npm run release"
+
 
 branches:
   only:
