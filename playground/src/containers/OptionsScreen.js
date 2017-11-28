@@ -50,7 +50,8 @@ class OptionsScreen extends Component {
         <Button title="Show Top Bar" onPress={this.onClickShowTopBar} />
         <Button title="Hide Top Bar" onPress={this.onClickHideTopBar} />
         <Button title="scrollView Screen" onPress={this.onClickScrollViewScreen} />
-        <Button title="Show alert" onPress={this.onClickAlert} />
+        <Button title="Show custom alert" onPress={this.onClickAlert} />
+        <Button title="Show snackbar" onPress={this.onClickSnackbar} />
         <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
       </View>
     );
@@ -122,8 +123,19 @@ class OptionsScreen extends Component {
   }
 
   onClickAlert() {
-    Navigation.showOverlay('alert', {
-      text: 'test!'
+    Navigation.showOverlay('custom', 'navigation.playground.CustomDialog');
+  }
+
+  onClickSnackbar() {
+    Navigation.showOverlay('snackbar', {
+      text: 'Test!',
+      // textColor: 'red',
+      // backgroundColor: 'green',
+      duration: 'long',
+      button: {
+        text: 'Action',
+        textColor: 'blue'
+      }
     });
   }
 }

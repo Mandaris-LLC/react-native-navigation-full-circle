@@ -16,8 +16,10 @@ import com.reactnativenavigation.parse.JSONParser;
 import com.reactnativenavigation.parse.LayoutNodeParser;
 import com.reactnativenavigation.parse.OverlayOptions;
 import com.reactnativenavigation.utils.UiThread;
+import com.reactnativenavigation.viewcontrollers.ContainerViewController;
 import com.reactnativenavigation.viewcontrollers.Navigator;
 import com.reactnativenavigation.viewcontrollers.ViewController;
+import com.reactnativenavigation.viewcontrollers.overlay.OverlayFactory;
 
 import org.json.JSONObject;
 
@@ -133,12 +135,35 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 	}
 
 	@ReactMethod
-	public void showOverlay(final String type, final ReadableMap options, final Promise promise) {
-		final OverlayOptions overlayOptions = OverlayOptions.parse(JSONParser.parse(options));
+	public void showOverlay(final String type, final ReadableMap data, final Promise promise) {
+		if (OverlayFactory.Overlay.create(type) == OverlayFactory.Overlay.CustomDialog) {
+			final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(data));
+			handle(new Runnable() {
+				@Override
+				public void run() {
+					ViewController viewController = newLayoutFactory().create(layoutTree);
+					navigator().showOverlay(type, OverlayOptions.create(viewController), promise);
+				}
+			});
+		} else {
+			final OverlayOptions overlayOptions = OverlayOptions.parse(JSONParser.parse(data));
+			handle(new Runnable() {
+				@Override
+				public void run() {
+					navigator().showOverlay(type, overlayOptions, promise);
+				}
+			});
+		}
+
+
+	}
+
+	@ReactMethod
+	public void dismissOverlay() {
 		handle(new Runnable() {
 			@Override
 			public void run() {
-				navigator().showOverlay(type, overlayOptions, promise);
+				navigator().dismissOverlay();
 			}
 		});
 	}
