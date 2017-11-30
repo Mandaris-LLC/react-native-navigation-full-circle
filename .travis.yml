@@ -18,7 +18,7 @@ jobs:
       osx_image: xcode9
       language: objective-c
       before_install:
-        - source ./scripts/env/env.ios.sh
+        - ./scripts/travis-fold.sh "source ./scripts/env/env.ios.sh"
       script:
         - ./scripts/travis-fold.sh "npm run test-unit-ios -- --release"
         - ./scripts/travis-fold.sh "npm run test-e2e-ios -- --release"
@@ -29,7 +29,7 @@ jobs:
       jdk: oraclejdk8
       language: java
       before_install:
-        - source ./scripts/env/env.android.sh
+        - ./scripts/travis-fold.sh "source ./scripts/env/env.android.sh"
       script:
         - ./scripts/travis-fold.sh "npm run test-unit-android -- --release"
         - ./scripts/travis-fold.sh "npm run test-e2e-android -- --release"
@@ -56,7 +56,7 @@ branches:
   - v2
 
 install:
-  - nvm install 8
+  - ./scripts/travis-fold.sh "nvm install 8"
   - ./scripts/travis-fold.sh "npm install"
   - ./scripts/travis-fold.sh "npm run clean"
 
