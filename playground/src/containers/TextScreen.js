@@ -15,6 +15,8 @@ class TextScreen extends Component {
         <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
         <Button title={'Set Tab Badge'} onPress={() => this.onButtonPress()} />
         <Button title="Switch To Tab 2" onPress={() => this.onClickSwitchToTab()} />
+        <Button title="Hide Tab Bar" onPress={() => this.hideTabBar(true)} />
+        <Button title="Show Tab Bar" onPress={() => this.hideTabBar(false)} />
       </View>
     );
   }
@@ -30,7 +32,7 @@ class TextScreen extends Component {
 
   onButtonPress() {
     Navigation.setOptions(this.props.containerId, {
-      tabBar: {
+      bottomTabs: {
         tabBadge: `TeSt`
       }
     });
@@ -38,8 +40,18 @@ class TextScreen extends Component {
 
   onClickSwitchToTab() {
     Navigation.setOptions(this.props.containerId, {
-      tabBar: {
-        currentTabIndex: 1
+      bottomTabs: {
+        currentTabIndex: 1,
+        hidden: true,
+        animateHide: true
+      }
+    });
+  }
+
+  hideTabBar(hidden) {
+    Navigation.setOptions(this.props.containerId, {
+      bottomTabs: {
+        hidden
       }
     });
   }
