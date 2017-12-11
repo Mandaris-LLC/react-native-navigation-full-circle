@@ -21,7 +21,7 @@
 @property (nonatomic, strong) NSString* fromId;
 @property (nonatomic, strong) NSString* toId;
 @property (nonatomic, strong) RNNAnimatedView* animatedView;
-@property (nonatomic, strong) NSString* isSharedElementTransition;
+@property (nonatomic) BOOL isSharedElementTransition;
 @property (nonatomic, strong) RNNViewLocation* locations;
 @property (nonatomic) BOOL isFromVC;
 @property (nonatomic) double startY;

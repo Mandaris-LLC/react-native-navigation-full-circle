@@ -25,7 +25,7 @@
 	self.toElement = nil;
 	self.animatedView = nil;
 	self.locations  = nil; 
-	self.isSharedElementTransition = [transition objectForKey:@"type"];
+	self.isSharedElementTransition = [[transition objectForKey:@"type"] isEqualToString:@"sharedElement"];
 	return self;
 }
 
