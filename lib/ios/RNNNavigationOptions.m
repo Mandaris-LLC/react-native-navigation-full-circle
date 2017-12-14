@@ -48,7 +48,7 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 
 -(void)applyOn:(UIViewController*)viewController {
 	if (self.topBar) {
-		if(self.topBar.backgroundColor) {
+		if (self.topBar.backgroundColor) {
 			UIColor* backgroundColor = [RCTConvert UIColor:self.topBar.backgroundColor];
 			viewController.navigationController.navigationBar.barTintColor = backgroundColor;
 		} else {
@@ -169,6 +169,10 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 				.shadowImage = nil;
 			}
 		}
+		
+		if (self.topBar.testID) {
+			viewController.navigationController.navigationBar.accessibilityIdentifier = self.topBar.testID;
+		}
 	}
 	
 	if (self.popGesture) {
@@ -194,6 +198,10 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 		}
 		if (self.bottomTabs.hidden) {
 			[((RNNTabBarController *)viewController.tabBarController) setTabBarHidden:[self.bottomTabs.hidden boolValue] animated:[self.bottomTabs.animateHide boolValue]];
+		}
+		
+		if (self.bottomTabs.testID) {
+			viewController.tabBarController.tabBar.accessibilityIdentifier = self.bottomTabs.testID;
 		}
 	}
 	
