@@ -16,6 +16,7 @@ function run() {
 }
 
 function startRecording() {
+  exec.execAsync(`open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app`);
   const screenId = exec.execSyncRead(`ffmpeg -f avfoundation -list_devices true -i "" 2>&1 | grep "Capture screen 0" | sed -e "s/.*\\[//" -e "s/\\].*//"`);
   exec.execAsync(`ffmpeg -f avfoundation -i "${screenId}:none" out.avi`);
 }
