@@ -16,7 +16,6 @@ function run() {
 }
 
 function startRecording() {
-  exec.execSync(`ffmpeg -f avfoundation -list_devices true -i ""`);
   const screenId = exec.execSyncRead(`ffmpeg -f avfoundation -list_devices true -i "" 2>&1 | grep "Capture screen 0" | sed -e "s/.*\\[//" -e "s/\\].*//"`);
   exec.execAsync(`ffmpeg -f avfoundation -i "${screenId}:none" out.avi`);
 }

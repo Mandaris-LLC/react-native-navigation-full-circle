@@ -20,6 +20,7 @@ jobs:
       before_install:
         - source ./scripts/env/env.ios.sh
       script:
+        - brew install ffmpeg --with-ffplay
         # - ./scripts/travis-fold.sh "npm run test-unit-ios -- --release"
         - ./scripts/travis-fold.sh "npm run test-e2e-ios -- --release"
 
