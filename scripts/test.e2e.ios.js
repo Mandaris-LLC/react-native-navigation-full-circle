@@ -13,6 +13,7 @@ function run() {
     exec.execAsync(`sleep 30`).then(() => {
       exec.execAsync(`open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app`);
     });
+    
     exec.execSync(`detox test --configuration ios.sim.${conf} ${process.env.CI ? '--cleanup' : ''}`);
   } finally {
     stopRecording();
