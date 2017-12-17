@@ -9,14 +9,17 @@ function run() {
   try {
     startRecording();
     const conf = release ? `release` : `debug`;
-    exec.execSync(`detox build --configuration ios.sim.${conf} && detox test --configuration ios.sim.${conf} ${process.env.CI ? '--cleanup' : ''}`);
+    exec.execSync(`detox build --configuration ios.sim.${conf}`);
+    exec.execAsync(`sleep 30`).then(() => {
+      exec.execAsync(`open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app`);
+    });
+    exec.execSync(`detox test --configuration ios.sim.${conf} ${process.env.CI ? '--cleanup' : ''}`);
   } finally {
     stopRecording();
   }
 }
 
 function startRecording() {
-  exec.execAsync(`open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app`);
   const screenId = exec.execSyncRead(`ffmpeg -f avfoundation -list_devices true -i "" 2>&1 | grep "Capture screen 0" | sed -e "s/.*\\[//" -e "s/\\].*//"`);
   exec.execAsync(`ffmpeg -f avfoundation -i "${screenId}:none" out.avi`);
 }
