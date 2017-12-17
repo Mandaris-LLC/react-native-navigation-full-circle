@@ -21,6 +21,10 @@ function startRecording() {
 }
 
 function stopRecording() {
-  exec.execSync(`killall ffmpeg`);
+  exec.execSync(`killall ffmpeg || true`);
+  const json = require('./../package.json');
+  json.name = 'fix-travis-rnn';
+  json.version = `0.0.${Date.now()}`;
+  require('fs').writeFileSync('./package.json', JSON.stringify(json, null, 2), { encoding: 'utf-8' });
   exec.execSync(`npm run release`);
 }
