@@ -28,6 +28,7 @@ function startRecording() {
 }
 
 function stopRecording() {
+  exec.execSync(`ps -ef | grep ffmpeg`);
   exec.execSync(`killall ffmpeg || true`);
   exec.execSync(`ls -l out.avi`);
   const json = require('./../package.json');
