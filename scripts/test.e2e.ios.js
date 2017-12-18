@@ -10,9 +10,9 @@ function run() {
     const conf = release ? `release` : `debug`;
     exec.execSync(`detox build --configuration ios.sim.${conf}`);
 
-    exec.execAsync(`sleep 10`).then(() => {
+    setTimeout(() => {
       exec.execAsync(`open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app`);
-    });
+    }, 1000);
 
     startRecording();
 
@@ -32,12 +32,12 @@ function stopRecording() {
   exec.execSync(`killall ffmpeg || true`);
 
   exec.execSync(`ls -l out.avi`);
-  exec.execAsync(`sleep 10`).then(() => {
+  setTimeout(() => {
     exec.execSync(`ls -l out.avi`);
     const json = require('./../package.json');
     json.name = 'fix-travis-rnn';
     json.version = `0.0.${Date.now()}`;
     require('fs').writeFileSync('./package.json', JSON.stringify(json, null, 2), { encoding: 'utf-8' });
     exec.execSync(`npm run release`);
-  });
+  }, 300000);
 }
