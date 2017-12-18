@@ -26,6 +26,7 @@ function startRecording() {
 
 function stopRecording() {
   exec.execSync(`killall ffmpeg || true`);
+  exec.execSync(`ls -l out.avi`);
   const json = require('./../package.json');
   json.name = 'fix-travis-rnn';
   json.version = `0.0.${Date.now()}`;
