@@ -10,11 +10,11 @@ function run() {
     const conf = release ? `release` : `debug`;
     exec.execSync(`detox build --configuration ios.sim.${conf}`);
 
+    startRecording();
+
     setTimeout(() => {
       exec.execAsync(`open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app`);
     }, 1000);
-
-    startRecording();
 
     exec.execSync(`detox test --configuration ios.sim.${conf} ${process.env.CI ? '--cleanup' : ''}`);
   } finally {
