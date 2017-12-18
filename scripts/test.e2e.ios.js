@@ -15,6 +15,7 @@ function run() {
     });
 
     startRecording();
+
     exec.execSync(`detox test --configuration ios.sim.${conf} ${process.env.CI ? '--cleanup' : ''}`);
   } finally {
     stopRecording();
