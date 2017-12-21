@@ -4,26 +4,20 @@ import android.content.Context;
 import android.view.View;
 
 import com.reactnativenavigation.parse.NavigationOptions;
-import com.reactnativenavigation.presentation.OptionsPresenter;
 import com.reactnativenavigation.views.ReactContainer;
 import com.reactnativenavigation.views.TopBar;
 
-public class TestContainerLayout extends View implements ReactContainer {
+public class TestContainerView extends View implements ReactContainer {
 
-    private final TopBar topBar;
-    private final OptionsPresenter optionsPresenter;
+	private TopBar topBar;
 
-    public TestContainerLayout(final Context context) {
+	public TestContainerView(final Context context) {
 		super(context);
-        topBar = new TopBar(context, this);
-        optionsPresenter = new OptionsPresenter(topBar, new View(context));
-    }
+		topBar = new TopBar(context, this);
 
-    public TopBar getTopBar() {
-        return topBar;
-    }
+	}
 
-    @Override
+	@Override
 	public boolean isReady() {
 		return false;
 	}
@@ -47,11 +41,16 @@ public class TestContainerLayout extends View implements ReactContainer {
 
     @Override
     public void applyOptions(NavigationOptions options) {
-        optionsPresenter.applyOptions(options);
+
     }
 
     @Override
     public void sendOnNavigationButtonPressed(String id) {
 
+    }
+
+    @Override
+    public TopBar getTopBar() {
+        return topBar;
     }
 }
