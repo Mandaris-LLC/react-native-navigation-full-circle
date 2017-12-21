@@ -3,9 +3,9 @@
  - [Installation - Android](/docs/installation-android)
  - [Usage](/docs/usage)
 - API
- - [Top Level](/docs/docs/Navigation)
-- Params
- - [Root](/docs/docs/Root)
- - [Container](/docs/docs/Container)
- - [TopBar](/docs/docs/TopBar)
- - [BottomTabs](/docs/docs/BottomTabs)
+ - [Top Level](/docs/Navigation)
+ - Params
+  - [Root](/docs/Root)
+  - [Container](/docs/Container)
+  - [TopBar](/docs/TopBar)
+  - [BottomTabs](/docs/BottomTabs)
