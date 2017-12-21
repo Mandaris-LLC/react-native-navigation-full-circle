@@ -4,8 +4,8 @@
  - [Usage](/docs/usage)
 - API
  - [Top Level](/docs/Navigation)
- - Params
-  - [Root](/docs/Root)
-  - [Container](/docs/Container)
-  - [TopBar](/docs/TopBar)
-  - [BottomTabs](/docs/BottomTabs)
+- Params
+ - [Root](/docs/Root)
+ - [Container](/docs/Container)
+ - [TopBar](/docs/TopBar)
+ - [BottomTabs](/docs/BottomTabs)
