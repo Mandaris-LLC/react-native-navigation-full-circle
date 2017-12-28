@@ -14,6 +14,7 @@ import com.reactnativenavigation.viewcontrollers.overlay.DialogViewController;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabController;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsController;
 import com.reactnativenavigation.views.ContainerViewCreator;
+import com.reactnativenavigation.views.TopTabsLayoutCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,7 +137,8 @@ public class LayoutFactory {
             tabController.setTabIndex(i);
             tabs.add(tabController);
         }
-        return new TopTabsController(activity, node.id, tabs);
+        NavigationOptions navigationOptions = NavigationOptions.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
+        return new TopTabsController(activity, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), navigationOptions);
     }
 
     private ViewController createTopTab(LayoutNode node) {
