@@ -10,7 +10,8 @@
 
 -(instancetype)initWithRootViewCreator:(id <RNNRootViewCreator>)creator
 								 store:(RNNStore*)store
-						  eventEmitter:(RNNEventEmitter*)eventEmitter;
+						  eventEmitter:(RNNEventEmitter*)eventEmitter
+							 andBridge:(RCTBridge*)bridge;
 
 -(UIViewController<RNNRootViewProtocol> *)createLayoutAndSaveToStore:(NSDictionary*)layout;
 
