@@ -8,7 +8,7 @@ describe('screen style', () => {
     await device.relaunchApp();
   });
 
-  it('declare a navigationOptions on container component', async () => {
+  it('declare a options on container component', async () => {
     await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
     await expect(element(by.label('Static Title'))).toBeVisible();
   });
