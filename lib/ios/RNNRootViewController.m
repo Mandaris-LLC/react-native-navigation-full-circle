@@ -45,7 +45,7 @@
 }
 
 -(BOOL)isCustomTransitioned {
-	return self.animator;
+	return self.animator != nil;
 }
 
 - (BOOL)prefersStatusBarHidden {

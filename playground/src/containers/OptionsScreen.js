@@ -125,13 +125,17 @@ class OptionsScreen extends Component {
 
   onClickScrollViewScreen() {
     Navigation.push(this.props.containerId, {
-      name: 'navigation.playground.ScrollViewScreen'
+      component: {
+        name: 'navigation.playground.ScrollViewScreen'
+      }
     });
   }
 
   onClickCustomTranstition() {
     Navigation.push(this.props.containerId, {
-      name: 'navigation.playground.CustomTransitionOrigin'
+      component: {
+        name: 'navigation.playground.CustomTransitionOrigin'
+      }
     });
   }
 

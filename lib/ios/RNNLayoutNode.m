@@ -15,11 +15,11 @@
 
 -(BOOL)isContainer
 {
-	return [self.type isEqualToString:@"Container"];
+	return [self.type isEqualToString:@"Component"];
 }
 -(BOOL)isContainerStack
 {
-	return [self.type isEqualToString:@"ContainerStack"];
+	return [self.type isEqualToString:@"Stack"];
 }
 -(BOOL)isTabs
 {

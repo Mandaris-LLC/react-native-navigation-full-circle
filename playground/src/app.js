@@ -5,8 +5,14 @@ function start() {
   registerContainers();
   Navigation.events().onAppLaunched(() => {
     Navigation.setRoot({
-      container: {
-        name: 'navigation.playground.WelcomeScreen'
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'navigation.playground.WelcomeScreen'
+            }
+          }
+        ]
       }
     });
   });

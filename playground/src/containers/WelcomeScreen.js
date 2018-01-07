@@ -46,79 +46,113 @@ class WelcomeScreen extends Component {
 
   onClickSwitchToTabs() {
     Navigation.setRoot({
-      bottomTabs: [
-        {
-          container: {
-            name: 'navigation.playground.TextScreen',
-            passProps: {
-              text: 'This is tab 1',
-              myFunction: () => 'Hello from a function!'
-            },
-            options: {
-              bottomTab: {
-                title: 'Tab 1',
-                testID: testIDs.FIRST_TAB_BAR_BUTTON
-              }
+      bottomTabs: {
+        children: [
+          {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: 'navigation.playground.TextScreen',
+                    passProps: {
+                      text: 'This is tab 1',
+                      myFunction: () => 'Hello from a function!'
+                    },
+                    options: {
+                      bottomTab: {
+                        title: 'Tab 1',
+                        testID: testIDs.FIRST_TAB_BAR_BUTTON
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: 'navigation.playground.TextScreen',
+                    passProps: {
+                      text: 'This is tab 2'
+                    },
+                    options: {
+                      bottomTab: {
+                        title: 'Tab 2',
+                        testID: testIDs.SECOND_TAB_BAR_BUTTON
+                      }
+                    }
+                  }
+                }
+              ]
             }
           }
-        },
-        {
-          container: {
-            name: 'navigation.playground.TextScreen',
-            passProps: {
-              text: 'This is tab 2'
-            },
-            options: {
-              bottomTab: {
-                title: 'Tab 2',
-                testID: testIDs.SECOND_TAB_BAR_BUTTON
-              }
-            }
-          }
-        }
-      ]
+        ]
+      }
     });
   }
 
   onClickSwitchToSideMenus() {
     Navigation.setRoot({
-      bottomTabs: [
-        {
-          container: {
-            name: 'navigation.playground.TextScreen',
-            passProps: {
-              text: 'This is a side menu center screen tab 1'
-            }
-          }
-        },
-        {
-          container: {
-            name: 'navigation.playground.TextScreen',
-            passProps: {
-              text: 'This is a side menu center screen tab 2'
-            }
-          }
-        },
-        {
-          container: {
-            name: 'navigation.playground.TextScreen',
-            passProps: {
-              text: 'This is a side menu center screen tab 3'
-            }
-          }
-        }
-      ],
       sideMenu: {
         left: {
-          container: {
+          component: {
             name: 'navigation.playground.SideMenuScreen',
             passProps: {
               side: 'left'
             }
           }
         },
+        center: {
+          bottomTabs: [
+            {
+              stack: {
+                children: [
+                  {
+                    component: {
+                      name: 'navigation.playground.TextScreen',
+                      passProps: {
+                        text: 'This is a side menu center screen tab 1'
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              stack: {
+                children: [
+                  {
+                    component: {
+                      name: 'navigation.playground.TextScreen',
+                      passProps: {
+                        text: 'This is a side menu center screen tab 2'
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              stack: {
+                children: [
+                  {
+                    component: {
+                      name: 'navigation.playground.TextScreen',
+                      passProps: {
+                        text: 'This is a side menu center screen tab 3'
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
         right: {
-          container: {
+          component: {
             name: 'navigation.playground.SideMenuScreen',
             passProps: {
               side: 'right'
@@ -131,19 +165,23 @@ class WelcomeScreen extends Component {
 
   async onClickPush() {
     await Navigation.push(this.props.containerId, {
-      name: 'navigation.playground.PushedScreen'
+      component: {
+        name: 'navigation.playground.PushedScreen'
+      }
     });
   }
 
   onClickLifecycleScreen() {
     Navigation.push(this.props.containerId, {
-      name: 'navigation.playground.LifecycleScreen'
+      component: {
+        name: 'navigation.playground.LifecycleScreen'
+      }
     });
   }
 
   async onClickShowModal() {
     await Navigation.showModal({
-      container: {
+      component: {
         name: 'navigation.playground.ModalScreen'
       }
     });
@@ -155,7 +193,9 @@ class WelcomeScreen extends Component {
 
   onClickPushOptionsScreen() {
     Navigation.push(this.props.containerId, {
-      name: 'navigation.playground.OptionsScreen'
+      component: {
+        name: 'navigation.playground.OptionsScreen'
+      }
     });
   }
 
@@ -212,13 +252,17 @@ class WelcomeScreen extends Component {
 
   onClickBackHandler() {
     Navigation.push(this.props.containerId, {
-      name: 'navigation.playground.BackHandlerScreen'
+      component: {
+        name: 'navigation.playground.BackHandlerScreen'
+      }
     });
   }
 
   onClickPushOrientationMenuScreen() {
     Navigation.push(this.props.containerId, {
-      name: 'navigation.playground.OrientationSelectScreen'
+      component: {
+        name: 'navigation.playground.OrientationSelectScreen'
+      }
     });
   }
 }

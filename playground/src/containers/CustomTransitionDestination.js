@@ -22,19 +22,23 @@ class CustomTransitionDestination extends Component {
   }
   push() {
     Navigation.push(this.props.containerId, {
-      name: 'navigation.playground.OptionsScreen'
+      component: {
+        name: 'navigation.playground.OptionsScreen'
+      }
     });
   }
   pop() {
-    Navigation.pop(this.props.containerId, { customTransition: {
-      animations: [{ type: 'sharedElement', fromId: 'title2', toId: 'title1', startDelay: 0, springVelocity: 0.2, duration: 0.5 },
-            { type: 'sharedElement', toId: 'image1', fromId: 'customDestinationImage', startDelay: 0, springVelocity: 0.2, duration: 0.5 },
-            { type: 'sharedElement', toId: 'image2', fromId: 'customDestinationImage2', startDelay: 0, duration: 0.8 },
-            { fromId: 'image4', startY: 50, startX: 50, startAlpha: 0, startDelay: 0, duration: 0.8, springVelocity: 0.5 },
-            { fromId: 'customDestinationParagraph', endY: 50, endX: 50, endAlpha: 0, startAlpha: 1, startDelay: 0, duration: 0.8 }
-      ],
-      duration: 0.8
-    } });
+    Navigation.pop(this.props.containerId, {
+      customTransition: {
+        animations: [{ type: 'sharedElement', fromId: 'title2', toId: 'title1', startDelay: 0, springVelocity: 0.2, duration: 0.5 },
+        { type: 'sharedElement', toId: 'image1', fromId: 'customDestinationImage', startDelay: 0, springVelocity: 0.2, duration: 0.5 },
+        { type: 'sharedElement', toId: 'image2', fromId: 'customDestinationImage2', startDelay: 0, duration: 0.8 },
+        { fromId: 'image4', startY: 50, startX: 50, startAlpha: 0, startDelay: 0, duration: 0.8, springVelocity: 0.5 },
+        { fromId: 'customDestinationParagraph', endY: 50, endX: 50, endAlpha: 0, startAlpha: 1, startDelay: 0, duration: 0.8 }
+        ],
+        duration: 0.8
+      }
+    });
   }
   render() {
     return (
