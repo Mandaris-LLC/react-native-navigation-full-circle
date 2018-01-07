@@ -183,7 +183,7 @@ class WelcomeScreen extends Component {
           options: {
             topTab: {
               title: 'Tab 2',
-              titleFontFamily: 'Dosis-Regular'
+              titleFontFamily: 'HelveticaNeue-Italic'
             }
           }
         },

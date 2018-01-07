@@ -72,4 +72,8 @@
 	}
 }
 
+- (BOOL)isCustomTransitioned {
+	return NO;
+}
+
 @end

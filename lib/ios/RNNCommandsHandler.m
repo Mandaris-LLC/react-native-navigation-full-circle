@@ -8,14 +8,12 @@
 @implementation RNNCommandsHandler {
 	RNNControllerFactory *_controllerFactory;
 	RNNStore *_store;
-	RCTBridge* _bridge;
 	RNNNavigationStackManager* _navigationStackManager;
 	RNNModalManager* _modalManager;
 }
 
--(instancetype) initWithStore:(RNNStore*)store controllerFactory:(RNNControllerFactory*)controllerFactory andBridge:(RCTBridge*)bridge {
+-(instancetype) initWithStore:(RNNStore*)store controllerFactory:(RNNControllerFactory*)controllerFactory {
 	self = [super init];
-	_bridge = bridge;
 	_store = store;
 	_controllerFactory = controllerFactory;
 	_navigationStackManager = [[RNNNavigationStackManager alloc] initWithStore:_store];
@@ -48,7 +46,6 @@
 		[CATransaction setCompletionBlock:completion];
 		
 		[rootVc.navigationOptions applyOn:vc];
-		[rootVc applyNavigationButtons];
 		
 		[CATransaction commit];
 	}
@@ -56,9 +53,8 @@
 
 -(void) push:(NSString*)containerId layout:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
-	UIViewController *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
-	UIViewController *fromVc = [_store findContainerForId:containerId];
-	[_bridge.uiManager setAvailableSize:fromVc.view.bounds.size forRootView:newVc.view];
+	
+	UIViewController<RNNRootViewProtocol> *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
 	[_navigationStackManager push:newVc onTop:containerId completion:completion];
 }
 
