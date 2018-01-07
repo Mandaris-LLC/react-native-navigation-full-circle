@@ -44,12 +44,12 @@
 	
 	UIViewController<RNNRootViewProtocol> *result;
 	
-	if ( node.isContainer || node.isTopTab) {
+	if ( node.isComponent) {
 		result = [self createContainer:node];
 	}
 	
-	else if (node.isContainerStack)	{
-		result = [self createContainerStack:node];
+	else if (node.isStack)	{
+		result = [self createStack:node];
 	}
 	
 	else if (node.isTabs) {
@@ -97,7 +97,7 @@
 	return container;
 }
 
-- (UIViewController<RNNRootViewProtocol> *)createContainerStack:(RNNLayoutNode*)node {
+- (UIViewController<RNNRootViewProtocol> *)createStack:(RNNLayoutNode*)node {
 	RNNNavigationController* vc = [[RNNNavigationController alloc] init];
 	
 	NSMutableArray* controllers = [NSMutableArray new];
