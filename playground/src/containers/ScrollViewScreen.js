@@ -7,7 +7,7 @@ const Navigation = require('react-native-navigation');
 const testIDs = require('../testIDs');
 
 class ScrollViewScreen extends Component {
-  static get navigationOptions() {
+  static get options() {
     return {
       topBar: {
         translucent: false

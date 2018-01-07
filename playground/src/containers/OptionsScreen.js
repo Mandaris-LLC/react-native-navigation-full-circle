@@ -11,7 +11,7 @@ const BUTTON_TWO = 'buttonTwo';
 const BUTTON_LEFT = 'buttonLeft';
 
 class OptionsScreen extends Component {
-  static get navigationOptions() {
+  static get options() {
     return {
       topBar: {
         title: 'Static Title',

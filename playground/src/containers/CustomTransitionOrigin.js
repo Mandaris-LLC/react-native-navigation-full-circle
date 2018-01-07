@@ -8,7 +8,7 @@ class CustomTransitionOrigin extends Component {
     super(props);
     this.onClickNavigationIcon = this.onClickNavigationIcon.bind(this);
   }
-  static get navigationOptions() {
+  static get options() {
     return {
       topBar: {
         textFontFamily: 'HelveticaNeue-Italic',

@@ -9,7 +9,7 @@ const Navigation = require('react-native-navigation');
 const testIDs = require('../testIDs');
 
 class ModalScreen extends Component {
-  static get navigationOptions() {
+  static get options() {
     return {
       orientation: ['portrait']
     };

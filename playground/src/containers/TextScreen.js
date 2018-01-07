@@ -9,7 +9,7 @@ const testIDs = require('../testIDs');
 let globalFirstContainerID;
 
 class TextScreen extends Component {
-  static get navigationOptions() {
+  static get options() {
     return {
       bottomTabs: {
         testID: testIDs.BOTTOM_TABS_ELEMENT

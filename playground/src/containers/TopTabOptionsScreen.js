@@ -5,7 +5,7 @@ const { View, Text, Button } = require('react-native');
 const Navigation = require('react-native-navigation');
 
 class TopTabOptionsScreen extends PureComponent {
-  static get navigationOptions() {
+  static get options() {
     return {
       topBar: {
         title: 'Tab 1',

@@ -4,7 +4,7 @@ const { Component } = require('react');
 const { View, Text, Button, BackHandler } = require('react-native');
 
 class BackHandlerScreen extends Component {
-  static get navigationOptions() {
+  static get options() {
     return {
       topBar: {
         title: 'Back Handler',

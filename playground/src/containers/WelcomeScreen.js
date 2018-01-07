@@ -7,7 +7,7 @@ const testIDs = require('../testIDs');
 const Navigation = require('react-native-navigation');
 
 class WelcomeScreen extends Component {
-  static get navigationOptions() {
+  static get options() {
     return {
       topBar: {
         largeTitle: false
@@ -54,7 +54,7 @@ class WelcomeScreen extends Component {
               text: 'This is tab 1',
               myFunction: () => 'Hello from a function!'
             },
-            navigationOptions: {
+            options: {
               bottomTab: {
                 title: 'Tab 1',
                 testID: testIDs.FIRST_TAB_BAR_BUTTON
@@ -68,7 +68,7 @@ class WelcomeScreen extends Component {
             passProps: {
               text: 'This is tab 2'
             },
-            navigationOptions: {
+            options: {
               bottomTab: {
                 title: 'Tab 2',
                 testID: testIDs.SECOND_TAB_BAR_BUTTON
@@ -168,7 +168,7 @@ class WelcomeScreen extends Component {
             title: 'Tab 1',
             text: 'This is top tab 1'
           },
-          navigationOptions: {
+          options: {
             topTab: {
               title: 'Tab 1'
             }
@@ -180,7 +180,7 @@ class WelcomeScreen extends Component {
             title: 'Tab 2',
             text: 'This is top tab 2'
           },
-          navigationOptions: {
+          options: {
             topTab: {
               title: 'Tab 2',
               titleFontFamily: 'Dosis-Regular'
@@ -193,14 +193,14 @@ class WelcomeScreen extends Component {
             title: 'Tab 3',
             text: 'This is top tab 3'
           },
-          navigationOptions: {
+          options: {
             topTab: {
               title: 'Tab 3'
             }
           }
         }
       ],
-      navigationOptions: {
+      options: {
         topTabs: {
           selectedTabColor: '#12766b',
           unselectedTabColor: 'red',
