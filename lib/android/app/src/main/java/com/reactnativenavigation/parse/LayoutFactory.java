@@ -96,12 +96,12 @@ public class LayoutFactory {
 	private ViewController createComponent(LayoutNode node) {
 		String id = node.id;
 		String name = node.data.optString("name");
-		NavigationOptions navigationOptions = NavigationOptions.parse(typefaceManager, node.data.optJSONObject("navigationOptions"), defaultOptions);
+		NavigationOptions options = NavigationOptions.parse(typefaceManager, node.data.optJSONObject("options"), defaultOptions);
 		return new ComponentViewController(activity,
                 id,
                 name,
                 new ComponentViewCreator(reactInstanceManager),
-                navigationOptions
+                options
         );
 	}
 
@@ -137,19 +137,19 @@ public class LayoutFactory {
             tabController.setTabIndex(i);
             tabs.add(tabController);
         }
-        NavigationOptions navigationOptions = NavigationOptions.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
-        return new TopTabsController(activity, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), navigationOptions);
+        NavigationOptions options = NavigationOptions.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
+        return new TopTabsController(activity, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), options);
     }
 
     private ViewController createTopTab(LayoutNode node) {
         String id = node.id;
         String name = node.data.optString("name");
-        NavigationOptions navigationOptions = NavigationOptions.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
+        NavigationOptions options = NavigationOptions.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
         return new TopTabController(activity,
                 id,
                 name,
                 new ReactComponentViewCreator(reactInstanceManager),
-                navigationOptions
+                options
         );
     }
 }

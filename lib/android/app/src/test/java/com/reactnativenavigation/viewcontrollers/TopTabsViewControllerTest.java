@@ -31,7 +31,7 @@ public class TopTabsViewControllerTest extends BaseTest {
     private List<TopTabLayoutMock> tabs = new ArrayList<>(SIZE);
     private List<TopTabController> tabControllers = new ArrayList<>(SIZE);
     private List<NavigationOptions> tabOptions = new ArrayList<>(SIZE);
-    private NavigationOptions navigationOptions;
+    private NavigationOptions options;
     private TopTabsLayout topTabsLayout;
 
     @Override
@@ -41,12 +41,12 @@ public class TopTabsViewControllerTest extends BaseTest {
         tabs.clear();
         Activity activity = newActivity();
         createTabs(activity);
-        navigationOptions = new NavigationOptions();
+        options = new NavigationOptions();
         topTabsLayout = spy(new TopTabsLayout(activity, tabControllers, new TopTabsAdapter(tabControllers)));
 
         TopTabsLayoutCreator layoutCreator = Mockito.mock(TopTabsLayoutCreator.class);
         Mockito.when(layoutCreator.create()).thenReturn(topTabsLayout);
-        uut = new TopTabsController(activity, "componentId", tabControllers, layoutCreator, navigationOptions);
+        uut = new TopTabsController(activity, "componentId", tabControllers, layoutCreator, options);
     }
 
     private void createTabs(Activity activity) {
@@ -130,7 +130,7 @@ public class TopTabsViewControllerTest extends BaseTest {
     public void appliesOptionsOnLayoutWhenVisible() throws Exception {
         uut.ensureViewIsCreated();
         uut.onViewAppeared();
-        verify(topTabsLayout, times(1)).applyOptions(navigationOptions);
+        verify(topTabsLayout, times(1)).applyOptions(options);
     }
 
     private IReactView tab(TopTabsLayout topTabs, final int index) {

@@ -44,7 +44,7 @@ public class OptionsApplyingTest extends BaseTest {
 
 	@Test
 	public void initialOptionsAppliedOnAppear() throws Exception {
-		assertThat(uut.getNavigationOptions()).isSameAs(initialNavigationOptions);
+		assertThat(uut.getOptions()).isSameAs(initialNavigationOptions);
 		initialNavigationOptions.topBarOptions.title = "the title";
 		StackController stackController = new StackController(activity, "stackId");
 		stackController.push(uut);
@@ -56,12 +56,12 @@ public class OptionsApplyingTest extends BaseTest {
 
 	@Test
 	public void mergeNavigationOptionsUpdatesCurrentOptions() throws Exception {
-		assertThat(uut.getNavigationOptions().topBarOptions.title).isEmpty();
+		assertThat(uut.getOptions().topBarOptions.title).isEmpty();
 		NavigationOptions options = new NavigationOptions();
 		options.topBarOptions.title = "new title";
 		uut.mergeNavigationOptions(options);
-		assertThat(uut.getNavigationOptions().topBarOptions.title).isEqualTo("new title");
-		assertThat(uut.getNavigationOptions()).isSameAs(initialNavigationOptions);
+		assertThat(uut.getOptions().topBarOptions.title).isEqualTo("new title");
+		assertThat(uut.getOptions()).isSameAs(initialNavigationOptions);
 	}
 
 	@Test
@@ -91,7 +91,7 @@ public class OptionsApplyingTest extends BaseTest {
 
 	@Test
 	public void appliesTopBarTextColor() throws Exception {
-		assertThat(uut.getNavigationOptions()).isSameAs(initialNavigationOptions);
+		assertThat(uut.getOptions()).isSameAs(initialNavigationOptions);
 		initialNavigationOptions.topBarOptions.title = "the title";
 		uut.onViewAppeared();
 		assertThat(uut.getTopBar().getTitleTextView().getCurrentTextColor()).isNotEqualTo(Color.RED);
@@ -107,7 +107,7 @@ public class OptionsApplyingTest extends BaseTest {
 
 	@Test
 	public void appliesTopBarTextSize() throws Exception {
-		assertThat(uut.getNavigationOptions()).isSameAs(initialNavigationOptions);
+		assertThat(uut.getOptions()).isSameAs(initialNavigationOptions);
 		initialNavigationOptions.topBarOptions.title = "the title";
 		uut.onViewAppeared();
 		assertThat(uut.getTopBar().getTitleTextView().getTextSize()).isNotEqualTo(18);
@@ -123,7 +123,7 @@ public class OptionsApplyingTest extends BaseTest {
 
 	@Test
 	public void appliesTopBarHidden() throws Exception {
-		assertThat(uut.getNavigationOptions()).isSameAs(initialNavigationOptions);
+		assertThat(uut.getOptions()).isSameAs(initialNavigationOptions);
 		initialNavigationOptions.topBarOptions.title = "the title";
 		uut.onViewAppeared();
 		assertThat(uut.getTopBar().getVisibility()).isNotEqualTo(View.GONE);

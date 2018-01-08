@@ -63,7 +63,7 @@ public class ModalStack {
 
 	@Nullable
     ViewController findControllerById(String id) {
-        Modal modal = findModalByContainerId(id);
+        Modal modal = findModalByComponentId(id);
         return modal != null ? modal.viewController : null;
     }
 

@@ -35,7 +35,7 @@ public class ComponentViewController extends ViewController implements Navigatio
 	private final String componentName;
 
 	private final ReactViewCreator viewCreator;
-	private NavigationOptions navigationOptions;
+	private NavigationOptions options;
 	private ReactComponent component;
 
 	public ComponentViewController(final Activity activity,
@@ -46,7 +46,7 @@ public class ComponentViewController extends ViewController implements Navigatio
 		super(activity, id);
 		this.componentName = componentName;
 		this.viewCreator = viewCreator;
-		this.navigationOptions = initialNavigationOptions;
+		this.options = initialNavigationOptions;
 	}
 
     @RestrictTo(RestrictTo.Scope.TESTS)
@@ -65,7 +65,7 @@ public class ComponentViewController extends ViewController implements Navigatio
 	public void onViewAppeared() {
 		super.onViewAppeared();
 		ensureViewIsCreated();
-		component.applyOptions(navigationOptions);
+		component.applyOptions(options);
 		component.sendComponentStart();
 	}
 
@@ -89,11 +89,11 @@ public class ComponentViewController extends ViewController implements Navigatio
 
 	@Override
 	public void mergeNavigationOptions(NavigationOptions options) {
-		navigationOptions.mergeWith(options);
-        component.applyOptions(navigationOptions);
+		this.options.mergeWith(options);
+        component.applyOptions(options);
 	}
 
-	NavigationOptions getNavigationOptions() {
-		return navigationOptions;
+	NavigationOptions getOptions() {
+		return options;
 	}
 }
