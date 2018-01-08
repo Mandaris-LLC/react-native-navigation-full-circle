@@ -41,11 +41,11 @@
 	UIViewController* vc = [_store findComponentForId:componentId];
 	if([vc isKindOfClass:[RNNRootViewController class]]) {
 		RNNRootViewController* rootVc = (RNNRootViewController*)vc;
-		[rootVc.navigationOptions mergeWith:options];
+		[rootVc.options mergeWith:options];
 		[CATransaction begin];
 		[CATransaction setCompletionBlock:completion];
 		
-		[rootVc.navigationOptions applyOn:vc];
+		[rootVc.options applyOn:vc];
 		
 		[CATransaction commit];
 	}

@@ -20,7 +20,7 @@
 	self = [super init];
 	self.componentId = componentId;
 	self.componentName = name;
-	self.navigationOptions = options;
+	self.options = options;
 	self.eventEmitter = eventEmitter;
 	self.animator = animator;
 	self.view = [creator createRootView:self.componentName rootViewId:self.componentId];
@@ -37,7 +37,7 @@
 	
 -(void)viewWillAppear:(BOOL)animated{
 	[super viewWillAppear:animated];
-	[self.navigationOptions applyOn:self];
+	[self.options applyOn:self];
 }
 
 - (void)viewDidLoad {
@@ -49,22 +49,22 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
-	if ([self.navigationOptions.statusBarHidden boolValue]) {
+	if ([self.options.statusBarHidden boolValue]) {
 		return YES;
-	} else if ([self.navigationOptions.statusBarHideWithTopBar boolValue]) {
+	} else if ([self.options.statusBarHideWithTopBar boolValue]) {
 		return self.navigationController.isNavigationBarHidden;
 	}
 	return NO;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-	return self.navigationOptions.supportedOrientations;
+	return self.options.supportedOrientations;
 }
 
 - (BOOL)hidesBottomBarWhenPushed
 {
-	if (self.navigationOptions.bottomTabs && self.navigationOptions.bottomTabs.hidden) {
-		return [self.navigationOptions.bottomTabs.hidden boolValue];
+	if (self.options.bottomTabs && self.options.bottomTabs.hidden) {
+		return [self.options.bottomTabs.hidden boolValue];
 	}
 	return NO;
 }
@@ -81,7 +81,7 @@
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
 	RNNRootViewController* vc =  (RNNRootViewController*)viewController;
-	if (![vc.navigationOptions.backButtonTransition isEqualToString:@"custom"]){
+	if (![vc.options.backButtonTransition isEqualToString:@"custom"]){
 		navigationController.delegate = nil;
 	}
 }
@@ -104,11 +104,11 @@
 }
 
 -(void)applyTabBarItem {
-	[self.navigationOptions.bottomTab applyOn:self];
+	[self.options.bottomTab applyOn:self];
 }
 
 -(void)applyTopTabsOptions {
-	[self.navigationOptions.topTab applyOn:self];
+	[self.options.topTab applyOn:self];
 }
 
 /**

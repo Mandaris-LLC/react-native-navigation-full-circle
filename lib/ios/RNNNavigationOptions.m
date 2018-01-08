@@ -17,19 +17,19 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 	return [self initWithDict:@{}];
 }
 
--(instancetype)initWithDict:(NSDictionary *)navigationOptions {
+-(instancetype)initWithDict:(NSDictionary *)options {
 	self = [super init];
-	self.statusBarHidden = [navigationOptions objectForKey:@"statusBarHidden"];
-	self.screenBackgroundColor = [navigationOptions objectForKey:@"screenBackgroundColor"];
-	self.backButtonTransition = [navigationOptions objectForKey:@"backButtonTransition"];
-	self.orientation = [navigationOptions objectForKey:@"orientation"];
-	self.topBar = [[RNNTopBarOptions alloc] initWithDict:[navigationOptions objectForKey:@"topBar"]];
-	self.topTab = [[RNNTopTabOptions alloc] initWithDict:[navigationOptions objectForKey:@"topTab"]];
-	self.bottomTabs = [[RNNBottomTabsOptions alloc] initWithDict:[navigationOptions objectForKey:@"bottomTabs"]];
-	self.sideMenu = [[RNNSideMenuOptions alloc] initWithDict:[navigationOptions objectForKey:@"sideMenu"]];
-	self.backgroundImage = [RCTConvert UIImage:[navigationOptions objectForKey:@"backgroundImage"]];
-	self.rootBackgroundImage = [RCTConvert UIImage:[navigationOptions objectForKey:@"rootBackgroundImage"]];
-	self.bottomTab = [[RNNBottomTabOptions alloc] initWithDict:[navigationOptions objectForKey:@"bottomTab"]];
+	self.statusBarHidden = [options objectForKey:@"statusBarHidden"];
+	self.screenBackgroundColor = [options objectForKey:@"screenBackgroundColor"];
+	self.backButtonTransition = [options objectForKey:@"backButtonTransition"];
+	self.orientation = [options objectForKey:@"orientation"];
+	self.topBar = [[RNNTopBarOptions alloc] initWithDict:[options objectForKey:@"topBar"]];
+	self.topTab = [[RNNTopTabOptions alloc] initWithDict:[options objectForKey:@"topTab"]];
+	self.bottomTabs = [[RNNBottomTabsOptions alloc] initWithDict:[options objectForKey:@"bottomTabs"]];
+	self.sideMenu = [[RNNSideMenuOptions alloc] initWithDict:[options objectForKey:@"sideMenu"]];
+	self.backgroundImage = [RCTConvert UIImage:[options objectForKey:@"backgroundImage"]];
+	self.rootBackgroundImage = [RCTConvert UIImage:[options objectForKey:@"rootBackgroundImage"]];
+	self.bottomTab = [[RNNBottomTabOptions alloc] initWithDict:[options objectForKey:@"bottomTab"]];
     
 	return self;
 }

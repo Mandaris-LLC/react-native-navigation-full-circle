@@ -11,7 +11,7 @@
 
 @interface RNNRootViewController : UIViewController	<RNNRootViewProtocol>
 
-@property (nonatomic, strong) RNNNavigationOptions* navigationOptions;
+@property (nonatomic, strong) RNNNavigationOptions* options;
 @property (nonatomic, strong) RNNAnimator* animator;
 @property (nonatomic, strong) RNNEventEmitter *eventEmitter;
 @property (nonatomic, strong) NSString* componentId;
