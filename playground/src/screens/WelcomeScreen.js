@@ -106,50 +106,52 @@ class WelcomeScreen extends Component {
           }
         },
         center: {
-          bottomTabs: [
-            {
-              stack: {
-                children: [
-                  {
-                    component: {
-                      name: 'navigation.playground.TextScreen',
-                      passProps: {
-                        text: 'This is a side menu center screen tab 1'
+          bottomTabs: {
+            children: [
+              {
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        name: 'navigation.playground.TextScreen',
+                        passProps: {
+                          text: 'This is a side menu center screen tab 1'
+                        }
                       }
                     }
-                  }
-                ]
-              }
-            },
-            {
-              stack: {
-                children: [
-                  {
-                    component: {
-                      name: 'navigation.playground.TextScreen',
-                      passProps: {
-                        text: 'This is a side menu center screen tab 2'
+                  ]
+                }
+              },
+              {
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        name: 'navigation.playground.TextScreen',
+                        passProps: {
+                          text: 'This is a side menu center screen tab 2'
+                        }
                       }
                     }
-                  }
-                ]
-              }
-            },
-            {
-              stack: {
-                children: [
-                  {
-                    component: {
-                      name: 'navigation.playground.TextScreen',
-                      passProps: {
-                        text: 'This is a side menu center screen tab 3'
+                  ]
+                }
+              },
+              {
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        name: 'navigation.playground.TextScreen',
+                        passProps: {
+                          text: 'This is a side menu center screen tab 3'
+                        }
                       }
                     }
-                  }
-                ]
+                  ]
+                }
               }
-            }
-          ]
+            ]
+          }
         },
         right: {
           component: {
