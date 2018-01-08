@@ -4,7 +4,7 @@
 #import "RNNAnimator.h"
 
 @interface RNNRootViewController()
-@property (nonatomic, strong) NSString* containerName;
+@property (nonatomic, strong) NSString* componentName;
 @property (nonatomic) BOOL _statusBarHidden;
 
 @end
@@ -13,17 +13,17 @@
 
 -(instancetype)initWithName:(NSString*)name
 				withOptions:(RNNNavigationOptions*)options
-			withContainerId:(NSString*)containerId
+			withComponentId:(NSString*)componentId
 			rootViewCreator:(id<RNNRootViewCreator>)creator
 			   eventEmitter:(RNNEventEmitter*)eventEmitter
 				   animator:(RNNAnimator *)animator {
 	self = [super init];
-	self.containerId = containerId;
-	self.containerName = name;
+	self.componentId = componentId;
+	self.componentName = name;
 	self.navigationOptions = options;
 	self.eventEmitter = eventEmitter;
 	self.animator = animator;
-	self.view = [creator createRootView:self.containerName rootViewId:self.containerId];
+	self.view = [creator createRootView:self.componentName rootViewId:self.componentId];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(onJsReload)
@@ -71,12 +71,12 @@
 
 -(void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	[self.eventEmitter sendContainerDidAppear:self.containerId];
+	[self.eventEmitter sendComponentDidAppear:self.componentId];
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
-	[self.eventEmitter sendContainerDidDisappear:self.containerId];
+	[self.eventEmitter sendComponentDidDisappear:self.componentId];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{

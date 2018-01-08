@@ -35,10 +35,10 @@
 	completion();
 }
 
--(void) setOptions:(NSString*)containerId options:(NSDictionary*)options completion:(RNNTransitionCompletionBlock)completion {
+-(void) setOptions:(NSString*)componentId options:(NSDictionary*)options completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	
-	UIViewController* vc = [_store findContainerForId:containerId];
+	UIViewController* vc = [_store findComponentForId:componentId];
 	if([vc isKindOfClass:[RNNRootViewController class]]) {
 		RNNRootViewController* rootVc = (RNNRootViewController*)vc;
 		[rootVc.navigationOptions mergeWith:options];
@@ -51,46 +51,46 @@
 	}
 }
 
--(void) push:(NSString*)containerId layout:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion {
+-(void) push:(NSString*)componentId layout:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	
 	UIViewController<RNNRootViewProtocol> *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
-	[_navigationStackManager push:newVc onTop:containerId completion:completion];
+	[_navigationStackManager push:newVc onTop:componentId completion:completion];
 }
 
--(void)pop:(NSString*)containerId options:(NSDictionary*)options completion:(RNNTransitionCompletionBlock)completion {
+-(void)pop:(NSString*)componentId options:(NSDictionary*)options completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[CATransaction begin];
 	[CATransaction setCompletionBlock:completion];
 	NSDictionary* animationData = options[@"customTransition"];
 	if (animationData){
 		if ([animationData objectForKey:@"animations"]) {
-			[_navigationStackManager pop:containerId withAnimationData:animationData];
+			[_navigationStackManager pop:componentId withAnimationData:animationData];
 		} else {
 			[[NSException exceptionWithName:NSInvalidArgumentException reason:@"unsupported transitionAnimation" userInfo:nil] raise];
 		}
 	} else {
-		[_navigationStackManager pop:containerId withAnimationData:nil];
+		[_navigationStackManager pop:componentId withAnimationData:nil];
 	}
 	[CATransaction commit];
 }
 
--(void) popTo:(NSString*)containerId completion:(RNNTransitionCompletionBlock)completion {
+-(void) popTo:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[CATransaction begin];
 	[CATransaction setCompletionBlock:completion];
 	
-	[_navigationStackManager popTo:containerId];
+	[_navigationStackManager popTo:componentId];
 	
 	[CATransaction commit];
 }
 
--(void) popToRoot:(NSString*)containerId completion:(RNNTransitionCompletionBlock)completion {
+-(void) popToRoot:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[CATransaction begin];
 	[CATransaction setCompletionBlock:completion];
 	
-	[_navigationStackManager popToRoot:containerId];
+	[_navigationStackManager popToRoot:componentId];
 	
 	[CATransaction commit];
 }
@@ -102,12 +102,12 @@
 	[_modalManager showModal:newVc completion:completion];
 }
 
--(void) dismissModal:(NSString*)containerId completion:(RNNTransitionCompletionBlock)completion {
+-(void) dismissModal:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[CATransaction begin];
 	[CATransaction setCompletionBlock:completion];
 	
-	[_modalManager dismissModal:containerId];
+	[_modalManager dismissModal:componentId];
 	
 	[CATransaction commit];
 }

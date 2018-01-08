@@ -45,7 +45,7 @@
 	UIViewController<RNNRootViewProtocol> *result;
 	
 	if ( node.isComponent) {
-		result = [self createContainer:node];
+		result = [self createComponent:node];
 	}
 	
 	else if (node.isStack)	{
@@ -79,22 +79,22 @@
 		@throw [NSException exceptionWithName:@"UnknownControllerType" reason:[@"Unknown controller type " stringByAppendingString:node.type] userInfo:nil];
 	}
 
-	[_store setContainer:result containerId:node.nodeId];
+	[_store setComponent:result componentId:node.nodeId];
 	
 	return result;
 }
 
-- (UIViewController<RNNRootViewProtocol> *)createContainer:(RNNLayoutNode*)node {
+- (UIViewController<RNNRootViewProtocol> *)createComponent:(RNNLayoutNode*)node {
 	NSString* name = node.data[@"name"];
 	NSDictionary* customTransition = node.data[@"customTransition"];
 	RNNAnimator* animator = [[RNNAnimator alloc] initWithAnimationsDictionary:customTransition];
 	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:node.data[@"navigationOptions"]];
-	NSString* containerId = node.nodeId;
-	RNNRootViewController* container = [[RNNRootViewController alloc] initWithName:name withOptions:options withContainerId:containerId rootViewCreator:_creator eventEmitter:_eventEmitter animator:animator];
+	NSString* componentId = node.nodeId;
+	RNNRootViewController* component = [[RNNRootViewController alloc] initWithName:name withOptions:options withComponentId:componentId rootViewCreator:_creator eventEmitter:_eventEmitter animator:animator];
 	CGSize availableSize = UIApplication.sharedApplication.delegate.window.bounds.size;
-	[_bridge.uiManager setAvailableSize:availableSize forRootView:container.view];
+	[_bridge.uiManager setAvailableSize:availableSize forRootView:component.view];
 	
-	return container;
+	return component;
 }
 
 - (UIViewController<RNNRootViewProtocol> *)createStack:(RNNLayoutNode*)node {
