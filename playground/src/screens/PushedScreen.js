@@ -36,10 +36,12 @@ class PushedScreen extends Component {
 
   async onClickPush() {
     await Navigation.push(this.props.componentId, {
-      name: 'navigation.playground.PushedScreen',
-      passProps: {
-        stackPosition: this.getStackPosition() + 1,
-        previousScreenIds: _.concat([], this.props.previousScreenIds || [], this.props.componentId)
+      component: {
+        name: 'navigation.playground.PushedScreen',
+        passProps: {
+          stackPosition: this.getStackPosition() + 1,
+          previousScreenIds: _.concat([], this.props.previousScreenIds || [], this.props.componentId)
+        }
       }
     });
   }

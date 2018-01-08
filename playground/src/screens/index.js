@@ -16,7 +16,7 @@ const SideMenuScreen = require('./SideMenuScreen');
 const TopTabScreen = require('./TopTabScreen');
 const TopTabOptionsScreen = require('./TopTabOptionsScreen');
 
-function registerComponents() {
+function registerScreens() {
   Navigation.registerComponent(`navigation.playground.CustomTransitionDestination`, () => CustomTransitionDestination);
   Navigation.registerComponent(`navigation.playground.CustomTransitionOrigin`, () => CustomTransitionOrigin);
   Navigation.registerComponent(`navigation.playground.ScrollViewScreen`, () => ScrollViewScreen);
@@ -36,5 +36,5 @@ function registerComponents() {
 }
 
 module.exports = {
-  registerComponents
+  registerScreens
 };
