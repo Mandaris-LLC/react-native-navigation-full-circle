@@ -5,7 +5,7 @@
 #  React Native Navigation v2 (WIP)
 We are rebuilding react-native-navigation.
 
-> As we are in stage alpha, expect breaking API changes or use a specific version (for example "2.0.2071")
+> As we are in stage alpha, expect breaking API changes or use a specific version (for example "2.0.1234")
 
 - [Why?](#why-rebuild-react-native-navigation)
 - [v2 Roadmap](#v2-roadmap)
