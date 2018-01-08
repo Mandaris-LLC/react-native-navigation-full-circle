@@ -5,7 +5,7 @@ const { Text } = require('react-native');
 const { connect } = require('remx');
 const store = require('./MyStore');
 
-class MyContainer extends Component {
+class MyComponent extends Component {
   render() {
     if (this.props.renderCountIncrement) {
       this.props.renderCountIncrement();
@@ -28,4 +28,4 @@ function mapStateToProps() {
   };
 }
 
-module.exports = connect(mapStateToProps)(MyContainer);
+module.exports = connect(mapStateToProps)(MyComponent);

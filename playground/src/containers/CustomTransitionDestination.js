@@ -21,14 +21,14 @@ class CustomTransitionDestination extends Component {
     };
   }
   push() {
-    Navigation.push(this.props.containerId, {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.OptionsScreen'
       }
     });
   }
   pop() {
-    Navigation.pop(this.props.containerId, {
+    Navigation.pop(this.props.componentId, {
       customTransition: {
         animations: [{ type: 'sharedElement', fromId: 'title2', toId: 'title1', startDelay: 0, springVelocity: 0.2, duration: 0.5 },
         { type: 'sharedElement', toId: 'image1', fromId: 'customDestinationImage', startDelay: 0, springVelocity: 0.2, duration: 0.5 },

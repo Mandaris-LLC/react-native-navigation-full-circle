@@ -29,23 +29,23 @@ class PushedScreen extends Component {
         <Button title="Pop Previous" testID={testIDs.POP_PREVIOUS_BUTTON} onPress={this.onClickPopPrevious} />
         <Button title="Pop To Root" testID={testIDs.POP_TO_ROOT} onPress={this.onClickPopToRoot} />
         {stackPosition > 2 && <Button title="Pop To Stack Position 1" testID={testIDs.POP_STACK_POSITION_ONE_BUTTON} onPress={this.onClickPopToFirstPosition} />}
-        <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
+        <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
       </View>
     );
   }
 
   async onClickPush() {
-    await Navigation.push(this.props.containerId, {
+    await Navigation.push(this.props.componentId, {
       name: 'navigation.playground.PushedScreen',
       passProps: {
         stackPosition: this.getStackPosition() + 1,
-        previousScreenIds: _.concat([], this.props.previousScreenIds || [], this.props.containerId)
+        previousScreenIds: _.concat([], this.props.previousScreenIds || [], this.props.componentId)
       }
     });
   }
 
   async onClickPop() {
-    await Navigation.pop(this.props.containerId);
+    await Navigation.pop(this.props.componentId);
   }
 
   async onClickPopPrevious() {
@@ -57,7 +57,7 @@ class PushedScreen extends Component {
   }
 
   async onClickPopToRoot() {
-    await Navigation.popToRoot(this.props.containerId);
+    await Navigation.popToRoot(this.props.componentId);
   }
 
   getStackPosition() {

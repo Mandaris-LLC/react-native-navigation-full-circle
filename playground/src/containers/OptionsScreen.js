@@ -63,14 +63,14 @@ class OptionsScreen extends Component {
         <Button title="Custom Transition" onPress={this.onClickCustomTranstition} />
         <Button title="Show custom alert" testID={testIDs.SHOW_CUSTOM_ALERT_BUTTON} onPress={this.onClickAlert} />
         <Button title="Show snackbar" testID={testIDs.SHOW_SNACKBAR_BUTTON} onPress={this.onClickSnackbar} />
-        <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
+        <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
       </View>
     );
   }
 
   onNavigationButtonPressed(id) {
     if (id === BUTTON_ONE) {
-      Navigation.setOptions(this.props.containerId, {
+      Navigation.setOptions(this.props.componentId, {
         topBar: {
           rightButtons: [{
             id: BUTTON_TWO,
@@ -88,7 +88,7 @@ class OptionsScreen extends Component {
         }
       });
     } else if (id === BUTTON_TWO) {
-      Navigation.setOptions(this.props.containerId, {
+      Navigation.setOptions(this.props.componentId, {
         topBar: {
           rightButtons: [{
             id: BUTTON_ONE,
@@ -106,12 +106,12 @@ class OptionsScreen extends Component {
         }
       });
     } else if (id === BUTTON_LEFT) {
-      Navigation.pop(this.props.containerId);
+      Navigation.pop(this.props.componentId);
     }
   }
 
   onClickDynamicOptions() {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       topBar: {
         title: 'Dynamic Title',
         textColor: '#00FFFF',
@@ -124,7 +124,7 @@ class OptionsScreen extends Component {
   }
 
   onClickScrollViewScreen() {
-    Navigation.push(this.props.containerId, {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.ScrollViewScreen'
       }
@@ -132,7 +132,7 @@ class OptionsScreen extends Component {
   }
 
   onClickCustomTranstition() {
-    Navigation.push(this.props.containerId, {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.CustomTransitionOrigin'
       }
@@ -140,21 +140,21 @@ class OptionsScreen extends Component {
   }
 
   onClickTopBarTransparent() {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       topBar: {
         transparent: true
       }
     });
   }
   onClickTopBarOpaque() {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       topBar: {
         transparent: false
       }
     });
   }
   onClickShowTopBar() {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       topBar: {
         hidden: false,
         animateHide: true
@@ -163,7 +163,7 @@ class OptionsScreen extends Component {
   }
 
   onClickHideTopBar() {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       topBar: {
         hidden: true,
         animateHide: true

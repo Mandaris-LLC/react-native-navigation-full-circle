@@ -36,7 +36,7 @@ class ScrollViewScreen extends Component {
   }
 
   onClickToggleTopBarHideOnScroll() {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       topBar: {
         hideOnScroll: !this.state.topBarHideOnScroll
       }

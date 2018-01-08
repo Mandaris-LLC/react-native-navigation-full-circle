@@ -4,7 +4,7 @@ const path = require('path');
 
 const BASE_DIR = './lib/src/params/';
 const OPTIONS_DIR = BASE_DIR + 'options/';
-const CONTAINERS_DIR = BASE_DIR + 'containers/';
+const CONTAINERS_DIR = BASE_DIR + 'components/';
 const OUTPUT_DIR = './docs/docs/';
 const PARAMS_PARTIALS = ['./docs/templates/header.hbs', './docs/templates/sig-name.hbs'];
 const PARTIALS = [

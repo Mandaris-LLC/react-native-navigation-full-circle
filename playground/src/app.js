@@ -1,8 +1,8 @@
 const Navigation = require('react-native-navigation');
-const { registerContainers } = require('./containers');
+const { registerComponents } = require('./components');
 
 function start() {
-  registerContainers();
+  registerComponents();
   Navigation.events().onAppLaunched(() => {
     Navigation.setRoot({
       stack: {

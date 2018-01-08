@@ -55,13 +55,13 @@ class LifecycleScreen extends Component {
         <Text style={styles.h1}>{`Lifecycle Screen`}</Text>
         <Text style={styles.h1}>{this.state.text}</Text>
         <Button title="Push to test didDisappear" testID={testIDs.PUSH_TO_TEST_DID_DISAPPEAR_BUTTON} onPress={this.onClickPush} />
-        <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
+        <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
       </View>
     );
   }
 
   onClickPush() {
-    Navigation.push(this.props.containerId, { component: { name: 'navigation.playground.TextScreen' } });
+    Navigation.push(this.props.componentId, { component: { name: 'navigation.playground.TextScreen' } });
   }
 }
 module.exports = LifecycleScreen;

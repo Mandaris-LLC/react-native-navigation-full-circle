@@ -39,7 +39,7 @@ class WelcomeScreen extends Component {
         <Button title="Show Modal" testID={testIDs.SHOW_MODAL_BUTTON} onPress={this.onClickShowModal} />
         <Button title="Show Redbox" testID={testIDs.SHOW_REDBOX_BUTTON} onPress={this.onClickShowRedbox} />
         <Button title="Orientation" testID={testIDs.ORIENTATION_BUTTON} onPress={this.onClickPushOrientationMenuScreen} />
-        <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
+        <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
       </View>
     );
   }
@@ -164,7 +164,7 @@ class WelcomeScreen extends Component {
   }
 
   async onClickPush() {
-    await Navigation.push(this.props.containerId, {
+    await Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.PushedScreen'
       }
@@ -172,7 +172,7 @@ class WelcomeScreen extends Component {
   }
 
   onClickLifecycleScreen() {
-    Navigation.push(this.props.containerId, {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.LifecycleScreen'
       }
@@ -192,7 +192,7 @@ class WelcomeScreen extends Component {
   }
 
   onClickPushOptionsScreen() {
-    Navigation.push(this.props.containerId, {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.OptionsScreen'
       }
@@ -200,7 +200,7 @@ class WelcomeScreen extends Component {
   }
 
   onClickPushTopTabsScreen() {
-    Navigation.push(this.props.containerId, {
+    Navigation.push(this.props.componentId, {
       topTabs: [
         {
           name: 'navigation.playground.TopTabOptionsScreen',
@@ -251,7 +251,7 @@ class WelcomeScreen extends Component {
   }
 
   onClickBackHandler() {
-    Navigation.push(this.props.containerId, {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.BackHandlerScreen'
       }
@@ -259,7 +259,7 @@ class WelcomeScreen extends Component {
   }
 
   onClickPushOrientationMenuScreen() {
-    Navigation.push(this.props.containerId, {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.OrientationSelectScreen'
       }

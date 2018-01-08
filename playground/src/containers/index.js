@@ -16,25 +16,25 @@ const SideMenuScreen = require('./SideMenuScreen');
 const TopTabScreen = require('./TopTabScreen');
 const TopTabOptionsScreen = require('./TopTabOptionsScreen');
 
-function registerContainers() {
-  Navigation.registerContainer(`navigation.playground.CustomTransitionDestination`, () => CustomTransitionDestination);
-  Navigation.registerContainer(`navigation.playground.CustomTransitionOrigin`, () => CustomTransitionOrigin);
-  Navigation.registerContainer(`navigation.playground.ScrollViewScreen`, () => ScrollViewScreen);
-  Navigation.registerContainer(`navigation.playground.WelcomeScreen`, () => WelcomeScreen);
-  Navigation.registerContainer(`navigation.playground.ModalScreen`, () => ModalScreen);
-  Navigation.registerContainer(`navigation.playground.LifecycleScreen`, () => LifecycleScreen);
-  Navigation.registerContainer(`navigation.playground.TextScreen`, () => TextScreen);
-  Navigation.registerContainer(`navigation.playground.PushedScreen`, () => PushedScreen);
-  Navigation.registerContainer(`navigation.playground.OptionsScreen`, () => OptionsScreen);
-  Navigation.registerContainer(`navigation.playground.OrientationSelectScreen`, () => OrientationSelectScreen);
-  Navigation.registerContainer(`navigation.playground.OrientationDetectScreen`, () => OrientationDetectScreen);
-  Navigation.registerContainer('navigation.playground.CustomDialog', () => CustomDialog);
-  Navigation.registerContainer('navigation.playground.BackHandlerScreen', () => BandHandlerScreen);
-  Navigation.registerContainer('navigation.playground.SideMenuScreen', () => SideMenuScreen);
-  Navigation.registerContainer('navigation.playground.TopTabScreen', () => TopTabScreen);
-  Navigation.registerContainer('navigation.playground.TopTabOptionsScreen', () => TopTabOptionsScreen);
+function registerComponents() {
+  Navigation.registerComponent(`navigation.playground.CustomTransitionDestination`, () => CustomTransitionDestination);
+  Navigation.registerComponent(`navigation.playground.CustomTransitionOrigin`, () => CustomTransitionOrigin);
+  Navigation.registerComponent(`navigation.playground.ScrollViewScreen`, () => ScrollViewScreen);
+  Navigation.registerComponent(`navigation.playground.WelcomeScreen`, () => WelcomeScreen);
+  Navigation.registerComponent(`navigation.playground.ModalScreen`, () => ModalScreen);
+  Navigation.registerComponent(`navigation.playground.LifecycleScreen`, () => LifecycleScreen);
+  Navigation.registerComponent(`navigation.playground.TextScreen`, () => TextScreen);
+  Navigation.registerComponent(`navigation.playground.PushedScreen`, () => PushedScreen);
+  Navigation.registerComponent(`navigation.playground.OptionsScreen`, () => OptionsScreen);
+  Navigation.registerComponent(`navigation.playground.OrientationSelectScreen`, () => OrientationSelectScreen);
+  Navigation.registerComponent(`navigation.playground.OrientationDetectScreen`, () => OrientationDetectScreen);
+  Navigation.registerComponent('navigation.playground.CustomDialog', () => CustomDialog);
+  Navigation.registerComponent('navigation.playground.BackHandlerScreen', () => BandHandlerScreen);
+  Navigation.registerComponent('navigation.playground.SideMenuScreen', () => SideMenuScreen);
+  Navigation.registerComponent('navigation.playground.TopTabScreen', () => TopTabScreen);
+  Navigation.registerComponent('navigation.playground.TopTabOptionsScreen', () => TopTabOptionsScreen);
 }
 
 module.exports = {
-  registerContainers
+  registerComponents
 };

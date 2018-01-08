@@ -6,7 +6,7 @@ const { View, Text, Button } = require('react-native');
 const Navigation = require('react-native-navigation');
 const testIDs = require('../testIDs');
 
-let globalFirstContainerID;
+let globalFirstComponentID;
 
 class TextScreen extends Component {
   static get options() {
@@ -19,7 +19,7 @@ class TextScreen extends Component {
 
   constructor(props) {
     super(props);
-    globalFirstContainerID = (props.text === 'This is tab 1') ? props.containerId : globalFirstContainerID;
+    globalFirstComponentID = (props.text === 'This is tab 1') ? props.componentId : globalFirstComponentID;
   }
 
   render() {
@@ -27,10 +27,10 @@ class TextScreen extends Component {
       <View style={styles.root}>
         <Text style={styles.h1} testID={testIDs.CENTERED_TEXT_HEADER}>{this.props.text || 'Text Screen'}</Text>
         {this.renderTextFromFunctionInProps()}
-        <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
+        <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
         <Button title={'Set Tab Badge'} testID={testIDs.SET_TAB_BADGE_BUTTON} onPress={() => this.onButtonPress()} />
         <Button title={'Switch To Tab 2'} testID={testIDs.SWITCH_SECOND_TAB_BUTTON} onPress={() => this.onClickSwitchToTab()} />
-        <Button title={'Switch To Tab 1 by containerID'} testID={testIDs.SWITCH_FIRST_TAB_BUTTON} onPress={() => this.onClickSwitchToTabByContainerID()} />
+        <Button title={'Switch To Tab 1 by componentID'} testID={testIDs.SWITCH_FIRST_TAB_BUTTON} onPress={() => this.onClickSwitchToTabByComponentID()} />
         <Button title="Hide Tab Bar" testID={testIDs.HIDE_BOTTOM_TABS_BUTTON} onPress={() => this.hideTabBar(true)} />
         <Button title="Show Tab Bar" testID={testIDs.SHOW_BOTTOM_TABS_BUTTON} onPress={() => this.hideTabBar(false)} />
         <Button title="Show Left Side Menu" testID={testIDs.SHOW_LEFT_SIDE_MENU_BUTTON} onPress={() => this.showSideMenu('left')} />
@@ -49,7 +49,7 @@ class TextScreen extends Component {
   }
 
   onButtonPress() {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       bottomTab: {
         badge: `TeSt`
       }
@@ -57,7 +57,7 @@ class TextScreen extends Component {
   }
 
   onClickSwitchToTab() {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       bottomTabs: {
         currentTabIndex: 1,
         hidden: true,
@@ -66,16 +66,16 @@ class TextScreen extends Component {
     });
   }
 
-  onClickSwitchToTabByContainerID() {
-    Navigation.setOptions(this.props.containerId, {
+  onClickSwitchToTabByComponentID() {
+    Navigation.setOptions(this.props.componentId, {
       bottomTabs: {
-        currentTabId: globalFirstContainerID
+        currentTabId: globalFirstComponentID
       }
     });
   }
 
   hideTabBar(hidden) {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       bottomTabs: {
         hidden
       }
@@ -83,7 +83,7 @@ class TextScreen extends Component {
   }
 
   showSideMenu(side) {
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       sideMenu: {
         [side]: {
           visible: true

@@ -12,7 +12,7 @@ class OrientationDetectScreen extends Component {
 
     this.detectHorizontal = this.detectHorizontal.bind(this);
     this.state = { horizontal: false };
-    Navigation.setOptions(this.props.containerId, {
+    Navigation.setOptions(this.props.componentId, {
       orientation: props.orientation
     });
   }
@@ -21,8 +21,8 @@ class OrientationDetectScreen extends Component {
     return (
       <View style={styles.root} onLayout={this.detectHorizontal}>
         <Text style={styles.h1}>{`Orientation Screen`}</Text>
-        <Button title="Dismiss" testID={testIDs.DISMISS_BUTTON} onPress={() => Navigation.dismissModal(this.props.containerId)} />
-        <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
+        <Button title="Dismiss" testID={testIDs.DISMISS_BUTTON} onPress={() => Navigation.dismissModal(this.props.componentId)} />
+        <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
         <Text style={styles.footer} testID="currentOrientation">{this.state.horizontal ? 'Landscape' : 'Portrait'}</Text>
       </View>
     );
