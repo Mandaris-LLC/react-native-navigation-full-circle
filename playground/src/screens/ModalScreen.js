@@ -83,9 +83,11 @@ class ModalScreen extends Component {
 
   onClickPushScreen() {
     Navigation.push(this.props.containerId, {
-      name: `navigation.playground.PushedScreen`,
-      passProps: {
-        text: 'Pushed from modal'
+      component: {
+        name: `navigation.playground.PushedScreen`,
+        passProps: {
+          text: 'Pushed from modal'
+        }
       }
     });
   }
