@@ -37,8 +37,8 @@ public class LayoutFactory {
 		switch (node.type) {
 			case Component:
 				return createComponent(node);
-			case ComponentStack:
-				return createComponentStack(node);
+			case Stack:
+				return createStack(node);
 			case BottomTabs:
 				return createBottomTabs(node);
 			case SideMenuRoot:
@@ -49,12 +49,12 @@ public class LayoutFactory {
 				return createSideMenuLeft(node);
 			case SideMenuRight:
 				return createSideMenuRight(node);
-			case CustomDialog:
-				return createDialogComponent(node);
+//			case CustomDialog:
+//				return createDialogComponent(node);
             case TopTabs:
                 return createTopTabs(node);
-            case TopTab:
-                return createTopTab(node);
+//            case TopTab:
+//                return createTopTab(node);
 			default:
 				throw new IllegalArgumentException("Invalid node type: " + node.type);
 		}
@@ -105,7 +105,7 @@ public class LayoutFactory {
         );
 	}
 
-	private ViewController createComponentStack(LayoutNode node) {
+	private ViewController createStack(LayoutNode node) {
 		StackController stackController = new StackController(activity, node.id);
 		for (LayoutNode child : node.children) {
 			stackController.push(create(child), null);

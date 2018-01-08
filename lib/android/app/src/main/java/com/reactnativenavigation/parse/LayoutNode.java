@@ -8,15 +8,13 @@ import java.util.List;
 public class LayoutNode {
 	public enum Type {
 		Component,
-		ComponentStack,
+		Stack,
 		BottomTabs,
 		SideMenuRoot,
 		SideMenuCenter,
 		SideMenuLeft,
 		SideMenuRight,
-		CustomDialog,
-        TopTabs,
-        TopTab
+        TopTabs
 	}
 
 	public final String id;

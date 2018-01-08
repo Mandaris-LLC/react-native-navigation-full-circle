@@ -30,7 +30,7 @@ public class LayoutNodeParserTest extends BaseTest {
 	@Test
 	public void parseFromTree() throws Exception {
 		JSONObject tree = new JSONObject("{id: node1, " +
-				"type: ComponentStack, " +
+				"type: Stack, " +
 				"data: {dataKey: dataValue}, " +
 				"children: [{id: childId1, type: Component}]}");
 
@@ -38,7 +38,7 @@ public class LayoutNodeParserTest extends BaseTest {
 
 		assertThat(result).isNotNull();
 		assertThat(result.id).isEqualTo("node1");
-		assertThat(result.type).isEqualTo(LayoutNode.Type.ComponentStack);
+		assertThat(result.type).isEqualTo(LayoutNode.Type.Stack);
 		assertThat(result.data.length()).isEqualTo(1);
 		assertThat(result.data.getString("dataKey")).isEqualTo("dataValue");
 		assertThat(result.children).hasSize(1);
