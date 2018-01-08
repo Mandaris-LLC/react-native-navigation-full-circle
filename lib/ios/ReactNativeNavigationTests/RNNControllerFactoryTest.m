@@ -46,7 +46,7 @@
 - (void)testCreateLayout_ComponentStackLayout {
 	id ans = [self.factory createLayoutAndSaveToStore:
 			  @{@"id": @"cntId",
-				@"type": @"ComponentStack",
+				@"type": @"Stack",
 				@"data": @{},
 				@"children": @[]}];
 	XCTAssertTrue([ans isMemberOfClass:[RNNNavigationController class]]);
@@ -55,7 +55,7 @@
 - (void)testCreateLayout_ComponentStackLayoutRecursive {
 	RNNNavigationController* ans = (RNNNavigationController*) [self.factory createLayoutAndSaveToStore:
 															 @{@"id": @"cntId",
-															   @"type": @"ComponentStack",
+															   @"type": @"Stack",
 															   @"data": @{},
 															   @"children": @[
 																	   @{@"id": @"cntId_2",
@@ -76,7 +76,7 @@
 														  @"data": @{},
 														  @"children": @[
 																  @{@"id": @"cntId_2",
-																	@"type": @"ComponentStack",
+																	@"type": @"Stack",
 																	@"data": @{},
 																	@"children": @[
 																			@{@"id": @"cntId_3",

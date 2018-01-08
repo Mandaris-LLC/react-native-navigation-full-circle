@@ -90,7 +90,7 @@
 	return YES;
 }
 - (void)animationEnded:(BOOL)transitionCompleted {
-	
+
 }
 
 - (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext
@@ -104,8 +104,8 @@
 	self.transitionContext = transitionContext;
 	UIViewController* toVC   = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
 	UIViewController* fromVC  = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-	UIView* componentView = [transitionContext componentView];
-	
+	UIView* componentView = [transitionContext containerView];
+
 	toVC.view.frame = fromVC.view.frame;
 	UIView* topViewContent = [self.topView subviews][0];
 	UIImage* image = [[self.topView subviews][0] image];
@@ -143,7 +143,7 @@
 								  if (![transitionContext transitionWasCancelled]) {
 									  [componentView addSubview: toVC.view];
 									  [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-									  
+
 								  }
 								  if ([transitionContext transitionWasCancelled]) {
 									  [self.topView setHidden:NO];
@@ -157,15 +157,15 @@
 								  animationControllerForOperation:(UINavigationControllerOperation)operation
 											   fromViewController:(UIViewController*)fromVC
 												 toViewController:(UIViewController*)toVC {
-	
+
 		if (operation == UINavigationControllerOperationPop) {
 			return self;
 		} else {
 			return nil;
 		}
-	
+
 	return nil;
-	
+
 }
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
 						 interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {

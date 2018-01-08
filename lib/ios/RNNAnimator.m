@@ -147,7 +147,7 @@
 {
 	UIViewController* toVC   = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
 	UIViewController* fromVC  = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-	UIView* componentView = [transitionContext componentView];
+	UIView* componentView = [transitionContext containerView];
 	self.fromVC = fromVC;
 	self.toVC = toVC;
 	toVC.view.frame = fromVC.view.frame;
