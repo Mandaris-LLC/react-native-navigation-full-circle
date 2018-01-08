@@ -1,4 +1,5 @@
-throw new Error('temporarily disabled, until newAPI is complete')
+throw new Error('temporarily disabled, until newAPI is complete');
+/*
 const jsdoc2md = require('jsdoc-to-markdown');
 const fs = require('fs');
 const path = require('path');
@@ -60,23 +61,23 @@ function inputFiles() {
       };
     }),
     ...fs.readdirSync(CONTAINERS_DIR)
-        .map((file) => {
-          return {
-            file: CONTAINERS_DIR + file,
-            outputDir: OUTPUT_DIR,
-            partial: PARAMS_PARTIALS,
-            separator: false
-          };
-        }),
+      .map((file) => {
+        return {
+          file: CONTAINERS_DIR + file,
+          outputDir: OUTPUT_DIR,
+          partial: PARAMS_PARTIALS,
+          separator: false
+        };
+      }),
     ...fs.readdirSync(BASE_DIR)
-        .filter((file) => fs.statSync(BASE_DIR + file).isFile())
-        .map((file) => {
-          return {
-            file: BASE_DIR + file,
-            outputDir: OUTPUT_DIR
-          };
-        })
+      .filter((file) => fs.statSync(BASE_DIR + file).isFile())
+      .map((file) => {
+        return {
+          file: BASE_DIR + file,
+          outputDir: OUTPUT_DIR
+        };
+      })
   ];
 }
 
-inputFiles().forEach((inputFile) => generateMarkdownForFile(inputFile));
+inputFiles().forEach((inputFile) => generateMarkdownForFile(inputFile)); */
