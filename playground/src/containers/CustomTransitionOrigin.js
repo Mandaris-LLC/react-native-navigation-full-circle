@@ -51,7 +51,7 @@ class CustomTransitionOrigin extends Component {
     );
   }
   onClickNavigationIcon() {
-    Navigation.push(this.props.containerId, {
+    Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.CustomTransitionDestination',
         customTransition: {

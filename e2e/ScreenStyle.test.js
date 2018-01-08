@@ -8,12 +8,12 @@ describe('screen style', () => {
     await device.relaunchApp();
   });
 
-  it('declare a options on container component', async () => {
+  it('declare a options on component component', async () => {
     await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
     await expect(element(by.label('Static Title'))).toBeVisible();
   });
 
-  it('change title on container component', async () => {
+  it('change title on component component', async () => {
     await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
     await expect(element(by.label('Static Title'))).toBeVisible();
     await elementById(testIDs.DYNAMIC_OPTIONS_BUTTON).tap();

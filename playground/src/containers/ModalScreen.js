@@ -38,7 +38,7 @@ class ModalScreen extends Component {
         {this.getPreviousModalId() ? (<Button title="Dismiss Previous Modal" testID={testIDs.DISMISS_PREVIOUS_MODAL_BUTTON} onPress={this.onClickDismissPreviousModal} />) : undefined}
         {this.props.previousModalIds ? (<Button title="Dismiss ALL Previous Modals" testID={testIDs.DISMISS_ALL_PREVIOUS_MODAL_BUTTON} onPress={this.onClickDismissAllPreviousModals} />) : undefined}
         {this.props.previousModalIds ? (<Button title="Dismiss First In Stack" testID={testIDs.DISMISS_FIRST_MODAL_BUTTON} onPress={this.onClickDismissFirstInStack} />) : undefined}
-        <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
+        <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
       </View>
     );
   }
@@ -49,14 +49,14 @@ class ModalScreen extends Component {
         name: 'navigation.playground.ModalScreen',
         passProps: {
           modalPosition: this.getModalPosition() + 1,
-          previousModalIds: _.concat([], this.props.previousModalIds || [], this.props.containerId)
+          previousModalIds: _.concat([], this.props.previousModalIds || [], this.props.componentId)
         }
       }
     });
   }
 
   async onClickDismissModal() {
-    await Navigation.dismissModal(this.props.containerId);
+    await Navigation.dismissModal(this.props.componentId);
   }
 
   onClickDismissPreviousModal() {
