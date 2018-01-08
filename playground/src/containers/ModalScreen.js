@@ -45,7 +45,7 @@ class ModalScreen extends Component {
 
   onClickShowModal() {
     Navigation.showModal({
-      container: {
+      component: {
         name: 'navigation.playground.ModalScreen',
         passProps: {
           modalPosition: this.getModalPosition() + 1,

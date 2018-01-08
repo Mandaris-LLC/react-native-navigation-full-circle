@@ -21,7 +21,7 @@ class OrientationSelectScreen extends Component {
 
   onClickOrientationScreen(orientation) {
     Navigation.showModal({
-      container: {
+      component: {
         name: 'navigation.playground.OrientationDetectScreen',
         passProps: {
           orientation
