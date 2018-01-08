@@ -4,7 +4,7 @@ package com.reactnativenavigation.viewcontrollers.overlay;
 import android.content.Context;
 
 import com.reactnativenavigation.parse.OverlayOptions;
-import com.reactnativenavigation.viewcontrollers.ContainerViewController;
+import com.reactnativenavigation.viewcontrollers.ComponentViewController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.views.CustomDialog;
 

@@ -3,7 +3,7 @@ package com.reactnativenavigation.viewcontrollers;
 import android.app.Activity;
 
 import com.reactnativenavigation.BaseTest;
-import com.reactnativenavigation.mocks.TestContainerLayout;
+import com.reactnativenavigation.mocks.TestComponentLayout;
 import com.reactnativenavigation.parse.NavigationOptions;
 
 import org.junit.Test;
@@ -14,30 +14,30 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ContainerViewControllerTest extends BaseTest {
-	private ContainerViewController uut;
-	private ContainerViewController.IReactView view;
+public class ComponentViewControllerTest extends BaseTest {
+	private ComponentViewController uut;
+	private ComponentViewController.IReactView view;
 
 	@Override
 	public void beforeEach() {
 		super.beforeEach();
 		Activity activity = newActivity();
-		view = spy(new TestContainerLayout(activity));
-		uut = new ContainerViewController(activity, "containerId1", "containerName", new ContainerViewController.ReactViewCreator() {
+		view = spy(new TestComponentLayout(activity));
+		uut = new ComponentViewController(activity, "componentId1", "componentName", new ComponentViewController.ReactViewCreator() {
 			@Override
-			public ContainerViewController.IReactView create(final Activity activity1, final String containerId, final String containerName) {
+			public ComponentViewController.IReactView create(final Activity activity1, final String componentId, final String componentName) {
 				return view;
 			}
 		}, new NavigationOptions());
 	}
 
 	@Test
-	public void createsViewFromContainerViewCreator() throws Exception {
+	public void createsViewFromComponentViewCreator() throws Exception {
 		assertThat(uut.getView()).isSameAs(view);
 	}
 
 	@Test
-	public void containerViewDestroyedOnDestroy() throws Exception {
+	public void componentViewDestroyedOnDestroy() throws Exception {
 		uut.ensureViewIsCreated();
 		verify(view, times(0)).destroy();
 		uut.destroy();
@@ -45,20 +45,20 @@ public class ContainerViewControllerTest extends BaseTest {
 	}
 
 	@Test
-	public void lifecycleMethodsSentToContainerView() throws Exception {
+	public void lifecycleMethodsSentToComponentView() throws Exception {
 		uut.ensureViewIsCreated();
-		verify(view, times(0)).sendContainerStart();
-		verify(view, times(0)).sendContainerStop();
+		verify(view, times(0)).sendComponentStart();
+		verify(view, times(0)).sendComponentStop();
 		uut.onViewAppeared();
-		verify(view, times(1)).sendContainerStart();
-		verify(view, times(0)).sendContainerStop();
+		verify(view, times(1)).sendComponentStart();
+		verify(view, times(0)).sendComponentStop();
 		uut.onViewDisappear();
-		verify(view, times(1)).sendContainerStart();
-		verify(view, times(1)).sendContainerStop();
+		verify(view, times(1)).sendComponentStart();
+		verify(view, times(1)).sendComponentStop();
 	}
 
 	@Test
-	public void isViewShownOnlyIfContainerViewIsReady() throws Exception {
+	public void isViewShownOnlyIfComponentViewIsReady() throws Exception {
 		assertThat(uut.isViewShown()).isFalse();
 		uut.ensureViewIsCreated();
 		when(view.asView().isShown()).thenReturn(true);

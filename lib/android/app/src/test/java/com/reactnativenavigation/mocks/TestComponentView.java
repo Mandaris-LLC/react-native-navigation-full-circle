@@ -4,14 +4,14 @@ import android.content.Context;
 import android.view.View;
 
 import com.reactnativenavigation.parse.NavigationOptions;
-import com.reactnativenavigation.views.ReactContainer;
+import com.reactnativenavigation.views.ReactComponent;
 import com.reactnativenavigation.views.TopBar;
 
-public class TestContainerView extends View implements ReactContainer {
+public class TestComponentView extends View implements ReactComponent {
 
 	private TopBar topBar;
 
-	public TestContainerView(final Context context) {
+	public TestComponentView(final Context context) {
 		super(context);
 		topBar = new TopBar(context, this);
 
@@ -32,11 +32,11 @@ public class TestContainerView extends View implements ReactContainer {
 	}
 
 	@Override
-	public void sendContainerStart() {
+	public void sendComponentStart() {
 	}
 
 	@Override
-	public void sendContainerStop() {
+	public void sendComponentStop() {
 	}
 
     @Override

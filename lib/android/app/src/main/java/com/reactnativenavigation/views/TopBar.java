@@ -23,12 +23,12 @@ import java.util.ArrayList;
 @SuppressLint("ViewConstructor")
 public class TopBar extends AppBarLayout {
 	private final Toolbar titleBar;
-    private Container container;
+    private Component component;
     private TopTabs topTabs;
 
-    public TopBar(final Context context, Container container) {
+    public TopBar(final Context context, Component component) {
         super(context);
-        this.container = container;
+        this.component = component;
         titleBar = new Toolbar(context);
         topTabs = new TopTabs(getContext());
         addView(titleBar);
@@ -115,7 +115,7 @@ public class TopBar extends AppBarLayout {
 	}
 
 	private void setLeftButton(final Button button) {
-		TitleBarButton leftBarButton = new TitleBarButton(container, this.titleBar, button);
+		TitleBarButton leftBarButton = new TitleBarButton(component, this.titleBar, button);
 		leftBarButton.applyNavigationIcon(getContext());
 	}
 
@@ -129,7 +129,7 @@ public class TopBar extends AppBarLayout {
 
 		for (int i = 0; i < rightButtons.size(); i++){
 	   		Button button = rightButtons.get(i);
-			TitleBarButton titleBarButton = new TitleBarButton(container, this.titleBar, button);
+			TitleBarButton titleBarButton = new TitleBarButton(component, this.titleBar, button);
 			titleBarButton.addToMenu(getContext(), menu);
        }
     }

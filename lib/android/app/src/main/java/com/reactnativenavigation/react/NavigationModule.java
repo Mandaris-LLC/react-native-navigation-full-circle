@@ -52,33 +52,33 @@ public class NavigationModule extends ReactContextBaseJavaModule {
     }
 
 	@ReactMethod
-	public void setOptions(final String onContainerId, final ReadableMap options) {
+	public void setOptions(final String onComponentId, final ReadableMap options) {
 		final NavigationOptions navOptions = NavigationOptions.parse(new TypefaceLoader(activity()), JSONParser.parse(options));
-		handle(() -> navigator().setOptions(onContainerId, navOptions));
+		handle(() -> navigator().setOptions(onComponentId, navOptions));
 	}
 
 	@ReactMethod
-	public void push(final String onContainerId, final ReadableMap rawLayoutTree, final Promise promise) {
+	public void push(final String onComponentId, final ReadableMap rawLayoutTree, final Promise promise) {
 		final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
 		handle(() -> {
             final ViewController viewController = newLayoutFactory().create(layoutTree);
-            navigator().push(onContainerId, viewController, promise);
+            navigator().push(onComponentId, viewController, promise);
         });
 	}
 
 	@ReactMethod
-	public void pop(final String onContainerId, final ReadableMap options, final Promise promise) {
-		handle(() -> navigator().popSpecific(onContainerId, promise));
+	public void pop(final String onComponentId, final ReadableMap options, final Promise promise) {
+		handle(() -> navigator().popSpecific(onComponentId, promise));
 	}
 
 	@ReactMethod
-	public void popTo(final String containerId, final Promise promise) {
-		handle(() -> navigator().popTo(containerId, promise));
+	public void popTo(final String componentId, final Promise promise) {
+		handle(() -> navigator().popTo(componentId, promise));
 	}
 
 	@ReactMethod
-	public void popToRoot(final String containerId, final Promise promise) {
-		handle(() -> navigator().popToRoot(containerId, promise));
+	public void popToRoot(final String componentId, final Promise promise) {
+		handle(() -> navigator().popToRoot(componentId, promise));
 	}
 
 	@ReactMethod
@@ -91,8 +91,8 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 	}
 
 	@ReactMethod
-	public void dismissModal(final String containerId, final Promise promise) {
-		handle(() -> navigator().dismissModal(containerId, promise));
+	public void dismissModal(final String componentId, final Promise promise) {
+		handle(() -> navigator().dismissModal(componentId, promise));
 	}
 
 	@ReactMethod

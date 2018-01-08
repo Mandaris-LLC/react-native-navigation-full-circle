@@ -8,16 +8,16 @@ import android.widget.LinearLayout;
 
 import com.reactnativenavigation.parse.NavigationOptions;
 import com.reactnativenavigation.presentation.OptionsPresenter;
-import com.reactnativenavigation.viewcontrollers.ContainerViewController.IReactView;
+import com.reactnativenavigation.viewcontrollers.ComponentViewController.IReactView;
 
 @SuppressLint("ViewConstructor")
-public class ContainerLayout extends LinearLayout implements ReactContainer {
+public class ComponentLayout extends LinearLayout implements ReactComponent {
 
 	private TopBar topBar;
 	private IReactView reactView;
 	private final OptionsPresenter optionsPresenter;
 
-	public ContainerLayout(Context context, IReactView reactView) {
+	public ComponentLayout(Context context, IReactView reactView) {
 		super(context);
 		this.topBar = new TopBar(context, this);
 		this.reactView = reactView;
@@ -47,13 +47,13 @@ public class ContainerLayout extends LinearLayout implements ReactContainer {
 	}
 
 	@Override
-	public void sendContainerStart() {
-		reactView.sendContainerStart();
+	public void sendComponentStart() {
+		reactView.sendComponentStart();
 	}
 
 	@Override
-	public void sendContainerStop() {
-		reactView.sendContainerStop();
+	public void sendComponentStop() {
+		reactView.sendComponentStop();
 	}
 
     @Override

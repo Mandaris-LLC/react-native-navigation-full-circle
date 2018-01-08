@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.TopTabLayoutMock;
 import com.reactnativenavigation.parse.NavigationOptions;
-import com.reactnativenavigation.viewcontrollers.ContainerViewController.IReactView;
+import com.reactnativenavigation.viewcontrollers.ComponentViewController.IReactView;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabController;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsAdapter;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsController;
@@ -46,7 +46,7 @@ public class TopTabsViewControllerTest extends BaseTest {
 
         TopTabsLayoutCreator layoutCreator = Mockito.mock(TopTabsLayoutCreator.class);
         Mockito.when(layoutCreator.create()).thenReturn(topTabsLayout);
-        uut = new TopTabsController(activity, "containerId", tabControllers, layoutCreator, navigationOptions);
+        uut = new TopTabsController(activity, "componentId", tabControllers, layoutCreator, navigationOptions);
     }
 
     private void createTabs(Activity activity) {
@@ -57,14 +57,14 @@ public class TopTabsViewControllerTest extends BaseTest {
             tabControllers.add(spy(new TopTabController(activity,
                     "idTab" + i,
                     "tab" + i,
-                    (activity1, containerId, containerName) -> reactView,
+                    (activity1, componentId, componentName) -> reactView,
                     tabOptions.get(i))
             ));
         }
     }
 
     @Test
-    public void createsViewFromContainerViewCreator() throws Exception {
+    public void createsViewFromComponentViewCreator() throws Exception {
         uut.ensureViewIsCreated();
         for (int i = 0; i < SIZE; i++) {
             verify(tabControllers.get(i), times(1)).createView();
@@ -72,7 +72,7 @@ public class TopTabsViewControllerTest extends BaseTest {
     }
 
     @Test
-    public void containerViewDestroyedOnDestroy() throws Exception {
+    public void componentViewDestroyedOnDestroy() throws Exception {
         uut.ensureViewIsCreated();
         TopTabsLayout topTabs = (TopTabsLayout) uut.getView();
         for (int i = 0; i < SIZE; i++) {
@@ -91,9 +91,9 @@ public class TopTabsViewControllerTest extends BaseTest {
         TopTabLayoutMock selectedTab = tabs.get(1);
         uut.onViewAppeared();
         uut.switchToTab(1);
-        verify(initialTab, times(1)).sendContainerStop();
-        verify(selectedTab, times(1)).sendContainerStart();
-        verify(selectedTab, times(0)).sendContainerStop();
+        verify(initialTab, times(1)).sendComponentStop();
+        verify(selectedTab, times(1)).sendComponentStart();
+        verify(selectedTab, times(0)).sendComponentStop();
     }
 
     @Test
@@ -102,10 +102,10 @@ public class TopTabsViewControllerTest extends BaseTest {
         uut.onViewAppeared();
         uut.switchToTab(1);
         uut.switchToTab(0);
-        verify(tabs.get(0), times(1)).sendContainerStop();
-        verify(tabs.get(0), times(2)).sendContainerStart();
-        verify(tabs.get(1), times(1)).sendContainerStart();
-        verify(tabs.get(1), times(1)).sendContainerStop();
+        verify(tabs.get(0), times(1)).sendComponentStop();
+        verify(tabs.get(0), times(2)).sendComponentStart();
+        verify(tabs.get(1), times(1)).sendComponentStart();
+        verify(tabs.get(1), times(1)).sendComponentStop();
     }
 
     @Test

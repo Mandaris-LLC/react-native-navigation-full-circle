@@ -26,12 +26,12 @@ public class TopTabControllerTest extends BaseTest {
         view = spy(new TopTabLayoutMock(activity));
         initialOptions = new NavigationOptions();
         uut = new TopTabController(activity,
-                "containerId",
-                "containerName",
-                (activity1, containerId, containerName) -> view,
+                "componentId",
+                "componentName",
+                (activity1, componentId, componentName) -> view,
                 initialOptions
         );
-        parentController = spy(new TopTabsControllerMock(activity, "parentContainerId"));
+        parentController = spy(new TopTabsControllerMock(activity, "parentComponentId"));
         uut.setParentController(parentController);
     }
 

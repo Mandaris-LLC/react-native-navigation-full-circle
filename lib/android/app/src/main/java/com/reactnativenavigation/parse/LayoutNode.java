@@ -7,8 +7,8 @@ import java.util.List;
 
 public class LayoutNode {
 	public enum Type {
-		Container,
-		ContainerStack,
+		Component,
+		ComponentStack,
 		BottomTabs,
 		SideMenuRoot,
 		SideMenuCenter,

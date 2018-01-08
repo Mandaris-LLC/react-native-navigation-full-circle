@@ -77,8 +77,8 @@ public class Navigator extends ParentController {
         return defaultOptions;
     }
 
-	public void setOptions(final String containerId, NavigationOptions options) {
-		ViewController target = findControllerById(containerId);
+	public void setOptions(final String componentId, NavigationOptions options) {
+		ViewController target = findControllerById(componentId);
 		if (target instanceof NavigationOptionsListener) {
 			((NavigationOptionsListener) target).mergeNavigationOptions(options);
 		}
@@ -133,12 +133,12 @@ public class Navigator extends ParentController {
 		}
 	}
 
-	void popTo(final String containerId) {
-		popTo(containerId, null);
+	void popTo(final String componentId) {
+		popTo(componentId, null);
 	}
 
-	public void popTo(final String containerId, Promise promise) {
-		ViewController target = findControllerById(containerId);
+	public void popTo(final String componentId, Promise promise) {
+		ViewController target = findControllerById(componentId);
 		if (target != null) {
 		    target.performOnParentStack(stack -> stack.popTo(target, promise), () -> rejectPromise(promise));
 		} else {
@@ -150,8 +150,8 @@ public class Navigator extends ParentController {
 		modalStack.showModal(viewController, promise);
 	}
 
-	public void dismissModal(final String containerId, Promise promise) {
-		modalStack.dismissModal(containerId, promise);
+	public void dismissModal(final String componentId, Promise promise) {
+		modalStack.dismissModal(componentId, promise);
 	}
 
 	public void dismissAllModals(Promise promise) {

@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.MockPromise;
-import com.reactnativenavigation.mocks.SimpleContainerViewController;
+import com.reactnativenavigation.mocks.SimpleComponentViewController;
 import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.mocks.TestStackAnimator;
 import com.reactnativenavigation.parse.NavigationOptions;
@@ -195,19 +195,19 @@ public class NavigatorTest extends BaseTest {
 
 	@Test
 	public void setOptions_CallsApplyNavigationOptions() {
-		ContainerViewController containerVc = new SimpleContainerViewController(activity, "theId");
-		uut.setRoot(containerVc);
-		assertThat(containerVc.getNavigationOptions().topBarOptions.title).isEmpty();
+		ComponentViewController componentVc = new SimpleComponentViewController(activity, "theId");
+		uut.setRoot(componentVc);
+		assertThat(componentVc.getNavigationOptions().topBarOptions.title).isEmpty();
 
 		NavigationOptions options = new NavigationOptions();
 		options.topBarOptions.title = "new title";
 
 		uut.setOptions("theId", options);
-		assertThat(containerVc.getNavigationOptions().topBarOptions.title).isEqualTo("new title");
+		assertThat(componentVc.getNavigationOptions().topBarOptions.title).isEqualTo("new title");
 	}
 
 	@Test
-	public void setOptions_AffectsOnlyContainerViewControllers() {
+	public void setOptions_AffectsOnlyComponentViewControllers() {
 		uut.setOptions("some unknown child id", new NavigationOptions());
 	}
 

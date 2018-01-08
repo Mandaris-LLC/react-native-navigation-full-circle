@@ -26,13 +26,13 @@ public class ModalStack {
 		}
 	}
 
-	public void dismissModal(final String containerId, Promise promise) {
-		Modal modal = findModalByContainerId(containerId);
+	public void dismissModal(final String componentId, Promise promise) {
+		Modal modal = findModalByComponentId(componentId);
 		if (modal != null) {
 			modal.dismiss();
 			modals.remove(modal);
 			if (promise != null) {
-				promise.resolve(containerId);
+				promise.resolve(componentId);
 			}
 		} else {
 			Navigator.rejectPromise(promise);
@@ -50,9 +50,9 @@ public class ModalStack {
 	}
 
 	@Nullable
-	private Modal findModalByContainerId(String containerId) {
+	private Modal findModalByComponentId(String componentId) {
 		for (Modal modal : modals) {
-			if (modal.containsDeepContainerId(containerId)) {
+			if (modal.containsDeepComponentId(componentId)) {
 				return modal;
 			}
 		}
@@ -78,8 +78,8 @@ public class ModalStack {
 			dialog.dismiss();
 		}
 
-		boolean containsDeepContainerId(String containerId) {
-			return viewController.findControllerById(containerId) != null;
+		boolean containsDeepComponentId(String componentId) {
+			return viewController.findControllerById(componentId) != null;
 		}
 
 		private void preMeasureView() {

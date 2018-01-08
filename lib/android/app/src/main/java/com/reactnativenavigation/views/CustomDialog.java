@@ -14,16 +14,16 @@ import com.facebook.react.ReactRootView;
 
 public class CustomDialog extends Dialog {
 
-	private View container;
+	private View component;
 
-	public CustomDialog(@NonNull Context context, @NonNull View container) {
+	public CustomDialog(@NonNull Context context, @NonNull View component) {
 		super(context);
 
-		this.container = container;
+		this.component = component;
 		init();
 	}
 
 	private void init() {
-		addContentView(container, new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+		addContentView(component, new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 	}
 }

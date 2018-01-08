@@ -113,19 +113,19 @@ public class StackAnimator {
 		return metrics.heightPixels;
 	}
 
-	public void animateShowTopBar(final TopBar topBar, final View container) {
-		ValueAnimator containerHeightAnim = ValueAnimator.ofInt(container.getMeasuredHeight(), container.getMeasuredHeight() - topBar.getMeasuredHeight());
-		containerHeightAnim.setInterpolator(DECELERATE_INTERPOLATOR);
-		containerHeightAnim.setDuration(DURATION_TOPBAR);
-		containerHeightAnim.addUpdateListener(valueAnimator -> {
+	public void animateShowTopBar(final TopBar topBar, final View component) {
+		ValueAnimator componentHeightAnim = ValueAnimator.ofInt(component.getMeasuredHeight(), component.getMeasuredHeight() - topBar.getMeasuredHeight());
+		componentHeightAnim.setInterpolator(DECELERATE_INTERPOLATOR);
+		componentHeightAnim.setDuration(DURATION_TOPBAR);
+		componentHeightAnim.addUpdateListener(valueAnimator -> {
             int val = (Integer) valueAnimator.getAnimatedValue();
-			ViewGroup.LayoutParams layoutParams = container.getLayoutParams();
+			ViewGroup.LayoutParams layoutParams = component.getLayoutParams();
             layoutParams.height = val;
-            container.setLayoutParams(layoutParams);
+            component.setLayoutParams(layoutParams);
         });
-		ObjectAnimator containerTransitionAnim = ObjectAnimator.ofFloat(container, View.TRANSLATION_Y, -1 * topBar.getMeasuredHeight(), 0);
-		containerTransitionAnim.setInterpolator(DECELERATE_INTERPOLATOR);
-		containerTransitionAnim.setDuration(DURATION_TOPBAR);
+		ObjectAnimator componentTransitionAnim = ObjectAnimator.ofFloat(component, View.TRANSLATION_Y, -1 * topBar.getMeasuredHeight(), 0);
+		componentTransitionAnim.setInterpolator(DECELERATE_INTERPOLATOR);
+		componentTransitionAnim.setDuration(DURATION_TOPBAR);
 
 		ObjectAnimator topbarAnim = ObjectAnimator.ofFloat(topBar, View.TRANSLATION_Y, -1 * topBar.getHeight(), 0);
 		topbarAnim.setInterpolator(DECELERATE_INTERPOLATOR);
@@ -140,9 +140,9 @@ public class StackAnimator {
 
 			@Override
 			public void onAnimationEnd(Animator animation) {
-                ViewGroup.LayoutParams layoutParams = container.getLayoutParams();
+                ViewGroup.LayoutParams layoutParams = component.getLayoutParams();
 				layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-				container.setLayoutParams(layoutParams);
+				component.setLayoutParams(layoutParams);
 			}
 
 			@Override
@@ -155,23 +155,23 @@ public class StackAnimator {
 
 			}
 		});
-		set.playTogether(containerHeightAnim, containerTransitionAnim, topbarAnim);
+		set.playTogether(componentHeightAnim, componentTransitionAnim, topbarAnim);
 		set.start();
 	}
 
-	public void animateHideTopBar(final TopBar topBar, final View container) {
-		ValueAnimator containerHeightAnim = ValueAnimator.ofInt(container.getMeasuredHeight(), container.getMeasuredHeight() + topBar.getMeasuredHeight());
-		containerHeightAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
-		containerHeightAnim.setDuration(DURATION_TOPBAR);
-		containerHeightAnim.addUpdateListener(valueAnimator -> {
+	public void animateHideTopBar(final TopBar topBar, final View component) {
+		ValueAnimator componentHeightAnim = ValueAnimator.ofInt(component.getMeasuredHeight(), component.getMeasuredHeight() + topBar.getMeasuredHeight());
+		componentHeightAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+		componentHeightAnim.setDuration(DURATION_TOPBAR);
+		componentHeightAnim.addUpdateListener(valueAnimator -> {
             int val = (Integer) valueAnimator.getAnimatedValue();
-			ViewGroup.LayoutParams layoutParams = container.getLayoutParams();
+			ViewGroup.LayoutParams layoutParams = component.getLayoutParams();
             layoutParams.height = val;
-            container.setLayoutParams(layoutParams);
+            component.setLayoutParams(layoutParams);
         });
-		ObjectAnimator containerTransitionAnim = ObjectAnimator.ofFloat(container, View.TRANSLATION_Y, 0, -1 * topBar.getMeasuredHeight());
-		containerTransitionAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
-		containerTransitionAnim.setDuration(DURATION_TOPBAR);
+		ObjectAnimator componentTransitionAnim = ObjectAnimator.ofFloat(component, View.TRANSLATION_Y, 0, -1 * topBar.getMeasuredHeight());
+		componentTransitionAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+		componentTransitionAnim.setDuration(DURATION_TOPBAR);
 
 		ObjectAnimator topbarAnim = ObjectAnimator.ofFloat(topBar, View.TRANSLATION_Y, 0, -1 * topBar.getMeasuredHeight());
 		topbarAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
@@ -185,10 +185,10 @@ public class StackAnimator {
 
 			@Override
 			public void onAnimationEnd(Animator animation) {
-                ViewGroup.LayoutParams layoutParams = container.getLayoutParams();
+                ViewGroup.LayoutParams layoutParams = component.getLayoutParams();
 				layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-				container.setLayoutParams(layoutParams);
-				container.setTranslationY(0);
+				component.setLayoutParams(layoutParams);
+				component.setTranslationY(0);
 
 				topBar.setVisibility(View.GONE);
 				topBar.setTranslationY(0);
@@ -204,7 +204,7 @@ public class StackAnimator {
 
 			}
 		});
-		set.playTogether(containerHeightAnim, containerTransitionAnim, topbarAnim);
+		set.playTogether(componentHeightAnim, componentTransitionAnim, topbarAnim);
 		set.start();
 	}
 }

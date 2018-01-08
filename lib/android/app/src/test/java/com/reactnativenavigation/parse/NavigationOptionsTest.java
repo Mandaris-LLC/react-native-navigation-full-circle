@@ -27,7 +27,7 @@ public class NavigationOptionsTest extends BaseTest {
     private static final NavigationOptions.BooleanOptions BOTTOM_TABS_ANIMATE_HIDE = True;
     private static final NavigationOptions.BooleanOptions BOTTOM_TABS_HIDDEN = True;
     private static final int BOTTOM_TABS_BADGE = 3;
-    private static final String BOTTOM_TABS_CURRENT_TAB_ID = "ContainerId";
+    private static final String BOTTOM_TABS_CURRENT_TAB_ID = "ComponentId";
     private static final int BOTTOM_TABS_CURRENT_TAB_INDEX = 1;
     private TypefaceLoader mockLoader;
 

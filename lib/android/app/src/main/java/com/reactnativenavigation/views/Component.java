@@ -4,7 +4,7 @@ import android.support.annotation.RestrictTo;
 
 import com.reactnativenavigation.parse.NavigationOptions;
 
-public interface Container {
+public interface Component {
     void applyOptions(NavigationOptions options);
 
     void sendOnNavigationButtonPressed(String id);

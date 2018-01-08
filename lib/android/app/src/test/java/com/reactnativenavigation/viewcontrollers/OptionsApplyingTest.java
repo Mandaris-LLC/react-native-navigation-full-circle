@@ -6,7 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 
 import com.reactnativenavigation.BaseTest;
-import com.reactnativenavigation.mocks.TestContainerLayout;
+import com.reactnativenavigation.mocks.TestComponentLayout;
 import com.reactnativenavigation.parse.NavigationOptions;
 
 import org.junit.Test;
@@ -16,8 +16,8 @@ import static org.mockito.Mockito.spy;
 
 public class OptionsApplyingTest extends BaseTest {
 	private Activity activity;
-	private ContainerViewController uut;
-	private ContainerViewController.IReactView view;
+	private ComponentViewController uut;
+	private ComponentViewController.IReactView view;
 	private NavigationOptions initialNavigationOptions;
 
 	@Override
@@ -25,11 +25,11 @@ public class OptionsApplyingTest extends BaseTest {
 		super.beforeEach();
 		activity = newActivity();
 		initialNavigationOptions = new NavigationOptions();
-		view = spy(new TestContainerLayout(activity));
-		uut = new ContainerViewController(activity,
-                "containerId1",
-                "containerName",
-                (activity1, containerId, containerName) -> view,
+		view = spy(new TestComponentLayout(activity));
+		uut = new ComponentViewController(activity,
+                "componentId1",
+                "componentName",
+                (activity1, componentId, componentName) -> view,
                 initialNavigationOptions
         );
 		uut.ensureViewIsCreated();

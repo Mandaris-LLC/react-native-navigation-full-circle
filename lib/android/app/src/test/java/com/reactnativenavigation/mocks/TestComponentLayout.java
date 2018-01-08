@@ -5,15 +5,15 @@ import android.view.View;
 
 import com.reactnativenavigation.parse.NavigationOptions;
 import com.reactnativenavigation.presentation.OptionsPresenter;
-import com.reactnativenavigation.views.ReactContainer;
+import com.reactnativenavigation.views.ReactComponent;
 import com.reactnativenavigation.views.TopBar;
 
-public class TestContainerLayout extends View implements ReactContainer {
+public class TestComponentLayout extends View implements ReactComponent {
 
     private final TopBar topBar;
     private final OptionsPresenter optionsPresenter;
 
-    public TestContainerLayout(final Context context) {
+    public TestComponentLayout(final Context context) {
 		super(context);
         topBar = new TopBar(context, this);
         optionsPresenter = new OptionsPresenter(topBar, new View(context));
@@ -38,11 +38,11 @@ public class TestContainerLayout extends View implements ReactContainer {
 	}
 
 	@Override
-	public void sendContainerStart() {
+	public void sendComponentStart() {
 	}
 
 	@Override
-	public void sendContainerStop() {
+	public void sendComponentStop() {
 	}
 
     @Override
