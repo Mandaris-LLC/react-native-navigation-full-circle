@@ -7,7 +7,6 @@ import com.reactnativenavigation.BaseTest;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import static com.reactnativenavigation.parse.NavigationOptions.BooleanOptions.True;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class OverlayOptionsTest extends BaseTest {

@@ -5,21 +5,21 @@ import android.view.View;
 
 import com.reactnativenavigation.parse.NavigationOptions;
 import com.reactnativenavigation.presentation.NavigationOptionsListener;
-import com.reactnativenavigation.viewcontrollers.ContainerViewController;
+import com.reactnativenavigation.viewcontrollers.ComponentViewController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.views.TopTab;
 
 public class TopTabController extends ViewController implements NavigationOptionsListener {
 
-    private final String containerName;
-    private ContainerViewController.ReactViewCreator viewCreator;
+    private final String componentName;
+    private ComponentViewController.ReactViewCreator viewCreator;
     private final NavigationOptions options;
     private TopTab topTab;
     private boolean isSelectedTab;
 
-    public TopTabController(Activity activity, String id, String name, ContainerViewController.ReactViewCreator viewCreator, NavigationOptions initialOptions) {
+    public TopTabController(Activity activity, String id, String name, ComponentViewController.ReactViewCreator viewCreator, NavigationOptions initialOptions) {
         super(activity, id);
-        this.containerName = name;
+        this.componentName = name;
         this.viewCreator = viewCreator;
         this.options = initialOptions;
     }
@@ -29,7 +29,7 @@ public class TopTabController extends ViewController implements NavigationOption
         super.onViewAppeared();
         isSelectedTab = true;
         applyOptions(options);
-        topTab.sendContainerStart();
+        topTab.sendComponentStart();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class TopTabController extends ViewController implements NavigationOption
     public void onViewDisappear() {
         super.onViewDisappear();
         isSelectedTab = false;
-        topTab.sendContainerStop();
+        topTab.sendComponentStop();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class TopTabController extends ViewController implements NavigationOption
     public View createView() {
         topTab = new TopTab(
                 getActivity(),
-                viewCreator.create(getActivity(), getId(), containerName)
+                viewCreator.create(getActivity(), getId(), componentName)
         );
         return topTab;
     }

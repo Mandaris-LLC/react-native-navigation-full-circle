@@ -6,8 +6,6 @@ import com.reactnativenavigation.utils.TypefaceLoader;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class NavigationOptions implements DEFAULT_VALUES {
 
     public enum BooleanOptions {

@@ -21,33 +21,23 @@ import com.reactnativenavigation.parse.Color;
 import com.reactnativenavigation.parse.NavigationOptions;
 import com.reactnativenavigation.parse.Number;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsViewPager;
+import com.reactnativenavigation.parse.Color;
 
 import java.util.ArrayList;
 
 @SuppressLint("ViewConstructor")
 public class TopBar extends AppBarLayout {
-    private final Toolbar titleBar;
-    private Container container;
+	private final Toolbar titleBar;
+    private Component component;
     private TopTabs topTabs;
 
-    private TopBarAnimator animator;
-    private TopBarCollapseBehavior collapsingBehavior;
-
-    public TopBar(Context context) {
-        this(context, null, null);
-    }
-
-    public TopBar(Context context, Container container) {
-        this(context, container, null);
-    }
-
-    public TopBar(Context context, Container container, EventDispatcher eventDispatcher) {
+    public TopBar(final Context context, Component component) {
         super(context);
         collapsingBehavior = new TopBarCollapseBehavior(eventDispatcher, this);
-        this.container = container;
+        this.component = component;
         titleBar = new Toolbar(context);
         topTabs = new TopTabs(getContext());
-        animator = new TopBarAnimator(this, container != null ? container.getContentView() : null);
+        animator = new TopBarAnimator(this, component != null ? component.getContentView() : null);
         addView(titleBar);
     }
 
@@ -131,10 +121,10 @@ public class TopBar extends AppBarLayout {
         setLeftButton(leftButton);
     }
 
-    private void setLeftButton(final Button button) {
-        TitleBarButton leftBarButton = new TitleBarButton(container, this.titleBar, button);
-        leftBarButton.applyNavigationIcon(getContext());
-    }
+	private void setLeftButton(final Button button) {
+		TitleBarButton leftBarButton = new TitleBarButton(component, this.titleBar, button);
+		leftBarButton.applyNavigationIcon(getContext());
+	}
 
     private void setRightButtons(ArrayList<Button> rightButtons) {
         if (rightButtons == null || rightButtons.size() == 0) {
@@ -144,11 +134,11 @@ public class TopBar extends AppBarLayout {
         Menu menu = getTitleBar().getMenu();
         menu.clear();
 
-        for (int i = 0; i < rightButtons.size(); i++) {
-            Button button = rightButtons.get(i);
-            TitleBarButton titleBarButton = new TitleBarButton(container, this.titleBar, button);
-            titleBarButton.addToMenu(getContext(), menu);
-        }
+		for (int i = 0; i < rightButtons.size(); i++){
+	   		Button button = rightButtons.get(i);
+			TitleBarButton titleBarButton = new TitleBarButton(component, this.titleBar, button);
+			titleBarButton.addToMenu(getContext(), menu);
+       }
     }
 
     public Toolbar getTitleBar() {

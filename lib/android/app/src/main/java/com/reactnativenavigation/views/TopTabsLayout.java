@@ -19,7 +19,7 @@ import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsViewPager;
 import java.util.List;
 
 @SuppressLint("ViewConstructor")
-public class TopTabsLayout extends RelativeLayout implements Container {
+public class TopTabsLayout extends RelativeLayout implements Component {
 
     private TopBar topBar;
     private List<TopTabController> tabs;

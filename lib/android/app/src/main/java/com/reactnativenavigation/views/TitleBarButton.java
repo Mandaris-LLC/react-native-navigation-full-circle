@@ -24,11 +24,11 @@ import java.util.ArrayList;
 public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
 	private Toolbar toolbar;
 	private final Button button;
-	private Container container;
+	private Component component;
 	private Drawable icon;
 
-	TitleBarButton(Container container, Toolbar toolbar, Button button) {
-		this.container = container;
+	TitleBarButton(Component component, Toolbar toolbar, Button button) {
+		this.component = component;
 		this.toolbar = toolbar;
 		this.button = button;
 	}
@@ -118,12 +118,12 @@ public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
 	}
 
 	private void setNavigationClickListener() {
-		toolbar.setNavigationOnClickListener(view -> container.sendOnNavigationButtonPressed(button.id));
+		toolbar.setNavigationOnClickListener(view -> component.sendOnNavigationButtonPressed(button.id));
 	}
 
 	@Override
 	public boolean onMenuItemClick(MenuItem menuItem) {
-		this.container.sendOnNavigationButtonPressed(button.id);
+		this.component.sendOnNavigationButtonPressed(button.id);
 		return true;
 	}
 
