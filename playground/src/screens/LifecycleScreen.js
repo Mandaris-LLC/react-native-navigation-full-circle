@@ -20,29 +20,11 @@ class LifecycleScreen extends Component {
   }
 
   didDisappear() {
-    if (Platform.OS === 'ios') {
-      alert('didDisappear'); // eslint-disable-line no-alert
-    } else {
-      Navigation.showOverlay('alert', {
-        text: 'didDisappear',
-        positiveButton: {
-          text: 'OK'
-        }
-      });
-    }
+    alert('didDisappear'); // eslint-disable-line no-alert
   }
 
   componentWillUnmount() {
-    if (Platform.OS === 'ios') {
-      alert('componentWillUnmount'); // eslint-disable-line no-alert
-    } else {
-      Navigation.showOverlay('alert', {
-        text: 'componentWillUnmount',
-        positiveButton: {
-          text: 'OK'
-        }
-      });
-    }
+    alert('componentWillUnmount'); // eslint-disable-line no-alert
   }
 
   onNavigationButtonPressed(id) {

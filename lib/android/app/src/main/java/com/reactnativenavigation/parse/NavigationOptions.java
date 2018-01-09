@@ -1,10 +1,10 @@
 package com.reactnativenavigation.parse;
 
-import android.support.annotation.*;
+import android.support.annotation.NonNull;
 
-import com.reactnativenavigation.utils.*;
+import com.reactnativenavigation.utils.TypefaceLoader;
 
-import org.json.*;
+import org.json.JSONObject;
 
 public class NavigationOptions implements DEFAULT_VALUES {
 
