@@ -23,10 +23,10 @@ public class LayoutFactory {
 
 	private final Activity activity;
 	private final ReactInstanceManager reactInstanceManager;
-    private NavigationOptions defaultOptions;
+    private Options defaultOptions;
     private final TypefaceLoader typefaceManager;
 
-    public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager, NavigationOptions defaultOptions) {
+    public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager, Options defaultOptions) {
 		this.activity = activity;
 		this.reactInstanceManager = reactInstanceManager;
         this.defaultOptions = defaultOptions;
@@ -96,7 +96,7 @@ public class LayoutFactory {
 	private ViewController createComponent(LayoutNode node) {
 		String id = node.id;
 		String name = node.data.optString("name");
-		NavigationOptions options = NavigationOptions.parse(typefaceManager, node.data.optJSONObject("options"), defaultOptions);
+		Options options = Options.parse(typefaceManager, node.data.optJSONObject("options"), defaultOptions);
 		return new ComponentViewController(activity,
                 id,
                 name,
@@ -137,14 +137,14 @@ public class LayoutFactory {
             tabController.setTabIndex(i);
             tabs.add(tabController);
         }
-        NavigationOptions options = NavigationOptions.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
+        Options options = Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
         return new TopTabsController(activity, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), options);
     }
 
     private ViewController createTopTab(LayoutNode node) {
         String id = node.id;
         String name = node.data.optString("name");
-        NavigationOptions options = NavigationOptions.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
+        Options options = Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
         return new TopTabController(activity,
                 id,
                 name,

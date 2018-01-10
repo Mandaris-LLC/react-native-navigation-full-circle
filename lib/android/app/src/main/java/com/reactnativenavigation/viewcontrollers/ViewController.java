@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.view.ViewTreeObserver;
 
-import com.reactnativenavigation.parse.NavigationOptions;
+import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.utils.StringUtils;
 import com.reactnativenavigation.utils.Task;
@@ -105,7 +105,7 @@ public abstract class ViewController implements ViewTreeObserver.OnGlobalLayoutL
         isShown = false;
     }
 
-    public void applyOptions(NavigationOptions options) {
+    public void applyOptions(Options options) {
 
     }
 

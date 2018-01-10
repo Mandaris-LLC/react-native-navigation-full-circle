@@ -21,8 +21,8 @@ public class ComponentLayout extends RelativeLayout implements ReactComponent {
 
 	public ComponentLayout(Context context, IReactView reactView, EventDispatcher eventDispatcher) {
 		super(context);
-		this.topBar = new TopBar(context, this, eventDispatcher);
 		this.reactView = reactView;
+		this.topBar = new TopBar(context, this, eventDispatcher);
         optionsPresenter = new OptionsPresenter(this);
         initViews();
     }
@@ -60,7 +60,7 @@ public class ComponentLayout extends RelativeLayout implements ReactComponent {
 	}
 
     @Override
-    public void applyOptions(NavigationOptions options) {
+    public void applyOptions(Options options) {
         optionsPresenter.applyOptions(options);
     }
 

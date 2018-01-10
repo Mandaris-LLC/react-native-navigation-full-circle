@@ -41,7 +41,7 @@ public class TopTabsLayout extends RelativeLayout implements Component {
     }
 
     @Override
-    public void applyOptions(NavigationOptions options) {
+    public void applyOptions(Options options) {
         optionsPresenter.applyOptions(options);
     }
 

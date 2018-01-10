@@ -1,14 +1,12 @@
 package com.reactnativenavigation.mocks;
 
-import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.content.*;
+import android.view.*;
+import android.widget.*;
 
-import com.reactnativenavigation.parse.NavigationOptions;
-import com.reactnativenavigation.presentation.OptionsPresenter;
-import com.reactnativenavigation.views.ReactComponent;
-import com.reactnativenavigation.views.TopBar;
+import com.reactnativenavigation.parse.*;
+import com.reactnativenavigation.presentation.*;
+import com.reactnativenavigation.views.*;
 
 public class TestComponentLayout extends RelativeLayout implements ReactComponent {
 
@@ -17,7 +15,7 @@ public class TestComponentLayout extends RelativeLayout implements ReactComponen
     private final OptionsPresenter optionsPresenter;
 
     public TestComponentLayout(final Context context) {
-		super(context);
+        super(context);
         topBar = new TopBar(context, this, null);
         contentView = new View(context);
         addView(topBar);
@@ -71,7 +69,7 @@ public class TestComponentLayout extends RelativeLayout implements ReactComponen
     }
 
     @Override
-    public void applyOptions(NavigationOptions options) {
+    public void applyOptions(Options options) {
         optionsPresenter.applyOptions(options);
     }
 

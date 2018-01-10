@@ -160,22 +160,22 @@ public class TopBar extends AppBarLayout {
         collapsingBehavior.disableCollapse();
     }
 
-    public void show(NavigationOptions.BooleanOptions animated) {
+    public void show(Options.BooleanOptions animated) {
         if (getVisibility() == View.VISIBLE) {
             return;
         }
-        if (animated == NavigationOptions.BooleanOptions.True) {
+        if (animated == Options.BooleanOptions.True) {
             animator.show();
         } else {
             setVisibility(View.VISIBLE);
         }
     }
 
-    public void hide(NavigationOptions.BooleanOptions animated) {
+    public void hide(Options.BooleanOptions animated) {
         if (getVisibility() == View.GONE) {
             return;
         }
-        if (animated == NavigationOptions.BooleanOptions.True) {
+        if (animated == Options.BooleanOptions.True) {
             animator.hide();
         } else {
             setVisibility(View.GONE);
