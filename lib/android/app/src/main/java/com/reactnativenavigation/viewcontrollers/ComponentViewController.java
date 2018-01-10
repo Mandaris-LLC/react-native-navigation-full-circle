@@ -13,7 +13,7 @@ public class ComponentViewController extends ViewController implements Navigatio
     public interface ReactViewCreator {
 
         IReactView create(Activity activity, String componentId, String componentName);
-	}
+    }
 
     public interface IReactView {
 
@@ -23,75 +23,79 @@ public class ComponentViewController extends ViewController implements Navigatio
 
         void destroy();
 
-		void sendComponentStart();
+        void sendComponentStart();
 
-		void sendComponentStop();
+        void sendComponentStop();
 
         void sendOnNavigationButtonPressed(String buttonId);
     }
 
-	private final String componentName;
+    private final String componentName;
 
-	private final ReactViewCreator viewCreator;
-	private NavigationOptions options;
-	private ReactComponent component;
+    private final ReactViewCreator viewCreator;
+    private NavigationOptions options;
+    private ReactComponent component;
 
-	public ComponentViewController(final Activity activity,
-								   final String id,
-								   final String componentName,
-								   final ReactViewCreator viewCreator,
-								   final NavigationOptions initialNavigationOptions) {
-		super(activity, id);
-		this.componentName = componentName;
-		this.viewCreator = viewCreator;
-		this.options = initialNavigationOptions;
-	}
+    public ComponentViewController(final Activity activity,
+                                   final String id,
+                                   final String componentName,
+                                   final ReactViewCreator viewCreator,
+                                   final NavigationOptions initialNavigationOptions) {
+        super(activity, id);
+        this.componentName = componentName;
+        this.viewCreator = viewCreator;
+        this.options = initialNavigationOptions;
+    }
 
     @RestrictTo(RestrictTo.Scope.TESTS)
     TopBar getTopBar() {
         return component.getTopBar();
     }
 
-	@Override
-	public void destroy() {
-		super.destroy();
-		if (component != null) component.destroy();
-		component = null;
-	}
+    @Override
+    public void destroy() {
+        super.destroy();
+        if (component != null) component.destroy();
+        component = null;
+    }
 
-	@Override
-	public void onViewAppeared() {
-		super.onViewAppeared();
-		ensureViewIsCreated();
-		component.applyOptions(options);
-		component.sendComponentStart();
-	}
-
-	@Override
-	public void onViewDisappear() {
-		super.onViewDisappear();
-		component.sendComponentStop();
-	}
-
-	@Override
-	protected boolean isViewShown() {
-		return super.isViewShown() && component.isReady();
-	}
-
-	@NonNull
-	@Override
-	protected View createView() {
-		component = (ReactComponent) viewCreator.create(getActivity(), getId(), componentName);
-        return component.asView();
-	}
-
-	@Override
-	public void mergeNavigationOptions(NavigationOptions options) {
-		this.options.mergeWith(options);
+    @Override
+    public void onViewAppeared() {
+        super.onViewAppeared();
+        ensureViewIsCreated();
         component.applyOptions(options);
-	}
+        component.sendComponentStart();
+    }
 
-	NavigationOptions getOptions() {
-		return options;
-	}
+    @Override
+    public void onViewDisappear() {
+        super.onViewDisappear();
+        component.sendComponentStop();
+    }
+
+    @Override
+    protected boolean isViewShown() {
+        return super.isViewShown() && component.isReady();
+    }
+
+    @NonNull
+    @Override
+    protected View createView() {
+        component = (ReactComponent) viewCreator.create(getActivity(), getId(), componentName);
+        return component.asView();
+    }
+
+    @Override
+    public void mergeNavigationOptions(NavigationOptions options) {
+        this.options.mergeWith(options);
+        component.applyOptions(options);
+    }
+
+    NavigationOptions getOptions() {
+        return options;
+    }
+
+    ReactComponent getComponent() {
+        return component;
+    }
 }

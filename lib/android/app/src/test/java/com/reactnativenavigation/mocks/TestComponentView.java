@@ -13,7 +13,7 @@ public class TestComponentView extends View implements ReactComponent {
 
 	public TestComponentView(final Context context) {
 		super(context);
-		topBar = new TopBar(context, this);
+		topBar = new TopBar(context, this, null);
 
 	}
 

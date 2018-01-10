@@ -1,20 +1,16 @@
 package com.reactnativenavigation.views;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RestrictTo;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.annotation.*;
+import android.content.*;
+import android.view.*;
+import android.widget.*;
 
-import com.facebook.react.uimanager.events.EventDispatcher;
-import com.reactnativenavigation.parse.NavigationOptions;
-import com.reactnativenavigation.presentation.OptionsPresenter;
-import com.reactnativenavigation.viewcontrollers.ComponentViewController.IReactView;
+import com.facebook.react.uimanager.events.*;
+import com.reactnativenavigation.parse.*;
+import com.reactnativenavigation.presentation.*;
+import com.reactnativenavigation.viewcontrollers.ComponentViewController.*;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.view.ViewGroup.LayoutParams.*;
 
 @SuppressLint("ViewConstructor")
 public class ComponentLayout extends RelativeLayout implements ReactComponent {
@@ -25,7 +21,7 @@ public class ComponentLayout extends RelativeLayout implements ReactComponent {
 
 	public ComponentLayout(Context context, IReactView reactView, EventDispatcher eventDispatcher) {
 		super(context);
-		this.topBar = new TopBar(context, this);
+		this.topBar = new TopBar(context, this, eventDispatcher);
 		this.reactView = reactView;
         optionsPresenter = new OptionsPresenter(this);
         initViews();

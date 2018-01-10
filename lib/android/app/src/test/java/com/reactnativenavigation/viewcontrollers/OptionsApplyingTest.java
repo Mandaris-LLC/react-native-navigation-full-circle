@@ -140,7 +140,7 @@ public class OptionsApplyingTest extends BaseTest {
 
     @Test
     public void appliesDrawUnder() throws Exception {
-        assertThat(uut.getNavigationOptions()).isSameAs(initialNavigationOptions);
+        assertThat(uut.getOptions()).isSameAs(initialNavigationOptions);
         initialNavigationOptions.topBarOptions.title = "the title";
         initialNavigationOptions.topBarOptions.drawBehind = NavigationOptions.BooleanOptions.False;
         uut.onViewAppeared();

@@ -18,7 +18,7 @@ public class TestComponentLayout extends RelativeLayout implements ReactComponen
 
     public TestComponentLayout(final Context context) {
 		super(context);
-        topBar = new TopBar(context, this);
+        topBar = new TopBar(context, this, null);
         contentView = new View(context);
         addView(topBar);
         addView(contentView);
