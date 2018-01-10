@@ -4,7 +4,7 @@ const _ = require('lodash');
 const fix = _.includes(process.argv, '--fix') ? '--fix' : '';
 
 const dirs = [
-  'lib/src',
+  'lib/dist',
   'integration',
   'e2e',
   'scripts',

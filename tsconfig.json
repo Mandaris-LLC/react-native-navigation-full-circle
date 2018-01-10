@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib/dist",
+    "allowJs": true,
+    "target": "esnext",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "jsx": "preserve",
+    "noEmitOnError": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "types": [
+      "react",
+      "react-native",
+      "jest"
+    ]
+  },
+  "include": [
+    "./lib/src/**/*"
+  ]
+}

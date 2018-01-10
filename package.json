@@ -23,23 +23,25 @@
     "type": "git",
     "url": "https://github.com/wix/react-native-navigation.git"
   },
-  "main": "lib/src/index.js",
+  "main": "lib/dist/index.js",
   "scripts": {
-    "build": ":",
+    "build": "rm -rf ./lib/dist && tsc",
     "xcode": "open playground/ios/playground.xcodeproj",
     "install-android": "node ./scripts/install-android.js",
     "uninstall-android": "cd playground/android && ./gradlew uninstallAll",
     "clean": "node ./scripts/clean.js",
+    "prestart": "npm run build",
     "start": "node ./scripts/start.js",
+    "pretest-js": "npm run build",
     "test-js": "node ./scripts/test-js.js",
     "test-unit-android": "node ./scripts/test.unit.android.js",
     "test-unit-ios": "node ./scripts/test.unit.ios.js",
+    "pretest-e2e-android": "npm run build",
     "test-e2e-android": "node ./scripts/test.e2e.android.js",
+    "pretest-e2e-ios": "npm run build",
     "test-e2e-ios": "node ./scripts/test.e2e.ios.js",
     "test-all": "node ./scripts/test.all.js",
-    "test-watch": "jest --coverage --watch",
-    "release": "node ./scripts/release.js",
-    "gen-doc": "node ./scripts/generate-js-doc.js"
+    "release": "node ./scripts/release.js"
   },
   "peerDependencies": {
     "react": "*",
@@ -66,7 +68,12 @@
     "remx": "2.x.x",
     "semver": "5.x.x",
     "shell-utils": "1.x.x",
-    "xo": "0.18.x"
+    "xo": "0.18.x",
+    "typescript": "2.x.x",
+    "@types/react": "16.0.0",
+    "@types/react-native": "0.49.x",
+    "@types/jest": "22.x.x",
+    "@types/prop-types": "15.x.x"
   },
   "babel": {
     "env": {
@@ -81,15 +88,15 @@
     "preset": "react-native",
     "roots": [
       "<rootDir>/node_modules/",
-      "<rootDir>/lib/src/",
+      "<rootDir>/lib/dist/",
       "<rootDir>/integration/"
     ],
     "collectCoverageFrom": [
-      "lib/src/**/*.js",
+      "lib/dist/**/*.js",
       "integration/**/*.js",
-      "!lib/src/index.js",
-      "!lib/src/Navigation.js",
-      "!lib/src/adapters/**/*"
+      "!lib/dist/index.js",
+      "!lib/dist/Navigation.js",
+      "!lib/dist/adapters/**/*"
     ],
     "resetMocks": true,
     "resetModules": true,
