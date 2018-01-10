@@ -1,17 +1,14 @@
 package com.reactnativenavigation.viewcontrollers;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.annotation.RestrictTo;
-import android.util.Log;
-import android.view.View;
+import android.app.*;
+import android.support.annotation.*;
+import android.view.*;
 
-import com.reactnativenavigation.parse.NavigationOptions;
-import com.reactnativenavigation.presentation.NavigationOptionsListener;
-import com.reactnativenavigation.views.ReactComponent;
-import com.reactnativenavigation.views.TopBar;
+import com.reactnativenavigation.parse.*;
+import com.reactnativenavigation.presentation.*;
+import com.reactnativenavigation.views.*;
 
-public class ContainerViewController extends ViewController implements NavigationOptionsListener {
+public class ComponentViewController extends ViewController implements NavigationOptionsListener {
 
     public interface ReactViewCreator {
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.reactnativenavigation.parse.NavigationOptions;
-import com.reactnativenavigation.views.ReactContainer;
+import com.reactnativenavigation.views.ReactComponent;
 import com.reactnativenavigation.views.TopBar;
 
 public class TestComponentView extends View implements ReactComponent {

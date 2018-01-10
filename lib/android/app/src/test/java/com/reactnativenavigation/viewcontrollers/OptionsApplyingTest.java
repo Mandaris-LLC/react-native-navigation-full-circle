@@ -144,14 +144,14 @@ public class OptionsApplyingTest extends BaseTest {
         initialNavigationOptions.topBarOptions.title = "the title";
         initialNavigationOptions.topBarOptions.drawBehind = NavigationOptions.BooleanOptions.False;
         uut.onViewAppeared();
-        RelativeLayout.LayoutParams uutLayoutParams = (RelativeLayout.LayoutParams) ((ViewGroup) uut.getContainer().asView()).getChildAt(1).getLayoutParams();
+        RelativeLayout.LayoutParams uutLayoutParams = (RelativeLayout.LayoutParams) ((ViewGroup) uut.getComponent().asView()).getChildAt(1).getLayoutParams();
         assertThat(uutLayoutParams.getRule(BELOW)).isNotEqualTo(0);
 
         NavigationOptions opts = new NavigationOptions();
         opts.topBarOptions.drawBehind = NavigationOptions.BooleanOptions.True;
         uut.mergeNavigationOptions(opts);
 
-        uutLayoutParams = (RelativeLayout.LayoutParams) ((ViewGroup) uut.getContainer().asView()).getChildAt(1).getLayoutParams();
+        uutLayoutParams = (RelativeLayout.LayoutParams) ((ViewGroup) uut.getComponent().asView()).getChildAt(1).getLayoutParams();
         assertThat(uutLayoutParams.getRule(BELOW)).isEqualTo(0);
     }
 }

@@ -4,7 +4,7 @@ import android.support.annotation.RestrictTo;
 import android.view.View;
 
 import com.reactnativenavigation.parse.NavigationOptions;
-import com.reactnativenavigation.viewcontrollers.ContainerViewController;
+import com.reactnativenavigation.viewcontrollers.ComponentViewController;
 
 public interface Component {
     void applyOptions(NavigationOptions options);

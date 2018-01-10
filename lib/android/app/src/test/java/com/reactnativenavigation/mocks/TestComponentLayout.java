@@ -7,7 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.parse.NavigationOptions;
 import com.reactnativenavigation.presentation.OptionsPresenter;
-import com.reactnativenavigation.views.ReactContainer;
+import com.reactnativenavigation.views.ReactComponent;
 import com.reactnativenavigation.views.TopBar;
 
 public class TestComponentLayout extends RelativeLayout implements ReactComponent {

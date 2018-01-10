@@ -5,7 +5,7 @@ import com.reactnativenavigation.parse.NavigationOptions;
 import com.reactnativenavigation.parse.TopBarOptions;
 import com.reactnativenavigation.parse.TopTabOptions;
 import com.reactnativenavigation.parse.TopTabsOptions;
-import com.reactnativenavigation.views.Container;
+import com.reactnativenavigation.views.Component;
 import com.reactnativenavigation.views.TopBar;
 
 import java.util.ArrayList;
@@ -15,12 +15,12 @@ import static com.reactnativenavigation.parse.NavigationOptions.BooleanOptions.T
 
 public class OptionsPresenter {
 
-    private Container reactContainer;
+    private Component reactComponent;
     private TopBar topBar;
 
-    public OptionsPresenter(Container reactContainer) {
-        this.reactContainer = reactContainer;
-        this.topBar = reactContainer.getTopBar();
+    public OptionsPresenter(Component reactComponent) {
+        this.reactComponent = reactComponent;
+        this.topBar = reactComponent.getTopBar();
     }
 
     public void applyOptions(NavigationOptions options) {
@@ -44,9 +44,9 @@ public class OptionsPresenter {
             topBar.show(options.animateHide);
         }
         if (options.drawBehind == True) {
-            reactContainer.drawBehindTopBar();
+            reactComponent.drawBehindTopBar();
         } else if (options.drawBehind == False) {
-            reactContainer.drawBelowTopBar();
+            reactComponent.drawBelowTopBar();
         }
 
         if (options.hideOnScroll == True) {
