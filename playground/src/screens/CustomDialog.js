@@ -2,7 +2,7 @@ const React = require('react');
 const { PureComponent } = require('react');
 
 const { View, Text, Button } = require('react-native');
-const Navigation = require('react-native-navigation');
+const { Navigation } = require('react-native-navigation');
 
 class CustomDialog extends PureComponent {
 

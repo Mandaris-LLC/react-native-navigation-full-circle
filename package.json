@@ -169,6 +169,7 @@
       "import/order": 0,
       "import/named": 0,
       "import/no-unassigned-import": 0,
+      "import/prefer-default-export": 0,
       "import/no-unresolved": [
         2,
         {

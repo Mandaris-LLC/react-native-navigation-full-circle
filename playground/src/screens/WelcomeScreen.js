@@ -4,7 +4,7 @@ const { View, Text, Button } = require('react-native');
 
 const testIDs = require('../testIDs');
 
-const Navigation = require('react-native-navigation');
+const { Navigation } = require('react-native-navigation');
 
 class WelcomeScreen extends Component {
   static get options() {
