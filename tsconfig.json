@@ -3,7 +3,6 @@
     "outDir": "./lib/dist",
     "allowJs": true,
     "target": "esnext",
-    "moduleResolution": "node",
     "module": "commonjs",
     "jsx": "preserve",
     "noEmitOnError": true,
