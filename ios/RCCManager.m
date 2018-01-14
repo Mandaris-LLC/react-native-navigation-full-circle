@@ -216,13 +216,13 @@
     return nil;
   }
   
-  UIStoryboard* storyboard = [UIStoryboard storyboardWithName:launchStoryboardName bundle:nil];
-  if (storyboard == nil)
-  {
+  @try {
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:launchStoryboardName bundle:nil];
+    return storyboard.instantiateInitialViewController;
+  }
+  @catch(NSException *exception) {
     return nil;
   }
-  
-  return storyboard.instantiateInitialViewController;
 }
 
 + (UIViewController *)viewControllerFromLaunchNibForScreenBounds:(CGRect)screenBounds
