@@ -1,45 +1,47 @@
-const { NativeModules } = require('react-native');
+import { NativeModules } from 'react-native';
 
-class NativeCommandsSender {
+export class NativeCommandsSender {
+  private nativeCommandsModule: any;
+
   constructor() {
     this.nativeCommandsModule = NativeModules.RNNBridgeModule;
   }
 
-  setRoot(layoutTree) {
+  setRoot(layoutTree: object) {
     return this.nativeCommandsModule.setRoot(layoutTree);
   }
 
-  setDefaultOptions(options) {
+  setDefaultOptions(options: object) {
     this.nativeCommandsModule.setDefaultOptions(options);
   }
 
-  setOptions(componentId, options) {
+  setOptions(componentId: string, options: object) {
     this.nativeCommandsModule.setOptions(componentId, options);
   }
 
-  async push(onComponentId, layout) {
+  async push(onComponentId: string, layout: object) {
     const pushedComponentId = await this.nativeCommandsModule.push(onComponentId, layout);
     return pushedComponentId;
   }
 
-  pop(componentId, options) {
+  pop(componentId: string, options: object) {
     return this.nativeCommandsModule.pop(componentId, options);
   }
 
-  popTo(componentId) {
+  popTo(componentId: string) {
     return this.nativeCommandsModule.popTo(componentId);
   }
 
-  popToRoot(componentId) {
+  popToRoot(componentId: string) {
     return this.nativeCommandsModule.popToRoot(componentId);
   }
 
-  async showModal(layout) {
+  async showModal(layout: object) {
     const completed = await this.nativeCommandsModule.showModal(layout);
     return completed;
   }
 
-  dismissModal(componentId) {
+  dismissModal(componentId: string) {
     return this.nativeCommandsModule.dismissModal(componentId);
   }
 
@@ -47,7 +49,7 @@ class NativeCommandsSender {
     return this.nativeCommandsModule.dismissAllModals();
   }
 
-  showOverlay(type, options) {
+  showOverlay(type: any, options: object) {
     return this.nativeCommandsModule.showOverlay(type, options);
   }
 
@@ -56,5 +58,3 @@ class NativeCommandsSender {
     return Promise.resolve(true);
   }
 }
-
-module.exports = NativeCommandsSender;

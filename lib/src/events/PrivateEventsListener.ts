@@ -1,7 +1,10 @@
-const Lifecycle = require('../components/Lifecycle');
+import * as Lifecycle from '../components/Lifecycle';
 
-class PrivateEventsListener {
-  constructor(nativeEventsReceiver, store) {
+export class PrivateEventsListener {
+  private nativeEventsReceiver: any;
+  private lifecycle: any;
+
+  constructor(nativeEventsReceiver: any, store: any) {
     this.nativeEventsReceiver = nativeEventsReceiver;
     this.lifecycle = new Lifecycle(store);
   }
@@ -12,5 +15,3 @@ class PrivateEventsListener {
     this.nativeEventsReceiver.registerNavigationButtonPressed(this.lifecycle.onNavigationButtonPressed);
   }
 }
-
-module.exports = PrivateEventsListener;

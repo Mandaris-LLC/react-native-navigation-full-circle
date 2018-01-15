@@ -1,7 +1,7 @@
-const OptionsProcessor = require('./OptionsProcessor');
+import { OptionsProcessor } from './OptionsProcessor';
 
 describe('navigation options', () => {
-  let options;
+  let options: any;
 
   beforeEach(() => {
     options = {};

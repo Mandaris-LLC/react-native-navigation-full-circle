@@ -1,9 +1,9 @@
-const _ = require('lodash');
-const { processColor } = require('react-native');
-const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
+import * as _ from 'lodash';
+import { processColor } from 'react-native';
+import * as resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
-class OptionsProcessor {
-  static processOptions(options) {
+export class OptionsProcessor {
+  static processOptions(options: any) {
     _.forEach(options, (value, key) => {
       if (value) {
         if (_.endsWith(key, 'Color')) {
@@ -19,5 +19,3 @@ class OptionsProcessor {
     });
   }
 }
-
-module.exports = OptionsProcessor;

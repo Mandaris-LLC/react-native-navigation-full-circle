@@ -1,11 +1,11 @@
-const PrivateEventsListener = require('./PrivateEventsListener');
-const NativeEventsReceiver = require('../adapters/NativeEventsReceiver.mock');
-const Store = require('../components/Store');
+import { PrivateEventsListener } from './PrivateEventsListener';
+import { NativeEventsReceiver } from '../adapters/NativeEventsReceiver.mock';
+import * as  Store from '../components/Store';
 
 describe('PrivateEventsListener', () => {
-  let uut;
-  let nativeEventsReceiver;
-  let store;
+  let uut: PrivateEventsListener;
+  let nativeEventsReceiver: any;
+  let store: any;
 
   beforeEach(() => {
     nativeEventsReceiver = new NativeEventsReceiver();
