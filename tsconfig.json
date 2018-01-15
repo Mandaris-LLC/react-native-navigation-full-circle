@@ -1,18 +1,17 @@
 {
+  "extends": "./tsconfig-strict",
   "compilerOptions": {
     "outDir": "./lib/dist",
     "allowJs": true,
     "target": "esnext",
     "module": "commonjs",
-    "jsx": "preserve",
-    "noEmitOnError": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
+    "jsx": "react-native",
     "types": [
+      "lodash",
       "react",
       "react-native",
+      "prop-types",
+      "react-test-renderer",
       "jest"
     ]
   },
