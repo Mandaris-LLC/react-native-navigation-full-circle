@@ -15,15 +15,17 @@ import com.reactnativenavigation.views.TopBar;
 public class TopBarAnimator {
 
     private static final int DURATION_TOPBAR = 300;
-    private DecelerateInterpolator decelerateInterpolator;
-    private AccelerateInterpolator accelerateInterpolator;
+    private final DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator();
+    private final AccelerateInterpolator accelerateInterpolator = new AccelerateInterpolator();
 
     private TopBar topBar;
     private View contentView;
 
+    public TopBarAnimator(TopBar topBar) {
+        this.topBar = topBar;
+    }
+
     public TopBarAnimator(TopBar topBar, View contentView) {
-        decelerateInterpolator = new DecelerateInterpolator();
-        accelerateInterpolator = new AccelerateInterpolator();
         this.topBar = topBar;
         this.contentView = contentView;
     }
@@ -60,12 +62,12 @@ public class TopBarAnimator {
         hide(0, accelerateInterpolator, DURATION_TOPBAR);
     }
 
-    public void hide(float startTranslation, TimeInterpolator interpolator, int duration) {
-        ObjectAnimator topbarAnim = ObjectAnimator.ofFloat(topBar, View.TRANSLATION_Y, startTranslation, -1 * topBar.getMeasuredHeight());
-        topbarAnim.setInterpolator(interpolator);
-        topbarAnim.setDuration(duration);
+    void hide(float startTranslation, TimeInterpolator interpolator, int duration) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(topBar, View.TRANSLATION_Y, startTranslation, -1 * topBar.getMeasuredHeight());
+        animator.setInterpolator(interpolator);
+        animator.setDuration(duration);
 
-        topbarAnim.addListener(new AnimatorListenerAdapter() {
+        animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (contentView != null) {
@@ -77,6 +79,6 @@ public class TopBarAnimator {
                 topBar.setVisibility(View.GONE);
             }
         });
-        topbarAnim.start();
+        animator.start();
     }
 }

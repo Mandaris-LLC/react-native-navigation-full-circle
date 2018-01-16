@@ -1,40 +1,44 @@
 package com.reactnativenavigation.views;
 
-import android.annotation.*;
-import android.content.*;
-import android.graphics.*;
-import android.support.annotation.*;
-import android.support.design.widget.*;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Typeface;
+import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.*;
-import android.view.*;
-import android.widget.*;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.facebook.react.uimanager.events.*;
-import com.reactnativenavigation.anim.*;
+import com.reactnativenavigation.anim.TopBarAnimator;
+import com.reactnativenavigation.anim.TopBarCollapseBehavior;
+import com.reactnativenavigation.interfaces.ScrollEventListener;
 import com.reactnativenavigation.parse.Button;
 import com.reactnativenavigation.parse.Color;
-import com.reactnativenavigation.parse.*;
+import com.reactnativenavigation.parse.Fraction;
 import com.reactnativenavigation.parse.Number;
-import com.reactnativenavigation.viewcontrollers.toptabs.*;
+import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsViewPager;
 
-import java.util.*;
+import java.util.ArrayList;
 
 @SuppressLint("ViewConstructor")
-public class TopBar extends AppBarLayout {
+public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAwareView {
     private final Toolbar titleBar;
+    private TitleBarButton.OnClickListener onClickListener;
     private final TopBarCollapseBehavior collapsingBehavior;
     private final TopBarAnimator animator;
-    private Component component;
     private TopTabs topTabs;
 
-    public TopBar(final Context context, Component component, EventDispatcher eventDispatcher) {
+    public TopBar(final Context context, TitleBarButton.OnClickListener onClickListener) {
         super(context);
-        collapsingBehavior = new TopBarCollapseBehavior(eventDispatcher, this);
-        this.component = component;
+        this.onClickListener = onClickListener;
+        collapsingBehavior = new TopBarCollapseBehavior(this);
         titleBar = new Toolbar(context);
         topTabs = new TopTabs(getContext());
-        this.animator = new TopBarAnimator(this, component != null ? component.getContentView() : null);
+        this.animator = new TopBarAnimator(this);
         addView(titleBar);
     }
 
@@ -46,14 +50,14 @@ public class TopBar extends AppBarLayout {
         return titleBar.getTitle() != null ? titleBar.getTitle().toString() : "";
     }
 
-    public void setTitleTextColor(@ColorInt int color) {
-        titleBar.setTitleTextColor(color);
+    public void setTitleTextColor(Color color) {
+        if (color.hasValue()) titleBar.setTitleTextColor(color.get());
     }
 
-    public void setTitleFontSize(float size) {
+    public void setTitleFontSize(Fraction size) {
         TextView titleTextView = getTitleTextView();
-        if (titleTextView != null) {
-            titleTextView.setTextSize(size);
+        if (titleTextView != null && size.hasValue()) {
+            titleTextView.setTextSize(size.get());
         }
     }
 
@@ -85,27 +89,27 @@ public class TopBar extends AppBarLayout {
         return findTextView(titleBar);
     }
 
-    @Override
-    public void setBackgroundColor(@ColorInt int color) {
-        titleBar.setBackgroundColor(color);
+    public void setBackgroundColor(Color color) {
+        if (color.hasValue()) titleBar.setBackgroundColor(color.get());
     }
 
     @Nullable
     private TextView findTextView(ViewGroup root) {
         for (int i = 0; i < root.getChildCount(); i++) {
             View view = root.getChildAt(i);
+            if (view instanceof ViewGroup) {
+                view = findTextView((ViewGroup) view);
+            }
             if (view instanceof TextView) {
                 return (TextView) view;
-            }
-            if (view instanceof ViewGroup) {
-                return findTextView((ViewGroup) view);
             }
         }
         return null;
     }
 
     private void setLeftButtons(ArrayList<Button> leftButtons) {
-        if (leftButtons == null || leftButtons.isEmpty()) {
+        if (leftButtons == null) return;
+        if (leftButtons.isEmpty()) {
             titleBar.setNavigationIcon(null);
             return;
         }
@@ -119,7 +123,7 @@ public class TopBar extends AppBarLayout {
     }
 
     private void setLeftButton(final Button button) {
-        TitleBarButton leftBarButton = new TitleBarButton(component, this.titleBar, button);
+        TitleBarButton leftBarButton = new TitleBarButton(this.titleBar, button, onClickListener);
         leftBarButton.applyNavigationIcon(getContext());
     }
 
@@ -133,7 +137,7 @@ public class TopBar extends AppBarLayout {
 
         for (int i = 0; i < rightButtons.size(); i++) {
             Button button = rightButtons.get(i);
-            TitleBarButton titleBarButton = new TitleBarButton(component, this.titleBar, button);
+            TitleBarButton titleBarButton = new TitleBarButton(this.titleBar, button, onClickListener);
             titleBarButton.addToMenu(getContext(), menu);
         }
     }
@@ -180,5 +184,11 @@ public class TopBar extends AppBarLayout {
         } else {
             setVisibility(View.GONE);
         }
+    }
+
+    public void clear() {
+        titleBar.setTitle(null);
+        titleBar.setNavigationIcon(null);
+        titleBar.getMenu().clear();
     }
 }

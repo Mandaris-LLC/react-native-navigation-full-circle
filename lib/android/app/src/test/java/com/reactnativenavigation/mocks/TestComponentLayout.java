@@ -1,35 +1,24 @@
 package com.reactnativenavigation.mocks;
 
-import android.content.*;
-import android.view.*;
-import android.widget.*;
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
-import com.reactnativenavigation.parse.*;
-import com.reactnativenavigation.presentation.*;
-import com.reactnativenavigation.views.*;
+import com.reactnativenavigation.interfaces.ScrollEventListener;
+import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.views.ReactComponent;
+import com.reactnativenavigation.views.TitleBarButton;
+import com.reactnativenavigation.views.TopBar;
 
-public class TestComponentLayout extends RelativeLayout implements ReactComponent {
+public class TestComponentLayout extends RelativeLayout implements ReactComponent, TitleBarButton.OnClickListener {
 
-    private final TopBar topBar;
     private final View contentView;
-    private final OptionsPresenter optionsPresenter;
 
     public TestComponentLayout(final Context context) {
         super(context);
-        topBar = new TopBar(context, this, null);
         contentView = new View(context);
-        addView(topBar);
         addView(contentView);
-        optionsPresenter = new OptionsPresenter(this);
-    }
-
-    public TopBar getTopBar() {
-        return topBar;
-    }
-
-    @Override
-    public View getContentView() {
-        return contentView;
     }
 
     @Override
@@ -40,7 +29,7 @@ public class TestComponentLayout extends RelativeLayout implements ReactComponen
     }
 
     @Override
-    public void drawBelowTopBar() {
+    public void drawBelowTopBar(TopBar topBar) {
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.addRule(BELOW, topBar.getId());
         contentView.setLayoutParams(layoutParams);
@@ -70,11 +59,21 @@ public class TestComponentLayout extends RelativeLayout implements ReactComponen
 
     @Override
     public void applyOptions(Options options) {
-        optionsPresenter.applyOptions(options);
+
     }
 
     @Override
     public void sendOnNavigationButtonPressed(String id) {
+
+    }
+
+    @Override
+    public ScrollEventListener getScrollEventListener() {
+        return null;
+    }
+
+    @Override
+    public void onPress(String buttonId) {
 
     }
 }

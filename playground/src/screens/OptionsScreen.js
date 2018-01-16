@@ -48,6 +48,7 @@ class OptionsScreen extends Component {
     this.onClickTopBarTransparent = this.onClickTopBarTransparent.bind(this);
     this.onClickTopBarOpaque = this.onClickTopBarOpaque.bind(this);
     this.onClickCustomTranstition = this.onClickCustomTranstition.bind(this);
+    this.onClickPushDefaultOptionsScreen = this.onClickPushDefaultOptionsScreen.bind(this);
   }
 
   render() {
@@ -63,7 +64,8 @@ class OptionsScreen extends Component {
         <Button title="Custom Transition" onPress={this.onClickCustomTranstition} />
         <Button title="Show custom alert" testID={testIDs.SHOW_CUSTOM_ALERT_BUTTON} onPress={this.onClickAlert} />
         <Button title="Show snackbar" testID={testIDs.SHOW_SNACKBAR_BUTTON} onPress={this.onClickSnackbar} />
-        <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
+        <Button title="Push Default Options Screen" testID={testIDs.PUSH_DEFAULT_OPTIONS_BUTTON} onPress={this.onClickPushDefaultOptionsScreen} />
+        <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
       </View>
     );
   }
@@ -187,13 +189,28 @@ class OptionsScreen extends Component {
       }
     });
   }
+
+  onClickPushDefaultOptionsScreen() {
+    Navigation.setDefaultOptions({
+      topBar: {
+        hidden: true
+      }
+    });
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'navigation.playground.PushedScreen'
+      }
+    });
+  }
 }
 
 const styles = {
   root: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   h1: {
     fontSize: 24,

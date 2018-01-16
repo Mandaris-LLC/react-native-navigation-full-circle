@@ -1,34 +1,32 @@
 package com.reactnativenavigation.views;
 
-import android.annotation.*;
-import android.content.*;
-import android.support.annotation.*;
-import android.support.v4.view.*;
-import android.view.*;
-import android.widget.*;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.support.annotation.RestrictTo;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
-import com.reactnativenavigation.parse.*;
-import com.reactnativenavigation.presentation.*;
-import com.reactnativenavigation.utils.*;
-import com.reactnativenavigation.viewcontrollers.toptabs.*;
+import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.viewcontrollers.ViewController;
+import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsAdapter;
+import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsViewPager;
 
-import java.util.*;
+import java.util.List;
 
 @SuppressLint("ViewConstructor")
-public class TopTabsLayout extends RelativeLayout implements Component {
+public class TopTabsLayout extends RelativeLayout implements Component, TitleBarButton.OnClickListener {
 
     private TopBar topBar;
-    private List<TopTabController> tabs;
     private TopTabsViewPager viewPager;
-    private final OptionsPresenter optionsPresenter;
 
-    public TopTabsLayout(Context context, List<TopTabController> tabs, TopTabsAdapter adapter) {
+    public TopTabsLayout(Context context, List<ViewController> tabs, TopTabsAdapter adapter) {
         super(context);
-        this.tabs = tabs;
-        topBar = new TopBar(context, this, null);
-        topBar.setId(View.generateViewId());
         viewPager = new TopTabsViewPager(context, tabs, adapter);
-        optionsPresenter = new OptionsPresenter(this);
+        topBar = new TopBar(context, this);
+        topBar.setId(View.generateViewId());
+
         initViews();
     }
 
@@ -42,22 +40,7 @@ public class TopTabsLayout extends RelativeLayout implements Component {
 
     @Override
     public void applyOptions(Options options) {
-        optionsPresenter.applyOptions(options);
-    }
 
-    @Override
-    public void sendOnNavigationButtonPressed(String id) {
-        viewPager.sendOnNavigationButtonPressed(id);
-    }
-
-    @Override
-    public TopBar getTopBar() {
-        return topBar;
-    }
-
-    @Override
-    public View getContentView() {
-        return viewPager;
     }
 
     @Override
@@ -66,7 +49,7 @@ public class TopTabsLayout extends RelativeLayout implements Component {
     }
 
     @Override
-    public void drawBelowTopBar() {
+    public void drawBelowTopBar(TopBar topBar) {
 
     }
 
@@ -75,16 +58,16 @@ public class TopTabsLayout extends RelativeLayout implements Component {
         return viewPager;
     }
 
-
-    public void performOnCurrentTab(Task<TopTabController> task) {
-        task.run(tabs.get(viewPager.getCurrentItem()));
-    }
-
     public void switchToTab(int index) {
         viewPager.setCurrentItem(index);
     }
 
     public int getCurrentItem() {
         return viewPager.getCurrentItem();
+    }
+
+    @Override
+    public void onPress(String buttonId) {
+        viewPager.sendOnNavigationButtonPressed(buttonId);
     }
 }

@@ -4,6 +4,7 @@ import android.app.*;
 import android.support.annotation.*;
 import android.view.*;
 
+import com.reactnativenavigation.interfaces.ScrollEventListener;
 import com.reactnativenavigation.parse.*;
 import com.reactnativenavigation.presentation.*;
 import com.reactnativenavigation.views.*;
@@ -28,12 +29,13 @@ public class ComponentViewController extends ViewController implements Navigatio
         void sendComponentStop();
 
         void sendOnNavigationButtonPressed(String buttonId);
+
+        ScrollEventListener getScrollEventListener();
     }
 
     private final String componentName;
 
     private final ReactViewCreator viewCreator;
-    private Options options;
     private ReactComponent component;
 
     public ComponentViewController(final Activity activity,
@@ -44,12 +46,7 @@ public class ComponentViewController extends ViewController implements Navigatio
         super(activity, id);
         this.componentName = componentName;
         this.viewCreator = viewCreator;
-        this.options = initialNavigationOptions;
-    }
-
-    @RestrictTo(RestrictTo.Scope.TESTS)
-    TopBar getTopBar() {
-        return component.getTopBar();
+        options = initialNavigationOptions;
     }
 
     @Override
@@ -63,7 +60,10 @@ public class ComponentViewController extends ViewController implements Navigatio
     public void onViewAppeared() {
         super.onViewAppeared();
         ensureViewIsCreated();
-        component.applyOptions(options);
+        applyOnParentStack(parentController -> {
+            parentController.clearOptions();
+            parentController.applyOptions(options, component);
+        });
         component.sendComponentStart();
     }
 
@@ -89,6 +89,7 @@ public class ComponentViewController extends ViewController implements Navigatio
     public void mergeOptions(Options options) {
         this.options.mergeWith(options);
         component.applyOptions(this.options);
+        applyOnParentStack(parentController -> parentController.applyOptions(this.options, component));
     }
 
     Options getOptions() {

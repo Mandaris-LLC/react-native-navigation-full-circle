@@ -22,19 +22,23 @@ import com.reactnativenavigation.utils.UiUtils;
 import java.util.ArrayList;
 
 public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
+    public interface OnClickListener {
+        void onPress(String buttonId);
+    }
+
 	private Toolbar toolbar;
 	private final Button button;
-	private Component component;
 	private Drawable icon;
+    private OnClickListener onPressListener;
 
-	TitleBarButton(Component component, Toolbar toolbar, Button button) {
-		this.component = component;
+    TitleBarButton(Toolbar toolbar, Button button, OnClickListener onPressListener) {
+        this.onPressListener = onPressListener;
 		this.toolbar = toolbar;
 		this.button = button;
 	}
 
 	void addToMenu(Context context, final Menu menu) {
-		MenuItem menuItem = menu.add(button.title);
+		MenuItem menuItem = menu.add(button.title.get(""));
 		menuItem.setShowAsAction(button.showAsAction);
 		menuItem.setEnabled(button.disabled != Options.BooleanOptions.True);
 		menuItem.setOnMenuItemClickListener(this);
@@ -53,39 +57,33 @@ public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
 			return;
 		}
 
-		ImageUtils.tryLoadIcon(context, button.icon, new ImageUtils.ImageLoadingListener() {
+		ImageUtils.loadIcon(context, button.icon.get(), new ImageUtils.ImageLoadingListener() {
 			@Override
 			public void onComplete(@NonNull Drawable drawable) {
 				icon = drawable;
-				UiUtils.runOnMainThread(() -> {
-                    setIconColor();
-                    setNavigationClickListener();
-                    toolbar.setNavigationIcon(icon);
-                });
+                setIconColor();
+                setNavigationClickListener();
+                toolbar.setNavigationIcon(icon);
 			}
 
 			@Override
 			public void onError(Throwable error) {
-				//TODO: handle
 				error.printStackTrace();
 			}
 		});
 	}
 
 	private void applyIcon(Context context, final MenuItem menuItem) {
-		ImageUtils.tryLoadIcon(context, button.icon, new ImageUtils.ImageLoadingListener() {
+		ImageUtils.loadIcon(context, button.icon.get(), new ImageUtils.ImageLoadingListener() {
 			@Override
 			public void onComplete(@NonNull Drawable drawable) {
 				icon = drawable;
-				UiUtils.runOnMainThread(() -> {
-                    menuItem.setIcon(icon);
-                    setIconColor();
-                });
+                menuItem.setIcon(icon);
+                setIconColor();
 			}
 
 			@Override
 			public void onError(Throwable error) {
-				//TODO: handle
 				error.printStackTrace();
 			}
 		});
@@ -112,25 +110,25 @@ public class TitleBarButton implements MenuItem.OnMenuItemClickListener {
 	}
 
 	private void setFontSize(MenuItem menuItem) {
-		SpannableString spanString = new SpannableString(button.title);
-		spanString.setSpan(new AbsoluteSizeSpan(button.buttonFontSize, true), 0, button.title.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+		SpannableString spanString = new SpannableString(button.title.get());
+		spanString.setSpan(new AbsoluteSizeSpan(button.buttonFontSize, true), 0, button.title.get().length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 		menuItem.setTitleCondensed(spanString);
 	}
 
 	private void setNavigationClickListener() {
-		toolbar.setNavigationOnClickListener(view -> component.sendOnNavigationButtonPressed(button.id));
+		toolbar.setNavigationOnClickListener(view -> onPressListener.onPress(button.id));
 	}
 
 	@Override
 	public boolean onMenuItemClick(MenuItem menuItem) {
-		this.component.sendOnNavigationButtonPressed(button.id);
+		onPressListener.onPress(button.id);
 		return true;
 	}
 
 	@NonNull
 	private ArrayList<View> findActualTextViewInMenuByLabel() {
 		ArrayList<View> outViews = new ArrayList<>();
-		this.toolbar.findViewsWithText(outViews, button.title, View.FIND_VIEWS_WITH_TEXT);
+		this.toolbar.findViewsWithText(outViews, button.title.get(), View.FIND_VIEWS_WITH_TEXT);
 		return outViews;
 	}
 
