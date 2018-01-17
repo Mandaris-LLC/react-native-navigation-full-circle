@@ -1,7 +1,7 @@
-const LayoutTreeParser = require('./LayoutTreeParser');
-const LayoutTypes = require('./LayoutTypes');
-const _ = require('lodash');
-const Examples = require('./LayoutExamples');
+import * as  _ from 'lodash';
+import { LayoutTreeParser } from './LayoutTreeParser';
+import { LayoutTypes } from './LayoutTypes';
+import { Examples } from './LayoutExamples';
 
 describe('LayoutTreeParser', () => {
   let uut;

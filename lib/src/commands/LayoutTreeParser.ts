@@ -1,14 +1,13 @@
-import { LayoutTypes } from './LayoutTypes';
+import * as _ from 'lodash';
+import { LayoutTypes } from './values/LayoutTypes';
 
-const _ = require('lodash');
-
-class LayoutTreeParser {
+export class LayoutTreeParser {
   constructor() {
     this.parse = this.parse.bind(this);
   }
 
   /**
-   * returns correct layout tree of nodes which are { type, data, children }
+   * @returns correct layout tree of nodes which are { type, data, children }
    */
   parse(api) {
     if (api.topTabs) {
@@ -92,5 +91,3 @@ class LayoutTreeParser {
     };
   }
 }
-
-module.exports = LayoutTreeParser;

@@ -1,4 +1,6 @@
-export const enum LayoutTypes {
+import * as _ from 'lodash';
+
+export const enum LayoutType {
   Component = 'Component',
   Stack = 'Stack',
   BottomTabs = 'BottomTabs',
@@ -8,3 +10,7 @@ export const enum LayoutTypes {
   SideMenuRight = 'SideMenuRight',
   TopTabs = 'TopTabs'
 };
+
+export function isValid(name: string) {
+  return _.keys(LayoutType);
+}

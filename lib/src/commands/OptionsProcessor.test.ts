@@ -9,8 +9,10 @@ describe('navigation options', () => {
 
   it('processes colors into numeric AARRGGBB', () => {
     options.someKeyColor = 'red';
+    options.color = 'blue';
     OptionsProcessor.processOptions(options);
     expect(options.someKeyColor).toEqual(0xffff0000);
+    expect(options.color).toEqual(0xff0000ff);
 
     options.someKeyColor = 'yellow';
     OptionsProcessor.processOptions(options);
@@ -78,6 +80,8 @@ describe('navigation options', () => {
 
   it('resolve image sources with name/ending with icon', () => {
     options.icon = 'require("https://wix.github.io/react-native-navigation/_images/logo.png");';
+    options.image = 'require("https://wix.github.io/react-native-navigation/_images/logo.png");';
+    options.myImage = 'require("https://wix.github.io/react-native-navigation/_images/logo.png");';
     options.topBar = {
       myIcon: 'require("https://wix.github.io/react-native-navigation/_images/logo.png");',
       myOtherValue: 'value'
@@ -89,6 +93,8 @@ describe('navigation options', () => {
     // and expect the value to be resovled, in this case it doesn't find anything and returns null
     expect(options.icon).toEqual(null);
     expect(options.topBar.myIcon).toEqual(null);
+    expect(options.image).toEqual(null);
+    expect(options.myImage).toEqual(null);
     expect(options.topBar.myOtherValue).toEqual('value');
   });
 
