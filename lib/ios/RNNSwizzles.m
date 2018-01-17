@@ -14,7 +14,7 @@ static id (*__SWZ_initWithEventDispatcher_orig)(id self, SEL _cmd, id eventDispa
 
 @implementation RNNSwizzles
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_10_3
 - (id)__swz_initWithEventDispatcher:(id)eventDispatcher
 {
 	id returnValue = __SWZ_initWithEventDispatcher_orig(self, _cmd, eventDispatcher);
