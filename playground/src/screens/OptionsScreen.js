@@ -198,7 +198,11 @@ class OptionsScreen extends Component {
     Navigation.showOverlay({
       component: {
         name: 'navigation.playground.CustomDialog',
-        options: { interceptTouches }
+        options: {
+          overlay: {
+            interceptTouches
+          }
+        }
       }
     });
   }
