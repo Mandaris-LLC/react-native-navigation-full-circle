@@ -62,6 +62,12 @@ class WelcomeScreen extends Component {
                       bottomTab: {
                         title: 'Tab 1',
                         testID: testIDs.FIRST_TAB_BAR_BUTTON
+                      },
+                      bottomTabs: {
+                        textColor: '#12766b',
+                        selectedTextColor: 'red',
+                        fontFamily: 'HelveticaNeue-Italic',
+                        fontSize: 13
                       }
                     }
                   }
