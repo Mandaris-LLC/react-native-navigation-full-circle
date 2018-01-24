@@ -76,6 +76,10 @@
 	return NO;
 }
 
+- (BOOL)isAnimated {
+	return YES;
+}
+
 - (NSString *)componentId {
 	return _currentViewController.componentId;
 }
