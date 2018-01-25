@@ -655,6 +655,7 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
     }
   }
 
+  #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_10_3
   if (@available(iOS 11.0, *)) {
     if ([self.navigationController.navigationBar respondsToSelector:@selector(setPrefersLargeTitles:)]) {
       NSNumber *prefersLargeTitles = self.navigatorStyle[@"largeTitle"];
@@ -671,6 +672,7 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
       }
     }
   }
+  #endif
 }
 
 
