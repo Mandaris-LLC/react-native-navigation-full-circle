@@ -1,9 +1,9 @@
-const LayoutTreeParser = require('./LayoutTreeParser');
-const LayoutTreeCrawler = require('./LayoutTreeCrawler');
-const Store = require('../components/Store');
-const { UniqueIdProvider } = require('../adapters/UniqueIdProvider.mock');
-const { NativeCommandsSender } = require('../adapters/NativeCommandsSender.mock');
-const Commands = require('./Commands');
+import { LayoutTreeParser } from './LayoutTreeParser';
+import { LayoutTreeCrawler } from './LayoutTreeCrawler';
+import { Store } from '../components/Store';
+import { UniqueIdProvider } from '../adapters/UniqueIdProvider.mock';
+import { NativeCommandsSender } from '../adapters/NativeCommandsSender.mock';
+import { Commands } from './Commands';
 
 describe('Commands', () => {
   let uut;

@@ -1,6 +1,10 @@
-const _ = require('lodash');
+import * as _ from 'lodash';
 
-class Store {
+export class Store {
+  private propsByComponentId: {};
+  private componentsByName: {};
+  private refsById: {};
+
   constructor() {
     this.propsByComponentId = {};
     this.componentsByName = {};
@@ -36,5 +40,3 @@ class Store {
     _.unset(this.propsByComponentId, id);
   }
 }
-
-module.exports = Store;

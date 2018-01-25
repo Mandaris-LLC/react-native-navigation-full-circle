@@ -1,15 +1,13 @@
 import * as _ from 'lodash';
 import { LayoutType } from './values/LayoutType';
+import { LayoutNode } from './values/LayoutNode';
 
 export class LayoutTreeParser {
   constructor() {
     this.parse = this.parse.bind(this);
   }
 
-  /**
-   * @returns correct layout tree of nodes which are { type, data, children }
-   */
-  parse(api) {
+  parse(api: any): LayoutNode {
     if (api.topTabs) {
       return this._topTabs(api.topTabs);
     } else if (api.sideMenu) {
@@ -24,7 +22,7 @@ export class LayoutTreeParser {
     throw new Error(`unknown LayoutType "${_.keys(api)}"`);
   }
 
-  _topTabs(api) {
+  _topTabs(api): LayoutNode {
     return {
       type: LayoutType.TopTabs,
       data: { options: api.options },
@@ -32,7 +30,7 @@ export class LayoutTreeParser {
     };
   }
 
-  _sideMenu(api) {
+  _sideMenu(api): LayoutNode {
     return {
       type: LayoutType.SideMenuRoot,
       data: { options: api.options },
@@ -40,7 +38,7 @@ export class LayoutTreeParser {
     };
   }
 
-  _sideMenuChildren(api) {
+  _sideMenuChildren(api): Array<LayoutNode> {
     if (!api.center) {
       throw new Error(`sideMenu.center is required`);
     }
@@ -67,7 +65,7 @@ export class LayoutTreeParser {
     return children;
   }
 
-  _bottomTabs(api) {
+  _bottomTabs(api): LayoutNode {
     return {
       type: LayoutType.BottomTabs,
       data: { options: api.options },
@@ -75,7 +73,7 @@ export class LayoutTreeParser {
     };
   }
 
-  _stack(api) {
+  _stack(api): LayoutNode {
     return {
       type: LayoutType.Stack,
       data: { name: api.name, options: api.options },
@@ -83,7 +81,7 @@ export class LayoutTreeParser {
     };
   }
 
-  _component(api) {
+  _component(api): LayoutNode {
     return {
       type: LayoutType.Component,
       data: { name: api.name, options: api.options, passProps: api.passProps },

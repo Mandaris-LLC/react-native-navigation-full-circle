@@ -1,4 +1,6 @@
-class Lifecycle {
+export class Lifecycle {
+  private store: any;
+
   constructor(store) {
     this.store = store;
     this.componentDidAppear = this.componentDidAppear.bind(this);
@@ -27,5 +29,3 @@ class Lifecycle {
     }
   }
 }
-
-module.exports = Lifecycle;

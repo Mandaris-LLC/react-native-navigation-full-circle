@@ -1,7 +1,8 @@
-const LayoutTypes = require('./LayoutTypes');
-const LayoutTreeCrawler = require('./LayoutTreeCrawler');
+import { LayoutType } from './values/LayoutType';
+import { LayoutTreeCrawler } from './LayoutTreeCrawler';
+import { UniqueIdProvider } from '../adapters/UniqueIdProvider.mock';
+import { LayoutNode } from './values/LayoutNode';
 const Store = require('../components/Store');
-const UniqueIdProvider = require('../adapters/UniqueIdProvider.mock');
 
 describe('LayoutTreeCrawler', () => {
   let uut;
@@ -13,34 +14,34 @@ describe('LayoutTreeCrawler', () => {
   });
 
   it('crawls a layout tree and adds unique id to each node', () => {
-    const node = { type: LayoutTypes.Stack, children: [{ type: LayoutTypes.BottomTabs }] };
+    const node: any = { type: LayoutType.Stack, children: [{ type: LayoutType.BottomTabs }] };
     uut.crawl(node);
     expect(node.id).toEqual('Stack+UNIQUE_ID');
     expect(node.children[0].id).toEqual('BottomTabs+UNIQUE_ID');
   });
 
   it('crawls a layout tree and ensures data exists', () => {
-    const node = { type: LayoutTypes.Stack, children: [{ type: LayoutTypes.BottomTabs }] };
+    const node: any = { type: LayoutType.Stack, children: [{ type: LayoutType.BottomTabs }] };
     uut.crawl(node);
     expect(node.data).toEqual({});
     expect(node.children[0].data).toEqual({});
   });
 
   it('crawls a layout tree and ensures children exists', () => {
-    const node = { type: LayoutTypes.Stack, children: [{ type: LayoutTypes.BottomTabs }] };
+    const node: any = { type: LayoutType.Stack, children: [{ type: LayoutType.BottomTabs }] };
     uut.crawl(node);
     expect(node.children[0].children).toEqual([]);
   });
 
   it('crawls a layout tree and asserts known layout type', () => {
-    const node = { type: LayoutTypes.Stack, children: [{ type: 'Bob' }] };
-    expect(() => uut.crawl(node)).toThrow(new Error('Unknown layout type Bob'));
+    const node = { type: LayoutType.Stack, children: [{ type: 'Bob' }] };
+    expect(() => uut.crawl(node)).toThrowError('Unknown layout type Bob');
   });
 
   it('saves passProps into store for Component nodes', () => {
     const node = {
-      type: LayoutTypes.BottomTabs, children: [
-        { type: LayoutTypes.Component, data: { name: 'the name', passProps: { myProp: 123 } } }]
+      type: LayoutType.BottomTabs, children: [
+        { type: LayoutType.Component, data: { name: 'the name', passProps: { myProp: 123 } } }]
     };
     expect(store.getPropsForComponentId('Component+UNIQUE_ID')).toEqual({});
     uut.crawl(node);
@@ -55,7 +56,7 @@ describe('LayoutTreeCrawler', () => {
       }
     };
 
-    const node = { type: LayoutTypes.Component, data: { name: 'theComponentName' } };
+    const node: any = { type: LayoutType.Component, data: { name: 'theComponentName' } };
     store.setOriginalComponentClassForName('theComponentName', MyComponent);
     uut.crawl(node);
     expect(node.data.options).toEqual(theStyle);
@@ -83,7 +84,7 @@ describe('LayoutTreeCrawler', () => {
       }
     };
 
-    const node = { type: LayoutTypes.Component, data: { name: 'theComponentName', options: passedOptions } };
+    const node = { type: LayoutType.Component, data: { name: 'theComponentName', options: passedOptions } };
     store.setOriginalComponentClassForName('theComponentName', MyComponent);
 
     uut.crawl(node);
@@ -106,21 +107,21 @@ describe('LayoutTreeCrawler', () => {
       }
     };
 
-    const node = { type: LayoutTypes.Component, data: { name: 'theComponentName' } };
+    const node: any = { type: LayoutType.Component, data: { name: 'theComponentName' } };
     store.setOriginalComponentClassForName('theComponentName', MyComponent);
     uut.crawl(node);
     expect(node.data.options).not.toBe(theStyle);
   });
 
   it('Components: must contain data name', () => {
-    const node = { type: LayoutTypes.Component, data: {} };
-    expect(() => uut.crawl(node)).toThrow(new Error('Missing component data.name'));
+    const node = { type: LayoutType.Component, data: {} };
+    expect(() => uut.crawl(node)).toThrowError('Missing component data.name');
   });
 
   it('Components: options default obj', () => {
     const MyComponent = class { };
 
-    const node = { type: LayoutTypes.Component, data: { name: 'theComponentName' } };
+    const node: any = { type: LayoutType.Component, data: { name: 'theComponentName' } };
     store.setOriginalComponentClassForName('theComponentName', MyComponent);
     uut.crawl(node);
     expect(node.data.options).toEqual({});
@@ -132,7 +133,7 @@ describe('LayoutTreeCrawler', () => {
 
     beforeEach(() => {
       options = {};
-      node = { type: LayoutTypes.Component, data: { name: 'theComponentName', options } };
+      node = { type: LayoutType.Component, data: { name: 'theComponentName', options } };
     });
 
     it('processes colors into numeric AARRGGBB', () => {

@@ -1,6 +1,6 @@
 import { PrivateEventsListener } from './PrivateEventsListener';
 import { NativeEventsReceiver } from '../adapters/NativeEventsReceiver.mock';
-import * as  Store from '../components/Store';
+import { Store } from '../components/Store';
 
 describe('PrivateEventsListener', () => {
   let uut: PrivateEventsListener;

@@ -1,5 +1,5 @@
-const PublicEventsRegistry = require('./PublicEventsRegistry');
-const NativeEventsReceiver = require('../adapters/NativeEventsReceiver.mock');
+import { PublicEventsRegistry } from './PublicEventsRegistry';
+import { NativeEventsReceiver } from '../adapters/NativeEventsReceiver.mock';
 
 describe('PublicEventsRegistry', () => {
   let uut;

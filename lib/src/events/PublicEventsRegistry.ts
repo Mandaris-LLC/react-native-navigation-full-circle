@@ -1,4 +1,6 @@
-class PublicEventsRegistry {
+export class PublicEventsRegistry {
+  private nativeEventsReceiver: any;
+
   constructor(nativeEventsReceiver) {
     this.nativeEventsReceiver = nativeEventsReceiver;
   }
@@ -7,5 +9,3 @@ class PublicEventsRegistry {
     this.nativeEventsReceiver.registerAppLaunched(callback);
   }
 }
-
-module.exports = PublicEventsRegistry;

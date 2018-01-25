@@ -1,4 +1,4 @@
-const Store = require('./Store');
+import { Store } from './Store';
 
 describe('Store', () => {
   let uut;

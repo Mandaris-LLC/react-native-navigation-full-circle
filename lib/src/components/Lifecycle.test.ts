@@ -1,5 +1,5 @@
-const Lifecycle = require('./Lifecycle');
-const Store = require('../components/Store');
+import { Lifecycle } from './Lifecycle';
+import { Store } from '../components/Store';
 
 describe('Lifecycle', () => {
   let store;

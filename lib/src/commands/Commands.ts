@@ -1,14 +1,18 @@
-const _ = require('lodash');
-const OptionsProcessor = require('./OptionsProcessor');
+import * as _ from 'lodash';
+import { OptionsProcessor } from './OptionsProcessor';
 
-class Commands {
+export class Commands {
+  private nativeCommandsSender: any;
+  private layoutTreeParser: any;
+  private layoutTreeCrawler: any;
+
   constructor(nativeCommandsSender, layoutTreeParser, layoutTreeCrawler) {
     this.nativeCommandsSender = nativeCommandsSender;
     this.layoutTreeParser = layoutTreeParser;
     this.layoutTreeCrawler = layoutTreeCrawler;
   }
 
-  setRoot(simpleApi) {
+  setRoot(simpleApi: any) {
     const input = _.cloneDeep(simpleApi);
     const layout = this.layoutTreeParser.parse(input);
     this.layoutTreeCrawler.crawl(layout);
@@ -63,22 +67,20 @@ class Commands {
   }
 
   // showOverlay(type, options) {
-    // let promise;
-    // if (type === 'custom') {
-    //   const layout = this.layoutTreeParser.createDialogComponent({ name: options });
-    //   this.layoutTreeCrawler.crawl(layout);
-    //   promise = this.nativeCommandsSender.showOverlay(type, layout);
-    // } else {
-    //   const input = _.cloneDeep(options);
-    //   OptionsProcessor.processOptions(input);
-    //   promise = this.nativeCommandsSender.showOverlay(type, input);
-    // }
-    // return promise;
+  // let promise;
+  // if (type === 'custom') {
+  //   const layout = this.layoutTreeParser.createDialogComponent({ name: options });
+  //   this.layoutTreeCrawler.crawl(layout);
+  //   promise = this.nativeCommandsSender.showOverlay(type, layout);
+  // } else {
+  //   const input = _.cloneDeep(options);
+  //   OptionsProcessor.processOptions(input);
+  //   promise = this.nativeCommandsSender.showOverlay(type, input);
+  // }
+  // return promise;
   // }
 
   dismissOverlay() {
     return this.nativeCommandsSender.dismissOverlay();
   }
 }
-
-module.exports = Commands;

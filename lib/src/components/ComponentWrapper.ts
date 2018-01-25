@@ -1,11 +1,9 @@
-const _ = require('lodash');
+import * as  _ from 'lodash';
+import * as React from 'react';
 
-const React = require('react');
-const { Component } = require('react');
-
-class ComponentWrapper {
-  static wrap(componentName, OriginalComponent, store) {
-    return class extends Component {
+export class ComponentWrapper {
+  static wrap(componentName: string, OriginalComponent: any, store: any) {
+    return class extends React.Component<any, any> {
       constructor(props) {
         super(props);
         this._saveComponentRef = this._saveComponentRef.bind(this);
@@ -61,15 +59,13 @@ class ComponentWrapper {
       render() {
         return (
           <OriginalComponent
-            ref={this._saveComponentRef}
-            {...this.state.allProps}
-            componentId={this.state.componentId}
-            key={this.state.componentId}
+            ref= { this._saveComponentRef }
+        {...this.state.allProps }
+        componentId = { this.state.componentId }
+        key = { this.state.componentId }
           />
         );
       }
     };
   }
 }
-
-module.exports = ComponentWrapper;

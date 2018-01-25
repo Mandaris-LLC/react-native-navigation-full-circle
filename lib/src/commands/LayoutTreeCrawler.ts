@@ -1,21 +1,33 @@
-import { LayoutTypes } from './LayoutTypes';
+import * as _ from 'lodash';
+import { OptionsProcessor } from './OptionsProcessor';
+import { LayoutType, isLayoutType } from './values/LayoutType';
+import { LayoutNode } from './values/LayoutNode';
 
-const _ = require('lodash');
-const OptionsProcessor = require('./OptionsProcessor');
+interface IdProvider {
+  generate: (str: string) => string;
+}
 
-class LayoutTreeCrawler {
-  constructor(uniqueIdProvider, store) {
+interface Store {
+  setPropsForComponentId: (str: string, props: object) => void;
+  getOriginalComponentClassForName: (str: string) => any;
+}
+
+export class LayoutTreeCrawler {
+  private uniqueIdProvider: IdProvider
+  private store: Store
+
+  constructor(uniqueIdProvider: IdProvider, store: Store) {
     this.uniqueIdProvider = uniqueIdProvider;
     this.store = store;
     this.crawl = this.crawl.bind(this);
   }
 
-  crawl(node) {
+  crawl(node: LayoutNode): void {
     this._assertKnownLayoutType(node.type);
     node.id = this.uniqueIdProvider.generate(node.type);
     node.data = node.data || {};
     node.children = node.children || [];
-    if (_.isEqual(node.type, LayoutTypes.Component)) {
+    if (node.type == LayoutType.Component) {
       this._handleComponent(node);
     }
     _.forEach(node.children, this.crawl);
@@ -40,7 +52,7 @@ class LayoutTreeCrawler {
   }
 
   _assertKnownLayoutType(type) {
-    if (!_.includes(LayoutTypes, type)) {
+    if (!isLayoutType(type)) {
       throw new Error(`Unknown layout type ${type}`);
     }
   }
@@ -51,5 +63,3 @@ class LayoutTreeCrawler {
     }
   }
 }
-
-module.exports = LayoutTreeCrawler;

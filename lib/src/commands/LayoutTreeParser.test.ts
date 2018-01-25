@@ -11,7 +11,7 @@ describe('LayoutTreeParser', () => {
 
   describe('parses into { type, data, children }', () => {
     it('unknown type', () => {
-      expect(() => uut.parse({ wut: {} })).toThrow(new Error('unknown LayoutType "wut"'));
+      expect(() => uut.parse({ wut: {} })).toThrowError('unknown LayoutType "wut"');
     });
 
     it('single component', () => {
@@ -88,7 +88,7 @@ describe('LayoutTreeParser', () => {
     });
 
     it('side menu center is require', () => {
-      expect(() => uut.parse({ sideMenu: {} })).toThrow(new Error('sideMenu.center is required'));
+      expect(() => uut.parse({ sideMenu: {} })).toThrowError('sideMenu.center is required');
     });
 
     it('top tabs', () => {
@@ -127,120 +127,130 @@ describe('LayoutTreeParser', () => {
   });
 });
 
-const LayoutExamples = {
-  passProps: {
-    strProp: 'string prop',
-    numProp: 12345,
-    objProp: { inner: { foo: 'bar' } },
-    fnProp: () => 'Hello from a function'
-  },
+/* Layout Examples: */
 
-  options: {
-    topBar: {
-      title: 'Hello1'
-    }
-  },
+const passProps = {
+  strProp: 'string prop',
+  numProp: 12345,
+  objProp: { inner: { foo: 'bar' } },
+  fnProp: () => 'Hello from a function'
+};
 
-  singleComponent: {
-    component: {
-      name: 'MyReactComponent',
-      options: this.options,
-      passProps: this.passProps
-    }
-  },
+const options = {
+  topBar: {
+    title: 'Hello1'
+  }
+};
 
-  stackWithTopBar: {
-    stack: {
-      children: [
-        {
-          component: {
-            name: 'MyReactComponent1'
-          }
-        },
-        {
-          component: {
-            name: 'MyReactComponent2',
-            options: this.options
-          }
+const singleComponent = {
+  component: {
+    name: 'MyReactComponent',
+    options,
+    passProps
+  }
+};
+
+const stackWithTopBar = {
+  stack: {
+    children: [
+      {
+        component: {
+          name: 'MyReactComponent1'
         }
-      ],
-      options: this.options
-    }
-  },
+      },
+      {
+        component: {
+          name: 'MyReactComponent2',
+          options
+        }
+      }
+    ],
+    options
+  }
+};
 
+const bottomTabs = {
   bottomTabs: {
-    bottomTabs: {
-      children: [
-        { ...this.stackWithTopBar },
-        { ...this.stackWithTopBar },
-        {
-          component: {
-            name: 'MyReactComponent1'
-          }
+    children: [
+      stackWithTopBar,
+      stackWithTopBar,
+      {
+        component: {
+          name: 'MyReactComponent1'
         }
-      ]
-    }
-  },
+      }
+    ]
+  }
+};
 
+const sideMenu = {
   sideMenu: {
-    sideMenu: {
-      left: { ...this.singleComponent },
-      center: { ...this.stackWithTopBar },
-      right: { ...this.singleComponent }
-    }
-  },
+    left: singleComponent,
+    center: stackWithTopBar,
+    right: singleComponent
+  }
+};
 
+const topTabs = {
   topTabs: {
-    topTabs: {
-      children: [
-        { ...this.singleComponent },
-        { ...this.singleComponent },
-        { ...this.singleComponent },
-        { ...this.singleComponent },
-        { ...this.stackWithTopBar }
-      ],
-      options: this.options
-    }
-  },
+    children: [
+      singleComponent,
+      singleComponent,
+      singleComponent,
+      singleComponent,
+      stackWithTopBar
+    ],
+    options
+  }
+};
 
-  complexLayout: {
-    sideMenu: {
-      left: { ...this.singleComponent },
-      center: {
-        bottomTabs: {
-          children: [
-            { ...this.stackWithTopBar },
-            { ...this.stackWithTopBar },
-            {
-              stack: {
-                children: [
-                  {
-                    topTabs: {
-                      children: [
-                        { ...this.stackWithTopBar },
-                        { ...this.stackWithTopBar },
-                        {
-                          topTabs: {
-                            options: this.options,
-                            children: [
-                              { ...this.singleComponent },
-                              { ...this.singleComponent },
-                              { ...this.singleComponent },
-                              { ...this.singleComponent },
-                              { ...this.stackWithTopBar }
-                            ]
-                          }
+const complexLayout = {
+  sideMenu: {
+    left: singleComponent,
+    center: {
+      bottomTabs: {
+        children: [
+          stackWithTopBar,
+          stackWithTopBar,
+          {
+            stack: {
+              children: [
+                {
+                  topTabs: {
+                    children: [
+                      stackWithTopBar,
+                      stackWithTopBar,
+                      {
+                        topTabs: {
+                          options,
+                          children: [
+                            singleComponent,
+                            singleComponent,
+                            singleComponent,
+                            singleComponent,
+                            stackWithTopBar
+                          ]
                         }
-                      ]
-                    }
+                      }
+                    ]
                   }
-                ]
-              }
+                }
+              ]
             }
-          ]
-        }
+          }
+        ]
       }
     }
   }
-}
+};
 
+const LayoutExamples = {
+  passProps,
+  options,
+  singleComponent,
+  stackWithTopBar,
+  bottomTabs,
+  sideMenu,
+  topTabs,
+  complexLayout
+};
