@@ -1,5 +1,9 @@
-import { LayoutTypes } from "./LayoutTypes";
+import { LayoutType } from "./LayoutType";
 
 export interface LayoutNode {
-  type: LayoutTypes
+  id: string;
+  type: LayoutType;
+  data: object;
+  children: Array<LayoutNode>;
 }
+

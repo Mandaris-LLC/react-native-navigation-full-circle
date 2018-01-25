@@ -1,26 +1,21 @@
-import { LayoutType } from './LayoutType';
+import { LayoutType, isLayoutType } from './LayoutType';
 
-describe('LayoutType', () => {
+describe.only('LayoutType', () => {
   it('is an enum', () => {
     expect(LayoutType.Component).toEqual('Component');
     expect(LayoutType.Stack).toEqual('Stack');
-  });
 
-  it('valueOf dynamic string value', () => {
     const name = 'Stack';
     expect(LayoutType[name]).toEqual(LayoutType.Stack);
     expect(LayoutType['asdasd']).toEqual(undefined);
-    expect(LayoutType.isValid('asdasd')).toBe(false);
-    expect(LayoutType.isValid('TopTabs')).toBe(true);
-    expect(LayoutType.isValid('isValid')).toBe(false);
+  });
+
+  it('isLayoutType', () => {
+    expect(isLayoutType(null)).toBe(false);
+    expect(isLayoutType(undefined)).toBe(false);
+    expect(isLayoutType('')).toBe(false);
+    expect(isLayoutType('asdasd')).toBe(false);
+    expect(isLayoutType('TopTabs')).toBe(true);
+    expect(isLayoutType('isLayoutType')).toBe(false);
   });
 });
-
-// Component: 'Component',
-// Stack: 'Stack',
-// BottomTabs: 'BottomTabs',
-// SideMenuRoot: 'SideMenuRoot',
-// SideMenuCenter: 'SideMenuCenter',
-// SideMenuLeft: 'SideMenuLeft',
-// SideMenuRight: 'SideMenuRight',
-// TopTabs: 'TopTabs',

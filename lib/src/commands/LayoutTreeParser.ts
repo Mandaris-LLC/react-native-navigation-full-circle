@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { LayoutTypes } from './values/LayoutTypes';
+import { LayoutType } from './values/LayoutType';
 
 export class LayoutTreeParser {
   constructor() {
@@ -26,7 +26,7 @@ export class LayoutTreeParser {
 
   _topTabs(api) {
     return {
-      type: LayoutTypes.TopTabs,
+      type: LayoutType.TopTabs,
       data: { options: api.options },
       children: _.map(api.children, this.parse)
     };
@@ -34,7 +34,7 @@ export class LayoutTreeParser {
 
   _sideMenu(api) {
     return {
-      type: LayoutTypes.SideMenuRoot,
+      type: LayoutType.SideMenuRoot,
       data: { options: api.options },
       children: this._sideMenuChildren(api)
     };
@@ -47,19 +47,19 @@ export class LayoutTreeParser {
     const children = [];
     if (api.left) {
       children.push({
-        type: LayoutTypes.SideMenuLeft,
+        type: LayoutType.SideMenuLeft,
         data: {},
         children: [this.parse(api.left)]
       });
     }
     children.push({
-      type: LayoutTypes.SideMenuCenter,
+      type: LayoutType.SideMenuCenter,
       data: {},
       children: [this.parse(api.center)]
     });
     if (api.right) {
       children.push({
-        type: LayoutTypes.SideMenuRight,
+        type: LayoutType.SideMenuRight,
         data: {},
         children: [this.parse(api.right)]
       });
@@ -69,7 +69,7 @@ export class LayoutTreeParser {
 
   _bottomTabs(api) {
     return {
-      type: LayoutTypes.BottomTabs,
+      type: LayoutType.BottomTabs,
       data: { options: api.options },
       children: _.map(api.children, this.parse)
     };
@@ -77,7 +77,7 @@ export class LayoutTreeParser {
 
   _stack(api) {
     return {
-      type: LayoutTypes.Stack,
+      type: LayoutType.Stack,
       data: { name: api.name, options: api.options },
       children: _.map(api.children, this.parse)
     };
@@ -85,7 +85,7 @@ export class LayoutTreeParser {
 
   _component(api) {
     return {
-      type: LayoutTypes.Component,
+      type: LayoutType.Component,
       data: { name: api.name, options: api.options, passProps: api.passProps },
       children: []
     };
