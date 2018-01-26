@@ -1,5 +1,5 @@
 export class Lifecycle {
-  private store: any;
+  private store;
 
   constructor(store) {
     this.store = store;

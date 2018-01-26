@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { AppRegistry } from 'react-native';
-import {ComponentWrapper} from './ComponentWrapper';
+import { AppRegistry, ComponentProvider } from 'react-native';
+import { ComponentWrapper } from './ComponentWrapper';
 
 export class ComponentRegistry {
-  private store: any;
+  private store;
 
   constructor(store) {
     this.store = store;
   }
 
-  registerComponent(componentName: string, getComponentClassFunc: ()=>React.Component) {
+  registerComponent(componentName: string, getComponentClassFunc: ComponentProvider) {
     const OriginalComponentClass = getComponentClassFunc();
     const NavigationComponent = ComponentWrapper.wrap(componentName, OriginalComponentClass, this.store);
     this.store.setOriginalComponentClassForName(componentName, OriginalComponentClass);

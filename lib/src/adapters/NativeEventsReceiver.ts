@@ -1,25 +1,25 @@
 import { NativeModules, NativeEventEmitter } from 'react-native';
 
 export class NativeEventsReceiver {
-  private emitter: NativeEventEmitter;
+  private emitter;
 
   constructor() {
     this.emitter = new NativeEventEmitter(NativeModules.RNNEventEmitter);
   }
 
-  registerComponentDidAppear(callback: any) {
+  registerComponentDidAppear(callback) {
     this.emitter.addListener('RNN.componentDidAppear', callback);
   }
 
-  registerComponentDidDisappear(callback: any) {
+  registerComponentDidDisappear(callback) {
     this.emitter.addListener('RNN.componentDidDisappear', callback);
   }
 
-  registerAppLaunched(callback: any) {
+  registerAppLaunched(callback) {
     this.emitter.addListener('RNN.appLaunched', callback);
   }
 
-  registerNavigationButtonPressed(callback: any) {
+  registerNavigationButtonPressed(callback) {
     this.emitter.addListener('RNN.navigationButtonPressed', callback);
   }
 }

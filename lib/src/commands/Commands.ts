@@ -2,9 +2,9 @@ import * as _ from 'lodash';
 import { OptionsProcessor } from './OptionsProcessor';
 
 export class Commands {
-  private nativeCommandsSender: any;
-  private layoutTreeParser: any;
-  private layoutTreeCrawler: any;
+  private nativeCommandsSender;
+  private layoutTreeParser;
+  private layoutTreeCrawler;
 
   constructor(nativeCommandsSender, layoutTreeParser, layoutTreeCrawler) {
     this.nativeCommandsSender = nativeCommandsSender;
@@ -12,7 +12,7 @@ export class Commands {
     this.layoutTreeCrawler = layoutTreeCrawler;
   }
 
-  setRoot(simpleApi: any) {
+  setRoot(simpleApi) {
     const input = _.cloneDeep(simpleApi);
     const layout = this.layoutTreeParser.parse(input);
     this.layoutTreeCrawler.crawl(layout);

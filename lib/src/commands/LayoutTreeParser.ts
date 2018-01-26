@@ -7,7 +7,7 @@ export class LayoutTreeParser {
     this.parse = this.parse.bind(this);
   }
 
-  parse(api: any): LayoutNode {
+  parse(api): LayoutNode {
     if (api.topTabs) {
       return this._topTabs(api.topTabs);
     } else if (api.sideMenu) {

@@ -4,8 +4,8 @@ import { Store } from '../components/Store';
 
 describe('PrivateEventsListener', () => {
   let uut: PrivateEventsListener;
-  let nativeEventsReceiver: any;
-  let store: any;
+  let nativeEventsReceiver;
+  let store;
 
   beforeEach(() => {
     nativeEventsReceiver = new NativeEventsReceiver();

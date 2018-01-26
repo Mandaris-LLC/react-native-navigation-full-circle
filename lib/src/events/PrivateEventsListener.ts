@@ -1,10 +1,10 @@
-import * as Lifecycle from '../components/Lifecycle';
+import { Lifecycle } from '../components/Lifecycle';
 
 export class PrivateEventsListener {
-  private nativeEventsReceiver: any;
-  private lifecycle: any;
+  private nativeEventsReceiver;
+  private lifecycle;
 
-  constructor(nativeEventsReceiver: any, store: any) {
+  constructor(nativeEventsReceiver, store) {
     this.nativeEventsReceiver = nativeEventsReceiver;
     this.lifecycle = new Lifecycle(store);
   }

@@ -1,5 +1,5 @@
 export class PublicEventsRegistry {
-  private nativeEventsReceiver: any;
+  private nativeEventsReceiver;
 
   constructor(nativeEventsReceiver) {
     this.nativeEventsReceiver = nativeEventsReceiver;

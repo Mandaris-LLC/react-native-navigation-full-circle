@@ -1,7 +1,7 @@
 import { OptionsProcessor } from './OptionsProcessor';
 
 describe('navigation options', () => {
-  let options: any;
+  let options;
 
   beforeEach(() => {
     options = {};

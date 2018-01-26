@@ -2,7 +2,7 @@ import { LayoutType } from './values/LayoutType';
 import { LayoutTreeCrawler } from './LayoutTreeCrawler';
 import { UniqueIdProvider } from '../adapters/UniqueIdProvider.mock';
 import { LayoutNode } from './values/LayoutNode';
-const Store = require('../components/Store');
+import { Store } from '../components/Store';
 
 describe('LayoutTreeCrawler', () => {
   let uut;

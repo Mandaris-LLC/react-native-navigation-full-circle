@@ -1,23 +1,31 @@
-const React = require('react');
-const { Component } = require('react');
+import * as React from 'react';
+import { Text } from 'react-native';
+import * as renderer from 'react-test-renderer';
+import { ComponentWrapper } from './ComponentWrapper';
+import { Store } from './Store';
 
-const { Text } = require('react-native');
-const renderer = require('react-test-renderer');
-const ComponentWrapper = require('./ComponentWrapper');
-const Store = require('./Store');
+declare module 'react-test-renderer' {
+  interface ReactTestInstance {
+    [P: string]: any;
+  }
+}
 
 describe('ComponentWrapper', () => {
   let store;
   const componentName = 'example.MyComponent';
   let childRef;
 
-  class MyComponent extends Component {
+  class MyComponent extends React.Component {
     render() {
       return <Text>{'Hello, World!'}</Text>;
     }
   }
 
-  class TestParent extends Component {
+
+
+  class TestParent extends React.Component<any, { propsFromState: {} }> {
+    private ChildClass;
+
     constructor(props) {
       super(props);
       this.ChildClass = props.ChildClass;
@@ -25,9 +33,8 @@ describe('ComponentWrapper', () => {
     }
 
     render() {
-      const Child = this.ChildClass;
       return (
-        <Child
+        <this.ChildClass
           ref={(r) => childRef = r}
           componentId="component1"
           {...this.state.propsFromState}
@@ -46,7 +53,7 @@ describe('ComponentWrapper', () => {
     console.error = (a) => a;
     expect(() => {
       renderer.create(<NavigationComponent />);
-    }).toThrow(new Error('Component example.MyComponent does not have a componentId!'));
+    }).toThrowError('Component example.MyComponent does not have a componentId!');
     console.error = orig;
   });
 
@@ -132,7 +139,7 @@ describe('ComponentWrapper', () => {
     const NavigationComponent = ComponentWrapper.wrap(componentName, MyComponent, store);
     const tree = renderer.create(<NavigationComponent componentId={'component1'} />);
     const instance = tree.getInstance();
-    expect(instance.originalComponentRef).toBeInstanceOf(Component);
+    expect(instance.originalComponentRef).toBeInstanceOf(React.Component);
     tree.unmount();
     expect(instance.originalComponentRef).toBeFalsy();
   });

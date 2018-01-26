@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native';
 
 export class NativeCommandsSender {
-  private nativeCommandsModule: any;
+  private nativeCommandsModule;
 
   constructor() {
     this.nativeCommandsModule = NativeModules.RNNBridgeModule;

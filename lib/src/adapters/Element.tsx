@@ -3,8 +3,8 @@ import * as PropTypes from 'prop-types';
 import { requireNativeComponent } from 'react-native';
 
 interface ElementProps {
-  elementId: any;
-  resizeMode: any;
+  elementId;
+  resizeMode;
 }
 
 let RNNElement: React.ComponentClass;
