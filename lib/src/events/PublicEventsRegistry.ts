@@ -8,4 +8,12 @@ export class PublicEventsRegistry {
   onAppLaunched(callback) {
     this.nativeEventsReceiver.registerAppLaunched(callback);
   }
+
+  navigationCommands(callback) {
+    this.nativeEventsReceiver.registerNavigationCommands(callback);
+  }
+
+  componentLifecycle(callback) {
+    this.nativeEventsReceiver.registerComponentLifecycle(callback);
+  }
 }

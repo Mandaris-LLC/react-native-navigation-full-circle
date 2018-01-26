@@ -59,4 +59,38 @@ describe('screen stack', () => {
     await elementById(testIDs.SWITCH_FIRST_TAB_BUTTON).tap();
     await expect(elementByLabel('This is tab 1')).toBeVisible();
   });
+
+  it('show and dismiss overlay', async () => {
+    await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
+    await elementById(testIDs.SHOW_OVERLAY_BUTTON).tap();
+    await expect(elementById(testIDs.DIALOG_HEADER)).toBeVisible();
+    await elementById(testIDs.OK_BUTTON).tap();
+    await expect(elementById(testIDs.DIALOG_HEADER)).toBeNotVisible();
+  });
+
+  it('overlay pass touches - true', async () => {
+    await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
+    await elementById(testIDs.SHOW_TOUCH_THROUGH_OVERLAY_BUTTON).tap();
+    await expect(elementById(testIDs.DIALOG_HEADER)).toBeVisible();
+    await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
+    await elementById(testIDs.HIDE_TOP_BAR_BUTTON).tap();
+    await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeNotVisible();
+  });
+
+  it('overlay pass touches - false', async () => {
+    await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
+    await elementById(testIDs.SHOW_OVERLAY_BUTTON).tap();
+    await expect(elementById(testIDs.DIALOG_HEADER)).toBeVisible();
+    await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
+    await elementById(testIDs.HIDE_TOP_BAR_BUTTON).tap();
+    await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
+  });
+
+  it('push stack with multiple children', async () => {
+    await elementById(testIDs.SHOW_MODAL_BUTTON).tap();
+    await elementById(testIDs.MODAL_WITH_STACK_BUTTON).tap();
+    await expect(elementByLabel('Screen 2')).toBeVisible();
+    await Utils.tapBackIos();
+    await expect(elementByLabel('Screen 1')).toBeVisible();
+  });
 });

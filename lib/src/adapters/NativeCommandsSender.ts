@@ -49,12 +49,11 @@ export class NativeCommandsSender {
     return this.nativeCommandsModule.dismissAllModals();
   }
 
-  showOverlay(type: any, options: object) {
-    return this.nativeCommandsModule.showOverlay(type, options);
+  showOverlay(layout: object) {
+    return this.nativeCommandsModule.showOverlay(layout);
   }
 
-  dismissOverlay() {
-    this.nativeCommandsModule.dismissOverlay();
-    return Promise.resolve(true);
+  dismissOverlay(componentId: string) {
+    return this.nativeCommandsModule.dismissOverlay(componentId);
   }
 }

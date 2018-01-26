@@ -1,6 +1,7 @@
 #import "RNNCommandsHandler.h"
 #import "RNNModalManager.h"
 #import "RNNNavigationStackManager.h"
+#import "RNNOverlayManager.h"
 #import "RNNNavigationOptions.h"
 #import "RNNRootViewController.h"
 #import "React/RCTUIManager.h"
@@ -10,6 +11,7 @@
 	RNNStore *_store;
 	RNNNavigationStackManager* _navigationStackManager;
 	RNNModalManager* _modalManager;
+	RNNOverlayManager* _overlayManager;
 }
 
 -(instancetype) initWithStore:(RNNStore*)store controllerFactory:(RNNControllerFactory*)controllerFactory {
@@ -18,6 +20,7 @@
 	_controllerFactory = controllerFactory;
 	_navigationStackManager = [[RNNNavigationStackManager alloc] initWithStore:_store];
 	_modalManager = [[RNNModalManager alloc] initWithStore:_store];
+	_overlayManager = [[RNNOverlayManager alloc] init];
 	return self;
 }
 
@@ -61,13 +64,19 @@
 	[self assertReady];
 	
 	UIViewController<RNNRootViewProtocol> *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
-	[_navigationStackManager push:newVc onTop:componentId completion:completion];
+	[_navigationStackManager push:newVc onTop:componentId completion:^{
+		[_controllerFactory.eventEmitter sendNavigationEvent:[RNNNavigationEvent create:kPush fromComponent:componentId toComponent:newVc.componentId]];
+		completion();
+	}];
 }
 
 -(void)pop:(NSString*)componentId options:(NSDictionary*)options completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[CATransaction begin];
-	[CATransaction setCompletionBlock:completion];
+	[CATransaction setCompletionBlock:^{
+		[_controllerFactory.eventEmitter sendNavigationEvent:[RNNNavigationEvent create:kPop fromComponent:nil toComponent:componentId]];
+		completion();
+	}];
 	NSDictionary* animationData = options[@"customTransition"];
 	if (animationData){
 		if ([animationData objectForKey:@"animations"]) {
@@ -84,7 +93,10 @@
 -(void) popTo:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[CATransaction begin];
-	[CATransaction setCompletionBlock:completion];
+	[CATransaction setCompletionBlock:^{
+		[_controllerFactory.eventEmitter sendNavigationEvent:[RNNNavigationEvent create:kPopTo fromComponent:nil toComponent:componentId]];
+		completion();
+	}];
 	
 	[_navigationStackManager popTo:componentId];
 	
@@ -94,7 +106,10 @@
 -(void) popToRoot:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[CATransaction begin];
-	[CATransaction setCompletionBlock:completion];
+	[CATransaction setCompletionBlock:^{
+		[_controllerFactory.eventEmitter sendNavigationEvent:[RNNNavigationEvent create:kPopToRoot fromComponent:componentId toComponent:nil]];
+		completion();
+	}];
 	
 	[_navigationStackManager popToRoot:componentId];
 	
@@ -104,14 +119,20 @@
 -(void) showModal:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	
-	UIViewController *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
-	[_modalManager showModal:newVc completion:completion];
+	UIViewController<RNNRootViewProtocol> *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
+	[_modalManager showModal:newVc completion:^{
+		[_controllerFactory.eventEmitter sendNavigationEvent:[RNNNavigationEvent create:kShowModal fromComponent:nil toComponent:newVc.componentId]];
+		completion();
+	}];
 }
 
 -(void) dismissModal:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[CATransaction begin];
-	[CATransaction setCompletionBlock:completion];
+	[CATransaction setCompletionBlock:^{
+		[_controllerFactory.eventEmitter sendNavigationEvent:[RNNNavigationEvent create:kDismissModal fromComponent:componentId toComponent:nil]];
+		completion();
+	}];
 	
 	[_modalManager dismissModal:componentId];
 	
@@ -121,11 +142,31 @@
 -(void) dismissAllModalsWithCompletion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[CATransaction begin];
-	[CATransaction setCompletionBlock:completion];
+	[CATransaction setCompletionBlock:^{
+		[_controllerFactory.eventEmitter sendNavigationEvent:[RNNNavigationEvent create:kDismissAllModals fromComponent:nil toComponent:nil]];
+		completion();
+	}];
 	
 	[_modalManager dismissAllModals];
 	
 	[CATransaction commit];
+}
+
+-(void)showOverlay:(NSDictionary *)layout completion:(RNNTransitionCompletionBlock)completion {
+	[self assertReady];
+	UIViewController<RNNRootViewProtocol>* overlayVC = [_controllerFactory createOverlay:layout];
+	[_overlayManager showOverlay:overlayVC completion:^{
+		[_controllerFactory.eventEmitter sendNavigationEvent:[RNNNavigationEvent create:kShowOverlay fromComponent:nil toComponent:overlayVC.componentId]];
+		completion();
+	}];
+}
+
+- (void)dismissOverlay:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
+	[self assertReady];
+	[_overlayManager dismissOverlay:componentId completion:^{	
+		[_controllerFactory.eventEmitter sendNavigationEvent:[RNNNavigationEvent create:kDismissOverlay fromComponent:componentId toComponent:nil]];
+		completion();
+	}];
 }
 
 #pragma mark - private

@@ -5,6 +5,7 @@
 #import "RNNSideMenuOptions.h"
 #import "RNNTopTabOptions.h"
 #import "RNNTopTabsOptions.h"
+#import "RNNOverlayOptions.h"
 
 extern const NSInteger BLUR_STATUS_TAG;
 extern const NSInteger BLUR_TOPBAR_TAG;
@@ -18,9 +19,11 @@ extern const NSInteger TOP_BAR_TRANSPARENT_TAG;
 @property (nonatomic, strong) RNNTopTabsOptions* topTabs;
 @property (nonatomic, strong) RNNTopTabOptions* topTab;
 @property (nonatomic, strong) RNNSideMenuOptions* sideMenu;
+@property (nonatomic, strong) RNNOverlayOptions* overlay;
 
 @property (nonatomic, strong) RNNNavigationOptions* defaultOptions;
 
+@property (nonatomic, strong) NSNumber* animated;
 @property (nonatomic, strong) NSNumber* statusBarHidden;
 @property (nonatomic, strong) NSNumber* screenBackgroundColor;
 @property (nonatomic, strong) NSMutableDictionary* originalTopBarImages;

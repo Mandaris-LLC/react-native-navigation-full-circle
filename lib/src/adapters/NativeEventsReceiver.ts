@@ -19,6 +19,14 @@ export class NativeEventsReceiver {
     this.emitter.addListener('RNN.appLaunched', callback);
   }
 
+  registerNavigationCommands(callback) {
+    this.emitter.addListener('RNN.navigationCommands', callback);
+  }
+
+  registerComponentLifecycle(callback) {
+    this.emitter.addListener('RNN.componentLifecycle', callback);
+  }
+
   registerNavigationButtonPressed(callback) {
     this.emitter.addListener('RNN.navigationButtonPressed', callback);
   }
