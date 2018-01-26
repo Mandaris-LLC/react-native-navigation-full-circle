@@ -1,6 +1,6 @@
 import * as  _ from 'lodash';
 import { LayoutTreeParser } from './LayoutTreeParser';
-import { LayoutType } from './values/LayoutType';
+import { LayoutType } from './LayoutType';
 
 describe('LayoutTreeParser', () => {
   let uut;

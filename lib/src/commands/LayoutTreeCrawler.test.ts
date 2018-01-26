@@ -1,7 +1,6 @@
-import { LayoutType } from './values/LayoutType';
-import { LayoutTreeCrawler } from './LayoutTreeCrawler';
+import { LayoutType } from './LayoutType';
+import { LayoutTreeCrawler, LayoutNode } from './LayoutTreeCrawler';
 import { UniqueIdProvider } from '../adapters/UniqueIdProvider.mock';
-import { LayoutNode } from './values/LayoutNode';
 import { Store } from '../components/Store';
 
 describe('LayoutTreeCrawler', () => {
@@ -206,6 +205,25 @@ describe('LayoutTreeCrawler', () => {
       uut.crawl(node);
       expect(node.data.options.innerObj.theKeyColor).toEqual(0xffff0000);
       expect(node.data.options.innerObj.innerMostObj.anotherColor).toEqual(0xffffff00);
+    });
+  });
+
+  describe('LayoutNode', () => {
+    it('convertable from same data structure', () => {
+      const x = {
+        id: 'theId',
+        type: LayoutType.Component,
+        data: {},
+        children: []
+      };
+
+      let got;
+      function expectingLayoutNode(param: LayoutNode) {
+        got = param;
+      }
+      expectingLayoutNode(x);
+
+      expect(got).toBe(x);
     });
   });
 });

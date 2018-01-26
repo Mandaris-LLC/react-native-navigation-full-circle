@@ -1,30 +1,32 @@
-const NativeCommandsSender = require('./adapters/NativeCommandsSender');
-const NativeEventsReceiver = require('./adapters/NativeEventsReceiver');
-const UniqueIdProvider = require('./adapters/UniqueIdProvider');
-const Store = require('./components/Store');
-const ComponentRegistry = require('./components/ComponentRegistry');
-const Commands = require('./commands/Commands');
-const LayoutTreeParser = require('./commands/LayoutTreeParser');
-const LayoutTreeCrawler = require('./commands/LayoutTreeCrawler');
-const PrivateEventsListener = require('./events/PrivateEventsListener');
-const PublicEventsRegistry = require('./events/PublicEventsRegistry');
-
+import { NativeCommandsSender } from './adapters/NativeCommandsSender';
+import { NativeEventsReceiver } from './adapters/NativeEventsReceiver';
+import { UniqueIdProvider } from './adapters/UniqueIdProvider';
+import { Store } from './components/Store';
+import { ComponentRegistry } from './components/ComponentRegistry';
+import { Commands } from './commands/Commands';
+import { LayoutTreeParser } from './commands/LayoutTreeParser';
+import { LayoutTreeCrawler } from './commands/LayoutTreeCrawler';
+import { PrivateEventsListener } from './events/PrivateEventsListener';
+import { PublicEventsRegistry } from './events/PublicEventsRegistry';
+import { ComponentProvider } from 'react-native';
 import { Element } from './adapters/Element';
 
 class Navigation {
+  public readonly Element = Element;
+
+  private readonly store = new Store();
+  private readonly nativeEventsReceiver = new NativeEventsReceiver();
+  private readonly uniqueIdProvider = new UniqueIdProvider();
+  private readonly componentRegistry = new ComponentRegistry(this.store);
+  private readonly layoutTreeParser = new LayoutTreeParser();
+  private readonly layoutTreeCrawler = new LayoutTreeCrawler(this.uniqueIdProvider, this.store);
+  private readonly nativeCommandsSender = new NativeCommandsSender();
+  private readonly commands = new Commands(this.nativeCommandsSender, this.layoutTreeParser, this.layoutTreeCrawler);
+  private readonly publicEventsRegistry = new PublicEventsRegistry(this.nativeEventsReceiver);
+  private readonly privateEventsListener = new PrivateEventsListener(this.nativeEventsReceiver, this.store);
+
   constructor() {
-    this.store = new Store();
-    this.nativeEventsReceiver = new NativeEventsReceiver();
-    this.uniqueIdProvider = new UniqueIdProvider();
-    this.componentRegistry = new ComponentRegistry(this.store);
-    this.layoutTreeParser = new LayoutTreeParser();
-    this.layoutTreeCrawler = new LayoutTreeCrawler(this.uniqueIdProvider, this.store);
-    this.nativeCommandsSender = new NativeCommandsSender();
-    this.commands = new Commands(this.nativeCommandsSender, this.layoutTreeParser, this.layoutTreeCrawler);
-    this.publicEventsRegistry = new PublicEventsRegistry(this.nativeEventsReceiver);
-    this.privateEventsListener = new PrivateEventsListener(this.nativeEventsReceiver, this.store);
     this.privateEventsListener.listenAndHandlePrivateEvents();
-    this.Element = Element;
   }
 
   /**
@@ -32,7 +34,7 @@ class Navigation {
    * @param {string} componentName Unique component name
    * @param {function} getComponentClassFunc generator function, typically `() => require('./myComponent')`
    */
-  registerComponent(componentName, getComponentClassFunc) {
+  registerComponent(componentName: string, getComponentClassFunc: ComponentProvider) {
     this.componentRegistry.registerComponent(componentName, getComponentClassFunc);
   }
 

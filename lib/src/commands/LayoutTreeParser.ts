@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
-import { LayoutType } from './values/LayoutType';
-import { LayoutNode } from './values/LayoutNode';
+import { LayoutType } from './LayoutType';
+import { LayoutNode } from './LayoutTreeCrawler';
 
 export class LayoutTreeParser {
   constructor() {

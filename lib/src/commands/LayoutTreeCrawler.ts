@@ -1,7 +1,13 @@
 import * as _ from 'lodash';
 import { OptionsProcessor } from './OptionsProcessor';
-import { LayoutType, isLayoutType } from './values/LayoutType';
-import { LayoutNode } from './values/LayoutNode';
+import { LayoutType, isLayoutType } from './LayoutType';
+
+export interface LayoutNode {
+  id?: string;
+  type: LayoutType;
+  data: object;
+  children: Array<LayoutNode>;
+}
 
 interface IdProvider {
   generate: (str: string) => string;
