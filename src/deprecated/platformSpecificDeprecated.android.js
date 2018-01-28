@@ -779,7 +779,7 @@ async function getCurrentlyVisibleScreenId() {
 }
 
 async function getLaunchArgs() {
-  return await NativeReactModule.getLaunchArgs();
+  return await newPlatformSpecific.getLaunchArgs();
 }
 
 export default {
