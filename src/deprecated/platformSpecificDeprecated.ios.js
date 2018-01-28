@@ -586,10 +586,6 @@ function dismissLightBox(params) {
   Modal.dismissLightBox();
 }
 
-async function getInitialProps() {
-  return await ControllerRegistry.getInitialProps();
-}
-
 function showInAppNotification(params) {
   if (!params.screen) {
     console.error('showInAppNotification(params): params.screen is required');
@@ -697,6 +693,10 @@ function _saveNavigatorButtonsPassProps(buttons = []) {
   })
 }
 
+async function getLaunchArgs() {
+  return await ControllerRegistry.getInitialProps();
+}
+
 export default {
   startTabBasedApp,
   startSingleScreenApp,
@@ -726,5 +726,5 @@ export default {
   showContextualMenu,
   dismissContextualMenu,
   getCurrentlyVisibleScreenId,
-  getInitialProps
+  getLaunchArgs
 };
