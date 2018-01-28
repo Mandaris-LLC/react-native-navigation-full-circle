@@ -12,20 +12,33 @@ import { ComponentProvider } from 'react-native';
 import { Element } from './adapters/Element';
 
 class Navigation {
-  public readonly Element = Element;
+  public readonly Element;
 
-  private readonly store = new Store();
-  private readonly nativeEventsReceiver = new NativeEventsReceiver();
-  private readonly uniqueIdProvider = new UniqueIdProvider();
-  private readonly componentRegistry = new ComponentRegistry(this.store);
-  private readonly layoutTreeParser = new LayoutTreeParser();
-  private readonly layoutTreeCrawler = new LayoutTreeCrawler(this.uniqueIdProvider, this.store);
-  private readonly nativeCommandsSender = new NativeCommandsSender();
-  private readonly commands = new Commands(this.nativeCommandsSender, this.layoutTreeParser, this.layoutTreeCrawler);
-  private readonly publicEventsRegistry = new PublicEventsRegistry(this.nativeEventsReceiver);
-  private readonly privateEventsListener = new PrivateEventsListener(this.nativeEventsReceiver, this.store);
+  private readonly store;
+  private readonly nativeEventsReceiver;
+  private readonly uniqueIdProvider;
+  private readonly componentRegistry;
+  private readonly layoutTreeParser;
+  private readonly layoutTreeCrawler;
+  private readonly nativeCommandsSender;
+  private readonly commands;
+  private readonly publicEventsRegistry;
+  private readonly privateEventsListener;
 
   constructor() {
+    this.Element = Element;
+
+    this.store = new Store();
+    this.nativeEventsReceiver = new NativeEventsReceiver();
+    this.uniqueIdProvider = new UniqueIdProvider();
+    this.componentRegistry = new ComponentRegistry(this.store);
+    this.layoutTreeParser = new LayoutTreeParser();
+    this.layoutTreeCrawler = new LayoutTreeCrawler(this.uniqueIdProvider, this.store);
+    this.nativeCommandsSender = new NativeCommandsSender();
+    this.commands = new Commands(this.nativeCommandsSender, this.layoutTreeParser, this.layoutTreeCrawler);
+    this.publicEventsRegistry = new PublicEventsRegistry(this.nativeEventsReceiver);
+    this.privateEventsListener = new PrivateEventsListener(this.nativeEventsReceiver, this.store);
+
     this.privateEventsListener.listenAndHandlePrivateEvents();
   }
 
@@ -108,7 +121,7 @@ class Navigation {
    * Pop the stack to a given component
    * @param {string} componentId The component's id.
    */
-  popTo(componentId) {
+  popTo(componentId: string) {
     return this.commands.popTo(componentId);
   }
 
@@ -116,7 +129,7 @@ class Navigation {
    * Pop the component's stack to root.
    * @param {*} componentId
    */
-  popToRoot(componentId) {
+  popToRoot(componentId: string) {
     return this.commands.popToRoot(componentId);
   }
 
@@ -132,12 +145,12 @@ class Navigation {
    * dismiss overlay by componentId
    * @param {string} componentId
    */
-  dismissOverlay(componentId) {
+  dismissOverlay(componentId: string) {
     return this.commands.dismissOverlay(componentId);
   }
 
   /**
-   * Obtain the events registery instance
+   * Obtain the events registry instance
    */
   events() {
     return this.publicEventsRegistry;

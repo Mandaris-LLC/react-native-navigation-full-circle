@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { AppRegistry, ComponentProvider } from 'react-native';
 import { ComponentWrapper } from './ComponentWrapper';
 

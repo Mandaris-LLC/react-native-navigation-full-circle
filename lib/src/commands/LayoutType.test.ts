@@ -11,8 +11,6 @@ describe.only('LayoutType', () => {
   });
 
   it('isLayoutType', () => {
-    expect(isLayoutType(null)).toBe(false);
-    expect(isLayoutType(undefined)).toBe(false);
     expect(isLayoutType('')).toBe(false);
     expect(isLayoutType('asdasd')).toBe(false);
     expect(isLayoutType('TopTabs')).toBe(true);

@@ -46,6 +46,6 @@ describe('ComponentRegistry', () => {
     uut.registerComponent('example.MyComponent.name', () => MyComponent);
     const Component = mockRegistry.mock.calls[0][1]();
     const tree = renderer.create(<Component componentId="123" />);
-    expect(tree.toJSON().children).toEqual(['Hello, World!']);
+    expect(tree.toJSON()!.children).toEqual(['Hello, World!']);
   });
 });

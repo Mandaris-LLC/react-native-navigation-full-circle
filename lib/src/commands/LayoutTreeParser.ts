@@ -42,7 +42,7 @@ export class LayoutTreeParser {
     if (!api.center) {
       throw new Error(`sideMenu.center is required`);
     }
-    const children = [];
+    const children: Array<LayoutNode> = [];
     if (api.left) {
       children.push({
         type: LayoutType.SideMenuLeft,

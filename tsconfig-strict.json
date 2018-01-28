@@ -10,14 +10,14 @@
     "importHelpers": true,
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "pretty": true,
-    "strictFunctionTypes": false,
+    "strictFunctionTypes": true,
     "strictNullChecks": true,
-    "strict": true
+    "strict": true,
+    "noImplicitAny": true
   }
 }

@@ -3,13 +3,13 @@ import * as PropTypes from 'prop-types';
 import { requireNativeComponent } from 'react-native';
 
 interface ElementProps {
-  elementId;
-  resizeMode;
+  elementId: PropTypes.Requireable<string>;
+  resizeMode: any;
 }
 
-let RNNElement: React.ComponentClass;
+let RNNElement: React.ComponentType<any>;
 
-export class Element extends React.Component<ElementProps, object> {
+export class Element extends React.Component<ElementProps, any> {
   static propTypes = {
     elementId: PropTypes.string.isRequired,
     resizeMode: PropTypes.string
@@ -26,3 +26,4 @@ export class Element extends React.Component<ElementProps, object> {
 }
 
 RNNElement = requireNativeComponent('RNNElement', Element);
+
