@@ -5,7 +5,8 @@
     "allowJs": false,
     "target": "esnext",
     "module": "commonjs",
-    "jsx": "react-native"
+    "jsx": "react-native",
+    "declaration": true
   },
   "include": [
     "./lib/src/**/*"

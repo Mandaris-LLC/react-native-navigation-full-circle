@@ -9,22 +9,10 @@ export interface LayoutNode {
   children: LayoutNode[];
 }
 
-interface IdProvider {
-  generate: (str: string) => string;
-}
-
-interface Store {
-  setPropsForComponentId: (str: string, props: object) => void;
-  getOriginalComponentClassForName: (str: string) => any;
-}
-
 export class LayoutTreeCrawler {
-  private uniqueIdProvider: IdProvider;
-  private store: Store;
-
-  constructor(uniqueIdProvider: IdProvider, store: Store) {
-    this.uniqueIdProvider = uniqueIdProvider;
-    this.store = store;
+  constructor(
+    private readonly uniqueIdProvider: any,
+    private readonly store: any) {
     this.crawl = this.crawl.bind(this);
   }
 

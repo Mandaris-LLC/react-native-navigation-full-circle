@@ -11,7 +11,7 @@ import { PublicEventsRegistry } from './events/PublicEventsRegistry';
 import { ComponentProvider } from 'react-native';
 import { Element } from './adapters/Element';
 
-class Navigation {
+export class Navigation {
   public readonly Element;
 
   private readonly store;
@@ -156,5 +156,3 @@ class Navigation {
     return this.publicEventsRegistry;
   }
 }
-
-export const singleton = new Navigation();
