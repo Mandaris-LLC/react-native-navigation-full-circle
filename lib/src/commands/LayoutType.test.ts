@@ -7,7 +7,7 @@ describe.only('LayoutType', () => {
 
     const name = 'Stack';
     expect(LayoutType[name]).toEqual(LayoutType.Stack);
-    expect(LayoutType['asdasd']).toEqual(undefined);
+    expect(LayoutType['asdasd']).toEqual(undefined); //tslint:disable-line
   });
 
   it('isLayoutType', () => {

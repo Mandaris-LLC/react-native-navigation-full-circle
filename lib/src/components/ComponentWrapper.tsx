@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as  _ from 'lodash';
 
 interface State {
-  componentId: string,
-  allProps: {}
+  componentId: string;
+  allProps: {};
 }
 
 export class ComponentWrapper {
@@ -75,7 +75,7 @@ export class ComponentWrapper {
           />
         );
       }
-    };
+    }
 
     return WrappedComponent;
   }

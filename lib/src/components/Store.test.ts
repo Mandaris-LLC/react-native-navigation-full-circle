@@ -47,4 +47,3 @@ describe('Store', () => {
     expect(uut.getPropsForComponentId('refUniqueId')).toEqual({});
   });
 });
-

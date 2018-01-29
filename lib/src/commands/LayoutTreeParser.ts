@@ -38,11 +38,11 @@ export class LayoutTreeParser {
     };
   }
 
-  _sideMenuChildren(api): Array<LayoutNode> {
+  _sideMenuChildren(api): LayoutNode[] {
     if (!api.center) {
       throw new Error(`sideMenu.center is required`);
     }
-    const children: Array<LayoutNode> = [];
+    const children: LayoutNode[] = [];
     if (api.left) {
       children.push({
         type: LayoutType.SideMenuLeft,

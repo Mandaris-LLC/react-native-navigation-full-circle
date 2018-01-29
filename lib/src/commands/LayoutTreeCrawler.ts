@@ -6,7 +6,7 @@ export interface LayoutNode {
   id?: string;
   type: LayoutType;
   data: object;
-  children: Array<LayoutNode>;
+  children: LayoutNode[];
 }
 
 interface IdProvider {
@@ -19,8 +19,8 @@ interface Store {
 }
 
 export class LayoutTreeCrawler {
-  private uniqueIdProvider: IdProvider
-  private store: Store
+  private uniqueIdProvider: IdProvider;
+  private store: Store;
 
   constructor(uniqueIdProvider: IdProvider, store: Store) {
     this.uniqueIdProvider = uniqueIdProvider;
@@ -33,7 +33,7 @@ export class LayoutTreeCrawler {
     node.id = this.uniqueIdProvider.generate(node.type);
     node.data = node.data || {};
     node.children = node.children || [];
-    if (node.type == LayoutType.Component) {
+    if (node.type === LayoutType.Component) {
       this._handleComponent(node);
     }
     _.forEach(node.children, this.crawl);

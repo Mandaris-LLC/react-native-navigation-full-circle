@@ -13,10 +13,11 @@ export class Element extends React.Component<ElementProps, any> {
   static propTypes = {
     elementId: PropTypes.string.isRequired,
     resizeMode: PropTypes.string
-  }
+  };
+
   static defaultProps = {
     resizeMode: ''
-  }
+  };
 
   render() {
     return (
@@ -26,4 +27,3 @@ export class Element extends React.Component<ElementProps, any> {
 }
 
 RNNElement = requireNativeComponent('RNNElement', Element);
-

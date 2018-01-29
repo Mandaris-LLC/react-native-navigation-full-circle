@@ -5,15 +5,15 @@ export class PublicEventsRegistry {
     this.nativeEventsReceiver = nativeEventsReceiver;
   }
 
-  onAppLaunched(callback) {
+  public onAppLaunched(callback) {
     this.nativeEventsReceiver.registerAppLaunched(callback);
   }
 
-  navigationCommands(callback) {
+  public navigationCommands(callback) {
     this.nativeEventsReceiver.registerNavigationCommands(callback);
   }
 
-  componentLifecycle(callback) {
+  public componentLifecycle(callback) {
     this.nativeEventsReceiver.registerComponentLifecycle(callback);
   }
 }

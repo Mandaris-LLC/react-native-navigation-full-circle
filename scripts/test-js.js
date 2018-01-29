@@ -4,7 +4,7 @@ const _ = require('lodash');
 const fix = _.includes(process.argv, '--fix') ? '--fix' : '';
 
 const dirs = [
-  'lib/dist',
+  'lib/src',
   'integration',
   'e2e',
   'scripts',
@@ -14,7 +14,7 @@ const dirs = [
 run();
 
 function run() {
-  const paths = _.chain(dirs).map((d) => `'${d}/**'`).join(' ').value();
-  exec.execSync(`xo ${paths} ${fix}`);
+  const paths = _.chain(dirs).map((d) => `'${d}/**/*.[tj]s*'`).join(' ').value();
+  exec.execSync(`tslint ${paths} ${fix} --format verbose`);
   exec.execSync(`jest --coverage`);
 }

@@ -118,7 +118,6 @@ describe('LayoutTreeParser', () => {
   });
 
   it('options for all containing types', () => {
-    const options = {};
     expect(uut.parse({ component: { options } }).data.options).toBe(options);
     expect(uut.parse({ stack: { options } }).data.options).toBe(options);
     expect(uut.parse({ bottomTabs: { options } }).data.options).toBe(options);

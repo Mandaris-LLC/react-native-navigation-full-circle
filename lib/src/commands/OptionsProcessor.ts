@@ -5,7 +5,7 @@ import * as resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSo
 export class OptionsProcessor {
   static processOptions(options) {
     _.forEach(options, (value, key) => {
-      if (!value) return
+      if (!value) { return; }
 
       if (_.isEqual(key, 'color') || _.endsWith(key, 'Color')) {
         options[key] = processColor(value);

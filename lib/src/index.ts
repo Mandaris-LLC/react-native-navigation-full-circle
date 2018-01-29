@@ -1,3 +1,3 @@
-import { singleton } from "./Navigation";
+import { singleton } from './Navigation';
 
 export const Navigation = singleton;

@@ -47,7 +47,7 @@ class Navigation {
    * @param {string} componentName Unique component name
    * @param {function} getComponentClassFunc generator function, typically `() => require('./myComponent')`
    */
-  registerComponent(componentName: string, getComponentClassFunc: ComponentProvider) {
+  public registerComponent(componentName: string, getComponentClassFunc: ComponentProvider) {
     this.componentRegistry.registerComponent(componentName, getComponentClassFunc);
   }
 
@@ -55,7 +55,7 @@ class Navigation {
    * Reset the navigation stack to a new component (the stack root is changed).
    * @param {Root} root
    */
-  setRoot(params) {
+  public setRoot(params) {
     return this.commands.setRoot(params);
   }
 
@@ -63,7 +63,7 @@ class Navigation {
    * Set default options to all screens. Useful for declaring a consistent style across the app.
    * @param {options:Options} options
    */
-  setDefaultOptions(options) {
+  public setDefaultOptions(options) {
     this.commands.setDefaultOptions(options);
   }
 
@@ -72,7 +72,7 @@ class Navigation {
    * @param {string} componentId The component's id.
    * @param {options:Options} options
    */
-  setOptions(componentId, options) {
+  public setOptions(componentId, options) {
     this.commands.setOptions(componentId, options);
   }
 
@@ -80,7 +80,7 @@ class Navigation {
    * Show a screen as a modal.
    * @param {object} params
    */
-  showModal(params) {
+  public showModal(params) {
     return this.commands.showModal(params);
   }
 
@@ -88,14 +88,14 @@ class Navigation {
    * Dismiss a modal by componentId. The dismissed modal can be anywhere in the stack.
    * @param {string} componentId The component's id.
    */
-  dismissModal(componentId) {
+  public dismissModal(componentId) {
     return this.commands.dismissModal(componentId);
   }
 
   /**
    * Dismiss all Modals
    */
-  dismissAllModals() {
+  public dismissAllModals() {
     return this.commands.dismissAllModals();
   }
 
@@ -104,7 +104,7 @@ class Navigation {
    * @param {string} componentId The component's id.
    * @param {Component} component
    */
-  push(componentId, component) {
+  public push(componentId, component) {
     return this.commands.push(componentId, component);
   }
 
@@ -113,7 +113,7 @@ class Navigation {
    * @param {string} componentId The component's id.
    * @param {*} params
    */
-  pop(componentId, params) {
+  public pop(componentId, params) {
     return this.commands.pop(componentId, params);
   }
 
@@ -121,7 +121,7 @@ class Navigation {
    * Pop the stack to a given component
    * @param {string} componentId The component's id.
    */
-  popTo(componentId: string) {
+  public popTo(componentId: string) {
     return this.commands.popTo(componentId);
   }
 
@@ -129,7 +129,7 @@ class Navigation {
    * Pop the component's stack to root.
    * @param {*} componentId
    */
-  popToRoot(componentId: string) {
+  public popToRoot(componentId: string) {
     return this.commands.popToRoot(componentId);
   }
 
@@ -137,7 +137,7 @@ class Navigation {
    * Show overlay on top of the window
    * @param {*} params
    */
-  showOverlay(params) {
+  public showOverlay(params) {
     return this.commands.showOverlay(params);
   }
 
@@ -145,14 +145,14 @@ class Navigation {
    * dismiss overlay by componentId
    * @param {string} componentId
    */
-  dismissOverlay(componentId: string) {
+  public dismissOverlay(componentId: string) {
     return this.commands.dismissOverlay(componentId);
   }
 
   /**
    * Obtain the events registry instance
    */
-  events() {
+  public events() {
     return this.publicEventsRegistry;
   }
 }

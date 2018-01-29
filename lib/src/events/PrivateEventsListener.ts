@@ -9,7 +9,7 @@ export class PrivateEventsListener {
     this.lifecycle = new Lifecycle(store);
   }
 
-  listenAndHandlePrivateEvents() {
+  public listenAndHandlePrivateEvents() {
     this.nativeEventsReceiver.registerComponentDidAppear(this.lifecycle.componentDidAppear);
     this.nativeEventsReceiver.registerComponentDidDisappear(this.lifecycle.componentDidDisappear);
     this.nativeEventsReceiver.registerNavigationButtonPressed(this.lifecycle.onNavigationButtonPressed);

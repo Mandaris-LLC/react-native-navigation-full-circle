@@ -21,8 +21,6 @@ describe('ComponentWrapper', () => {
     }
   }
 
-
-
   class TestParent extends React.Component<any, { propsFromState: {} }> {
     private ChildClass;
 
@@ -36,7 +34,7 @@ describe('ComponentWrapper', () => {
       return (
         <this.ChildClass
           ref={(r) => childRef = r}
-          componentId="component1"
+          componentId='component1'
           {...this.state.propsFromState}
         />
       );
