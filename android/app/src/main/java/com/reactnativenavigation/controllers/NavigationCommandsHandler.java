@@ -549,6 +549,6 @@ public class NavigationCommandsHandler {
 
     public static void getLaunchArgs(Promise promise) {
         Bundle bundle = LaunchArgs.instance.get();
-        promise.resolve(bundle);
+        promise.resolve(Arguments.fromBundle(bundle));
     }
 }
