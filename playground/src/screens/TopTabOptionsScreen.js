@@ -25,7 +25,7 @@ class TopTabOptionsScreen extends PureComponent {
       <View style={styles.root}>
         <Text style={styles.h1}>{this.props.text || 'Top Tab Screen'}</Text>
         <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
-        <Button title="Dynamic Options" testID={testIDs.DYNAMIC_OPTIONS_BUTTON} onPress={this.onClickDynamicOptions} />
+        <Button title='Dynamic Options' testID={testIDs.DYNAMIC_OPTIONS_BUTTON} onPress={this.onClickDynamicOptions} />
       </View>
     );
   }

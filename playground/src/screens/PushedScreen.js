@@ -32,11 +32,11 @@ class PushedScreen extends Component {
       <View style={styles.root}>
         <Text testID={testIDs.PUSHED_SCREEN_HEADER} style={styles.h1}>{`Pushed Screen`}</Text>
         <Text style={styles.h2}>{`Stack Position: ${stackPosition}`}</Text>
-        <Button title="Push" testID={testIDs.PUSH_BUTTON} onPress={this.onClickPush} />
-        <Button title="Pop" testID={testIDs.POP_BUTTON} onPress={this.onClickPop} />
-        <Button title="Pop Previous" testID={testIDs.POP_PREVIOUS_BUTTON} onPress={this.onClickPopPrevious} />
-        <Button title="Pop To Root" testID={testIDs.POP_TO_ROOT} onPress={this.onClickPopToRoot} />
-        {stackPosition > 2 && <Button title="Pop To Stack Position 1" testID={testIDs.POP_STACK_POSITION_ONE_BUTTON} onPress={this.onClickPopToFirstPosition} />}
+        <Button title='Push' testID={testIDs.PUSH_BUTTON} onPress={this.onClickPush} />
+        <Button title='Pop' testID={testIDs.POP_BUTTON} onPress={this.onClickPop} />
+        <Button title='Pop Previous' testID={testIDs.POP_PREVIOUS_BUTTON} onPress={this.onClickPopPrevious} />
+        <Button title='Pop To Root' testID={testIDs.POP_TO_ROOT} onPress={this.onClickPopToRoot} />
+        {stackPosition > 2 && <Button title='Pop To Stack Position 1' testID={testIDs.POP_STACK_POSITION_ONE_BUTTON} onPress={this.onClickPopToFirstPosition} />}
         <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
       </View>
     );

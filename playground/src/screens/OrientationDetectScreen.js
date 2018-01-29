@@ -21,9 +21,9 @@ class OrientationDetectScreen extends Component {
     return (
       <View style={styles.root} onLayout={this.detectHorizontal}>
         <Text style={styles.h1}>{`Orientation Screen`}</Text>
-        <Button title="Dismiss" testID={testIDs.DISMISS_BUTTON} onPress={() => Navigation.dismissModal(this.props.componentId)} />
+        <Button title='Dismiss' testID={testIDs.DISMISS_BUTTON} onPress={() => Navigation.dismissModal(this.props.componentId)} />
         <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
-        <Text style={styles.footer} testID="currentOrientation">{this.state.horizontal ? 'Landscape' : 'Portrait'}</Text>
+        <Text style={styles.footer} testID='currentOrientation'>{this.state.horizontal ? 'Landscape' : 'Portrait'}</Text>
       </View>
     );
   }
