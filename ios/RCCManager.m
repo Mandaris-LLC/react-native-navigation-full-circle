@@ -10,7 +10,6 @@
 @property (nonatomic, strong) RCTBridge *sharedBridge;
 @property (nonatomic, strong) NSURL *bundleURL;
 @property (nonatomic, strong, readwrite) NSDictionary *globalAppStyle;
-@property (nonatomic, strong) NSDictionary *launchOptions;
 @end
 
 @implementation RCCManager
@@ -47,8 +46,8 @@
   return self;
 }
 
-- (NSDictionary *)getInitialProps {
-  return _launchOptions;
+- (NSArray *)getInitialProps {
+  return [[NSProcessInfo processInfo] arguments];
 }
 
 -(void)clearModuleRegistry
@@ -160,7 +159,6 @@
 {
   if (self.sharedBridge) return;
   
-  self.launchOptions = launchOptions;
   self.bundleURL = bundleURL;
   self.sharedBridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   
