@@ -72,11 +72,6 @@ static id (*__SWZ_initWithEventDispatcher_orig)(id self, SEL _cmd, id eventDispa
 	rv.top = CGRectIntersection(myFrameInVCView, CGRectMake(0, 0, vc.view.bounds.size.width, vc.topLayoutGuide.length)).size.height;
 	rv.bottom = CGRectIntersection(myFrameInVCView, CGRectMake(0, vc.view.bounds.size.height - vc.bottomLayoutGuide.length, vc.view.bounds.size.width, vc.bottomLayoutGuide.length)).size.height;
 	
-	if (@available(iOS 11.0, *))
-	{
-		NSParameterAssert(UIEdgeInsetsEqualToEdgeInsets(self.safeAreaInsets, rv));
-	}
-	
 	return rv;
 }
 
