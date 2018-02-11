@@ -39,9 +39,10 @@ public abstract class ViewController<T extends ViewGroup> implements ViewTreeObs
     private boolean isDestroyed;
     private ViewVisibilityListener viewVisibilityListener = new ViewVisibilityListenerAdapter();
 
-    public ViewController(Activity activity, String id) {
+    public ViewController(Activity activity, String id, Options initialOptions) {
         this.activity = activity;
         this.id = id;
+        options = initialOptions;
     }
 
     protected abstract T createView();
@@ -125,11 +126,15 @@ public abstract class ViewController<T extends ViewGroup> implements ViewTreeObs
         return isSameId(id) ? this : null;
     }
 
+    public boolean containsComponent(ReactComponent component) {
+        return getView().equals(component);
+    }
+
     public void onViewAppeared() {
         isShown = true;
         applyOnParentController(parentController -> {
             parentController.clearOptions();
-            parentController.applyOptions(options, (ReactComponent) getView());
+            if (getView() instanceof ReactComponent) parentController.applyOptions(options, (ReactComponent) getView());
         });
     }
 

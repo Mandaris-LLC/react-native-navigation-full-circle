@@ -2,18 +2,24 @@ package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.reactnativenavigation.parse.BottomTabOptions;
+import com.reactnativenavigation.parse.BottomTabsOptions;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.Text;
+import com.reactnativenavigation.presentation.BottomTabOptionsPresenter;
 import com.reactnativenavigation.presentation.NavigationOptionsListener;
-import com.reactnativenavigation.utils.CompatUtils;
+import com.reactnativenavigation.utils.ImageLoader;
+import com.reactnativenavigation.utils.UiUtils;
+import com.reactnativenavigation.views.BottomTabs;
+import com.reactnativenavigation.views.ReactComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,47 +31,46 @@ import static android.widget.RelativeLayout.ABOVE;
 import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 import static com.reactnativenavigation.parse.DEFAULT_VALUES.NO_INT_VALUE;
 
-public class BottomTabsController extends ParentController
-		implements BottomNavigationView.OnNavigationItemSelectedListener, NavigationOptionsListener {
-	private BottomNavigationView bottomNavigationView;
+public class BottomTabsController extends ParentController implements AHBottomNavigation.OnTabSelectedListener, NavigationOptionsListener {
+	private BottomTabs bottomTabs;
 	private List<ViewController> tabs = new ArrayList<>();
-	private int selectedIndex = 0;
+    private ImageLoader imageLoader;
 
-	public BottomTabsController(final Activity activity, final String id) {
-		super(activity, id);
-	}
+    public BottomTabsController(final Activity activity, ImageLoader imageLoader, final String id, Options initialOptions) {
+		super(activity, id, initialOptions);
+        this.imageLoader = imageLoader;
+    }
 
 	@NonNull
 	@Override
 	protected ViewGroup createView() {
 		RelativeLayout root = new RelativeLayout(getActivity());
-		bottomNavigationView = new BottomNavigationView(getActivity());
-		bottomNavigationView.setId(CompatUtils.generateViewId());
-		bottomNavigationView.setBackgroundColor(Color.DKGRAY);
-		bottomNavigationView.setOnNavigationItemSelectedListener(this);
+		bottomTabs = new BottomTabs(getActivity(), options.bottomTabsOptions);
+        bottomTabs.setOnTabSelectedListener(this);
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
 		lp.addRule(ALIGN_PARENT_BOTTOM);
-		root.addView(bottomNavigationView, lp);
+		root.addView(bottomTabs, lp);
 		return root;
 	}
 
-	@Override
+    @Override
+    public void applyOptions(Options options, ReactComponent childComponent) {
+        int tabIndex = findTabContainingComponent(childComponent);
+        if (tabIndex >= 0) new BottomTabOptionsPresenter(bottomTabs).present(options, tabIndex);
+    }
+
+    @Override
 	public boolean handleBack() {
-		return !tabs.isEmpty() && tabs.get(selectedIndex).handleBack();
+		return !tabs.isEmpty() && tabs.get(bottomTabs.getCurrentItem()).handleBack();
 	}
 
-	@Override
-	public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
-		selectTabAtIndex(item.getItemId());
-		return true;
+    @Override
+    public boolean onTabSelected(int index, boolean wasSelected) {
+        if (wasSelected) return false;
+        selectTabAtIndex(index);
+        return true;
 	}
-
-	void selectTabAtIndex(final int newIndex) {
-		tabs.get(selectedIndex).getView().setVisibility(View.GONE);
-		selectedIndex = newIndex;
-		tabs.get(selectedIndex).getView().setVisibility(View.VISIBLE);
-	}
-
+	
 	public void setTabs(final List<ViewController> tabs) {
 		if (tabs.size() > 5) {
 			throw new RuntimeException("Too many tabs!");
@@ -73,22 +78,41 @@ public class BottomTabsController extends ParentController
 		this.tabs = tabs;
 		getView();
 		for (int i = 0; i < tabs.size(); i++) {
-			String title = String.valueOf(i);
-			createTab(tabs.get(i), i, title);
+		    tabs.get(i).setParentController(this);
+			createTab(i, tabs.get(i).options.bottomTabOptions, tabs.get(i).options.bottomTabsOptions);
 		}
 		selectTabAtIndex(0);
 	}
 
-	private void createTab(ViewController tab, final int index, final String title) {
-		bottomNavigationView.getMenu().add(0, index, Menu.NONE, title);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-		params.addRule(ABOVE, bottomNavigationView.getId());
-		tab.getView().setVisibility(View.GONE);
-		getView().addView(tab.getView(), params);
+	private void createTab(int index, final BottomTabOptions tabOptions, final BottomTabsOptions bottomTabsOptions) {
+	    if (!tabOptions.icon.hasValue()) {
+            throw new RuntimeException("BottomTab must have an icon");
+        }
+        imageLoader.loadIcon(getActivity(), tabOptions.icon.get(), new ImageLoader.ImageLoadingListener() {
+            @Override
+            public void onComplete(@NonNull Drawable drawable) {
+                setIconColor(drawable, bottomTabsOptions);
+                AHBottomNavigationItem item = new AHBottomNavigationItem(tabOptions.title.get(""), drawable);
+                bottomTabs.addItem(item);
+                bottomTabs.post(() -> bottomTabs.setTabTag(index, tabOptions.testId));
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                error.printStackTrace();
+            }
+        });
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+        params.addRule(ABOVE, bottomTabs.getId());
 	}
 
-	int getSelectedIndex() {
-		return selectedIndex;
+    private void setIconColor(Drawable drawable, BottomTabsOptions options) {
+        UiUtils.tintDrawable(drawable, Color.RED);
+    }
+
+    int getSelectedIndex() {
+		return bottomTabs.getCurrentItem();
 	}
 
 	@NonNull
@@ -99,6 +123,7 @@ public class BottomTabsController extends ParentController
 
 	@Override
 	public void mergeOptions(Options options) {
+        this.options.mergeWith(options);
         if (options.bottomTabsOptions.currentTabIndex != NO_INT_VALUE) {
             selectTabAtIndex(options.bottomTabsOptions.currentTabIndex);
         }
@@ -117,7 +142,18 @@ public class BottomTabsController extends ParentController
         }
     }
 
-	private boolean hasControlWithId(StackController controller, String id) {
+    void selectTabAtIndex(final int newIndex) {
+        getView().removeView(getCurrentView());
+        bottomTabs.setCurrentItem(newIndex, false);
+        getView().addView(getCurrentView());
+    }
+
+    @NonNull
+    private ViewGroup getCurrentView() {
+        return tabs.get(bottomTabs.getCurrentItem()).getView();
+    }
+
+    private boolean hasControlWithId(StackController controller, String id) {
 		for (ViewController child : controller.getChildControllers()) {
 			if (id.equals(child.getId())) {
 				return true;
@@ -128,4 +164,14 @@ public class BottomTabsController extends ParentController
 		}
 		return false;
 	}
+
+	@IntRange(from = -1)
+    private int findTabContainingComponent(ReactComponent component) {
+        for (int i = 0; i < tabs.size(); i++) {
+            if (tabs.get(i).containsComponent(component)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

@@ -13,8 +13,8 @@ import java.util.Collection;
 
 public abstract class ParentController<T extends ViewGroup> extends ViewController {
 
-	public ParentController(final Activity activity, final String id) {
-		super(activity, id);
+	public ParentController(final Activity activity, final String id, Options initialOptions) {
+		super(activity, id, initialOptions);
 	}
 
 	@NonNull
@@ -43,6 +43,17 @@ public abstract class ParentController<T extends ViewGroup> extends ViewControll
 
 		return null;
 	}
+
+	@Override
+    public boolean containsComponent(ReactComponent component) {
+        if (super.containsComponent(component)) {
+            return true;
+        }
+        for (ViewController child : getChildControllers()) {
+            if (child.containsComponent(component)) return true;
+        }
+        return false;
+    }
 
     public void applyOptions(Options options, ReactComponent childComponent) {
 
