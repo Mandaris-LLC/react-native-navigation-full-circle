@@ -12,10 +12,7 @@ mkdir -p ~/.android
 touch ~/.android/repositories.cfg
 
 echo "Downloading Android SDK"
-brew --version
-brew config
-brew tap caskroom/cask
-brew cask install android-sdk
+curl --location https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip | tar -x -z -C $ANDROID_HOME
 
 echo "Accepting Android Licenses"
 yes | sdkmanager --licenses
