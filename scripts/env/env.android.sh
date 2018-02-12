@@ -12,7 +12,10 @@ mkdir -p ~/.android
 touch ~/.android/repositories.cfg
 
 echo "Downloading Android SDK"
+brew --version
+brew config
+brew tap caskroom/cask
 brew cask install android-sdk
 
 echo "Accepting Android Licenses"
-yes | /sdkmanager --licenses
+yes | sdkmanager --licenses
