@@ -15,4 +15,4 @@ echo "Downloading Android SDK"
 brew cask install android-sdk
 
 echo "Accepting Android Licenses"
-yes | sdkmanager --licenses
+yes | /sdkmanager --licenses
