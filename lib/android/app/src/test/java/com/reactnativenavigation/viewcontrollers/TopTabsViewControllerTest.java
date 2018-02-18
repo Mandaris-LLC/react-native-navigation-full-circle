@@ -10,6 +10,7 @@ import com.reactnativenavigation.mocks.TestComponentViewCreator;
 import com.reactnativenavigation.mocks.TestReactView;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.Text;
+import com.reactnativenavigation.utils.ViewHelper;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsAdapter;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsController;
 import com.reactnativenavigation.views.ReactComponent;
@@ -205,6 +206,30 @@ public class TopTabsViewControllerTest extends BaseTest {
         ArgumentCaptor<ReactComponent> viewCaptor = ArgumentCaptor.forClass(ReactComponent.class);
         verify(parentController, times(1)).applyOptions(optionsCaptor.capture(), viewCaptor.capture());
         assertThat(optionsCaptor.getValue().topTabOptions.title.hasValue()).isFalse();
+    }
+
+    @Test
+    public void applyOptions_tabsAreRemovedBeforeViewDisappears() throws Exception {
+        parentController.getView().removeAllViews();
+
+        StackController stackController = spy(new StackController(activity, "stack", new Options()));
+        ComponentViewController first = new ComponentViewController(
+                activity,
+                "firstScreen",
+                "comp1",
+                new TestComponentViewCreator(),
+                new Options()
+        );
+        stackController.push(first, new MockPromise());
+        stackController.push(uut, new MockPromise());
+
+        first.ensureViewIsCreated();
+        uut.ensureViewIsCreated();
+        uut.onViewAppeared();
+
+        assertThat(ViewHelper.isVisible(stackController.getTopBar().getTopTabs())).isTrue();
+        stackController.pop(new MockPromise());
+        assertThat(ViewHelper.isVisible(stackController.getTopBar().getTopTabs())).isFalse();
     }
 
     private IReactView tab(TopTabsViewPager topTabs, final int index) {
