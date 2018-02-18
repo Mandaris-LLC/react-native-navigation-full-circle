@@ -44,7 +44,7 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 			[options mergeWith:[otherOptions objectForKey:key]];
 		} else {
 			[self setValue:[otherOptions objectForKey:key] forKey:key];
-		}
+		} 
 	}
 }
 
