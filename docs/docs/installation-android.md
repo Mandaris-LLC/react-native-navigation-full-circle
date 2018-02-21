@@ -68,6 +68,7 @@ dependencies {
 ```
 	
 5. Make sure you're using the new gradle plugin, edit `android/gradle/wrapper/gradle-wrapper.properties`
+
 ```diff
 distributionBase=GRADLE_USER_HOME
 distributionPath=wrapper/dists
