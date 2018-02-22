@@ -304,6 +304,7 @@ public class SingleScreenLayout extends BaseLayout {
 
     @Override
     public void onModalDismissed() {
+        stack.peek().setStyle();
         stack.peek().getScreenParams().timestamp = System.currentTimeMillis();
         NavigationApplication.instance.getEventEmitter().sendWillAppearEvent(stack.peek().getScreenParams(), NavigationType.DismissModal);
         NavigationApplication.instance.getEventEmitter().sendDidAppearEvent(stack.peek().getScreenParams(), NavigationType.DismissModal);
