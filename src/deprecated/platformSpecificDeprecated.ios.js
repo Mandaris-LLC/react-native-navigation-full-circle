@@ -24,10 +24,19 @@ async function startTabBasedApp(params) {
   params.tabs.map(function(tab, index) {
     const navigatorID = controllerID + '_nav' + index;
     const screenInstanceID = _.uniqueId('screenInstanceID');
-    if (!tab.screen) {
+
+    const components = tab.components;
+    if (!tab.screen && !components) {
       console.error('startTabBasedApp(params): every tab must include a screen property, take a look at tab#' + (index + 1));
       return;
     }
+
+    if (components) {
+      params.tabs[index].components = components;
+      Object.assign(tab, components[0]);
+      components.shift();
+    }
+    
     const {
       navigatorStyle,
       navigatorButtons,
@@ -98,6 +107,7 @@ async function startTabBasedApp(params) {
                     subtitle={tab.subtitle}
                     titleImage={tab.titleImage}
                     component={tab.screen}
+                    components={tab.components}
                     passProps={{
                     navigatorID: tab.navigationParams.navigatorID,
                     screenInstanceID: tab.navigationParams.screenInstanceID,
@@ -123,13 +133,19 @@ async function startTabBasedApp(params) {
 }
 
 async function startSingleScreenApp(params) {
-  if (!params.screen) {
+  const components = params.components;
+  let screen = params.screen;
+  if (!screen && !components) {
     console.error('startSingleScreenApp(params): params.screen is required');
     return;
   }
 
+  if (components) {
+    screen = components[0];
+    components.shift();
+  }
+
   const controllerID = _.uniqueId('controllerID');
-  const screen = params.screen;
   if (!screen.screen) {
     console.error('startSingleScreenApp(params): screen must include a screen property');
     return;
@@ -183,6 +199,7 @@ async function startSingleScreenApp(params) {
           subtitle={params.subtitle}
           titleImage={screen.titleImage}
           component={screen.screen}
+          components={components}
           passProps={{
             navigatorID: navigatorID,
             screenInstanceID: screenInstanceID,

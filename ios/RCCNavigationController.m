@@ -68,6 +68,13 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
 
   [self setRotation:props];
   
+  NSArray* components = props[@"components"];
+  if (components.count) {
+    for (NSDictionary* component in components) {
+      [self performAction:@"push" actionParams:@{@"animated": @(0), @"component": component[@"screen"]} bridge:bridge];
+    }
+  }
+  
   return self;
 }
 
