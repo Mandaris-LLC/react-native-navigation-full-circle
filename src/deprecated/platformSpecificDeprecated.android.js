@@ -317,9 +317,7 @@ async function startTabBasedApp(params) {
       const screen = createBottomTabScreen(components[0], idx, params)
       const {label, icon} = components[0];
       components.shift();
-      console.log('guyca', `${JSON.stringify(components[0])}`);
       screen.screens = components.map(c => createBottomTabScreen({...c, icon, label}, idx, params));
-      
       newTabs.push(screen);
     } else {
       newTabs.push(createBottomTabScreen(tab, idx, params));

@@ -88,6 +88,10 @@ function savePassProps(params) {
     PropRegistry.save(params.screen.navigationParams.screenInstanceID, params.screen.passProps);
   }
 
+  if (_.get(params, 'screen.screens')) {
+    _.forEach(params.screen.screens, savePassProps)
+  }
+
   if (_.get(params, 'screen.topTabs')) {
     _.forEach(params.screen.topTabs, (tab) => savePassProps(tab));
   }
@@ -102,6 +106,10 @@ function savePassProps(params) {
         tab.passProps = params.passProps;
       }
       savePassProps(tab);
+      
+      if (tab.screens) {
+        _.forEach(tab.screens, savePassProps)
+      }
     });
   }
 
