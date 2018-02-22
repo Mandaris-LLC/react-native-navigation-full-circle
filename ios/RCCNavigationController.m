@@ -71,7 +71,9 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   NSArray* components = props[@"components"];
   if (components.count) {
     for (NSDictionary* component in components) {
-      [self performAction:@"push" actionParams:@{@"animated": @(0), @"component": component[@"screen"]} bridge:bridge];
+      NSMutableDictionary *mutableParams = [[NSMutableDictionary alloc] initWithDictionary:@{@"animated": @(0), @"component": component[@"screen"]}];
+      [mutableParams addEntriesFromDictionary:component];
+      [self performAction:@"push" actionParams:mutableParams bridge:bridge];
     }
   }
   

@@ -36,7 +36,7 @@ async function startTabBasedApp(params) {
       Object.assign(tab, components[0]);
       components.shift();
     }
-    
+
     const {
       navigatorStyle,
       navigatorButtons,
@@ -90,7 +90,7 @@ async function startTabBasedApp(params) {
         );
       }
     },
-    renderBody: function() {
+    renderBody: function () {
       return (
         <TabBarControllerIOS
           id={controllerID + '_tabs'}
@@ -98,7 +98,7 @@ async function startTabBasedApp(params) {
           appStyle={params.appStyle}
           initialTabIndex={params.initialTabIndex}>
           {
-            params.tabs.map(function(tab, index) {
+            params.tabs.map(function (tab, index) {
               return (
                 <TabBarControllerIOS.Item {...tab} title={tab.label}>
                   <NavigationControllerIOS
@@ -109,10 +109,10 @@ async function startTabBasedApp(params) {
                     component={tab.screen}
                     components={tab.components}
                     passProps={{
-                    navigatorID: tab.navigationParams.navigatorID,
-                    screenInstanceID: tab.navigationParams.screenInstanceID,
-                    navigatorEventID: tab.navigationParams.navigatorEventID,
-                  }}
+                      navigatorID: tab.navigationParams.navigatorID,
+                      screenInstanceID: tab.navigationParams.screenInstanceID,
+                      navigatorEventID: tab.navigationParams.navigatorEventID,
+                    }}
                     style={tab.navigationParams.navigatorStyle}
                     leftButtons={tab.navigationParams.navigatorButtons.leftButtons}
                     rightButtons={tab.navigationParams.navigatorButtons.rightButtons}
@@ -141,8 +141,15 @@ async function startSingleScreenApp(params) {
   }
 
   if (components) {
-    screen = components[0];
-    components.shift();
+    components.forEach(component => {
+      screen = components[0];
+      components.shift();
+      const screenInstanceID = _.uniqueId('screenInstanceID');
+      component.navigationParams = {
+        screenInstanceID
+      };
+      savePassProps(component);
+    });
   }
 
   const controllerID = _.uniqueId('controllerID');
@@ -168,6 +175,13 @@ async function startSingleScreenApp(params) {
     navigatorID
   };
 
+  const passProps = {
+    navigatorID: navigatorID,
+    screenInstanceID: screenInstanceID,
+    navigatorEventID: navigatorEventID,
+    ...screen.passProps
+  };
+
   const Controller = Controllers.createClass({
     render: function() {
       if (!params.drawer || (!params.drawer.left && !params.drawer.right)) {
@@ -176,15 +190,15 @@ async function startSingleScreenApp(params) {
         const navigatorID = controllerID + '_drawer';
         return (
           <DrawerControllerIOS id={navigatorID}
-                               componentLeft={params.drawer.left ? params.drawer.left.screen : undefined}
-                               passPropsLeft={{navigatorID: navigatorID}}
-                               componentRight={params.drawer.right ? params.drawer.right.screen : undefined}
-                               passPropsRight={{navigatorID: navigatorID}}
-                               disableOpenGesture={params.drawer.disableOpenGesture}
-                               type={params.drawer.type ? params.drawer.type : 'MMDrawer'}
-                               animationType={params.drawer.animationType ? params.drawer.animationType : 'slide'}
-                               style={params.drawer.style}
-                               appStyle={params.appStyle}
+            componentLeft={params.drawer.left ? params.drawer.left.screen : undefined}
+            passPropsLeft={{navigatorID: navigatorID}}
+            componentRight={params.drawer.right ? params.drawer.right.screen : undefined}
+            passPropsRight={{navigatorID: navigatorID}}
+            disableOpenGesture={params.drawer.disableOpenGesture}
+            type={params.drawer.type ? params.drawer.type : 'MMDrawer'}
+            animationType={params.drawer.animationType ? params.drawer.animationType : 'slide'}
+            style={params.drawer.style}
+            appStyle={params.appStyle}
           >
             {this.renderBody()}
           </DrawerControllerIOS>
@@ -200,11 +214,7 @@ async function startSingleScreenApp(params) {
           titleImage={screen.titleImage}
           component={screen.screen}
           components={components}
-          passProps={{
-            navigatorID: navigatorID,
-            screenInstanceID: screenInstanceID,
-            navigatorEventID: navigatorEventID
-          }}
+          passProps={passProps}
           style={navigatorStyle}
           leftButtons={navigatorButtons.leftButtons}
           rightButtons={navigatorButtons.rightButtons}
@@ -365,8 +375,8 @@ function navigatorResetTo(navigator, params) {
 }
 
 function navigatorSetDrawerEnabled(navigator, params) {
-    const controllerID = navigator.navigatorID.split('_')[0];
-    Controllers.NavigationControllerIOS(controllerID + '_drawer').setDrawerEnabled(params)
+  const controllerID = navigator.navigatorID.split('_')[0];
+  Controllers.NavigationControllerIOS(controllerID + '_drawer').setDrawerEnabled(params)
 }
 
 function navigatorSetTitle(navigator, params) {
