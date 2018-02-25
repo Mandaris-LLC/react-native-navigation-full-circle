@@ -22,7 +22,7 @@ async function startSingleScreenApp(params) {
     components.shift();
     params.screen.screens = components.map(createSingleScreen);
   } else {
-    params.screen = createSingleScreen(params.screen);
+    params.screen = createSingleScreen({...params.screen, passProps: params.passProps});
   }
 
   params.sideMenu = convertDrawerParamsToSideMenuParams(params.drawer);
