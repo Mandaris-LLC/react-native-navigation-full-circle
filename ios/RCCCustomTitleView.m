@@ -17,7 +17,6 @@
 
 @implementation RCCCustomTitleView
 
-
 - (instancetype)initWithFrame:(CGRect)frame subView:(RCTRootView*)subView alignment:(NSString*)alignment {
     self = [super init];
     
