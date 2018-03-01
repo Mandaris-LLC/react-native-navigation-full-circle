@@ -3,6 +3,9 @@ package com.reactnativenavigation.parse;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 
+import com.reactnativenavigation.parse.params.NullText;
+import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.parse.parsers.TextParser;
 import com.reactnativenavigation.utils.TypefaceLoader;
 
 import org.json.JSONObject;
@@ -21,11 +24,13 @@ public class TopTabOptions implements DEFAULT_VALUES {
         return result;
     }
 
-    void mergeWith(TopTabOptions topTabsOptions) {
-
+    void mergeWith(TopTabOptions other) {
+        if (other.title.hasValue()) title = other.title;
+        if (other.fontFamily != null) fontFamily = other.fontFamily;
+        if (other.tabIndex >= 0) tabIndex = other.tabIndex;
     }
 
-    void mergeWithDefault(TopTabOptions topTabsOptions) {
-
+    void mergeWithDefault(TopTabOptions other) {
+        if (fontFamily == null) fontFamily = other.fontFamily;
     }
 }

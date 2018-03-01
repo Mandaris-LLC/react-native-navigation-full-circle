@@ -41,6 +41,10 @@
 	return YES;
 }
 
+- (void)mergeOptions:(NSDictionary *)options {
+	[((UIViewController<RNNRootViewProtocol>*)self.selectedViewController) mergeOptions:options];
+}
+
 - (NSString *)componentId {
 	return ((UIViewController<RNNRootViewProtocol>*)self.selectedViewController).componentId;
 }

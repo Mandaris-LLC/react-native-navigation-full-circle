@@ -2,7 +2,7 @@ const React = require('react');
 const { PureComponent } = require('react');
 
 const { Text, Button, View, Alert, Platform } = require('react-native');
-const Navigation = require('react-native-navigation');
+const { Navigation } = require('react-native-navigation');
 
 const testIDs = require('../testIDs');
 
@@ -12,7 +12,7 @@ class CustomDialog extends PureComponent {
     return (
       <View style={styles.root}>
         <Text style={styles.h1} testID={testIDs.DIALOG_HEADER}>Test view</Text>
-        <Button title="OK" testID={testIDs.OK_BUTTON} onPress={() => this.onCLickOk()} />
+        <Button title='OK' testID={testIDs.OK_BUTTON} onPress={() => this.onCLickOk()} />
       </View>
     );
   }

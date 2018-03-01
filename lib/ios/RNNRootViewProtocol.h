@@ -2,8 +2,11 @@
 
 @protocol RNNRootViewProtocol <NSObject, UINavigationControllerDelegate>
 
-@required
+@optional
+- (void)mergeOptions:(NSDictionary*)options;
+- (BOOL)isCustomViewController;
 
+@required
 - (BOOL)isCustomTransitioned;
 - (BOOL)isAnimated;
 

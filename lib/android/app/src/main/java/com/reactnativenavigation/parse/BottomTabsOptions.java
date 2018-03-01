@@ -1,7 +1,17 @@
 package com.reactnativenavigation.parse;
 
-
-import com.reactnativenavigation.parse.Options.BooleanOptions;
+import com.reactnativenavigation.parse.params.Bool;
+import com.reactnativenavigation.parse.params.Color;
+import com.reactnativenavigation.parse.params.NullBool;
+import com.reactnativenavigation.parse.params.NullColor;
+import com.reactnativenavigation.parse.params.NullNumber;
+import com.reactnativenavigation.parse.params.NullText;
+import com.reactnativenavigation.parse.params.Number;
+import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.parse.parsers.BoolParser;
+import com.reactnativenavigation.parse.parsers.ColorParser;
+import com.reactnativenavigation.parse.parsers.NumberParser;
+import com.reactnativenavigation.parse.parsers.TextParser;
 
 import org.json.JSONObject;
 
@@ -11,54 +21,72 @@ public class BottomTabsOptions implements DEFAULT_VALUES {
 		BottomTabsOptions options = new BottomTabsOptions();
 		if (json == null) return options;
 
-		options.currentTabId = TextParser.parse(json, "currentTabId");
-		options.currentTabIndex = json.optInt("currentTabIndex", NO_INT_VALUE);
-		options.tabBadge = json.optInt("tabBadge", NO_INT_VALUE);
-		options.hidden = BooleanOptions.parse(json.optString("hidden"));
-		options.animateHide = BooleanOptions.parse(json.optString("animateHide"));
+        options.backgroundColor = ColorParser.parse(json, "backgroundColor");
+        options.tabColor = ColorParser.parse(json, "tabColor");
+        options.selectedTabColor = ColorParser.parse(json, "selectedTabColor");
+        options.currentTabId = TextParser.parse(json, "currentTabId");
+		options.currentTabIndex = NumberParser.parse(json,"currentTabIndex");
+		options.visible = BoolParser.parse(json,"visible");
+		options.animate = BoolParser.parse(json,"animate");
+        options.testId = TextParser.parse(json, "testID");
 
 		return options;
 	}
 
-	int tabBadge = NO_INT_VALUE;
-	BooleanOptions hidden = BooleanOptions.False;
-	BooleanOptions animateHide = BooleanOptions.False;
-	public int currentTabIndex = NO_INT_VALUE;
+    public Color backgroundColor = new NullColor();
+    public Color tabColor = new NullColor();
+    public Color selectedTabColor = new NullColor();
+	public Bool visible = new NullBool();
+	public Bool animate = new NullBool();
+	public Number currentTabIndex = new NullNumber();
 	public Text currentTabId = new NullText();
+    public Text testId = new NullText();
 
 	void mergeWith(final BottomTabsOptions other) {
 		if (other.currentTabId.hasValue()) {
 			currentTabId = other.currentTabId;
 		}
-		if (NO_INT_VALUE != other.currentTabIndex) {
+		if (other.currentTabIndex.hasValue()) {
             currentTabIndex = other.currentTabIndex;
 		}
-		if (NO_INT_VALUE != other.tabBadge) {
-			tabBadge = other.tabBadge;
+		if (other.visible.hasValue()) {
+			visible = other.visible;
 		}
-		if (other.hidden != BooleanOptions.NoValue) {
-			hidden = other.hidden;
+		if (other.animate.hasValue()) {
+			animate = other.animate;
 		}
-		if (other.animateHide != BooleanOptions.NoValue) {
-			animateHide = other.animateHide;
-		}
-	}
+        if (other.tabColor.hasValue()) {
+            tabColor = other.tabColor;
+        }
+        if (other.selectedTabColor.hasValue()) {
+            selectedTabColor = other.selectedTabColor;
+        }
+        if (other.backgroundColor.hasValue()) {
+		    backgroundColor = other.backgroundColor;
+        }
+    }
 
     void mergeWithDefault(final BottomTabsOptions defaultOptions) {
         if (!currentTabId.hasValue()) {
             currentTabId = defaultOptions.currentTabId;
         }
-        if (NO_INT_VALUE == currentTabIndex) {
+        if (!currentTabIndex.hasValue()) {
             currentTabIndex = defaultOptions.currentTabIndex;
         }
-        if (NO_INT_VALUE == tabBadge) {
-            tabBadge = defaultOptions.tabBadge;
+        if (!visible.hasValue()) {
+            visible = defaultOptions.visible;
         }
-        if (hidden == BooleanOptions.NoValue) {
-            hidden = defaultOptions.hidden;
+        if (!animate.hasValue()) {
+            animate = defaultOptions.animate;
         }
-        if (animateHide == BooleanOptions.NoValue) {
-            animateHide = defaultOptions.animateHide;
+        if (!tabColor.hasValue()) {
+            tabColor = defaultOptions.tabColor;
+        }
+        if (!selectedTabColor.hasValue()) {
+            selectedTabColor = defaultOptions.selectedTabColor;
+        }
+        if (!backgroundColor.hasValue()) {
+            backgroundColor = defaultOptions.backgroundColor;
         }
     }
 }

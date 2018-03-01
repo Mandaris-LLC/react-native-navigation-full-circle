@@ -43,8 +43,8 @@
 	
 	UIViewController<RNNRootViewProtocol> *result;
 	
-	if ( node.isComponent) {
-		result = [self createComponent:node];
+	if (node.isComponent) {
+		result = [self createComponent:node nativeComponent:NO];
 	}
 	
 	else if (node.isStack)	{
@@ -70,8 +70,13 @@
 	else if (node.isSideMenuLeft) {
 		result = [self createSideMenuChild:node type:RNNSideMenuChildTypeLeft];
 	}
+	
 	else if (node.isSideMenuRight) {
 		result = [self createSideMenuChild:node type:RNNSideMenuChildTypeRight];
+	}
+	
+	else if (node.isExternalComponent) {
+		result = [self createComponent:node nativeComponent:YES];
 	}
 	
 	if (!result) {
@@ -83,35 +88,36 @@
 	return result;
 }
 
-- (UIViewController<RNNRootViewProtocol> *)createComponent:(RNNLayoutNode*)node {
+- (UIViewController<RNNRootViewProtocol> *)createComponent:(RNNLayoutNode*)node nativeComponent:(BOOL)nativeComponent {
 	NSString* name = node.data[@"name"];
-	NSDictionary* customTransition = node.data[@"customTransition"];
-	RNNAnimator* animator = [[RNNAnimator alloc] initWithAnimationsDictionary:customTransition];
 	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:node.data[@"options"]];
 	options.defaultOptions = _defaultOptions;
 	NSString* componentId = node.nodeId;
-	RNNRootViewController* component = [[RNNRootViewController alloc] initWithName:name withOptions:options withComponentId:componentId rootViewCreator:_creator eventEmitter:_eventEmitter animator:animator];
-	CGSize availableSize = UIApplication.sharedApplication.delegate.window.bounds.size;
-	[_bridge.uiManager setAvailableSize:availableSize forRootView:component.view];
-	
+	RNNRootViewController* component = [[RNNRootViewController alloc] initWithName:name withOptions:options withComponentId:componentId rootViewCreator:_creator eventEmitter:_eventEmitter isExternalComponent:nativeComponent];
+	if (!component.isCustomViewController) {
+		CGSize availableSize = UIApplication.sharedApplication.delegate.window.bounds.size;
+		[_bridge.uiManager setAvailableSize:availableSize forRootView:component.view];
+	}
 	return component;
 }
 
 - (UIViewController<RNNRootViewProtocol> *)createStack:(RNNLayoutNode*)node {
 	RNNNavigationController* vc = [[RNNNavigationController alloc] init];
-	
+	NSDictionary* options = node.data[@"options"];
 	NSMutableArray* controllers = [NSMutableArray new];
 	for (NSDictionary* child in node.children) {
 		[controllers addObject:[self fromTree:child]];
 	}
 	[vc setViewControllers:controllers];
+	[vc mergeOptions:options];
 	
 	return vc;
 }
 
 -(UIViewController<RNNRootViewProtocol> *)createTabs:(RNNLayoutNode*)node {
 	RNNTabBarController* vc = [[RNNTabBarController alloc] init];
-	
+	NSDictionary* options = node.data[@"options"];
+
 	NSMutableArray* controllers = [NSMutableArray new];
 	for (NSDictionary *child in node.children) {
 		UIViewController* childVc = (UIViewController*)[self fromTree:child];
@@ -121,6 +127,7 @@
 		[controllers addObject:childVc];
 	}
 	[vc setViewControllers:controllers];
+	[vc mergeOptions:options];
 	
 	return vc;
 }

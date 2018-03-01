@@ -18,17 +18,15 @@ public class ComponentViewController extends ViewController<ComponentLayout> imp
                                    final String id,
                                    final String componentName,
                                    final ReactViewCreator viewCreator,
-                                   final Options initialNavigationOptions) {
-        super(activity, id);
+                                   final Options initialOptions) {
+        super(activity, id, initialOptions);
         this.componentName = componentName;
         this.viewCreator = viewCreator;
-        options = initialNavigationOptions;
     }
 
     @Override
     public void onViewAppeared() {
         super.onViewAppeared();
-        view.applyOptions(options);
         view.sendComponentStart();
     }
 
@@ -36,6 +34,16 @@ public class ComponentViewController extends ViewController<ComponentLayout> imp
     public void onViewDisappear() {
         view.sendComponentStop();
         super.onViewDisappear();
+    }
+
+    @Override
+    public void sendOnNavigationButtonPressed(String buttonId) {
+        getView().sendOnNavigationButtonPressed(buttonId);
+    }
+
+    @Override
+    public void applyOptions(Options options) {
+        view.applyOptions(options);
     }
 
     @Override
@@ -52,13 +60,9 @@ public class ComponentViewController extends ViewController<ComponentLayout> imp
 
     @Override
     public void mergeOptions(Options options) {
-        this.options.mergeWith(options);
+        this.options = this.options.mergeWith(options);
         view.applyOptions(this.options);
         applyOnParentController(parentController -> parentController.applyOptions(this.options, view));
-    }
-
-    Options getOptions() {
-        return options;
     }
 
     ReactComponent getComponent() {

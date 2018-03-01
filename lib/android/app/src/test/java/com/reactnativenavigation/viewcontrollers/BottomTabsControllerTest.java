@@ -1,21 +1,34 @@
 package com.reactnativenavigation.viewcontrollers;
 
-import android.app.*;
-import android.support.annotation.*;
-import android.support.design.widget.*;
-import android.view.*;
-import android.widget.*;
+import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.widget.RelativeLayout;
 
-import com.reactnativenavigation.*;
-import com.reactnativenavigation.mocks.*;
+import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.mocks.ImageLoaderMock;
+import com.reactnativenavigation.mocks.MockPromise;
+import com.reactnativenavigation.mocks.SimpleViewController;
+import com.reactnativenavigation.parse.params.Color;
+import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.parse.params.Number;
+import com.reactnativenavigation.utils.ImageLoader;
+import com.reactnativenavigation.utils.OptionHelper;
+import com.reactnativenavigation.viewcontrollers.bottomtabs.BottomTabsController;
+import com.reactnativenavigation.views.BottomTabs;
+import com.reactnativenavigation.views.ReactComponent;
 
-import org.assertj.core.api.iterable.*;
-import org.junit.*;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import static org.assertj.core.api.Java6Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class BottomTabsControllerTest extends BaseTest {
 
@@ -26,38 +39,49 @@ public class BottomTabsControllerTest extends BaseTest {
     private ViewController child3;
     private ViewController child4;
     private ViewController child5;
+    private Options tabOptions = OptionHelper.createBottomTabOptions();
+    private ImageLoader imageLoaderMock = ImageLoaderMock.mock();
 
     @Override
     public void beforeEach() {
         super.beforeEach();
         activity = newActivity();
-        uut = new BottomTabsController(activity, "uut");
-        child1 = new SimpleViewController(activity, "child1");
-        child2 = new SimpleViewController(activity, "child2");
-        child3 = new SimpleViewController(activity, "child3");
-        child4 = new SimpleViewController(activity, "child4");
-        child5 = new SimpleViewController(activity, "child5");
+        uut = spy(new BottomTabsController(activity, imageLoaderMock, "uut", new Options()));
+        child1 = spy(new SimpleViewController(activity, "child1", tabOptions));
+        child2 = spy(new SimpleViewController(activity, "child2", tabOptions));
+        child3 = spy(new SimpleViewController(activity, "child3", tabOptions));
+        child4 = spy(new SimpleViewController(activity, "child4", tabOptions));
+        child5 = spy(new SimpleViewController(activity, "child5", tabOptions));
     }
 
     @Test
     public void containsRelativeLayoutView() throws Exception {
         assertThat(uut.getView()).isInstanceOf(RelativeLayout.class);
-        assertThat(uut.getView().getChildAt(0)).isInstanceOf(BottomNavigationView.class);
+        assertThat(uut.getView().getChildAt(0)).isInstanceOf(BottomTabs.class);
     }
 
     @Test(expected = RuntimeException.class)
     public void setTabs_ThrowWhenMoreThan5() throws Exception {
         List<ViewController> tabs = createTabs();
-        tabs.add(new SimpleViewController(activity, "6"));
+        tabs.add(new SimpleViewController(activity, "6", tabOptions));
         uut.setTabs(tabs);
     }
 
     @Test
-    public void setTabs_AddAllViewsAsGoneExceptFirst() throws Exception {
+    public void setTab_controllerIsSetAsParent() throws Exception {
         List<ViewController> tabs = createTabs();
         uut.setTabs(tabs);
-        assertThat(uut.getView().getChildCount()).isEqualTo(6);
-        assertThat(uut.getChildControllers()).extracting((Extractor<ViewController, Integer>) input -> input.getView().getVisibility()).containsExactly(View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE);
+        for (ViewController tab : tabs) {
+            assertThat(tab.getParentController()).isEqualTo(uut);
+        }
+    }
+
+    @Test
+    public void setTabs_AddAllViews() throws Exception {
+        List<ViewController> tabs = createTabs();
+        uut.setTabs(tabs);
+        assertThat(uut.getView().getChildCount()).isEqualTo(2);
+        assertThat(((ViewController) ((List) uut.getChildControllers()).get(0)).getView().getParent()).isNotNull();
     }
 
     @Test
@@ -68,14 +92,14 @@ public class BottomTabsControllerTest extends BaseTest {
         uut.selectTabAtIndex(3);
 
         assertThat(uut.getSelectedIndex()).isEqualTo(3);
-        assertThat(uut.getChildControllers()).extracting((Extractor<ViewController, Integer>) input -> input.getView().getVisibility()).containsExactly(View.GONE, View.GONE, View.GONE, View.VISIBLE, View.GONE);
+        assertThat(((ViewController) ((List) uut.getChildControllers()).get(0)).getView().getParent()).isNull();
     }
 
     @Test
     public void findControllerById_ReturnsSelfOrChildren() throws Exception {
         assertThat(uut.findControllerById("123")).isNull();
         assertThat(uut.findControllerById(uut.getId())).isEqualTo(uut);
-        StackController inner = new StackController(activity, "inner");
+        StackController inner = new StackController(activity, "inner", tabOptions);
         inner.animatePush(child1, new MockPromise());
         assertThat(uut.findControllerById(child1.getId())).isNull();
         uut.setTabs(Collections.singletonList(inner));
@@ -97,6 +121,47 @@ public class BottomTabsControllerTest extends BaseTest {
         assertThat(uut.handleBack()).isTrue();
 
         verify(spy, times(1)).handleBack();
+    }
+
+    @Test
+    public void applyOptions_bottomTabsOptionsAreClearedAfterApply() throws Exception {
+        List<ViewController> tabs = createTabs();
+        child1.options.bottomTabsOptions.tabColor = new Color(android.graphics.Color.RED);
+        uut.setTabs(tabs);
+        uut.ensureViewIsCreated();
+
+        StackController stack = spy(new StackController(activity, "stack", new Options()));
+        stack.ensureViewIsCreated();
+        stack.push(uut, new MockPromise());
+
+        child1.onViewAppeared();
+        ArgumentCaptor<Options> optionsCaptor = ArgumentCaptor.forClass(Options.class);
+        ArgumentCaptor<ReactComponent> viewCaptor = ArgumentCaptor.forClass(ReactComponent.class);
+        verify(stack, times(1)).applyOptions(optionsCaptor.capture(), viewCaptor.capture());
+        assertThat(viewCaptor.getValue()).isEqualTo(child1.getView());
+        assertThat(optionsCaptor.getValue().bottomTabsOptions.tabColor.hasValue()).isFalse();
+    }
+
+    @Test
+    public void mergeOptions_currentTabIndex() throws Exception {
+        List<ViewController> tabs = createTabs();
+        uut.setTabs(tabs);
+        uut.ensureViewIsCreated();
+
+        Options options = new Options();
+        options.bottomTabsOptions.currentTabIndex = new Number(1);
+        uut.mergeOptions(options);
+        verify(uut, times(1)).selectTabAtIndex(1);
+    }
+
+    @Test
+    public void buttonPressInvokedOnCurrentTab() throws Exception {
+        uut.setTabs(createTabs());
+        uut.ensureViewIsCreated();
+        uut.selectTabAtIndex(1);
+
+        uut.sendOnNavigationButtonPressed("btn1");
+        verify(child2, times(1)).sendOnNavigationButtonPressed("btn1");
     }
 
     @NonNull

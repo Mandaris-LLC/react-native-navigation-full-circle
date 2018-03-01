@@ -4,7 +4,7 @@
 
 ### Navigation
 ```js
-import Navigation from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 ```
 ### Events - On App Launched
 How to initiate your app.
@@ -12,18 +12,18 @@ How to initiate your app.
 ```js
 Navigation.events().onAppLaunched(() => {
   Navigation.setRoot({
-    container: {
+    component: {
       name: 'navigation.playground.WelcomeScreen'
     }
   });
 });
 ```
 
-### registerContainer(screenID, generator)
+### registerComponent(screenID, generator)
 Every screen component in your app must be registered with a unique name. The component itself is a traditional React component extending React.Component.
 
 ```js
-Navigation.registerContainer(`navigation.playground.WelcomeScreen`, () => WelcomeScreen);
+Navigation.registerComponent(`navigation.playground.WelcomeScreen`, () => WelcomeScreen);
 ```
 
 ### setRoot({params})
@@ -31,20 +31,22 @@ Start a Single page app with two side menus:
 
 ```js
 Navigation.setRoot({
-  container: {
-    name: 'navigation.playground.WelcomeScreen'
-  },
   sideMenu: {
     left: {
-      container: {
+      component: {
         name: 'navigation.playground.TextScreen',
         passProps: {
           text: 'This is a left side menu screen'
         }
       }
     },
+    center: {
+      component: {
+        name: 'navigation.playground.WelcomeScreen'
+      },
+    },
     right: {
-      container: {
+      component: {
         name: 'navigation.playground.TextScreen',
         passProps: {
           text: 'This is a right side menu screen'
@@ -58,25 +60,60 @@ Start a tab based app:
 
 ```js
 Navigation.setRoot({
-  bottomTabs: [
-    {
-      container: {
-        name: 'navigation.playground.TextScreen',
-        passProps: {
-          text: 'This is tab 1',
-          myFunction: () => 'Hello from a function!'
-        }
-      }
+  bottomTabs: {
+    children: [
+      {
+        component: {
+          name: 'navigation.playground.TextScreen',
+          passProps: {
+            text: 'This is tab 1',
+            myFunction: () => 'Hello from a function!',
+          },
+        },
+      },
+      {
+        component: {
+          name: 'navigation.playground.TextScreen',
+          passProps: {
+            text: 'This is tab 2',
+          },
+        },
+      },
+    ],
+  },
+});
+```
+
+Start a stack based app (with options):
+
+```js
+Navigation.setRoot({
+  stack: {
+    options: {
+      topBar: {
+        hidden: true,
+      },
     },
-    {
-      container: {
-        name: 'navigation.playground.TextScreen',
-        passProps: {
-          text: 'This is tab 2'
-        }
-      }
-    }
-  ]
+    children: [
+      {
+        component: {
+          name: 'navigation.playground.TextScreen',
+          passProps: {
+            text: 'This is tab 1',
+            myFunction: () => 'Hello from a function!',
+          },
+        },
+      },
+      {
+        component: {
+          name: 'navigation.playground.TextScreen',
+          passProps: {
+            text: 'This is tab 2',
+          },
+        },
+      },
+    ],
+  },
 });
 ```
 ## Screen API
@@ -85,18 +122,20 @@ Navigation.setRoot({
 Push a new screen into this screen's navigation stack.
 
 ```js
-Navigation.push(this.props.containerId, {
-  name: 'navigation.playground.PushedScreen',
-  passProps: {}
+Navigation.push(this.props.componentId, {
+  component: {
+    name: 'navigation.playground.PushedScreen',
+    passProps: {}
+  }
 });
 ```
-### pop(containerId)
+### pop(componentId)
 Pop the top screen from this screen's navigation stack.
 
 ```js
-Navigation.pop(this.props.containerId);
+Navigation.pop(this.props.componentId);
 ```
-### popTo(containerId)
+### popTo(componentId)
 ```js
 Navigation.popTo(previousScreenId);
 ```
@@ -104,14 +143,14 @@ Navigation.popTo(previousScreenId);
 Pop all the screens until the root from this screen's navigation stack
 
 ```js
-Navigation.popToRoot(this.props.containerId);
+Navigation.popToRoot(this.props.componentId);
 ```
 ### showModal(params = {})
 Show a screen as a modal.
 
 ```js
 Navigation.showModal({
-  container: {
+  component: {
     name: 'navigation.playground.ModalScreen',
     passProps: {
         key: 'value'
@@ -119,11 +158,11 @@ Navigation.showModal({
   }
 });
 ```
-### dismissModal(containerId)
+### dismissModal(componentId)
 Dismiss modal.
 
 ```js
-Navigation.dismissModal(this.props.containerId);
+Navigation.dismissModal(this.props.componentId);
 ```
 ### dismissAllModals()
 Dismiss all the current modals at the same time.

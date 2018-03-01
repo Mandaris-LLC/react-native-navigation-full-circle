@@ -32,17 +32,20 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 	self.bottomTab = [[RNNBottomTabOptions alloc] initWithDict:[options objectForKey:@"bottomTab"]];
 	self.overlay = [[RNNOverlayOptions alloc] initWithDict:[options objectForKey:@"overlay"]];
 	self.animated = [options objectForKey:@"animated"];
+	self.customTransition = [[RNNAnimationOptions alloc] initWithDict:[options objectForKey:@"customTransition"]];
 	
 	return self;
 }
 
 -(void)mergeWith:(NSDictionary *)otherOptions {
 	for (id key in otherOptions) {
-		if ([[self valueForKey:key] isKindOfClass:[RNNOptions class]]) {
+		if ([self hasProperty:key]) {
+			if ([[self valueForKey:key] isKindOfClass:[RNNOptions class]]) {
 			RNNOptions* options = [self valueForKey:key];
 			[options mergeWith:[otherOptions objectForKey:key]];
 		} else {
 			[self setValue:[otherOptions objectForKey:key] forKey:key];
+		} 		
 		}
 	}
 }

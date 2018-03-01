@@ -13,16 +13,16 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 		[(RNNTabBarController*)viewController.tabBarController setSelectedIndexByComponentID:self.currentTabId];
 	}
 	
-	if (self.hidden) {
-		[((RNNTabBarController *)viewController.tabBarController) setTabBarHidden:[self.hidden boolValue] animated:[self.animateHide boolValue]];
+	if (self.visible) {
+		[((RNNTabBarController *)viewController.tabBarController) setTabBarHidden:![self.visible boolValue] animated:[self.animate boolValue]];
 	}
 	
 	if (self.testID) {
 		viewController.tabBarController.tabBar.accessibilityIdentifier = self.testID;
 	}
 	
-	if (self.drawUnder) {
-		if ([self.drawUnder boolValue]) {
+	if (self.drawBehind) {
+		if ([self.drawBehind boolValue]) {
 			viewController.edgesForExtendedLayout |= UIRectEdgeBottom;
 		} else {
 			viewController.edgesForExtendedLayout &= ~UIRectEdgeBottom;
@@ -41,27 +41,21 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 		viewController.tabBarController.tabBar.clipsToBounds = [self.hideShadow boolValue];
 	}
 	
-	if (self.tabBarTextFont || self.textColor) {
+	if (self.tabBarTextFont) {
 		NSMutableDictionary* tabBarTitleTextAttributes = [NSMutableDictionary new];
-		if (self.textColor) {
-			tabBarTitleTextAttributes[NSForegroundColorAttributeName] = [RCTConvert UIColor:self.textColor];
-		}
-		
-		if (self.tabBarTextFont) {
-			tabBarTitleTextAttributes[NSFontAttributeName] = self.tabBarTextFont;
-		}
+		tabBarTitleTextAttributes[NSFontAttributeName] = self.tabBarTextFont;
 		
 		for (UITabBarItem* item in viewController.tabBarController.tabBar.items) {
 			[item setTitleTextAttributes:tabBarTitleTextAttributes forState:UIControlStateNormal];
 		}
 	}
 	
-	if (self.selectedTextColor){
-		for (UITabBarItem* item in viewController.tabBarController.tabBar.items) {
-			NSMutableDictionary* tabBarTitleTextAttributes = [NSMutableDictionary new];
-			tabBarTitleTextAttributes[NSForegroundColorAttributeName] = [RCTConvert UIColor:self.selectedTextColor];
-			[item setTitleTextAttributes:tabBarTitleTextAttributes forState:UIControlStateSelected];
-		}
+	if (self.tabColor) {
+		viewController.tabBarController.tabBar.unselectedItemTintColor = [RCTConvert UIColor:self.tabColor];
+	}
+	
+	if (self.selectedTabColor) {
+		viewController.tabBarController.tabBar.tintColor = [RCTConvert UIColor:self.selectedTabColor];
 	}
 	
 	[self resetOptions];

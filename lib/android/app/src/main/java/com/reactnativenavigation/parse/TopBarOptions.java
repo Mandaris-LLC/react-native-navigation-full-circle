@@ -4,6 +4,19 @@ package com.reactnativenavigation.parse;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 
+import com.reactnativenavigation.parse.params.Bool;
+import com.reactnativenavigation.parse.params.Button;
+import com.reactnativenavigation.parse.params.Color;
+import com.reactnativenavigation.parse.params.Fraction;
+import com.reactnativenavigation.parse.params.NullBool;
+import com.reactnativenavigation.parse.params.NullColor;
+import com.reactnativenavigation.parse.params.NullFraction;
+import com.reactnativenavigation.parse.params.NullText;
+import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.parse.parsers.BoolParser;
+import com.reactnativenavigation.parse.parsers.ColorParser;
+import com.reactnativenavigation.parse.parsers.FractionParser;
+import com.reactnativenavigation.parse.parsers.TextParser;
 import com.reactnativenavigation.utils.TypefaceLoader;
 
 import org.json.JSONObject;
@@ -21,30 +34,33 @@ public class TopBarOptions implements DEFAULT_VALUES {
         options.textColor = ColorParser.parse(json, "textColor");
         options.textFontSize = FractionParser.parse(json, "textFontSize");
         options.textFontFamily = typefaceManager.getTypeFace(json.optString("textFontFamily", ""));
-        options.hidden = Options.BooleanOptions.parse(json.optString("hidden"));
-        options.animateHide = Options.BooleanOptions.parse(json.optString("animateHide"));
-        options.hideOnScroll = Options.BooleanOptions.parse(json.optString("hideOnScroll"));
-        options.drawBehind = Options.BooleanOptions.parse(json.optString("drawBehind"));
+        options.visible = BoolParser.parse(json, "visible");
+        options.animate = BoolParser.parse(json,"animate");
+        options.hideOnScroll = BoolParser.parse(json,"hideOnScroll");
+        options.drawBehind = BoolParser.parse(json,"drawBehind");
         options.rightButtons = Button.parseJsonArray(json.optJSONArray("rightButtons"));
         options.leftButtons = Button.parseJsonArray(json.optJSONArray("leftButtons"));
+        options.testId = TextParser.parse(json, "testID");
 
         return options;
     }
 
     public Text title = new NullText();
+    public Text testId = new NullText();
     public Color backgroundColor = new NullColor();
     public Color textColor = new NullColor();
     public Fraction textFontSize = new NullFraction();
     @Nullable public Typeface textFontFamily;
-    public Options.BooleanOptions hidden = Options.BooleanOptions.NoValue;
-    public Options.BooleanOptions animateHide = Options.BooleanOptions.NoValue;
-    public Options.BooleanOptions hideOnScroll = Options.BooleanOptions.NoValue;
-    public Options.BooleanOptions drawBehind = Options.BooleanOptions.NoValue;
+    public Bool visible = new NullBool();
+    public Bool animate = new NullBool();
+    public Bool hideOnScroll = new NullBool();
+    public Bool drawBehind = new NullBool();
     public ArrayList<Button> leftButtons;
     public ArrayList<Button> rightButtons;
 
     void mergeWith(final TopBarOptions other) {
-        if (other.title != null) title = other.title;
+        if (other.title.hasValue())
+            title = other.title;
         if (other.backgroundColor.hasValue())
             backgroundColor = other.backgroundColor;
         if (other.textColor.hasValue())
@@ -53,16 +69,16 @@ public class TopBarOptions implements DEFAULT_VALUES {
             textFontSize = other.textFontSize;
         if (other.textFontFamily != null)
             textFontFamily = other.textFontFamily;
-        if (other.hidden != Options.BooleanOptions.NoValue) {
-            hidden = other.hidden;
+        if (other.visible.hasValue()) {
+            visible = other.visible;
         }
-        if (other.animateHide != Options.BooleanOptions.NoValue) {
-            animateHide = other.animateHide;
+        if (other.animate.hasValue()) {
+            animate = other.animate;
         }
-        if (other.hideOnScroll != Options.BooleanOptions.NoValue) {
+        if (other.hideOnScroll.hasValue()) {
             hideOnScroll = other.hideOnScroll;
         }
-        if (other.drawBehind != Options.BooleanOptions.NoValue) {
+        if (other.drawBehind.hasValue()) {
             drawBehind = other.drawBehind;
         }
         if (other.leftButtons != null)
@@ -82,13 +98,13 @@ public class TopBarOptions implements DEFAULT_VALUES {
             textFontSize = defaultOptions.textFontSize;
         if (textFontFamily == null)
             textFontFamily = defaultOptions.textFontFamily;
-        if (hidden == Options.BooleanOptions.NoValue)
-            hidden = defaultOptions.hidden;
-        if (animateHide == Options.BooleanOptions.NoValue)
-            animateHide = defaultOptions.animateHide;
-        if (hideOnScroll == Options.BooleanOptions.NoValue)
+        if (!visible.hasValue())
+            visible = defaultOptions.visible;
+        if (!animate.hasValue())
+            animate = defaultOptions.animate;
+        if (!hideOnScroll.hasValue())
             hideOnScroll = defaultOptions.hideOnScroll;
-        if (drawBehind == Options.BooleanOptions.NoValue)
+        if (!drawBehind.hasValue())
             drawBehind = defaultOptions.drawBehind;
         if (leftButtons == null)
             leftButtons = defaultOptions.leftButtons;

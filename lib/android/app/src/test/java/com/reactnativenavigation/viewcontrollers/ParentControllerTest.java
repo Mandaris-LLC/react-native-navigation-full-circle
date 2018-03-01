@@ -1,22 +1,32 @@
 package com.reactnativenavigation.viewcontrollers;
 
-import android.app.*;
-import android.support.annotation.*;
-import android.view.*;
-import android.widget.*;
+import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
-import com.reactnativenavigation.*;
-import com.reactnativenavigation.mocks.*;
+import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.mocks.MockPromise;
+import com.reactnativenavigation.mocks.SimpleViewController;
+import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.views.ReactComponent;
 
-import org.junit.*;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import static org.assertj.core.api.Java6Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class ParentControllerTest extends BaseTest {
 
+    public static final String INITIAL_TITLE = "initial title";
     private Activity activity;
     private List<ViewController> children;
     private ParentController uut;
@@ -26,12 +36,24 @@ public class ParentControllerTest extends BaseTest {
         super.beforeEach();
         activity = newActivity();
         children = new ArrayList<>();
-        uut = new ParentController(activity, "uut") {
+        Options initialOptions = new Options();
+        initialOptions.topBarOptions.title = new Text(INITIAL_TITLE);
+        uut = spy(new ParentController(activity, "uut", initialOptions) {
 
             @NonNull
             @Override
             protected ViewGroup createView() {
-                return new FrameLayout(activity);
+                FrameLayout layout = new FrameLayout(activity);
+                for (ViewController child : children) {
+                    child.setParentController(this);
+                    layout.addView(child.getView());
+                }
+                return layout;
+            }
+
+            @Override
+            public void sendOnNavigationButtonPressed(String buttonId) {
+
             }
 
             @NonNull
@@ -39,7 +61,7 @@ public class ParentControllerTest extends BaseTest {
             public Collection<ViewController> getChildControllers() {
                 return children;
             }
-        };
+        });
     }
 
     @Test
@@ -54,8 +76,8 @@ public class ParentControllerTest extends BaseTest {
 
     @Test
     public void findControllerById_ChildById() throws Exception {
-        SimpleViewController child1 = new SimpleViewController(activity, "child1");
-        SimpleViewController child2 = new SimpleViewController(activity, "child2");
+        SimpleViewController child1 = new SimpleViewController(activity, "child1", new Options());
+        SimpleViewController child2 = new SimpleViewController(activity, "child2", new Options());
         children.add(child1);
         children.add(child2);
 
@@ -65,9 +87,9 @@ public class ParentControllerTest extends BaseTest {
 
     @Test
     public void findControllerById_Recursive() throws Exception {
-        StackController stackController = new StackController(activity, "stack");
-        SimpleViewController child1 = new SimpleViewController(activity, "child1");
-        SimpleViewController child2 = new SimpleViewController(activity, "child2");
+        StackController stackController = new StackController(activity, "stack", new Options());
+        SimpleViewController child1 = new SimpleViewController(activity, "child1", new Options());
+        SimpleViewController child2 = new SimpleViewController(activity, "child2", new Options());
         stackController.animatePush(child1, new MockPromise());
         stackController.animatePush(child2, new MockPromise());
         children.add(stackController);
@@ -77,7 +99,7 @@ public class ParentControllerTest extends BaseTest {
 
     @Test
     public void destroy_DestroysChildren() throws Exception {
-        ViewController child1 = spy(new SimpleViewController(activity, "child1"));
+        ViewController child1 = spy(new SimpleViewController(activity, "child1", new Options()));
         children.add(child1);
 
         verify(child1, times(0)).destroy();
@@ -87,11 +109,43 @@ public class ParentControllerTest extends BaseTest {
 
     @Test
     public void optionsAreClearedWhenChildIsAppeared() throws Exception {
-        StackController stackController = spy(new StackController(activity, "stack"));
-        SimpleViewController child1 = new SimpleViewController(activity, "child1");
+        StackController stackController = spy(new StackController(activity, "stack", new Options()));
+        SimpleViewController child1 = new SimpleViewController(activity, "child1", new Options());
         stackController.animatePush(child1, new MockPromise());
 
         child1.onViewAppeared();
         verify(stackController, times(1)).clearOptions();
+    }
+
+    @Test
+    public void mergeOptions_optionsAreMergedWhenChildAppears() throws Exception {
+        Options options = new Options();
+        options.topBarOptions.title = new Text("new title");
+        ViewController child1 = spy(new SimpleViewController(activity, "child1", options));
+        children.add(child1);
+        uut.ensureViewIsCreated();
+
+        child1.ensureViewIsCreated();
+        child1.onViewAppeared();
+        ArgumentCaptor<Options> optionsCaptor = ArgumentCaptor.forClass(Options.class);
+        ArgumentCaptor<ReactComponent> viewCaptor = ArgumentCaptor.forClass(ReactComponent.class);
+        verify(uut, times(1)).clearOptions();
+        verify(uut, times(1)).applyOptions(optionsCaptor.capture(), viewCaptor.capture());
+        assertThat(optionsCaptor.getValue().topBarOptions.title.get()).isEqualTo("new title");
+        assertThat(viewCaptor.getValue()).isEqualTo(child1.getView());
+    }
+
+    @Test
+    public void mergeOptions_initialParentOptionsAreNotMutatedWhenChildAppears() throws Exception {
+        Options options = new Options();
+        options.topBarOptions.title = new Text("new title");
+        ViewController child1 = spy(new SimpleViewController(activity, "child1", options));
+        children.add(child1);
+
+        uut.ensureViewIsCreated();
+
+        child1.ensureViewIsCreated();
+        child1.onViewAppeared();
+        assertThat(uut.initialOptions.topBarOptions.title.get()).isEqualTo(INITIAL_TITLE);
     }
 }

@@ -16,6 +16,10 @@
 	return rootVC.isAnimated;
 }
 
+- (void)mergeOptions:(NSDictionary *)options {
+	[((UIViewController<RNNRootViewProtocol>*)self.topViewController) mergeOptions:options];
+}
+
 - (NSString *)componentId {
 	return ((UIViewController<RNNRootViewProtocol>*)self.topViewController).componentId;
 }

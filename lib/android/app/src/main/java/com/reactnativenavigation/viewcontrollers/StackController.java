@@ -17,31 +17,42 @@ import com.reactnativenavigation.views.TopBar;
 import java.util.Collection;
 import java.util.Iterator;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
 public class StackController extends ParentController <StackLayout> {
 
     private static final NoOpPromise NO_OP = new NoOpPromise();
     private final IdStack<ViewController> stack = new IdStack<>();
     private final NavigationAnimator animator;
-    private StackLayout stackLayout;
 
-    public StackController(final Activity activity, String id) {
-		super(activity, id);
+    public StackController(final Activity activity, String id, Options initialOptions) {
+        super(activity, id, initialOptions);
         animator = new NavigationAnimator(activity);
     }
 
     @RestrictTo(RestrictTo.Scope.TESTS)
     TopBar getTopBar() {
-        return stackLayout.getTopBar();
+        return getView().getTopBar();
     }
+
+    @RestrictTo(RestrictTo.Scope.TESTS)
+    StackLayout getStackLayout() {return getView();}
 
     @Override
     public void applyOptions(Options options, ReactComponent component) {
-        stackLayout.applyOptions(options, component);
+        super.applyOptions(options, component);
+        getView().applyOptions(this.options, component);
+        applyOnParentController(parentController ->
+                ((ParentController) parentController).applyOptions(this.options.copy().clearTopBarOptions(), component)
+        );
+        fabOptionsPresenter.applyOptions(options.fabOptions, component, getView());
+        animator.setOptions(options.animationsOptions);
     }
 
     @Override
     void clearOptions() {
-        stackLayout.clearOptions();
+        super.clearOptions();
+        getView().clearOptions();
     }
 
     public void push(ViewController child, final Promise promise) {
@@ -50,7 +61,7 @@ public class StackController extends ParentController <StackLayout> {
         child.setParentController(this);
         stack.push(child.getId(), child);
         View enteringView = child.getView();
-        getView().addView(enteringView);
+        getView().addView(enteringView, MATCH_PARENT, MATCH_PARENT);
 
         if (toRemove != null) {
             getView().removeView(toRemove.getView());
@@ -59,22 +70,22 @@ public class StackController extends ParentController <StackLayout> {
     }
 
     public void animatePush(final ViewController child, final Promise promise) {
-		final ViewController toRemove = stack.peek();
+        final ViewController toRemove = stack.peek();
 
 		child.setParentController(this);
 		stack.push(child.getId(), child);
 		View enteringView = child.getView();
-		getView().addView(enteringView);
+		getView().addView(enteringView, MATCH_PARENT, MATCH_PARENT);
 
-		if (toRemove != null) {
+        if (toRemove != null) {
             animator.animatePush(enteringView, () -> {
                 getView().removeView(toRemove.getView());
                 promise.resolve(child.getId());
             });
-		} else {
-			promise.resolve(child.getId());
-		}
-	}
+        } else {
+            promise.resolve(child.getId());
+        }
+    }
 
     void pop(final Promise promise) {
         if (!canPop()) {
@@ -82,31 +93,32 @@ public class StackController extends ParentController <StackLayout> {
             return;
         }
 
-        final ViewController poppedTop = stack.pop();
-        ViewController newTop = stack.peek();
+        final ViewController exitingController = stack.pop();
+        final ViewController enteringController = stack.peek();
+        popInternal(exitingController, enteringController);
 
-        View enteringView = newTop.getView();
-        final View exitingView = poppedTop.getView();
-        getView().addView(enteringView, getView().getChildCount() - 1);
-
-        finishPopping(exitingView, poppedTop, promise);
+        finishPopping(exitingController.getView(), exitingController, promise);
     }
 
-	private void animatePop(final Promise promise) {
+	void animatePop(final Promise promise) {
 		if (!canPop()) {
 			Navigator.rejectPromise(promise);
 			return;
 		}
 
-		final ViewController poppedTop = stack.pop();
-		ViewController newTop = stack.peek();
+		final ViewController exitingController = stack.pop();
+        final ViewController enteringController = stack.peek();
+        popInternal(exitingController, enteringController);
 
-		View enteringView = newTop.getView();
-		final View exitingView = poppedTop.getView();
-		getView().addView(enteringView, getView().getChildCount() - 1);
-
-        animator.animatePop(exitingView, () -> finishPopping(exitingView, poppedTop, promise));
+        animator.animatePop(exitingController.getView(), () -> finishPopping(exitingController.getView(), exitingController, promise));
 	}
+
+    private void popInternal(ViewController disappearing, ViewController appearing) {
+        disappearing.onViewWillDisappear();
+        appearing.onViewWillAppear();
+        getView().onChildWillDisappear(disappearing.options, appearing.options);
+        getView().addView(appearing.getView(), getView().indexOfChild(disappearing.getView()));
+    }
 
     boolean canPop() {
         return stack.size() > 1;
@@ -180,11 +192,15 @@ public class StackController extends ParentController <StackLayout> {
         return false;
 	}
 
+    @Override
+    public void sendOnNavigationButtonPressed(String buttonId) {
+        peek().sendOnNavigationButtonPressed(buttonId);
+    }
+
     @NonNull
     @Override
     protected StackLayout createView() {
-        stackLayout = new StackLayout(getActivity());
-        return stackLayout;
+        return new StackLayout(getActivity(), this::sendOnNavigationButtonPressed);
     }
 
 	@NonNull
@@ -195,6 +211,11 @@ public class StackController extends ParentController <StackLayout> {
 
     @Override
     public void setupTopTabsWithViewPager(ViewPager viewPager) {
-        stackLayout.setupTopTabsWithViewPager(viewPager);
+        getView().initTopTabs(viewPager);
+    }
+
+    @Override
+    public void clearTopTabs() {
+        getView().clearTopTabs();
     }
 }

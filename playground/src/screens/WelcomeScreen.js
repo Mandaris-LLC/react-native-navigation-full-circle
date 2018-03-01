@@ -1,16 +1,19 @@
 const React = require('react');
 const { Component } = require('react');
-const { View, Text, Button } = require('react-native');
+const { View, Text, Button, Platform } = require('react-native');
 
 const testIDs = require('../testIDs');
 
-const Navigation = require('react-native-navigation');
+const { Navigation } = require('react-native-navigation');
 
 class WelcomeScreen extends Component {
   static get options() {
     return {
       topBar: {
-        largeTitle: false
+        largeTitle: false,
+        drawBehind: true,
+        visible: false,
+        animate: false
       }
     };
   }
@@ -20,25 +23,31 @@ class WelcomeScreen extends Component {
     this.onClickShowModal = this.onClickShowModal.bind(this);
     this.onClickLifecycleScreen = this.onClickLifecycleScreen.bind(this);
     this.onClickPushOptionsScreen = this.onClickPushOptionsScreen.bind(this);
+    this.onClickPushExternalComponent = this.onClickPushExternalComponent.bind(this);
     this.onClickPushOrientationMenuScreen = this.onClickPushOrientationMenuScreen.bind(this);
     this.onClickBackHandler = this.onClickBackHandler.bind(this);
     this.onClickPushTopTabsScreen = this.onClickPushTopTabsScreen.bind(this);
+    this.onClickShowStaticLifecycleOverlay = this.onClickShowStaticLifecycleOverlay.bind(this);
+    this.onClickProvidedId = this.onClickProvidedId.bind(this);
   }
 
   render() {
     return (
-      <View style={styles.root}>
+      <View style={styles.root} key={'root'}>
         <Text testID={testIDs.WELCOME_SCREEN_HEADER} style={styles.h1}>{`React Native Navigation!`}</Text>
-        <Button title="Switch to tab based app" testID={testIDs.TAB_BASED_APP_BUTTON} onPress={this.onClickSwitchToTabs} />
-        <Button title="Switch to app with side menus" testID={testIDs.TAB_BASED_APP_SIDE_BUTTON} onPress={this.onClickSwitchToSideMenus} />
-        <Button title="Push Lifecycle Screen" testID={testIDs.PUSH_LIFECYCLE_BUTTON} onPress={this.onClickLifecycleScreen} />
-        <Button title="Push" testID={testIDs.PUSH_BUTTON} onPress={this.onClickPush} />
-        <Button title="Push Options Screen" testID={testIDs.PUSH_OPTIONS_BUTTON} onPress={this.onClickPushOptionsScreen} />
-        <Button title="Push Top Tabs screen" testID={testIDs.PUSH_TOP_TABS_BUTTON} onPress={this.onClickPushTopTabsScreen} />
-        <Button title="Back Handler" testID={testIDs.BACK_HANDLER_BUTTON} onPress={this.onClickBackHandler} />
-        <Button title="Show Modal" testID={testIDs.SHOW_MODAL_BUTTON} onPress={this.onClickShowModal} />
-        <Button title="Show Redbox" testID={testIDs.SHOW_REDBOX_BUTTON} onPress={this.onClickShowRedbox} />
-        <Button title="Orientation" testID={testIDs.ORIENTATION_BUTTON} onPress={this.onClickPushOrientationMenuScreen} />
+        <Button title='Switch to tab based app' testID={testIDs.TAB_BASED_APP_BUTTON} onPress={this.onClickSwitchToTabs} />
+        <Button title='Switch to app with side menus' testID={testIDs.TAB_BASED_APP_SIDE_BUTTON} onPress={this.onClickSwitchToSideMenus} />
+        <Button title='Push Lifecycle Screen' testID={testIDs.PUSH_LIFECYCLE_BUTTON} onPress={this.onClickLifecycleScreen} />
+        <Button title='Static Lifecycle Events' testID={testIDs.PUSH_STATIC_LIFECYCLE_BUTTON} onPress={this.onClickShowStaticLifecycleOverlay} />
+        <Button title='Push' testID={testIDs.PUSH_BUTTON} onPress={this.onClickPush} />
+        <Button title='Push Options Screen' testID={testIDs.PUSH_OPTIONS_BUTTON} onPress={this.onClickPushOptionsScreen} />
+        <Button title='Push Native Component' testID={testIDs.PUSH_NATIVE_COMPONENT_BUTTON} onPress={this.onClickPushExternalComponent} />
+        {Platform.OS === 'android' && <Button title='Push Top Tabs screen' testID={testIDs.PUSH_TOP_TABS_BUTTON} onPress={this.onClickPushTopTabsScreen} />}
+        {Platform.OS === 'android' && <Button title='Back Handler' testID={testIDs.BACK_HANDLER_BUTTON} onPress={this.onClickBackHandler} />}
+        <Button title='Show Modal' testID={testIDs.SHOW_MODAL_BUTTON} onPress={this.onClickShowModal} />
+        <Button title='Show Redbox' testID={testIDs.SHOW_REDBOX_BUTTON} onPress={this.onClickShowRedbox} />
+        <Button title='Orientation' testID={testIDs.ORIENTATION_BUTTON} onPress={this.onClickPushOrientationMenuScreen} />
+        <Button title='Provided Id' testID={testIDs.PROVIDED_ID} onPress={this.onClickProvidedId} />
         <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
       </View>
     );
@@ -59,20 +68,21 @@ class WelcomeScreen extends Component {
                       myFunction: () => 'Hello from a function!'
                     },
                     options: {
-                      bottomTab: {
-                        title: 'Tab 1',
-                        testID: testIDs.FIRST_TAB_BAR_BUTTON
-                      },
-                      bottomTabs: {
-                        textColor: '#12766b',
-                        selectedTextColor: 'red',
-                        fontFamily: 'HelveticaNeue-Italic',
-                        fontSize: 13
+                      topBar: {
+                        visible: (Platform.OS === 'android') ? true : false,
+                        title: 'React Native Navigation!'
                       }
                     }
                   }
                 }
-              ]
+              ],
+              options: {
+                bottomTab: {
+                  title: 'Tab 1',
+                  icon: require('../images/one.png'),
+                  testID: testIDs.FIRST_TAB_BAR_BUTTON
+                }
+              }
             }
           },
           {
@@ -83,19 +93,29 @@ class WelcomeScreen extends Component {
                     name: 'navigation.playground.TextScreen',
                     passProps: {
                       text: 'This is tab 2'
-                    },
-                    options: {
-                      bottomTab: {
-                        title: 'Tab 2',
-                        testID: testIDs.SECOND_TAB_BAR_BUTTON
-                      }
                     }
                   }
                 }
-              ]
+              ],
+              options: {
+                bottomTab: {
+                  title: 'Tab 2',
+                  icon: require('../images/two.png'),
+                  testID: testIDs.SECOND_TAB_BAR_BUTTON
+                }
+              }
             }
           }
-        ]
+        ],
+        options: {
+          bottomTabs: {
+            tabColor: 'red',
+            selectedTabColor: 'blue',
+            fontFamily: 'HelveticaNeue-Italic',
+            fontSize: 13,
+            testID: testIDs.BOTTOM_TABS_ELEMENT
+          }
+        }
       }
     });
   }
@@ -125,7 +145,14 @@ class WelcomeScreen extends Component {
                         }
                       }
                     }
-                  ]
+                  ],
+                  options: {
+                    bottomTab: {
+                      title: 'Tab 1',
+                      icon: require('../images/one.png'),
+                      testID: testIDs.FIRST_TAB_BAR_BUTTON
+                    }
+                  }
                 }
               },
               {
@@ -139,7 +166,14 @@ class WelcomeScreen extends Component {
                         }
                       }
                     }
-                  ]
+                  ],
+                  options: {
+                    bottomTab: {
+                      title: 'Tab 2',
+                      icon: require('../images/two.png'),
+                      testID: testIDs.SECOND_TAB_BAR_BUTTON
+                    }
+                  }
                 }
               },
               {
@@ -153,10 +187,25 @@ class WelcomeScreen extends Component {
                         }
                       }
                     }
-                  ]
+                  ],
+                  options: {
+                    bottomTab: {
+                      title: 'Tab 3',
+                      icon: require('../images/three.png'),
+                      testID: testIDs.SECOND_TAB_BAR_BUTTON
+                    }
+                  }
                 }
               }
-            ]
+            ],
+            options: {
+              bottomTabs: {
+                tabColor: 'red',
+                selectedTabColor: 'blue',
+                fontFamily: 'HelveticaNeue-Italic',
+                fontSize: 13
+              }
+            }
           }
         },
         right: {
@@ -184,10 +233,33 @@ class WelcomeScreen extends Component {
     });
   }
 
+  async onClickPushExternalComponent() {
+    await Navigation.push(this.props.componentId, {
+      externalComponent: {
+        className: 'RNNCustomViewController',
+        options: {
+          topBar: {
+            title: 'pushed',
+            visible: true,
+            testID: testIDs.TOP_BAR_ELEMENT
+          }
+        }
+      }
+    });
+  }
+
   onClickLifecycleScreen() {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.LifecycleScreen'
+      }
+    });
+  }
+
+  onClickShowStaticLifecycleOverlay() {
+    Navigation.showOverlay({
+      component: {
+        name: 'navigation.playground.StaticLifecycleOverlay'
       }
     });
   }
@@ -304,6 +376,26 @@ class WelcomeScreen extends Component {
       }
     });
   }
+
+  onClickProvidedId() {
+    Navigation.showModal({
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'navigation.playground.TextScreen',
+              id: 'my unique id'
+            }
+          }
+        ]
+      }
+    });
+    Navigation.setOptions('my unique id', {
+      topBar: {
+        title: 'User provided id'
+      }
+    });
+  }
 }
 
 module.exports = WelcomeScreen;
@@ -312,7 +404,8 @@ const styles = {
   root: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   h1: {
     fontSize: 24,

@@ -10,14 +10,14 @@ describe('screen style', () => {
 
   it('declare a options on component component', async () => {
     await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
-    await expect(element(by.label('Static Title'))).toBeVisible();
+    await expect(elementByLabel('Static Title')).toBeVisible();
   });
 
   it('change title on component component', async () => {
     await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
-    await expect(element(by.label('Static Title'))).toBeVisible();
+    await expect(elementByLabel('Static Title')).toBeVisible();
     await elementById(testIDs.DYNAMIC_OPTIONS_BUTTON).tap();
-    await expect(element(by.label('Dynamic Title'))).toBeVisible();
+    await expect(elementByLabel('Dynamic Title')).toBeVisible();
   });
 
   it('set dynamic options with valid options will do something and not crash', async () => {
@@ -35,23 +35,15 @@ describe('screen style', () => {
     await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
   });
 
-  it('hides topBar onScroll down and shows it on scroll up', async () => {
+  it(':ios: hides topBar onScroll down and shows it on scroll up', async () => {
     await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
     await elementById(testIDs.SCROLLVIEW_SCREEN_BUTTON).tap();
     await elementById(testIDs.TOGGLE_TOP_BAR_HIDE_ON_SCROLL).tap();
     await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
-    await element(by.id(testIDs.SCROLLVIEW_ELEMENT)).swipe('up', 'fast');
+    await element(by.id(testIDs.SCROLLVIEW_ELEMENT)).swipe('up', 'slow');
     await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeNotVisible();
-    await element(by.id(testIDs.SCROLLVIEW_ELEMENT)).swipe('down', 'fast');
+    await element(by.id(testIDs.SCROLLVIEW_ELEMENT)).swipe('down', 'slow');
     await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
-  });
-
-  it('makes topBar transparent and opaque', async () => {
-    await elementByLabel('Push Options Screen').tap();
-    await elementByLabel('Top Bar Transparent').tap();
-    await expect(element(by.type('_UIVisualEffectBackdropView'))).toBeNotVisible();
-    await elementByLabel('Top Bar Opaque').tap();
-    await expect(element(by.type('_UIVisualEffectBackdropView')).atIndex(1)).toBeVisible();
   });
 
   it('set Tab Bar badge on a current Tab', async () => {
@@ -60,14 +52,14 @@ describe('screen style', () => {
     await expect(element(by.text('TeSt'))).toBeVisible();
   });
 
-  it('hide Tab Bar', async () => {
+  it(':ios: hide Tab Bar', async () => {
     await elementById(testIDs.TAB_BASED_APP_BUTTON).tap();
     await expect(elementById(testIDs.BOTTOM_TABS_ELEMENT)).toBeVisible();
     await elementById(testIDs.HIDE_BOTTOM_TABS_BUTTON).tap();
     await expect(elementById(testIDs.BOTTOM_TABS_ELEMENT)).toBeNotVisible();
   });
 
-  it('show Tab Bar', async () => {
+  it(':ios: show Tab Bar', async () => {
     await elementById(testIDs.TAB_BASED_APP_BUTTON).tap();
     await elementById(testIDs.HIDE_BOTTOM_TABS_BUTTON).tap();
     await expect(elementById(testIDs.BOTTOM_TABS_ELEMENT)).toBeNotVisible();
@@ -91,7 +83,7 @@ describe('screen style', () => {
     await expect(elementById(testIDs.CENTERED_TEXT_HEADER)).toBeVisible();
   });
 
-  it('set right buttons', async () => {
+  it(':ios: set right buttons', async () => {
     await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
     await expect(elementById('buttonOne')).toBeVisible();
     await elementById('buttonOne').tap();
@@ -124,6 +116,18 @@ describe('screen style', () => {
     await elementById(testIDs.PUSH_DEFAULT_OPTIONS_BUTTON).tap();
     await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeNotVisible();
     await elementById(testIDs.POP_BUTTON).tap();
+    await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
+  });
+
+  it('supports user-provided id', async () => {
+    await elementById(testIDs.PROVIDED_ID).tap();
+    await expect(elementByLabel('User provided id')).toBeVisible();
+  });
+
+  it('stack options should not override component options', async () => {
+    await elementById(testIDs.TAB_BASED_APP_BUTTON).tap();
+    await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeNotVisible();
+    await elementById(testIDs.SECOND_TAB_BAR_BUTTON).tap();
     await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
   });
 });

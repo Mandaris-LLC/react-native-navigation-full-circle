@@ -42,7 +42,7 @@
 	self.componentId = @"cntId";
 	self.emitter = nil;
 	self.options = [RNNNavigationOptions new];
-	self.uut = [[RNNRootViewController alloc] initWithName:self.pageName withOptions:self.options withComponentId:self.componentId rootViewCreator:self.creator eventEmitter:self.emitter animator:nil];
+	self.uut = [[RNNRootViewController alloc] initWithName:self.pageName withOptions:self.options withComponentId:self.componentId rootViewCreator:self.creator eventEmitter:self.emitter isExternalComponent:NO];
 }
 
 -(void)testTopBarBackgroundColor_validColor{
@@ -79,7 +79,7 @@
 
 - (void)testStatusBarHideWithTopBar_false {
 	self.options.statusBarHideWithTopBar = @(0);
-	self.options.topBar.hidden = @(1);
+	self.options.topBar.visible = @(0);
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -88,7 +88,7 @@
 
 - (void)testStatusBarHideWithTopBar_true {
 	self.options.statusBarHideWithTopBar = @(1);
-	self.options.topBar.hidden = @(1);
+	self.options.topBar.visible = @(0);
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 
@@ -385,7 +385,7 @@
 -(void)testRightButtonsWithTitle_withStyle {
 	NSNumber* inputColor = @(0xFFFF0000);
 	
-	self.options.topBar.rightButtons = @[@{@"id": @"testId", @"title": @"test", @"disabled": @true, @"buttonColor": inputColor, @"buttonFontSize": @22, @"buttonFontWeight": @"800"}];
+	self.options.topBar.rightButtons = @[@{@"id": @"testId", @"title": @"test", @"enabled": @false, @"buttonColor": inputColor, @"buttonFontSize": @22, @"buttonFontWeight": @"800"}];
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -416,7 +416,7 @@
 -(void)testLeftButtonsWithTitle_withStyle {
 	NSNumber* inputColor = @(0xFFFF0000);
 	
-	self.options.topBar.leftButtons = @[@{@"id": @"testId", @"title": @"test", @"disabled": @true, @"buttonColor": inputColor, @"buttonFontSize": @22, @"buttonFontWeight": @"800"}];
+	self.options.topBar.leftButtons = @[@{@"id": @"testId", @"title": @"test", @"enabled": @false, @"buttonColor": inputColor, @"buttonFontSize": @22, @"buttonFontWeight": @"800"}];
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -471,7 +471,7 @@
 
 
 - (void)testTabBarHidden_true {
-	self.options.bottomTabs.hidden = @(1);
+	self.options.bottomTabs.visible = @(0);
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 
@@ -479,7 +479,7 @@
 }
 
 - (void)testTabBarHidden_false {
-	self.options.bottomTabs.hidden = @(0);
+	self.options.bottomTabs.visible = @(1);
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 
@@ -545,7 +545,7 @@
 }
 
 -(void)testTopBarDrawUnder_true {
-	self.options.topBar.drawUnder = @(1);
+	self.options.topBar.drawBehind = @(1);
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -553,7 +553,7 @@
 }
 
 -(void)testTopBarDrawUnder_false {
-	self.options.topBar.drawUnder = @(0);
+	self.options.topBar.drawBehind = @(0);
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -561,7 +561,7 @@
 }
 
 -(void)testBottomTabsDrawUnder_true {
-	self.options.bottomTabs.drawUnder = @(1);
+	self.options.bottomTabs.drawBehind = @(1);
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -569,7 +569,7 @@
 }
 
 -(void)testBottomTabsDrawUnder_false {
-	self.options.bottomTabs.drawUnder = @(0);
+	self.options.bottomTabs.drawBehind = @(0);
 	__unused UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:self.uut];
 	[self.uut viewWillAppear:false];
 	
@@ -619,13 +619,20 @@
 	XCTAssertTrue([self.uut.tabBarController.tabBar.barTintColor isEqual:expectedColor]);
 }
 
--(void)testTabBarTextColor_validColor{
+-(void)testTabBarSelectedColor_validColor{
 	NSNumber* inputColor = @(0xFFFF0000);
-	self.options.bottomTabs.textColor = inputColor;
+	self.options.bottomTabs.tabColor = inputColor;
 	[self.uut embedInTabBarController];
 	UIColor* expectedColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
-	NSDictionary* attributes = [self.uut.tabBarController.tabBar.items.firstObject titleTextAttributesForState:UIControlStateNormal];
-	XCTAssertTrue([attributes[@"NSColor"] isEqual:expectedColor]);
+	XCTAssertTrue([self.uut.tabBarController.tabBar.unselectedItemTintColor isEqual:expectedColor]);
+}
+
+-(void)testTabBarUnselectedColor_validColor{
+	NSNumber* inputColor = @(0xFFFF0000);
+	self.options.bottomTabs.selectedTabColor = inputColor;
+	[self.uut embedInTabBarController];
+	UIColor* expectedColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
+	XCTAssertTrue([self.uut.tabBarController.tabBar.tintColor isEqual:expectedColor]);
 }
 
 -(void)testTabBarTextFontFamily_validFont{
@@ -645,28 +652,22 @@
 	XCTAssertTrue([attributes[@"NSFont"] isEqual:expectedFont]);
 }
 
--(void)testTabBarTextFontSize_withoutTextFontFamily_withTextColor {
+-(void)testTabBarTextFontSize_withoutTextFontFamily {
 	self.options.bottomTabs.fontSize = @(15);
-	self.options.bottomTabs.textColor = @(0xFFFF0000);
 	[self.uut embedInTabBarController];
 	UIFont* expectedFont = [UIFont systemFontOfSize:15];
-	UIColor* expectedColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
 	NSDictionary* attributes = [self.uut.tabBarController.tabBar.items.firstObject titleTextAttributesForState:UIControlStateNormal];
 	XCTAssertTrue([attributes[@"NSFont"] isEqual:expectedFont]);
-	XCTAssertTrue([attributes[@"NSColor"] isEqual:expectedColor]);
 }
 
 -(void)testTabBarTextFontSize_withTextFontFamily_withTextColor {
 	NSString* inputFont = @"HelveticaNeue";
 	self.options.bottomTabs.fontSize = @(15);
-	self.options.bottomTabs.textColor = @(0xFFFF0000);
 	self.options.bottomTabs.fontFamily = inputFont;
 	[self.uut embedInTabBarController];
-	UIColor* expectedColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
 	UIFont* expectedFont = [UIFont fontWithName:inputFont size:15];
 	NSDictionary* attributes = [self.uut.tabBarController.tabBar.items.firstObject titleTextAttributesForState:UIControlStateNormal];
 	XCTAssertTrue([attributes[@"NSFont"] isEqual:expectedFont]);
-	XCTAssertTrue([attributes[@"NSColor"] isEqual:expectedColor]);
 }
 
 -(void)testTabBarTextFontSize_withTextFontFamily_withoutTextColor {
