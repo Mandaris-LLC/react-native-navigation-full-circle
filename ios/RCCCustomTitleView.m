@@ -9,54 +9,47 @@
 #import "RCCCustomTitleView.h"
 
 @interface RCCCustomTitleView ()
-
-@property (nonatomic, strong) RCTRootView *subView;
-@property (nonatomic, strong) NSString *alignment;
-
+@property (nonatomic, strong) UIView *subView;
+@property (nonatomic, strong) NSString *subViewAlign;
 @end
 
 @implementation RCCCustomTitleView
 
-- (instancetype)initWithFrame:(CGRect)frame subView:(RCTRootView*)subView alignment:(NSString*)alignment {
-    self = [super init];
+
+-(instancetype)initWithFrame:(CGRect)frame subView:(UIView*)subView alignment:(NSString*)alignment {
+    self = [super initWithFrame:frame];
     
     if (self) {
-        self.subView = subView;
-        self.alignment = alignment;
-        
         self.backgroundColor = [UIColor clearColor];
-        self.subView.backgroundColor = [UIColor clearColor];
+        self.subView = subView;
+        self.subViewAlign = alignment;
         
-        if ([alignment isEqualToString:@"fill"]) {
-            self.frame = frame;
-            self.subView.frame = self.frame;
-        } else {
-            self.subView.delegate = self;
-        }
-        
+        subView.frame = self.bounds;
         [self addSubview:subView];
     }
     
     return self;
 }
 
-- (void)rootViewDidChangeIntrinsicSize:(RCTRootView *)rootView {
-    if ([self.alignment isEqualToString:@"center"]) {
-        [self setFrame:CGRectMake(0, 0, rootView.intrinsicContentSize.width, rootView.intrinsicContentSize.height)];
-        [self.subView setFrame:CGRectMake(0, 0, rootView.intrinsicContentSize.width, rootView.intrinsicContentSize.height)];
-    }
-}
 
-- (void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    // whenever the orientation changes this runs
-    // and sets the nav bar item width to the new size width
-    CGRect newFrame = self.frame;
+-(void)layoutSubviews {
+    [super layoutSubviews];
     
-    if (newFrame.size.width < size.width) {
-        newFrame.size.width = size.width;
-        newFrame.origin.x = 0;
+    if ([self.subViewAlign isEqualToString:@"fill"]) {
+        self.subView.frame = self.bounds;
     }
-    [super setFrame:newFrame];
+    else {
+        
+        CGFloat superViewWidth = self.superview.frame.size.width;
+        CGFloat paddingLeftFromCenter = (superViewWidth/2) - self.frame.origin.x;
+        CGFloat paddingRightFromCenter = self.frame.size.width - paddingLeftFromCenter;;
+        CGRect reactViewFrame = self.subView.bounds;
+        CGFloat minPadding = MIN(paddingLeftFromCenter, paddingRightFromCenter);
+        
+        reactViewFrame.size.width = minPadding*2;
+        reactViewFrame.origin.x = paddingLeftFromCenter - minPadding;
+        self.subView.frame = reactViewFrame;
+    }
 }
 
 @end
