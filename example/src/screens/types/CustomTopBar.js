@@ -18,8 +18,8 @@ export default class CustomTopBar extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={ () => Alert.alert(this.props.title, 'Hello custom btn :)') }>
-          <Text style={styles.text}>Custom</Text>
+        <TouchableOpacity stye={styles.button} onPress={ () => Alert.alert(this.props.title, 'Thanks for that :)') }>
+          <Text style={styles.text}>Press Me</Text>
         </TouchableOpacity>
       </View>
     );
@@ -30,16 +30,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: 'yellow'
+    alignItems: 'center'
   },
   button: {
     alignSelf: 'center',
-    // backgroundColor: 'green'
+    backgroundColor: 'green'
   },
   text: {
     alignSelf: 'center',
-    color: 'white'
+    color: Platform.OS === 'ios' ? 'black' : 'white'
   }
 });
 
