@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <React/RCTRootView.h>
-#import <React/RCTRootViewDelegate.h>
 
-@interface RCCCustomTitleView : UIView <RCTRootViewDelegate>
+@interface RCCCustomTitleView : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame subView:(RCTRootView*)subView alignment:(NSString*)alignment;
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator;
+-(instancetype)initWithFrame:(CGRect)frame subView:(UIView*)subView alignment:(NSString*)alignment;
+- (void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator;
 
 @end
