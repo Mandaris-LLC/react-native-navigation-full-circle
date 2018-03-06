@@ -2,12 +2,12 @@ const Utils = require('./Utils');
 const testIDs = require('../playground/src/testIDs');
 const { elementByLabel, elementById } = Utils;
 
-describe('Overlay', () => {
+describe('static lifecycle events', () => {
   beforeEach(async () => {
     await device.relaunchApp();
   });
 
-  it.skip('didAppear didDisappear', async () => {
+  it(':android: didAppear didDisappear', async () => {
     await elementById(testIDs.PUSH_STATIC_LIFECYCLE_BUTTON).tap();
     await expect(elementByLabel('Static Lifecycle Events Overlay')).toBeVisible();
     await expect(elementByLabel('didAppear | navigation.playground.StaticLifecycleOverlay')).toBeVisible();
