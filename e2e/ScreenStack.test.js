@@ -75,7 +75,7 @@ describe('screen stack', () => {
     await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
   });
 
-  it.only(':android: override hardware back button', async () => {
+  it(':android: override hardware back button', async () => {
     await elementByLabel('BACK HANDLER').tap();
     await expect(elementByLabel('Back Handler Screen')).toBeVisible();
 
