@@ -7,7 +7,7 @@ describe('Overlay', () => {
     await device.relaunchApp();
   });
 
-  it('didAppear didDisappear', async () => {
+  it.skip('didAppear didDisappear', async () => {
     await elementById(testIDs.PUSH_STATIC_LIFECYCLE_BUTTON).tap();
     await expect(elementByLabel('Static Lifecycle Events')).toBeVisible();
     await expect(elementByLabel('didAppear | navigation.playground.StaticLifecycleOverlay')).toBeVisible();

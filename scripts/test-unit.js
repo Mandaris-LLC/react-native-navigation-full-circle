@@ -1,9 +1,24 @@
 const _ = require('lodash');
 const exec = require('shell-utils').exec;
 
+const android = _.includes(process.argv, '--android');
 const release = _.includes(process.argv, '--release');
 
 function run() {
+  if (android) {
+    runAndroidUnitTests();
+  } else {
+    runIosUnitTests();
+  }
+}
+
+function runAndroidUnitTests() {
+  const conf = release ? 'testReleaseUnitTest' : 'testDebugUnitTest';
+
+  exec.execSync(`cd lib/android && ./gradlew ${conf}`);
+}
+
+function runIosUnitTests() {
   const conf = release ? `Release` : `Debug`;
 
   exec.execSync(`cd ./playground/ios &&
