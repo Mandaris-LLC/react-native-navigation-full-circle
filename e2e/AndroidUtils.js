@@ -19,5 +19,7 @@ module.exports = {
   openActivity: () => {
     exec.execSync('adb shell am start -n com.reactnativenavigation.playground/.MainActivity');
   },
-  executeShellCommand: (command) => exec.execSync(`adb shell ${command}`)
-}
+  executeShellCommand: (command) => {
+    exec.execSync(`adb shell ${command}`);
+  }
+};

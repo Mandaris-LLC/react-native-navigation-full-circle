@@ -43,7 +43,7 @@ describe('application lifecycle test', () => {
   it(':android: device orientation does not destroy activity', async () => {
     await elementById(testIDs.PUSH_BUTTON).tap();
     await expect(elementByLabel('Pushed Screen')).toBeVisible();
-    
+
     await device.setOrientation('landscape');
 
     await expect(elementByLabel('Pushed Screen')).toBeVisible();
@@ -60,7 +60,7 @@ describe('application lifecycle test', () => {
     await expect(elementByLabel('Pushed Screen')).toBeNotVisible();
     await expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
-  
+
   xit(':android: pressing menu opens dev menu', async () => {
     if (!IS_RELEASE) {
       Android.pressMenu();
@@ -101,12 +101,12 @@ describe('application lifecycle test', () => {
       await expect(elementByLabel('Pushed Screen')).toBeVisible();
 
       Android.executeShellCommand('am broadcast -a com.reactnativenavigation.broadcast.RELOAD');
-      
+
       await sleep(1000);
       await expect(elementByLabel('React Native Navigation!')).toBeVisible();
     }
   });
-  
+
   async function togglePhonePermission() {
     await sleep(700);
     Android.revokePermission();
