@@ -29,6 +29,7 @@ public class Options implements DEFAULT_VALUES {
         result.fabOptions = FabOptions.parse(json.optJSONObject("fab"));
         result.animationsOptions = AnimationsOptions.parse(json.optJSONObject("animations"));
         result.sideMenuRootOptions = SideMenuRootOptions.parse(json.optJSONObject("sideMenu"));
+        result.externalComponent = ExternalComponent.parse(json.optJSONObject("externalComponent"));
 
         return result.withDefaultOptions(defaultOptions);
     }
@@ -43,6 +44,7 @@ public class Options implements DEFAULT_VALUES {
     @NonNull public FabOptions fabOptions = new FabOptions();
     @NonNull public AnimationsOptions animationsOptions = new AnimationsOptions();
     @NonNull public SideMenuRootOptions sideMenuRootOptions = new SideMenuRootOptions();
+    @NonNull public ExternalComponent externalComponent = new ExternalComponent();
 
     void setTopTabIndex(int i) {
         topTabOptions.tabIndex = i;
@@ -61,6 +63,7 @@ public class Options implements DEFAULT_VALUES {
         result.fabOptions.mergeWith(fabOptions);
         result.animationsOptions.mergeWith(animationsOptions);
         result.sideMenuRootOptions.mergeWith(sideMenuRootOptions);
+        result.externalComponent.mergeWith(externalComponent);
         return result;
     }
 
@@ -76,6 +79,7 @@ public class Options implements DEFAULT_VALUES {
         result.fabOptions.mergeWith(other.fabOptions);
         result.animationsOptions.mergeWith(other.animationsOptions);
         result.sideMenuRootOptions.mergeWith(other.sideMenuRootOptions);
+        result.externalComponent.mergeWith(other.externalComponent);
         return result;
     }
 
@@ -89,6 +93,7 @@ public class Options implements DEFAULT_VALUES {
         fabOptions.mergeWithDefault(other.fabOptions);
         animationsOptions.mergeWithDefault(other.animationsOptions);
         sideMenuRootOptions.mergeWithDefault(other.sideMenuRootOptions);
+        externalComponent.mergeWithDefault(other.externalComponent);
         return this;
     }
 

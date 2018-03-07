@@ -39,6 +39,7 @@ public class OptionsTest extends BaseTest {
     private static final String BOTTOM_TABS_BADGE = "3";
     private static final String BOTTOM_TABS_CURRENT_TAB_ID = "ComponentId";
     private static final Number BOTTOM_TABS_CURRENT_TAB_INDEX = new Number(1);
+    private static final String EXTERNAL_CLASS_CREATOR = "com.rnn.creators.Creator.createFragment";
     private TypefaceLoader mockLoader;
 
     @Override
@@ -57,6 +58,7 @@ public class OptionsTest extends BaseTest {
         JSONObject json = new JSONObject()
                 .put("topBar", createTopBar(TOP_BAR_VISIBLE.get()))
                 .put("fab", createFab())
+                .put("externalComponent", createExternalComponent())
                 .put("bottomTabs", createBottomTabs());
         Options result = Options.parse(mockLoader, json);
         assertResult(result);
@@ -83,6 +85,7 @@ public class OptionsTest extends BaseTest {
         assertThat(result.fabOptions.hideOnScroll.get()).isEqualTo(FAB_HIDE_ON_SCROLL);
         assertThat(result.fabOptions.alignVertically.get()).isEqualTo(FAB_ALIGN_VERTICALLY);
         assertThat(result.fabOptions.alignHorizontally.get()).isEqualTo(FAB_ALIGN_HORIZONTALLY);
+        assertThat(result.externalComponent.classCreator.get()).isEqualTo(EXTERNAL_CLASS_CREATOR);
     }
 
     @NonNull
@@ -120,6 +123,11 @@ public class OptionsTest extends BaseTest {
                 .put("visible", FAB_VISIBLE);
     }
 
+    private JSONObject createExternalComponent() throws JSONException {
+        return new JSONObject()
+                .put("classCreator", EXTERNAL_CLASS_CREATOR);
+    }
+
     @NonNull
     private JSONObject createOtherFab() throws JSONException {
         return new JSONObject()
@@ -154,6 +162,10 @@ public class OptionsTest extends BaseTest {
                 .put("tabBadge", BOTTOM_TABS_BADGE);
     }
 
+    private JSONObject createOtherExternalClass() {
+        return new JSONObject();
+    }
+
     @Test
     public void mergeDoesNotMutate() throws Exception {
         JSONObject json1 = new JSONObject();
@@ -174,10 +186,11 @@ public class OptionsTest extends BaseTest {
 
     @Test
     public void mergeDefaultOptions() throws Exception {
-        JSONObject json = new JSONObject();
-        json.put("topBar", createTopBar(TOP_BAR_VISIBLE.get()));
-        json.put("fab", createFab());
-        json.put("bottomTabs", createBottomTabs());
+        JSONObject json = new JSONObject()
+                .put("topBar", createTopBar(TOP_BAR_VISIBLE.get()))
+                .put("fab", createFab())
+                .put("bottomTabs", createBottomTabs())
+                .put("externalComponent", createExternalComponent());
         Options defaultOptions = Options.parse(mockLoader, json);
         Options options = new Options();
 
@@ -189,7 +202,8 @@ public class OptionsTest extends BaseTest {
         JSONObject defaultJson = new JSONObject()
                 .put("topBar", createOtherTopBar())
                 .put("fab", createOtherFab())
-                .put("bottomTabs", createOtherBottomTabs());
+                .put("bottomTabs", createOtherBottomTabs())
+                .put("externalComponent", createExternalComponent());
         Options defaultOptions = Options.parse(mockLoader, defaultJson);
 
         JSONObject json = new JSONObject()
