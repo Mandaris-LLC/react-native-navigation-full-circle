@@ -35,6 +35,39 @@ async function startTabBasedApp(params) {
       params.tabs[index].components = components;
       Object.assign(tab, components[0]);
       components.shift();
+
+      components.forEach(component => {
+      const screenInstanceID = _.uniqueId('screenInstanceID');
+
+      const {
+        navigatorStyle,
+        navigatorButtons,
+        navigatorEventID
+      } = _mergeScreenSpecificSettings(component.screen, screenInstanceID, params);
+      _saveNavigatorButtonsProps(navigatorButtons);
+      _saveNavBarComponentProps(navigatorStyle);
+      const passProps = Object.assign({}, params.passProps);
+      passProps.navigatorID = navigatorID;
+      passProps.screenInstanceID = screenInstanceID;
+      passProps.navigatorEventID = navigatorEventID;
+
+
+      component.navigationParams = {
+        screenInstanceID,
+        navigatorStyle,
+        navigatorButtons,
+        navigatorEventID,
+        navigatorID: navigatorID,
+        passProps
+      };
+
+      component.subtitle = params.subtitle;
+      component.passProps = passProps;
+
+      savePassProps(component);
+
+    });
+      
     }
 
     const {
