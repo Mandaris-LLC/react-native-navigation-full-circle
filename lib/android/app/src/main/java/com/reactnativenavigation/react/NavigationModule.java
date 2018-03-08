@@ -9,7 +9,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.reactnativenavigation.NavigationActivity;
-import com.reactnativenavigation.parse.parsers.JSONParser;
 import com.reactnativenavigation.parse.LayoutFactory;
 import com.reactnativenavigation.parse.LayoutNode;
 import com.reactnativenavigation.parse.parsers.LayoutNodeParser;
@@ -18,6 +17,8 @@ import com.reactnativenavigation.utils.TypefaceLoader;
 import com.reactnativenavigation.utils.UiThread;
 import com.reactnativenavigation.viewcontrollers.Navigator;
 import com.reactnativenavigation.viewcontrollers.ViewController;
+
+import org.json.JSONObject;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
 	private static final String NAME = "RNNBridgeModule";
@@ -36,7 +37,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
 	@ReactMethod
 	public void setRoot(final ReadableMap rawLayoutTree, final Promise promise) {
-		final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
+		final LayoutNode layoutTree = LayoutNodeParser.parse(new JSONObject(rawLayoutTree.toHashMap()));
 		handle(() -> {
             final ViewController viewController = newLayoutFactory().create(layoutTree);
             navigator().setRoot(viewController, promise);
@@ -45,19 +46,19 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
 	@ReactMethod
 	public void setDefaultOptions(final ReadableMap options) {
-        final Options defaultOptions = Options.parse(new TypefaceLoader(activity()), JSONParser.parse(options));
+        final Options defaultOptions = Options.parse(new TypefaceLoader(activity()), new JSONObject(options.toHashMap()));
         handle(() -> navigator().setDefaultOptions(defaultOptions));
     }
 
 	@ReactMethod
 	public void setOptions(final String onComponentId, final ReadableMap options) {
-		final Options navOptions = Options.parse(new TypefaceLoader(activity()), JSONParser.parse(options));
+		final Options navOptions = Options.parse(new TypefaceLoader(activity()), new JSONObject(options.toHashMap()));
 		handle(() -> navigator().setOptions(onComponentId, navOptions));
 	}
 
 	@ReactMethod
 	public void push(final String onComponentId, final ReadableMap rawLayoutTree, final Promise promise) {
-		final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
+		final LayoutNode layoutTree = LayoutNodeParser.parse(new JSONObject(rawLayoutTree.toHashMap()));
 		handle(() -> {
             final ViewController viewController = newLayoutFactory().create(layoutTree);
             navigator().push(onComponentId, viewController, promise);
@@ -81,7 +82,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
 	@ReactMethod
 	public void showModal(final ReadableMap rawLayoutTree, final Promise promise) {
-		final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
+		final LayoutNode layoutTree = LayoutNodeParser.parse(new JSONObject(rawLayoutTree.toHashMap()));
 		handle(() -> {
             final ViewController viewController = newLayoutFactory().create(layoutTree);
             navigator().showModal(viewController, promise);
@@ -100,7 +101,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 
 	@ReactMethod
 	public void showOverlay(final ReadableMap rawLayoutTree) {
-        final LayoutNode layoutTree = LayoutNodeParser.parse(JSONParser.parse(rawLayoutTree));
+        final LayoutNode layoutTree = LayoutNodeParser.parse(new JSONObject(rawLayoutTree.toHashMap()));
         handle(() -> {
             final ViewController viewController = newLayoutFactory().create(layoutTree);
             navigator().showOverlay(viewController);
