@@ -74,19 +74,4 @@ describe('screen stack', () => {
     await expect(elementById('TestLabel')).toBeVisible();
     await expect(elementById(testIDs.TOP_BAR_ELEMENT)).toBeVisible();
   });
-
-  it(':android: override hardware back button', async () => {
-    await elementByLabel('BACK HANDLER').tap();
-    await expect(elementByLabel('Back Handler Screen')).toBeVisible();
-
-    await elementByLabel('ADD BACK HANDLER').tap();
-    Android.pressBack();
-    await sleep(100);
-    await expect(elementByLabel('Back Handler Screen')).toBeVisible();
-
-    await elementByLabel('REMOVE BACK HANDLER').tap();
-    Android.pressBack();
-    await sleep(100);
-    await expect(elementByLabel('React Native Navigation!')).toBeVisible();
-  });
 });

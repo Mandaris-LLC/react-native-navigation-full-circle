@@ -1,15 +1,13 @@
 const React = require('react');
 const { Component } = require('react');
-const { Navigation } = require('react-native-navigation');
+
 const { View, Text, Button, BackHandler } = require('react-native');
 
-class BackHandlerScreen extends Component {
+class BackHandlerModalScreen extends Component {
   static get options() {
     return {
       topBar: {
-        title: 'Back Handler',
-        textColor: 'black',
-        textFontSize: 16
+        title: 'Back Handler'
       }
     };
   }
@@ -34,8 +32,6 @@ class BackHandlerScreen extends Component {
         <Text style={styles.h2}>{this.state.backPress}</Text>
         <Button title='add back handler' onPress={() => this.addBackHandler()} />
         <Button title='remove back handler' onPress={() => this.removeBackHandler()} />
-        <Button title='show single component modal' onPress={() => this.showModal()} />
-        <Button title='show modal with stack' onPress={() => this.showModalWitchStack()} />
       </View>
     );
   }
@@ -46,33 +42,6 @@ class BackHandlerScreen extends Component {
 
   removeBackHandler() {
     BackHandler.removeEventListener('hardwareBackPress', this.backHandler);
-  }
-
-  showModal() {
-    Navigation.showModal({
-      component: {
-        name: 'navigation.playground.BackHandlerModalScreen'
-      }
-    });
-  }
-
-  showModalWitchStack() {
-    Navigation.showModal({
-      stack: {
-        children: [
-          {
-            component: {
-              name: 'navigation.playground.BackHandlerModalScreen'
-            }
-          },
-          {
-            component: {
-              name: 'navigation.playground.BackHandlerModalScreen'
-            }
-          }
-        ]
-      }
-    });
   }
 
   componentWillUnmount() {
@@ -99,4 +68,4 @@ const styles = {
   }
 };
 
-module.exports = BackHandlerScreen;
+module.exports = BackHandlerModalScreen;

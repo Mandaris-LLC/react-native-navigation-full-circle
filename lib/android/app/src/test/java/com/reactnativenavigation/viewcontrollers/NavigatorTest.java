@@ -206,12 +206,19 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void handleBack_DelegatesToRoot() throws Exception {
-        assertThat(uut.handleBack()).isFalse();
-        ViewController spy = spy(child1);
-        uut.setRoot(spy, new MockPromise());
-        when(spy.handleBack()).thenReturn(true);
+        ViewController root = spy(child1);
+        uut.setRoot(root, new MockPromise());
+        when(root.handleBack()).thenReturn(true);
         assertThat(uut.handleBack()).isTrue();
-        verify(spy, times(1)).handleBack();
+        verify(root, times(1)).handleBack();
+    }
+
+    @Test
+    public void handleBack_modalTakePrecedenceOverRoot() throws Exception {
+        ViewController root = spy(child1);
+        uut.setRoot(root, new MockPromise());
+        uut.showModal(child2, new MockPromise());
+        verify(root, times(0)).handleBack();
     }
 
     @Test
