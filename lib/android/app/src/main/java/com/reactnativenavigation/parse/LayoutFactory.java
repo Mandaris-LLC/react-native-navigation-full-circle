@@ -63,8 +63,7 @@ public class LayoutFactory {
 	}
 
     private ViewController createSideMenuRoot(LayoutNode node) {
-        final Options options = Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
-		SideMenuController sideMenuLayout = new SideMenuController(activity, node.id, options);
+        SideMenuController sideMenuLayout = new SideMenuController(activity, node.id, getOptions(node));
 		for (LayoutNode child : node.children) {
 			ViewController childLayout = create(child);
 			switch (child.type) {
@@ -99,42 +98,42 @@ public class LayoutFactory {
 	private ViewController createComponent(LayoutNode node) {
 		String id = node.id;
 		String name = node.data.optString("name");
-		Options options = Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
-		return new ComponentViewController(activity,
+        return new ComponentViewController(activity,
                 id,
                 name,
                 new ComponentViewCreator(reactInstanceManager),
-                options
+                getOptions(node)
         );
 	}
 
     private ViewController createExternalComponent(LayoutNode node) {
-        final Options options = Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
-        ExternalComponent externalComponent = ExternalComponent.parse(node.data);
+        final ExternalComponent externalComponent = ExternalComponent.parse(node.data);
         return new ExternalComponentViewController(activity,
                 node.id,
                 externalComponent,
                 externalComponentCreators.get(externalComponent.name.get()),
-                options
+                getOptions(node)
         );
     }
 
 	private ViewController createStack(LayoutNode node) {
-        final Options options = Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
-		StackController stackController = new StackController(activity, node.id, options);
-        for (int i = 0; i < node.children.size(); i++) {
-            if (i < node.children.size() - 1) {
-                stackController.push(create(node.children.get(i)), new NoOpPromise());
-            } else {
-                stackController.animatePush(create(node.children.get(i)), new NoOpPromise());
-            }
-        }
-		return stackController;
+        StackController stackController = new StackController(activity, node.id, getOptions(node));
+        addChildrenToStack(node.children, stackController);
+        return stackController;
 	}
 
-	private ViewController createBottomTabs(LayoutNode node) {
-        final Options options = Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
-		final BottomTabsController tabsComponent = new BottomTabsController(activity, new ImageLoader(), node.id, options);
+    private void addChildrenToStack(List<LayoutNode> children, StackController stackController) {
+        for (int i = 0; i < children.size(); i++) {
+            if (i < children.size() - 1) {
+                stackController.push(create(children.get(i)), new NoOpPromise());
+            } else {
+                stackController.animatePush(create(children.get(i)), new NoOpPromise());
+            }
+        }
+    }
+
+    private ViewController createBottomTabs(LayoutNode node) {
+        final BottomTabsController tabsComponent = new BottomTabsController(activity, new ImageLoader(), node.id, getOptions(node));
 		List<ViewController> tabs = new ArrayList<>();
 		for (int i = 0; i < node.children.size(); i++) {
             tabs.add(create(node.children.get(i)));
@@ -147,11 +146,14 @@ public class LayoutFactory {
         final List<ViewController> tabs = new ArrayList<>();
         for (int i = 0; i < node.children.size(); i++) {
             ViewController tabController = create(node.children.get(i));
-            Options options = Options.parse(typefaceManager, node.children.get(i).getNavigationOptions(), defaultOptions);
+            Options options = getOptions(node.children.get(i));
             options.setTopTabIndex(i);
             tabs.add(tabController);
         }
-        Options options = Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
-        return new TopTabsController(activity, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), options);
+        return new TopTabsController(activity, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), getOptions(node));
+    }
+
+    private Options getOptions(LayoutNode node) {
+        return Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
     }
 }
