@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 pipeline {
   agent any
   stages {
@@ -22,13 +21,11 @@ npm run test-js'''
         }
         stage('Run IOS tests') {
           steps {
-          ansiColor('xterm') {
             sh '''#!/bin/bash
 
 npm run test-unit-ios -- --release
 npm run test-e2e-ios -- --release'''
           }
-         }
         }
         stage('Run android tests') {
           steps {
