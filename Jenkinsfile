@@ -5,7 +5,6 @@ pipeline {
       steps {
       ansiColor('xterm') {
         sh '''#!/bin/bash -ex
-        source ~/.bashrc
         npm install
         npm run clean'''
         }
@@ -16,22 +15,19 @@ pipeline {
         stage('Run test-js') {
           steps {
             sh '''#!/bin/bash
-            source ~/.bashrc
             npm run test-js'''
           }
         }
-        stage('Run IOS tests') {
+        stage('Run iOS tests') {
           steps {
             sh '''#!/bin/bash
-            source ~/.bashrc
             npm run test-unit-ios -- --release
             npm run test-e2e-ios -- --release'''
           }
         }
-        stage('Run android tests') {
+        stage('Run Android tests') {
           steps {
             sh '''#!/bin/bash
-            source ~/.bashrc
             npm run test-unit-android -- --release
             npm run test-e2e-android -- --release'''
           }
