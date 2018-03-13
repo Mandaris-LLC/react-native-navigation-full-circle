@@ -28,8 +28,7 @@ pipeline {
         stage('Run Android tests') {
           steps {
             sh '''#!/bin/bash
-            npm run test-unit-android -- --release
-            npm run test-e2e-android -- --release'''
+            npm run test-unit-android -- --release'''
           }
         }
       }
