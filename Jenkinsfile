@@ -4,9 +4,11 @@ pipeline {
   stages {
     stage('Install npm packages') {
       steps {
+      ansiColor('xterm') {
         sh '''#!/bin/bash -ex
 npm install
 npm run clean'''
+        }
       }
     }
     stage('Run All Tests') {
