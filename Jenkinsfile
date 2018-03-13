@@ -5,6 +5,7 @@ pipeline {
       steps {
       ansiColor('xterm') {
         sh '''#!/bin/bash -ex
+        node -v
 npm install
 npm run clean'''
         }
