@@ -18,6 +18,7 @@
 @property (nonatomic) double endY;
 @property (nonatomic) double startX;
 @property (nonatomic) double endX;
+@property (nonatomic) UIViewAnimationOptions interpolation;
 
 - (instancetype)initWithTransition:(NSDictionary*)transition;
 

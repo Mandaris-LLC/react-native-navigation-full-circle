@@ -29,7 +29,7 @@
 	[_screenTransition.topBar setupInitialTransitionForView:toViewController.navigationController.navigationBar];
 	
 	
-	[UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+	[UIView animateWithDuration:[self transitionDuration:transitionContext] delay:self.screenTransition.content.startDelay options:self.screenTransition.content.interpolation animations:^{
 		[_screenTransition.content completeTransitionForView:toViewController.view];
 		[_screenTransition.topBar completeTransitionForView:toViewController.navigationController.navigationBar];
 	} completion:^(BOOL finished) {

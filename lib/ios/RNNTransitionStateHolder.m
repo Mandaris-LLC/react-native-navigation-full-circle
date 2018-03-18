@@ -25,8 +25,20 @@
 	self.fromId = [transition objectForKey:@"fromId"];
 	self.toId = [transition objectForKey:@"toId"];
 	self.isSharedElementTransition = [[transition objectForKey:@"type"] isEqualToString:@"sharedElement"];
+	self.interpolation = [self animationOptionsFromString:transition[@"interpolation"]];
+	
 	
 	return self;
+}
+
+- (UIViewAnimationOptions)animationOptionsFromString:(NSString*)interpolationString {
+	if ([interpolationString isEqualToString:@"accelerate"]) {
+		return UIViewAnimationOptionCurveEaseIn;
+	} else if ([interpolationString isEqualToString:@"decelerate"]) {
+		return UIViewAnimationOptionCurveEaseOut;
+	}
+	
+	return UIViewAnimationOptionCurveEaseInOut;
 }
 
 - (void)setupInitialTransitionForView:(UIView*)view {
