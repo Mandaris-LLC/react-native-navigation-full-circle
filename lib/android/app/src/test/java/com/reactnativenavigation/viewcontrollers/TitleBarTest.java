@@ -114,6 +114,12 @@ public class TitleBarTest extends BaseTest {
         verify(buttonControllers.get(leftButton.id), times(1)).destroy();
     }
 
+    @Test
+    public void setRightButtons_buttonsAreAddedInReverseOrderToMatchOrderOnIOs() throws Exception {
+        uut.setButtons(new ArrayList<>(), rightButtons(textButton, customButton));
+        assertThat(uut.getMenu().getItem(1).getTitle()).isEqualTo(textButton.title.get());
+    }
+
     private List<Button> leftButton(Button leftButton) {
         return Collections.singletonList(leftButton);
     }

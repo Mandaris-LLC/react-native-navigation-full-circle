@@ -106,8 +106,8 @@ public class TopBarButtonController extends ViewController<TopBarReactButtonView
         });
     }
 
-    public void addToMenu(Toolbar toolbar) {
-        MenuItem menuItem = toolbar.getMenu().add(button.title.get(""));
+    public void addToMenu(Toolbar toolbar, int position) {
+        MenuItem menuItem = toolbar.getMenu().add(0, position, position, button.title.get(""));
         menuItem.setShowAsAction(button.showAsAction);
         menuItem.setEnabled(button.enabled.isTrueOrUndefined());
         menuItem.setOnMenuItemClickListener(this);

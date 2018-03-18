@@ -113,10 +113,10 @@ public class TitleBar extends Toolbar {
     public void setRightButtons(List<Button> rightButtons) {
         if (rightButtons == null) return;
         clearRightButtons();
-        for (Button button : rightButtons) {
-            TopBarButtonController controller = createButtonController(button);
+        for (int i = 0; i < rightButtons.size(); i++) {
+            TopBarButtonController controller = createButtonController(rightButtons.get(i));
             rightButtonControllers.add(controller);
-            controller.addToMenu(this);
+            controller.addToMenu(this, rightButtons.size() - i - 1);
         }
     }
 
