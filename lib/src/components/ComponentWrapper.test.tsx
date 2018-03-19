@@ -78,7 +78,7 @@ describe('ComponentWrapper', () => {
   });
 
   it('pulls props from the store and injects them into the inner component', () => {
-    store.setPropsForComponentId('component123', { numberProp: 1, stringProp: 'hello', objectProp: { a: 2 } });
+    store.setPropsForId('component123', { numberProp: 1, stringProp: 'hello', objectProp: { a: 2 } });
     const NavigationComponent = ComponentWrapper.wrap(componentName, MyComponent, store);
     const tree = renderer.create(<NavigationComponent componentId={'component123'} />);
     const originalComponentProps = tree.getInstance()!.originalComponentRef.props;
@@ -88,7 +88,7 @@ describe('ComponentWrapper', () => {
   it('updates props from store into inner component', () => {
     const NavigationComponent = ComponentWrapper.wrap(componentName, MyComponent, store);
     const tree = renderer.create(<TestParent ChildClass={NavigationComponent} />);
-    store.setPropsForComponentId('component1', { myProp: 'hello' });
+    store.setPropsForId('component1', { myProp: 'hello' });
     expect(childRef.originalComponentRef.props.foo).toEqual(undefined);
     expect(childRef.originalComponentRef.props.myProp).toEqual(undefined);
     tree.getInstance()!.setState({ propsFromState: { foo: 'yo' } });
@@ -114,16 +114,16 @@ describe('ComponentWrapper', () => {
   it('saves self ref into store', () => {
     const NavigationComponent = ComponentWrapper.wrap(componentName, MyComponent, store);
     const tree = renderer.create(<NavigationComponent componentId={'component1'} />);
-    expect(store.getRefForComponentId('component1')).toBeDefined();
-    expect(store.getRefForComponentId('component1')).toBe(tree.getInstance());
+    expect(store.getRefForId('component1')).toBeDefined();
+    expect(store.getRefForId('component1')).toBe(tree.getInstance());
   });
 
   it('cleans ref from store on unMount', () => {
     const NavigationComponent = ComponentWrapper.wrap(componentName, MyComponent, store);
     const tree = renderer.create(<NavigationComponent componentId={'component1'} />);
-    expect(store.getRefForComponentId('component1')).toBeDefined();
+    expect(store.getRefForId('component1')).toBeDefined();
     tree.unmount();
-    expect(store.getRefForComponentId('component1')).toBeUndefined();
+    expect(store.getRefForId('component1')).toBeUndefined();
   });
 
   it('holds ref to OriginalComponent', () => {

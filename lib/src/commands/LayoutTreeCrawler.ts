@@ -40,7 +40,7 @@ export class LayoutTreeCrawler {
   }
 
   _savePropsToStore(node) {
-    this.store.setPropsForComponentId(node.id, node.data.passProps);
+    this.store.setPropsForId(node.id, node.data.passProps);
   }
 
   _applyStaticOptions(node) {

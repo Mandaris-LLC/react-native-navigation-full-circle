@@ -106,7 +106,7 @@ describe('navigation options', () => {
 
     OptionsProcessor.processOptions({ o: options }, store);
 
-    expect(store.setPropsForComponentId).toBeCalledWith('1', passProps);
+    expect(store.setPropsForId).toBeCalledWith('1', passProps);
   });
 
   it('processes Options object', () => {
