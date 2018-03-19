@@ -14,7 +14,6 @@ public class NavigationEvent {
 	private static final String componentDidAppear = "RNN.componentDidAppear";
 	private static final String componentDidDisappear = "RNN.componentDidDisappear";
 	private static final String onNavigationButtonPressed = "RNN.navigationButtonPressed";
-    private static final String componentLifecycle = "RNN.componentLifecycle";
 
 	private final RCTDeviceEventEmitter emitter;
 
@@ -28,12 +27,10 @@ public class NavigationEvent {
 
 	public void componentDidDisappear(String id, String componentName) {
 		emit(componentDidDisappear, id);
-		emit(componentLifecycle, getLifecycleEventData(id, componentName, "didDisappear"));
 	}
 
 	public void componentDidAppear(String id, String componentName) {
 		emit(componentDidAppear, id);
-        emit(componentLifecycle, getLifecycleEventData(id, componentName, "didAppear"));
 	}
 
     @NonNull
