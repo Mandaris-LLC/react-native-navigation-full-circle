@@ -1,4 +1,8 @@
-import { NativeModules, NativeEventEmitter, EmitterSubscription } from 'react-native';
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+export interface EventSubscription {
+  remove();
+}
 
 export class NativeEventsReceiver {
   private emitter: NativeEventEmitter;
@@ -6,19 +10,19 @@ export class NativeEventsReceiver {
     this.emitter = new NativeEventEmitter(NativeModules.RNNEventEmitter);
   }
 
-  registerAppLaunched(callback): EmitterSubscription {
+  registerAppLaunched(callback): EventSubscription {
     return this.emitter.addListener('RNN.appLaunched', callback);
   }
 
-  registerComponentDidAppear(callback): EmitterSubscription {
+  registerComponentDidAppear(callback): EventSubscription {
     return this.emitter.addListener('RNN.componentDidAppear', callback);
   }
 
-  registerComponentDidDisappear(callback): EmitterSubscription {
+  registerComponentDidDisappear(callback): EventSubscription {
     return this.emitter.addListener('RNN.componentDidDisappear', callback);
   }
 
-  registerInteraction(callback): EmitterSubscription {
+  registerInteraction(callback): EventSubscription {
     return this.emitter.addListener('RNN.interaction', callback);
   }
 }

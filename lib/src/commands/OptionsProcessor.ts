@@ -9,8 +9,8 @@ export class OptionsProcessor {
     _.forEach(options, (value, key) => {
       if (!value) { return; }
 
-      this.processColors(key, value, options);
-      this.processImages(key, value, options);
+      this.processColor(key, value, options);
+      this.processImage(key, value, options);
       this.processButtonsPassProps(key, value);
 
       if (_.isObject(value) || _.isArray(value)) {
@@ -19,13 +19,13 @@ export class OptionsProcessor {
     });
   }
 
-  private processColors(key, value, options) {
+  private processColor(key, value, options) {
     if (_.isEqual(key, 'color') || _.endsWith(key, 'Color')) {
       options[key] = processColor(value);
     }
   }
 
-  private processImages(key, value, options) {
+  private processImage(key, value, options) {
     if (_.isEqual(key, 'icon') || _.isEqual(key, 'image') || _.endsWith(key, 'Icon') || _.endsWith(key, 'Image')) {
       options[key] = resolveAssetSource(value);
     }

@@ -1,4 +1,4 @@
-import { EventSubscription } from 'react-native';
+import { EventSubscription } from '../adapters/NativeEventsReceiver';
 
 export class EventsRegistry {
   private nativeEventsReceiver;

@@ -22,7 +22,7 @@ if (Platform.OS === 'android') {
 
 function start() {
   registerScreens();
-  Navigation.events().onAppLaunched(() => {
+  Navigation.events().appLaunched(() => {
     Navigation.setDefaultOptions({
       _animations: {
         push: {
