@@ -15,11 +15,12 @@ export interface LayoutNode {
 }
 
 export class LayoutTreeCrawler {
-  private optionsProcessor = new OptionsProcessor();
+  private optionsProcessor: OptionsProcessor;
   constructor(
     private readonly uniqueIdProvider: any,
     public readonly store: any) {
     this.crawl = this.crawl.bind(this);
+    this.optionsProcessor = new OptionsProcessor(store);
   }
 
   crawl(node: LayoutNode): void {
@@ -30,7 +31,7 @@ export class LayoutTreeCrawler {
     if (node.type === LayoutType.Component) {
       this._handleComponent(node);
     }
-    this.optionsProcessor.processOptions(node.data.options, this.store);
+    this.optionsProcessor.processOptions(node.data.options);
     _.forEach(node.children, this.crawl);
   }
 
