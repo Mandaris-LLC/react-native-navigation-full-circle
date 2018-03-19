@@ -19,7 +19,7 @@ export class ComponentWrapper {
         this._assertComponentId(props);
         this.state = {
           componentId: props.componentId,
-          allProps: _.merge({}, props, store.getPropsForComponentId(props.componentId))
+          allProps: _.merge({}, props, store.getPropsForId(props.componentId))
         };
       }
 
@@ -34,7 +34,7 @@ export class ComponentWrapper {
       }
 
       componentWillMount() {
-        store.setRefForComponentId(this.state.componentId, this);
+        store.setRefForId(this.state.componentId, this);
       }
 
       componentWillUnmount() {
@@ -61,7 +61,7 @@ export class ComponentWrapper {
 
       componentWillReceiveProps(nextProps) {
         this.setState({
-          allProps: _.merge({}, nextProps, store.getPropsForComponentId(this.state.componentId))
+          allProps: _.merge({}, nextProps, store.getPropsForId(this.state.componentId))
         });
       }
 

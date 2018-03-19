@@ -23,7 +23,7 @@ export class OptionsProcessor {
   static processArrayOptions(key, array, store) {
     _.forEach(array, (value) => {
       if (_.endsWith(key, 'Buttons') && value.passProps) {
-        store.setPropsForComponentId(value.id, value.passProps);
+        store.setPropsForId(value.id, value.passProps);
       }
     });
   }
