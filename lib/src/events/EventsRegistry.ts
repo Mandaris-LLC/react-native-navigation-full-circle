@@ -1,25 +1,25 @@
-import { EventSubscription } from '../adapters/NativeEventsReceiver';
+import { EventSubscription, NativeEventsReceiver } from '../adapters/NativeEventsReceiver';
 
 export class EventsRegistry {
-  private nativeEventsReceiver;
+  private nativeEventsReceiver: NativeEventsReceiver;
 
-  constructor(nativeEventsReceiver) {
+  constructor(nativeEventsReceiver: NativeEventsReceiver) {
     this.nativeEventsReceiver = nativeEventsReceiver;
   }
 
-  public appLaunched(callback): EventSubscription {
+  public appLaunched(callback: () => void): EventSubscription {
     return this.nativeEventsReceiver.registerAppLaunched(callback);
   }
 
-  public componentDidAppear(callback): EventSubscription {
+  public componentDidAppear(callback: (componendId: string, componentName: string) => void): EventSubscription {
     return this.nativeEventsReceiver.registerComponentDidAppear(callback);
   }
 
-  public componentDidDisappear(callback): EventSubscription {
+  public componentDidDisappear(callback: (componendId: string, componentName: string) => void): EventSubscription {
     return this.nativeEventsReceiver.registerComponentDidDisappear(callback);
   }
 
-  public interaction(callback): EventSubscription {
+  public interaction(callback: (name: string) => void): EventSubscription {
     return this.nativeEventsReceiver.registerInteraction(callback);
   }
 }
