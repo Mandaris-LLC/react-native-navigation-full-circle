@@ -22,8 +22,8 @@ function validateEnv() {
     throw new Error(`releasing is only available from CI`);
   }
 
-  if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
-    console.log(`not publishing as triggered by pull request ${process.env.TRAVIS_PULL_REQUEST}`);
+  if (!process.env.JENKINS_MASTER) {
+    console.log(`not publishing on a different build`);
     return false;
   }
 
