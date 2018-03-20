@@ -4,7 +4,7 @@ const semver = require('semver');
 const fs = require('fs');
 const _ = require('lodash');
 
-const ONLY_ON_BRANCH = 'v2';
+const ONLY_ON_BRANCH = 'origin/v2';
 const VERSION_TAG = 'alpha';
 const VERSION_INC = 'patch';
 
@@ -18,8 +18,8 @@ function run() {
 }
 
 function validateEnv() {
-  if (!process.env.CI || !process.env.TRAVIS) {
-    throw new Error(`releasing is only available from Travis CI`);
+  if (!process.env.CI) {
+    throw new Error(`releasing is only available from CI`);
   }
 
   if (process.env.TRAVIS_PULL_REQUEST !== 'false') {
@@ -27,8 +27,8 @@ function validateEnv() {
     return false;
   }
 
-  if (process.env.TRAVIS_BRANCH !== ONLY_ON_BRANCH) {
-    console.log(`not publishing on branch ${process.env.TRAVIS_BRANCH}`);
+  if (process.env.GIT_BRANCH !== ONLY_ON_BRANCH) {
+    console.log(`not publishing on branch ${process.env.GIT_BRANCH}`);
     return false;
   }
 
