@@ -45,4 +45,16 @@ describe('EventsRegistry', () => {
     expect(mockNativeEventsReceiver.registerComponentDidDisappear).toHaveBeenCalledTimes(1);
     expect(mockNativeEventsReceiver.registerComponentDidDisappear).toHaveBeenCalledWith(cb);
   });
+
+  it('exposes interaction event', () => {
+    const subscription = {};
+    const cb = jest.fn();
+    mockNativeEventsReceiver.registerInteraction.mockReturnValueOnce(subscription);
+
+    const result = uut.interaction(cb);
+
+    expect(result).toBe(subscription);
+    expect(mockNativeEventsReceiver.registerInteraction).toHaveBeenCalledTimes(1);
+    expect(mockNativeEventsReceiver.registerInteraction).toHaveBeenCalledWith(cb);
+  });
 });

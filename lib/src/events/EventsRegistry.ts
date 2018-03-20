@@ -18,4 +18,8 @@ export class EventsRegistry {
   public componentDidDisappear(callback): EventSubscription {
     return this.nativeEventsReceiver.registerComponentDidDisappear(callback);
   }
+
+  public interaction(callback): EventSubscription {
+    return this.nativeEventsReceiver.registerInteraction(callback);
+  }
 }
