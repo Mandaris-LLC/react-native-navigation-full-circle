@@ -10,19 +10,19 @@ export class NativeEventsReceiver {
     this.emitter = new NativeEventEmitter(NativeModules.RNNEventEmitter);
   }
 
-  registerAppLaunched(callback): EventSubscription {
+  registerAppLaunched(callback: () => void): EventSubscription {
     return this.emitter.addListener('RNN.appLaunched', callback);
   }
 
-  registerComponentDidAppear(callback): EventSubscription {
+  registerComponentDidAppear(callback: (componendId: string, componentName: string) => void): EventSubscription {
     return this.emitter.addListener('RNN.componentDidAppear', callback);
   }
 
-  registerComponentDidDisappear(callback): EventSubscription {
+  registerComponentDidDisappear(callback: (componendId: string, componentName: string) => void): EventSubscription {
     return this.emitter.addListener('RNN.componentDidDisappear', callback);
   }
 
-  registerInteraction(callback): EventSubscription {
+  registerInteraction(callback: (name: string) => void): EventSubscription {
     return this.emitter.addListener('RNN.interaction', callback);
   }
 }
