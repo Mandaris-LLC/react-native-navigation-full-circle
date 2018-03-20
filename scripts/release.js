@@ -48,7 +48,7 @@ function calcNewVersion() {
 }
 
 function copyNpmRc() {
-  exec.execSync(`rm -f package-lock.json`);
+  execSync(`rm -f package-lock.json`);
   const npmrcPath = p.resolve(`${__dirname}/.npmrc`);
   execSync(`cp -rf ${npmrcPath} .`);
 }
