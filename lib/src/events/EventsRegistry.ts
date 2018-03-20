@@ -10,4 +10,12 @@ export class EventsRegistry {
   public appLaunched(callback): EventSubscription {
     return this.nativeEventsReceiver.registerAppLaunched(callback);
   }
+
+  public componentDidAppear(callback): EventSubscription {
+    return this.nativeEventsReceiver.registerComponentDidAppear(callback);
+  }
+
+  public componentDidDisappear(callback): EventSubscription {
+    return this.nativeEventsReceiver.registerComponentDidDisappear(callback);
+  }
 }
