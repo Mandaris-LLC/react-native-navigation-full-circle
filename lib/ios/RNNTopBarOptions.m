@@ -150,6 +150,10 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 	[[UINavigationBar appearance] setBackIndicatorImage:image];
 	[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:image];
 	
+	if (self.hideBackButtonTitle) {
+		self.backButtonTitle = @"";
+	}
+	
 	if (self.backButtonTitle) {
 		UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:self.backButtonTitle
 																	 style:UIBarButtonItemStylePlain
