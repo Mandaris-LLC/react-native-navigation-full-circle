@@ -10,10 +10,10 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import static com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
 public class NavigationEvent {
-	private static final String onAppLaunched = "RNN.appLaunched";
+	private static final String onAppLaunched = "RNN.onAppLaunched";
 	private static final String componentDidAppear = "RNN.componentDidAppear";
 	private static final String componentDidDisappear = "RNN.componentDidDisappear";
-	private static final String onNavigationButtonPressed = "RNN.navigationButtonPressed";
+	private static final String onNavigationButtonPressed = "RNN.onNavigationButtonPressed";
 
 	private final RCTDeviceEventEmitter emitter;
 

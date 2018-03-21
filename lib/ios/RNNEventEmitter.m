@@ -7,10 +7,10 @@
 
 RCT_EXPORT_MODULE();
 
-static NSString* const onAppLaunched	= @"RNN.appLaunched";
+static NSString* const onAppLaunched	= @"RNN.onAppLaunched";
 static NSString* const componentDidAppear	= @"RNN.componentDidAppear";
 static NSString* const componentDidDisappear	= @"RNN.componentDidDisappear";
-static NSString* const onNavigationButtonPressed	= @"RNN.navigationButtonPressed";
+static NSString* const onNavigationButtonPressed	= @"RNN.onNavigationButtonPressed";
 
 -(NSArray<NSString *> *)supportedEvents {
 	return @[onAppLaunched, componentDidAppear, componentDidDisappear, onNavigationButtonPressed];
@@ -35,7 +35,7 @@ static NSString* const onNavigationButtonPressed	= @"RNN.navigationButtonPressed
 }
 
 -(void)sendOnNavigationButtonPressed:(NSString *)componentId buttonId:(NSString*)buttonId {
-	[self send:onNavigationButtonPressed body:@{@"componentId":componentId , @"buttonId": buttonId }];
+	[self send:onNavigationButtonPressed body:@{@"componentId":componentId , @"buttonId": buttonId}];
 }
 
 - (void)addListener:(NSString *)eventName {

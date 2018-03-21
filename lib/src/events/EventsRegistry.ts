@@ -19,7 +19,7 @@ export class EventsRegistry {
     return this.nativeEventsReceiver.registerComponentDidDisappear(callback);
   }
 
-  public onNavigationInteraction(callback: (componentId: string, params) => void): EventSubscription {
-    return this.nativeEventsReceiver.registerOnNavigationInteraction(callback);
+  public onNavigationButtonPressed(callback: (componentId: string, buttonId: string) => void): EventSubscription {
+    return this.nativeEventsReceiver.registerOnNavigationButtonPressed(callback);
   }
 }

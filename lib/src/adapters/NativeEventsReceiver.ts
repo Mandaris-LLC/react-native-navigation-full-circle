@@ -22,7 +22,7 @@ export class NativeEventsReceiver {
     return this.emitter.addListener('RNN.componentDidDisappear', callback);
   }
 
-  registerOnNavigationInteraction(callback: (componentId: string, params) => void): EventSubscription {
-    return this.emitter.addListener('RNN.onNavigationInteraction', callback);
+  registerOnNavigationButtonPressed(callback: (componentId: string, buttonId: string) => void): EventSubscription {
+    return this.emitter.addListener('RNN.onNavigationButtonPressed', ({ componentId, buttonId }) => callback(componentId, buttonId));
   }
 }

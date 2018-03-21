@@ -39,9 +39,9 @@ export class ComponentWrapper {
         }
       }
 
-      onNavigationInteraction(buttonId) {
-        if (this.originalComponentRef.onNavigationInteraction) {
-          this.originalComponentRef.onNavigationInteraction(buttonId);
+      onNavigationButtonPressed(buttonId) {
+        if (this.originalComponentRef.onNavigationButtonPressed) {
+          this.originalComponentRef.onNavigationButtonPressed(buttonId);
         }
       }
 

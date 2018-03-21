@@ -46,15 +46,15 @@ describe('EventsRegistry', () => {
     expect(mockNativeEventsReceiver.registerComponentDidDisappear).toHaveBeenCalledWith(cb);
   });
 
-  it('exposes onNavigationInteraction event', () => {
+  it('exposes onNavigationButtonPressed event', () => {
     const subscription = {};
     const cb = jest.fn();
-    mockNativeEventsReceiver.registerOnNavigationInteraction.mockReturnValueOnce(subscription);
+    mockNativeEventsReceiver.registerOnNavigationButtonPressed.mockReturnValueOnce(subscription);
 
-    const result = uut.onNavigationInteraction(cb);
+    const result = uut.onNavigationButtonPressed(cb);
 
     expect(result).toBe(subscription);
-    expect(mockNativeEventsReceiver.registerOnNavigationInteraction).toHaveBeenCalledTimes(1);
-    expect(mockNativeEventsReceiver.registerOnNavigationInteraction).toHaveBeenCalledWith(cb);
+    expect(mockNativeEventsReceiver.registerOnNavigationButtonPressed).toHaveBeenCalledTimes(1);
+    expect(mockNativeEventsReceiver.registerOnNavigationButtonPressed).toHaveBeenCalledWith(cb);
   });
 });

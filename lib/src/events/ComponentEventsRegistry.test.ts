@@ -12,13 +12,13 @@ describe(`ComponentEventRegistry`, () => {
     eventRegistry = {
       componentDidAppear: jest.fn(),
       componentDidDisappear: jest.fn(),
-      onNavigationInteraction: jest.fn()
+      onNavigationButtonPressed: jest.fn()
     };
 
     mockComponentRef = {
       componentDidAppear: jest.fn(),
       componentDidDisappear: jest.fn(),
-      onNavigationInteraction: jest.fn()
+      onNavigationButtonPressed: jest.fn()
     };
 
     store = new Store();
@@ -30,26 +30,26 @@ describe(`ComponentEventRegistry`, () => {
   it('register for lifecycle events on eventRegistry', () => {
     expect(eventRegistry.componentDidAppear).toHaveBeenCalledTimes(0);
     expect(eventRegistry.componentDidDisappear).toHaveBeenCalledTimes(0);
-    expect(eventRegistry.onNavigationInteraction).toHaveBeenCalledTimes(0);
+    expect(eventRegistry.onNavigationButtonPressed).toHaveBeenCalledTimes(0);
     uut.registerForAllComponents();
     expect(eventRegistry.componentDidAppear).toHaveBeenCalledTimes(1);
     expect(eventRegistry.componentDidDisappear).toHaveBeenCalledTimes(1);
-    expect(eventRegistry.onNavigationInteraction).toHaveBeenCalledTimes(1);
+    expect(eventRegistry.onNavigationButtonPressed).toHaveBeenCalledTimes(1);
   });
 
   it('bubbles lifecycle to component from store', () => {
     const params = {};
     expect(mockComponentRef.componentDidAppear).toHaveBeenCalledTimes(0);
     expect(mockComponentRef.componentDidDisappear).toHaveBeenCalledTimes(0);
-    expect(mockComponentRef.onNavigationInteraction).toHaveBeenCalledTimes(0);
+    expect(mockComponentRef.onNavigationButtonPressed).toHaveBeenCalledTimes(0);
     uut.registerForAllComponents();
     eventRegistry.componentDidAppear.mock.calls[0][0](refId);
     eventRegistry.componentDidDisappear.mock.calls[0][0](refId);
-    eventRegistry.onNavigationInteraction.mock.calls[0][0](refId, params);
+    eventRegistry.onNavigationButtonPressed.mock.calls[0][0](refId, params);
     expect(mockComponentRef.componentDidAppear).toHaveBeenCalledTimes(1);
     expect(mockComponentRef.componentDidDisappear).toHaveBeenCalledTimes(1);
-    expect(mockComponentRef.onNavigationInteraction).toHaveBeenCalledTimes(1);
-    expect(mockComponentRef.onNavigationInteraction).toHaveBeenCalledWith(params);
+    expect(mockComponentRef.onNavigationButtonPressed).toHaveBeenCalledTimes(1);
+    expect(mockComponentRef.onNavigationButtonPressed).toHaveBeenCalledWith(params);
   });
 
   it('defensive unknown id', () => {
@@ -57,7 +57,7 @@ describe(`ComponentEventRegistry`, () => {
     expect(() => {
       eventRegistry.componentDidAppear.mock.calls[0][0]('bad id');
       eventRegistry.componentDidDisappear.mock.calls[0][0]('bad id');
-      eventRegistry.onNavigationInteraction.mock.calls[0][0]('bad id', {});
+      eventRegistry.onNavigationButtonPressed.mock.calls[0][0]('bad id', {});
     }).not.toThrow();
   });
 
@@ -67,7 +67,7 @@ describe(`ComponentEventRegistry`, () => {
     expect(() => {
       eventRegistry.componentDidAppear.mock.calls[0][0]('myId');
       eventRegistry.componentDidDisappear.mock.calls[0][0]('myId');
-      eventRegistry.onNavigationInteraction.mock.calls[0][0]('myId', {});
+      eventRegistry.onNavigationButtonPressed.mock.calls[0][0]('myId', {});
     }).not.toThrow();
   });
 });

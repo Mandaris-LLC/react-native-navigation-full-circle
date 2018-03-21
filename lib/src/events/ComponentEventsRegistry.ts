@@ -5,13 +5,13 @@ export class ComponentEventsRegistry {
   constructor(private eventsRegistry: EventsRegistry, private store: Store) {
     this.componentDidAppear = this.componentDidAppear.bind(this);
     this.componentDidDisappear = this.componentDidDisappear.bind(this);
-    this.onNavigationInteraction = this.onNavigationInteraction.bind(this);
+    this.onNavigationButtonPressed = this.onNavigationButtonPressed.bind(this);
   }
 
   public registerForAllComponents(): void {
     this.eventsRegistry.componentDidAppear(this.componentDidAppear);
     this.eventsRegistry.componentDidDisappear(this.componentDidDisappear);
-    this.eventsRegistry.onNavigationInteraction(this.onNavigationInteraction);
+    this.eventsRegistry.onNavigationButtonPressed(this.onNavigationButtonPressed);
   }
 
   private componentDidAppear(componentId: string) {
@@ -28,10 +28,11 @@ export class ComponentEventsRegistry {
     }
   }
 
-  private onNavigationInteraction(componentId: string, params) {
+  private onNavigationButtonPressed(componentId: string, buttonId: string) {
+    console.log(componentId, buttonId); //tslint:disable-line
     const componentRef = this.store.getRefForId(componentId);
-    if (componentRef && componentRef.onNavigationInteraction) {
-      componentRef.onNavigationInteraction(params);
+    if (componentRef && componentRef.onNavigationButtonPressed) {
+      componentRef.onNavigationButtonPressed(buttonId);
     }
   }
 }

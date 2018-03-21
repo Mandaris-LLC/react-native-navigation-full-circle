@@ -22,7 +22,7 @@ if (Platform.OS === 'android') {
 
 function start() {
   registerScreens();
-  Navigation.events().appLaunched(() => {
+  Navigation.events().onAppLaunched(() => {
     Navigation.setDefaultOptions({
       _animations: {
         push: {
@@ -46,7 +46,7 @@ function start() {
             interpolation: 'decelerate',
           }
         },
-        pop : {
+        pop: {
           rotationY: {
             from: 0,
             to: -360,
