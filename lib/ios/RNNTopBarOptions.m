@@ -158,6 +158,9 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 		
 		viewController.navigationItem.backBarButtonItem = backItem;
 	}
+	
+	viewController.navigationItem.hidesBackButton = [self.backButtonHidden boolValue];
+	
 }
 
 -(void)storeOriginalTopBarImages:(UIViewController*)viewController {
