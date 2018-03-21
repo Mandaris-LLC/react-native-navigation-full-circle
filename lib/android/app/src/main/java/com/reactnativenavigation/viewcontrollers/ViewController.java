@@ -156,7 +156,7 @@ public abstract class ViewController<T extends ViewGroup> implements ViewTreeObs
         applyOptions(options);
         applyOnParentController(parentController -> {
             parentController.clearOptions();
-            if (getView() instanceof Component) parentController.applyOptions(options, (Component) getView());
+            if (getView() instanceof Component) parentController.applyChildOptions(options, (Component) getView());
         });
     }
 

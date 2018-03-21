@@ -139,7 +139,7 @@ public class BottomTabsControllerTest extends BaseTest {
         child1.onViewAppeared();
         ArgumentCaptor<Options> optionsCaptor = ArgumentCaptor.forClass(Options.class);
         ArgumentCaptor<ReactComponent> viewCaptor = ArgumentCaptor.forClass(ReactComponent.class);
-        verify(stack, times(1)).applyOptions(optionsCaptor.capture(), viewCaptor.capture());
+        verify(stack, times(1)).applyChildOptions(optionsCaptor.capture(), viewCaptor.capture());
         assertThat(viewCaptor.getValue()).isEqualTo(child1.getView());
         assertThat(optionsCaptor.getValue().bottomTabsOptions.tabColor.hasValue()).isFalse();
     }

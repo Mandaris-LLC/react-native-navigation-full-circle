@@ -166,7 +166,7 @@ public class TopTabsViewControllerTest extends BaseTest {
         verify(tabControllers.get(1), times(0)).onViewAppeared();
 
         ReactComponent comp = ((ComponentViewController) tabControllers.get(0)).getComponent();
-        verify(uut, times(1)).applyOptions(any(Options.class), eq(comp));
+        verify(uut, times(1)).applyChildOptions(any(Options.class), eq(comp));
     }
 
     @Test
@@ -178,17 +178,17 @@ public class TopTabsViewControllerTest extends BaseTest {
 
         uut.onViewAppeared();
         ReactComponent currentTab = tabView(0);
-        verify(uut, times(1)).applyOptions(any(Options.class), eq(currentTab));
+        verify(uut, times(1)).applyChildOptions(any(Options.class), eq(currentTab));
         assertThat(uut.options.topBarOptions.title.text.get()).isEqualTo(createTabTopBarTitle(0));
 
         uut.switchToTab(1);
         currentTab = tabView(1);
-        verify(uut, times(1)).applyOptions(any(Options.class), eq(currentTab));
+        verify(uut, times(1)).applyChildOptions(any(Options.class), eq(currentTab));
         assertThat(uut.options.topBarOptions.title.text.get()).isEqualTo(createTabTopBarTitle(1));
 
         uut.switchToTab(0);
         currentTab = tabView(0);
-        verify(uut, times(2)).applyOptions(any(Options.class), eq(currentTab));
+        verify(uut, times(2)).applyChildOptions(any(Options.class), eq(currentTab));
         assertThat(uut.options.topBarOptions.title.text.get()).isEqualTo(createTabTopBarTitle(0));
     }
 
@@ -213,7 +213,7 @@ public class TopTabsViewControllerTest extends BaseTest {
         tabControllers.get(0).onViewAppeared();
         ArgumentCaptor<Options> optionsCaptor = ArgumentCaptor.forClass(Options.class);
         ArgumentCaptor<ReactComponent> viewCaptor = ArgumentCaptor.forClass(ReactComponent.class);
-        verify(parentController, times(1)).applyOptions(optionsCaptor.capture(), viewCaptor.capture());
+        verify(parentController, times(1)).applyChildOptions(optionsCaptor.capture(), viewCaptor.capture());
         assertThat(optionsCaptor.getValue().topTabOptions.title.hasValue()).isFalse();
     }
 

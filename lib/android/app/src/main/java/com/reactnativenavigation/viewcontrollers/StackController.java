@@ -42,14 +42,14 @@ public class StackController extends ParentController <StackLayout> {
     }
 
     @Override
-    public void applyOptions(Options options, Component component) {
-        super.applyOptions(options, component);
-        getView().applyOptions(this.options, component);
+    public void applyChildOptions(Options options, Component child) {
+        super.applyChildOptions(options, child);
+        getView().applyOptions(this.options, child);
         applyOnParentController(parentController ->
-                ((ParentController) parentController).applyOptions(this.options.copy().clearTopBarOptions(), component)
+                ((ParentController) parentController).applyChildOptions(this.options.copy().clearTopBarOptions(), child)
         );
-        if (component instanceof ReactComponent) {
-            fabOptionsPresenter.applyOptions(options.fabOptions, (ReactComponent) component, getView());
+        if (child instanceof ReactComponent) {
+            fabOptionsPresenter.applyOptions(options.fabOptions, (ReactComponent) child, getView());
         }
         animator.setOptions(options.animationsOptions);
     }

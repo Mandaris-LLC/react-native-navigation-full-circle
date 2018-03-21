@@ -88,7 +88,7 @@ public class StackControllerTest extends BaseTest {
             @Override
             public void resolve(@Nullable Object value) {
                 uut.pop(new MockPromise());
-                verify(uut, times(1)).applyOptions(uut.options, eq((ReactComponent) child1.getView()));
+                verify(uut, times(1)).applyChildOptions(uut.options, eq((ReactComponent) child1.getView()));
             }
         });
     }
@@ -432,7 +432,7 @@ public class StackControllerTest extends BaseTest {
 
         ArgumentCaptor<Options> optionsCaptor = ArgumentCaptor.forClass(Options.class);
         ArgumentCaptor<ReactComponent> viewCaptor = ArgumentCaptor.forClass(ReactComponent.class);
-        verify(parent, times(1)).applyOptions(optionsCaptor.capture(), viewCaptor.capture());
+        verify(parent, times(1)).applyChildOptions(optionsCaptor.capture(), viewCaptor.capture());
         assertThat(optionsCaptor.getValue().topBarOptions.title.text.hasValue()).isFalse();
     }
 
