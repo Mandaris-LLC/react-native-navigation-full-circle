@@ -2,7 +2,9 @@ package com.reactnativenavigation.parse;
 
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.reactnativenavigation.BuildConfig;
 import com.reactnativenavigation.parse.params.Color;
 import com.reactnativenavigation.parse.params.Fraction;
 import com.reactnativenavigation.parse.params.NullColor;
@@ -44,6 +46,11 @@ public class TitleOptions {
         options.fontFamily = typefaceManager.getTypeFace(json.optString("fontFamily", ""));
         options.component = TextParser.parse(json, "component");
         options.alignment = Alignment.fromString(TextParser.parse(json, "alignment").get(""));
+
+        if (options.component.hasValue() && options.text.hasValue()) {
+            if (BuildConfig.DEBUG) Log.w("RNN", "A screen can't use both text and component - clearing text.");
+            options.text = new NullText();
+        }
 
         return options;
     }

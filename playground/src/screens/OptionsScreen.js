@@ -23,6 +23,8 @@ class OptionsScreen extends Component {
           fontSize: 16,
           fontFamily: 'HelveticaNeue-Italic',
           largeTitle: false,
+          component: 'navigation.playground.CustomTopBar',
+          alignment: 'center'
         },
         ...Platform.select({
           android: { drawBehind: true },
@@ -41,13 +43,13 @@ class OptionsScreen extends Component {
             testID: CUSTOM_BUTTON2,
             component: 'CustomRoundedButton'
           },
-          {
-            id: BUTTON_ONE,
-            testID: BUTTON_ONE,
-            title: 'One',
-            buttonFontSize: 28,
-            buttonColor: 'red'
-          }
+          // {
+          //   id: BUTTON_ONE,
+          //   testID: BUTTON_ONE,
+          //   title: 'One',
+          //   buttonFontSize: 28,
+          //   buttonColor: 'red'
+          // }
         ],
         leftButtons: [{
           id: BUTTON_LEFT,
@@ -99,6 +101,7 @@ class OptionsScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
+        <View style={{width: 2, height: 2, backgroundColor: 'red', alignSelf: 'center'}}/>
         <Text style={styles.h1} testID={testIDs.OPTIONS_SCREEN_HEADER}>{`Options Screen`}</Text>
         <Button title='Dynamic Options' testID={testIDs.DYNAMIC_OPTIONS_BUTTON} onPress={this.onClickDynamicOptions} />
         <Button title='Show Top Bar' testID={testIDs.SHOW_TOP_BAR_BUTTON} onPress={this.onClickShowTopBar} />

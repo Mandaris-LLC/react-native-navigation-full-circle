@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,6 +22,9 @@ import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 @SuppressLint("ViewConstructor")
 public class TitleBar extends Toolbar {
@@ -48,8 +52,8 @@ public class TitleBar extends Toolbar {
     }
 
     public void setComponent(String componentName, TitleOptions.Alignment alignment) {
-        reactViewController.setComponent(componentName, alignment);
-        addView(reactViewController.getView(), ViewGroup.LayoutParams.WRAP_CONTENT, getHeight());
+        reactViewController.setComponent(componentName);
+        addView(reactViewController.getView(), getComponentLayoutParams(alignment));
     }
 
     public void setBackgroundColor(Color color) {
@@ -145,5 +149,15 @@ public class TitleBar extends Toolbar {
             }
         }
         return null;
+    }
+
+    public Toolbar.LayoutParams getComponentLayoutParams(TitleOptions.Alignment alignment) {
+        if (alignment == TitleOptions.Alignment.Fill) {
+            return new LayoutParams(MATCH_PARENT, getHeight());
+        } else {
+            LayoutParams lp = new LayoutParams(WRAP_CONTENT, getHeight());
+            lp.gravity = Gravity.CENTER;
+            return lp;
+        }
     }
 }

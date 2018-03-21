@@ -3,7 +3,6 @@ package com.reactnativenavigation.viewcontrollers;
 import android.app.Activity;
 
 import com.reactnativenavigation.parse.Options;
-import com.reactnativenavigation.parse.TitleOptions;
 import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.views.titlebar.TitleBarReactView;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
@@ -12,7 +11,6 @@ public class TitleBarReactViewController extends ViewController<TitleBarReactVie
 
     private final TitleBarReactViewCreator reactViewCreator;
     private String componentName;
-    private TitleOptions.Alignment alignment;
 
     public TitleBarReactViewController(Activity activity, TitleBarReactViewCreator reactViewCreator) {
         super(activity, CompatUtils.generateViewId() + "", new Options());
@@ -29,8 +27,7 @@ public class TitleBarReactViewController extends ViewController<TitleBarReactVie
 
     }
 
-    public void setComponent(String componentName, TitleOptions.Alignment alignment) {
+    public void setComponent(String componentName) {
         this.componentName = componentName;
-        this.alignment = alignment;
     }
 }

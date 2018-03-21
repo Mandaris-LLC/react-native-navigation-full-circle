@@ -1,6 +1,8 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.ViewGroup;
 
 import com.reactnativenavigation.BaseTest;
@@ -14,6 +16,7 @@ import com.reactnativenavigation.views.titlebar.TitleBar;
 import com.reactnativenavigation.views.titlebar.TitleBarReactView;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +27,6 @@ import java.util.Map;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -128,10 +130,28 @@ public class TitleBarTest extends BaseTest {
     }
 
     @Test
-    public void setComponent_addsComponentToTitleBar() {
+    public void setComponent_addsComponentToTitleBar() throws Exception {
         uut.setComponent("com.rnn.CustomView", TitleOptions.Alignment.Center);
-        final int height = uut.getHeight();
-        verify(uut, times(1)).addView(any(TitleBarReactView.class), eq(ViewGroup.LayoutParams.WRAP_CONTENT), eq(height));
+        verify(uut, times(1)).addView(any(TitleBarReactView.class));
+    }
+
+    @Test
+    public void setComponent_alignFill() throws Exception {
+        uut.setComponent("com.rnn.CustomView", TitleOptions.Alignment.Fill);
+        verify(uut, times(1)).getComponentLayoutParams(TitleOptions.Alignment.Fill);
+        ArgumentCaptor<Toolbar.LayoutParams> lpCaptor = ArgumentCaptor.forClass(Toolbar.LayoutParams.class);
+        verify(uut, times(1)).addView(any(TitleBarReactView.class), lpCaptor.capture());
+        assertThat(lpCaptor.getValue().width == ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+    @Test
+    public void setComponent_alignCenter() throws Exception {
+        uut.setComponent("com.rnn.CustomView", TitleOptions.Alignment.Center);
+        verify(uut, times(1)).getComponentLayoutParams(TitleOptions.Alignment.Center);
+        ArgumentCaptor<Toolbar.LayoutParams> lpCaptor = ArgumentCaptor.forClass(Toolbar.LayoutParams.class);
+        verify(uut, times(1)).addView(any(TitleBarReactView.class), lpCaptor.capture());
+        assertThat(lpCaptor.getValue().width == ViewGroup.LayoutParams.WRAP_CONTENT);
+        assertThat(lpCaptor.getValue().gravity == Gravity.CENTER);
     }
 
     private List<Button> leftButton(Button leftButton) {
