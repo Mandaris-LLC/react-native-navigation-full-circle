@@ -38,12 +38,13 @@ public class TitleBarTest extends BaseTest {
     private Button textButton;
     private Button customButton;
     private Map<String, TopBarButtonController> buttonControllers;
+    private TitleBarReactViewController reactViewController;
 
     @Override
     public void beforeEach() {
         final TopBarButtonCreatorMock buttonCreator = new TopBarButtonCreatorMock();
         final Activity activity = newActivity();
-        TitleBarReactViewController reactViewController = new TitleBarReactViewController(activity, new TitleBarReactViewCreatorMock());
+        reactViewController = spy(new TitleBarReactViewController(activity, new TitleBarReactViewCreatorMock()));
         createButtons();
         buttonControllers = new HashMap<>();
         uut = spy(new TitleBar(activity, buttonCreator, reactViewController, (buttonId -> {})) {
@@ -132,7 +133,7 @@ public class TitleBarTest extends BaseTest {
     @Test
     public void setComponent_addsComponentToTitleBar() throws Exception {
         uut.setComponent("com.rnn.CustomView", TitleOptions.Alignment.Center);
-        verify(uut, times(1)).addView(any(TitleBarReactView.class));
+        verify(uut, times(1)).addView(any(TitleBarReactView.class), any(Toolbar.LayoutParams.class));
     }
 
     @Test
@@ -152,6 +153,15 @@ public class TitleBarTest extends BaseTest {
         verify(uut, times(1)).addView(any(TitleBarReactView.class), lpCaptor.capture());
         assertThat(lpCaptor.getValue().width == ViewGroup.LayoutParams.WRAP_CONTENT);
         assertThat(lpCaptor.getValue().gravity == Gravity.CENTER);
+    }
+
+    @Test
+    public void clear() throws Exception {
+        uut.clear();
+        assertThat(uut.getTitle()).isNullOrEmpty();
+        assertThat(uut.getMenu().size()).isZero();
+        assertThat(uut.getNavigationIcon()).isNull();
+        verify(reactViewController, times(1)).destroy();
     }
 
     private List<Button> leftButton(Button leftButton) {

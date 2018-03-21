@@ -22,9 +22,7 @@ class OptionsScreen extends Component {
           color: 'black',
           fontSize: 16,
           fontFamily: 'HelveticaNeue-Italic',
-          largeTitle: false,
-          component: 'navigation.playground.CustomTopBar',
-          alignment: 'center'
+          largeTitle: false
         },
         ...Platform.select({
           android: { drawBehind: true },
@@ -268,7 +266,7 @@ class OptionsScreen extends Component {
       topBar: {
         title: {
           component: 'navigation.playground.CustomTopBar',
-          alignment: 'fill'
+          alignment: 'center'
         }
       }
     });

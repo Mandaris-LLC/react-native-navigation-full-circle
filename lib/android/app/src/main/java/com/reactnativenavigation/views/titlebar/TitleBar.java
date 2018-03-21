@@ -82,6 +82,12 @@ public class TitleBar extends Toolbar {
         setTitle(null);
         clearRightButtons();
         clearLeftButton();
+        clearComponent();
+    }
+
+    private void clearComponent() {
+        reactViewController.destroy();
+        reactViewController = new TitleBarReactViewController(reactViewController);
     }
 
     private void clearLeftButton() {

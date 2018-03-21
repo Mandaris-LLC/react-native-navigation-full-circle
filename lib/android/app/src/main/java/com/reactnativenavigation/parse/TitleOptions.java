@@ -47,10 +47,7 @@ public class TitleOptions {
         options.component = TextParser.parse(json, "component");
         options.alignment = Alignment.fromString(TextParser.parse(json, "alignment").get(""));
 
-        if (options.component.hasValue() && options.text.hasValue()) {
-            if (BuildConfig.DEBUG) Log.w("RNN", "A screen can't use both text and component - clearing text.");
-            options.text = new NullText();
-        }
+        validate(options);
 
         return options;
     }
@@ -69,6 +66,7 @@ public class TitleOptions {
         if (other.fontFamily != null) fontFamily = other.fontFamily;
         if (other.component.hasValue()) component = other.component;
         if (other.alignment != Alignment.Default) alignment = other.alignment;
+        validate(this);
     }
 
     void mergeWithDefault(TitleOptions defaultOptions) {
@@ -78,5 +76,13 @@ public class TitleOptions {
         if (fontFamily == null) fontFamily = defaultOptions.fontFamily;
         if (!component.hasValue()) component = defaultOptions.component;
         if (alignment == Alignment.Default) alignment = defaultOptions.alignment;
+        validate(this);
+    }
+
+    private static void validate(TitleOptions options) {
+        if (options.component.hasValue() && options.text.hasValue()) {
+            if (BuildConfig.DEBUG) Log.w("RNN", "A screen can't use both text and component - clearing text.");
+            options.text = new Text("");
+        }
     }
 }
