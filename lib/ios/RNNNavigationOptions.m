@@ -20,6 +20,8 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 -(instancetype)initWithDict:(NSDictionary *)options {
 	self = [super init];
 	self.statusBarHidden = [options objectForKey:@"statusBarHidden"];
+	self.statusBarBlur = [options objectForKey:@"statusBarBlur"];
+	self.statusBarStyle = [options objectForKey:@"statusBarStyle"];
 	self.screenBackgroundColor = [options objectForKey:@"screenBackgroundColor"];
 	self.backButtonTransition = [options objectForKey:@"backButtonTransition"];
 	self.orientation = [options objectForKey:@"orientation"];

@@ -120,6 +120,14 @@
 	return NO;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+	if (self.options.statusBarStyle && [self.options.statusBarStyle isEqualToString:@"light"]) {
+		return UIStatusBarStyleLightContent;
+	} else {
+		return UIStatusBarStyleDefault;
+	}
+}
+
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
 	return self.options.supportedOrientations;
 }
