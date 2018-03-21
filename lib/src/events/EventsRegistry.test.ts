@@ -32,8 +32,8 @@ describe('EventsRegistry', () => {
     expect(result).toBe(subscription);
     expect(mockNativeEventsReceiver.registerComponentDidAppear).toHaveBeenCalledTimes(1);
 
-    mockNativeEventsReceiver.registerComponentDidAppear.mock.calls[0][0]({ componentId: 'theId' });
-    expect(cb).toHaveBeenCalledWith('theId', '');
+    mockNativeEventsReceiver.registerComponentDidAppear.mock.calls[0][0]({ componentId: 'theId', componentName: 'theName' });
+    expect(cb).toHaveBeenCalledWith('theId', 'theName');
   });
 
   it('exposes componentDidDisappear event', () => {
@@ -46,8 +46,8 @@ describe('EventsRegistry', () => {
     expect(result).toBe(subscription);
     expect(mockNativeEventsReceiver.registerComponentDidDisappear).toHaveBeenCalledTimes(1);
 
-    mockNativeEventsReceiver.registerComponentDidDisappear.mock.calls[0][0]({ componentId: 'theId' });
-    expect(cb).toHaveBeenCalledWith('theId', '');
+    mockNativeEventsReceiver.registerComponentDidDisappear.mock.calls[0][0]({ componentId: 'theId', componentName: 'theName' });
+    expect(cb).toHaveBeenCalledWith('theId', 'theName');
   });
 
   it('exposes onNavigationButtonPressed event', () => {

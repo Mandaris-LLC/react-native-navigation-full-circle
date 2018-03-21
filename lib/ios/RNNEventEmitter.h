@@ -8,9 +8,9 @@
 
 -(void)sendOnAppLaunched;
 
--(void)sendComponentDidAppear:(NSString*)componentId;
+-(void)sendComponentDidAppear:(NSString*)componentId componentName:(NSString*)componentName;
 
--(void)sendComponentDidDisappear:(NSString*)componentId;
+-(void)sendComponentDidDisappear:(NSString*)componentId componentName:(NSString*)componentName;
 
 -(void)sendOnNavigationButtonPressed:(NSString*)componentId buttonId:(NSString*)buttonId;
 

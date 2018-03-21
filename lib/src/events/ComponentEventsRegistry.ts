@@ -29,7 +29,6 @@ export class ComponentEventsRegistry {
   }
 
   private onNavigationButtonPressed(componentId: string, buttonId: string) {
-    console.log(componentId, buttonId); //tslint:disable-line
     const componentRef = this.store.getRefForId(componentId);
     if (componentRef && componentRef.onNavigationButtonPressed) {
       componentRef.onNavigationButtonPressed(buttonId);

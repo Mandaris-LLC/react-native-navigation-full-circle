@@ -52,7 +52,7 @@
 
 -(void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-	[self.eventEmitter sendComponentDidAppear:self.componentId];
+	[self.eventEmitter sendComponentDidAppear:self.componentId componentName:self.componentName];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -61,7 +61,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
-	[self.eventEmitter sendComponentDidDisappear:self.componentId];
+	[self.eventEmitter sendComponentDidDisappear:self.componentId componentName:self.componentName];
 }
 
 - (void)viewDidLoad {
