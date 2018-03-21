@@ -143,54 +143,54 @@ describe('ComponentWrapper', () => {
   });
 
   describe('component lifecycle', () => {
-    const didAppearCallback = jest.fn();
-    const didDisappearCallback = jest.fn();
-    const onNavigationButtonPressedCallback = jest.fn();
+    const componentDidAppearCallback = jest.fn();
+    const componentDidDisappearCallback = jest.fn();
+    const onNavigationInteractionCallback = jest.fn();
 
     class MyLifecycleComponent extends MyComponent {
-      didAppear() {
-        didAppearCallback();
+      componentDidAppear() {
+        componentDidAppearCallback();
       }
 
-      didDisappear() {
-        didDisappearCallback();
+      componentDidDisappear() {
+        componentDidDisappearCallback();
       }
 
-      onNavigationButtonPressed() {
-        onNavigationButtonPressedCallback();
+      onNavigationInteraction() {
+        onNavigationInteractionCallback();
       }
     }
 
-    it('didAppear, didDisappear and onNavigationButtonPressed are optional', () => {
+    it('componentDidAppear, componentDidDisappear and onNavigationInteraction are optional', () => {
       const NavigationComponent = ComponentWrapper.wrap(componentName, MyComponent, store);
       const tree = renderer.create(<NavigationComponent componentId={'component1'} />);
-      expect(() => tree.getInstance()!.didAppear()).not.toThrow();
-      expect(() => tree.getInstance()!.didDisappear()).not.toThrow();
-      expect(() => tree.getInstance()!.onNavigationButtonPressed()).not.toThrow();
+      expect(() => tree.getInstance()!.componentDidAppear()).not.toThrow();
+      expect(() => tree.getInstance()!.componentDidDisappear()).not.toThrow();
+      expect(() => tree.getInstance()!.onNavigationInteraction()).not.toThrow();
     });
 
-    it('calls didAppear on OriginalComponent', () => {
+    it('calls componentDidAppear on OriginalComponent', () => {
       const NavigationComponent = ComponentWrapper.wrap(componentName, MyLifecycleComponent, store);
       const tree = renderer.create(<NavigationComponent componentId={'component1'} />);
-      expect(didAppearCallback).toHaveBeenCalledTimes(0);
-      tree.getInstance()!.didAppear();
-      expect(didAppearCallback).toHaveBeenCalledTimes(1);
+      expect(componentDidAppearCallback).toHaveBeenCalledTimes(0);
+      tree.getInstance()!.componentDidAppear();
+      expect(componentDidAppearCallback).toHaveBeenCalledTimes(1);
     });
 
-    it('calls didDisappear on OriginalComponent', () => {
+    it('calls componentDidDisappear on OriginalComponent', () => {
       const NavigationComponent = ComponentWrapper.wrap(componentName, MyLifecycleComponent, store);
       const tree = renderer.create(<NavigationComponent componentId={'component1'} />);
-      expect(didDisappearCallback).toHaveBeenCalledTimes(0);
-      tree.getInstance()!.didDisappear();
-      expect(didDisappearCallback).toHaveBeenCalledTimes(1);
+      expect(componentDidDisappearCallback).toHaveBeenCalledTimes(0);
+      tree.getInstance()!.componentDidDisappear();
+      expect(componentDidDisappearCallback).toHaveBeenCalledTimes(1);
     });
 
-    it('calls onNavigationButtonPressed on OriginalComponent', () => {
+    it('calls onNavigationInteraction on OriginalComponent', () => {
       const NavigationComponent = ComponentWrapper.wrap(componentName, MyLifecycleComponent, store);
       const tree = renderer.create(<NavigationComponent componentId={'component1'} />);
-      expect(onNavigationButtonPressedCallback).toHaveBeenCalledTimes(0);
-      tree.getInstance()!.onNavigationButtonPressed();
-      expect(onNavigationButtonPressedCallback).toHaveBeenCalledTimes(1);
+      expect(onNavigationInteractionCallback).toHaveBeenCalledTimes(0);
+      tree.getInstance()!.onNavigationInteraction();
+      expect(onNavigationInteractionCallback).toHaveBeenCalledTimes(1);
     });
   });
 });

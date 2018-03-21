@@ -13,13 +13,13 @@ describe('EventsRegistry', () => {
   it('exposes appLaunch event', () => {
     const subscription = {};
     const cb = jest.fn();
-    mockNativeEventsReceiver.registerAppLaunched.mockReturnValueOnce(subscription);
+    mockNativeEventsReceiver.registerOnAppLaunched.mockReturnValueOnce(subscription);
 
-    const result = uut.appLaunched(cb);
+    const result = uut.onAppLaunched(cb);
 
     expect(result).toBe(subscription);
-    expect(mockNativeEventsReceiver.registerAppLaunched).toHaveBeenCalledTimes(1);
-    expect(mockNativeEventsReceiver.registerAppLaunched).toHaveBeenCalledWith(cb);
+    expect(mockNativeEventsReceiver.registerOnAppLaunched).toHaveBeenCalledTimes(1);
+    expect(mockNativeEventsReceiver.registerOnAppLaunched).toHaveBeenCalledWith(cb);
   });
 
   it('exposes componentDidAppear event', () => {
@@ -49,12 +49,12 @@ describe('EventsRegistry', () => {
   it('exposes interaction event', () => {
     const subscription = {};
     const cb = jest.fn();
-    mockNativeEventsReceiver.registerInteraction.mockReturnValueOnce(subscription);
+    mockNativeEventsReceiver.registerOnNavigationInteraction.mockReturnValueOnce(subscription);
 
-    const result = uut.interaction(cb);
+    const result = uut.onNavigationInteraction(cb);
 
     expect(result).toBe(subscription);
-    expect(mockNativeEventsReceiver.registerInteraction).toHaveBeenCalledTimes(1);
-    expect(mockNativeEventsReceiver.registerInteraction).toHaveBeenCalledWith(cb);
+    expect(mockNativeEventsReceiver.registerOnNavigationInteraction).toHaveBeenCalledTimes(1);
+    expect(mockNativeEventsReceiver.registerOnNavigationInteraction).toHaveBeenCalledWith(cb);
   });
 });

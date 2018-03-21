@@ -41,21 +41,21 @@ export class ComponentWrapper {
         store.cleanId(this.state.componentId);
       }
 
-      didAppear() {
-        if (this.originalComponentRef.didAppear) {
-          this.originalComponentRef.didAppear();
+      componentDidAppear() {
+        if (this.originalComponentRef.componentDidAppear) {
+          this.originalComponentRef.componentDidAppear();
         }
       }
 
-      didDisappear() {
-        if (this.originalComponentRef.didDisappear) {
-          this.originalComponentRef.didDisappear();
+      componentDidDisappear() {
+        if (this.originalComponentRef.componentDidDisappear) {
+          this.originalComponentRef.componentDidDisappear();
         }
       }
 
-      onNavigationButtonPressed(buttonId) {
-        if (this.originalComponentRef.onNavigationButtonPressed) {
-          this.originalComponentRef.onNavigationButtonPressed(buttonId);
+      onNavigationInteraction(buttonId) {
+        if (this.originalComponentRef.onNavigationInteraction) {
+          this.originalComponentRef.onNavigationInteraction(buttonId);
         }
       }
 
@@ -69,7 +69,7 @@ export class ComponentWrapper {
         return (
           <OriginalComponentClass
             ref={this._saveComponentRef}
-            { ...this.state.allProps }
+            {...this.state.allProps}
             componentId={this.state.componentId}
             key={this.state.componentId}
           />
