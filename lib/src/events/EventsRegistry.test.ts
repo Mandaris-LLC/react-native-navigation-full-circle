@@ -31,7 +31,9 @@ describe('EventsRegistry', () => {
 
     expect(result).toBe(subscription);
     expect(mockNativeEventsReceiver.registerComponentDidAppear).toHaveBeenCalledTimes(1);
-    expect(mockNativeEventsReceiver.registerComponentDidAppear).toHaveBeenCalledWith(cb);
+
+    mockNativeEventsReceiver.registerComponentDidAppear.mock.calls[0][0]({ componentId: 'theId' });
+    expect(cb).toHaveBeenCalledWith('theId', '');
   });
 
   it('exposes componentDidDisappear event', () => {
@@ -43,7 +45,9 @@ describe('EventsRegistry', () => {
 
     expect(result).toBe(subscription);
     expect(mockNativeEventsReceiver.registerComponentDidDisappear).toHaveBeenCalledTimes(1);
-    expect(mockNativeEventsReceiver.registerComponentDidDisappear).toHaveBeenCalledWith(cb);
+
+    mockNativeEventsReceiver.registerComponentDidDisappear.mock.calls[0][0]({ componentId: 'theId' });
+    expect(cb).toHaveBeenCalledWith('theId', '');
   });
 
   it('exposes onNavigationButtonPressed event', () => {
@@ -55,6 +59,8 @@ describe('EventsRegistry', () => {
 
     expect(result).toBe(subscription);
     expect(mockNativeEventsReceiver.registerOnNavigationButtonPressed).toHaveBeenCalledTimes(1);
-    expect(mockNativeEventsReceiver.registerOnNavigationButtonPressed).toHaveBeenCalledWith(cb);
+
+    mockNativeEventsReceiver.registerOnNavigationButtonPressed.mock.calls[0][0]({ componentId: 'theId', buttonId: 'theBtnId' });
+    expect(cb).toHaveBeenCalledWith('theId', 'theBtnId');
   });
 });

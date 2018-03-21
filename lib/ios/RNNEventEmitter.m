@@ -27,11 +27,11 @@ static NSString* const onNavigationButtonPressed	= @"RNN.onNavigationButtonPress
 }
 
 -(void)sendComponentDidAppear:(NSString *)componentId {
-	[self send:componentDidAppear body:componentId];
+	[self send:componentDidAppear body:@{@"componentId":componentId}];
 }
 
 -(void)sendComponentDidDisappear:(NSString *)componentId {
-	[self send:componentDidDisappear body:componentId];
+	[self send:componentDidDisappear body:@{@"componentId":componentId}];
 }
 
 -(void)sendOnNavigationButtonPressed:(NSString *)componentId buttonId:(NSString*)buttonId {
