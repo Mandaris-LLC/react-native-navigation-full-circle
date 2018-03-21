@@ -40,13 +40,14 @@ public class OptionsPresenter {
     }
 
     private void applyTopBarOptions(TopBarOptions options) {
-        if (options.title.hasValue()) topBar.setTitle(options.title.get());
-        topBar.setBackgroundColor(options.backgroundColor);
-        topBar.setTitleTextColor(options.textColor);
-        topBar.setTitleFontSize(options.textFontSize);
+        if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
+        if (options.title.component.hasValue()) topBar.setComponent(options.title.component.get(), options.title.alignment);
+        topBar.setBackgroundColor(options.background.color);
+        topBar.setTitleTextColor(options.title.color);
+        topBar.setTitleFontSize(options.title.fontSize);
         if (options.testId.hasValue()) topBar.setTestId(options.testId.get());
 
-        topBar.setTitleTypeface(options.textFontFamily);
+        topBar.setTitleTypeface(options.title.fontFamily);
         if (options.visible.isFalse()) {
             topBar.hide(options.animate);
         }

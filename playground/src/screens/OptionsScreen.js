@@ -17,16 +17,18 @@ class OptionsScreen extends Component {
   static get options() {
     return {
       topBar: {
-        title: 'Static Title',
-        textColor: 'black',
+        title: {
+          text: 'Static Title',
+          color: 'black',
+          fontSize: 16,
+          fontFamily: 'HelveticaNeue-Italic',
+          largeTitle: false,
+        },
         ...Platform.select({
           android: { drawBehind: true },
           ios: { drawBehind: false, }
         }),
-        largeTitle: false,
         visible: true,
-        textFontSize: 16,
-        textFontFamily: 'HelveticaNeue-Italic',
         testID: testIDs.TOP_BAR_ELEMENT,
         rightButtons: [
           {
@@ -105,12 +107,11 @@ class OptionsScreen extends Component {
         <Button title='Top Bar Opaque' onPress={this.onClickTopBarOpaque} />
         <Button title='scrollView Screen' testID={testIDs.SCROLLVIEW_SCREEN_BUTTON} onPress={this.onClickScrollViewScreen} />
         <Button title='Custom Transition' testID={testIDs.CUSTOM_TRANSITION_BUTTON} onPress={this.onClickCustomTranstition} />
-        {Platform.OS === 'android' ?
-          <Button title='Hide fab' testID={testIDs.HIDE_FAB} onPress={this.onClickFab} />
-          : null}
+        {Platform.OS === 'android' ? <Button title='Hide fab' testID={testIDs.HIDE_FAB} onPress={this.onClickFab} /> : null}
         <Button title='Show overlay' testID={testIDs.SHOW_OVERLAY_BUTTON} onPress={() => this.onClickShowOverlay(true)} />
         <Button title='Show touch through overlay' testID={testIDs.SHOW_TOUCH_THROUGH_OVERLAY_BUTTON} onPress={() => this.onClickShowOverlay(false)} />
         <Button title='Push Default Options Screen' testID={testIDs.PUSH_DEFAULT_OPTIONS_BUTTON} onPress={this.onClickPushDefaultOptionsScreen} />
+        <Button title='Show TopBar react view' testID={testIDs.SHOW_TOPBAR_REACT_VIEW} onPress={this.onShowTopBarReactView} />
         <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
       </View>
     );
@@ -161,12 +162,14 @@ class OptionsScreen extends Component {
   onClickDynamicOptions() {
     Navigation.setOptions(this.props.componentId, {
       topBar: {
-        title: 'Dynamic Title',
-        textColor: '#00FFFF',
-        largeTitle: false,
+        title: {
+          text: 'Dynamic Title',
+          color: '#00FFFF',
+          largeTitle: false,
+          fontSize: 20,
+          fontFamily: 'HelveticaNeue-CondensedBold'
+        },
         buttonColor: 'red',
-        textFontSize: 20,
-        textFontFamily: 'HelveticaNeue-CondensedBold'
       }
     });
   }
@@ -253,6 +256,17 @@ class OptionsScreen extends Component {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.PushedScreen'
+      }
+    });
+  }
+
+  onShowTopBarReactView = () => {
+    Navigation.setOptions(this.props.componentId, {
+      topBar: {
+        title: {
+          component: 'navigation.playground.CustomTopBar',
+          alignment: 'fill'
+        }
       }
     });
   }
