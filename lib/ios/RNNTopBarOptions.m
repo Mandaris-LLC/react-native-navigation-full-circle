@@ -114,7 +114,7 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 	if (self.translucent) {
 		viewController.navigationController.navigationBar.translucent = [self.translucent boolValue];
 	} else {
-		viewController.navigationController.navigationBar.translucent = YES;
+		viewController.navigationController.navigationBar.translucent = NO;
 	}
 	
 	if (self.drawBehind) {

@@ -40,7 +40,7 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 	if (self.translucent) {
 		viewController.tabBarController.tabBar.translucent = [self.translucent boolValue];
 	} else {
-		viewController.tabBarController.tabBar.translucent = YES;
+		viewController.tabBarController.tabBar.translucent = NO;
 	}
 	
 	if (self.hideShadow) {
