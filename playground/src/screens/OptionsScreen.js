@@ -33,23 +33,23 @@ class OptionsScreen extends Component {
         visible: true,
         testID: testIDs.TOP_BAR_ELEMENT,
         rightButtons: [
-          {
-            id: CUSTOM_BUTTON,
-            testID: CUSTOM_BUTTON,
-            component: 'CustomTextButton'
-          },
+          // {
+          //   id: CUSTOM_BUTTON,
+          //   testID: CUSTOM_BUTTON,
+          //   component: 'CustomTextButton'
+          // },
           {
             id: CUSTOM_BUTTON2,
             testID: CUSTOM_BUTTON2,
             component: 'CustomRoundedButton'
           },
-          // {
-          //   id: BUTTON_ONE,
-          //   testID: BUTTON_ONE,
-          //   title: 'One',
-          //   buttonFontSize: 28,
-          //   buttonColor: 'red'
-          // }
+          {
+            id: BUTTON_ONE,
+            testID: BUTTON_ONE,
+            title: 'One',
+            buttonFontSize: 28,
+            buttonColor: 'red'
+          }
         ],
         leftButtons: [{
           id: BUTTON_LEFT,
