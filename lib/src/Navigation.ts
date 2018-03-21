@@ -9,6 +9,7 @@ import { LayoutTreeCrawler } from './commands/LayoutTreeCrawler';
 import { EventsRegistry } from './events/EventsRegistry';
 import { ComponentProvider } from 'react-native';
 import { Element } from './adapters/Element';
+import { ComponentEventsRegistry } from './events/ComponentEventsRegistry';
 
 export class Navigation {
   public readonly Element;
@@ -21,7 +22,7 @@ export class Navigation {
   private readonly layoutTreeCrawler;
   private readonly nativeCommandsSender;
   private readonly commands;
-  private readonly publicEventsRegistry;
+  private readonly eventsRegistry;
 
   constructor() {
     this.Element = Element;
@@ -34,7 +35,9 @@ export class Navigation {
     this.layoutTreeCrawler = new LayoutTreeCrawler(this.uniqueIdProvider, this.store);
     this.nativeCommandsSender = new NativeCommandsSender();
     this.commands = new Commands(this.nativeCommandsSender, this.layoutTreeParser, this.layoutTreeCrawler);
-    this.publicEventsRegistry = new EventsRegistry(this.nativeEventsReceiver);
+    this.eventsRegistry = new EventsRegistry(this.nativeEventsReceiver);
+
+    new ComponentEventsRegistry(this.eventsRegistry, this.store).registerForAllComponents();
   }
 
   /**
@@ -133,6 +136,6 @@ export class Navigation {
    * Obtain the events registry instance
    */
   public events(): EventsRegistry {
-    return this.publicEventsRegistry;
+    return this.eventsRegistry;
   }
 }
