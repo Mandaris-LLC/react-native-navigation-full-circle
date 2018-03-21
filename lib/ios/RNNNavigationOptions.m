@@ -51,9 +51,7 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 	}
 }
 
--(void)applyOn:(UIViewController*)viewController {
-//	[_defaultOptions applyOn:viewController];
-	
+-(void)applyOn:(UIViewController*)viewController {	
 	[self.topBar applyOn:viewController];
 	[self.bottomTabs applyOn:viewController];
 	[self.topTab applyOn:viewController];

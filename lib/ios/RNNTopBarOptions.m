@@ -16,6 +16,7 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 - (instancetype)initWithDict:(NSDictionary *)dict {
 	self = [super initWithDict:dict];
 	self.title = [RNNTitleOptions new];
+
 	return self;
 }
 
@@ -42,16 +43,16 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 		}
 	}
 	
-	
-	
-	
-	
 	if (self.visible) {
 		[viewController.navigationController setNavigationBarHidden:![self.visible boolValue] animated:[self.animate boolValue]];
+	} else {
+		[viewController.navigationController setNavigationBarHidden:NO animated:NO];
 	}
 	
 	if (self.hideOnScroll) {
 		viewController.navigationController.hidesBarsOnSwipe = [self.hideOnScroll boolValue];
+	} else {
+		viewController.navigationController.hidesBarsOnSwipe = NO;
 	}
 	
 	if (self.buttonColor) {
@@ -112,6 +113,8 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 	
 	if (self.translucent) {
 		viewController.navigationController.navigationBar.translucent = [self.translucent boolValue];
+	} else {
+		viewController.navigationController.navigationBar.translucent = YES;
 	}
 	
 	if (self.drawBehind) {
@@ -120,6 +123,8 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 		} else {
 			viewController.edgesForExtendedLayout &= ~UIRectEdgeTop;
 		}
+	} else {
+		viewController.edgesForExtendedLayout = UIRectEdgeAll;
 	}
 	
 	if (self.noBorder) {
