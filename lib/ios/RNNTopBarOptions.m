@@ -149,6 +149,15 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 	UIImage *image = self.backButtonImage ? [RCTConvert UIImage:self.backButtonImage] : nil;
 	[[UINavigationBar appearance] setBackIndicatorImage:image];
 	[[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:image];
+	
+	if (self.backButtonTitle) {
+		UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:self.backButtonTitle
+																	 style:UIBarButtonItemStylePlain
+																	target:nil
+																	action:nil];
+		
+		viewController.navigationItem.backBarButtonItem = backItem;
+	}
 }
 
 -(void)storeOriginalTopBarImages:(UIViewController*)viewController {

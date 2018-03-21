@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString* testID;
 @property (nonatomic, strong) RNNTitleOptions* title;
 @property (nonatomic, strong) NSNumber* backButtonImage;
+@property (nonatomic, strong) NSString* backButtonTitle;
 
 @property (nonatomic, strong) NSString* componentName;
 @property (nonatomic, strong) NSString* backgroundComponentName;
