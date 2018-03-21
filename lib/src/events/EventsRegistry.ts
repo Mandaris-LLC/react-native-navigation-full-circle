@@ -11,15 +11,15 @@ export class EventsRegistry {
     return this.nativeEventsReceiver.registerOnAppLaunched(callback);
   }
 
-  public componentDidAppear(callback: (componendId: string, componentName: string) => void): EventSubscription {
+  public componentDidAppear(callback: (componentId: string, componentName: string) => void): EventSubscription {
     return this.nativeEventsReceiver.registerComponentDidAppear(callback);
   }
 
-  public componentDidDisappear(callback: (componendId: string, componentName: string) => void): EventSubscription {
+  public componentDidDisappear(callback: (componentId: string, componentName: string) => void): EventSubscription {
     return this.nativeEventsReceiver.registerComponentDidDisappear(callback);
   }
 
-  public onNavigationInteraction(callback: (name: string) => void): EventSubscription {
+  public onNavigationInteraction(callback: (componentId: string, params) => void): EventSubscription {
     return this.nativeEventsReceiver.registerOnNavigationInteraction(callback);
   }
 }

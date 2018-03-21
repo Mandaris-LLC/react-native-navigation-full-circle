@@ -10,7 +10,7 @@ describe('EventsRegistry', () => {
     uut = new EventsRegistry(mockNativeEventsReceiver);
   });
 
-  it('exposes appLaunch event', () => {
+  it('exposes onAppLaunched event', () => {
     const subscription = {};
     const cb = jest.fn();
     mockNativeEventsReceiver.registerOnAppLaunched.mockReturnValueOnce(subscription);
@@ -46,7 +46,7 @@ describe('EventsRegistry', () => {
     expect(mockNativeEventsReceiver.registerComponentDidDisappear).toHaveBeenCalledWith(cb);
   });
 
-  it('exposes interaction event', () => {
+  it('exposes onNavigationInteraction event', () => {
     const subscription = {};
     const cb = jest.fn();
     mockNativeEventsReceiver.registerOnNavigationInteraction.mockReturnValueOnce(subscription);

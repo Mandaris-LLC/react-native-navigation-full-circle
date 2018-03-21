@@ -14,15 +14,15 @@ export class NativeEventsReceiver {
     return this.emitter.addListener('RNN.onAppLaunched', callback);
   }
 
-  registerComponentDidAppear(callback: (componendId: string, componentName: string) => void): EventSubscription {
+  registerComponentDidAppear(callback: (componentId: string, componentName: string) => void): EventSubscription {
     return this.emitter.addListener('RNN.componentDidAppear', callback);
   }
 
-  registerComponentDidDisappear(callback: (componendId: string, componentName: string) => void): EventSubscription {
+  registerComponentDidDisappear(callback: (componentId: string, componentName: string) => void): EventSubscription {
     return this.emitter.addListener('RNN.componentDidDisappear', callback);
   }
 
-  registerOnNavigationInteraction(callback: (name: string) => void): EventSubscription {
+  registerOnNavigationInteraction(callback: (componentId: string, params) => void): EventSubscription {
     return this.emitter.addListener('RNN.onNavigationInteraction', callback);
   }
 }
