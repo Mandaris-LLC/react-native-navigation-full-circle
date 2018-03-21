@@ -16,21 +16,15 @@ import java.util.ArrayList;
 
 public class OptionsPresenter {
     private TopBar topBar;
-    private Component component;
-
-    public OptionsPresenter(TopBar topBar, Component component) {
-        this.topBar = topBar;
-        this.component = component;
-    }
 
     public OptionsPresenter(TopBar topBar) {
         this.topBar = topBar;
     }
 
-    public void applyOptions(Options options) {
+    public void applyChildOptions(Options options, Component child) {
         applyOrientation(options.orientationOptions);
         applyButtons(options.topBarOptions.leftButtons, options.topBarOptions.rightButtons);
-        applyTopBarOptions(options.topBarOptions);
+        applyTopBarOptions(options.topBarOptions, child);
         applyTopTabsOptions(options.topTabsOptions);
         applyTopTabOptions(options.topTabOptions);
     }
@@ -39,7 +33,7 @@ public class OptionsPresenter {
         ((Activity) topBar.getContext()).setRequestedOrientation(options.getValue());
     }
 
-    private void applyTopBarOptions(TopBarOptions options) {
+    private void applyTopBarOptions(TopBarOptions options, Component component) {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
         if (options.title.component.hasValue()) topBar.setComponent(options.title.component.get(), options.title.alignment);
         topBar.setBackgroundColor(options.background.color);
@@ -59,7 +53,6 @@ public class OptionsPresenter {
         } else if (options.drawBehind.isFalseOrUndefined()) {
             component.drawBelowTopBar(topBar);
         }
-
         if (options.hideOnScroll.isTrue()) {
             if (component instanceof IReactView) {
                 topBar.enableCollapse(((IReactView) component).getScrollEventListener());

@@ -38,13 +38,13 @@ public class StackController extends ParentController <StackLayout> {
 
     public void applyOptions(Options options) {
         super.applyOptions(options);
-        getView().applyOptions(options);
+        getView().applyChildOptions(options);
     }
 
     @Override
     public void applyChildOptions(Options options, Component child) {
         super.applyChildOptions(options, child);
-        getView().applyOptions(this.options, child);
+        getView().applyChildOptions(this.options, child);
         applyOnParentController(parentController ->
                 ((ParentController) parentController).applyChildOptions(this.options.copy().clearTopBarOptions(), child)
         );

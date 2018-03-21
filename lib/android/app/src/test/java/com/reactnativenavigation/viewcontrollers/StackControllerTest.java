@@ -352,7 +352,6 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void pop_animatesTopBarIfNeeded() throws Exception {
         uut.ensureViewIsCreated();
-        uut.getView().setTopBar(spy(uut.getTopBar()));
 
         child1.options.topBarOptions.visible = new Bool(false);
         child1.options.topBarOptions.animate = new Bool(false);
