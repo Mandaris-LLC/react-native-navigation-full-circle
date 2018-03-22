@@ -17,7 +17,7 @@ public class Options implements DEFAULT_VALUES {
     @NonNull
     public static Options parse(TypefaceLoader typefaceManager, JSONObject json, @NonNull Options defaultOptions) {
         Options result = new Options();
-        if (json == null) return result;
+        if (json == null) return result.withDefaultOptions(defaultOptions);
 
         result.orientationOptions = OrientationOptions.parse(json);
         result.topBarOptions = TopBarOptions.parse(typefaceManager, json.optJSONObject("topBar"));
