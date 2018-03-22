@@ -20,7 +20,6 @@ export class Commands {
 
     const result = this.nativeCommandsSender.setRoot(layout);
     this.commandsObserver.notify('setRoot', { layout });
-
     return result;
   }
 
@@ -44,7 +43,10 @@ export class Commands {
     const input = _.cloneDeep(simpleApi);
     const layout = this.layoutTreeParser.parse(input);
     this.layoutTreeCrawler.crawl(layout);
-    return this.nativeCommandsSender.showModal(layout);
+
+    const result = this.nativeCommandsSender.showModal(layout);
+    this.commandsObserver.notify('showModal', { layout });
+    return result;
   }
 
   public dismissModal(id) {

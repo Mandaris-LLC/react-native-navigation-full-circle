@@ -303,26 +303,41 @@ describe('Commands', () => {
       uut = new Commands(mockCommandsSender, mockParser, mockCrawler, commandsObserver);
     });
 
-    it('always call last', () => {
+    function getAllMethodsOfUut() {
+      const uutFns = Object.getOwnPropertyNames(Commands.prototype);
+      const methods = _.filter(uutFns, (fn) => fn !== 'constructor');
+      expect(methods.length).toBeGreaterThan(1);
+      return methods;
+    }
+
+    function getAllMethodsOfNativeCommandsSender() {
       const nativeCommandsSenderFns = _.functions(mockCommandsSender);
       expect(nativeCommandsSenderFns.length).toBeGreaterThan(1);
+      return nativeCommandsSenderFns;
+    }
 
+    it('always call last, when nativeCommand fails, dont notify listeners', () => {
       // throw when calling any native commands sender
-      _.forEach(nativeCommandsSenderFns, (fn) => {
+      _.forEach(getAllMethodsOfNativeCommandsSender(), (fn) => {
         mockCommandsSender[fn].mockImplementation(() => {
           throw new Error(`throwing from mockNativeCommandsSender`);
         });
       });
 
-      // call all commands on uut, all should throw, no commandObservers called
-      const uutFns = Object.getOwnPropertyNames(Commands.prototype);
-      const methods = _.filter(uutFns, (fn) => fn !== 'constructor');
-      expect(methods.sort()).toEqual(nativeCommandsSenderFns.sort());
+      expect(getAllMethodsOfUut().sort()).toEqual(getAllMethodsOfNativeCommandsSender().sort());
 
-      _.forEach(methods, (m) => {
+      // call all commands on uut, all should throw, no commandObservers called
+      _.forEach(getAllMethodsOfUut(), (m) => {
         expect(() => uut[m]()).toThrow();
         expect(cb).not.toHaveBeenCalled();
       });
+    });
+
+    xit('notify on all commands', () => {
+      _.forEach(getAllMethodsOfUut(), (m) => {
+        uut[m]();
+      });
+      expect(cb).toHaveBeenCalledTimes(getAllMethodsOfUut().length);
     });
 
     it('setRoot', () => {
@@ -338,11 +353,17 @@ describe('Commands', () => {
       expect(cb).toHaveBeenCalledWith('setDefaultOptions', { options });
     });
 
-    xit('setOptions', () => {
+    it('setOptions', () => {
       const options = { x: 1 };
       uut.setOptions('compId', options);
       expect(cb).toHaveBeenCalledTimes(1);
-      expect(cb).toHaveBeenCalledWith('setOptions', { componentId: 'compId', options: {} });
+      expect(cb).toHaveBeenCalledWith('setOptions', { componentId: 'compId', options });
+    });
+
+    it('showModal', () => {
+      uut.showModal({});
+      expect(cb).toHaveBeenCalledTimes(1);
+      expect(cb).toHaveBeenCalledWith('showModal', { layout: 'parsed' });
     });
   });
 });
