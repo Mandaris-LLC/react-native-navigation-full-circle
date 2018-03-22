@@ -3,6 +3,7 @@ package com.reactnativenavigation.parse;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.util.Log;
 import android.util.Property;
 import android.view.View;
 
