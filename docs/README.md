@@ -185,17 +185,17 @@ Note:  v1 properties with names beginning with 'navBar' are replaced in v2 with 
 | topBarHidden          |   ✅    |   ✅      |     ✅        | Wix|
 | topBarHideOnScroll    |  ✅     |  ✅    |✅| Wix|
 | topBarTranslucent     |  ✅     |   ✅     |     [Contribute](/docs/WorkingLocally.md)        | Wix|
-| topBarTransparent     | ✅      |[Contribute](/docs/WorkingLocally.md)|     [Contribute](/docs/WorkingLocally.md)        |
+| topBarTransparent     | ✅      |✅|     [Contribute](/docs/WorkingLocally.md)        |
 | topBarNoBorder        |  ✅     |    ✅     |     [Contribute](/docs/WorkingLocally.md)        |  @gtchance|
 | drawUnderTabBar       |  ✅     |    ✅     |✅| |
 | drawUnderTopBar       |  ✅     |    ✅     |✅||
 | statusBarBlur         |  ✅     |    ✅     |      [Contribute](/docs/WorkingLocally.md)       | @gtchance|
 | topBarBlur            | ✅      |    ✅     |      [Contribute](/docs/WorkingLocally.md)       | @gtchance|
 | tabBarHidden  |   ✅  |   ✅     |✅| @gtchance|
-| statusBarTextColorScheme |  ✅   |   in development      |      / iOS specific    |
-| statusBarTextColorSchemeSingleScreen|  ✅   |     in development    |     / iOS specific      |
-| topBarSubtitleColor          |  ✅   |   [Contribute](/docs/WorkingLocally.md)     |      [Contribute](/docs/WorkingLocally.md)      |
-| topBarSubtitleFontFamily    |   ✅  |    [Contribute](/docs/WorkingLocally.md)    |     [Contribute](/docs/WorkingLocally.md)       |
+| statusBarTextColorScheme |  ✅   |✅|      / iOS specific    |
+| statusBarTextColorSchemeSingleScreen|  ✅   |✅|     / iOS specific      |
+| topBarSubtitleColor          |  ✅   |✅|      [Contribute](/docs/WorkingLocally.md)      |
+| topBarSubtitleFontFamily    |   ✅  |✅|     [Contribute](/docs/WorkingLocally.md)       |
 | screenBackgroundColor     | ✅    |   ✅     |     [Contribute](/docs/WorkingLocally.md)       |  Wix|
 | orientation     |  ✅   |    ✅     |✅| Wix|
 | statusBarHideWithTopBar        |  ✅   |   ✅     |     [Contribute](/docs/WorkingLocally.md)       | @gtchance|
