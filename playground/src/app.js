@@ -26,44 +26,63 @@ function start() {
     Navigation.setDefaultOptions({
       _animations: {
         push: {
-          y: {
-            from: 1000,
-            to: 0,
-            duration: 500,
-            interpolation: 'decelerate',
+          topBar: {
+            y: {
+              from: 1000,
+              to: 0,
+              duration: 500,
+              interpolation: 'accelerate',
+            },
+            alpha: {
+              from: 0,
+              to: 1,
+              duration: 500,
+              interpolation: 'accelerate'
+            }
           },
-          x: {
-            from: 1000,
-            to: 0,
-            duration: 500,
-            interpolation: 'decelerate',
-            startDelay: 100
-          },
-          scaleY: {
-            from: 0,
-            to: 1,
-            duration: 1000,
-            interpolation: 'decelerate',
+          content: {
+            y: {
+              from: 1000,
+              to: 0,
+              duration: 500,
+              interpolation: 'accelerate',
+            },
+            alpha: {
+              from: 0,
+              to: 1,
+              duration: 500,
+              interpolation: 'accelerate'
+            }
           }
         },
         pop: {
-          rotationY: {
-            from: 0,
-            to: -360,
-            duration: 500,
-            interpolation: 'accelerate',
+          topBar: {
+            y: {
+              from: 0,
+              to: 100,
+              duration: 500,
+              interpolation: 'decelerate',
+            },
+            alpha: {
+              from: 1,
+              to: 0,
+              duration: 500,
+              interpolation: 'decelerate'
+            }
           },
-          x: {
-            from: 0,
-            to: -1000,
-            duration: 500,
-            interpolation: 'accelerate',
-            startDelay: 100
-          },
-          alpha: {
-            from: 1,
-            to: 0,
-            duration: 500
+          content: {
+            y: {
+              from: 0,
+              to: 1000,
+              duration: 500,
+              interpolation: 'decelerate',
+            },
+            alpha: {
+              from: 1,
+              to: 0,
+              duration: 500,
+              interpolation: 'decelerate'
+            }
           }
         }
       }
