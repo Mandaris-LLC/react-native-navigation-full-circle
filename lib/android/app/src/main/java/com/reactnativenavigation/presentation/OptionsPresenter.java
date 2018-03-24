@@ -75,7 +75,8 @@ public class OptionsPresenter {
     }
 
     private void applyButtons(ArrayList<Button> leftButtons, ArrayList<Button> rightButtons) {
-        topBar.setButtons(leftButtons, rightButtons);
+        topBar.setLeftButtons(leftButtons);
+        topBar.setRightButtons(rightButtons);
     }
 
     private void applyTopTabsOptions(TopTabsOptions options) {
@@ -101,5 +102,61 @@ public class OptionsPresenter {
         } else {
             childDisappearListener.childDisappear();
         }
+    }
+
+    public void mergeChildOptions(Options options, Component child) {
+        mergeOrientation(options.orientationOptions);
+        mergeButtons(options.topBarOptions.leftButtons, options.topBarOptions.rightButtons);
+        mergeTopBarOptions(options.topBarOptions, child);
+        mergeTopTabsOptions(options.topTabsOptions);
+        mergeTopTabOptions(options.topTabOptions);
+    }
+
+    private void mergeOrientation(OrientationOptions orientationOptions) {
+        if (orientationOptions.hasValue()) applyOrientation(orientationOptions);
+    }
+
+    private void mergeButtons(ArrayList<Button> leftButtons, ArrayList<Button> rightButtons) {
+        if (leftButtons != null) topBar.setLeftButtons(leftButtons);
+        if (rightButtons != null) topBar.setRightButtons(rightButtons);
+    }
+
+    private void mergeTopBarOptions(TopBarOptions options, Component component) {
+        if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
+        if (options.title.component.hasValue()) topBar.setComponent(options.title.component.get(), options.title.alignment);
+        if (options.background.color.hasValue()) topBar.setBackgroundColor(options.background.color);
+        if (options.title.color.hasValue()) topBar.setTitleTextColor(options.title.color);
+        if (options.title.fontSize.hasValue()) topBar.setTitleFontSize(options.title.fontSize);
+        if (options.testId.hasValue()) topBar.setTestId(options.testId.get());
+
+        if (options.title.fontFamily != null) topBar.setTitleTypeface(options.title.fontFamily);
+        if (options.visible.isFalse()) {
+            topBar.hide(options.animate);
+        }
+        if (options.visible.isTrue()) {
+            topBar.show(options.animate);
+        }
+        if (options.drawBehind.isTrue()) {
+            component.drawBehindTopBar();
+        }
+        if (options.drawBehind.isFalse()) {
+            component.drawBelowTopBar(topBar);
+        }
+        if (options.hideOnScroll.isTrue() && component instanceof IReactView) {
+            topBar.enableCollapse(((IReactView) component).getScrollEventListener());
+        }
+        if (options.hideOnScroll.isFalse()) {
+            topBar.disableCollapse();
+        }
+    }
+
+    private void mergeTopTabsOptions(TopTabsOptions options) {
+        if (options.selectedTabColor.hasValue() && options.unselectedTabColor.hasValue()) topBar.applyTopTabsColors(options.selectedTabColor, options.unselectedTabColor);
+        if (options.fontSize.hasValue()) topBar.applyTopTabsFontSize(options.fontSize);
+        if (options.visible.hasValue()) topBar.setTopTabsVisible(options.visible.isTrue());
+    }
+
+    private void mergeTopTabOptions(TopTabOptions topTabOptions) {
+        if (topTabOptions.fontFamily != null) topBar.setTopTabFontFamily(topTabOptions.tabIndex, topTabOptions.fontFamily);
     }
 }
