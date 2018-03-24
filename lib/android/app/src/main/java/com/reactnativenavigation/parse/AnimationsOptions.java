@@ -1,8 +1,6 @@
 package com.reactnativenavigation.parse;
 
 
-import android.util.Log;
-
 import org.json.JSONObject;
 
 public class AnimationsOptions {

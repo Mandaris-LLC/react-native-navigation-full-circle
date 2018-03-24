@@ -27,7 +27,7 @@ public class OptionsPresenter {
     public void applyChildOptions(Options options, Component child) {
         applyOrientation(options.orientationOptions);
         applyButtons(options.topBarOptions.leftButtons, options.topBarOptions.rightButtons);
-        applyTopBarOptions(options.topBarOptions, child, options.animationsOptions);
+        applyTopBarOptions(options.topBarOptions, options.animationsOptions, child);
         applyTopTabsOptions(options.topTabsOptions);
         applyTopTabOptions(options.topTabOptions);
     }
@@ -36,7 +36,7 @@ public class OptionsPresenter {
         ((Activity) topBar.getContext()).setRequestedOrientation(options.getValue());
     }
 
-    private void applyTopBarOptions(TopBarOptions options, Component component, AnimationsOptions animationOptions) {
+    private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component) {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
         if (options.title.component.hasValue())
             topBar.setComponent(options.title.component.get(), options.title.alignment);
@@ -107,7 +107,7 @@ public class OptionsPresenter {
     public void mergeChildOptions(Options options, Component child) {
         mergeOrientation(options.orientationOptions);
         mergeButtons(options.topBarOptions.leftButtons, options.topBarOptions.rightButtons);
-        mergeTopBarOptions(options.topBarOptions, child);
+        mergeTopBarOptions(options.topBarOptions, options.animationsOptions, child);
         mergeTopTabsOptions(options.topTabsOptions);
         mergeTopTabOptions(options.topTabOptions);
     }
@@ -121,7 +121,7 @@ public class OptionsPresenter {
         if (rightButtons != null) topBar.setRightButtons(rightButtons);
     }
 
-    private void mergeTopBarOptions(TopBarOptions options, Component component) {
+    private void mergeTopBarOptions(TopBarOptions options, AnimationsOptions animationsOptions, Component component) {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
         if (options.title.component.hasValue()) topBar.setComponent(options.title.component.get(), options.title.alignment);
         if (options.background.color.hasValue()) topBar.setBackgroundColor(options.background.color);
@@ -131,10 +131,18 @@ public class OptionsPresenter {
 
         if (options.title.fontFamily != null) topBar.setTitleTypeface(options.title.fontFamily);
         if (options.visible.isFalse()) {
-            topBar.hide(options.animate);
+            if (options.animate.isTrueOrUndefined()) {
+                topBar.hideAnimate(animationsOptions.pop.topBar);
+            } else {
+                topBar.hide();
+            }
         }
         if (options.visible.isTrue()) {
-            topBar.show(options.animate);
+            if (options.animate.isTrueOrUndefined()) {
+                topBar.showAnimate(animationsOptions.push.topBar);
+            } else {
+                topBar.show();
+            }
         }
         if (options.drawBehind.isTrue()) {
             component.drawBehindTopBar();

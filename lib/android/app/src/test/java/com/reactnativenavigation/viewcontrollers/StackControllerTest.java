@@ -10,7 +10,7 @@ import com.reactnativenavigation.mocks.MockPromise;
 import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
-import com.reactnativenavigation.parse.AnimationOptions;
+import com.reactnativenavigation.parse.NestedAnimationsOptions;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Text;
@@ -517,7 +517,7 @@ public class StackControllerTest extends BaseTest {
         ParentController parentController = Mockito.mock(ParentController.class);
         uut.setParentController(parentController);
         Options options = new Options();
-        options.animationsOptions.push = AnimationOptions.parse(new JSONObject());
+        options.animationsOptions.push = NestedAnimationsOptions.parse(new JSONObject());
         options.topBarOptions.testId = new Text("id");
         options.fabOptions.id = new Text("fabId");
         Component component = mock(Component.class);

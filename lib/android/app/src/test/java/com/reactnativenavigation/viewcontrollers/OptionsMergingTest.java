@@ -89,6 +89,7 @@ public class OptionsMergingTest extends BaseTest {
         options.topBarOptions.title = titleOptions;
         options.topBarOptions.background.color = new Color(0);
         options.topBarOptions.testId = new Text("test123");
+        options.topBarOptions.animate = new Bool(false);
         options.topBarOptions.visible = new Bool(false);
         options.topBarOptions.drawBehind = new Bool(false);
         options.topBarOptions.hideOnScroll = new Bool(false);
@@ -142,7 +143,7 @@ public class OptionsMergingTest extends BaseTest {
         verify(topBar, times(t)).setTitleFontSize(any());
         verify(topBar, times(t)).setTestId(any());
         verify(topBar, times(t)).setTitleTypeface(any());
-        verify(topBar, times(t)).hide(any());
+        verify(topBar, times(t)).hide();
         verify(child, times(t)).drawBelowTopBar(topBar);
         verify(child, times(0)).drawBehindTopBar();
     }
