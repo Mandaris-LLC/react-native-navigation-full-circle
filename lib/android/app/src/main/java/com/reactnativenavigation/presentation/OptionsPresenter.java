@@ -38,8 +38,7 @@ public class OptionsPresenter {
 
     private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component) {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
-        if (options.title.component.hasValue())
-            topBar.setComponent(options.title.component.get(), options.title.alignment);
+        if (options.title.component.hasValue()) topBar.setComponent(options.title.component.get(), options.title.alignment);
         topBar.setBackgroundColor(options.background.color);
         topBar.setTitleTextColor(options.title.color);
         topBar.setTitleFontSize(options.title.fontSize);
@@ -86,9 +85,7 @@ public class OptionsPresenter {
     }
 
     private void applyTopTabOptions(TopTabOptions topTabOptions) {
-        if (topTabOptions.fontFamily != null) {
-            topBar.setTopTabFontFamily(topTabOptions.tabIndex, topTabOptions.fontFamily);
-        }
+        if (topTabOptions.fontFamily != null) topBar.setTopTabFontFamily(topTabOptions.tabIndex, topTabOptions.fontFamily);
     }
 
     public void onChildWillDisappear(Options disappearing, Options appearing, @NonNull ChildDisappearListener childDisappearListener) {
