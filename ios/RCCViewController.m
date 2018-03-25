@@ -650,6 +650,10 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
       self.navigationItem.titleView.clipsToBounds = YES;
     }
   }
+    
+    [self processTitleView:viewController
+                     props:self.navigatorStyle
+                     style:self.navigatorStyle];
 
   #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_10_3
   if (@available(iOS 11.0, *)) {
@@ -670,6 +674,21 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
     }
   }
   #endif
+}
+
+-(void)processTitleView:(UIViewController*)viewController
+                  props:(NSDictionary*)props
+                  style:(NSDictionary*)style {
+    BOOL isSetSubtitleBool = props[@"isSetSubtitle"] ? [props[@"isSetSubtitle"] boolValue] : NO;
+    RCCTitleViewHelper *titleViewHelper = [[RCCTitleViewHelper alloc] init:viewController
+                                                      navigationController:self.navigationController
+                                                                     title:props[@"title"]
+                                                                  subtitle:props[@"subtitle"]
+                                                            titleImageData:props[@"titleImage"]
+                                                             isSetSubtitle:isSetSubtitleBool];
+    
+    [titleViewHelper setup:style];
+    
 }
 
 - (void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

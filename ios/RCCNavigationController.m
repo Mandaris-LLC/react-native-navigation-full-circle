@@ -128,12 +128,13 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
       }
     }
     
+    NSMutableDictionary *mergedStyle = [NSMutableDictionary dictionaryWithDictionary:navigatorStyle];
+    [mergedStyle setValuesForKeysWithDictionary:actionParams];
+    
+    navigatorStyle = mergedStyle;
+    
     RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle globalProps:nil bridge:bridge];
     viewController.controllerId = passProps[@"screenInstanceID"];
-    
-    [self processTitleView:viewController
-                     props:actionParams
-                     style:navigatorStyle];
     
     NSString *backButtonTitle = actionParams[@"backButtonTitle"];
     if (!backButtonTitle) {
