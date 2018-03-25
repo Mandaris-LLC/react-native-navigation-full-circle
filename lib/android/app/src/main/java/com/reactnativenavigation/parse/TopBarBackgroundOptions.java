@@ -6,9 +6,9 @@ import com.reactnativenavigation.parse.parsers.ColorParser;
 
 import org.json.JSONObject;
 
-public class TopBarBackground {
-    public static TopBarBackground parse(JSONObject json) {
-        TopBarBackground options = new TopBarBackground();
+public class TopBarBackgroundOptions {
+    public static TopBarBackgroundOptions parse(JSONObject json) {
+        TopBarBackgroundOptions options = new TopBarBackgroundOptions();
         if (json == null) {
             return options;
         }
@@ -20,11 +20,11 @@ public class TopBarBackground {
 
     public Color color = new NullColor();
 
-    void mergeWith(final TopBarBackground other) {
+    void mergeWith(final TopBarBackgroundOptions other) {
         if (other.color.hasValue()) color = other.color;
     }
 
-    void mergeWithDefault(TopBarBackground defaultOptions) {
+    void mergeWithDefault(TopBarBackgroundOptions defaultOptions) {
         if (!color.hasValue()) color = defaultOptions.color;
     }
 }
