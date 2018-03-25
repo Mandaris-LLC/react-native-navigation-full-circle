@@ -9,6 +9,7 @@ import com.reactnativenavigation.anim.NavigationAnimator;
 import com.reactnativenavigation.mocks.MockPromise;
 import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
+import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.NestedAnimationsOptions;
 import com.reactnativenavigation.parse.Options;
@@ -47,7 +48,7 @@ public class StackControllerTest extends BaseTest {
     public void beforeEach() {
         super.beforeEach();
         activity = newActivity();
-        uut = createStackController("uut");
+        uut = createStackController();
         child1 = spy(new SimpleViewController(activity, "child1", new Options()));
         child2 = spy(new SimpleViewController(activity, "child2", new Options()));
         child3 = spy(new SimpleViewController(activity, "child3", new Options()));
@@ -103,7 +104,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void pop_layoutHandlesChildWillDisappear() throws Exception {
         final StackLayout[] stackLayout = new StackLayout[1];
-        uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), "uut", new Options()) {
+        uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), "uut", new Options()) {
             @NonNull
             @Override
             protected StackLayout createView() {
@@ -323,7 +324,7 @@ public class StackControllerTest extends BaseTest {
 
     @Test
     public void findControllerById_Deeply() throws Exception {
-        StackController stack = createStackController("stack2");
+        StackController stack = createStackController("another");
         stack.animatePush(child2, new MockPromise());
         uut.animatePush(stack, new MockPromise());
         assertThat(uut.findControllerById(child2.getId())).isEqualTo(child2);
@@ -463,7 +464,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void mergeChildOptions_updatesViewWithNewOptions() throws Exception {
         final StackLayout[] stackLayout = new StackLayout[1];
-        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), "stack", new Options()) {
+        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), "stack", new Options()) {
             @NonNull
             @Override
             protected StackLayout createView() {
@@ -480,7 +481,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void mergeChildOptions_updatesParentControllerWithNewOptions() throws Exception {
         final StackLayout[] stackLayout = new StackLayout[1];
-        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), "stack", new Options()) {
+        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), "stack", new Options()) {
             @NonNull
             @Override
             protected StackLayout createView() {
@@ -536,8 +537,12 @@ public class StackControllerTest extends BaseTest {
         assertThat(uut.getChildControllers()).extracting((Extractor<ViewController, String>) ViewController::getId).containsOnly(ids);
     }
 
+    private StackController createStackController() {
+        return createStackController("stackId");
+    }
+
     private StackController createStackController(String id) {
-        return new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), id, new Options()) {
+        return new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), id, new Options()) {
             @Override
             NavigationAnimator createAnimator() {
                 animator = Mockito.mock(NavigationAnimator.class);

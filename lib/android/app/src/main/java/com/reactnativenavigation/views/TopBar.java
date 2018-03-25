@@ -13,12 +13,14 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.reactnativenavigation.R;
 import com.reactnativenavigation.anim.AnimationListener;
 import com.reactnativenavigation.anim.TopBarAnimator;
 import com.reactnativenavigation.anim.TopBarCollapseBehavior;
 import com.reactnativenavigation.interfaces.ScrollEventListener;
 import com.reactnativenavigation.parse.AnimationOptions;
 import com.reactnativenavigation.parse.TitleOptions;
+import com.reactnativenavigation.parse.TopBarBackgroundOptions;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Color;
 import com.reactnativenavigation.parse.params.Fraction;
@@ -29,6 +31,8 @@ import com.reactnativenavigation.viewcontrollers.TitleBarReactViewController;
 import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
 import com.reactnativenavigation.views.titlebar.TitleBar;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
+import com.reactnativenavigation.views.topbar.TopBarBackgroundView;
+import com.reactnativenavigation.views.topbar.TopBarBackgroundViewCreator;
 
 import java.util.List;
 
@@ -43,12 +47,14 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
     private TopTabs topTabs;
     private RelativeLayout root;
     private StackLayout parentView;
+    private TopBarBackgroundViewCreator topBarBackgroundViewCreator;
 
-    public TopBar(final Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarButtonController.OnClickListener onClickListener, StackLayout parentView) {
+    public TopBar(final Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator topBarBackgroundViewCreator, TopBarButtonController.OnClickListener onClickListener, StackLayout parentView) {
         super(context);
         collapsingBehavior = new TopBarCollapseBehavior(this);
-        animator = new TopBarAnimator(this);
+        this.topBarBackgroundViewCreator = topBarBackgroundViewCreator;
         this.parentView = parentView;
+        animator = new TopBarAnimator(this);
         createLayout(buttonCreator, titleBarReactViewCreator, onClickListener);
     }
 
@@ -96,6 +102,14 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
 
     public void setComponent(String componentName, TitleOptions.Alignment alignment) {
         titleBar.setComponent(componentName, alignment);
+    }
+
+    public void setBackgroundComponent(TopBarBackgroundOptions options) {
+        if (options.component.hasValue()) {
+            TopBarBackgroundView background = topBarBackgroundViewCreator.create((Activity) getContext(), String.valueOf(CompatUtils.generateViewId()), options.component.get());
+            background.setId(R.id.topBarBackgroundComponent);
+            root.addView(background);
+        }
     }
 
     public void setTopTabFontFamily(int tabIndex, Typeface fontFamily) {

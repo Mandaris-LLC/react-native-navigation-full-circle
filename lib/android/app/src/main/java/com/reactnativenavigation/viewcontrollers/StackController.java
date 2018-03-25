@@ -15,6 +15,7 @@ import com.reactnativenavigation.views.ReactComponent;
 import com.reactnativenavigation.views.StackLayout;
 import com.reactnativenavigation.views.TopBar;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
+import com.reactnativenavigation.views.topbar.TopBarBackgroundViewCreator;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -28,12 +29,14 @@ public class StackController extends ParentController<StackLayout> {
     private final NavigationAnimator animator;
     private final ReactViewCreator topBarButtonCreator;
     private final TitleBarReactViewCreator titleBarReactViewCreator;
+    private TopBarBackgroundViewCreator topBarBackgroundViewCreator;
 
-    public StackController(final Activity activity, ReactViewCreator topBarButtonCreator, TitleBarReactViewCreator titleBarReactViewCreator, String id, Options initialOptions) {
+    public StackController(final Activity activity, ReactViewCreator topBarButtonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator topBarBackgroundViewCreator, String id, Options initialOptions) {
         super(activity, id, initialOptions);
         animator = createAnimator();
         this.topBarButtonCreator = topBarButtonCreator;
         this.titleBarReactViewCreator = titleBarReactViewCreator;
+        this.topBarBackgroundViewCreator = topBarBackgroundViewCreator;
     }
 
     public void applyOptions(Options options) {
@@ -226,7 +229,7 @@ public class StackController extends ParentController<StackLayout> {
     @NonNull
     @Override
     protected StackLayout createView() {
-        return new StackLayout(getActivity(), topBarButtonCreator, titleBarReactViewCreator, this::sendOnNavigationButtonPressed);
+        return new StackLayout(getActivity(), topBarButtonCreator, titleBarReactViewCreator, topBarBackgroundViewCreator, this::sendOnNavigationButtonPressed);
     }
 
     @NonNull
