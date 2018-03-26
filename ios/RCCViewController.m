@@ -619,9 +619,9 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
         }
     }
     
-    [self processTitleView:viewController
-                     props:self.navigatorStyle
-                     style:self.navigatorStyle];
+    // [self processTitleView:viewController
+    //                  props:self.navigatorStyle
+    //                  style:self.navigatorStyle];
     
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_10_3
     if (@available(iOS 11.0, *)) {
