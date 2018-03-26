@@ -95,11 +95,12 @@
 }
 
 - (void)setCustomNavigationComponentBackground {
-	if (self.options.topBar.backgroundComponentName) {
-		RCTRootView *reactView = (RCTRootView*)[_creator createRootView:self.options.topBar.backgroundComponentName rootViewId:@"navBarBackground"];
+	if (self.options.topBar.background.component) {
+		RCTRootView *reactView = (RCTRootView*)[_creator createRootView:self.options.topBar.background.component rootViewId:@"navBarBackground"];
 
 		RNNCustomTitleView *titleView = [[RNNCustomTitleView alloc] initWithFrame:self.navigationController.navigationBar.bounds subView:reactView alignment:@"fill"];
 		[self.navigationController.navigationBar insertSubview:titleView atIndex:1];
+		self.navigationController.navigationBar.clipsToBounds = YES;
 	}
 }
 
