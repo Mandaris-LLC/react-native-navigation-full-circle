@@ -19,6 +19,10 @@ public class TopBarBackgroundOptions {
         options.color = ColorParser.parse(json, "color");
         options.component = TextParser.parse(json, "component");
 
+        if (options.component.hasValue()) {
+            options.color = new Color(android.graphics.Color.TRANSPARENT);
+        }
+
         return options;
     }
 
@@ -27,9 +31,11 @@ public class TopBarBackgroundOptions {
 
     void mergeWith(final TopBarBackgroundOptions other) {
         if (other.color.hasValue()) color = other.color;
+        if (other.component.hasValue()) component = other.component;
     }
 
     void mergeWithDefault(TopBarBackgroundOptions defaultOptions) {
         if (!color.hasValue()) color = defaultOptions.color;
+        if (!component.hasValue()) component = defaultOptions.component;
     }
 }

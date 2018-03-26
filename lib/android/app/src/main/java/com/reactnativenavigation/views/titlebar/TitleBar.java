@@ -55,6 +55,7 @@ public class TitleBar extends Toolbar {
         clearTitle();
         reactViewController.setComponent(componentName);
         addView(reactViewController.getView(), getComponentLayoutParams(alignment));
+        requestLayout();
     }
 
     public void setBackgroundColor(Color color) {

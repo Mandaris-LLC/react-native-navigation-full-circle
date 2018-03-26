@@ -40,6 +40,7 @@ public class OptionsPresenter {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
         if (options.title.component.hasValue()) topBar.setComponent(options.title.component.get(), options.title.alignment);
         topBar.setBackgroundColor(options.background.color);
+        topBar.setBackgroundComponent(options.background.component);
         topBar.setTitleTextColor(options.title.color);
         topBar.setTitleFontSize(options.title.fontSize);
         if (options.testId.hasValue()) topBar.setTestId(options.testId.get());

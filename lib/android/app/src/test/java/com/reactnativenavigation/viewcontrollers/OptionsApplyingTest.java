@@ -14,10 +14,14 @@ import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.parse.TopBarBackgroundOptions;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Fraction;
 import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.utils.ViewUtils;
+import com.reactnativenavigation.views.topbar.TopBarBackgroundView;
 
+import org.json.JSONObject;
 import org.junit.Test;
 
 import javax.annotation.Nullable;
@@ -176,5 +180,18 @@ public class OptionsApplyingTest extends BaseTest {
                 assertThat(uutLayoutParams.getRule(BELOW)).isNotEqualTo(stackController.getTopBar().getId());
             }
         });
+    }
+
+    @Test
+    public void appliesTopBarComponent() throws Exception {
+        JSONObject json = new JSONObject();
+        json.put("component", "someComponent");
+        uut.options.topBarOptions.background = TopBarBackgroundOptions.parse(json);
+        uut.ensureViewIsCreated();
+        stackController.push(uut, new MockPromise());
+        uut.onViewAppeared();
+
+        assertThat(((ColorDrawable) stackController.getTopBar().getTitleBar().getBackground()).getColor()).isEqualTo(Color.TRANSPARENT);
+        assertThat(ViewUtils.findChildrenByClassRecursive(stackController.getTopBar(), TopBarBackgroundView.class)).isNotNull();
     }
 }
