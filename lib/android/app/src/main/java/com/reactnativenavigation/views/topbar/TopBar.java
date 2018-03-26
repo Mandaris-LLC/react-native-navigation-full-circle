@@ -1,4 +1,4 @@
-package com.reactnativenavigation.views;
+package com.reactnativenavigation.views.topbar;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -27,10 +27,10 @@ import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.viewcontrollers.ReactViewCreator;
 import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
+import com.reactnativenavigation.views.StackLayout;
+import com.reactnativenavigation.views.toptabs.TopTabs;
 import com.reactnativenavigation.views.titlebar.TitleBar;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
-import com.reactnativenavigation.views.topbar.TopBarBackgroundView;
-import com.reactnativenavigation.views.topbar.TopBarBackgroundViewCreator;
 
 import java.util.List;
 
