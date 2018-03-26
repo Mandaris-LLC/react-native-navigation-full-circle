@@ -137,7 +137,7 @@ public class OptionsMergingTest extends BaseTest {
 
     private void assertTopBarOptions(int t) {
         verify(topBar, times(t)).setTitle(any());
-        verify(topBar, times(t)).setComponent(any(), any());
+        verify(topBar, times(t)).setTitleComponent(any(), any());
         verify(topBar, times(t)).setBackgroundColor(any());
         verify(topBar, times(t)).setTitleTextColor(any());
         verify(topBar, times(t)).setTitleFontSize(any());

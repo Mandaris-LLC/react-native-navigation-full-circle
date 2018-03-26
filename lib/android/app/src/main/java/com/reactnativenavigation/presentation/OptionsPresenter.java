@@ -38,7 +38,7 @@ public class OptionsPresenter {
 
     private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component) {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
-        if (options.title.component.hasValue()) topBar.setComponent(options.title.component.get(), options.title.alignment);
+        if (options.title.component.hasValue()) topBar.setTitleComponent(options.title.component.get(), options.title.alignment);
         topBar.setBackgroundColor(options.background.color);
         topBar.setBackgroundComponent(options.background.component);
         topBar.setTitleTextColor(options.title.color);
@@ -121,7 +121,7 @@ public class OptionsPresenter {
 
     private void mergeTopBarOptions(TopBarOptions options, AnimationsOptions animationsOptions, Component component) {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
-        if (options.title.component.hasValue()) topBar.setComponent(options.title.component.get(), options.title.alignment);
+        if (options.title.component.hasValue()) topBar.setTitleComponent(options.title.component.get(), options.title.alignment);
         if (options.background.color.hasValue()) topBar.setBackgroundColor(options.background.color);
         if (options.title.color.hasValue()) topBar.setTitleTextColor(options.title.color);
         if (options.title.fontSize.hasValue()) topBar.setTitleFontSize(options.title.fontSize);
