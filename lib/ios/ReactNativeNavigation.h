@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef UIViewController * (^RNNExternalViewCreator)(void);
+typedef UIViewController * (^RNNExternalViewCreator)(NSDictionary* props);
 
 @interface ReactNativeNavigation : NSObject
 
