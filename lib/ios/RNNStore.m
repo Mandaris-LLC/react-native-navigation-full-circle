@@ -77,9 +77,9 @@
 	[_externalComponentCreators setObject:[callback copy] forKey:name];
 }
 
-- (UIViewController *)getExternalComponent:(NSString *)name props:(NSDictionary*)props {
+- (UIViewController *)getExternalComponent:(NSString *)name props:(NSDictionary*)props bridge:(RCTBridge *)bridge {
 	RNNExternalViewCreator creator = [_externalComponentCreators objectForKey:name];
-	return creator(props);
+	return creator(props, bridge);
 }
 
 @end

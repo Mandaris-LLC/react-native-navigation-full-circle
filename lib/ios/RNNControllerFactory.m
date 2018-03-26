@@ -106,7 +106,7 @@
 	NSString* name = node.data[@"name"];
 	NSDictionary* props = node.data[@"passProps"];
 	
-	UIViewController* externalVC = [_store getExternalComponent:name props:props];
+	UIViewController* externalVC = [_store getExternalComponent:name props:props bridge:_bridge];
 	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:_defaultOptionsDict];
 	[options mergeWith:node.data[@"options"]];
 	
