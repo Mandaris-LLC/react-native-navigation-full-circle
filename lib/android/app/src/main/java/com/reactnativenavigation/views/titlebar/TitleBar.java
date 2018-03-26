@@ -43,6 +43,12 @@ public class TitleBar extends Toolbar {
         setContentDescription("titleBar");
     }
 
+    @Override
+    public void setTitle(CharSequence title) {
+        clearComponent();
+        super.setTitle(title);
+    }
+
     public String getTitle() {
         return super.getTitle() == null ? "" : (String) super.getTitle();
     }
