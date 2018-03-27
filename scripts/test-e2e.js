@@ -14,6 +14,8 @@ function run() {
   const configuration = `${prefix}.${suffix}`;
   const cleanup = process.env.CI ? `--cleanup` : ``;
 
-  !skipBuild && exec.execSync(`detox build --configuration ${configuration}`);
+  if (!skipBuild) {
+    exec.execSync(`detox build --configuration ${configuration}`);
+  }
   exec.execSync(`detox test --configuration ${configuration} --platform ${platform} ${cleanup}`);
 }
