@@ -50,6 +50,9 @@ export class Commands {
   }
 
   public dismissModal(componentId) {
+    if (!componentId) {
+      console.error('dismissModal - componentId is missing');
+    }
     const result = this.nativeCommandsSender.dismissModal(componentId);
     this.commandsObserver.notify('dismissModal', { componentId });
     return result;
