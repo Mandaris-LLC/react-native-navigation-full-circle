@@ -53,7 +53,8 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
         collapsingBehavior = new TopBarCollapseBehavior(this);
         this.topBarBackgroundViewCreator = topBarBackgroundViewCreator;
         this.parentView = parentView;
-        animator = new TopBarAnimator(this);
+        topTabs = new TopTabs(getContext());
+        animator = new TopBarAnimator(this, parentView.getStackId());
         createLayout(buttonCreator, titleBarReactViewCreator, onClickListener);
     }
 

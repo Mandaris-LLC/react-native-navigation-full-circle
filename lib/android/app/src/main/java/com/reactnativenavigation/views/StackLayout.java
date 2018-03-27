@@ -22,10 +22,12 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 @SuppressLint("ViewConstructor")
 public class StackLayout extends RelativeLayout {
     private TopBar topBar;
+    private String stackId;
     private final OptionsPresenter optionsPresenter;
 
-    public StackLayout(Context context, ReactViewCreator topBarButtonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator topBarBackgroundViewCreator, TopBarButtonController.OnClickListener topBarButtonClickListener) {
+    public StackLayout(Context context, ReactViewCreator topBarButtonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator topBarBackgroundViewCreator, TopBarButtonController.OnClickListener topBarButtonClickListener, String stackId) {
         super(context);
+        this.stackId = stackId;
         createLayout(topBarButtonCreator, titleBarReactViewCreator, topBarBackgroundViewCreator, topBarButtonClickListener);
         optionsPresenter = new OptionsPresenter(topBar);
         setContentDescription("StackLayout");
@@ -46,7 +48,7 @@ public class StackLayout extends RelativeLayout {
     }
 
     public void onChildWillDisappear(Options disappearing, Options appearing, ChildDisappearListener childDisappearListener) {
-        new OptionsPresenter(topBar).onChildWillDisappear(disappearing, appearing, childDisappearListener);
+        optionsPresenter.onChildWillDisappear(disappearing, appearing, childDisappearListener);
     }
 
     public void clearOptions() {
@@ -68,5 +70,9 @@ public class StackLayout extends RelativeLayout {
 
     public void mergeChildOptions(Options options, Component child) {
         optionsPresenter.mergeChildOptions(options, child);
+    }
+
+    public String getStackId() {
+        return stackId;
     }
 }

@@ -27,17 +27,26 @@ function start() {
       _animations: {
         push: {
           topBar: {
-            y: {
-              from: 1000,
-              to: 0,
-              duration: 500,
-              interpolation: 'accelerate',
-            },
+            id: 'TEST',
             alpha: {
               from: 0,
               to: 1,
               duration: 500,
               interpolation: 'accelerate'
+            }
+          },
+          bottomTabs: {
+            y: {
+              from: 1000,
+              to: 0,
+              duration: 500,
+              interpolation: 'decelerate',
+            },
+            alpha: {
+              from: 0,
+              to: 1,
+              duration: 500,
+              interpolation: 'decelerate'
             }
           },
           bottomTabs: {
@@ -71,6 +80,15 @@ function start() {
         },
         pop: {
           topBar: {
+            id: 'TEST',
+            alpha: {
+              from: 1,
+              to: 0,
+              duration: 500,
+              interpolation: 'accelerate'
+            }
+          },
+          bottomTabs: {
             y: {
               from: 0,
               to: 100,
@@ -118,6 +136,7 @@ function start() {
 
     Navigation.setRoot({
       stack: {
+        id: 'TEST',
         children: [
           {
             component: {

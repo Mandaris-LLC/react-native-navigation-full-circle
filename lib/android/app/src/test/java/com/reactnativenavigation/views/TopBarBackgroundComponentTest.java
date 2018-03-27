@@ -42,7 +42,7 @@ public class TopBarBackgroundComponentTest extends BaseTest {
                 return backgroundView;
             }
         };
-        StackLayout parent = new StackLayout(newActivity(), new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), backgroundViewCreator, onClickListener);
+        StackLayout parent = new StackLayout(newActivity(), new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), backgroundViewCreator, onClickListener, null);
         uut = new TopBar(newActivity(), new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), backgroundViewCreator, onClickListener, parent);
         parent.addView(uut);
     }
