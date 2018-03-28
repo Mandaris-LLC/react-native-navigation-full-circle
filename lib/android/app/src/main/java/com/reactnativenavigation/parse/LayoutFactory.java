@@ -117,6 +117,7 @@ public class LayoutFactory {
                 node.id,
                 externalComponent,
                 externalComponentCreators.get(externalComponent.name.get()),
+                reactInstanceManager,
                 getOptions(node)
         );
     }
