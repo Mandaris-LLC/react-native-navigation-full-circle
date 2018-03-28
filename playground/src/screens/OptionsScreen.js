@@ -25,7 +25,8 @@ class OptionsScreen extends Component {
           largeTitle: false
         },
         subtitle: {
-          text: 'Static'
+          text: 'Static Subtitle',
+          color: 'red'
         },
         background: {
           component: 'TopBarBackground'

@@ -38,12 +38,15 @@ public class OptionsPresenter {
 
     private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component) {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
-        if (options.subtitle.text.hasValue()) topBar.setSubtitle(options.subtitle.text.get());
         if (options.title.component.hasValue()) topBar.setTitleComponent(options.title.component.get(), options.title.alignment);
+        if (options.title.color.hasValue()) topBar.setTitleTextColor(options.title.color.get());
+        topBar.setTitleFontSize(options.title.fontSize);
+
+        if (options.subtitle.text.hasValue()) topBar.setSubtitle(options.subtitle.text.get());
+        if (options.subtitle.color.hasValue()) topBar.setSubtitleColor(options.subtitle.color.get());
+
         topBar.setBackgroundColor(options.background.color);
         topBar.setBackgroundComponent(options.background.component);
-        topBar.setTitleTextColor(options.title.color);
-        topBar.setTitleFontSize(options.title.fontSize);
         if (options.testId.hasValue()) topBar.setTestId(options.testId.get());
 
         topBar.setTitleTypeface(options.title.fontFamily);
@@ -123,10 +126,11 @@ public class OptionsPresenter {
     private void mergeTopBarOptions(TopBarOptions options, AnimationsOptions animationsOptions, Component component) {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
         if (options.title.component.hasValue()) topBar.setTitleComponent(options.title.component.get(), options.title.alignment);
-        if (options.title.color.hasValue()) topBar.setTitleTextColor(options.title.color);
+        if (options.title.color.hasValue()) topBar.setTitleTextColor(options.title.color.get());
         if (options.title.fontSize.hasValue()) topBar.setTitleFontSize(options.title.fontSize);
 
         if (options.subtitle.text.hasValue()) topBar.setSubtitle(options.subtitle.text.get());
+        if (options.subtitle.color.hasValue()) topBar.setSubtitleColor(options.subtitle.color.get());
 
         if (options.background.color.hasValue()) topBar.setBackgroundColor(options.background.color);
 

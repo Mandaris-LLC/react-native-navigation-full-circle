@@ -3,6 +3,7 @@ package com.reactnativenavigation.views.topbar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
 import android.support.annotation.RestrictTo;
 import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.AppBarLayout;
@@ -83,11 +84,15 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
         titleBar.setSubtitle(subtitle);
     }
 
+    public void setSubtitleColor(@ColorInt int color) {
+        titleBar.setSubtitleTextColor(color);
+    }
+
     public void setTestId(String testId) {
         setTag(testId);
     }
 
-    public void setTitleTextColor(Color color) {
+    public void setTitleTextColor(@ColorInt int color) {
         titleBar.setTitleTextColor(color);
     }
 

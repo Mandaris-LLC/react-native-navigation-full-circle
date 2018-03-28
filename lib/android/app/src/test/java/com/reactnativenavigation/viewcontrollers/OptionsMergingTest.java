@@ -60,7 +60,7 @@ public class OptionsMergingTest extends BaseTest {
     }
 
     @Test
-    public void mergeButtons() throws Exception {
+    public void mergeButtons() {
         Options options = new Options();
         uut.mergeChildOptions(options, child);
         verify(topBar, times(0)).setRightButtons(any());
@@ -76,7 +76,7 @@ public class OptionsMergingTest extends BaseTest {
     }
 
     @Test
-    public void mergeTopBarOptions() throws Exception {
+    public void mergeTopBarOptions() {
         Options options = new Options();
         uut.mergeChildOptions(options, child);
         assertTopBarOptions(0);
@@ -90,6 +90,7 @@ public class OptionsMergingTest extends BaseTest {
         options.topBarOptions.title = titleOptions;
         SubtitleOptions subtitleOptions = new SubtitleOptions();
         subtitleOptions.text = new Text("Sub");
+        subtitleOptions.color = new Color(1);
         options.topBarOptions.subtitle = subtitleOptions;
         options.topBarOptions.background.color = new Color(0);
         options.topBarOptions.testId = new Text("test123");
@@ -107,7 +108,7 @@ public class OptionsMergingTest extends BaseTest {
     }
 
     @Test
-    public void mergeTopTabsOptions() throws Exception {
+    public void mergeTopTabsOptions() {
         Options options = new Options();
         uut.mergeChildOptions(options, child);
         verify(topBar, times(0)).applyTopTabsColors(any(), any());
@@ -125,7 +126,7 @@ public class OptionsMergingTest extends BaseTest {
     }
 
     @Test
-    public void mergeTopTabOptions() throws Exception {
+    public void mergeTopTabOptions() {
         Options options = new Options();
         uut.mergeChildOptions(options, child);
 
@@ -144,10 +145,11 @@ public class OptionsMergingTest extends BaseTest {
         verify(topBar, times(t)).setSubtitle(any());
         verify(topBar, times(t)).setTitleComponent(any(), any());
         verify(topBar, times(t)).setBackgroundColor(any());
-        verify(topBar, times(t)).setTitleTextColor(any());
+        verify(topBar, times(t)).setTitleTextColor(anyInt());
         verify(topBar, times(t)).setTitleFontSize(any());
-        verify(topBar, times(t)).setTestId(any());
         verify(topBar, times(t)).setTitleTypeface(any());
+        verify(topBar, times(t)).setSubtitleColor(anyInt());
+        verify(topBar, times(t)).setTestId(any());
         verify(topBar, times(t)).hide();
         verify(child, times(t)).drawBelowTopBar(topBar);
         verify(child, times(0)).drawBehindTopBar();
