@@ -6,7 +6,6 @@ const { View, Text, Button } = require('react-native');
 const { Navigation } = require('react-native-navigation');
 const testIDs = require('../testIDs');
 
-
 class ComplexLayout extends Component {
   constructor(props) {
     super(props);
