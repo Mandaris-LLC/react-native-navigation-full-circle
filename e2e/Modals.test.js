@@ -109,7 +109,7 @@ describe('modal', () => {
   });
 
   it('present modal multiple times', async () => {
-    await elementById(testIDs.SHOW_MODAL_BUTTON).tap();    
+    await elementById(testIDs.SHOW_MODAL_BUTTON).tap();
     await elementById(testIDs.SHOW_MODAL_BUTTON).tap();
     await elementById(testIDs.DISMISS_MODAL_BUTTON).tap();
     await elementById(testIDs.SHOW_MODAL_BUTTON).tap();
