@@ -18,6 +18,11 @@ public class TopBarBackgroundViewController extends ViewController<TopBarBackgro
         this.viewCreator = viewCreator;
     }
 
+    public TopBarBackgroundViewController(TopBarBackgroundViewController topBarBackgroundViewController) {
+        super(topBarBackgroundViewController.getActivity(), CompatUtils.generateViewId() + "", new Options());
+        this.viewCreator = topBarBackgroundViewController.viewCreator;
+    }
+
     @Override
     protected TopBarBackgroundView createView() {
         return viewCreator.create(getActivity(), getId(), component);

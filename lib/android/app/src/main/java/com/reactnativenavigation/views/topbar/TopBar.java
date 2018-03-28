@@ -193,6 +193,7 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
 
     public void clear() {
         topBarBackgroundViewController.destroy();
+        topBarBackgroundViewController = new TopBarBackgroundViewController(topBarBackgroundViewController);
         titleBar.clear();
     }
 
