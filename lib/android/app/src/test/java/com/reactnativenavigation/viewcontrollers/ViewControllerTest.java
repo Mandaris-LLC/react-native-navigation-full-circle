@@ -13,6 +13,7 @@ import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 
 import org.assertj.android.api.Assertions;
@@ -69,7 +70,7 @@ public class ViewControllerTest extends BaseTest {
     @Test
     public void holdsAReferenceToStackControllerOrNull() {
         assertThat(uut.getParentController()).isNull();
-        StackController nav = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "stack", new Options());
+        StackController nav = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(), "stack", new Options());
         nav.animatePush(uut, new MockPromise());
         assertThat(uut.getParentController()).isEqualTo(nav);
     }

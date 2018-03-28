@@ -12,6 +12,7 @@ import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.topbar.TopBar;
 import com.reactnativenavigation.views.topbar.TopBarBackgroundView;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.verify;
 
 public class TopBarBackgroundComponentTest extends BaseTest {
     private TopBar uut;
-    private TopBarBackgroundView backgroundView;
+    private TopBarBackgroundViewController topBarBackgroundViewController;
 
     @SuppressWarnings("Convert2Lambda")
     @Override
@@ -36,15 +37,10 @@ public class TopBarBackgroundComponentTest extends BaseTest {
                 Log.i("TopBarTest", "onPress: " + buttonId);
             }
         });
-        TopBarBackgroundViewCreatorMock backgroundViewCreator = new TopBarBackgroundViewCreatorMock() {
-            @Override
-            public TopBarBackgroundView create(Activity activity, String componentId, String componentName) {
-                backgroundView = spy(super.create(activity, componentId, componentName));
-                return backgroundView;
-            }
-        };
-        StackLayout parent = new StackLayout(newActivity(), new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), backgroundViewCreator, new TopBarController(), onClickListener, null);
-        uut = new TopBar(newActivity(), new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), backgroundViewCreator, onClickListener, parent);
+        Activity activity = newActivity();
+        topBarBackgroundViewController = spy(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()));
+        StackLayout parent = new StackLayout(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), topBarBackgroundViewController, new TopBarController(), onClickListener, null);
+        uut = new TopBar(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), topBarBackgroundViewController, onClickListener, parent);
         parent.addView(uut);
     }
 
@@ -68,7 +64,6 @@ public class TopBarBackgroundComponentTest extends BaseTest {
     public void clear_componentIsDestroyed() {
         uut.setBackgroundComponent(new Text("someComponent"));
         uut.clear();
-        verify(backgroundView, times(1)).destroy();
-        assertThat(backgroundView.getParent()).isNull();
+        verify(topBarBackgroundViewController, times(1)).destroy();
     }
 }

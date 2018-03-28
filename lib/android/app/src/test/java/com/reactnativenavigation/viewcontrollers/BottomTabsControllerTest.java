@@ -17,6 +17,7 @@ import com.reactnativenavigation.parse.params.Number;
 import com.reactnativenavigation.utils.ImageLoader;
 import com.reactnativenavigation.utils.OptionHelper;
 import com.reactnativenavigation.viewcontrollers.bottomtabs.BottomTabsController;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.BottomTabs;
 import com.reactnativenavigation.views.ReactComponent;
@@ -174,6 +175,13 @@ public class BottomTabsControllerTest extends BaseTest {
     }
 
     private StackController createStack(String id) {
-        return new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), id, tabOptions);
+        return new StackController(activity,
+                new TopBarButtonCreatorMock(),
+                new TitleBarReactViewCreatorMock(),
+                new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()),
+                new TopBarController(),
+                id,
+                tabOptions
+        );
     }
 }

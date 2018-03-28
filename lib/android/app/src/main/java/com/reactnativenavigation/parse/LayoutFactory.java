@@ -13,6 +13,7 @@ import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.viewcontrollers.bottomtabs.BottomTabsController;
 import com.reactnativenavigation.viewcontrollers.externalcomponent.ExternalComponentCreator;
 import com.reactnativenavigation.viewcontrollers.externalcomponent.ExternalComponentViewController;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsController;
 import com.reactnativenavigation.views.ComponentViewCreator;
@@ -124,7 +125,7 @@ public class LayoutFactory {
         StackController stackController = new StackController(activity,
                 new TitleBarButtonCreator(reactInstanceManager),
                 new TitleBarReactViewCreator(reactInstanceManager),
-                new TopBarBackgroundViewCreator(reactInstanceManager),
+                new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreator(reactInstanceManager)),
                 new TopBarController(),
                 node.id,
                 getOptions(node)

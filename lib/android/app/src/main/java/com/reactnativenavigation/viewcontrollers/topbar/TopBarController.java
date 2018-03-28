@@ -10,22 +10,21 @@ import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
 import com.reactnativenavigation.views.StackLayout;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
 import com.reactnativenavigation.views.topbar.TopBar;
-import com.reactnativenavigation.views.topbar.TopBarBackgroundViewCreator;
 
 
 public class TopBarController {
     private TopBar topBar;
 
-    public View createView(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator backgroundViewCreator, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
+    public View createView(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
         if (topBar == null) {
-            topBar = createTopBar(context, buttonCreator, titleBarReactViewCreator, backgroundViewCreator, topBarButtonClickListener, stackLayout);
+            topBar = createTopBar(context, buttonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarButtonClickListener, stackLayout);
             topBar.setId(CompatUtils.generateViewId());
         }
         return topBar;
     }
 
-    protected TopBar createTopBar(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator backgroundViewCreator, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
-        return new TopBar(context, buttonCreator, titleBarReactViewCreator, backgroundViewCreator, topBarButtonClickListener, stackLayout);
+    protected TopBar createTopBar(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
+        return new TopBar(context, buttonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarButtonClickListener, stackLayout);
     }
 
     public void clear() {

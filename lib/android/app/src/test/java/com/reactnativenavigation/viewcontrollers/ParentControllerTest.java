@@ -13,6 +13,7 @@ import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.ReactComponent;
 
@@ -154,6 +155,14 @@ public class ParentControllerTest extends BaseTest {
     }
 
     private StackController createStack() {
-        return new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "stack", new Options());
+        return new StackController(
+                activity,
+                new TopBarButtonCreatorMock(),
+                new TitleBarReactViewCreatorMock(),
+                new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()),
+                new TopBarController(),
+                "stack",
+                new Options()
+        );
     }
 }

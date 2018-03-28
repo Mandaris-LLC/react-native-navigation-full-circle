@@ -17,6 +17,7 @@ import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.utils.ImageLoader;
 import com.reactnativenavigation.utils.OptionHelper;
 import com.reactnativenavigation.viewcontrollers.bottomtabs.BottomTabsController;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 
 import org.junit.Test;
@@ -251,7 +252,7 @@ public class NavigatorTest extends BaseTest {
 
     @NonNull
     private StackController newStack() {
-        return new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(),
+        return new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(),
                 "stack" + CompatUtils.generateViewId(), tabOptions);
     }
 

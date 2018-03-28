@@ -10,13 +10,13 @@ import com.facebook.react.bridge.Promise;
 import com.reactnativenavigation.anim.NavigationAnimator;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.utils.NoOpPromise;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.Component;
 import com.reactnativenavigation.views.ReactComponent;
 import com.reactnativenavigation.views.StackLayout;
-import com.reactnativenavigation.views.topbar.TopBar;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
-import com.reactnativenavigation.views.topbar.TopBarBackgroundViewCreator;
+import com.reactnativenavigation.views.topbar.TopBar;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -30,16 +30,16 @@ public class StackController extends ParentController<StackLayout> {
     private final NavigationAnimator animator;
     private final ReactViewCreator topBarButtonCreator;
     private final TitleBarReactViewCreator titleBarReactViewCreator;
-    private TopBarBackgroundViewCreator topBarBackgroundViewCreator;
+    private TopBarBackgroundViewController topBarBackgroundViewController;
     private TopBarController topBarController;
 
-    public StackController(final Activity activity, ReactViewCreator topBarButtonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator topBarBackgroundViewCreator, TopBarController topBarController, String id, Options initialOptions) {
+    public StackController(final Activity activity, ReactViewCreator topBarButtonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarController topBarController, String id, Options initialOptions) {
         super(activity, id, initialOptions);
         this.topBarController = topBarController;
         animator = createAnimator();
         this.topBarButtonCreator = topBarButtonCreator;
         this.titleBarReactViewCreator = titleBarReactViewCreator;
-        this.topBarBackgroundViewCreator = topBarBackgroundViewCreator;
+        this.topBarBackgroundViewController = topBarBackgroundViewController;
     }
 
     public void applyOptions(Options options) {
@@ -238,7 +238,7 @@ public class StackController extends ParentController<StackLayout> {
     @NonNull
     @Override
     protected StackLayout createView() {
-        return new StackLayout(getActivity(), topBarButtonCreator, titleBarReactViewCreator, topBarBackgroundViewCreator, topBarController, this::sendOnNavigationButtonPressed, getId());
+        return new StackLayout(getActivity(), topBarButtonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarController, this::sendOnNavigationButtonPressed, getId());
     }
 
     @NonNull

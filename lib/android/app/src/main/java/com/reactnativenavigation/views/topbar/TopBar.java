@@ -1,7 +1,6 @@
 package com.reactnativenavigation.views.topbar;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.RestrictTo;
@@ -27,10 +26,11 @@ import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.viewcontrollers.ReactViewCreator;
 import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.views.StackLayout;
-import com.reactnativenavigation.views.toptabs.TopTabs;
 import com.reactnativenavigation.views.titlebar.TitleBar;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
+import com.reactnativenavigation.views.toptabs.TopTabs;
 
 import java.util.List;
 
@@ -45,13 +45,12 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
     private TopTabs topTabs;
     private RelativeLayout root;
     private StackLayout parentView;
-    private TopBarBackgroundViewCreator topBarBackgroundViewCreator;
-    private TopBarBackgroundView backgroundView;
+    private TopBarBackgroundViewController topBarBackgroundViewController;
 
-    public TopBar(final Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator topBarBackgroundViewCreator, TopBarButtonController.OnClickListener onClickListener, StackLayout parentView) {
+    public TopBar(final Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarButtonController.OnClickListener onClickListener, StackLayout parentView) {
         super(context);
         collapsingBehavior = new TopBarCollapseBehavior(this);
-        this.topBarBackgroundViewCreator = topBarBackgroundViewCreator;
+        this.topBarBackgroundViewController = topBarBackgroundViewController;
         this.parentView = parentView;
         topTabs = new TopTabs(getContext());
         animator = new TopBarAnimator(this, parentView.getStackId());
@@ -102,9 +101,9 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
 
     public void setBackgroundComponent(Text component) {
         if (component.hasValue()) {
-            backgroundView = topBarBackgroundViewCreator.create((Activity) getContext(), String.valueOf(CompatUtils.generateViewId()), component.get());
+            topBarBackgroundViewController.setComponent(component.get());
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(MATCH_PARENT, getHeight());
-            root.addView(backgroundView, 0, lp);
+            root.addView(topBarBackgroundViewController.getView(), 0, lp);
         }
     }
 
@@ -130,11 +129,6 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
 
     public void setRightButtons(List<Button> rightButtons) {
         titleBar.setRightButtons(rightButtons);
-    }
-
-    @RestrictTo(RestrictTo.Scope.TESTS)
-    public TextView getTitleTextView() {
-        return titleBar.getTitleTextView();
     }
 
     public void setBackgroundColor(Color color) {
@@ -198,11 +192,7 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
     }
 
     public void clear() {
-        if (backgroundView != null) {
-            backgroundView.destroy();
-            root.removeView(backgroundView);
-            backgroundView = null;
-        }
+        topBarBackgroundViewController.destroy();
         titleBar.clear();
     }
 
@@ -218,5 +208,10 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
     @VisibleForTesting
     public void setAnimator(TopBarAnimator animator) {
         this.animator = animator;
+    }
+
+    @RestrictTo(RestrictTo.Scope.TESTS)
+    public TextView getTitleTextView() {
+        return titleBar.getTitleTextView();
     }
 }

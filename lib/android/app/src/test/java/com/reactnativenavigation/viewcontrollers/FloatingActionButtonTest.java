@@ -14,6 +14,7 @@ import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.FabOptions;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.Fab;
 import com.reactnativenavigation.views.FabMenu;
@@ -36,7 +37,7 @@ public class FloatingActionButtonTest extends BaseTest {
     public void beforeEach() {
         super.beforeEach();
         activity = newActivity();
-        stackController = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "stackController", new Options());
+        stackController = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(), "stackController", new Options());
         Options options = getOptionsWithFab();
         childFab = new SimpleViewController(activity, "child1", options);
         childNoFab = new SimpleViewController(activity, "child2", new Options());

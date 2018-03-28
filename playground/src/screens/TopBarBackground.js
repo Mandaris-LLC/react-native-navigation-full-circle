@@ -13,6 +13,22 @@ class TopBarBackground extends Component {
     this.dots = new Array(55).fill('').map((ignored, i) => <View key={'dot' + i} style={styles.dot}/>);
   }
 
+  componentDidAppear() {
+    console.log('RNN', 'TBB.componentDidAppear');
+  }
+
+  componentDidDisappear() {
+    console.log('RNN', `TBB.componentDidDisappear`);
+  }
+
+  componentDidMount() {
+    console.log('RNN', `TBB.componentDidMount`);
+  }
+
+  componentWillUnmount() {
+    console.log('RNN', `TBB.componentWillUnmount`);
+  }
+
   render() {
     return (
       <View style={styles.container}>

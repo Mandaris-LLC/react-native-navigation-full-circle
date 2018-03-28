@@ -19,6 +19,7 @@ import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Fraction;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ViewUtils;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.topbar.TopBarBackgroundView;
 
@@ -52,7 +53,7 @@ public class OptionsApplyingTest extends BaseTest {
                 (activity1, componentId, componentName) -> view,
                 initialNavigationOptions
         );
-        stackController = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "stack", new Options());
+        stackController = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(), "stack", new Options());
         stackController.ensureViewIsCreated();
         uut.setParentController(stackController);
     }
@@ -69,7 +70,7 @@ public class OptionsApplyingTest extends BaseTest {
     @Test
     public void initialOptionsAppliedOnAppear() {
         uut.options.topBarOptions.title.text = new Text("the title");
-        StackController stackController = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "stackId", new Options());
+        StackController stackController = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(), "stackId", new Options());
         stackController.animatePush(uut, new MockPromise() {});
         assertThat(stackController.getTopBar().getTitle()).isEmpty();
 

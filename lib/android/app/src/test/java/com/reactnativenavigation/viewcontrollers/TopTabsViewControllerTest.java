@@ -14,6 +14,7 @@ import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ViewHelper;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsAdapter;
 import com.reactnativenavigation.viewcontrollers.toptabs.TopTabsController;
@@ -70,7 +71,7 @@ public class TopTabsViewControllerTest extends BaseTest {
 
     @NonNull
     private StackController createStackController(String id) {
-        return new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), id, new Options());
+        return new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(), id, new Options());
     }
 
     @NonNull

@@ -16,6 +16,7 @@ import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ViewHelper;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.Component;
 import com.reactnativenavigation.views.ReactComponent;
@@ -106,7 +107,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void pop_layoutHandlesChildWillDisappear() {
         final StackLayout[] stackLayout = new StackLayout[1];
-        uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "uut", new Options()) {
+        uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(), "uut", new Options()) {
             @NonNull
             @Override
             protected StackLayout createView() {
@@ -466,7 +467,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void mergeChildOptions_updatesViewWithNewOptions() {
         final StackLayout[] stackLayout = new StackLayout[1];
-        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "stack", new Options()) {
+        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(), "stack", new Options()) {
             @NonNull
             @Override
             protected StackLayout createView() {
@@ -483,7 +484,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void mergeChildOptions_updatesParentControllerWithNewOptions() {
         final StackLayout[] stackLayout = new StackLayout[1];
-        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "stack", new Options()) {
+        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(), "stack", new Options()) {
             @NonNull
             @Override
             protected StackLayout createView() {
@@ -553,7 +554,7 @@ public class StackControllerTest extends BaseTest {
     private StackController createStackController(String id) {
         topBarController = spy(new TopBarController());
         return new StackController(activity,
-                new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(),
+                new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()),
                 topBarController, id, new Options()) {
             @Override
             NavigationAnimator createAnimator() {
