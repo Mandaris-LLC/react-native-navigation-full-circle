@@ -38,6 +38,7 @@ class WelcomeScreen extends Component {
         <Button title='Show Redbox' testID={testIDs.SHOW_REDBOX_BUTTON} onPress={this.onClickShowRedbox} />
         <Button title='Orientation' testID={testIDs.ORIENTATION_BUTTON} onPress={this.onClickPushOrientationMenuScreen} />
         <Button title='Provided Id' testID={testIDs.PROVIDED_ID} onPress={this.onClickProvidedId} />
+        <Button title='Complex Layout' testID={testIDs.COMPLEX_LAYOUT_BUTTON} onPress={this.onClickComplexLayout} />
         <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
       </View>
     );
@@ -410,6 +411,14 @@ class WelcomeScreen extends Component {
         title: {
           text: 'User provided id'
         }
+      }
+    });
+  }
+
+  onClickComplexLayout = () => {
+    Navigation.showModal({
+      component: {
+        name: 'navigation.playground.ComplexLayout'
       }
     });
   }
