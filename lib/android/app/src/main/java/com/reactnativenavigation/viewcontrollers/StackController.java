@@ -263,7 +263,7 @@ public class StackController extends ParentController<StackLayout> {
 
     @RestrictTo(RestrictTo.Scope.TESTS)
     TopBar getTopBar() {
-        return topBarController.getTopBar();
+        return topBarController.getView();
     }
 
     @RestrictTo(RestrictTo.Scope.TESTS)

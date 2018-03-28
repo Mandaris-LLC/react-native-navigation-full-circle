@@ -16,19 +16,23 @@ import com.reactnativenavigation.views.topbar.TopBarBackgroundViewCreator;
 public class TopBarController {
     private TopBar topBar;
 
-    public View createTopBar(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator backgroundViewCreator, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
+    public View createView(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator backgroundViewCreator, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
         if (topBar == null) {
-            topBar = new TopBar(context, buttonCreator, titleBarReactViewCreator, backgroundViewCreator, topBarButtonClickListener, stackLayout);
+            topBar = createTopBar(context, buttonCreator, titleBarReactViewCreator, backgroundViewCreator, topBarButtonClickListener, stackLayout);
             topBar.setId(CompatUtils.generateViewId());
         }
         return topBar;
+    }
+
+    protected TopBar createTopBar(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator backgroundViewCreator, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
+        return new TopBar(context, buttonCreator, titleBarReactViewCreator, backgroundViewCreator, topBarButtonClickListener, stackLayout);
     }
 
     public void clear() {
         topBar.clear();
     }
 
-    public TopBar getTopBar() {
+    public TopBar getView() {
         return topBar;
     }
 

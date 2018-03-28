@@ -25,12 +25,12 @@ public class StackLayout extends RelativeLayout {
         super(context);
         this.stackId = stackId;
         createLayout(topBarButtonCreator, titleBarReactViewCreator, topBarBackgroundViewCreator, topBarController, topBarButtonClickListener);
-        optionsPresenter = new OptionsPresenter(topBarController.getTopBar());
+        optionsPresenter = new OptionsPresenter(topBarController.getView());
         setContentDescription("StackLayout");
     }
 
     private void createLayout(ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewCreator BackgroundViewCreator, TopBarController topBarController, TopBarButtonController.OnClickListener topBarButtonClickListener) {
-        addView(topBarController.createTopBar(getContext(), buttonCreator, titleBarReactViewCreator, BackgroundViewCreator, topBarButtonClickListener, this), MATCH_PARENT, WRAP_CONTENT);
+        addView(topBarController.createView(getContext(), buttonCreator, titleBarReactViewCreator, BackgroundViewCreator, topBarButtonClickListener, this), MATCH_PARENT, WRAP_CONTENT);
     }
 
     public void applyChildOptions(Options options) {
