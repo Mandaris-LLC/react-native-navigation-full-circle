@@ -13,7 +13,9 @@ import com.reactnativenavigation.mocks.TestReactView;
 import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
+import com.reactnativenavigation.mocks.TypefaceLoaderMock;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.parse.SubtitleOptions;
 import com.reactnativenavigation.parse.TopBarBackgroundOptions;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Fraction;
@@ -195,5 +197,17 @@ public class OptionsApplyingTest extends BaseTest {
 
         assertThat(((ColorDrawable) stackController.getTopBar().getTitleBar().getBackground()).getColor()).isEqualTo(Color.TRANSPARENT);
         assertThat(ViewUtils.findChildrenByClassRecursive(stackController.getTopBar(), TopBarBackgroundView.class)).isNotNull();
+    }
+
+    @Test
+    public void appliesSubtitle() throws Exception {
+        JSONObject json = new JSONObject();
+        json.put("text", "sub");
+        uut.options.topBarOptions.subtitle = SubtitleOptions.parse(new TypefaceLoaderMock(), json);
+        uut.ensureViewIsCreated();
+        stackController.push(uut, new MockPromise());
+        uut.onViewAppeared();
+
+        assertThat(stackController.getTopBar().getTitleBar().getSubtitle()).isEqualTo("sub");
     }
 }

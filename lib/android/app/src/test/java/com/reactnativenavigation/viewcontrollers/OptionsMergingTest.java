@@ -8,6 +8,7 @@ import com.reactnativenavigation.mocks.TestComponentLayout;
 import com.reactnativenavigation.mocks.TestReactView;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.OrientationOptions;
+import com.reactnativenavigation.parse.SubtitleOptions;
 import com.reactnativenavigation.parse.TitleOptions;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Color;
@@ -87,6 +88,9 @@ public class OptionsMergingTest extends BaseTest {
         titleOptions.fontSize = new Fraction(1.0f);
         titleOptions.fontFamily = Typeface.DEFAULT_BOLD;
         options.topBarOptions.title = titleOptions;
+        SubtitleOptions subtitleOptions = new SubtitleOptions();
+        subtitleOptions.text = new Text("Sub");
+        options.topBarOptions.subtitle = subtitleOptions;
         options.topBarOptions.background.color = new Color(0);
         options.topBarOptions.testId = new Text("test123");
         options.topBarOptions.animate = new Bool(false);
@@ -137,6 +141,7 @@ public class OptionsMergingTest extends BaseTest {
 
     private void assertTopBarOptions(int t) {
         verify(topBar, times(t)).setTitle(any());
+        verify(topBar, times(t)).setSubtitle(any());
         verify(topBar, times(t)).setTitleComponent(any(), any());
         verify(topBar, times(t)).setBackgroundColor(any());
         verify(topBar, times(t)).setTitleTextColor(any());

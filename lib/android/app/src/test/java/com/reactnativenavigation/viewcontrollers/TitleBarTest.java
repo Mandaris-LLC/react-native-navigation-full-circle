@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
-import com.reactnativenavigation.parse.TitleOptions;
+import com.reactnativenavigation.parse.Alignment;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.react.ReactView;
@@ -144,14 +144,14 @@ public class TitleBarTest extends BaseTest {
 
     @Test
     public void setComponent_addsComponentToTitleBar() {
-        uut.setComponent("com.rnn.CustomView", TitleOptions.Alignment.Center);
+        uut.setComponent("com.rnn.CustomView", Alignment.Center);
         verify(uut, times(1)).addView(any(TitleBarReactView.class), any(Toolbar.LayoutParams.class));
     }
 
     @Test
     public void setComponent_alignFill() {
-        uut.setComponent("com.rnn.CustomView", TitleOptions.Alignment.Fill);
-        verify(uut, times(1)).getComponentLayoutParams(TitleOptions.Alignment.Fill);
+        uut.setComponent("com.rnn.CustomView", Alignment.Fill);
+        verify(uut, times(1)).getComponentLayoutParams(Alignment.Fill);
         ArgumentCaptor<Toolbar.LayoutParams> lpCaptor = ArgumentCaptor.forClass(Toolbar.LayoutParams.class);
         verify(uut, times(1)).addView(any(TitleBarReactView.class), lpCaptor.capture());
         assertThat(lpCaptor.getValue().width == ViewGroup.LayoutParams.MATCH_PARENT);
@@ -159,8 +159,8 @@ public class TitleBarTest extends BaseTest {
 
     @Test
     public void setComponent_alignCenter() {
-        uut.setComponent("com.rnn.CustomView", TitleOptions.Alignment.Center);
-        verify(uut, times(1)).getComponentLayoutParams(TitleOptions.Alignment.Center);
+        uut.setComponent("com.rnn.CustomView", Alignment.Center);
+        verify(uut, times(1)).getComponentLayoutParams(Alignment.Center);
         ArgumentCaptor<Toolbar.LayoutParams> lpCaptor = ArgumentCaptor.forClass(Toolbar.LayoutParams.class);
         verify(uut, times(1)).addView(any(TitleBarReactView.class), lpCaptor.capture());
         assertThat(lpCaptor.getValue().width == ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -169,7 +169,7 @@ public class TitleBarTest extends BaseTest {
 
     @Test
     public void clear() {
-        uut.setComponent("someComponent", TitleOptions.Alignment.Center);
+        uut.setComponent("someComponent", Alignment.Center);
         uut.clear();
         assertThat(uut.getTitle()).isNullOrEmpty();
         assertThat(uut.getMenu().size()).isZero();

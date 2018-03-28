@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.reactnativenavigation.parse.TitleOptions;
+import com.reactnativenavigation.parse.Alignment;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Color;
 import com.reactnativenavigation.parse.params.Fraction;
@@ -58,7 +58,7 @@ public class TitleBar extends Toolbar {
         if (color.hasValue()) setTitleTextColor(color.get());
     }
 
-    public void setComponent(String componentName, TitleOptions.Alignment alignment) {
+    public void setComponent(String componentName, Alignment alignment) {
         clearTitle();
         reactViewController.setComponent(componentName);
         addView(reactViewController.getView(), getComponentLayoutParams(alignment));
@@ -164,9 +164,9 @@ public class TitleBar extends Toolbar {
         return null;
     }
 
-    public Toolbar.LayoutParams getComponentLayoutParams(TitleOptions.Alignment alignment) {
+    public Toolbar.LayoutParams getComponentLayoutParams(Alignment alignment) {
         LayoutParams lp = new LayoutParams(MATCH_PARENT, getHeight());
-        if (alignment == TitleOptions.Alignment.Center) {
+        if (alignment == Alignment.Center) {
             lp.gravity = Gravity.CENTER;
         }
         return lp;

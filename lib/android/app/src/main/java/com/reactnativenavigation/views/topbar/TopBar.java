@@ -16,8 +16,8 @@ import com.reactnativenavigation.anim.AnimationListener;
 import com.reactnativenavigation.anim.TopBarAnimator;
 import com.reactnativenavigation.anim.TopBarCollapseBehavior;
 import com.reactnativenavigation.interfaces.ScrollEventListener;
+import com.reactnativenavigation.parse.Alignment;
 import com.reactnativenavigation.parse.AnimationOptions;
-import com.reactnativenavigation.parse.TitleOptions;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Color;
 import com.reactnativenavigation.parse.params.Fraction;
@@ -79,6 +79,10 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
         return titleBar.getTitle();
     }
 
+    public void setSubtitle(String subtitle) {
+        titleBar.setSubtitle(subtitle);
+    }
+
     public void setTestId(String testId) {
         setTag(testId);
     }
@@ -95,7 +99,7 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
         titleBar.setTitleTypeface(typeface);
     }
 
-    public void setTitleComponent(String componentName, TitleOptions.Alignment alignment) {
+    public void setTitleComponent(String componentName, Alignment alignment) {
         titleBar.setComponent(componentName, alignment);
     }
 

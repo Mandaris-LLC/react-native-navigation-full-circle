@@ -84,7 +84,7 @@ public class OptionsTest extends BaseTest {
         assertThat(result.fabOptions.hideOnScroll.get()).isEqualTo(FAB_HIDE_ON_SCROLL);
         assertThat(result.fabOptions.alignVertically.get()).isEqualTo(FAB_ALIGN_VERTICALLY);
         assertThat(result.fabOptions.alignHorizontally.get()).isEqualTo(FAB_ALIGN_HORIZONTALLY);
-        assertThat(result.topBarOptions.title.alignment).isEqualTo(TitleOptions.Alignment.Center);
+        assertThat(result.topBarOptions.title.alignment).isEqualTo(Alignment.Center);
     }
 
     @NonNull

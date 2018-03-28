@@ -52,13 +52,13 @@ public class ExternalComponentViewControllerTest extends BaseTest {
     }
 
     @Test
-    public void createView_returnsFrameLayout() throws Exception {
+    public void createView_returnsFrameLayout() {
         ExternalComponentLayout view = uut.getView();
         assertThat(FrameLayout.class.isAssignableFrom(view.getClass())).isTrue();
     }
 
     @Test
-    public void createView_createsExternalComponent() throws Exception {
+    public void createView_createsExternalComponent() {
         ExternalComponentLayout view = uut.getView();
         verify(componentCreator, times(1)).create((FragmentActivity) activity, reactInstanceManager, ec.passProps);
         assertThat(view.getChildCount()).isGreaterThan(0);

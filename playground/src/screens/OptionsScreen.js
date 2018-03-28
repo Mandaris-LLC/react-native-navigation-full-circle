@@ -24,6 +24,9 @@ class OptionsScreen extends Component {
           fontFamily: 'HelveticaNeue-Italic',
           largeTitle: false
         },
+        subtitle: {
+          text: 'Static'
+        },
         background: {
           component: 'TopBarBackground'
         },

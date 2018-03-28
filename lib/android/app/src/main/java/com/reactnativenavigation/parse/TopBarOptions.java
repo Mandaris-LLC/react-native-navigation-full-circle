@@ -23,6 +23,7 @@ public class TopBarOptions implements DEFAULT_VALUES {
         if (json == null) return options;
 
         options.title = TitleOptions.parse(typefaceManager, json.optJSONObject("title"));
+        options.subtitle = SubtitleOptions.parse(typefaceManager, json.optJSONObject("subtitle"));
         options.background = TopBarBackgroundOptions.parse(json.optJSONObject("background"));
         options.visible = BoolParser.parse(json, "visible");
         options.animate = BoolParser.parse(json,"animate");
@@ -36,6 +37,7 @@ public class TopBarOptions implements DEFAULT_VALUES {
     }
 
     public TitleOptions title = new TitleOptions();
+    public SubtitleOptions subtitle = new SubtitleOptions();
     public Text testId = new NullText();
     public TopBarBackgroundOptions background = new TopBarBackgroundOptions();
     public Bool visible = new NullBool();
@@ -47,6 +49,7 @@ public class TopBarOptions implements DEFAULT_VALUES {
 
     void mergeWith(final TopBarOptions other) {
         title.mergeWith(other.title);
+        subtitle.mergeWith(other.subtitle);
         background.mergeWith(other.background);
         if (other.testId.hasValue()) testId = other.testId;
         if (other.visible.hasValue()) visible = other.visible;
@@ -59,6 +62,7 @@ public class TopBarOptions implements DEFAULT_VALUES {
 
     void mergeWithDefault(TopBarOptions defaultOptions) {
         title.mergeWithDefault(defaultOptions.title);
+        subtitle.mergeWithDefault(defaultOptions.subtitle);
         background.mergeWithDefault(defaultOptions.background);
         if (!visible.hasValue()) visible = defaultOptions.visible;
         if (!animate.hasValue()) animate = defaultOptions.animate;
