@@ -16,13 +16,13 @@ import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ViewHelper;
+import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.Component;
 import com.reactnativenavigation.views.ReactComponent;
 import com.reactnativenavigation.views.StackLayout;
 
 import org.assertj.core.api.iterable.Extractor;
 import org.json.JSONObject;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -44,6 +44,7 @@ public class StackControllerTest extends BaseTest {
     private ViewController child2;
     private ViewController child3;
     private NavigationAnimator animator;
+    private TopBarController topBarController;
 
     @Override
     public void beforeEach() {
@@ -105,7 +106,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void pop_layoutHandlesChildWillDisappear() {
         final StackLayout[] stackLayout = new StackLayout[1];
-        uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), "uut", new Options()) {
+        uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "uut", new Options()) {
             @NonNull
             @Override
             protected StackLayout createView() {
@@ -465,7 +466,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void mergeChildOptions_updatesViewWithNewOptions() {
         final StackLayout[] stackLayout = new StackLayout[1];
-        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), "stack", new Options()) {
+        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "stack", new Options()) {
             @NonNull
             @Override
             protected StackLayout createView() {
@@ -482,7 +483,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void mergeChildOptions_updatesParentControllerWithNewOptions() {
         final StackLayout[] stackLayout = new StackLayout[1];
-        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), "stack", new Options()) {
+        StackController uut = new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarController(), "stack", new Options()) {
             @NonNull
             @Override
             protected StackLayout createView() {
@@ -533,6 +534,13 @@ public class StackControllerTest extends BaseTest {
         assertThat(captor.getValue().fabOptions.hasValue()).isFalse();
     }
 
+    @Test
+    public void destroy() {
+        uut.ensureViewIsCreated();
+        uut.destroy();
+        verify(topBarController, times(1)).clear();
+    }
+
     private void assertContainsOnlyId(String... ids) {
         assertThat(uut.size()).isEqualTo(ids.length);
         assertThat(uut.getChildControllers()).extracting((Extractor<ViewController, String>) ViewController::getId).containsOnly(ids);
@@ -543,7 +551,10 @@ public class StackControllerTest extends BaseTest {
     }
 
     private StackController createStackController(String id) {
-        return new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), id, new Options()) {
+        topBarController = spy(new TopBarController());
+        return new StackController(activity,
+                new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(),
+                topBarController, id, new Options()) {
             @Override
             NavigationAnimator createAnimator() {
                 animator = Mockito.mock(NavigationAnimator.class);
