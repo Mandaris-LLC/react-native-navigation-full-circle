@@ -249,12 +249,12 @@ public class StackController extends ParentController<StackLayout> {
 
     @Override
     public void setupTopTabsWithViewPager(ViewPager viewPager) {
-        getView().initTopTabs(viewPager);
+        topBarController.initTopTabs(viewPager);
     }
 
     @Override
     public void clearTopTabs() {
-        getView().clearTopTabs();
+        topBarController.clearTopTabs();
     }
 
      NavigationAnimator createAnimator() {
@@ -263,7 +263,7 @@ public class StackController extends ParentController<StackLayout> {
 
     @RestrictTo(RestrictTo.Scope.TESTS)
     TopBar getTopBar() {
-        return getView().getTopBar();
+        return topBarController.getTopBar();
     }
 
     @RestrictTo(RestrictTo.Scope.TESTS)
