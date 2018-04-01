@@ -3,3 +3,9 @@
   - [Working Locally](/docs/WorkingLocally)
   - [Usage](/docs/Usage)
 - [API](/api/README)
+  - [Top Level](/docs/top-level-api)
+  - [Screen](/docs/screen-api)
+  - [Layout types](/docs/layout-types)
+- [Migration from v1](/api/README)
+  - [Top Level](/docs/top-level-api-migration)
+  
