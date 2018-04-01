@@ -90,6 +90,17 @@ export class Commands {
     return result;
   }
 
+  public setStackRoot(componentId, simpleApi) {
+    const input = _.cloneDeep(simpleApi);
+
+    const layout = this.layoutTreeParser.parse(input);
+    this.layoutTreeCrawler.crawl(layout);
+
+    const result = this.nativeCommandsSender.setStackRoot(componentId, layout);
+    this.commandsObserver.notify('setStackRoot', { componentId, layout });
+    return result;
+  }
+
   public showOverlay(simpleApi) {
     const input = _.cloneDeep(simpleApi);
 
