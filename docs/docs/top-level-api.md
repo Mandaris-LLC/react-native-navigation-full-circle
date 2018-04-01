@@ -47,33 +47,7 @@ Navigation.setRoot({
 });
 ```
 
-## startSingleScreenApp(params) -> setRoot({stack})
-
-Change your app root into an app based on a single screen (like the iOS Calendar or Settings app). The screen will receive its own navigation stack with a native nav bar
-
-```js
-Navigation.setRoot({
-  stack: {
-    children: [{
-      component: {
-        name: 'example.WelcomeScreen',
-        passProps: {
-          text: 'stack with one child'
-        }
-      }
-    }],
-    options: {
-      topBar: {
-        title: {
-          text: 'Welcome screen'
-        }
-      }
-    }
-  }
-});
-```
-
-## showModal(params = {}) -> showModal(layout = {})
+## showModal(layout = {})
 
 Show a screen as a modal.
 
@@ -99,7 +73,7 @@ Navigation.showModal({
 });
 ```
 
-## dismissModal(params = {}) -> dismissModal(componentId)
+## dismissModal(componentId)
 
 Dismiss the current modal.
 
@@ -107,7 +81,7 @@ Dismiss the current modal.
 Navigation.dismissModal(this.props.componentId);
 ```
 
-## dismissAllModals(params = {}) -> dismissAllModals()
+## dismissAllModals()
 
 Dismiss all the current modals at the same time.
 

@@ -45,21 +45,23 @@ Pop all the screens until the root from this screen's navigation stack.
 Navigation.popToRoot(this.props.componentId);
 ```
 
-<!-- ## resetTo(params)
+## setRootStack(componentId, params)
 
-Reset the screen's navigation stack to a new screen (the stack root is changed).
+Reset the current navigation stack to a new screen component (the stack root is changed).
 
 ```js
-this.props.navigator.resetTo({
-  screen: 'example.ScreenThree', // unique ID registered with Navigation.registerScreen
-  title: undefined, // navigation bar title of the pushed screen (optional)
-  passProps: {}, // simple serializable object that will pass as props to the pushed screen (optional)
-  animated: true, // does the resetTo have transition animation or does it happen immediately (optional)
-  animationType: 'fade', // 'fade' (for both) / 'slide-horizontal' (for android) does the resetTo have different transition animation (optional)
-  navigatorStyle: {}, // override the navigator style for the pushed screen (optional)
-  navigatorButtons: {} // override the nav buttons for the pushed screen (optional)
+Navigation.setRootStack(this.props.componentId, {
+  component: {
+        name: 'example.NewRootScreen',
+        passProps: {
+          text: 'Root screen'
+        },
+        options: {
+          animated: true // Will animate root change same as push
+        }
+      }
 });
-``` -->
+```
 
 ## showModal(layout = {})
 

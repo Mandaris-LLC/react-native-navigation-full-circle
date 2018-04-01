@@ -88,6 +88,7 @@ class PushedScreen extends Component {
           previousScreenIds: _.concat([], this.props.previousScreenIds || [], this.props.componentId)
         },
         options: {
+          animated: true,
           topBar: {
             title: {
               text: `Pushed ${this.getStackPosition() + 1}`

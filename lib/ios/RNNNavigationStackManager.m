@@ -113,7 +113,7 @@ dispatch_queue_t RCTGetUIManagerQueue(void);
 		}
 	}];
 	
-	[nvc setViewControllers:@[newRoot] animated:newRoot.options.animated];
+	[nvc setViewControllers:@[newRoot] animated:[newRoot.options.animated boolValue]];
 	
 	[CATransaction commit];
 }
