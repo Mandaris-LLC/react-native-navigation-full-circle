@@ -27,6 +27,7 @@ Component layout holds your react component.
 
 ```js
 const component = {
+  id: 'comopnent1', // Optional, Auto generated if empty
   name: 'Your registered component name',
   options: {},
   passProps: {

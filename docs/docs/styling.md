@@ -30,7 +30,7 @@ export default class StyledScreen extends Component {
   }
 ```
 
-## Enabling persistent styling properties on iOS
+## Enabling persistent styling properties
 In v2 we added `setDefaultOptions` API for styles that should be applied on all components.
 
 ```js

@@ -1,4 +1,4 @@
-# Top Level API Migration
+# Top Level API
 
 In order to make navigation API homogenous as much as possible, we provide setRoot function that receives layout of any kind.
 See [Layout types](layout-types)
@@ -47,71 +47,31 @@ Navigation.setRoot({
 });
 ```
 
-## showModal(layout = {})
+## showOverlay(layout = {})
 
-Show a screen as a modal.
+Show component as overlay.
 
 ```js
-Navigation.showModal({
-  stack: {
-    children: [{
-      component: {
-        name: 'example.ModalScreen',
-        passProps: {
-          text: 'stack with one child'
-        },
-        options: {
-          topBar: {
-            title: {
-              text: 'Modal with stack'
-            }
-          }
-        }
+Navigation.showOverlay({
+  component: {
+    name: 'example.Overlay',
+    options: {
+      overlay: {
+        interceptTouchOutside: true
       }
-    }]
+    }
   }
 });
 ```
 
-## dismissModal(componentId)
+## dismissOverlay(componentId)
 
-Dismiss the current modal.
+Dismiss overlay matching the overlay componentId.
 
 ```js
-Navigation.dismissModal(this.props.componentId);
+Navigation.dismissOverlay(this.props.componentId);
 ```
 
-## dismissAllModals()
-
-Dismiss all the current modals at the same time.
-
-```js
-Navigation.dismissAllModals();
-```
-
-<!-- ## showLightBox(params = {}) - Use showOverlay
-
-Show a screen as a lightbox.
-
-```js
-Navigation.showLightBox({
-  screen: 'example.LightBoxScreen', // unique ID registered with Navigation.registerScreen
-  passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
-  style: {
-    backgroundBlur: 'dark', // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
-    backgroundColor: '#ff000080', // tint color for the background, you can specify alpha here (optional)
-    tapBackgroundToDismiss: true // dismisses LightBox on background taps (optional)
-  }
-});
-``` -->
-
-<!-- ## dismissLightBox(params = {})
-
-Dismiss the current lightbox.
-
-```js
-Navigation.dismissLightBox();
-``` -->
 
 <!-- ## handleDeepLink(params = {})
 

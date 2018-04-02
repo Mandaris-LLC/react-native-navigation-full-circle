@@ -1,6 +1,6 @@
 # Screen API
 
-This API is relevant when in a screen component context - it allows a screen to push other screens, pop screens, change its navigator style, etc. Access to this API is available through the `Navigation` module and expect to receive the current presented component id from screen `props.componentId`.\
+This API is relevant when in a screen component context - it allows a screen to push other screens, pop screens, change its navigator style, etc. Access to this API is available through the `Navigation` module and expect to receive the current presented component id from screen `props.componentId`.
 Component must initialize in stack in order to push another component.
 
 ## push(componentId, layout)
@@ -103,31 +103,6 @@ Dismiss all the current modals at the same time.
 
 ```js
 Navigation.dismissAllModals();
-```
-
-## showOverlay(layout = {})
-
-Show component as overlay.
-
-```js
-Navigation.showOverlay({
-  component: {
-    name: 'example.Overlay',
-    options: {
-      overlay: {
-        interceptTouchOutside: true
-      }
-    }
-  }
-});
-```
-
-## dismissOverlay(componentId)
-
-Dismiss overlay matching the overlay componentId.
-
-```js
-Navigation.dismissOverlay(this.props.componentId);
 ```
 
 <!-- ## handleDeepLink(params = {})
