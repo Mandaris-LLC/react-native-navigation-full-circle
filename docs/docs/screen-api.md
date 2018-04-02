@@ -45,12 +45,12 @@ Pop all the screens until the root from this screen's navigation stack.
 Navigation.popToRoot(this.props.componentId);
 ```
 
-## setRootStack(componentId, params)
+## setStackRoot(componentId, params)
 
 Reset the current navigation stack to a new screen component (the stack root is changed).
 
 ```js
-Navigation.setRootStack(this.props.componentId, {
+Navigation.setStackRoot(this.props.componentId, {
   component: {
         name: 'example.NewRootScreen',
         passProps: {
