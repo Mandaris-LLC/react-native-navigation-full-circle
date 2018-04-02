@@ -1,7 +1,7 @@
 # Top Level API
 
 In order to make navigation API homogenous as much as possible, we provide setRoot function that receives layout of any kind.
-See [Layout types](layout-types)
+See [Layout types](docs/layout-types)
 
 
 ## setRoot(layout)
