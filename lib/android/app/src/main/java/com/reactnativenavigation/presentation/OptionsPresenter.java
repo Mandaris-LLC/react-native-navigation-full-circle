@@ -41,17 +41,17 @@ public class OptionsPresenter {
         if (options.title.component.hasValue()) topBar.setTitleComponent(options.title.component.get(), options.title.alignment);
         if (options.title.color.hasValue()) topBar.setTitleTextColor(options.title.color.get());
         if (options.title.fontSize.hasValue()) topBar.setTitleFontSize(options.title.fontSize.get());
+        topBar.setTitleTypeface(options.title.fontFamily);
 
         if (options.subtitle.text.hasValue()) topBar.setSubtitle(options.subtitle.text.get());
         if (options.subtitle.color.hasValue()) topBar.setSubtitleColor(options.subtitle.color.get());
-        if (options.subtitle.fontFamily != null) topBar.setSubtitleFontFamily(options.subtitle.fontFamily);
-        if (options.subtitle.fontSize.hasValue()) topBar.setTitleFontSize(options.subtitle.fontSize.get());
+        if (options.subtitle.fontSize.hasValue()) topBar.setSubtitleFontSize(options.subtitle.fontSize.get());
+        topBar.setSubtitleFontFamily(options.subtitle.fontFamily);
 
         topBar.setBackgroundColor(options.background.color);
         topBar.setBackgroundComponent(options.background.component);
         if (options.testId.hasValue()) topBar.setTestId(options.testId.get());
 
-        topBar.setTitleTypeface(options.title.fontFamily);
         if (options.visible.isFalse()) {
             if (options.animate.isTrueOrUndefined()) {
                 topBar.hideAnimate(animationOptions.pop.topBar);

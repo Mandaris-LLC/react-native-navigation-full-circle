@@ -77,9 +77,25 @@ public class TitleBar extends Toolbar {
         if (titleTextView != null) titleTextView.setTypeface(typeface);
     }
 
+    public void setSubtitleTypeface(Typeface typeface) {
+        TextView subtitleTextView = findSubtitleTextView();
+        if (subtitleTextView != null) subtitleTextView.setTypeface(typeface);
+    }
+
+    public void setSubtitleFontSize(float size) {
+        TextView subtitleTextView = findSubtitleTextView();
+        if (subtitleTextView != null) subtitleTextView.setTextSize(size);
+    }
+
     @Nullable
     public TextView findTitleTextView() {
-        List<TextView> children = ViewUtils.findChildrenByClass(this, TextView.class);
+        List<TextView> children = ViewUtils.findChildrenByClass(this, TextView.class, textView -> textView.getText().equals(getTitle()));
+        return children.isEmpty() ? null : children.get(0);
+    }
+
+    @Nullable
+    public TextView findSubtitleTextView() {
+        List<TextView> children = ViewUtils.findChildrenByClass(this, TextView.class, textView -> textView.getText().equals(getSubtitle()));
         return children.isEmpty() ? null : children.get(0);
     }
 

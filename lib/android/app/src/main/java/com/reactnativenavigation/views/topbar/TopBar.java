@@ -88,7 +88,11 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
     }
 
     public void setSubtitleFontFamily(Typeface fontFamily) {
+        titleBar.setSubtitleTypeface(fontFamily);
+    }
 
+    public void setSubtitleFontSize(float size) {
+        titleBar.setSubtitleFontSize(size);
     }
 
     public void setTestId(String testId) {
