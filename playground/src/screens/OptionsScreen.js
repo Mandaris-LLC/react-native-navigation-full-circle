@@ -90,20 +90,6 @@ class OptionsScreen extends Component {
     };
   }
 
-  constructor(props) {
-    super(props);
-    this.onClickDynamicOptions = this.onClickDynamicOptions.bind(this);
-    this.onClickShowTopBar = this.onClickShowTopBar.bind(this);
-    this.onClickHideTopBar = this.onClickHideTopBar.bind(this);
-    this.onClickScrollViewScreen = this.onClickScrollViewScreen.bind(this);
-    this.onClickTopBarTransparent = this.onClickTopBarTransparent.bind(this);
-    this.onClickTopBarOpaque = this.onClickTopBarOpaque.bind(this);
-    this.onClickCustomTranstition = this.onClickCustomTranstition.bind(this);
-    this.onClickShowOverlay = this.onClickShowOverlay.bind(this);
-    this.onClickPushDefaultOptionsScreen = this.onClickPushDefaultOptionsScreen.bind(this);
-    this.onClickFab = this.onClickFab.bind(this);
-  }
-
   render() {
     return (
       <View style={styles.root}>
@@ -167,7 +153,7 @@ class OptionsScreen extends Component {
     }
   }
 
-  onClickDynamicOptions() {
+  onClickDynamicOptions = () => {
     Navigation.setOptions(this.props.componentId, {
       topBar: {
         title: {
@@ -182,7 +168,7 @@ class OptionsScreen extends Component {
     });
   }
 
-  onClickScrollViewScreen() {
+  onClickScrollViewScreen = () => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.ScrollViewScreen'
@@ -190,7 +176,7 @@ class OptionsScreen extends Component {
     });
   }
 
-  onClickCustomTranstition() {
+  onClickCustomTranstition = () => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'navigation.playground.CustomTransitionOrigin'
@@ -198,21 +184,23 @@ class OptionsScreen extends Component {
     });
   }
 
-  onClickTopBarTransparent() {
+  onClickTopBarTransparent = () => {
     Navigation.setOptions(this.props.componentId, {
       topBar: {
         transparent: true
       }
     });
   }
-  onClickTopBarOpaque() {
+  
+  onClickTopBarOpaque = () => {
     Navigation.setOptions(this.props.componentId, {
       topBar: {
         transparent: false
       }
     });
   }
-  onClickShowTopBar() {
+  
+  onClickShowTopBar = () => {
     Navigation.setOptions(this.props.componentId, {
       topBar: {
         visible: true,
@@ -221,7 +209,7 @@ class OptionsScreen extends Component {
     });
   }
 
-  onClickHideTopBar() {
+  onClickHideTopBar = () => {
     Navigation.setOptions(this.props.componentId, {
       topBar: {
         visible: false,
@@ -230,7 +218,7 @@ class OptionsScreen extends Component {
     });
   }
 
-  onClickFab() {
+  onClickFab = () => {
     Navigation.setOptions(this.props.componentId, {
       fab: {
         id: FAB,
@@ -240,7 +228,7 @@ class OptionsScreen extends Component {
     });
   }
 
-  onClickShowOverlay(interceptTouchOutside) {
+  onClickShowOverlay = (interceptTouchOutside) => {
     Navigation.showOverlay({
       component: {
         name: 'navigation.playground.CustomDialog',
@@ -253,7 +241,7 @@ class OptionsScreen extends Component {
     });
   }
 
-  onClickPushDefaultOptionsScreen() {
+  onClickPushDefaultOptionsScreen = () => {
     Navigation.setDefaultOptions({
       topBar: {
         visible: false,
