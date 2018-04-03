@@ -20,6 +20,8 @@ import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 @SuppressLint("ViewConstructor")
@@ -66,18 +68,17 @@ public class TitleBar extends Toolbar {
     }
 
     public void setTitleFontSize(float size) {
-        TextView titleTextView = getTitleTextView();
+        TextView titleTextView = findTitleTextView();
         if (titleTextView != null) titleTextView.setTextSize(size);
     }
 
     public void setTitleTypeface(Typeface typeface) {
-        TextView titleTextView = getTitleTextView();
-        if (titleTextView != null) {
-            titleTextView.setTypeface(typeface);
-        }
+        TextView titleTextView = findTitleTextView();
+        if (titleTextView != null) titleTextView.setTypeface(typeface);
     }
 
-    public TextView getTitleTextView() {
+    @Nullable
+    public TextView findTitleTextView() {
         List<TextView> children = ViewUtils.findChildrenByClass(this, TextView.class);
         return children.isEmpty() ? null : children.get(0);
     }

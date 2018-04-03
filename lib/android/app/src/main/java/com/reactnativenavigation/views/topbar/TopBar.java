@@ -21,7 +21,6 @@ import com.reactnativenavigation.parse.Alignment;
 import com.reactnativenavigation.parse.AnimationOptions;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Color;
-import com.reactnativenavigation.parse.params.Fraction;
 import com.reactnativenavigation.parse.params.Number;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.CompatUtils;
@@ -226,6 +225,6 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
 
     @RestrictTo(RestrictTo.Scope.TESTS)
     public TextView getTitleTextView() {
-        return titleBar.getTitleTextView();
+        return titleBar.findTitleTextView();
     }
 }
