@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
-import com.reactnativenavigation.NavigationApplication;
-
 public class UiUtils {
     public static final int STATUS_BAR_HEIGHT_M = 24;
     public static final int STATUS_BAR_HEIGHT_L = 25;
@@ -56,16 +54,16 @@ public class UiUtils {
         final int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
         statusBarHeight = resourceId > 0 ?
                 resources.getDimensionPixelSize(resourceId) :
-                (int) dpToPx(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? STATUS_BAR_HEIGHT_M : STATUS_BAR_HEIGHT_L);
+                (int) dpToPx(context, Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? STATUS_BAR_HEIGHT_M : STATUS_BAR_HEIGHT_L);
         return statusBarHeight;
     }
 
-    public static float dpToPx(float dp) {
-        float scale = NavigationApplication.instance.getResources().getDisplayMetrics().density;
+    public static float dpToPx(Context context, float dp) {
+        float scale = context.getResources().getDisplayMetrics().density;
         return dp * scale + 0.5f;
     }
 
-    public static float dpToSp(float dp) {
-        return dpToPx(dp) / NavigationApplication.instance.getResources().getDisplayMetrics().density;
+    public static float dpToSp(Context context, float dp) {
+        return dpToPx(context, dp) / context.getResources().getDisplayMetrics().density;
     }
 }

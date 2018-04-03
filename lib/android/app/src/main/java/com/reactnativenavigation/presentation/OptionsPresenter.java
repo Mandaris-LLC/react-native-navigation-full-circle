@@ -22,13 +22,15 @@ import java.util.ArrayList;
 public class OptionsPresenter {
     private static final int DEFAULT_TITLE_COLOR = Color.BLACK;
     private static final int DEFAULT_SUBTITLE_COLOR = Color.GRAY;
-    private static final float DEFAULT_TITLE_FONT_SIZE = UiUtils.dpToSp(18);
-    private static final float DEFAULT_SUBTITLE_FONT_SIZE = UiUtils.dpToSp(14);
+    private final float defaultTitleFontSize;
+    private final float defaultSubtitleFontSize;
 
     private TopBar topBar;
 
     public OptionsPresenter(TopBar topBar) {
         this.topBar = topBar;
+        defaultTitleFontSize = UiUtils.dpToSp(topBar.getContext(), 18);
+        defaultSubtitleFontSize = UiUtils.dpToSp(topBar.getContext(), 14);
     }
 
     public void applyChildOptions(Options options, Component child) {
@@ -46,12 +48,12 @@ public class OptionsPresenter {
     private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component) {
         topBar.setTitle(options.title.text.get(""));
         if (options.title.component.hasValue()) topBar.setTitleComponent(options.title.component.get(), options.title.alignment);
-        topBar.setTitleFontSize(options.title.fontSize.get(DEFAULT_TITLE_FONT_SIZE));
+        topBar.setTitleFontSize(options.title.fontSize.get(defaultTitleFontSize));
         topBar.setTitleTextColor(options.title.color.get(DEFAULT_TITLE_COLOR));
         topBar.setTitleTypeface(options.title.fontFamily);
 
         topBar.setSubtitle(options.subtitle.text.get(""));
-        topBar.setSubtitleFontSize(options.subtitle.fontSize.get(DEFAULT_SUBTITLE_FONT_SIZE));
+        topBar.setSubtitleFontSize(options.subtitle.fontSize.get(defaultSubtitleFontSize));
         topBar.setSubtitleColor(options.subtitle.color.get(DEFAULT_SUBTITLE_COLOR));
         topBar.setSubtitleFontFamily(options.subtitle.fontFamily);
 
