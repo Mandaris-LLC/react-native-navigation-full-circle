@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.reactnativenavigation.parse.Alignment;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Color;
-import com.reactnativenavigation.parse.params.Fraction;
 import com.reactnativenavigation.viewcontrollers.ReactViewCreator;
 import com.reactnativenavigation.viewcontrollers.TitleBarReactViewController;
 import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
@@ -68,11 +67,9 @@ public class TitleBar extends Toolbar {
         if (color.hasValue()) setBackgroundColor(color.get());
     }
 
-    public void setTitleFontSize(Fraction size) {
+    public void setTitleFontSize(float size) {
         TextView titleTextView = getTitleTextView();
-        if (titleTextView != null && size.hasValue()) {
-            titleTextView.setTextSize(size.get());
-        }
+        if (titleTextView != null) titleTextView.setTextSize(size);
     }
 
     public void setTitleTypeface(Typeface typeface) {
@@ -88,6 +85,7 @@ public class TitleBar extends Toolbar {
 
     public void clear() {
         clearTitle();
+        clearSubtitle();
         clearRightButtons();
         clearLeftButton();
         clearComponent();
@@ -95,6 +93,10 @@ public class TitleBar extends Toolbar {
 
     private void clearTitle() {
         setTitle(null);
+    }
+
+    private void clearSubtitle() {
+        setSubtitle(null);
     }
 
     private void clearComponent() {

@@ -88,6 +88,10 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
         titleBar.setSubtitleTextColor(color);
     }
 
+    public void setSubtitleFontFamily(Typeface fontFamily) {
+
+    }
+
     public void setTestId(String testId) {
         setTag(testId);
     }
@@ -96,7 +100,7 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
         titleBar.setTitleTextColor(color);
     }
 
-    public void setTitleFontSize(Fraction size) {
+    public void setTitleFontSize(float size) {
         titleBar.setTitleFontSize(size);
     }
 
