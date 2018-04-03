@@ -4,17 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.reactnativenavigation.parse.Alignment;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Color;
+import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.viewcontrollers.ReactViewCreator;
 import com.reactnativenavigation.viewcontrollers.TitleBarReactViewController;
 import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
@@ -80,7 +78,8 @@ public class TitleBar extends Toolbar {
     }
 
     public TextView getTitleTextView() {
-        return findTextView(this);
+        List<TextView> children = ViewUtils.findChildrenByClass(this, TextView.class);
+        return children.isEmpty() ? null : children.get(0);
     }
 
     public void clear() {
@@ -150,20 +149,6 @@ public class TitleBar extends Toolbar {
 
     public TopBarButtonController createButtonController(Button button) {
         return new TopBarButtonController((Activity) getContext(), button, buttonCreator, onClickListener);
-    }
-
-    @Nullable
-    private TextView findTextView(ViewGroup root) {
-        for (int i = 0; i < root.getChildCount(); i++) {
-            View view = root.getChildAt(i);
-            if (view instanceof ViewGroup) {
-                view = findTextView((ViewGroup) view);
-            }
-            if (view instanceof TextView) {
-                return (TextView) view;
-            }
-        }
-        return null;
     }
 
     public Toolbar.LayoutParams getComponentLayoutParams(Alignment alignment) {
