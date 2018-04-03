@@ -100,7 +100,7 @@ public class OptionsTest extends BaseTest {
         assertThat(result.fabOptions.hideOnScroll.get()).isEqualTo(FAB_HIDE_ON_SCROLL);
         assertThat(result.fabOptions.alignVertically.get()).isEqualTo(FAB_ALIGN_VERTICALLY);
         assertThat(result.fabOptions.alignHorizontally.get()).isEqualTo(FAB_ALIGN_HORIZONTALLY);
-        assertThat(result.topBarOptions.title.alignment).isEqualTo(Alignment.Center);
+        assertThat(result.topBarOptions.title.componentAlignment).isEqualTo(Alignment.Center);
     }
 
     @NonNull
@@ -134,7 +134,7 @@ public class OptionsTest extends BaseTest {
                 .put("color", TOP_BAR_TEXT_COLOR)
                 .put("fontSize", TOP_BAR_FONT_SIZE)
                 .put("fontFamily", TOP_BAR_FONT_FAMILY)
-                .put("alignment", TITLE_ALIGNMENT);
+                .put("componentAlignment", TITLE_ALIGNMENT);
     }
 
     private JSONObject createSubtitle() throws JSONException {
