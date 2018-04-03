@@ -51,11 +51,13 @@ public class OptionsPresenter {
         topBar.setTitleFontSize(options.title.fontSize.get(defaultTitleFontSize));
         topBar.setTitleTextColor(options.title.color.get(DEFAULT_TITLE_COLOR));
         topBar.setTitleTypeface(options.title.fontFamily);
+        topBar.setTitleAlignment(options.title.alignment);
 
         topBar.setSubtitle(options.subtitle.text.get(""));
         topBar.setSubtitleFontSize(options.subtitle.fontSize.get(defaultSubtitleFontSize));
         topBar.setSubtitleColor(options.subtitle.color.get(DEFAULT_SUBTITLE_COLOR));
         topBar.setSubtitleFontFamily(options.subtitle.fontFamily);
+        topBar.setSubtitleAlignment(options.subtitle.alignment);
 
         topBar.setBackgroundColor(options.background.color);
         topBar.setBackgroundComponent(options.background.component);

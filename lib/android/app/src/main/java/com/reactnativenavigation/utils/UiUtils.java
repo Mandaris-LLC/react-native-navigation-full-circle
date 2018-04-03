@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -38,13 +39,22 @@ public class UiUtils {
 	}
 
 	public static float getWindowHeight(Context context) {
-		DisplayMetrics metrics = new DisplayMetrics();
-		WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		if (windowManager != null) {
-			windowManager.getDefaultDisplay().getMetrics(metrics);
-		}
-		return metrics.heightPixels;
+        return getDisplayMetrics(context).heightPixels;
 	}
+
+    public static float getWindowWidth(Context context) {
+        return getDisplayMetrics(context).widthPixels;
+    }
+
+    @NonNull
+    private static DisplayMetrics getDisplayMetrics(Context context) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        if (windowManager != null) {
+            windowManager.getDefaultDisplay().getMetrics(metrics);
+        }
+        return metrics;
+    }
 
     public static int getStatusBarHeight(Context context) {
         if (statusBarHeight > 0) {

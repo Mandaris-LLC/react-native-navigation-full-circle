@@ -21,13 +21,15 @@ class OptionsScreen extends Component {
           text: 'Static Title',
           color: 'black',
           fontSize: 16,
+          alignment: 'center',
           fontFamily: 'HelveticaNeue-Italic',
           largeTitle: false
         },
         subtitle: {
           text: 'Static Subtitle',
           color: 'red',
-          fontFamily: 'HelveticaNeue-Italic'
+          fontFamily: 'HelveticaNeue-Italic',
+          alignment: 'center'
         },
         background: {
           component: 'TopBarBackground'

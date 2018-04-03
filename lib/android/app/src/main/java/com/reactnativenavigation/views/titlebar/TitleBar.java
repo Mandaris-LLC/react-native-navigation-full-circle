@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.reactnativenavigation.parse.Alignment;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Color;
+import com.reactnativenavigation.utils.UiUtils;
 import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.viewcontrollers.ReactViewCreator;
 import com.reactnativenavigation.viewcontrollers.TitleBarReactViewController;
@@ -77,6 +78,12 @@ public class TitleBar extends Toolbar {
         if (titleTextView != null) titleTextView.setTypeface(typeface);
     }
 
+    public void setTitleAlignment(Alignment alignment) {
+        TextView title = findTitleTextView();
+        if (title == null) return;
+        alignTextView(alignment, title);
+    }
+
     public void setSubtitleTypeface(Typeface typeface) {
         TextView subtitleTextView = findSubtitleTextView();
         if (subtitleTextView != null) subtitleTextView.setTypeface(typeface);
@@ -85,6 +92,22 @@ public class TitleBar extends Toolbar {
     public void setSubtitleFontSize(float size) {
         TextView subtitleTextView = findSubtitleTextView();
         if (subtitleTextView != null) subtitleTextView.setTextSize(size);
+    }
+
+    public void setSubtitleAlignment(Alignment alignment) {
+        TextView subtitle = findSubtitleTextView();
+        if (subtitle == null) return;
+        alignTextView(alignment, subtitle);
+    }
+
+    private void alignTextView(Alignment alignment, TextView view) {
+        view.post(() -> {
+            if (alignment == Alignment.Center) {
+                view.setX((getWidth() - view.getWidth()) / 2);
+            } else {
+                view.setX(UiUtils.dpToPx(getContext(), 16));
+            }
+        });
     }
 
     @Nullable
