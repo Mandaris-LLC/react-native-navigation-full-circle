@@ -107,6 +107,7 @@ class OptionsScreen extends Component {
         <Button title='Show touch through overlay' testID={testIDs.SHOW_TOUCH_THROUGH_OVERLAY_BUTTON} onPress={() => this.onClickShowOverlay(false)} />
         <Button title='Push Default Options Screen' testID={testIDs.PUSH_DEFAULT_OPTIONS_BUTTON} onPress={this.onClickPushDefaultOptionsScreen} />
         <Button title='Show TopBar react view' testID={testIDs.SHOW_TOPBAR_REACT_VIEW} onPress={this.onShowTopBarReactView} />
+        {Platform.OS === 'android' ? <Button title='Push' testID={testIDs.PUSH_BUTTON} onPress={this.onPush} /> : null}
         <Text style={styles.footer}>{`this.props.containerId = ${this.props.containerId}`}</Text>
       </View>
     );
@@ -266,6 +267,24 @@ class OptionsScreen extends Component {
       }
     });
   }
+
+  onPush = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'navigation.playground.PushedScreen',
+        options: {
+          topBar: {
+            title: {
+              text: 'pushed'
+            },
+            subtitle: {
+              text: 'subtitle'
+            }
+          }
+        }
+      }
+    });
+  };
 }
 
 const styles = {

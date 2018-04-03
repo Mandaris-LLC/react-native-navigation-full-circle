@@ -1,6 +1,7 @@
 package com.reactnativenavigation.presentation;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.interfaces.ChildDisappearListener;
@@ -18,6 +19,9 @@ import com.reactnativenavigation.views.topbar.TopBar;
 import java.util.ArrayList;
 
 public class OptionsPresenter {
+    private static final int DEFAULT_TITLE_COLOR = Color.BLACK;
+    private static final int DEFAULT_SUBTITLE_COLOR = Color.GRAY;
+
     private TopBar topBar;
 
     public OptionsPresenter(TopBar topBar) {
@@ -39,13 +43,13 @@ public class OptionsPresenter {
     private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component) {
         if (options.title.text.hasValue()) topBar.setTitle(options.title.text.get());
         if (options.title.component.hasValue()) topBar.setTitleComponent(options.title.component.get(), options.title.alignment);
-        if (options.title.color.hasValue()) topBar.setTitleTextColor(options.title.color.get());
         if (options.title.fontSize.hasValue()) topBar.setTitleFontSize(options.title.fontSize.get());
+        topBar.setTitleTextColor(options.title.color.get(DEFAULT_TITLE_COLOR));
         topBar.setTitleTypeface(options.title.fontFamily);
 
         if (options.subtitle.text.hasValue()) topBar.setSubtitle(options.subtitle.text.get());
-        if (options.subtitle.color.hasValue()) topBar.setSubtitleColor(options.subtitle.color.get());
         if (options.subtitle.fontSize.hasValue()) topBar.setSubtitleFontSize(options.subtitle.fontSize.get());
+        topBar.setSubtitleColor(options.subtitle.color.get(DEFAULT_SUBTITLE_COLOR));
         topBar.setSubtitleFontFamily(options.subtitle.fontFamily);
 
         topBar.setBackgroundColor(options.background.color);

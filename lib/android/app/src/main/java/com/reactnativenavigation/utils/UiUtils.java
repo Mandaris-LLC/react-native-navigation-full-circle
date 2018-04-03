@@ -64,5 +64,4 @@ public class UiUtils {
         float scale = NavigationApplication.instance.getResources().getDisplayMetrics().density;
         return dp * scale + 0.5f;
     }
-
 }
