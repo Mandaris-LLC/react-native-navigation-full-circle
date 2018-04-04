@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.anim.NavigationAnimator;
-import com.reactnativenavigation.mocks.MockPromise;
 import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
@@ -28,8 +27,6 @@ import org.json.JSONObject;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-
-import javax.annotation.Nullable;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -113,7 +110,7 @@ public class StackControllerTest extends BaseTest {
             @Override
             public void onSuccess(String childId) {
                 assertContainsOnlyId(child2.getId(), child1.getId());
-                uut.pop(new MockPromise());
+                uut.pop(new CommandListenerAdapter());
                 assertContainsOnlyId(child1.getId());
             }
         });
@@ -125,7 +122,7 @@ public class StackControllerTest extends BaseTest {
         uut.push(child2, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
-                uut.pop(new MockPromise());
+                uut.pop(new CommandListenerAdapter());
                 verify(uut, times(1)).applyChildOptions(uut.options, eq((ReactComponent) child1.getView()));
             }
         });
@@ -147,9 +144,9 @@ public class StackControllerTest extends BaseTest {
         uut.push(child2, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
-                uut.animatePop(new MockPromise() {
+                uut.animatePop(new CommandListenerAdapter() {
                     @Override
-                    public void resolve(@Nullable Object value) {
+                    public void onSuccess(String childId) {
                         verify(stackLayout[0], times(1)).onChildWillDisappear(child2.options, child1.options, () -> {
                         });
                     }
@@ -204,11 +201,11 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void popDoesNothingWhenZeroOrOneChild() {
         assertThat(uut.isEmpty()).isTrue();
-        uut.pop(new MockPromise());
+        uut.pop(new CommandListenerAdapter());
         assertThat(uut.isEmpty()).isTrue();
 
         uut.push(child1, new CommandListenerAdapter());
-        uut.pop(new MockPromise());
+        uut.pop(new CommandListenerAdapter());
         assertContainsOnlyId(child1.getId());
     }
 
@@ -256,7 +253,7 @@ public class StackControllerTest extends BaseTest {
             public void onSuccess(String childId) {
                 assertIsChildById(uut.getView(), child2View);
                 assertNotChildOf(uut.getView(), child1View);
-                uut.pop(new MockPromise());
+                uut.pop(new CommandListenerAdapter());
                 assertNotChildOf(uut.getView(), child2View);
                 assertIsChildById(uut.getView(), child1View);
             }
@@ -269,9 +266,9 @@ public class StackControllerTest extends BaseTest {
         uut.push(child2, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
-                uut.popSpecific(child2, new MockPromise() {
+                uut.popSpecific(child2, new CommandListenerAdapter() {
                     @Override
-                    public void resolve(@Nullable Object value) {
+                    public void onSuccess(String childId) {
                         assertContainsOnlyId(child1.getId());
                         assertIsChildById(uut.getView(), child1.getView());
                     }
@@ -285,7 +282,7 @@ public class StackControllerTest extends BaseTest {
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
         assertIsChildById(uut.getView(), child2.getView());
-        uut.popSpecific(child1, new MockPromise());
+        uut.popSpecific(child1, new CommandListenerAdapter());
         assertContainsOnlyId(child2.getId());
         assertIsChildById(uut.getView(), child2.getView());
     }
@@ -300,7 +297,7 @@ public class StackControllerTest extends BaseTest {
                 assertThat(uut.size()).isEqualTo(3);
                 assertThat(uut.peek()).isEqualTo(child3);
 
-                uut.popTo(child1, new MockPromise());
+                uut.popTo(child1, new CommandListenerAdapter());
 
                 assertThat(uut.size()).isEqualTo(1);
                 assertThat(uut.peek()).isEqualTo(child1);
@@ -313,7 +310,7 @@ public class StackControllerTest extends BaseTest {
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child3, new CommandListenerAdapter());
         assertThat(uut.size()).isEqualTo(2);
-        uut.popTo(child2, new MockPromise());
+        uut.popTo(child2, new CommandListenerAdapter());
         assertThat(uut.size()).isEqualTo(2);
     }
 
@@ -330,9 +327,9 @@ public class StackControllerTest extends BaseTest {
                 assertThat(uut.size()).isEqualTo(3);
                 assertThat(uut.peek()).isEqualTo(child3);
 
-                uut.popToRoot(new MockPromise() {
+                uut.popToRoot(new CommandListenerAdapter() {
                     @Override
-                    public void resolve(@Nullable Object value) {
+                    public void onSuccess(String childId) {
                         assertThat(uut.size()).isEqualTo(1);
                         assertThat(uut.peek()).isEqualTo(child1);
                     }
@@ -344,7 +341,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void popToRoot_EmptyStackDoesNothing() {
         assertThat(uut.isEmpty()).isTrue();
-        uut.popToRoot(new MockPromise());
+        uut.popToRoot(new CommandListenerAdapter());
         assertThat(uut.isEmpty()).isTrue();
     }
 
@@ -375,7 +372,7 @@ public class StackControllerTest extends BaseTest {
             @Override
             public void onSuccess(String childId) {
                 verify(child3, times(0)).destroy();
-                uut.pop(new MockPromise());
+                uut.pop(new CommandListenerAdapter());
                 verify(child3, times(1)).destroy();
             }
         });
@@ -389,7 +386,7 @@ public class StackControllerTest extends BaseTest {
         child2 = spy(child2);
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
-        uut.pop(new MockPromise());
+        uut.pop(new CommandListenerAdapter());
         verify(child1, times(1)).onViewWillAppear();
         verify(child2, times(1)).onViewWillDisappear();
     }
@@ -406,9 +403,9 @@ public class StackControllerTest extends BaseTest {
 
         assertThat(uut.getTopBar().getVisibility()).isEqualTo(View.GONE);
         uut.push(child2, new CommandListenerAdapter());
-        uut.animatePop(new MockPromise() {
+        uut.animatePop(new CommandListenerAdapter() {
             @Override
-            public void resolve(@Nullable Object value) {
+            public void onSuccess(String childId) {
                 verify(uut.getTopBar(), times(1)).hide();
             }
         });
@@ -424,7 +421,7 @@ public class StackControllerTest extends BaseTest {
         uut.push(child3, new CommandListenerAdapter());
 
         verify(child2, times(0)).destroy();
-        uut.popSpecific(child2, new MockPromise());
+        uut.popSpecific(child2, new CommandListenerAdapter());
         verify(child2, times(1)).destroy();
     }
 
@@ -441,9 +438,9 @@ public class StackControllerTest extends BaseTest {
                 verify(child2, times(0)).destroy();
                 verify(child3, times(0)).destroy();
 
-                uut.popTo(child1, new MockPromise() {
+                uut.popTo(child1, new CommandListenerAdapter() {
                     @Override
-                    public void resolve(@Nullable Object value) {
+                    public void onSuccess(String childId) {
                         verify(child2, times(1)).destroy();
                         verify(child3, times(1)).destroy();
                     }
