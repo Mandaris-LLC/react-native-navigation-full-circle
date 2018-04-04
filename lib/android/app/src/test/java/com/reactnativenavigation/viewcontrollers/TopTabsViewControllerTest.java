@@ -65,7 +65,7 @@ public class TopTabsViewControllerTest extends BaseTest {
         tabControllers.forEach(viewController -> viewController.setParentController(uut));
 
         parentController = spy(createStackController("stackId"));
-        parentController.push(uut, new MockPromise());
+        parentController.push(uut);
         uut.setParentController(parentController);
     }
 
@@ -232,8 +232,8 @@ public class TopTabsViewControllerTest extends BaseTest {
                 new TestComponentViewCreator(),
                 new Options()
         );
-        stackController.push(first, new MockPromise());
-        stackController.push(uut, new MockPromise());
+        stackController.push(first);
+        stackController.push(uut);
 
         first.ensureViewIsCreated();
         uut.ensureViewIsCreated();

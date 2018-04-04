@@ -34,6 +34,10 @@ class ModalStack implements ModalListener {
         applyOnModal(componentId, (modal) -> modal.dismiss(promise), () -> Navigator.rejectPromise(promise));
     }
 
+    void dismissAll() {
+        dismissAll(new NoOpPromise());
+    }
+
     void dismissAll(Promise promise) {
         for (Modal modal : modals) {
             modal.dismiss(size() == 1 ? promise : new NoOpPromise());

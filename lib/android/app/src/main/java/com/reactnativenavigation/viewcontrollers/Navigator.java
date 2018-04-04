@@ -14,7 +14,6 @@ import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.presentation.NavigationOptionsListener;
 import com.reactnativenavigation.presentation.OverlayManager;
 import com.reactnativenavigation.utils.CompatUtils;
-import com.reactnativenavigation.utils.NoOpPromise;
 import com.reactnativenavigation.viewcontrollers.modal.Modal;
 import com.reactnativenavigation.viewcontrollers.modal.ModalCreator;
 import com.reactnativenavigation.viewcontrollers.modal.ModalListener;
@@ -24,7 +23,12 @@ import java.util.Collections;
 
 public class Navigator extends ParentController implements ModalListener {
 
-    private static final NoOpPromise NO_OP = new NoOpPromise();
+    public interface CommandListener {
+        void onSuccess(String childId);
+
+        void onError(String message);
+    }
+
     private final ModalStack modalStack;
     private ViewController root;
     private OverlayManager overlayManager = new OverlayManager();
@@ -54,7 +58,7 @@ public class Navigator extends ParentController implements ModalListener {
 
     @Override
     public void destroy() {
-        modalStack.dismissAll(NO_OP);
+        modalStack.dismissAll();
         super.destroy();
     }
 
@@ -100,10 +104,18 @@ public class Navigator extends ParentController implements ModalListener {
         }
     }
 
-    public void push(final String fromId, final ViewController viewController, Promise promise) {
+    public void push(final String fromId, final ViewController viewController, CommandListener listener) {
         ViewController from = findControllerById(fromId);
         if (from != null) {
-            from.performOnParentStack(stack -> ((StackController) stack).animatePush(viewController, promise));
+            from.performOnParentStack(stack -> ((StackController) stack).animatePush(viewController, listener));
+        }
+        listener.onError("Could not push component: " + viewController.getId() + ". Stack with id " + fromId + " was not found.");
+    }
+
+    public void setStackRoot(String fromId, ViewController viewController, CommandListener listener) {
+        ViewController from = findControllerById(fromId);
+        if (from != null) {
+            from.performOnParentStack(stack -> ((StackController) stack).setRoot(viewController, listener));
         }
     }
 

@@ -9,7 +9,9 @@ import android.view.View;
 import com.facebook.react.bridge.Promise;
 import com.reactnativenavigation.anim.NavigationAnimator;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.NoOpPromise;
+import com.reactnativenavigation.viewcontrollers.Navigator.CommandListener;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.Component;
@@ -91,7 +93,11 @@ public class StackController extends ParentController<StackLayout> {
         topBarController.clear();
     }
 
-    public void push(ViewController child, final Promise promise) {
+    public void push(ViewController child) {
+        push(child, new CommandListenerAdapter());
+    }
+
+    public void push(ViewController child, CommandListener listener) {
         final ViewController toRemove = stack.peek();
 
         child.setParentController(this);
@@ -102,10 +108,10 @@ public class StackController extends ParentController<StackLayout> {
         if (toRemove != null) {
             getView().removeView(toRemove.getView());
         }
-        promise.resolve(child.getId());
+        listener.onSuccess(child.getId());
     }
 
-    public void animatePush(final ViewController child, final Promise promise) {
+    public void animatePush(final ViewController child, CommandListener listener) {
         final ViewController toRemove = stack.peek();
 
         child.setParentController(this);
@@ -116,10 +122,37 @@ public class StackController extends ParentController<StackLayout> {
         if (toRemove != null) {
             animator.animatePush(enteringView, () -> {
                 getView().removeView(toRemove.getView());
-                promise.resolve(child.getId());
+                listener.onSuccess(child.getId());
             });
         } else {
-            promise.resolve(child.getId());
+            listener.onSuccess(child.getId());
+        }
+    }
+
+    public void setRoot(ViewController child, CommandListener listener) {
+        push(child);
+        removeChildrenBellowTop();
+        listener.onSuccess(child.getId());
+    }
+
+    public void animateSetRoot(ViewController child, CommandListener listener) {
+        animatePush(child, new CommandListenerAdapter() {
+            @Override
+            public void onSuccess(String childId) {
+                removeChildrenBellowTop();
+                listener.onSuccess(childId);
+            }
+        });
+    }
+
+    private void removeChildrenBellowTop() {
+        Iterator<String> iterator = stack.iterator();
+        while (stack.size() > 1) {
+            ViewController controller = stack.get(iterator.next());
+            if (!stack.isTop(controller.getId())) {
+                stack.remove(controller.getId());
+                controller.destroy();
+            }
         }
     }
 
