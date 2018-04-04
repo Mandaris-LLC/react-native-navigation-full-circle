@@ -135,10 +135,8 @@ public class LayoutFactory {
 	}
 
     private void addChildrenToStack(List<LayoutNode> children, StackController stackController) {
-        for (int i = 0; i < children.size(); i++) {
-            if (i < children.size() - 1) {
-                stackController.push(create(children.get(i)));
-            }
+        for (LayoutNode child : children) {
+            stackController.push(create(child));
         }
     }
 
