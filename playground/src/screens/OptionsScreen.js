@@ -194,7 +194,7 @@ class OptionsScreen extends Component {
       }
     });
   }
-  
+
   onClickTopBarOpaque = () => {
     Navigation.setOptions(this.props.componentId, {
       topBar: {
@@ -202,7 +202,7 @@ class OptionsScreen extends Component {
       }
     });
   }
-  
+
   onClickShowTopBar = () => {
     Navigation.setOptions(this.props.componentId, {
       topBar: {
@@ -286,7 +286,7 @@ class OptionsScreen extends Component {
         }
       }
     });
-  };
+  }
 }
 
 const styles = {
