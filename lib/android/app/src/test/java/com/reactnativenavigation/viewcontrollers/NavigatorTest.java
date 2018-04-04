@@ -12,6 +12,7 @@ import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.CompatUtils;
@@ -83,7 +84,7 @@ public class NavigatorTest extends BaseTest {
     @Test
     public void push() {
         StackController stackController = newStack();
-        stackController.animatePush(child1, new CommandListenerAdapter());
+        stackController.push(child1, new CommandListenerAdapter());
         uut.setRoot(stackController, new MockPromise());
 
         assertIsChildById(uut.getView(), stackController.getView());
@@ -107,8 +108,8 @@ public class NavigatorTest extends BaseTest {
         BottomTabsController bottomTabsController = newTabs();
         StackController stack1 = newStack();
         StackController stack2 = newStack();
-        stack1.animatePush(child1, new CommandListenerAdapter());
-        stack2.animatePush(child2, new CommandListenerAdapter());
+        stack1.push(child1, new CommandListenerAdapter());
+        stack2.push(child2, new CommandListenerAdapter());
         bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new MockPromise());
 
@@ -134,12 +135,12 @@ public class NavigatorTest extends BaseTest {
         StackController stack2 = newStack();
         bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new MockPromise());
-        stack1.animatePush(child1, new CommandListenerAdapter());
-        stack2.animatePush(child2, new CommandListenerAdapter());
-        stack2.animatePush(child3, new CommandListenerAdapter() {
+        stack1.push(child1, new CommandListenerAdapter());
+        stack2.push(child2, new CommandListenerAdapter());
+        stack2.push(child3, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
-                stack2.animatePush(child4, new CommandListenerAdapter() {
+                stack2.push(child4, new CommandListenerAdapter() {
                             @Override
                             public void onSuccess(String childId) {
                                 uut.pop("child4", new MockPromise());
@@ -156,10 +157,10 @@ public class NavigatorTest extends BaseTest {
         BottomTabsController bottomTabsController = newTabs();
         StackController stack1 = newStack();
         StackController stack2 = newStack();
-        stack1.animatePush(child1, new CommandListenerAdapter());
-        stack2.animatePush(child2, new CommandListenerAdapter());
-        stack2.animatePush(child3, new CommandListenerAdapter());
-        stack2.animatePush(child4, new CommandListenerAdapter());
+        stack1.push(child1, new CommandListenerAdapter());
+        stack2.push(child2, new CommandListenerAdapter());
+        stack2.push(child3, new CommandListenerAdapter());
+        stack2.push(child4, new CommandListenerAdapter());
         bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new MockPromise());
 
@@ -176,11 +177,11 @@ public class NavigatorTest extends BaseTest {
         bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new MockPromise());
 
-        stack1.animatePush(child1, new CommandListenerAdapter());
-        stack2.animatePush(child2, new CommandListenerAdapter());
-        stack2.animatePush(child3, new CommandListenerAdapter());
-        stack2.animatePush(child4, new CommandListenerAdapter());
-        stack2.animatePush(child5, new CommandListenerAdapter() {
+        stack1.push(child1, new CommandListenerAdapter());
+        stack2.push(child2, new CommandListenerAdapter());
+        stack2.push(child3, new CommandListenerAdapter());
+        stack2.push(child4, new CommandListenerAdapter());
+        stack2.push(child5, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
                 uut.popTo(child2.getId(), new MockPromise());
@@ -197,11 +198,11 @@ public class NavigatorTest extends BaseTest {
         bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new MockPromise());
 
-        stack1.animatePush(child1, new CommandListenerAdapter());
-        stack2.animatePush(child2, new CommandListenerAdapter());
-        stack2.animatePush(child3, new CommandListenerAdapter());
-        stack2.animatePush(child4, new CommandListenerAdapter());
-        stack2.animatePush(child5, new CommandListenerAdapter() {
+        stack1.push(child1, new CommandListenerAdapter());
+        stack2.push(child2, new CommandListenerAdapter());
+        stack2.push(child3, new CommandListenerAdapter());
+        stack2.push(child4, new CommandListenerAdapter());
+        stack2.push(child5, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
                 uut.popToRoot(child3.getId(), new MockPromise());
@@ -212,11 +213,15 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void setStackRoot() {
+        child1.options.animated = new Bool(false);
+        child2.options.animated = new Bool(false);
+        child3.options.animated = new Bool(false);
+
         StackController stack = newStack();
         uut.setRoot(stack, new MockPromise());
 
-        stack.animatePush(child1, new CommandListenerAdapter());
-        stack.animatePush(child2, new CommandListenerAdapter());
+        stack.push(child1, new CommandListenerAdapter());
+        stack.push(child2, new CommandListenerAdapter());
         stack.setRoot(child3, new CommandListenerAdapter());
 
         assertThat(stack.getChildControllers()).containsOnly(child3);
@@ -272,7 +277,7 @@ public class NavigatorTest extends BaseTest {
     @Test
     public void push_Promise() {
         final StackController stackController = newStack();
-        stackController.animatePush(child1, new CommandListenerAdapter());
+        stackController.push(child1, new CommandListenerAdapter());
         uut.setRoot(stackController, new MockPromise());
 
         assertIsChildById(uut.getView(), stackController.getView());
@@ -319,10 +324,10 @@ public class NavigatorTest extends BaseTest {
         bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new MockPromise());
 
-        stack1.animatePush(child1, new CommandListenerAdapter());
-        stack2.animatePush(child2, new CommandListenerAdapter());
-        stack2.animatePush(child3, new CommandListenerAdapter());
-        stack2.animatePush(child4, new CommandListenerAdapter() {
+        stack1.push(child1, new CommandListenerAdapter());
+        stack2.push(child2, new CommandListenerAdapter());
+        stack2.push(child3, new CommandListenerAdapter());
+        stack2.push(child4, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
                 uut.pop("child4", new MockPromise());
@@ -343,6 +348,8 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void pushedStackCanBePopped() {
+        child1.options.animated = new Bool(false);
+        child2.options.animated = new Bool(false);
         StackController parent = newStack();
         parent.ensureViewIsCreated();
         uut.setRoot(parent, new MockPromise());

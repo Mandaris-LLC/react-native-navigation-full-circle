@@ -13,6 +13,7 @@ import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.FabOptions;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
@@ -46,6 +47,7 @@ public class FloatingActionButtonTest extends BaseTest {
     @NonNull
     private Options getOptionsWithFab() {
         Options options = new Options();
+        options.animated = new Bool(false);
         FabOptions fabOptions = new FabOptions();
         fabOptions.id = new Text("FAB");
         options.fabOptions = fabOptions;
@@ -109,6 +111,9 @@ public class FloatingActionButtonTest extends BaseTest {
 
     @Test
     public void showOnPop() {
+        childFab.options.animated = new Bool(false);
+        childNoFab.options.animated = new Bool(false);
+
         stackController.push(childFab);
         stackController.push(childNoFab);
         childNoFab.onViewAppeared();

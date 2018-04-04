@@ -12,6 +12,7 @@ import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ViewHelper;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
@@ -232,6 +233,8 @@ public class TopTabsViewControllerTest extends BaseTest {
                 new TestComponentViewCreator(),
                 new Options()
         );
+        first.options.animated = new Bool(false);
+        uut.options.animated = new Bool(false);
         stackController.push(first);
         stackController.push(uut);
 

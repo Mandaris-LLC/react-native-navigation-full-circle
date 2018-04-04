@@ -105,7 +105,7 @@ public class BottomTabsControllerTest extends BaseTest {
         assertThat(uut.findControllerById("123")).isNull();
         assertThat(uut.findControllerById(uut.getId())).isEqualTo(uut);
         StackController inner = createStack("inner");
-        inner.animatePush(child1, new CommandListenerAdapter());
+        inner.push(child1, new CommandListenerAdapter());
         assertThat(uut.findControllerById(child1.getId())).isNull();
         uut.setTabs(Collections.singletonList(inner));
         assertThat(uut.findControllerById(child1.getId())).isEqualTo(child1);

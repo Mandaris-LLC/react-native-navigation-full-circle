@@ -73,7 +73,7 @@ public class OptionsApplyingTest extends BaseTest {
         uut.options.topBarOptions.title.text = new Text("the title");
         StackController stackController =
                 new StackController(activity, new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()), new TopBarController(), "stackId", new Options());
-        stackController.animatePush(uut, new CommandListenerAdapter());
+        stackController.push(uut, new CommandListenerAdapter());
         assertThat(stackController.getTopBar().getTitle()).isEmpty();
 
         uut.onViewAppeared();
@@ -118,7 +118,7 @@ public class OptionsApplyingTest extends BaseTest {
     @Test
     public void appliesTopBarTextColor() {
         assertThat(uut.initialOptions).isSameAs(initialNavigationOptions);
-        stackController.animatePush(uut, new CommandListenerAdapter() {
+        stackController.push(uut, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
                 Options opts = new Options();
@@ -169,7 +169,7 @@ public class OptionsApplyingTest extends BaseTest {
         uut.options.topBarOptions.title.text = new Text("the title");
         uut.options.topBarOptions.drawBehind = new Bool(false);
         uut.ensureViewIsCreated();
-        stackController.animatePush(uut, new CommandListenerAdapter() {
+        stackController.push(uut, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
                 uut.onViewAppeared();

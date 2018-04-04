@@ -99,44 +99,25 @@ public class StackController extends ParentController<StackLayout> {
 
     public void push(ViewController child, CommandListener listener) {
         final ViewController toRemove = stack.peek();
-
         child.setParentController(this);
         stack.push(child.getId(), child);
-        View enteringView = child.getView();
-        getView().addView(enteringView, MATCH_PARENT, MATCH_PARENT);
+        getView().addView(child.getView(), MATCH_PARENT, MATCH_PARENT);
 
         if (toRemove != null) {
-            getView().removeView(toRemove.getView());
-        }
-        listener.onSuccess(child.getId());
-    }
-
-    public void animatePush(final ViewController child, CommandListener listener) {
-        final ViewController toRemove = stack.peek();
-
-        child.setParentController(this);
-        stack.push(child.getId(), child);
-        View enteringView = child.getView();
-        getView().addView(enteringView, MATCH_PARENT, MATCH_PARENT);
-
-        if (toRemove != null) {
-            animator.animatePush(enteringView, () -> {
+            if (child.options.animated.isTrueOrUndefined()) {
+                animator.animatePush(child.getView(), () -> {
+                    getView().removeView(toRemove.getView());
+                    listener.onSuccess(child.getId());
+                });
+            } else {
                 getView().removeView(toRemove.getView());
                 listener.onSuccess(child.getId());
-            });
-        } else {
-            listener.onSuccess(child.getId());
+            }
         }
     }
 
     public void setRoot(ViewController child, CommandListener listener) {
-        push(child);
-        removeChildrenBellowTop();
-        listener.onSuccess(child.getId());
-    }
-
-    public void animateSetRoot(ViewController child, CommandListener listener) {
-        animatePush(child, new CommandListenerAdapter() {
+        push(child, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
                 removeChildrenBellowTop();

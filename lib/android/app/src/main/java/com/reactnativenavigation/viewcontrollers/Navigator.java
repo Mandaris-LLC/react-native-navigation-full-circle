@@ -107,7 +107,7 @@ public class Navigator extends ParentController implements ModalListener {
     public void push(final String fromId, final ViewController viewController, CommandListener listener) {
         ViewController from = findControllerById(fromId);
         if (from != null) {
-            from.performOnParentStack(stack -> ((StackController) stack).animatePush(viewController, listener));
+            from.performOnParentStack(stack -> ((StackController) stack).push(viewController, listener));
         } else {
             listener.onError("Could not push component: " + viewController.getId() + ". Stack with id " + fromId + " was not found.");
         }

@@ -95,8 +95,8 @@ public class ParentControllerTest extends BaseTest {
         StackController stackController = createStack();
         SimpleViewController child1 = new SimpleViewController(activity, "child1", new Options());
         SimpleViewController child2 = new SimpleViewController(activity, "child2", new Options());
-        stackController.animatePush(child1, new CommandListenerAdapter());
-        stackController.animatePush(child2, new CommandListenerAdapter());
+        stackController.push(child1, new CommandListenerAdapter());
+        stackController.push(child2, new CommandListenerAdapter());
         children.add(stackController);
 
         assertThat(uut.findControllerById("child2")).isEqualTo(child2);
@@ -116,7 +116,7 @@ public class ParentControllerTest extends BaseTest {
     public void optionsAreClearedWhenChildIsAppeared() {
         StackController stackController = spy(createStack());
         SimpleViewController child1 = new SimpleViewController(activity, "child1", new Options());
-        stackController.animatePush(child1, new CommandListenerAdapter());
+        stackController.push(child1, new CommandListenerAdapter());
 
         child1.onViewAppeared();
         verify(stackController, times(1)).clearOptions();
