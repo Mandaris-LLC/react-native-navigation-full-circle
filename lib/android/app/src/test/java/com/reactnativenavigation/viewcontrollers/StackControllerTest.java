@@ -29,6 +29,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -339,10 +340,50 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
+    public void popToRoot_onlyTopChildIsAnimated() {
+        child1.options.animated = new Bool(false);
+        child2.options.animated = new Bool(false);
+        child3.options.animated = new Bool(false);
+
+        uut.push(child1, new CommandListenerAdapter());
+        uut.push(child2, new CommandListenerAdapter());
+        uut.push(child3, new CommandListenerAdapter());
+
+        uut.popToRoot(new CommandListenerAdapter() {
+            @Override
+            public void onSuccess(String childId) {
+                verify(animator, times(1)).animatePop(eq(child3.getView()), any());
+            }
+        });
+    }
+
+    @Test
+    public void popToRoot_topChildrenAreDestroyed() {
+        child1.options.animated = new Bool(false);
+        child2.options.animated = new Bool(false);
+        child3.options.animated = new Bool(false);
+
+        uut.push(child1, new CommandListenerAdapter());
+        uut.push(child2, new CommandListenerAdapter());
+        uut.push(child3, new CommandListenerAdapter());
+
+        uut.popToRoot(new CommandListenerAdapter() {
+            @Override
+            public void onSuccess(String childId) {
+                verify(child1, times(0)).destroy();
+                verify(child2, times(1)).destroy();
+                verify(child3, times(1)).destroy();
+            }
+        });
+    }
+
+    @Test
     public void popToRoot_EmptyStackDoesNothing() {
         assertThat(uut.isEmpty()).isTrue();
-        uut.popToRoot(new CommandListenerAdapter());
+        CommandListenerAdapter listener = spy(new CommandListenerAdapter());
+        uut.popToRoot(listener);
         assertThat(uut.isEmpty()).isTrue();
+        verify(listener, times(1)).onError(any());
     }
 
     @Test
