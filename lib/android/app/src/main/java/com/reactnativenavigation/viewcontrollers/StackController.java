@@ -212,14 +212,21 @@ public class StackController extends ParentController<StackLayout> {
     }
 
     void popToRoot(CommandListener listener) {
-        while (canPop()) {
-            boolean animate = stack.size() == 2; // First element is root
-            if (animate) {
-                animatePop(listener);
-            } else {
-                pop(listener);
+        if (!canPop()) {
+            listener.onError("Nothing to pop");
+            return;
+        }
+
+        Iterator<String> iterator = stack.iterator();
+        while (stack.size() > 2) {
+            ViewController controller = stack.get(iterator.next());
+            if (!stack.isTop(controller.getId())) {
+                stack.remove(controller.getId());
+                controller.destroy();
             }
         }
+
+        animatePop(listener);
     }
 
     ViewController peek() {
