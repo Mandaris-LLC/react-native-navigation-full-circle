@@ -97,7 +97,7 @@
 	RNNRootViewController* component = [[RNNRootViewController alloc] initWithName:name withOptions:options withComponentId:componentId rootViewCreator:_creator eventEmitter:_eventEmitter isExternalComponent:NO];
 	if (!component.isCustomViewController) {
 		CGSize availableSize = UIApplication.sharedApplication.delegate.window.bounds.size;
-		[_bridge.uiManager setAvailableSize:availableSize forRootView:component.view];
+		[_bridge.uiManager setAvailableSize:availableSize forRootView:component.reactView];
 	}
 	return component;
 }
