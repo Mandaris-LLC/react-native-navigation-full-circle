@@ -139,7 +139,7 @@ public class StackController extends ParentController<StackLayout> {
         disappearing.onViewWillDisappear();
         appearing.onViewWillAppear();
         getView().onChildWillDisappear(disappearing.options, appearing.options, () ->
-                getView().addView(appearing.getView(), getView().indexOfChild(disappearing.getView()))
+                getView().addView(appearing.getView())
         );
 
         if (disappearing.options.animated.isTrueOrUndefined()) {
