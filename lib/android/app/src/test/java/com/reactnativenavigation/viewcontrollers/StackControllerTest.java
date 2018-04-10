@@ -76,10 +76,8 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void push() {
         assertThat(uut.isEmpty()).isTrue();
-        CommandListenerAdapter listener = spy(new CommandListenerAdapter());
-        uut.push(child1, listener);
+        uut.push(child1, new CommandListenerAdapter());
         assertContainsOnlyId(child1.getId());
-        verify(listener, times(1)).onSuccess(child1.getId());
     }
 
     @Test
@@ -204,7 +202,7 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
-    public void pop_doesNothingWhenZeroOrOneChild() {
+    public void popDoesNothingWhenZeroOrOneChild() {
         assertThat(uut.isEmpty()).isTrue();
         uut.pop(new CommandListenerAdapter());
         assertThat(uut.isEmpty()).isTrue();
