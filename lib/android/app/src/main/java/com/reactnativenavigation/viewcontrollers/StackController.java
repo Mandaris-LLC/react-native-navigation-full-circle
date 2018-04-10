@@ -97,7 +97,7 @@ public class StackController extends ParentController<StackLayout> {
 
         if (toRemove != null) {
             if (child.options.animated.isTrueOrUndefined()) {
-                animator.animatePush(child.getView(), () -> {
+                animator.push(child.getView(), () -> {
                     getView().removeView(toRemove.getView());
                     listener.onSuccess(child.getId());
                 });
@@ -143,7 +143,7 @@ public class StackController extends ParentController<StackLayout> {
         );
 
         if (disappearing.options.animated.isTrueOrUndefined()) {
-            animator.animatePop(
+            animator.pop(
                     disappearing.getView(),
                     () -> finishPopping(disappearing, listener)
             );

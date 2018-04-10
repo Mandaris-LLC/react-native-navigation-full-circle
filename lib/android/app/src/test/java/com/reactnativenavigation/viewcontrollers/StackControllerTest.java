@@ -328,9 +328,9 @@ public class StackControllerTest extends BaseTest {
                 uut.popTo(child2, new CommandListenerAdapter() {
                     @Override
                     public void onSuccess(String childId) {
-                        verify(animator, times(0)).animatePop(eq(child1.getView()), any());
-                        verify(animator, times(0)).animatePop(eq(child2.getView()), any());
-                        verify(animator, times(1)).animatePop(eq(child4.getView()), any());
+                        verify(animator, times(0)).pop(eq(child1.getView()), any());
+                        verify(animator, times(0)).pop(eq(child2.getView()), any());
+                        verify(animator, times(1)).pop(eq(child4.getView()), any());
                     }
                 });
             }
@@ -376,7 +376,7 @@ public class StackControllerTest extends BaseTest {
                 uut.popToRoot(new CommandListenerAdapter() {
                     @Override
                     public void onSuccess(String childId) {
-                        verify(animator, times(1)).animatePop(eq(child3.getView()), any());
+                        verify(animator, times(1)).pop(eq(child3.getView()), any());
                     }
                 });
             }
