@@ -61,6 +61,10 @@ public class AnimationOptions {
         return hasValue;
     }
 
+    public AnimatorSet getAnimation(View view) {
+        return getAnimation(view, null);
+    }
+
     public AnimatorSet getAnimation(View view, AnimatorSet defaultAnimation) {
         if (!hasValue()) return defaultAnimation;
         AnimatorSet animationSet = new AnimatorSet();

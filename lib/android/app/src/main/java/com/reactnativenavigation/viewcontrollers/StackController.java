@@ -143,10 +143,7 @@ public class StackController extends ParentController<StackLayout> {
         );
 
         if (disappearing.options.animated.isTrueOrUndefined()) {
-            animator.pop(
-                    disappearing.getView(),
-                    () -> finishPopping(disappearing, listener)
-            );
+            animator.pop(disappearing.getView(), () -> finishPopping(disappearing, listener));
         } else {
             finishPopping(disappearing, listener);
         }
