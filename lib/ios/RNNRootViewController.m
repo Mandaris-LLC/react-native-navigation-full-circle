@@ -41,6 +41,11 @@
 	return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+	[super viewWillAppear:animated];
+	[self.options applyOn:self];
+}
+
 -(void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	[self.eventEmitter sendComponentDidAppear:self.componentId componentName:self.componentName];
@@ -57,7 +62,6 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	[self.options applyOn:self];
 }
 
 - (void)optionsUpdated {
