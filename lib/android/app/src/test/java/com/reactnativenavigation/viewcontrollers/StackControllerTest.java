@@ -76,8 +76,10 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void push() {
         assertThat(uut.isEmpty()).isTrue();
-        uut.push(child1, new CommandListenerAdapter());
+        CommandListenerAdapter listener = spy(new CommandListenerAdapter());
+        uut.push(child1, listener);
         assertContainsOnlyId(child1.getId());
+        verify(listener, times(1)).onSuccess(child1.getId());
     }
 
     @Test

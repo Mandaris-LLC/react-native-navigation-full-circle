@@ -105,6 +105,8 @@ public class StackController extends ParentController<StackLayout> {
                 getView().removeView(toRemove.getView());
                 listener.onSuccess(child.getId());
             }
+        } else {
+            listener.onSuccess(child.getId());
         }
     }
 
