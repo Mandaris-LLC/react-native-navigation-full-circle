@@ -57,7 +57,7 @@ dispatch_queue_t RCTGetUIManagerQueue(void);
 		}
 	}];
 	
-	[[self.fromVC navigationController] pushViewController:self.toVC animated:self.toVC.options.animations.push.enabled];
+	[[self.fromVC navigationController] pushViewController:self.toVC animated:self.toVC.options.animations.push.enable];
 	[CATransaction commit];
 	
 	self.toVC = nil;
@@ -71,15 +71,15 @@ dispatch_queue_t RCTGetUIManagerQueue(void);
 	if ([nvc topViewController] == vc) {
 		if (vc.options.animations.pop) {
 			nvc.delegate = vc;
-			[nvc popViewControllerAnimated:vc.options.animations.pop.enabled];
+			[nvc popViewControllerAnimated:vc.options.animations.pop.enable];
 		} else {
 			nvc.delegate = nil;
-			[nvc popViewControllerAnimated:vc.options.animations.pop.enabled];
+			[nvc popViewControllerAnimated:vc.options.animations.pop.enable];
 		}
 	} else {
 		NSMutableArray * vcs = nvc.viewControllers.mutableCopy;
 		[vcs removeObject:vc];
-		[nvc setViewControllers:vcs animated:vc.options.animations.pop.enabled];
+		[nvc setViewControllers:vcs animated:vc.options.animations.pop.enable];
 	}
 	[_store removeComponent:componentId];
 }
@@ -90,7 +90,7 @@ dispatch_queue_t RCTGetUIManagerQueue(void);
 	if (vc) {
 		UINavigationController *nvc = [vc navigationController];
 		if(nvc) {
-			NSArray *poppedVCs = [nvc popToViewController:vc animated:vc.options.animations.pop.enabled];
+			NSArray *poppedVCs = [nvc popToViewController:vc animated:vc.options.animations.pop.enable];
 			[self removePopedViewControllers:poppedVCs];
 		}
 	}
@@ -99,7 +99,7 @@ dispatch_queue_t RCTGetUIManagerQueue(void);
 -(void)popToRoot:(NSString*)componentId {
 	RNNRootViewController *vc = (RNNRootViewController*)[_store findComponentForId:componentId];
 	UINavigationController* nvc = [vc navigationController];
-	NSArray* poppedVCs = [nvc popToRootViewControllerAnimated:vc.options.animations.pop.enabled];
+	NSArray* poppedVCs = [nvc popToRootViewControllerAnimated:vc.options.animations.pop.enable];
 	[self removePopedViewControllers:poppedVCs];
 }
 
@@ -113,7 +113,7 @@ dispatch_queue_t RCTGetUIManagerQueue(void);
 		}
 	}];
 	
-	[nvc setViewControllers:@[newRoot] animated:newRoot.options.animations.push.enabled];
+	[nvc setViewControllers:@[newRoot] animated:newRoot.options.animations.push.enable];
 	
 	[CATransaction commit];
 }

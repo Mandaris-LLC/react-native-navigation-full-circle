@@ -9,7 +9,7 @@
 	self.content = dict[@"content"] ? [[RNNTransitionStateHolder alloc] initWithDict:dict[@"content"]] : nil;
 	self.bottomTabs = dict[@"bottomTabs"] ? [[RNNTransitionStateHolder alloc] initWithDict:dict[@"bottomTabs"]] : nil;
 
-	self.enabled = dict[@"enabled"] ? [dict[@"enabled"] boolValue] : YES;
+	self.enable = dict[@"enabled"] ? [dict[@"enabled"] boolValue] : YES;
 
 	return self;
 }

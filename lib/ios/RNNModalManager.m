@@ -25,7 +25,7 @@
 	if (topVC.options.animations.showModal.hasCustomAnimation) {
 		self.toVC.transitioningDelegate = topVC;
 	}
-	[topVC presentViewController:self.toVC animated:self.toVC.options.animations.showModal.enabled completion:^{
+	[topVC presentViewController:self.toVC animated:self.toVC.options.animations.showModal.enable completion:^{
 		if (_completionBlock) {
 			_completionBlock();
 			_completionBlock = nil;
@@ -74,7 +74,7 @@
 	}
 	
 	if (modalToDismiss == topPresentedVC || [[topPresentedVC childViewControllers] containsObject:modalToDismiss]) {
-		[modalToDismiss dismissViewControllerAnimated:modalToDismiss.options.animations.dismissModal.enabled completion:^{
+		[modalToDismiss dismissViewControllerAnimated:modalToDismiss.options.animations.dismissModal.enable completion:^{
 			[[_store pendingModalIdsToDismiss] removeObject:componentId];
 			[_store removeComponent:componentId];
 			[self removePendingNextModalIfOnTop];

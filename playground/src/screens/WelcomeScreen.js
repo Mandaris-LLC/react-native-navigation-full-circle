@@ -304,7 +304,7 @@ class WelcomeScreen extends Component {
         options: {
           animations: {
             push: {
-              enabled: false
+              enable: false
             }
           }
         }
