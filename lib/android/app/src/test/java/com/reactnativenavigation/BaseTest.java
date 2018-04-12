@@ -47,7 +47,7 @@ public abstract class BaseTest {
 
     protected void disablePushAnimation(ViewController... controllers) {
         for (ViewController controller : controllers) {
-            controller.options.animations.push.enabled = new Bool(false);
+            controller.options.animations.push.enable = new Bool(false);
         }
     }
 }

@@ -231,8 +231,8 @@ public class TopTabsViewControllerTest extends BaseTest {
                 new TestComponentViewCreator(),
                 new Options()
         );
-        first.options.animations.push.enabled = new Bool(false);
-        uut.options.animations.push.enabled = new Bool(false);
+        first.options.animations.push.enable = new Bool(false);
+        uut.options.animations.push.enable = new Bool(false);
         stackController.push(first, new CommandListenerAdapter());
         stackController.push(uut, new CommandListenerAdapter());
 

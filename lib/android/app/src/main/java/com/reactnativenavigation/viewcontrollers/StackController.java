@@ -96,7 +96,7 @@ public class StackController extends ParentController<StackLayout> {
         getView().addView(child.getView(), MATCH_PARENT, MATCH_PARENT);
 
         if (toRemove != null) {
-            if (child.options.animations.push.enabled.isTrueOrUndefined()) {
+            if (child.options.animations.push.enable.isTrueOrUndefined()) {
                 animator.push(child.getView(), () -> {
                     getView().removeView(toRemove.getView());
                     listener.onSuccess(child.getId());
@@ -143,7 +143,7 @@ public class StackController extends ParentController<StackLayout> {
         getView().addView(appearing.getView(), 0);
         getView().onChildWillPop(disappearing.options, appearing.options);
 
-        if (disappearing.options.animations.pop.enabled.isTrueOrUndefined()) {
+        if (disappearing.options.animations.pop.enable.isTrueOrUndefined()) {
             animator.pop(disappearing.getView(), () -> finishPopping(disappearing, listener));
         } else {
             finishPopping(disappearing, listener);

@@ -346,8 +346,8 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void pushedStackCanBePopped() {
-        child1.options.animations.push.enabled = new Bool(false);
-        child2.options.animations.push.enabled = new Bool(false);
+        child1.options.animations.push.enable = new Bool(false);
+        child2.options.animations.push.enable = new Bool(false);
         StackController parent = newStack();
         parent.ensureViewIsCreated();
         uut.setRoot(parent, new MockPromise());

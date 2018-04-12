@@ -62,14 +62,14 @@ public class OptionsPresenter {
         if (options.testId.hasValue()) topBar.setTestId(options.testId.get());
 
         if (options.visible.isFalse()) {
-            if (options.animate.isTrueOrUndefined() && componentOptions.animations.push.enabled.isTrueOrUndefined()) {
+            if (options.animate.isTrueOrUndefined() && componentOptions.animations.push.enable.isTrueOrUndefined()) {
                 topBar.hideAnimate(animationOptions.pop.topBar);
             } else {
                 topBar.hide();
             }
         }
         if (options.visible.isTrueOrUndefined()) {
-            if (options.animate.isTrueOrUndefined() && componentOptions.animations.push.enabled.isTrueOrUndefined()) {
+            if (options.animate.isTrueOrUndefined() && componentOptions.animations.push.enable.isTrueOrUndefined()) {
                 topBar.showAnimate(animationOptions.push.topBar);
             } else {
                 topBar.show();
@@ -106,7 +106,7 @@ public class OptionsPresenter {
 
     public void onChildWillPop(Options disappearing, Options appearing) {
         if (disappearing.topBar.visible.isTrueOrUndefined() && appearing.topBar.visible.isFalse()) {
-            if (disappearing.topBar.animate.isTrueOrUndefined() && disappearing.animations.pop.enabled.isTrueOrUndefined()) {
+            if (disappearing.topBar.animate.isTrueOrUndefined() && disappearing.animations.pop.enable.isTrueOrUndefined()) {
                 topBar.hideAnimate(disappearing.animations.pop.topBar);
             } else {
                 topBar.hide();
