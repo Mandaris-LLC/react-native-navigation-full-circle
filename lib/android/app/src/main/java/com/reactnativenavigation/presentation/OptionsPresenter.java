@@ -9,6 +9,7 @@ import com.reactnativenavigation.parse.OrientationOptions;
 import com.reactnativenavigation.parse.TopBarOptions;
 import com.reactnativenavigation.parse.TopTabOptions;
 import com.reactnativenavigation.parse.TopTabsOptions;
+import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.utils.UiUtils;
 import com.reactnativenavigation.viewcontrollers.IReactView;
@@ -34,7 +35,7 @@ public class OptionsPresenter {
     public void applyChildOptions(Options options, Component child) {
         applyOrientation(options.orientationOptions);
         applyButtons(options.topBarOptions.leftButtons, options.topBarOptions.rightButtons);
-        applyTopBarOptions(options.topBarOptions, options.animationsOptions, child);
+        applyTopBarOptions(options.topBarOptions, options.animationsOptions, child, options.animated);
         applyTopTabsOptions(options.topTabsOptions);
         applyTopTabOptions(options.topTabOptions);
     }
@@ -43,7 +44,7 @@ public class OptionsPresenter {
         ((Activity) topBar.getContext()).setRequestedOrientation(options.getValue());
     }
 
-    private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component) {
+    private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component, Bool animated) {
         topBar.setTitle(options.title.text.get(""));
         if (options.title.component.hasValue()) topBar.setTitleComponent(options.title.component);
         topBar.setTitleFontSize(options.title.fontSize.get(defaultTitleFontSize));
@@ -62,14 +63,14 @@ public class OptionsPresenter {
         if (options.testId.hasValue()) topBar.setTestId(options.testId.get());
 
         if (options.visible.isFalse()) {
-            if (options.animate.isTrueOrUndefined()) {
+            if (options.animate.isTrueOrUndefined() && animated.isTrueOrUndefined()) {
                 topBar.hideAnimate(animationOptions.pop.topBar);
             } else {
                 topBar.hide();
             }
         }
         if (options.visible.isTrueOrUndefined()) {
-            if (options.animate.isTrueOrUndefined()) {
+            if (options.animate.isTrueOrUndefined() && animated.isTrueOrUndefined()) {
                 topBar.showAnimate(animationOptions.push.topBar);
             } else {
                 topBar.show();
@@ -106,7 +107,7 @@ public class OptionsPresenter {
 
     public void onChildWillDisappear(Options disappearing, Options appearing) {
         if (disappearing.topBarOptions.visible.isTrueOrUndefined() && appearing.topBarOptions.visible.isFalse()) {
-            if (disappearing.topBarOptions.animate.isTrueOrUndefined()) {
+            if (disappearing.topBarOptions.animate.isTrueOrUndefined() && disappearing.animated.isTrueOrUndefined()) {
                 topBar.hideAnimate(disappearing.animationsOptions.pop.topBar);
             } else {
                 topBar.hide();

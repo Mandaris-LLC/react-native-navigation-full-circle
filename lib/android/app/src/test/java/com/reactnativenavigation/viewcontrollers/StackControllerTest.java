@@ -1,6 +1,7 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 
@@ -21,6 +22,8 @@ import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.Component;
 import com.reactnativenavigation.views.ReactComponent;
 import com.reactnativenavigation.views.StackLayout;
+import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
+import com.reactnativenavigation.views.topbar.TopBar;
 
 import org.assertj.core.api.iterable.Extractor;
 import org.json.JSONObject;
@@ -171,17 +174,6 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
-    public void pushAssignsRefToSelfOnPushedController() {
-        assertThat(child1.getParentController()).isNull();
-        uut.push(child1, new CommandListenerAdapter());
-        assertThat(child1.getParentController()).isEqualTo(uut);
-
-        StackController anotherNavController = createStackController("another");
-        anotherNavController.push(child2, new CommandListenerAdapter());
-        assertThat(child2.getParentController()).isEqualTo(anotherNavController);
-    }
-
-    @Test
     public void handleBack_PopsUnlessSingleChild() {
         assertThat(uut.isEmpty()).isTrue();
         assertThat(uut.handleBack()).isFalse();
@@ -226,14 +218,14 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
-    public void pushAddsToViewTree() {
+    public void push_addsToViewTree() {
         assertThat(uut.getView().findViewById(child1.getView().getId())).isNull();
         uut.push(child1, new CommandListenerAdapter());
         assertThat(uut.getView().findViewById(child1.getView().getId())).isNotNull();
     }
 
     @Test
-    public void pushRemovesPreviousFromTree() {
+    public void push_removesPreviousFromTree() {
         assertThat(uut.getView().findViewById(child1.getView().getId())).isNull();
         uut.push(child1, new CommandListenerAdapter());
         assertThat(uut.getView().findViewById(child1.getView().getId())).isNotNull();
@@ -247,7 +239,60 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
-    public void popReplacesViewWithPrevious() {
+    public void push_assignsRefToSelfOnPushedController() {
+        assertThat(child1.getParentController()).isNull();
+        uut.push(child1, new CommandListenerAdapter());
+        assertThat(child1.getParentController()).isEqualTo(uut);
+
+        StackController anotherNavController = createStackController("another");
+        anotherNavController.push(child2, new CommandListenerAdapter());
+        assertThat(child2.getParentController()).isEqualTo(anotherNavController);
+    }
+
+    @Test
+    public void push_doesNotAnimateTopBarIfScreenIsPushedWithoutAnimation() {
+        uut.ensureViewIsCreated();
+        child1.ensureViewIsCreated();
+
+        child1.options.topBarOptions.visible = new Bool(false);
+        child1.options.topBarOptions.animate = new Bool(false);
+        child1.options.animated = new Bool(false);
+        child2.options.animated = new Bool(false);
+
+        uut.push(child1, new CommandListenerAdapter() {
+            @Override
+            public void onSuccess(String childId) {
+                child1.onViewAppeared();
+                assertThat(uut.getTopBar().getVisibility()).isEqualTo(View.GONE);
+
+                uut.push(child2, new CommandListenerAdapter());
+                child2.onViewAppeared();
+                verify(uut.getTopBar(), times(0)).showAnimate(child2.options.animationsOptions.push.topBar);
+                assertThat(uut.getTopBar().getVisibility()).isEqualTo(View.VISIBLE);
+                verify(uut.getTopBar(), times(1)).resetAnimationOptions();
+            }
+        });
+    }
+
+    @Test
+    public void push_animatesAndClearsPreviousAnimationValues() {
+        uut.ensureViewIsCreated();
+
+        child1.options.topBarOptions.visible = new Bool(false);
+        child1.options.topBarOptions.animate = new Bool(false);
+        child1.options.animated = new Bool(false);
+
+        uut.push(child1, new CommandListenerAdapter());
+        uut.push(child2, new CommandListenerAdapter() {
+            @Override
+            public void onSuccess(String childId) {
+                verify(uut.getTopBar(), times(1)).resetAnimationOptions();
+            }
+        });
+    }
+
+    @Test
+    public void pop_replacesViewWithPrevious() {
         final View child2View = child2.getView();
         final View child1View = child1.getView();
 
@@ -265,7 +310,7 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
-    public void popSpecificWhenTopIsRegularPop() {
+    public void pop_specificWhenTopIsRegularPop() {
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter() {
             @Override
@@ -282,7 +327,7 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
-    public void popSpecificDeepInStack() {
+    public void popSpecific_deepInStack() {
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
         assertIsChildById(uut.getView(), child2.getView());
@@ -460,25 +505,48 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
-    public void pop_animatesTopBarIfNeeded() {
+    public void pop_animatesTopBar() {
         uut.ensureViewIsCreated();
 
         child1.options.topBarOptions.visible = new Bool(false);
-        child1.options.topBarOptions.animate = new Bool(false);
-        child2.options.topBarOptions.visible = new Bool(true);
-        uut.push(child1, new CommandListenerAdapter());
-        child1.onViewAppeared();
-
-        assertThat(uut.getTopBar().getVisibility()).isEqualTo(View.GONE);
-        uut.push(child2, new CommandListenerAdapter() {
+        child1.options.animated = new Bool(false);
+        child2.options.animated = new Bool(true);
+        uut.push(child1, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
-                uut.pop(new CommandListenerAdapter() {
+                child1.onViewAppeared();
+                assertThat(uut.getTopBar().getVisibility()).isEqualTo(View.GONE);
+                uut.push(child2, new CommandListenerAdapter() {
                     @Override
                     public void onSuccess(String childId) {
-                        verify(uut.getTopBar(), times(1)).hide();
+                        uut.pop(new CommandListenerAdapter() {
+                            @Override
+                            public void onSuccess(String childId) {
+                                verify(uut.getTopBar(), times(1)).hideAnimate(child2.options.animationsOptions.pop.topBar);
+                            }
+                        });
                     }
                 });
+            }
+        });
+    }
+
+    @Test
+    public void pop_doesNotAnimateTopBarIfScreenIsPushedWithoutAnimation() {
+        uut.ensureViewIsCreated();
+
+        child1.options.topBarOptions.visible = new Bool(false);
+        child2.options.animated = new Bool(false);
+        child1.ensureViewIsCreated();
+        uut.push(child1, new CommandListenerAdapter() {
+            @Override
+            public void onSuccess(String childId) {
+                uut.push(child2, new CommandListenerAdapter());
+                assertThat(uut.getTopBar().getVisibility()).isEqualTo(View.VISIBLE);
+
+                uut.pop(new CommandListenerAdapter());
+                verify(uut.getTopBar(), times(0)).hideAnimate(child2.options.animationsOptions.pop.topBar);
+                assertThat(uut.getTopBar().getVisibility()).isEqualTo(View.GONE);
             }
         });
     }
@@ -656,10 +724,20 @@ public class StackControllerTest extends BaseTest {
     }
 
     private StackController createStackController(String id) {
-        topBarController = spy(new TopBarController());
+        topBarController = spy(new TopBarController() {
+            @Override
+            protected TopBar createTopBar(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
+                TopBar topBar = spy(super.createTopBar(context, buttonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarButtonClickListener, stackLayout));
+                return topBar;
+            }
+        });
         return new StackController(activity,
-                new TopBarButtonCreatorMock(), new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()),
-                topBarController, id, new Options()) {
+                new TopBarButtonCreatorMock(),
+                new TitleBarReactViewCreatorMock(),
+                new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()),
+                topBarController,
+                id,
+                new Options()) {
             @Override
             NavigationAnimator createAnimator() {
                 animator = Mockito.mock(NavigationAnimator.class);
