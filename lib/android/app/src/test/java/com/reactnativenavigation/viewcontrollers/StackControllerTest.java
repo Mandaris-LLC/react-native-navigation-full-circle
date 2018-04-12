@@ -219,16 +219,16 @@ public class StackControllerTest extends BaseTest {
 
     @Test
     public void push_addsToViewTree() {
-        assertThat(uut.getView().findViewById(child1.getView().getId())).isNull();
+        assertNotChildOf(uut.getView(), child1.getView());
         uut.push(child1, new CommandListenerAdapter());
-        assertThat(uut.getView().findViewById(child1.getView().getId())).isNotNull();
+        assertIsChild(uut.getView(), child1.getView());
     }
 
     @Test
     public void push_removesPreviousFromTree() {
-        assertThat(uut.getView().findViewById(child1.getView().getId())).isNull();
+        assertNotChildOf(uut.getView(), child1.getView());
         uut.push(child1, new CommandListenerAdapter());
-        assertThat(uut.getView().findViewById(child1.getView().getId())).isNotNull();
+        assertIsChild(uut.getView(), child1.getView());
         uut.push(child2, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
@@ -299,11 +299,11 @@ public class StackControllerTest extends BaseTest {
         uut.push(child2, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
-                assertIsChildById(uut.getView(), child2View);
+                assertIsChild(uut.getView(), child2View);
                 assertNotChildOf(uut.getView(), child1View);
                 uut.pop(new CommandListenerAdapter());
                 assertNotChildOf(uut.getView(), child2View);
-                assertIsChildById(uut.getView(), child1View);
+                assertIsChild(uut.getView(), child1View);
             }
         });
     }
@@ -318,7 +318,7 @@ public class StackControllerTest extends BaseTest {
                     @Override
                     public void onSuccess(String childId) {
                         assertContainsOnlyId(child1.getId());
-                        assertIsChildById(uut.getView(), child1.getView());
+                        assertIsChild(uut.getView(), child1.getView());
                     }
                 });
             }
@@ -329,10 +329,10 @@ public class StackControllerTest extends BaseTest {
     public void popSpecific_deepInStack() {
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
-        assertIsChildById(uut.getView(), child2.getView());
+        assertIsChild(uut.getView(), child2.getView());
         uut.popSpecific(child1, new CommandListenerAdapter());
         assertContainsOnlyId(child2.getId());
-        assertIsChildById(uut.getView(), child2.getView());
+        assertIsChild(uut.getView(), child2.getView());
     }
 
     @Test

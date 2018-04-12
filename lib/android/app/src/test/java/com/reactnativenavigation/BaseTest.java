@@ -5,6 +5,7 @@ import android.support.v7.app.*;
 import android.view.*;
 
 import com.reactnativenavigation.parse.params.Bool;
+import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
 import org.junit.*;
@@ -31,18 +32,16 @@ public abstract class BaseTest {
         return Robolectric.setupActivity(AppCompatActivity.class);
     }
 
-    public void assertIsChildById(ViewGroup parent, View child) {
+    public void assertIsChild(ViewGroup parent, View child) {
         assertThat(parent).isNotNull();
         assertThat(child).isNotNull();
-        assertThat(child.getId()).isNotZero().isPositive();
-        assertThat(parent.findViewById(child.getId())).isNotNull().isEqualTo(child);
+        assertThat(ViewUtils.isChildOf(parent, child)).isTrue();
     }
 
     public void assertNotChildOf(ViewGroup parent, View child) {
         assertThat(parent).isNotNull();
         assertThat(child).isNotNull();
-        assertThat(child.getId()).isNotZero().isPositive();
-        assertThat(parent.findViewById(child.getId())).isNull();
+        assertThat(ViewUtils.isChildOf(parent, child)).isFalse();
     }
 
     protected void disablePushAnimation(ViewController... controllers) {

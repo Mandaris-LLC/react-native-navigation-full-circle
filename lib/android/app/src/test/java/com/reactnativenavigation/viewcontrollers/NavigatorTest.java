@@ -65,14 +65,14 @@ public class NavigatorTest extends BaseTest {
     public void setRoot_AddsChildControllerView() {
         assertThat(uut.getView().getChildCount()).isZero();
         uut.setRoot(child1, new MockPromise());
-        assertIsChildById(uut.getView(), child1.getView());
+        assertIsChild(uut.getView(), child1.getView());
     }
 
     @Test
     public void setRoot_ReplacesExistingChildControllerViews() {
         uut.setRoot(child1, new MockPromise());
         uut.setRoot(child2, new MockPromise());
-        assertIsChildById(uut.getView(), child2.getView());
+        assertIsChild(uut.getView(), child2.getView());
     }
 
     @Test
@@ -87,20 +87,20 @@ public class NavigatorTest extends BaseTest {
         stackController.push(child1, new CommandListenerAdapter());
         uut.setRoot(stackController, new MockPromise());
 
-        assertIsChildById(uut.getView(), stackController.getView());
-        assertIsChildById(stackController.getView(), child1.getView());
+        assertIsChild(uut.getView(), stackController.getView());
+        assertIsChild(stackController.getView(), child1.getView());
 
         uut.push(child1.getId(), child2, new CommandListenerAdapter());
 
-        assertIsChildById(uut.getView(), stackController.getView());
-        assertIsChildById(stackController.getView(), child2.getView());
+        assertIsChild(uut.getView(), stackController.getView());
+        assertIsChild(stackController.getView(), child2.getView());
     }
 
     @Test
     public void push_InvalidPushWithoutAStack_DoesNothing() {
         uut.setRoot(child1, new MockPromise());
         uut.push(child1.getId(), child2, new CommandListenerAdapter());
-        assertIsChildById(uut.getView(), child1.getView());
+        assertIsChild(uut.getView(), child1.getView());
     }
 
     @Test
@@ -273,19 +273,19 @@ public class NavigatorTest extends BaseTest {
     }
 
     @Test
-    public void push_Promise() {
+    public void push_promise() {
         final StackController stackController = newStack();
         stackController.push(child1, new CommandListenerAdapter());
         uut.setRoot(stackController, new MockPromise());
 
-        assertIsChildById(uut.getView(), stackController.getView());
-        assertIsChildById(stackController.getView(), child1.getView());
+        assertIsChild(uut.getView(), stackController.getView());
+        assertIsChild(stackController.getView(), child1.getView());
 
         uut.push(child1.getId(), child2, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
-                assertIsChildById(uut.getView(), stackController.getView());
-                assertIsChildById(stackController.getView(), child2.getView());
+                assertIsChild(uut.getView(), stackController.getView());
+                assertIsChild(stackController.getView(), child2.getView());
             }
         });
     }
@@ -296,7 +296,7 @@ public class NavigatorTest extends BaseTest {
         uut.push(child1.getId(), child2, new CommandListenerAdapter() {
             @Override
             public void onError(String message) {
-                assertIsChildById(uut.getView(), child1.getView());
+                assertIsChild(uut.getView(), child1.getView());
             }
         });
 
@@ -341,7 +341,7 @@ public class NavigatorTest extends BaseTest {
         stackController.push(child1, new CommandListenerAdapter());
         uut.showModal(stackController, new MockPromise());
         uut.push(stackController.getId(), child2, new CommandListenerAdapter());
-        assertIsChildById(stackController.getView(), child2.getView());
+        assertIsChild(stackController.getView(), child2.getView());
     }
 
     @Test
