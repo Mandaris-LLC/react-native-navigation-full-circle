@@ -213,9 +213,7 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void setStackRoot() {
-        child1.options.animated = new Bool(false);
-        child2.options.animated = new Bool(false);
-        child3.options.animated = new Bool(false);
+        disablePushAnimation(child1, child2, child3);
 
         StackController stack = newStack();
         uut.setRoot(stack, new MockPromise());
@@ -248,14 +246,14 @@ public class NavigatorTest extends BaseTest {
     public void setOptions_CallsApplyNavigationOptions() {
         ComponentViewController componentVc = new SimpleComponentViewController(activity, "theId", new Options());
         componentVc.setParentController(parentController);
-        assertThat(componentVc.options.topBarOptions.title.text.get("")).isEmpty();
+        assertThat(componentVc.options.topBar.title.text.get("")).isEmpty();
         uut.setRoot(componentVc, new MockPromise());
 
         Options options = new Options();
-        options.topBarOptions.title.text = new Text("new title");
+        options.topBar.title.text = new Text("new title");
 
         uut.setOptions("theId", options);
-        assertThat(componentVc.options.topBarOptions.title.text.get()).isEqualTo("new title");
+        assertThat(componentVc.options.topBar.title.text.get()).isEqualTo("new title");
     }
 
     @Test
@@ -348,8 +346,8 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void pushedStackCanBePopped() {
-        child1.options.animated = new Bool(false);
-        child2.options.animated = new Bool(false);
+        child1.options.animations.push.enabled = new Bool(false);
+        child2.options.animations.push.enabled = new Bool(false);
         StackController parent = newStack();
         parent.ensureViewIsCreated();
         uut.setRoot(parent, new MockPromise());

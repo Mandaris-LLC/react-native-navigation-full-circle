@@ -40,8 +40,8 @@ public class StackLayout extends RelativeLayout {
         optionsPresenter.applyChildOptions(options, child);
     }
 
-    public void onChildWillDisappear(Options disappearing, Options appearing) {
-        optionsPresenter.onChildWillDisappear(disappearing, appearing);
+    public void onChildWillPop(Options disappearing, Options appearing) {
+        optionsPresenter.onChildWillPop(disappearing, appearing);
     }
 
     public void mergeChildOptions(Options options, Component child) {

@@ -9,7 +9,6 @@ import com.reactnativenavigation.parse.OrientationOptions;
 import com.reactnativenavigation.parse.TopBarOptions;
 import com.reactnativenavigation.parse.TopTabOptions;
 import com.reactnativenavigation.parse.TopTabsOptions;
-import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.utils.UiUtils;
 import com.reactnativenavigation.viewcontrollers.IReactView;
@@ -34,8 +33,8 @@ public class OptionsPresenter {
 
     public void applyChildOptions(Options options, Component child) {
         applyOrientation(options.orientationOptions);
-        applyButtons(options.topBarOptions.leftButtons, options.topBarOptions.rightButtons);
-        applyTopBarOptions(options.topBarOptions, options.animationsOptions, child, options.animated);
+        applyButtons(options.topBar.leftButtons, options.topBar.rightButtons);
+        applyTopBarOptions(options.topBar, options.animations, child, options);
         applyTopTabsOptions(options.topTabsOptions);
         applyTopTabOptions(options.topTabOptions);
     }
@@ -44,7 +43,7 @@ public class OptionsPresenter {
         ((Activity) topBar.getContext()).setRequestedOrientation(options.getValue());
     }
 
-    private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component, Bool animated) {
+    private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component, Options componentOptions) {
         topBar.setTitle(options.title.text.get(""));
         if (options.title.component.hasValue()) topBar.setTitleComponent(options.title.component);
         topBar.setTitleFontSize(options.title.fontSize.get(defaultTitleFontSize));
@@ -63,14 +62,14 @@ public class OptionsPresenter {
         if (options.testId.hasValue()) topBar.setTestId(options.testId.get());
 
         if (options.visible.isFalse()) {
-            if (options.animate.isTrueOrUndefined() && animated.isTrueOrUndefined()) {
+            if (options.animate.isTrueOrUndefined() && componentOptions.animations.push.enabled.isTrueOrUndefined()) {
                 topBar.hideAnimate(animationOptions.pop.topBar);
             } else {
                 topBar.hide();
             }
         }
         if (options.visible.isTrueOrUndefined()) {
-            if (options.animate.isTrueOrUndefined() && animated.isTrueOrUndefined()) {
+            if (options.animate.isTrueOrUndefined() && componentOptions.animations.push.enabled.isTrueOrUndefined()) {
                 topBar.showAnimate(animationOptions.push.topBar);
             } else {
                 topBar.show();
@@ -105,10 +104,10 @@ public class OptionsPresenter {
         if (topTabOptions.fontFamily != null) topBar.setTopTabFontFamily(topTabOptions.tabIndex, topTabOptions.fontFamily);
     }
 
-    public void onChildWillDisappear(Options disappearing, Options appearing) {
-        if (disappearing.topBarOptions.visible.isTrueOrUndefined() && appearing.topBarOptions.visible.isFalse()) {
-            if (disappearing.topBarOptions.animate.isTrueOrUndefined() && disappearing.animated.isTrueOrUndefined()) {
-                topBar.hideAnimate(disappearing.animationsOptions.pop.topBar);
+    public void onChildWillPop(Options disappearing, Options appearing) {
+        if (disappearing.topBar.visible.isTrueOrUndefined() && appearing.topBar.visible.isFalse()) {
+            if (disappearing.topBar.animate.isTrueOrUndefined() && disappearing.animations.pop.enabled.isTrueOrUndefined()) {
+                topBar.hideAnimate(disappearing.animations.pop.topBar);
             } else {
                 topBar.hide();
             }
@@ -117,8 +116,8 @@ public class OptionsPresenter {
 
     public void mergeChildOptions(Options options, Component child) {
         mergeOrientation(options.orientationOptions);
-        mergeButtons(options.topBarOptions.leftButtons, options.topBarOptions.rightButtons);
-        mergeTopBarOptions(options.topBarOptions, options.animationsOptions, child);
+        mergeButtons(options.topBar.leftButtons, options.topBar.rightButtons);
+        mergeTopBarOptions(options.topBar, options.animations, child);
         mergeTopTabsOptions(options.topTabsOptions);
         mergeTopTabOptions(options.topTabOptions);
     }

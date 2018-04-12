@@ -77,7 +77,7 @@ public class Navigator extends ParentController implements ModalListener {
         root = viewController;
         View view = viewController.getView();
 
-        AnimationsOptions animationsOptions = viewController.options.animationsOptions;
+        AnimationsOptions animationsOptions = viewController.options.animations;
         getView().addView(view);
         if (animationsOptions.startApp.hasValue()) {
             new NavigationAnimator(viewController.getActivity(), animationsOptions)

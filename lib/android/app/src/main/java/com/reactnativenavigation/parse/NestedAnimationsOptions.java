@@ -1,6 +1,9 @@
 package com.reactnativenavigation.parse;
 
 
+import com.reactnativenavigation.parse.params.Bool;
+import com.reactnativenavigation.parse.params.NullBool;
+
 import org.json.JSONObject;
 
 public class NestedAnimationsOptions {
@@ -15,6 +18,7 @@ public class NestedAnimationsOptions {
         return options;
     }
 
+    public Bool enabled = new NullBool();
     public AnimationOptions content = new AnimationOptions();
     public AnimationOptions bottomTabs = new AnimationOptions();
     public AnimationOptions topBar = new AnimationOptions();
@@ -23,12 +27,14 @@ public class NestedAnimationsOptions {
         topBar.mergeWith(other.topBar);
         content.mergeWith(other.content);
         bottomTabs.mergeWith(other.bottomTabs);
+        if (other.enabled.hasValue()) enabled = other.enabled;
     }
 
     void mergeWithDefault(NestedAnimationsOptions defaultOptions) {
         content.mergeWithDefault(defaultOptions.content);
         bottomTabs.mergeWithDefault(defaultOptions.bottomTabs);
         topBar.mergeWithDefault(defaultOptions.topBar);
+        if (!enabled.hasValue()) enabled = defaultOptions.enabled;
     }
 
     public boolean hasValue() {
