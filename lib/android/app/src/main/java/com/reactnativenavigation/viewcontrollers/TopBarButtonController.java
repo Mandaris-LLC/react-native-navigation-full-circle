@@ -19,6 +19,7 @@ import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ArrayUtils;
+import com.reactnativenavigation.utils.DrawableTinter;
 import com.reactnativenavigation.utils.ImageLoader;
 import com.reactnativenavigation.utils.ImageLoadingListenerAdapter;
 import com.reactnativenavigation.utils.UiUtils;
@@ -33,13 +34,17 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
         void onPress(String buttonId);
     }
 
+    private final ImageLoader imageLoader;
+    private DrawableTinter drawableTinter;
     private final Button button;
     private final ReactViewCreator viewCreator;
     private TopBarButtonController.OnClickListener onPressListener;
     private Drawable icon;
 
-    public TopBarButtonController(Activity activity, Button button, ReactViewCreator viewCreator, TopBarButtonController.OnClickListener onClickListener) {
+    public TopBarButtonController(Activity activity, ImageLoader imageLoader, DrawableTinter drawableTinter, Button button, ReactViewCreator viewCreator, OnClickListener onClickListener) {
         super(activity, button.id, new Options());
+        this.imageLoader = imageLoader;
+        this.drawableTinter = drawableTinter;
         this.button = button;
         this.viewCreator = viewCreator;
         this.onPressListener = onClickListener;
@@ -79,7 +84,7 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
             return;
         }
 
-        new ImageLoader().loadIcon(toolbar.getContext(), button.icon.get(), new ImageLoader.ImageLoadingListener() {
+        imageLoader.loadIcon(toolbar.getContext(), button.icon.get(), new ImageLoader.ImageLoadingListener() {
             @Override
             public void onComplete(@NonNull Drawable drawable) {
                 icon = drawable;
@@ -132,18 +137,15 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
     }
 
     private void loadIcon(ImageLoader.ImageLoadingListener callbacks) {
-        new ImageLoader().loadIcon(getActivity(), button.icon.get(), callbacks);
+        imageLoader.loadIcon(getActivity(), button.icon.get(), callbacks);
     }
 
     private void setIconColor(Drawable icon) {
-        if (button.enabled.isTrueOrUndefined() && button.buttonColor.hasValue()) {
-            UiUtils.tintDrawable(icon, button.buttonColor.get());
-            return;
-        }
-        if (button.disableIconTint.isTrue() && button.buttonColor.hasValue()) {
-            UiUtils.tintDrawable(icon, button.buttonColor.get());
-        } else {
-            UiUtils.tintDrawable(icon, Color.LTGRAY);
+        if (button.disableIconTint.isTrue()) return;
+        if (button.enabled.isTrueOrUndefined() && button.color.hasValue()) {
+            drawableTinter.tint(icon, button.color.get());
+        } else if (button.enabled.isFalse()) {
+            drawableTinter.tint(icon, button.disabledColor.get(Color.LTGRAY));
         }
     }
 
@@ -162,9 +164,12 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
     }
 
     private void setTextColorForFoundButtonViews(ArrayList<View> buttons) {
-        for (View button : buttons) {
-            if (this.button.buttonColor.hasValue())
-                ((TextView) button).setTextColor(this.button.buttonColor.get());
+        for (View btn : buttons) {
+            if (button.enabled.isTrueOrUndefined() && button.color.hasValue()) {
+                ((TextView) btn).setTextColor(this.button.color.get());
+            } else if (button.enabled.isFalse()) {
+                ((TextView) btn).setTextColor(button.disabledColor.get(Color.LTGRAY));
+            }
         }
     }
 

@@ -19,7 +19,8 @@ public class Button {
     public Bool enabled = new NullBool();
     public Bool disableIconTint = new NullBool();
     public int showAsAction;
-    public Color buttonColor = new NullColor();
+    public Color color = new NullColor();
+    public Color disabledColor = new NullColor();
     public Number buttonFontSize = new NullNumber();
     private Text buttonFontWeight = new NullText();
     public Text icon = new NullText();
@@ -33,7 +34,8 @@ public class Button {
         button.enabled = BoolParser.parse(json, "enabled");
         button.disableIconTint = BoolParser.parse(json, "disableIconTint");
         button.showAsAction = parseShowAsAction(json);
-        button.buttonColor = ColorParser.parse(json, "buttonColor");
+        button.color = ColorParser.parse(json, "buttonColor");
+        button.disabledColor = ColorParser.parse(json, "disabledColor");
         button.buttonFontSize = NumberParser.parse(json, "buttonFontSize");
         button.buttonFontWeight = TextParser.parse(json, "buttonFontWeight");
         button.testId = TextParser.parse(json, "testID");
