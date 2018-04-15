@@ -96,16 +96,30 @@
 		[barButtonItem setImage:[barButtonItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 	}
 	
-	id tintColor = dictionary[@"tintColor"];
-	if (tintColor) {
-		[barButtonItem setTintColor:[RCTConvert UIColor: tintColor]];
+	NSMutableDictionary* textAttributes = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary* disabledTextAttributes = [[NSMutableDictionary alloc] init];
+	
+	id color = dictionary[@"color"];
+	if (color) {
+		[textAttributes setObject:color forKey:NSForegroundColorAttributeName];
 	}
 	
 	NSNumber* disabledColor = dictionary[@"disabledColor"];
 	if (disabledColor) {
 		UIColor *color = [RCTConvert UIColor:disabledColor];
-		[barButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : color} forState:UIControlStateDisabled];
+		[disabledTextAttributes setObject:color forKey:NSForegroundColorAttributeName];
 	}
+	
+	NSNumber* fontSize = dictionary[@"fontSize"] ? dictionary[@"fontSize"] : @(17);
+	NSString* fontFamily = dictionary[@"fontFamily"];
+	if (fontFamily) {
+		[textAttributes setObject:[UIFont fontWithName:fontFamily size:[fontSize floatValue]] forKey:NSForegroundColorAttributeName];
+	} else{
+		[textAttributes setObject:[UIFont systemFontOfSize:[fontSize floatValue]] forKey:NSForegroundColorAttributeName];
+	}
+	
+	[barButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+	[barButtonItem setTitleTextAttributes:disabledTextAttributes forState:UIControlStateDisabled];
 	
 	NSString *testID = dictionary[@"testID"];
 	if (testID)
