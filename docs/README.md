@@ -90,11 +90,11 @@ v2 is written in Test Driven Development. We have a test for every feature inclu
 | backgroundColor    |  ✅       |     ✅|
 | buttonColor         |    ✅      |✅|
 | hidden             |   ✅      |     ✅|
-| hideOnScroll         |  ✅    |✅||
+| hideOnScroll         |  ✅    |✅|
 | translucent         |   ✅     |     [Contribute](/docs/WorkingLocally.md)        |
 | transparent         |  ✅        |     [Contribute](/docs/WorkingLocally.md)        |
 | noBorder             |    ✅     |     [Contribute](/docs/WorkingLocally.md)        |
-| drawUnder         |    ✅     |✅||
+| drawUnder         |    ✅     |✅|
 | blur               |    ✅     |      [Contribute](/docs/WorkingLocally.md)       |
 | custom component          |✅     |✅|
 | background component          |✅     |✅|
