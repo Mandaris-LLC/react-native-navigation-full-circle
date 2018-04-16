@@ -13,7 +13,7 @@ import { ComponentEventsObserver } from './events/ComponentEventsObserver';
 import { CommandsObserver } from './events/CommandsObserver';
 
 export class Navigation {
-  public readonly Element;
+  public readonly Element: React.ComponentType<{ elementId: any; resizeMode: any; }>;
 
   private readonly store;
   private readonly nativeEventsReceiver;

@@ -2,7 +2,7 @@
 
 ## Properties
 
-- Element (any)
+- Element (`React.ComponentType<object>`)
 
 ## Methods
 
@@ -14,11 +14,11 @@ Every navigation component in your app must be registered with a unique name.
 The component itself is a traditional React component extending React.Component.
 
 #### Arguments
-- componentName (string)
-- getComponentClassFunc (ComponentProvider)
+- componentName (`string`)
+- getComponentClassFunc (`ComponentProvider`)
 
 #### Returns
-- (void)
+- (`void`)
 
 ### `setRoot(layout: any): Promise<any>`
 
@@ -27,10 +27,10 @@ The component itself is a traditional React component extending React.Component.
 Reset the app to a new layout
 
 #### Arguments
-- layout (any)
+- layout (`any`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `setDefaultOptions(options: any): void`
 
@@ -39,10 +39,10 @@ Reset the app to a new layout
 Set default options to all screens. Useful for declaring a consistent style across the app.
 
 #### Arguments
-- options (any)
+- options (`any`)
 
 #### Returns
-- (void)
+- (`void`)
 
 ### `mergeOptions(componentId: string, options: any): void`
 
@@ -51,11 +51,11 @@ Set default options to all screens. Useful for declaring a consistent style acro
 Change a component's navigation options
 
 #### Arguments
-- componentId (string)
-- options (any)
+- componentId (`string`)
+- options (`any`)
 
 #### Returns
-- (void)
+- (`void`)
 
 ### `showModal(layout: any): Promise<any>`
 
@@ -64,10 +64,10 @@ Change a component's navigation options
 Show a screen as a modal.
 
 #### Arguments
-- layout (any)
+- layout (`any`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `dismissModal(componentId: string): Promise<any>`
 
@@ -76,10 +76,10 @@ Show a screen as a modal.
 Dismiss a modal by componentId. The dismissed modal can be anywhere in the stack.
 
 #### Arguments
-- componentId (string)
+- componentId (`string`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `dismissAllModals(): Promise<any>`
 
@@ -88,7 +88,7 @@ Dismiss a modal by componentId. The dismissed modal can be anywhere in the stack
 Dismiss all Modals
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `push(componentId: string, layout: any): Promise<any>`
 
@@ -97,11 +97,11 @@ Dismiss all Modals
 Push a new layout into this screen's navigation stack.
 
 #### Arguments
-- componentId (string)
-- layout (any)
+- componentId (`string`)
+- layout (`any`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `pop(componentId: string, params: any): Promise<any>`
 
@@ -110,11 +110,11 @@ Push a new layout into this screen's navigation stack.
 Pop a component from the stack, regardless of it's position.
 
 #### Arguments
-- componentId (string)
-- params (any)
+- componentId (`string`)
+- params (`any`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `popTo(componentId: string): Promise<any>`
 
@@ -123,10 +123,10 @@ Pop a component from the stack, regardless of it's position.
 Pop the stack to a given component
 
 #### Arguments
-- componentId (string)
+- componentId (`string`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `popToRoot(componentId: string): Promise<any>`
 
@@ -135,10 +135,10 @@ Pop the stack to a given component
 Pop the component's stack to root.
 
 #### Arguments
-- componentId (string)
+- componentId (`string`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `setStackRoot(componentId: string, layout: any): Promise<any>`
 
@@ -147,11 +147,11 @@ Pop the component's stack to root.
 Sets new root component to stack.
 
 #### Arguments
-- componentId (string)
-- layout (any)
+- componentId (`string`)
+- layout (`any`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `showOverlay(layout: any): Promise<any>`
 
@@ -160,10 +160,10 @@ Sets new root component to stack.
 Show overlay on top of the entire app
 
 #### Arguments
-- layout (any)
+- layout (`any`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `dismissOverlay(componentId: string): Promise<any>`
 
@@ -172,10 +172,10 @@ Show overlay on top of the entire app
 dismiss overlay by componentId
 
 #### Arguments
-- componentId (string)
+- componentId (`string`)
 
 #### Returns
-- (Promise<any>)
+- (`Promise<any>`)
 
 ### `events(): EventsRegistry`
 
@@ -184,5 +184,5 @@ dismiss overlay by componentId
 Obtain the events registry instance
 
 #### Returns
-- (EventsRegistry)
+- (`EventsRegistry`)
 
