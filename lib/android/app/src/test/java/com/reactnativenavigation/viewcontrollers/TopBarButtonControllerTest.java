@@ -1,6 +1,7 @@
 package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -15,7 +16,7 @@ import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Color;
 import com.reactnativenavigation.parse.params.NullText;
 import com.reactnativenavigation.parse.params.Text;
-import com.reactnativenavigation.utils.DrawableTinter;
+import com.reactnativenavigation.utils.ButtonOptionsPresenter;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 
@@ -27,14 +28,13 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class TopBarButtonControllerTest extends BaseTest {
 
     private TopBarButtonController uut;
     private StackController stackController;
     private Button button;
-    private DrawableTinter drawableTinter = spy(new DrawableTinter());
+    private ButtonOptionsPresenter optionsPresenter;
 
     @Override
     public void beforeEach() {
@@ -42,7 +42,6 @@ public class TopBarButtonControllerTest extends BaseTest {
         final Activity activity = newActivity();
 
         TopBarButtonCreatorMock buttonCreatorMock = new TopBarButtonCreatorMock();
-        uut = new TopBarButtonController(activity, ImageLoaderMock.mock(), drawableTinter, button, buttonCreatorMock, (buttonId) -> {});
         stackController = spy(new StackController(activity,
                 buttonCreatorMock,
                 new TitleBarReactViewCreatorMock(),
@@ -53,7 +52,12 @@ public class TopBarButtonControllerTest extends BaseTest {
         );
         stackController.getView().layout(0, 0, 1080, 1920);
         stackController.getTopBar().layout(0, 0, 1080, 200);
-        stackController.getTopBar().getTitleBar().layout(0, 0, 1080, 200);
+        getTitleBar().layout(0, 0, 1080, 200);
+
+        optionsPresenter = spy(new ButtonOptionsPresenter(getTitleBar(), button));
+        uut = new TopBarButtonController(activity, ImageLoaderMock.mock(), optionsPresenter, button, buttonCreatorMock, (buttonId) -> {});
+
+        stackController.ensureViewIsCreated();
     }
 
     @Test
@@ -66,45 +70,55 @@ public class TopBarButtonControllerTest extends BaseTest {
 
     @Test
     public void setIconColor_enabled() {
-        stackController.ensureViewIsCreated();
-
         setIconButton(true);
-        Toolbar titleBar = stackController.getTopBar().getTitleBar();
-        uut.addToMenu(titleBar, 0);
+        uut.addToMenu(getTitleBar(), 0);
 
-        assertThat(titleBar.getMenu().size()).isOne();
-        verify(drawableTinter, times(1)).tint(any(), eq(android.graphics.Color.RED));
+        assertThat(getTitleBar().getMenu().size()).isOne();
+        verify(optionsPresenter, times(1)).tint(any(), eq(android.graphics.Color.RED));
     }
 
     @Test
     public void setIconColor_disabled() {
-        stackController.ensureViewIsCreated();
-
         setIconButton(false);
-        uut.addToMenu(stackController.getTopBar().getTitleBar(), 0);
+        uut.addToMenu(getTitleBar(), 0);
 
-        verify(drawableTinter, times(1)).tint(any(), eq(android.graphics.Color.LTGRAY));
+        verify(optionsPresenter, times(1)).tint(any(), eq(android.graphics.Color.LTGRAY));
     }
 
     @Test
     public void setIconColor_disabledColor() {
-        stackController.ensureViewIsCreated();
-
         setIconButton(false);
         button.disabledColor = new Color(android.graphics.Color.BLACK);
-        uut.addToMenu(stackController.getTopBar().getTitleBar(), 0);
+        uut.addToMenu(getTitleBar(), 0);
 
-        verify(drawableTinter, times(1)).tint(any(), eq(android.graphics.Color.BLACK));
+        verify(optionsPresenter, times(1)).tint(any(), eq(android.graphics.Color.BLACK));
     }
 
     @Test
     public void disableIconTint() {
-        stackController.ensureViewIsCreated();
-
         setIconButton(false);
         button.disableIconTint = new Bool(true);
-        uut.addToMenu(stackController.getTopBar().getTitleBar(), 0);
-        verifyZeroInteractions(drawableTinter);
+        uut.addToMenu(getTitleBar(), 0);
+        verify(optionsPresenter, times(0)).setTextColor();
+    }
+
+    @Test
+    public void fontFamily() {
+        setTextButton();
+        uut.addToMenu(getTitleBar(), 0);
+        verify(optionsPresenter, times(1)).setTypeFace(Typeface.MONOSPACE);
+    }
+
+    private Toolbar getTitleBar() {
+        return stackController.getTopBar().getTitleBar();
+    }
+
+    private void setTextButton() {
+        button.id = "btn1";
+        button.color = new Color(android.graphics.Color.RED);
+        button.title = new Text("Button");
+        button.fontFamily = Typeface.MONOSPACE;
+        button.showAsAction = MenuItem.SHOW_AS_ACTION_ALWAYS;
     }
 
     private void setIconButton(boolean enabled) {

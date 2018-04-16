@@ -1,5 +1,7 @@
 package com.reactnativenavigation.parse.params;
 
+import android.graphics.Typeface;
+import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
 import com.reactnativenavigation.parse.Component;
@@ -7,6 +9,7 @@ import com.reactnativenavigation.parse.parsers.BoolParser;
 import com.reactnativenavigation.parse.parsers.ColorParser;
 import com.reactnativenavigation.parse.parsers.NumberParser;
 import com.reactnativenavigation.parse.parsers.TextParser;
+import com.reactnativenavigation.utils.TypefaceLoader;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,23 +24,25 @@ public class Button {
     public int showAsAction;
     public Color color = new NullColor();
     public Color disabledColor = new NullColor();
-    public Number buttonFontSize = new NullNumber();
-    private Text buttonFontWeight = new NullText();
+    public Number fontSize = new NullNumber();
+    private Text fontWeight = new NullText();
+    @Nullable public Typeface fontFamily;
     public Text icon = new NullText();
     public Text testId = new NullText();
     public Component component = new Component();
 
-    private static Button parseJson(JSONObject json) {
+    private static Button parseJson(JSONObject json, TypefaceLoader typefaceManager) {
         Button button = new Button();
         button.id = json.optString("id");
         button.title = TextParser.parse(json, "title");
         button.enabled = BoolParser.parse(json, "enabled");
         button.disableIconTint = BoolParser.parse(json, "disableIconTint");
         button.showAsAction = parseShowAsAction(json);
-        button.color = ColorParser.parse(json, "buttonColor");
+        button.color = ColorParser.parse(json, "color");
         button.disabledColor = ColorParser.parse(json, "disabledColor");
-        button.buttonFontSize = NumberParser.parse(json, "buttonFontSize");
-        button.buttonFontWeight = TextParser.parse(json, "buttonFontWeight");
+        button.fontSize = NumberParser.parse(json, "fontSize");
+        button.fontFamily = typefaceManager.getTypeFace(json.optString("fontFamily", ""));
+        button.fontWeight = TextParser.parse(json, "fontWeight");
         button.testId = TextParser.parse(json, "testID");
         button.component = Component.parse(json.optJSONObject("component"));
 
@@ -48,7 +53,7 @@ public class Button {
         return button;
     }
 
-    public static ArrayList<Button> parseJsonArray(JSONArray jsonArray) {
+    public static ArrayList<Button> parseJsonArray(JSONArray jsonArray, TypefaceLoader typefaceLoader) {
         ArrayList<Button> buttons = new ArrayList<>();
 
         if (jsonArray == null) {
@@ -57,7 +62,7 @@ public class Button {
 
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject json = jsonArray.optJSONObject(i);
-            Button button = Button.parseJson(json);
+            Button button = Button.parseJson(json, typefaceLoader);
             buttons.add(button);
         }
 

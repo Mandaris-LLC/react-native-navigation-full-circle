@@ -11,7 +11,6 @@ import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,14 +18,13 @@ import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ArrayUtils;
-import com.reactnativenavigation.utils.DrawableTinter;
+import com.reactnativenavigation.utils.ButtonOptionsPresenter;
 import com.reactnativenavigation.utils.ImageLoader;
 import com.reactnativenavigation.utils.ImageLoadingListenerAdapter;
 import com.reactnativenavigation.utils.UiUtils;
 import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.titlebar.TitleBarReactButtonView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TopBarButtonController extends ViewController<TitleBarReactButtonView> implements MenuItem.OnMenuItemClickListener {
@@ -35,16 +33,16 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
     }
 
     private final ImageLoader imageLoader;
-    private DrawableTinter drawableTinter;
+    private ButtonOptionsPresenter optionsPresenter;
     private final Button button;
     private final ReactViewCreator viewCreator;
     private TopBarButtonController.OnClickListener onPressListener;
     private Drawable icon;
 
-    public TopBarButtonController(Activity activity, ImageLoader imageLoader, DrawableTinter drawableTinter, Button button, ReactViewCreator viewCreator, OnClickListener onClickListener) {
+    public TopBarButtonController(Activity activity, ImageLoader imageLoader, ButtonOptionsPresenter optionsPresenter, Button button, ReactViewCreator viewCreator, OnClickListener onClickListener) {
         super(activity, button.id, new Options());
         this.imageLoader = imageLoader;
-        this.drawableTinter = drawableTinter;
+        this.optionsPresenter = optionsPresenter;
         this.button = button;
         this.viewCreator = viewCreator;
         this.onPressListener = onClickListener;
@@ -129,8 +127,9 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
                     }
                 });
             } else {
-                setTextColor(toolbar);
+                optionsPresenter.setTextColor();
                 setFontSize(menuItem);
+                optionsPresenter.setTypeFace(button.fontFamily);
             }
         }
         setTestId(toolbar, button.testId);
@@ -143,41 +142,21 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
     private void setIconColor(Drawable icon) {
         if (button.disableIconTint.isTrue()) return;
         if (button.enabled.isTrueOrUndefined() && button.color.hasValue()) {
-            drawableTinter.tint(icon, button.color.get());
+            optionsPresenter.tint(icon, button.color.get());
         } else if (button.enabled.isFalse()) {
-            drawableTinter.tint(icon, button.disabledColor.get(Color.LTGRAY));
-        }
-    }
-
-    private void setTextColor(Toolbar toolbar) {
-        UiUtils.runOnPreDrawOnce(toolbar, () -> {
-            ArrayList<View> outViews = findActualTextViewInMenuByText(toolbar);
-            setTextColorForFoundButtonViews(outViews);
-        });
-    }
-
-    @NonNull
-    private ArrayList<View> findActualTextViewInMenuByText(Toolbar toolbar) {
-        ArrayList<View> outViews = new ArrayList<>();
-        toolbar.findViewsWithText(outViews, button.title.get(), View.FIND_VIEWS_WITH_TEXT);
-        return outViews;
-    }
-
-    private void setTextColorForFoundButtonViews(ArrayList<View> buttons) {
-        for (View btn : buttons) {
-            if (button.enabled.isTrueOrUndefined() && button.color.hasValue()) {
-                ((TextView) btn).setTextColor(this.button.color.get());
-            } else if (button.enabled.isFalse()) {
-                ((TextView) btn).setTextColor(button.disabledColor.get(Color.LTGRAY));
-            }
+            optionsPresenter.tint(icon, button.disabledColor.get(Color.LTGRAY));
         }
     }
 
     private void setFontSize(MenuItem menuItem) {
         SpannableString spanString = new SpannableString(button.title.get());
-        if (this.button.buttonFontSize.hasValue())
-            spanString.setSpan(new AbsoluteSizeSpan(button.buttonFontSize.get(), true),
-                    0, button.title.get().length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        if (this.button.fontSize.hasValue())
+            spanString.setSpan(
+                    new AbsoluteSizeSpan(button.fontSize.get(), true),
+                    0,
+                    button.title.get().length(),
+                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
+            );
         menuItem.setTitleCondensed(spanString);
     }
 
