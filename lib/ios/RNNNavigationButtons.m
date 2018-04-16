@@ -101,7 +101,7 @@
 	
 	id color = dictionary[@"color"];
 	if (color) {
-		[textAttributes setObject:color forKey:NSForegroundColorAttributeName];
+		[textAttributes setObject:[RCTConvert UIColor:color] forKey:NSForegroundColorAttributeName];
 	}
 	
 	NSNumber* disabledColor = dictionary[@"disabledColor"];
@@ -113,9 +113,9 @@
 	NSNumber* fontSize = dictionary[@"fontSize"] ? dictionary[@"fontSize"] : @(17);
 	NSString* fontFamily = dictionary[@"fontFamily"];
 	if (fontFamily) {
-		[textAttributes setObject:[UIFont fontWithName:fontFamily size:[fontSize floatValue]] forKey:NSForegroundColorAttributeName];
+		[textAttributes setObject:[UIFont fontWithName:fontFamily size:[fontSize floatValue]] forKey:NSFontAttributeName];
 	} else{
-		[textAttributes setObject:[UIFont systemFontOfSize:[fontSize floatValue]] forKey:NSForegroundColorAttributeName];
+		[textAttributes setObject:[UIFont systemFontOfSize:[fontSize floatValue]] forKey:NSFontAttributeName];
 	}
 	
 	[barButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
