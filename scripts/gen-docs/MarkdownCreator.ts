@@ -2,10 +2,8 @@ import * as Handlebars from 'handlebars';
 import * as Typedoc from 'typedoc';
 import * as fs from 'fs';
 
-const TEMPLATES_DIR = `./src/templates`;
-
 export class MarkdownCreator {
-  constructor(private handlebarsFn: HandlebarsTemplateDelegate<any>) { }
+  constructor(private mdRelativeLinkPath: string, private handlebarsFn: HandlebarsTemplateDelegate<any>) { }
 
   public create(reflection: Typedoc.DeclarationReflection) {
     const context = {
@@ -25,7 +23,7 @@ export class MarkdownCreator {
       name: methodReflection.name,
       arguments: this.readArguments(methodReflection.signatures[0].parameters || []),
       returnType: methodReflection.signatures[0].type.toString(),
-      source: `/docs/api/${methodReflection.sources[0].fileName}#${methodReflection.sources[0].line}`,
+      source: `${this.mdRelativeLinkPath}/${methodReflection.sources[0].fileName}#${methodReflection.sources[0].line}`,
       comment: methodReflection.signatures[0].comment ? methodReflection.signatures[0].comment.shortText : ''
     }));
   }
@@ -43,14 +41,5 @@ export class MarkdownCreator {
       name: propReflection.name,
       type: propReflection.type.toString()
     }));
-  }
-
-  private setupTemplates() {
-    const mainTemplate = fs.readFileSync(`${TEMPLATES_DIR}/main.hbs`).toString();
-    const classTemplate = fs.readFileSync(`${TEMPLATES_DIR}/class.hbs`).toString();
-    const methodTemplate = fs.readFileSync(`${TEMPLATES_DIR}/method.hbs`).toString();
-    Handlebars.registerPartial('class', classTemplate);
-    Handlebars.registerPartial('method', methodTemplate);
-    return Handlebars.compile(mainTemplate, { strict: true });
   }
 }
