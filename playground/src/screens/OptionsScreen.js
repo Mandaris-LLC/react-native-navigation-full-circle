@@ -62,8 +62,9 @@ class OptionsScreen extends Component {
             id: BUTTON_ONE,
             testID: BUTTON_ONE,
             title: 'One',
-            buttonFontSize: 28,
-            buttonColor: 'red'
+            fontFamily: 'HelveticaNeue-Italic',
+            fontSize: 28,
+            color: 'red'
           }
         ],
         leftButtons: [{
@@ -71,7 +72,7 @@ class OptionsScreen extends Component {
           testID: BUTTON_LEFT,
           icon: require('../../img/navicon_add.png'),
           title: 'Left',
-          buttonColor: 'purple'
+          color: 'purple'
         }]
       },
       fab: {
@@ -133,9 +134,9 @@ class OptionsScreen extends Component {
             icon: require('../../img/navicon_add.png'),
             disableIconTint: true,
             showAsAction: 'ifRoom',
-            buttonColor: 'green',
-            buttonFontSize: 28,
-            buttonFontWeight: '800'
+            color: 'green',
+            fontSize: 28,
+            fontWeight: '800'
           }],
           leftButtons: []
         }
@@ -147,14 +148,14 @@ class OptionsScreen extends Component {
             id: BUTTON_ONE,
             testID: BUTTON_ONE,
             title: 'One',
-            buttonColor: 'red'
+            color: 'red'
           }],
           leftButtons: [{
             id: BUTTON_LEFT,
             testID: BUTTON_LEFT,
             icon: require('../../img/navicon_add.png'),
             title: 'Left',
-            buttonColor: 'purple'
+            color: 'purple'
           }]
         }
       });
@@ -173,7 +174,7 @@ class OptionsScreen extends Component {
           fontSize: 20,
           fontFamily: 'HelveticaNeue-CondensedBold'
         },
-        buttonColor: 'red',
+        color: 'red',
       }
     });
   }
