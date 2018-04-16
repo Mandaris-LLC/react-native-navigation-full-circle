@@ -6,9 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
@@ -128,7 +125,7 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
                 });
             } else {
                 optionsPresenter.setTextColor();
-                setFontSize(menuItem);
+                if (button.fontSize.hasValue()) optionsPresenter.setFontSize(menuItem);
                 optionsPresenter.setTypeFace(button.fontFamily);
             }
         }
@@ -146,18 +143,6 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
         } else if (button.enabled.isFalse()) {
             optionsPresenter.tint(icon, button.disabledColor.get(Color.LTGRAY));
         }
-    }
-
-    private void setFontSize(MenuItem menuItem) {
-        SpannableString spanString = new SpannableString(button.title.get());
-        if (this.button.fontSize.hasValue())
-            spanString.setSpan(
-                    new AbsoluteSizeSpan(button.fontSize.get(), true),
-                    0,
-                    button.title.get().length(),
-                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            );
-        menuItem.setTitleCondensed(spanString);
     }
 
     private void setTestId(Toolbar toolbar, Text testId) {

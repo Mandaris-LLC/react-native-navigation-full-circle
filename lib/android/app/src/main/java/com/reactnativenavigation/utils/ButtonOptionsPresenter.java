@@ -7,6 +7,10 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,6 +38,18 @@ public class ButtonOptionsPresenter {
                 ((TextView) btn).setTypeface(typeface);
             }
         });
+    }
+
+    public void setFontSize(MenuItem menuItem) {
+        SpannableString spanString = new SpannableString(button.title.get());
+        if (this.button.fontSize.hasValue())
+            spanString.setSpan(
+                    new AbsoluteSizeSpan(button.fontSize.get(), true),
+                    0,
+                    button.title.get().length(),
+                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
+            );
+        menuItem.setTitleCondensed(spanString);
     }
 
     public void setTextColor() {

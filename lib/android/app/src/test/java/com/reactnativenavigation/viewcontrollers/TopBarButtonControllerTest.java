@@ -15,6 +15,7 @@ import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Color;
 import com.reactnativenavigation.parse.params.NullText;
+import com.reactnativenavigation.parse.params.Number;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ButtonOptionsPresenter;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
@@ -107,6 +108,18 @@ public class TopBarButtonControllerTest extends BaseTest {
         setTextButton();
         uut.addToMenu(getTitleBar(), 0);
         verify(optionsPresenter, times(1)).setTypeFace(Typeface.MONOSPACE);
+    }
+
+    @Test
+    public void fontSize() {
+        setTextButton();
+        uut.addToMenu(getTitleBar(), 0);
+        verify(optionsPresenter, times(0)).setFontSize(getTitleBar().getMenu().getItem(0));
+
+        getTitleBar().getMenu().clear();
+        button.fontSize = new Number(10);
+        uut.addToMenu(getTitleBar(), 0);
+        verify(optionsPresenter, times(1)).setFontSize(getTitleBar().getMenu().getItem(0));
     }
 
     private Toolbar getTitleBar() {
