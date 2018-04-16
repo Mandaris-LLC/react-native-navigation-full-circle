@@ -65,11 +65,11 @@ public class ButtonOptionsPresenter {
         });
     }
 
-    private void setDisabledColor(TextView btn, int color) {
+    public void setDisabledColor(TextView btn, int color) {
         btn.setTextColor(color);
     }
 
-    private void setEnabledColor(TextView btn) {
+    public void setEnabledColor(TextView btn) {
         btn.setTextColor(button.color.get());
     }
 

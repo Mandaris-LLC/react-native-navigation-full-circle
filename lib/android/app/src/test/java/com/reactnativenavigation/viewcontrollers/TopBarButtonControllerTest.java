@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -100,7 +101,7 @@ public class TopBarButtonControllerTest extends BaseTest {
         setIconButton(false);
         button.disableIconTint = new Bool(true);
         uut.addToMenu(getTitleBar(), 0);
-        verify(optionsPresenter, times(0)).setTextColor();
+        verify(optionsPresenter, times(0)).tint(any(), anyInt());
     }
 
     @Test
@@ -116,10 +117,45 @@ public class TopBarButtonControllerTest extends BaseTest {
         uut.addToMenu(getTitleBar(), 0);
         verify(optionsPresenter, times(0)).setFontSize(getTitleBar().getMenu().getItem(0));
 
-        getTitleBar().getMenu().clear();
+        clearMenu();
         button.fontSize = new Number(10);
         uut.addToMenu(getTitleBar(), 0);
         verify(optionsPresenter, times(1)).setFontSize(getTitleBar().getMenu().getItem(0));
+    }
+
+    @Test
+    public void textColor_enabled() {
+        setTextButton();
+        button.enabled = new Bool(false);
+        uut.addToMenu(getTitleBar(), 0);
+        dispatchPreDraw(getTitleBar());
+        verify(optionsPresenter, times(0)).setEnabledColor(any());
+
+        clearMenu();
+        button.enabled = new Bool(true);
+        button.color = new Color(android.graphics.Color.RED);
+        uut.addToMenu(getTitleBar(), 0);
+        dispatchPreDraw(getTitleBar());
+        verify(optionsPresenter, times(1)).setEnabledColor(any());
+    }
+
+    private void clearMenu() {
+        getTitleBar().getMenu().clear();
+    }
+
+    @Test
+    public void textColor_disabled() {
+        setTextButton();
+        button.enabled = new Bool(false);
+        uut.addToMenu(getTitleBar(), 0);
+        dispatchPreDraw(getTitleBar());
+        verify(optionsPresenter, times(1)).setDisabledColor(any(), eq(android.graphics.Color.LTGRAY));
+
+        clearMenu();
+        button.disabledColor = new Color(android.graphics.Color.BLACK);
+        uut.addToMenu(getTitleBar(), 0);
+        dispatchPreDraw(getTitleBar());
+        verify(optionsPresenter, times(1)).setDisabledColor(any(), eq(android.graphics.Color.BLACK));
     }
 
     private Toolbar getTitleBar() {
@@ -128,7 +164,6 @@ public class TopBarButtonControllerTest extends BaseTest {
 
     private void setTextButton() {
         button.id = "btn1";
-        button.color = new Color(android.graphics.Color.RED);
         button.title = new Text("Button");
         button.fontFamily = Typeface.MONOSPACE;
         button.showAsAction = MenuItem.SHOW_AS_ACTION_ALWAYS;
