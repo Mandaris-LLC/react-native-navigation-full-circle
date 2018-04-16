@@ -18,12 +18,14 @@ export class MarkdownCreator {
 
   private readMethods(reflection: Typedoc.DeclarationReflection) {
     const methodReflections = reflection.getChildrenByKind(Typedoc.ReflectionKind.Method);
+
     methodReflections.sort((a, b) => a.sources[0].line - b.sources[0].line);
+
     return methodReflections.map((methodReflection) => ({
       name: methodReflection.name,
       arguments: this.readArguments(methodReflection.signatures[0].parameters || []),
       returnType: methodReflection.signatures[0].type.toString(),
-      source: `${methodReflection.sources[0].fileName}#${methodReflection.sources[0].line}`,
+      source: `/docs/api/${methodReflection.sources[0].fileName}#${methodReflection.sources[0].line}`,
       comment: methodReflection.signatures[0].comment ? methodReflection.signatures[0].comment.shortText : ''
     }));
   }
