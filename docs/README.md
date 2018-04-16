@@ -70,6 +70,7 @@ v2 is written in Test Driven Development. We have a test for every feature inclu
 | push              |   ✅       |	✅		|
 | pop               |  ✅        |	✅	|
 | popToRoot              |   ✅         |✅	|
+| popTo              |   ✅         |✅	|
 | resetTo             |   ✅        |	✅|
 | showModal              |  ✅        |	✅|
 | dismissModal           |     ✅       |	✅|
