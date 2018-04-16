@@ -44,6 +44,13 @@ Pop all the screens until the root from this screen's navigation stack.
 ```js
 Navigation.popToRoot(this.props.componentId);
 ```
+## popTo(componentId)
+
+Pop the stack to a given component.
+
+```js
+Navigation.popTo(componentId);
+```
 
 ## setStackRoot(componentId, params)
 
