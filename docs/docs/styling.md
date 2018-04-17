@@ -65,6 +65,7 @@ Navigation.mergeOptions(this.props.componentId, {
   popGesture: true,
   backgroundImage: require('background.png'),
   rootBackgroundImage: require('rootBackground.png'),
+  modalPresentationStyle: 'formSheet', // Supported styles are: 'formSheet', 'pageSheet', 'overFullScreen', 'overCurrentContext', 'currentContext', 'popOver', 'fullScreen' and 'none'.
   topBar: {
     visible: true,
     leftButtons: [{
