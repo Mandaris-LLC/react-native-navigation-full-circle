@@ -8,7 +8,7 @@
 
 ## registerComponent
 
-`registerComponent(componentName: string, getComponentClassFunc: ComponentProvider): void`
+`registerComponent(componentName: string, getComponentClassFunc: ComponentProvider): React.ComponentType<any>`
 
 [source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L52)
 

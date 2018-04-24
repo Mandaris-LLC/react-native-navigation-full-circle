@@ -49,8 +49,8 @@ export class Navigation {
    * Every navigation component in your app must be registered with a unique name.
    * The component itself is a traditional React component extending React.Component.
    */
-  public registerComponent(componentName: string, getComponentClassFunc: ComponentProvider) {
-    this.componentRegistry.registerComponent(componentName, getComponentClassFunc);
+  public registerComponent(componentName: string, getComponentClassFunc: ComponentProvider): React.ComponentType<any> {
+    return this.componentRegistry.registerComponent(componentName, getComponentClassFunc);
   }
 
   /**
