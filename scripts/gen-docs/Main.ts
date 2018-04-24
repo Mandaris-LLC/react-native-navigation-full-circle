@@ -1,34 +1,31 @@
 import * as fs from 'fs';
 import { ReflectionsReader } from './ReflectionsReader';
-import { MarkdownCreator } from './MarkdownCreator';
-import * as Handlebars from 'handlebars';
+import { ClassParser } from './ClassParser';
+import { MarkdownWriter } from './MarkdownWriter';
+import { ReflectionKind } from 'typedoc';
 
-const INPUT_DIR = `${__dirname}/../../lib/src/Navigation.ts`;
+const INPUT_DIR = `${__dirname}/../../lib/src`;
 const OUTPUT_DIR = `${__dirname}/../../docs/api`;
-const SOURCE_LINK_PREFIX = `https://github.com/wix/react-native-navigation/blob/v2/lib/src`;
 const TEMPLATES_DIR = `${__dirname}/templates`;
-const TSCONFIG = JSON.parse(fs.readFileSync(`${__dirname}/../../tsconfig.json`).toString());
+const TSCONFIG_PATH = `${__dirname}/../../tsconfig.json`;
+const SOURCE_LINK_PREFIX = `https://github.com/wix/react-native-navigation/blob/v2/lib/src`;
 
 class Main {
   public run() {
-    const handlebarsFn = this.setupHandlebars();
+    const classParser = new ClassParser(SOURCE_LINK_PREFIX);
+    const markdownWriter = new MarkdownWriter(TEMPLATES_DIR, OUTPUT_DIR);
+    const projectReflections = new ReflectionsReader(TSCONFIG_PATH).read(INPUT_DIR);
 
-    const reflection = new ReflectionsReader(TSCONFIG).read(INPUT_DIR);
-    const markdown = new MarkdownCreator(SOURCE_LINK_PREFIX, handlebarsFn).create(reflection);
+    const externalModules = projectReflections.getChildrenByKind(ReflectionKind.ExternalModule)
+      .filter((m) => !m.name.endsWith('.mock"') && !m.name.endsWith('.test"'));
 
-    fs.writeFileSync(`${OUTPUT_DIR}/Navigation.md`, markdown, { encoding: 'utf8' });
-  }
+    const classReflections = externalModules.filter((m) => m.getChildrenByKind(ReflectionKind.Class).length === 1)
+      .map((m) => m.getChildrenByKind(ReflectionKind.Class)[0]);
+    // just class modules, TODO: extract interfaces and types to their own modules, generate docs for interfaces and types
 
-  private setupHandlebars() {
-    const classTemplate = fs.readFileSync(`${TEMPLATES_DIR}/class.hbs`).toString();
-    const methodTemplate = fs.readFileSync(`${TEMPLATES_DIR}/method.hbs`).toString();
-    const propertyTemplate = fs.readFileSync(`${TEMPLATES_DIR}/property.hbs`).toString();
-
-    Handlebars.registerPartial('class', classTemplate);
-    Handlebars.registerPartial('method', methodTemplate);
-    Handlebars.registerPartial('property', propertyTemplate);
-
-    return Handlebars.compile('{{> class}}', { strict: true, noEscape: true });
+    const parsedClasses = classReflections.map((c) => classParser.parseClass(c));
+    markdownWriter.writeClasses(parsedClasses);
+    markdownWriter.writeMenu(parsedClasses);
   }
 }
 

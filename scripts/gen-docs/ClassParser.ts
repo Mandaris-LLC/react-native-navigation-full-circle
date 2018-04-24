@@ -1,41 +1,63 @@
 import * as Handlebars from 'handlebars';
 import * as Typedoc from 'typedoc';
-import * as fs from 'fs';
 
-export class MarkdownCreator {
-  constructor(private sourceLinkPrefix: string, private handlebarsFn: HandlebarsTemplateDelegate<any>) { }
+export interface PropertyContext {
+  name: string;
+  type: string;
+}
 
-  public create(reflection: Typedoc.DeclarationReflection) {
-    const context = {
+export interface ArgumentContext {
+  name: string;
+  type: string;
+}
+
+export interface MethodContext {
+  name: string;
+  arguments: ArgumentContext[];
+  returnType: string;
+  source: string;
+  comment?: string;
+}
+
+export interface ClassContext {
+  name: string;
+  properties: PropertyContext[];
+  methods: MethodContext[];
+}
+
+export class ClassParser {
+  constructor(private sourceLinkPrefix: string) { }
+
+  public parseClass(reflection: Typedoc.DeclarationReflection): ClassContext {
+    return {
       name: reflection.name,
-      properties: this.readProperties(reflection),
-      methods: this.readMethods(reflection)
+      properties: this.parseProperties(reflection),
+      methods: this.parseMethods(reflection)
     };
-    return this.handlebarsFn(context);
   }
 
-  private readMethods(reflection: Typedoc.DeclarationReflection) {
+  private parseMethods(reflection: Typedoc.DeclarationReflection): MethodContext[] {
     const methodReflections = reflection.getChildrenByKind(Typedoc.ReflectionKind.Method);
 
     methodReflections.sort((a, b) => a.sources[0].line - b.sources[0].line);
 
     return methodReflections.map((methodReflection) => ({
       name: methodReflection.name,
-      arguments: this.readArguments(methodReflection.signatures[0].parameters || []),
+      arguments: this.parseArguments(methodReflection.signatures[0].parameters || []),
       returnType: methodReflection.signatures[0].type.toString(),
       source: `${this.sourceLinkPrefix}/${methodReflection.sources[0].fileName}#L${methodReflection.sources[0].line}`,
       comment: methodReflection.signatures[0].comment ? methodReflection.signatures[0].comment.shortText : ''
     }));
   }
 
-  private readArguments(parameters: Typedoc.ParameterReflection[]) {
+  private parseArguments(parameters: Typedoc.ParameterReflection[]): ArgumentContext[] {
     return parameters.map((parameter) => ({
       name: parameter.name,
       type: parameter.type.toString()
     }));
   }
 
-  private readProperties(reflection: Typedoc.DeclarationReflection) {
+  private parseProperties(reflection: Typedoc.DeclarationReflection): PropertyContext[] {
     const propsReflections = reflection.getChildrenByKind(Typedoc.ReflectionKind.Property);
     return propsReflections.map((propReflection) => ({
       name: propReflection.name,

@@ -45,7 +45,7 @@
     "prerelease": "npm run build",
     "release": "node ./scripts/release",
     "local-docs": "node ./scripts/local-docs",
-    "gen-docs": "echo 'this is a work in progress!!!' && ts-node ./scripts/gen-docs/Main"
+    "gen-docs": "ts-node ./scripts/gen-docs/Main"
   },
   "peerDependencies": {
     "react": "*",
