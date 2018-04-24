@@ -16,15 +16,13 @@ import com.reactnativenavigation.presentation.NavigationOptionsListener;
 import com.reactnativenavigation.presentation.OverlayManager;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.CompatUtils;
-import com.reactnativenavigation.viewcontrollers.modal.Modal;
-import com.reactnativenavigation.viewcontrollers.modal.ModalListener;
 import com.reactnativenavigation.viewcontrollers.modal.ModalPresenter;
 import com.reactnativenavigation.viewcontrollers.modal.ModalStack2;
 
 import java.util.Collection;
 import java.util.Collections;
 
-public class Navigator extends ParentController implements ModalListener {
+public class Navigator extends ParentController {
 
     public interface CommandListener {
         void onSuccess(String childId);
@@ -32,7 +30,6 @@ public class Navigator extends ParentController implements ModalListener {
         void onError(String message);
     }
 
-//    private final ModalStack modalStack;
     private final ModalStack2 modalStack;
     private ViewController root;
     private FrameLayout rootLayout;
@@ -42,7 +39,6 @@ public class Navigator extends ParentController implements ModalListener {
 
     public Navigator(final Activity activity) {
         super(activity, "navigator" + CompatUtils.generateViewId(), new Options());
-//        modalStack = new ModalStack(new ModalCreator(), this);
         modalStack = new ModalStack2(new ModalPresenter(new ModalAnimator2(activity)));
     }
 
@@ -200,20 +196,6 @@ public class Navigator extends ParentController implements ModalListener {
                 listener.onError(message);
             }
         });
-    }
-
-    @Override
-    public void onModalDisplay(Modal modal) {
-        if (modalStack.size() == 1) {
-            root.onViewLostFocus();
-        }
-    }
-
-    @Override
-    public void onModalDismiss(Modal modal) {
-        if (modalStack.isEmpty()) {
-            root.onViewRegainedFocus();
-        }
     }
 
     public void dismissAllModals(CommandListener listener) {
