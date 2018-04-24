@@ -1,4 +1,6 @@
-### `{{name}}({{#each arguments}}{{name}}: {{type}}{{#unless @last}}, {{/unless}}{{/each}}): {{returnType}}`
+## {{name}}
+
+`{{name}}({{#each arguments}}{{name}}: {{type}}{{#unless @last}}, {{/unless}}{{/each}}): {{returnType}}`
 
 [source]({{source}})
 
@@ -6,13 +8,5 @@
 {{comment}}
 
 {{/if}}
-{{#if arguments}}
-#### Arguments
-{{#each arguments}}
-- {{name}} (`{{type}}`)
-{{/each}}
-
-{{/if}}
-#### Returns
-- (`{{returnType}}`)
+---
 

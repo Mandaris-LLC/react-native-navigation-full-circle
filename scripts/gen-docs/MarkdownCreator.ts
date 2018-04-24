@@ -3,7 +3,7 @@ import * as Typedoc from 'typedoc';
 import * as fs from 'fs';
 
 export class MarkdownCreator {
-  constructor(private mdRelativeLinkPath: string, private handlebarsFn: HandlebarsTemplateDelegate<any>) { }
+  constructor(private sourceLinkPrefix: string, private handlebarsFn: HandlebarsTemplateDelegate<any>) { }
 
   public create(reflection: Typedoc.DeclarationReflection) {
     const context = {
@@ -23,7 +23,7 @@ export class MarkdownCreator {
       name: methodReflection.name,
       arguments: this.readArguments(methodReflection.signatures[0].parameters || []),
       returnType: methodReflection.signatures[0].type.toString(),
-      source: `${this.mdRelativeLinkPath}/${methodReflection.sources[0].fileName}#${methodReflection.sources[0].line}`,
+      source: `${this.sourceLinkPrefix}/${methodReflection.sources[0].fileName}#L${methodReflection.sources[0].line}`,
       comment: methodReflection.signatures[0].comment ? methodReflection.signatures[0].comment.shortText : ''
     }));
   }

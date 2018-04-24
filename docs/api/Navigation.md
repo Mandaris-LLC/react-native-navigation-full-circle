@@ -1,188 +1,160 @@
 # Navigation
 
-## Properties
+## Element
 
-- Element (`React.ComponentType<object>`)
+`Element (React.ComponentType<object>)`
 
-## Methods
+---
 
-### `registerComponent(componentName: string, getComponentClassFunc: ComponentProvider): void`
+## registerComponent
 
-[source](/lib/src//Navigation.ts#52)
+`registerComponent(componentName: string, getComponentClassFunc: ComponentProvider): void`
+
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L52)
 
 Every navigation component in your app must be registered with a unique name.
 The component itself is a traditional React component extending React.Component.
 
-#### Arguments
-- componentName (`string`)
-- getComponentClassFunc (`ComponentProvider`)
+---
 
-#### Returns
-- (`void`)
+## setRoot
 
-### `setRoot(layout: any): Promise<any>`
+`setRoot(layout: any): Promise<any>`
 
-[source](/lib/src//Navigation.ts#59)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L59)
 
 Reset the app to a new layout
 
-#### Arguments
-- layout (`any`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## setDefaultOptions
 
-### `setDefaultOptions(options: any): void`
+`setDefaultOptions(options: any): void`
 
-[source](/lib/src//Navigation.ts#66)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L66)
 
 Set default options to all screens. Useful for declaring a consistent style across the app.
 
-#### Arguments
-- options (`any`)
+---
 
-#### Returns
-- (`void`)
+## mergeOptions
 
-### `mergeOptions(componentId: string, options: any): void`
+`mergeOptions(componentId: string, options: any): void`
 
-[source](/lib/src//Navigation.ts#73)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L73)
 
 Change a component's navigation options
 
-#### Arguments
-- componentId (`string`)
-- options (`any`)
+---
 
-#### Returns
-- (`void`)
+## showModal
 
-### `showModal(layout: any): Promise<any>`
+`showModal(layout: any): Promise<any>`
 
-[source](/lib/src//Navigation.ts#80)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L80)
 
 Show a screen as a modal.
 
-#### Arguments
-- layout (`any`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## dismissModal
 
-### `dismissModal(componentId: string): Promise<any>`
+`dismissModal(componentId: string): Promise<any>`
 
-[source](/lib/src//Navigation.ts#87)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L87)
 
 Dismiss a modal by componentId. The dismissed modal can be anywhere in the stack.
 
-#### Arguments
-- componentId (`string`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## dismissAllModals
 
-### `dismissAllModals(): Promise<any>`
+`dismissAllModals(): Promise<any>`
 
-[source](/lib/src//Navigation.ts#94)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L94)
 
 Dismiss all Modals
 
-#### Returns
-- (`Promise<any>`)
+---
 
-### `push(componentId: string, layout: any): Promise<any>`
+## push
 
-[source](/lib/src//Navigation.ts#101)
+`push(componentId: string, layout: any): Promise<any>`
+
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L101)
 
 Push a new layout into this screen's navigation stack.
 
-#### Arguments
-- componentId (`string`)
-- layout (`any`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## pop
 
-### `pop(componentId: string, params: any): Promise<any>`
+`pop(componentId: string, params: any): Promise<any>`
 
-[source](/lib/src//Navigation.ts#108)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L108)
 
 Pop a component from the stack, regardless of it's position.
 
-#### Arguments
-- componentId (`string`)
-- params (`any`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## popTo
 
-### `popTo(componentId: string): Promise<any>`
+`popTo(componentId: string): Promise<any>`
 
-[source](/lib/src//Navigation.ts#115)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L115)
 
 Pop the stack to a given component
 
-#### Arguments
-- componentId (`string`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## popToRoot
 
-### `popToRoot(componentId: string): Promise<any>`
+`popToRoot(componentId: string): Promise<any>`
 
-[source](/lib/src//Navigation.ts#122)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L122)
 
 Pop the component's stack to root.
 
-#### Arguments
-- componentId (`string`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## setStackRoot
 
-### `setStackRoot(componentId: string, layout: any): Promise<any>`
+`setStackRoot(componentId: string, layout: any): Promise<any>`
 
-[source](/lib/src//Navigation.ts#129)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L129)
 
 Sets new root component to stack.
 
-#### Arguments
-- componentId (`string`)
-- layout (`any`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## showOverlay
 
-### `showOverlay(layout: any): Promise<any>`
+`showOverlay(layout: any): Promise<any>`
 
-[source](/lib/src//Navigation.ts#136)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L136)
 
 Show overlay on top of the entire app
 
-#### Arguments
-- layout (`any`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## dismissOverlay
 
-### `dismissOverlay(componentId: string): Promise<any>`
+`dismissOverlay(componentId: string): Promise<any>`
 
-[source](/lib/src//Navigation.ts#143)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L143)
 
 dismiss overlay by componentId
 
-#### Arguments
-- componentId (`string`)
+---
 
-#### Returns
-- (`Promise<any>`)
+## events
 
-### `events(): EventsRegistry`
+`events(): EventsRegistry`
 
-[source](/lib/src//Navigation.ts#150)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/Navigation.ts#L150)
 
 Obtain the events registry instance
 
-#### Returns
-- (`EventsRegistry`)
+---
+
 

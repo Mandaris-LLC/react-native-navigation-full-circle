@@ -1,4 +1,5 @@
 import * as Typedoc from 'typedoc';
+import { OptionsReadMode } from 'typedoc/dist/lib/utils/options';
 
 const OPTIONS = {
   excludeExternals: true,
@@ -17,8 +18,8 @@ export class ReflectionsReader {
     this.typedocApp = new Typedoc.Application({ ...OPTIONS, ...tsconfig.compilerOptions });
   }
 
-  public read(modulePath: string): Typedoc.DeclarationReflection {
-    const expandedFiles = this.typedocApp.expandInputFiles([modulePath]);
+  public read(modulePathRoot: string): Typedoc.DeclarationReflection {
+    const expandedFiles = this.typedocApp.expandInputFiles([modulePathRoot]);
     const projectReflection = this.typedocApp.convert(expandedFiles);
     // console.log(JSON.stringify(this.typedocApp.serializer.projectToObject(projectReflection)));
     const externalModule = projectReflection.getChildrenByKind(Typedoc.ReflectionKind.ExternalModule)[0];

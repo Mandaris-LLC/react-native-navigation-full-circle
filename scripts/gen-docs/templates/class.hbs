@@ -1,17 +1,14 @@
 # {{name}}
 
 {{#if properties}}
-## Properties
-
 {{#each properties}}
-- {{name}} (`{{type}}`)
+{{> property}}
 {{/each}}
 
 {{/if}}
 {{#if methods}}
-## Methods
-
 {{#each methods}}
 {{> method}}
 {{/each}}
+
 {{/if}}

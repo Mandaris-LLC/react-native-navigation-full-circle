@@ -1,7 +1,9 @@
+- [Home](/)
 - Getting Started
   - [Installing](/docs/Installing)
   - [Working Locally](/docs/WorkingLocally)
   - [Usage](/docs/Usage)
+- [API](/api/README)
 - Guide
   - [Top Level](/docs/top-level-api)
   - [Screen](/docs/screen-api)
@@ -9,4 +11,3 @@
   - [Styling](/docs/styling)
 - Migration from v1
   - [Top Level](/docs/top-level-api-migration)
-  
