@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.facebook.react.bridge.Promise;
-import com.reactnativenavigation.anim.ModalAnimator2;
+import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.anim.NavigationAnimator;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.presentation.NavigationOptionsListener;
@@ -17,7 +17,7 @@ import com.reactnativenavigation.presentation.OverlayManager;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.viewcontrollers.modal.ModalPresenter;
-import com.reactnativenavigation.viewcontrollers.modal.ModalStack2;
+import com.reactnativenavigation.viewcontrollers.modal.ModalStack;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -30,7 +30,7 @@ public class Navigator extends ParentController {
         void onError(String message);
     }
 
-    private final ModalStack2 modalStack;
+    private final ModalStack modalStack;
     private ViewController root;
     private FrameLayout rootLayout;
     private FrameLayout contentLayout;
@@ -39,7 +39,7 @@ public class Navigator extends ParentController {
 
     public Navigator(final Activity activity) {
         super(activity, "navigator" + CompatUtils.generateViewId(), new Options());
-        modalStack = new ModalStack2(new ModalPresenter(new ModalAnimator2(activity)));
+        modalStack = new ModalStack(new ModalPresenter(new ModalAnimator(activity)));
     }
 
     public FrameLayout getContentLayout() {
@@ -87,7 +87,6 @@ public class Navigator extends ParentController {
         }
 
         root = viewController;
-
         contentLayout.addView(viewController.getView());
         if (viewController.options.animations.startApp.hasValue()) {
             new NavigationAnimator(viewController.getActivity(), viewController.options.animations)

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.BaseTest;
-import com.reactnativenavigation.anim.ModalAnimator2;
+import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
@@ -28,12 +28,12 @@ public class ModalPresenterTest extends BaseTest {
     private ViewController modal2;
     private ModalPresenter uut;
     private FrameLayout contentLayout;
-    private ModalAnimator2 animator;
+    private ModalAnimator animator;
 
     @Override
     public void beforeEach() {
         Activity activity = newActivity();
-        animator = spy(new ModalAnimator2(activity));
+        animator = spy(new ModalAnimator(activity));
         uut = new ModalPresenter(animator);
         contentLayout = new FrameLayout(activity);
         activity.setContentView(contentLayout);

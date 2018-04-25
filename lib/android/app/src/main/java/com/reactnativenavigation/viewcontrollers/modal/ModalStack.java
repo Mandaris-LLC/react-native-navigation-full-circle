@@ -11,11 +11,11 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class ModalStack2 {
+public class ModalStack {
     private List<ViewController> modals = new ArrayList<>();
     private final ModalPresenter presenter;
 
-    public ModalStack2(ModalPresenter presenter) {
+    public ModalStack(ModalPresenter presenter) {
         this.presenter = presenter;
     }
 
