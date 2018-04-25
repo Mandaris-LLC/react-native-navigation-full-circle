@@ -1,9 +1,6 @@
 import { NativeEventsReceiver } from '../adapters/NativeEventsReceiver';
 import { CommandsObserver } from './CommandsObserver';
-
-export interface EventSubscription {
-  remove();
-}
+import { EventSubscription } from '../interfaces/EventSubscription';
 
 export class EventsRegistry {
   constructor(private nativeEventsReceiver: NativeEventsReceiver, private commandsObserver: CommandsObserver) { }

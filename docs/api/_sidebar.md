@@ -14,4 +14,5 @@
 - [CommandsObserver](/api/CommandsObserver)
 - [ComponentEventsObserver](/api/ComponentEventsObserver)
 - [EventsRegistry](/api/EventsRegistry)
+- [EventSubscription](/api/EventSubscription)
 - [LayoutType](/api/LayoutType)

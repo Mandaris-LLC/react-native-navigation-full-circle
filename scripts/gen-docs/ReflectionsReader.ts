@@ -13,6 +13,7 @@ const OPTIONS = {
 
 export interface Reflections {
   classReflections: DeclarationReflection[];
+  interfaceReflections: DeclarationReflection[];
   enumReflections: DeclarationReflection[];
 }
 
@@ -32,10 +33,12 @@ export class ReflectionsReader {
 
     const externalModules = this.externalModulesWithoutTestsAndMocks(projectReflection);
     const classReflections = this.reflections(externalModules, ReflectionKind.Class);
+    const interfaceReflections = this.reflections(externalModules, ReflectionKind.Interface);
     const enumReflections = this.reflections(externalModules, ReflectionKind.Enum);
 
     return {
       classReflections,
+      interfaceReflections,
       enumReflections
     };
   }

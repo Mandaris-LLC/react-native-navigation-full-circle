@@ -1,5 +1,5 @@
 import { NativeModules, NativeEventEmitter } from 'react-native';
-import { EventSubscription } from '../events/EventsRegistry';
+import { EventSubscription } from '../interfaces/EventSubscription';
 
 export class NativeEventsReceiver {
   private emitter: NativeEventEmitter;

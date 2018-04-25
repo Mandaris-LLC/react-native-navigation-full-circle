@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { EventSubscription } from './EventsRegistry';
+import { EventSubscription } from '../interfaces/EventSubscription';
 
 export type CommandsListener = (name: string, params: {}) => void;
 

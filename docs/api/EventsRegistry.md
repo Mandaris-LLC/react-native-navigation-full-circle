@@ -4,7 +4,7 @@
 
 `onAppLaunched(callback: function): EventSubscription`
 
-[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L11)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L8)
 
 ---
 
@@ -12,7 +12,7 @@
 
 `componentDidAppear(callback: function): EventSubscription`
 
-[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L15)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L12)
 
 ---
 
@@ -20,7 +20,7 @@
 
 `componentDidDisappear(callback: function): EventSubscription`
 
-[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L19)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L16)
 
 ---
 
@@ -28,7 +28,7 @@
 
 `onNavigationButtonPressed(callback: function): EventSubscription`
 
-[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L23)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L20)
 
 ---
 
@@ -36,7 +36,7 @@
 
 `onNavigationCommand(callback: function): EventSubscription`
 
-[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L27)
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L24)
 
 ---
 

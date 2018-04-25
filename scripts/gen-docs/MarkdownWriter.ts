@@ -28,10 +28,13 @@ export class MarkdownWriter {
     });
   }
 
-  public writeMenu(classContexts: ClassContext[], enumContexts: EnumContext[]) {
-    const files = classContexts.map((c) => ({ name: c.name, path: `/api/${c.name}` }));
-    const files2 = enumContexts.map((c) => ({ name: c.name, path: `/api/${c.name}` }));
-    const menuMarkdown = this.menuFn({ files: _.concat(files, files2) });
+  public writeMenu(classContexts: ClassContext[], interfaceContexts: ClassContext[], enumContexts: EnumContext[]) {
+    const mapper = (c) => ({ name: c.name, path: `/api/${c.name}` });
+    const files = classContexts.map(mapper);
+    const files2 = interfaceContexts.map(mapper);
+    const files3 = enumContexts.map(mapper);
+
+    const menuMarkdown = this.menuFn({ files: _.concat(files, files2, files3) });
     fs.writeFileSync(`${this.outputDir}/_sidebar.md`, menuMarkdown, { encoding: 'utf8' });
     fs.writeFileSync(`${this.outputDir}/README.md`, menuMarkdown, { encoding: 'utf8' });
   }
