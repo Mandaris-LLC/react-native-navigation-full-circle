@@ -4,7 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.view.ViewGroup;
 
-import com.reactnativenavigation.anim.ModalAnimator2;
+import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.viewcontrollers.Navigator.CommandListener;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
@@ -13,9 +13,9 @@ import javax.annotation.Nullable;
 public class ModalPresenter {
 
     private ViewGroup content;
-    private ModalAnimator2 animator;
+    private ModalAnimator animator;
 
-    public ModalPresenter(ModalAnimator2 animator) {
+    public ModalPresenter(ModalAnimator animator) {
         this.animator = animator;
     }
 

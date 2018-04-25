@@ -4,10 +4,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.view.View;
 
-import com.reactnativenavigation.anim.ModalAnimator2;
+import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.parse.AnimationOptions;
 
-public class ModalAnimatorMock extends ModalAnimator2 {
+public class ModalAnimatorMock extends ModalAnimator {
 
     ModalAnimatorMock(Context context) {
         super(context);

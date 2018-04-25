@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.reactnativenavigation.BaseTest;
-import com.reactnativenavigation.anim.ModalAnimator2;
+import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.mocks.SimpleViewController;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
@@ -31,13 +31,13 @@ public class ModalStackTest2 extends BaseTest {
     private static final String MODAL_ID_2 = "modalId2";
     private static final String MODAL_ID_3 = "modalId3";
 
-    private ModalStack2 uut;
+    private ModalStack uut;
     private ViewController modal1;
     private ViewController modal2;
     private ViewController modal3;
     private Activity activity;
     private ModalPresenter presenter;
-    private ModalAnimator2 animator;
+    private ModalAnimator animator;
 
     @Override
     public void beforeEach() {
@@ -46,7 +46,7 @@ public class ModalStackTest2 extends BaseTest {
         activity.setContentView(root);
         animator = spy(new ModalAnimatorMock(activity));
         presenter = spy(new ModalPresenter(animator));
-        uut = new ModalStack2(presenter);
+        uut = new ModalStack(presenter);
         uut.setContentLayout(root);
         modal1 = spy(new SimpleViewController(activity, MODAL_ID_1, new Options()));
         modal2 = spy(new SimpleViewController(activity, MODAL_ID_2, new Options()));

@@ -8,11 +8,11 @@ import android.view.View;
 
 import com.reactnativenavigation.parse.AnimationOptions;
 
-public class ModalAnimator2 extends BaseAnimator {
+public class ModalAnimator extends BaseAnimator {
 
     private Animator animator;
 
-    public ModalAnimator2(Context context) {
+    public ModalAnimator(Context context) {
         super(context);
     }
 
