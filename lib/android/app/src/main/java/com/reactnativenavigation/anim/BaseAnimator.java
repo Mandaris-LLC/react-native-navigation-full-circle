@@ -3,20 +3,24 @@ package com.reactnativenavigation.anim;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.reactnativenavigation.parse.AnimationsOptions;
 import com.reactnativenavigation.utils.UiUtils;
 
+import static android.view.View.ALPHA;
+import static android.view.View.TRANSLATION_Y;
+
 class BaseAnimator {
 
     private static final int DURATION = 300;
-    private static final DecelerateInterpolator DECELERATE_INTERPOLATOR = new DecelerateInterpolator();
-    private static final AccelerateInterpolator ACCELERATE_INTERPOLATOR = new AccelerateInterpolator();
+    private static final TimeInterpolator DECELERATE = new DecelerateInterpolator();
+    private static final TimeInterpolator ACCELERATE_DECELERATE = new AccelerateDecelerateInterpolator();
 
     protected AnimationsOptions options = new AnimationsOptions();
 
@@ -28,13 +32,11 @@ class BaseAnimator {
 
     @NonNull
     AnimatorSet getDefaultPushAnimation(View view) {
-        ObjectAnimator alpha = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1);
-        alpha.setInterpolator(DECELERATE_INTERPOLATOR);
-
         AnimatorSet set = new AnimatorSet();
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, this.translationY, 0);
-        set.setInterpolator(DECELERATE_INTERPOLATOR);
+        set.setInterpolator(DECELERATE);
         set.setDuration(DURATION);
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(view, TRANSLATION_Y, this.translationY, 0);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(view, ALPHA, 0, 1);
         set.playTogether(translationY, alpha);
         return set;
     }
@@ -43,14 +45,10 @@ class BaseAnimator {
     @NonNull
     AnimatorSet getDefaultPopAnimation(View view) {
         AnimatorSet set = new AnimatorSet();
-
-        ObjectAnimator alpha = ObjectAnimator.ofFloat(view, View.ALPHA, 1, 0);
-        alpha.setInterpolator(ACCELERATE_INTERPOLATOR);
-
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, 0, this.translationY);
-        translationY.setInterpolator(ACCELERATE_INTERPOLATOR);
-        translationY.setDuration(DURATION);
-        alpha.setDuration(DURATION);
+        set.setInterpolator(ACCELERATE_DECELERATE);
+        set.setDuration(DURATION);
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(view, TRANSLATION_Y, 0, this.translationY);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(view, ALPHA, 1, 0);
         set.playTogether(translationY, alpha);
         return set;
     }
