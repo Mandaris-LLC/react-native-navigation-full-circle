@@ -48,10 +48,4 @@ describe('ComponentRegistry', () => {
     const tree = renderer.create(<Component componentId='123' />);
     expect(tree.toJSON()!.children).toEqual(['Hello, World!']);
   });
-
-  it('returns the wrapped registered component', () => {
-    const result = uut.registerComponent('example.MyComponent.name', () => MyComponent);
-    expect(result).toBeDefined();
-    expect(result).toBe(mockRegistry.mock.calls[0][1]());
-  });
 });
