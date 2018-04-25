@@ -9,7 +9,3 @@ export enum LayoutType {
   TopTabs = 'TopTabs',
   ExternalComponent = 'ExternalComponent'
 }
-
-export function isLayoutType(name: string): boolean {
-  return !!LayoutType[name];
-}

@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { OptionsProcessor } from './OptionsProcessor';
-import { LayoutType, isLayoutType } from './LayoutType';
+import { LayoutType } from './LayoutType';
 
 export interface Data {
   name?: string;
@@ -58,7 +58,7 @@ export class LayoutTreeCrawler {
   }
 
   _assertKnownLayoutType(type) {
-    if (!isLayoutType(type)) {
+    if (!LayoutType[type]) {
       throw new Error(`Unknown layout type ${type}`);
     }
   }
