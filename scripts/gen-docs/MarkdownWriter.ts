@@ -18,9 +18,8 @@ export class MarkdownWriter {
   }
 
   public writeMenu(classContexts: ClassContext[]) {
-    const menuMarkdown = this.menuFn({
-      classes: classContexts.map((c) => ({ name: c.name, path: `/api/${c.name}` }))
-    });
+    const files = classContexts.map((c) => ({ name: c.name, path: `/api/${c.name}` }));
+    const menuMarkdown = this.menuFn({ files });
     fs.writeFileSync(`${this.outputDir}/_sidebar.md`, menuMarkdown, { encoding: 'utf8' });
     fs.writeFileSync(`${this.outputDir}/README.md`, menuMarkdown, { encoding: 'utf8' });
   }
