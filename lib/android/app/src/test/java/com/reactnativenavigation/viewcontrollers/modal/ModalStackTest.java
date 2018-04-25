@@ -26,7 +26,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
-public class ModalStackTest2 extends BaseTest {
+public class ModalStackTest extends BaseTest {
     private static final String MODAL_ID_1 = "modalId1";
     private static final String MODAL_ID_2 = "modalId2";
     private static final String MODAL_ID_3 = "modalId3";
