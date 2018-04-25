@@ -24,4 +24,8 @@ export class EventsRegistry {
   public onNavigationCommand(callback: (name: string, params: any) => void): EventSubscription {
     return this.commandsObserver.register(callback);
   }
+
+  public onNavigationEvent(callback: (name: string, params: any) => void): EventSubscription {
+    return this.nativeEventsReceiver.registerOnNavigationEvent(({ name, params }) => callback(name, params));
+  }
 }

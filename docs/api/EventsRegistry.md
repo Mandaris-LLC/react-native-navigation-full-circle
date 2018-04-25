@@ -40,4 +40,12 @@
 
 ---
 
+## onNavigationEvent
+
+`onNavigationEvent(callback: function): EventSubscription`
+
+[source](https://github.com/wix/react-native-navigation/blob/v2/lib/src/events/EventsRegistry.ts#L28)
+
+---
+
 

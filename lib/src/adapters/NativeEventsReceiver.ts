@@ -22,4 +22,8 @@ export class NativeEventsReceiver {
   registerOnNavigationButtonPressed(callback: (params) => void): EventSubscription {
     return this.emitter.addListener('RNN.onNavigationButtonPressed', callback);
   }
+
+  public registerOnNavigationEvent(callback: (params) => void): EventSubscription {
+    return this.emitter.addListener('RNN.onNavigationEvent', callback);
+  }
 }

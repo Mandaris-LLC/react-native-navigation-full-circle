@@ -82,4 +82,26 @@ describe('EventsRegistry', () => {
     commandsObserver.notify('theCommandName', { x: 1 });
     expect(cb).not.toHaveBeenCalled();
   });
+
+  it('onNavigationEvent', () => {
+    const subscription = {};
+    const cb = jest.fn();
+    mockNativeEventsReceiver.registerOnNavigationEvent.mockReturnValueOnce(subscription);
+
+    const result = uut.onNavigationEvent(cb);
+
+    expect(result).toBe(subscription);
+    expect(mockNativeEventsReceiver.registerOnNavigationEvent).toHaveBeenCalledTimes(1);
+
+    mockNativeEventsReceiver.registerOnNavigationEvent.mock.calls[0][0]({ name: 'the event name', params: { a: 1 } });
+    expect(cb).toHaveBeenCalledWith('the event name', { a: 1 });
+  });
+
+  it('onNavigationEvent unregister', () => {
+    const subscription = {};
+    const cb = jest.fn();
+    mockNativeEventsReceiver.registerOnNavigationEvent.mockReturnValueOnce(subscription);
+    const result = uut.onNavigationEvent(cb);
+    expect(result).toBe(subscription);
+  });
 });
