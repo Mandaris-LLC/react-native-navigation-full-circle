@@ -32,7 +32,7 @@ describe('modal', () => {
     await expect(elementById(testIDs.WELCOME_SCREEN_HEADER)).toBeVisible();
   });
 
-  xit('dismiss unknown screen id', async () => {
+  it('dismiss unknown screen id', async () => {
     await elementById(testIDs.SHOW_MODAL_BUTTON).tap();
     await expect(elementByLabel('Modal Stack Position: 1')).toBeVisible();
     await elementById(testIDs.DISMISS_UNKNOWN_MODAL_BUTTON).tap();

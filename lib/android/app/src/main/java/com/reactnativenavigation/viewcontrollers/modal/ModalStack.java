@@ -29,9 +29,10 @@ public class ModalStack {
         presenter.showModal(viewController, toRemove, listener);
     }
 
-    public void dismissModal(String componentId, CommandListener listener) {
+    public void dismissModal(String componentId, Runnable onModalWilDismiss, CommandListener listener) {
         ViewController toDismiss = findModalByComponentId(componentId);
         if (toDismiss != null) {
+            onModalWilDismiss.run();
             ViewController toAdd = isTop(toDismiss) ? get(size() - 2) : null;
             modals.remove(toDismiss);
             presenter.dismissModal(toDismiss, toAdd, listener);
@@ -40,7 +41,7 @@ public class ModalStack {
         }
     }
 
-    public void dismissAllModals(CommandListener listener) {
+    public void dismissAllModals(CommandListener listener, Runnable onModalWilDismiss) {
         if (modals.isEmpty()) {
             listener.onError("Nothing to dismiss");
             return;
@@ -48,7 +49,7 @@ public class ModalStack {
 
         while (!modals.isEmpty()) {
             if (modals.size() == 1) {
-                dismissModal(modals.get(0).getId(), listener);
+                dismissModal(modals.get(0).getId(), onModalWilDismiss, listener);
             } else {
                 modals.get(0).destroy();
                 modals.remove(0);
@@ -61,8 +62,7 @@ public class ModalStack {
         if (peek().handleBack(listener)) {
             return true;
         }
-        onModalWillDismiss.run();
-        dismissModal(peek().getId(), listener);
+        dismissModal(peek().getId(), onModalWillDismiss, listener);
         return true;
     }
 

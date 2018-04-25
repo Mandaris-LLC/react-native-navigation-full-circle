@@ -72,7 +72,7 @@ public class Navigator extends ParentController {
 
     @Override
     public void destroy() {
-        modalStack.dismissAllModals(new CommandListenerAdapter());
+        modalStack.dismissAllModals(new CommandListenerAdapter(), () -> {});
         super.destroy();
     }
 
@@ -124,7 +124,11 @@ public class Navigator extends ParentController {
         if (from != null) {
             from.performOnParentStack(stack -> ((StackController) stack).push(viewController, listener));
         } else {
-            listener.onError("Could not push component: " + viewController.getId() + ". Stack with id " + fromId + " was not found.");
+            listener.onError("Could not push component: " +
+                             viewController.getId() +
+                             ". Stack with id " +
+                             fromId +
+                             " was not found.");
         }
     }
 
@@ -183,13 +187,18 @@ public class Navigator extends ParentController {
     }
 
     public void dismissModal(final String componentId, CommandListener listener) {
-        if (modalStack.size() == 1) contentLayout.addView(root.getView());
-        modalStack.dismissModal(componentId, listener);
+        modalStack.dismissModal(componentId,
+                () -> {
+                    if (modalStack.size() == 1) contentLayout.addView(root.getView());
+                },
+                listener
+        );
     }
 
     public void dismissAllModals(CommandListener listener) {
-        if (!modalStack.isEmpty()) contentLayout.addView(root.getView(), 0);
-        modalStack.dismissAllModals(listener);
+        modalStack.dismissAllModals(listener, () -> {
+            if (!modalStack.isEmpty()) contentLayout.addView(root.getView(), 0);
+        });
     }
 
     public void showOverlay(ViewController overlay) {
