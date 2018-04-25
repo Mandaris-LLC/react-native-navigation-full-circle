@@ -17,5 +17,5 @@ function run() {
   if (!skipBuild) {
     exec.execSync(`detox build --configuration ${configuration}`);
   }
-  exec.execSync(`detox test --configuration ${configuration} --platform ${platform} ${cleanup} --loglevel verbose`);
+  exec.execSync(`detox test --configuration ${configuration} --platform ${platform} ${cleanup}`);
 }
