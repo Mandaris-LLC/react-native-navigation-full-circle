@@ -183,18 +183,8 @@ public class Navigator extends ParentController {
     }
 
     public void dismissModal(final String componentId, CommandListener listener) {
-        modalStack.dismissModal(componentId, new CommandListener() {
-            @Override
-            public void onSuccess(String childId) {
-                if (modalStack.size() == 0) contentLayout.addView(root.getView());
-                listener.onSuccess(childId);
-            }
-
-            @Override
-            public void onError(String message) {
-                listener.onError(message);
-            }
-        });
+        if (modalStack.size() == 1) contentLayout.addView(root.getView());
+        modalStack.dismissModal(componentId, listener);
     }
 
     public void dismissAllModals(CommandListener listener) {
