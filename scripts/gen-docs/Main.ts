@@ -3,6 +3,7 @@ import { ReflectionsReader } from './ReflectionsReader';
 import { ClassParser } from './ClassParser';
 import { MarkdownWriter } from './MarkdownWriter';
 import { ReflectionKind } from 'typedoc';
+import { EnumParser } from './EnumParser';
 
 const INPUT_DIR = `${__dirname}/../../lib/src`;
 const OUTPUT_DIR = `${__dirname}/../../docs/api`;
@@ -16,9 +17,11 @@ class Main {
     const markdownWriter = new MarkdownWriter(TEMPLATES_DIR, OUTPUT_DIR);
     const reflections = new ReflectionsReader(TSCONFIG_PATH).read(INPUT_DIR);
 
-    const parsedClasses = reflections.classReflections.map((c) => classParser.parseClass(c));
+    const parsedClasses = classParser.parseClasses(reflections.classReflections);
+    const parsedEnums = new EnumParser().parse(reflections.enumReflections);
     markdownWriter.writeClasses(parsedClasses);
-    markdownWriter.writeMenu(parsedClasses);
+    markdownWriter.writeEnums(parsedEnums);
+    markdownWriter.writeMenu(parsedClasses, parsedEnums);
   }
 }
 

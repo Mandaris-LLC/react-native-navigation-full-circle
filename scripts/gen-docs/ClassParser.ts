@@ -28,11 +28,15 @@ export interface ClassContext {
 export class ClassParser {
   constructor(private sourceLinkPrefix: string) { }
 
-  public parseClass(reflection: Typedoc.DeclarationReflection): ClassContext {
+  public parseClasses(classReflections: Typedoc.DeclarationReflection[]): ClassContext[] {
+    return classReflections.map((r) => this.parseClass(r));
+  }
+
+  private parseClass(classReflection: Typedoc.DeclarationReflection): ClassContext {
     return {
-      name: reflection.name,
-      properties: this.parseProperties(reflection),
-      methods: this.parseMethods(reflection)
+      name: classReflection.name,
+      properties: this.parseProperties(classReflection),
+      methods: this.parseMethods(classReflection)
     };
   }
 

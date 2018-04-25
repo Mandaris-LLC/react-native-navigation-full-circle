@@ -13,6 +13,7 @@ const OPTIONS = {
 
 export interface Reflections {
   classReflections: DeclarationReflection[];
+  enumReflections: DeclarationReflection[];
 }
 
 export class ReflectionsReader {
@@ -30,10 +31,12 @@ export class ReflectionsReader {
     // console.log(JSON.stringify(this.typedocApp.serializer.projectToObject(projectReflection)));
 
     const externalModules = this.externalModulesWithoutTestsAndMocks(projectReflection);
-    const classReflections = this.classReflections(externalModules);
+    const classReflections = this.reflections(externalModules, ReflectionKind.Class);
+    const enumReflections = this.reflections(externalModules, ReflectionKind.Enum);
 
     return {
-      classReflections
+      classReflections,
+      enumReflections
     };
   }
 
@@ -42,8 +45,8 @@ export class ReflectionsReader {
       .filter((m) => !m.name.endsWith('.mock"') && !m.name.endsWith('.test"'));
   }
 
-  private classReflections(externalModules: DeclarationReflection[]): DeclarationReflection[] {
-    return externalModules.filter((m) => m.getChildrenByKind(ReflectionKind.Class).length === 1)
-      .map((m) => m.getChildrenByKind(ReflectionKind.Class)[0]);
+  private reflections(externalModules: DeclarationReflection[], kind: ReflectionKind): DeclarationReflection[] {
+    return externalModules.filter((m) => m.getChildrenByKind(kind).length === 1)
+      .map((m) => m.getChildrenByKind(kind)[0]);
   }
 }
