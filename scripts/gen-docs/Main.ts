@@ -14,16 +14,9 @@ class Main {
   public run() {
     const classParser = new ClassParser(SOURCE_LINK_PREFIX);
     const markdownWriter = new MarkdownWriter(TEMPLATES_DIR, OUTPUT_DIR);
-    const projectReflections = new ReflectionsReader(TSCONFIG_PATH).read(INPUT_DIR);
+    const reflections = new ReflectionsReader(TSCONFIG_PATH).read(INPUT_DIR);
 
-    const externalModules = projectReflections.getChildrenByKind(ReflectionKind.ExternalModule)
-      .filter((m) => !m.name.endsWith('.mock"') && !m.name.endsWith('.test"'));
-
-    const classReflections = externalModules.filter((m) => m.getChildrenByKind(ReflectionKind.Class).length === 1)
-      .map((m) => m.getChildrenByKind(ReflectionKind.Class)[0]);
-    // just class modules, TODO: extract interfaces and types to their own modules, generate docs for interfaces and types
-
-    const parsedClasses = classReflections.map((c) => classParser.parseClass(c));
+    const parsedClasses = reflections.classReflections.map((c) => classParser.parseClass(c));
     markdownWriter.writeClasses(parsedClasses);
     markdownWriter.writeMenu(parsedClasses);
   }
