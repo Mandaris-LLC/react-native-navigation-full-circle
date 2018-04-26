@@ -121,7 +121,7 @@ public class ModalPresenterTest extends BaseTest {
     }
 
     @Test
-    public void dismissModal_previousModalIsAddedAtIndex0() {
+    public void dismissModal_previousViewIsAddedAtIndex0() {
         FrameLayout spy = spy(new FrameLayout(newActivity()));
         uut.setContentLayout(spy);
         uut.dismissModal(modal1, modal2, new CommandListenerAdapter());
