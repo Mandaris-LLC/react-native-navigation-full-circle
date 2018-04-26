@@ -172,18 +172,7 @@ public class Navigator extends ParentController {
     }
 
     public void showModal(final ViewController viewController, CommandListener listener) {
-        modalStack.showModal(viewController, new CommandListenerAdapter() {
-            @Override
-            public void onSuccess(String childId) {
-                contentLayout.removeView(root.getView());
-                listener.onSuccess(childId);
-            }
-
-            @Override
-            public void onError(String message) {
-                listener.onError(message);
-            }
-        });
+        modalStack.showModal(viewController, root, listener);
     }
 
     public void dismissModal(final String componentId, CommandListener listener) {

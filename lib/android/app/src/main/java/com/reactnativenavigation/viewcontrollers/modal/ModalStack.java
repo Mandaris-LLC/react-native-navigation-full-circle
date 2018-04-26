@@ -23,8 +23,8 @@ public class ModalStack {
         presenter.setContentLayout(contentLayout);
     }
 
-    public void showModal(ViewController viewController, CommandListener listener) {
-        ViewController toRemove = isEmpty() ? null : peek();
+    public void showModal(ViewController viewController, ViewController root, CommandListener listener) {
+        ViewController toRemove = isEmpty() ? root : peek();
         modals.add(viewController);
         presenter.showModal(viewController, toRemove, listener);
     }

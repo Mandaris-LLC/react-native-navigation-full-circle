@@ -426,6 +426,7 @@ public class NavigatorTest extends BaseTest {
 
         uut.dismissModal(child1.getId(), new CommandListenerAdapter());
         assertThat(parentController.getView().getParent()).isNotNull();
+        verify(parentController, times(2)).onViewAppeared();
     }
 
     @Test

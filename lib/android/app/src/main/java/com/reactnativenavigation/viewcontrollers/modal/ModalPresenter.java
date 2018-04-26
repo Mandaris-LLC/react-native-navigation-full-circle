@@ -3,6 +3,7 @@ package com.reactnativenavigation.viewcontrollers.modal;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 
 import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.viewcontrollers.Navigator.CommandListener;
@@ -23,22 +24,22 @@ public class ModalPresenter {
         this.content = contentLayout;
     }
 
-    public void showModal(ViewController toAdd, @Nullable ViewController toRemove, CommandListener listener) {
+    public void showModal(ViewController toAdd, ViewController toRemove, CommandListener listener) {
         content.addView(toAdd.getView());
         if (toAdd.options.animations.showModal.enable.isTrueOrUndefined()) {
             animator.show(toAdd.getView(), toAdd.options.animations.showModal, new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    onShowModalEnd(toRemove, listener, toAdd);
+                    onShowModalEnd(toAdd, toRemove, listener);
                 }
             });
         } else {
-            onShowModalEnd(toRemove, listener, toAdd);
+            onShowModalEnd(toAdd, toRemove, listener);
         }
     }
 
-    private void onShowModalEnd(@Nullable ViewController toRemove, CommandListener listener, ViewController toAdd) {
-        if (toRemove != null) content.removeView(toRemove.getView());
+    private void onShowModalEnd(ViewController toAdd, ViewController toRemove, CommandListener listener) {
+        ((ViewManager) toRemove.getView().getParent()).removeView(toRemove.getView());
         listener.onSuccess(toAdd.getId());
     }
 
