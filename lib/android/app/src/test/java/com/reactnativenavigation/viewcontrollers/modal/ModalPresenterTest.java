@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.mocks.SimpleViewController;
+import com.reactnativenavigation.parse.ModalPresentationStyle;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.viewcontrollers.Navigator.CommandListener;
@@ -122,6 +123,7 @@ public class ModalPresenterTest extends BaseTest {
 
     @Test
     public void dismissModal_previousViewIsAddedAtIndex0() {
+        modal2.ensureViewIsCreated();
         FrameLayout spy = spy(new FrameLayout(newActivity()));
         uut.setContentLayout(spy);
         uut.dismissModal(modal1, modal2, new CommandListenerAdapter());
@@ -149,5 +151,15 @@ public class ModalPresenterTest extends BaseTest {
         assertThat(modal1.getView().getParent()).isNull();
         uut.dismissModal(modal2, modal1, new CommandListenerAdapter());
         verify(modal1, times(2)).onViewAppeared();
+    }
+
+    @Test
+    public void dismissModal_previousViewIsNotDetachedIfOverCurrentContext() {
+        modal1.options.modal.presentationStyle = ModalPresentationStyle.OverCurrentContext;
+        disableShowModalAnimation(modal1, modal2);
+
+        uut.showModal(modal1, rootController, new CommandListenerAdapter());
+        assertThat(rootController.getView().getParent()).isNotNull();
+        verify(rootController, times(0)).onViewDisappear();
     }
 }
