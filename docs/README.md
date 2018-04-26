@@ -119,7 +119,7 @@ v2 is written in Test Driven Development. We have a test for every feature inclu
 | icon          |   ✅     |✅|
 | disableTint        |    ✅       |✅|
 | fontSize        |    ✅       |✅|
-| fontWeight        |    ✅       |    [Contribute](/docs/WorkingLocally.md)   |
+| fontWeight        |    ✅       |    /iOS Specific   |
 
 |       statusBar        | iOS  | Android |
 |--------------------|:----:|:-----:|
