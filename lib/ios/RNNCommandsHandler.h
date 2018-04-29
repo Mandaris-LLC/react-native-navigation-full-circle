@@ -6,7 +6,7 @@
 
 @interface RNNCommandsHandler : NSObject
 
--(instancetype) initWithStore:(RNNStore*)store controllerFactory:(RNNControllerFactory*)controllerFactory;
+-(instancetype) initWithStore:(RNNStore*)store controllerFactory:(RNNControllerFactory*)controllerFactory eventEmitter:(RNNEventEmitter*)eventEmitter;
 
 -(void) setRoot:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion;
 
