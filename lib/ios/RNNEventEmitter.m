@@ -15,7 +15,7 @@ static NSString* const onNavigationCommand	= @"RNN.onNavigationCommand";
 static NSString* const onNavigationEvent	= @"RNN.onNavigationEvent";
 
 -(NSArray<NSString *> *)supportedEvents {
-	return @[onAppLaunched, componentDidAppear, componentDidDisappear, onNavigationButtonPressed];
+	return @[onAppLaunched, componentDidAppear, componentDidDisappear, onNavigationButtonPressed, onNavigationCommand, onNavigationEvent];
 }
 
 # pragma mark public
