@@ -90,5 +90,4 @@ describe('screen stack', () => {
     await elementById(testIDs.POP_BUTTON).tap();
     await expect(elementByLabel('Stack Position: 2')).toBeVisible();
   });
-  
 });
