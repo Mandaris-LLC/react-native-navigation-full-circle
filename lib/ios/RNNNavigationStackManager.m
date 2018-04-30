@@ -106,6 +106,11 @@ dispatch_queue_t RCTGetUIManagerQueue(void);
 -(void)setRoot:(UIViewController<RNNRootViewProtocol> *)newRoot fromComponent:(NSString *)componentId completion:(RNNTransitionCompletionBlock)completion {
 	UIViewController* vc = [_store findComponentForId:componentId];
 	UINavigationController* nvc = [vc navigationController];
+	
+	if (!nvc) {
+		@throw [NSException exceptionWithName:@"StackNotFound" reason:@"Missing stack, setRoot should contain stack layout" userInfo:nil];
+	}
+	
 	[CATransaction begin];
 	[CATransaction setCompletionBlock:^{
 		if (completion) {

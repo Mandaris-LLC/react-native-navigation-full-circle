@@ -79,7 +79,20 @@
 
 }
 
+- (void)testStackRoot_navigationControllerNilShouldThrow {
+	[self.nvc setViewControllers:@[self.vc1]];
+	self.nvc.willReturnVCs = @[self.vc1];
+	
+	XCTAssertThrowsSpecificNamed([self.uut setRoot:self.vc2 fromComponent:nil completion:nil], NSException, @"StackNotFound");
+}
 
-
+- (void)testStackRoot_shouldUpdateNavigationControllerChildrenViewControllers {
+	self.nvc.willReturnVCs = @[self.vc1, self.vc2, self.vc3];
+	
+	[self.uut setRoot:self.vc2 fromComponent:@"vc1" completion:nil];
+	
+	XCTAssertEqual(self.nvc.viewControllers.lastObject, self.vc2);
+	XCTAssertEqual(self.nvc.viewControllers.count, 1);
+}
 
 @end
