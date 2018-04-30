@@ -78,26 +78,26 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 	[_controllerFactory setDefaultOptionsDict:optionsDict];
 }
 
--(void)push:(NSString*)componentId layout:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion {
+-(void)push:(NSString*)componentId layout:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion rejection:(RCTPromiseRejectBlock)rejection {
 	[self assertReady];
 	[_eventEmitter sendOnNavigationComment:push params:@{@"componentId": componentId}];
 	UIViewController<RNNRootViewProtocol> *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
 	[_navigationStackManager push:newVc onTop:componentId completion:^{
 		completion();
-	}];
+	} rejection:rejection];
 }
 
--(void)setStackRoot:(NSString*)componentId layout:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion {
+-(void)setStackRoot:(NSString*)componentId layout:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion rejection:(RCTPromiseRejectBlock)rejection {
 	[self assertReady];
 	[_eventEmitter sendOnNavigationComment:setStackRoot params:@{@"componentId": componentId}];
 
 	UIViewController<RNNRootViewProtocol> *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
-	[_navigationStackManager setRoot:newVc fromComponent:componentId completion:^{
+	[_navigationStackManager setStackRoot:newVc fromComponent:componentId completion:^{
 		completion();
-	}];
+	} rejection:rejection];
 }
 
--(void)pop:(NSString*)componentId options:(NSDictionary*)options completion:(RNNTransitionCompletionBlock)completion {
+-(void)pop:(NSString*)componentId options:(NSDictionary*)options completion:(RNNTransitionCompletionBlock)completion rejection:(RCTPromiseRejectBlock)rejection {
 	[self assertReady];
 	[_eventEmitter sendOnNavigationComment:pop params:@{@"componentId": componentId}];
 	[CATransaction begin];
@@ -109,14 +109,14 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 	RNNAnimationOptions* transitionOptions = [[RNNAnimationOptions alloc] initWithDict:animationData];
 	
 	if (transitionOptions.animations){
-		[_navigationStackManager pop:componentId withTransitionOptions:transitionOptions];
+		[_navigationStackManager pop:componentId withTransitionOptions:transitionOptions rejection:rejection];
 	} else {
-		[_navigationStackManager pop:componentId withTransitionOptions:nil];
+		[_navigationStackManager pop:componentId withTransitionOptions:nil rejection:rejection];
 	}
 	[CATransaction commit];
 }
 
--(void) popTo:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
+-(void) popTo:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion rejection:(RCTPromiseRejectBlock)rejection {
 	[self assertReady];
 	[_eventEmitter sendOnNavigationComment:popTo params:@{@"componentId": componentId}];
 	[CATransaction begin];
@@ -124,12 +124,12 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 		completion();
 	}];
 	
-	[_navigationStackManager popTo:componentId];
+	[_navigationStackManager popTo:componentId rejection:rejection];
 	
 	[CATransaction commit];
 }
 
--(void) popToRoot:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
+-(void) popToRoot:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion rejection:(RCTPromiseRejectBlock)rejection {
 	[self assertReady];
 	[_eventEmitter sendOnNavigationComment:popToRoot params:@{@"componentId": componentId}];
 	[CATransaction begin];
@@ -137,7 +137,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 		completion();
 	}];
 	
-	[_navigationStackManager popToRoot:componentId];
+	[_navigationStackManager popToRoot:componentId rejection:rejection];
 	
 	[CATransaction commit];
 }
@@ -166,7 +166,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 
 -(void) dismissAllModalsWithCompletion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
-	[_eventEmitter sendOnNavigationComment:dismissAllModals params:nil];
+	[_eventEmitter sendOnNavigationComment:dismissAllModals params:@{}];
 	[CATransaction begin];
 	[CATransaction setCompletionBlock:^{
 		completion();
