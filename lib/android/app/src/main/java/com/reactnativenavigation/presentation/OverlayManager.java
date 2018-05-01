@@ -1,6 +1,5 @@
 package com.reactnativenavigation.presentation;
 
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.reactnativenavigation.viewcontrollers.ViewController;
@@ -8,15 +7,21 @@ import com.reactnativenavigation.viewcontrollers.ViewController;
 import java.util.HashMap;
 
 public class OverlayManager {
-    private final HashMap<String, View> overlayRegistry = new HashMap<>();
+    private final HashMap<String, ViewController> overlayRegistry = new HashMap<>();
 
     public void show(ViewGroup root, ViewController overlay) {
-        View view = overlay.getView();
-        overlayRegistry.put(overlay.getId(), view);
-        root.addView(view);
+        overlayRegistry.put(overlay.getId(), overlay);
+        root.addView(overlay.getView());
     }
 
     public void dismiss(ViewGroup root, String componentId) {
-        root.removeView(overlayRegistry.get(componentId));
+        root.removeView(overlayRegistry.get(componentId).getView());
+    }
+
+    public void destroy() {
+        for (ViewController view : overlayRegistry.values()) {
+            view.destroy();
+        }
+        overlayRegistry.clear();
     }
 }
