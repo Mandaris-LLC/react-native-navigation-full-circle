@@ -23,7 +23,6 @@ class TextScreen extends Component {
   constructor(props) {
     super(props);
     globalFirstComponentID = (props.text === 'This is tab 1') ? props.componentId : globalFirstComponentID;
-    this.onClickPop = this.onClickPop.bind(this);
   }
 
   render() {
@@ -44,7 +43,7 @@ class TextScreen extends Component {
     );
   }
 
-  async onClickPop() {
+  onClickPop = async () => {
     await Navigation.pop(this.props.componentId);
   }
 
