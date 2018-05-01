@@ -12,63 +12,63 @@ import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.viewcontrollers.Navigator;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
-	protected Navigator navigator;
-
-	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		navigator = new Navigator(this, new OverlayManager());
-		getReactGateway().onActivityCreated(this);
-		getReactGateway().addReloadListener(navigator);
-		setContentView(navigator.getView());
-	}
+    protected Navigator navigator;
 
     @Override
-	protected void onResume() {
-		super.onResume();
-		getReactGateway().onActivityResumed(this);
-	}
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        navigator = new Navigator(this, new OverlayManager());
+        getReactGateway().onActivityCreated(this);
+        getReactGateway().addReloadListener(navigator);
+        setContentView(navigator.getView());
+    }
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		getReactGateway().onActivityPaused(this);
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getReactGateway().onActivityResumed(this);
+    }
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		navigator.destroy();
-		getReactGateway().removeReloadListener(navigator);
-		getReactGateway().onActivityDestroyed(this);
-	}
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getReactGateway().onActivityPaused(this);
+    }
 
-	@Override
-	public void invokeDefaultOnBackPressed() {
-		if (!navigator.handleBack(new CommandListenerAdapter())) {
-			super.onBackPressed();
-		}
-	}
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        navigator.destroy();
+        getReactGateway().removeReloadListener(navigator);
+        getReactGateway().onActivityDestroyed(this);
+    }
 
-	@Override
-	public void onBackPressed() {
-		getReactGateway().onBackPressed();
-	}
+    @Override
+    public void invokeDefaultOnBackPressed() {
+        if (!navigator.handleBack(new CommandListenerAdapter())) {
+            super.onBackPressed();
+        }
+    }
 
-	@Override
-	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
-		return getReactGateway().onKeyUp(keyCode) || super.onKeyUp(keyCode, event);
-	}
+    @Override
+    public void onBackPressed() {
+        getReactGateway().onBackPressed();
+    }
+
+    @Override
+    public boolean onKeyUp(final int keyCode, final KeyEvent event) {
+        return getReactGateway().onKeyUp(keyCode) || super.onKeyUp(keyCode, event);
+    }
 
     public ReactGateway getReactGateway() {
         return app().getReactGateway();
     }
 
-	private NavigationApplication app() {
-		return (NavigationApplication) getApplication();
-	}
+    private NavigationApplication app() {
+        return (NavigationApplication) getApplication();
+    }
 
     public Navigator getNavigator() {
-		return navigator;
-	}
+        return navigator;
+    }
 }
