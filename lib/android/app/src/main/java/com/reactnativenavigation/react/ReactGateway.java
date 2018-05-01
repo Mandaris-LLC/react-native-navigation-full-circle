@@ -6,7 +6,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationActivity;
-import com.reactnativenavigation.NavigationApplication;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class ReactGateway {
 		this(application, isDebug, new NavigationReactNativeHost(application, isDebug, additionalReactPackages));
 	}
 
-	public ReactGateway(final Application application, final boolean isDebug, final ReactNativeHost reactNativeHost) {
+	private ReactGateway(final Application application, final boolean isDebug, final ReactNativeHost reactNativeHost) {
 		SoLoader.init(application, false);
 		this.reactNativeHost = reactNativeHost;
 		initializer = new NavigationReactInitializer(reactNativeHost.getReactInstanceManager(), isDebug);
@@ -48,6 +47,14 @@ public class ReactGateway {
 	public void onActivityDestroyed(NavigationActivity activity) {
 		initializer.onActivityDestroyed(activity);
 	}
+
+    public void addReloadListener(JsDevReloadHandler.ReloadListener reloadListener) {
+	    jsDevReloadHandler.addReloadListener(reloadListener);
+    }
+
+    public void removeReloadListener(JsDevReloadHandler.ReloadListener reloadListener) {
+	    jsDevReloadHandler.removeReloadListener(reloadListener);
+    }
 
 	public boolean onKeyUp(final int keyCode) {
 		return jsDevReloadHandler.onKeyUp(keyCode);
