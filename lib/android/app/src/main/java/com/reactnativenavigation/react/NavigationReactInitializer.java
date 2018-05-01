@@ -46,13 +46,13 @@ public class NavigationReactInitializer implements ReactInstanceManager.ReactIns
 		if (shouldCreateContext()) {
 			reactInstanceManager.createReactContextInBackground();
 		} else if (waitingForAppLaunchEvent) {
-			emitAppLaunched();
+			emitAppLaunched(reactInstanceManager.getCurrentReactContext());
 		}
 	}
 
-	private void emitAppLaunched() {
+	private void emitAppLaunched(ReactContext context) {
 		waitingForAppLaunchEvent = false;
-		new NavigationEvent(reactInstanceManager.getCurrentReactContext()).appLaunched();
+		new NavigationEvent(context).appLaunched();
 	}
 
 	private boolean shouldCreateContext() {
@@ -61,6 +61,6 @@ public class NavigationReactInitializer implements ReactInstanceManager.ReactIns
 
 	@Override
 	public void onReactContextInitialized(final ReactContext context) {
-		emitAppLaunched();
+        emitAppLaunched(context);
 	}
 }
