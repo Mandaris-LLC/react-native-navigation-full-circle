@@ -6,37 +6,41 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
+import com.reactnativenavigation.presentation.OverlayManager;
+import com.reactnativenavigation.react.ReactGateway;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.viewcontrollers.Navigator;
 
 public class NavigationActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
-	private Navigator navigator;
+	protected Navigator navigator;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app().getReactGateway().onActivityCreated(this);
-		navigator = new Navigator(this);
+		navigator = new Navigator(this, new OverlayManager());
+		getReactGateway().onActivityCreated(this);
+		getReactGateway().addReloadListener(navigator);
 		setContentView(navigator.getView());
 	}
 
-	@Override
+    @Override
 	protected void onResume() {
 		super.onResume();
-		app().getReactGateway().onActivityResumed(this);
+		getReactGateway().onActivityResumed(this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		app().getReactGateway().onActivityPaused(this);
+		getReactGateway().onActivityPaused(this);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		navigator.destroy();
-		app().getReactGateway().onActivityDestroyed(this);
+		getReactGateway().removeReloadListener(navigator);
+		getReactGateway().onActivityDestroyed(this);
 	}
 
 	@Override
@@ -48,19 +52,23 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
 
 	@Override
 	public void onBackPressed() {
-		app().getReactGateway().onBackPressed();
+		getReactGateway().onBackPressed();
 	}
 
 	@Override
 	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
-		return app().getReactGateway().onKeyUp(keyCode) || super.onKeyUp(keyCode, event);
+		return getReactGateway().onKeyUp(keyCode) || super.onKeyUp(keyCode, event);
 	}
+
+    public ReactGateway getReactGateway() {
+        return app().getReactGateway();
+    }
 
 	private NavigationApplication app() {
 		return (NavigationApplication) getApplication();
 	}
 
-	public Navigator getNavigator() {
+    public Navigator getNavigator() {
 		return navigator;
 	}
 }

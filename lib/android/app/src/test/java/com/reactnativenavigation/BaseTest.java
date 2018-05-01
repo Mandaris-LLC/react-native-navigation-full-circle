@@ -11,6 +11,7 @@ import com.reactnativenavigation.viewcontrollers.ViewController;
 import org.junit.*;
 import org.junit.runner.*;
 import org.robolectric.*;
+import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.*;
 
 import static org.assertj.core.api.Java6Assertions.*;
@@ -30,6 +31,10 @@ public abstract class BaseTest {
 
     public Activity newActivity() {
         return Robolectric.setupActivity(AppCompatActivity.class);
+    }
+
+    public <T extends AppCompatActivity> ActivityController<T> newActivityController(Class<T> clazz) {
+        return Robolectric.buildActivity(clazz);
     }
 
     public void assertIsChild(ViewGroup parent, View child) {

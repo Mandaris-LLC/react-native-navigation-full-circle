@@ -1,9 +1,9 @@
 package com.reactnativenavigation.viewcontrollers;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.TestActivity;
 import com.reactnativenavigation.mocks.ImageLoaderMock;
 import com.reactnativenavigation.mocks.MockPromise;
 import com.reactnativenavigation.mocks.SimpleComponentViewController;
@@ -14,6 +14,7 @@ import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.presentation.OverlayManager;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.utils.ImageLoader;
@@ -23,6 +24,8 @@ import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewCont
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.robolectric.android.controller.ActivityController;
 
 import java.util.Arrays;
 
@@ -36,7 +39,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class NavigatorTest extends BaseTest {
-    private Activity activity;
+    private TestActivity activity;
     private Navigator uut;
     private StackController parentController;
     private SimpleViewController child1;
@@ -46,13 +49,19 @@ public class NavigatorTest extends BaseTest {
     private ViewController child5;
     private Options tabOptions = OptionHelper.createBottomTabOptions();
     private ImageLoader imageLoaderMock;
+    private ActivityController<TestActivity> activityController;
+    private OverlayManager overlayManager;
 
     @Override
     public void beforeEach() {
         super.beforeEach();
+        overlayManager = Mockito.mock(OverlayManager.class);
         imageLoaderMock = ImageLoaderMock.mock();
-        activity = newActivity();
-        uut = new Navigator(activity);
+        activityController = newActivityController(TestActivity.class);
+        activity = activityController.create().get();
+        uut = new Navigator(activity, overlayManager);
+        activity.setNavigator(uut);
+
         parentController = spy(newStack());
         parentController.ensureViewIsCreated();
         child1 = new SimpleViewController(activity, "child1", tabOptions);
@@ -61,6 +70,8 @@ public class NavigatorTest extends BaseTest {
         child4 = new SimpleViewController(activity, "child4", tabOptions);
         child5 = new SimpleViewController(activity, "child5", tabOptions);
         activity.setContentView(uut.getView());
+
+        activityController.visible();
     }
 
     @Test
@@ -80,7 +91,7 @@ public class NavigatorTest extends BaseTest {
     @Test
     public void hasUniqueId() {
         assertThat(uut.getId()).startsWith("navigator");
-        assertThat(new Navigator(activity).getId()).isNotEqualTo(uut.getId());
+        assertThat(new Navigator(activity, overlayManager).getId()).isNotEqualTo(uut.getId());
     }
 
     @Test
@@ -447,4 +458,26 @@ public class NavigatorTest extends BaseTest {
         });
     }
 
+    @Test
+    public void destroy_destroyedRoot() {
+        parentController.options.animations.startApp.enable = new Bool(false);
+        uut.setRoot(parentController, new MockPromise());
+        activityController.destroy();
+        verify(parentController, times(1)).destroy();
+    }
+
+    @Test
+    public void destroy_destroyOverlayManager() {
+        uut.setRoot(parentController, new MockPromise());
+        activityController.destroy();
+        verify(overlayManager, times(1)).destroy();
+    }
+
+    @Test
+    public void reload_navigatorIsDestroyedOnReload() {
+        uut.setRoot(parentController, new MockPromise());
+        uut.onReload();
+        verify(parentController, times(1)).destroy();
+        verify(overlayManager, times(1)).destroy();
+    }
 }

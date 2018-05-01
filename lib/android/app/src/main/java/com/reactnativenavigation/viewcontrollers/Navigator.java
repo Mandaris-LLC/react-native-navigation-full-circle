@@ -14,6 +14,7 @@ import com.reactnativenavigation.anim.NavigationAnimator;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.presentation.NavigationOptionsListener;
 import com.reactnativenavigation.presentation.OverlayManager;
+import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.viewcontrollers.modal.ModalPresenter;
@@ -22,7 +23,7 @@ import com.reactnativenavigation.viewcontrollers.modal.ModalStack;
 import java.util.Collection;
 import java.util.Collections;
 
-public class Navigator extends ParentController {
+public class Navigator extends ParentController implements JsDevReloadHandler.ReloadListener {
 
     public interface CommandListener {
         void onSuccess(String childId);
@@ -34,12 +35,13 @@ public class Navigator extends ParentController {
     private ViewController root;
     private FrameLayout rootLayout;
     private FrameLayout contentLayout;
-    private OverlayManager overlayManager = new OverlayManager();
+    private final OverlayManager overlayManager;
     private Options defaultOptions = new Options();
 
-    public Navigator(final Activity activity) {
+    public Navigator(final Activity activity, OverlayManager overlayManager) {
         super(activity, "navigator" + CompatUtils.generateViewId(), new Options());
         modalStack = new ModalStack(new ModalPresenter(new ModalAnimator(activity)));
+        this.overlayManager = overlayManager;
     }
 
     public FrameLayout getContentLayout() {
@@ -69,9 +71,25 @@ public class Navigator extends ParentController {
     }
 
     @Override
+    public void onReload() {
+        destroyViews();
+    }
+
+    @Override
     public void destroy() {
-        modalStack.dismissAllModals(new CommandListenerAdapter(), root);
+        destroyViews();
         super.destroy();
+    }
+
+    private void destroyViews() {
+        destroyRoot();
+        overlayManager.destroy();
+        modalStack.dismissAllModals(new CommandListenerAdapter(), root);
+    }
+
+    private void destroyRoot() {
+        if (root != null) root.destroy();
+        root = null;
     }
 
     @Override
@@ -80,10 +98,7 @@ public class Navigator extends ParentController {
     }
 
     public void setRoot(final ViewController viewController, Promise promise) {
-        if (root != null) {
-            root.destroy();
-        }
-
+        destroyRoot();
         root = viewController;
         contentLayout.addView(viewController.getView());
         if (viewController.options.animations.startApp.hasValue()) {
