@@ -159,6 +159,4 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
             }
         });
     }
-
-
 }
