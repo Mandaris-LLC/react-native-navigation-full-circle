@@ -10,6 +10,10 @@ import android.view.KeyEvent;
 import com.facebook.react.ReactInstanceManager;
 
 public class JsDevReloadHandler {
+    public interface ReloadListener {
+        void onReload();
+    }
+
 	private static final String RELOAD_BROADCAST = "com.reactnativenavigation.broadcast.RELOAD";
 	private final BroadcastReceiver reloadReceiver = new BroadcastReceiver() {
 		@Override
@@ -19,10 +23,21 @@ public class JsDevReloadHandler {
 	};
 	private final ReactInstanceManager reactInstanceManager;
 	private long firstRTimestamp = 0;
+    private ReloadListener reloadListener;
 
-	public JsDevReloadHandler(final ReactInstanceManager reactInstanceManager) {
+    JsDevReloadHandler(final ReactInstanceManager reactInstanceManager) {
 		this.reactInstanceManager = reactInstanceManager;
 	}
+
+    public void addReloadListener(ReloadListener listener) {
+        reloadListener = listener;
+    }
+
+    public void removeReloadListener(ReloadListener listener) {
+        if (reloadListener == listener) {
+            reloadListener = null;
+        }
+    }
 
 	public void onActivityResumed(Activity activity) {
 		activity.registerReceiver(reloadReceiver, new IntentFilter(RELOAD_BROADCAST));
@@ -57,6 +72,7 @@ public class JsDevReloadHandler {
 	}
 
 	private void reloadReactNative() {
+        reloadListener.onReload();
 		reactInstanceManager.getDevSupportManager().handleReloadJS();
 	}
 }
