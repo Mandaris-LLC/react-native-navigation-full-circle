@@ -1,9 +1,10 @@
 import * as _ from 'lodash';
 import { CommandsObserver } from '../events/CommandsObserver';
+import { NativeCommandsSender } from '../adapters/NativeCommandsSender';
 
 export class Commands {
   constructor(
-    private readonly nativeCommandsSender,
+    private readonly nativeCommandsSender: NativeCommandsSender,
     private readonly layoutTreeParser,
     private readonly layoutTreeCrawler,
     private readonly commandsObserver: CommandsObserver) {
