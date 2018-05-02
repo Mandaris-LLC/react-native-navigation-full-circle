@@ -274,7 +274,6 @@
     
     [self setRotation:props];
     
-    [viewControllers addObject:viewController];
   }
   
   // replace the tabs
