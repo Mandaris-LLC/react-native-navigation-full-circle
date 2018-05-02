@@ -9,22 +9,18 @@ Push a new screen into this screen's navigation stack.
 
 ```js
 Navigation.push(this.props.componentId, {
-  stack: {
-    children: [{
-      component: {
-        name: 'example.PushedScreen',
-        passProps: {
-          text: 'Pushed screen'
-        },
-        options: {
-          topBar: {
-            title: {
-              text: 'Pushed screen title'
-            }
-          }
+  component: {
+    name: 'example.PushedScreen',
+    passProps: {
+      text: 'Pushed screen'
+    },
+    options: {
+      topBar: {
+        title: {
+          text: 'Pushed screen title'
         }
       }
-    }]
+    }
   }
 });
 ```
