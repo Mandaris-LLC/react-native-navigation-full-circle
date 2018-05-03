@@ -1,6 +1,8 @@
 package com.reactnativenavigation.react;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -62,5 +64,9 @@ public class ReactGateway {
 
     public void onBackPressed() {
 	    reactNativeHost.getReactInstanceManager().onBackPressed();
+    }
+
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        reactNativeHost.getReactInstanceManager().onActivityResult(activity, requestCode, resultCode, data);
     }
 }

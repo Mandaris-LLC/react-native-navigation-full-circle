@@ -1,5 +1,6 @@
 package com.reactnativenavigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +49,12 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
         if (!navigator.handleBack(new CommandListenerAdapter())) {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getReactGateway().onActivityResult(this, requestCode, resultCode, data);
     }
 
     @Override
