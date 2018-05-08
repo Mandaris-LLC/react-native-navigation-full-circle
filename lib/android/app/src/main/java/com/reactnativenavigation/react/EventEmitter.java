@@ -26,17 +26,17 @@ public class EventEmitter {
 	}
 
 	public void componentDidDisappear(String id, String componentName) {
-		WritableMap data = Arguments.createMap();
-		data.putString("componentId", id);
-		data.putString("componentName", componentName);
-		emit(componentDidDisappear, data);
+		WritableMap event = Arguments.createMap();
+		event.putString("componentId", id);
+		event.putString("componentName", componentName);
+		emit(componentDidDisappear, event);
 	}
 
 	public void componentDidAppear(String id, String componentName) {
-		WritableMap data = Arguments.createMap();
-		data.putString("componentId", id);
-		data.putString("componentName", componentName);
-		emit(componentDidAppear, data);
+		WritableMap event = Arguments.createMap();
+		event.putString("componentId", id);
+		event.putString("componentName", componentName);
+		emit(componentDidAppear, event);
 	}
 
     public void emitOnNavigationButtonPressed(String id, String buttonId) {
@@ -44,24 +44,28 @@ public class EventEmitter {
 		params.putString("componentId", id);
 		params.putString("buttonId", buttonId);
 
-        WritableMap data = Arguments.createMap();
-        data.putString("name", buttonPressedEvent);
-        data.putMap("params", params);
-		emit(nativeEvent, data);
+        WritableMap event = Arguments.createMap();
+        event.putString("name", buttonPressedEvent);
+        event.putMap("params", params);
+		emit(nativeEvent, event);
 	}
 
     public void emitBottomTabSelected(int unselectedTabIndex, int selectedTabIndex) {
-        WritableMap data = Arguments.createMap();
-        data.putInt("unselectedTabIndex", unselectedTabIndex);
-        data.putInt("selectedTabIndex", selectedTabIndex);
-        emit(nativeEvent, data);
+        WritableMap params = Arguments.createMap();
+        params.putInt("unselectedTabIndex", unselectedTabIndex);
+        params.putInt("selectedTabIndex", selectedTabIndex);
+
+        WritableMap event = Arguments.createMap();
+        event.putString("name", "bottomTabSelected");
+        event.putMap("params", params);
+        emitter.emit(nativeEvent, event);
     }
 
     public void emitCommandCompletedEvent(String commandId, long completionTime) {
-        WritableMap map = Arguments.createMap();
-        map.putString("commandId", commandId);
-        map.putDouble("completionTime", completionTime);
-        emit(commandCompleted, map);
+        WritableMap event = Arguments.createMap();
+        event.putString("commandId", commandId);
+        event.putDouble("completionTime", completionTime);
+        emitter.emit(commandCompleted, event);
     }
 
 	private void emit(String eventName) {
