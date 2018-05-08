@@ -47,7 +47,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 	
 	[_modalManager dismissAllModals];
 	[_eventEmitter sendOnNavigationCommand:setRoot params:@{@"layout": layout}];
-
+	
 	UIViewController *vc = [_controllerFactory createLayoutAndSaveToStore:layout];
 	
 	UIApplication.sharedApplication.delegate.window.rootViewController = vc;
@@ -58,7 +58,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 -(void) mergeOptions:(NSString*)componentId options:(NSDictionary*)options completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[_eventEmitter sendOnNavigationCommand:mergeOptions params:@{@"componentId": componentId, @"options": options}];
-
+	
 	UIViewController* vc = [_store findComponentForId:componentId];
 	if([vc isKindOfClass:[RNNRootViewController class]]) {
 		RNNRootViewController* rootVc = (RNNRootViewController*)vc;
@@ -66,9 +66,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 		[CATransaction begin];
 		[CATransaction setCompletionBlock:completion];
 		
-		if (rootVc.isViewLoaded && rootVc.view.window) {
-			[rootVc.options applyOn:vc];
-		}
+		[rootVc.options applyOn:vc];
 		
 		[CATransaction commit];
 	}
@@ -92,7 +90,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 -(void)setStackRoot:(NSString*)componentId layout:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion rejection:(RCTPromiseRejectBlock)rejection {
 	[self assertReady];
 	[_eventEmitter sendOnNavigationCommand:setStackRoot params:@{@"componentId": componentId}];
-
+	
 	UIViewController<RNNRootViewProtocol> *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
 	[_navigationStackManager setStackRoot:newVc fromComponent:componentId completion:^{
 		completion();
@@ -191,7 +189,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 - (void)dismissOverlay:(NSString*)componentId completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	[_eventEmitter sendOnNavigationCommand:dismissModal params:@{@"componentId": componentId}];
-	[_overlayManager dismissOverlay:componentId completion:^{	
+	[_overlayManager dismissOverlay:componentId completion:^{
 		completion();
 	}];
 }
@@ -201,8 +199,8 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 -(void) assertReady {
 	if (!_store.isReadyToReceiveCommands) {
 		[[NSException exceptionWithName:@"BridgeNotLoadedError"
-								reason:@"Bridge not yet loaded! Send commands after Navigation.events().onAppLaunched() has been called."
-							  userInfo:nil]
+								 reason:@"Bridge not yet loaded! Send commands after Navigation.events().onAppLaunched() has been called."
+							   userInfo:nil]
 		 raise];
 	}
 }
