@@ -8,15 +8,16 @@ import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.facebook.react.bridge.Promise;
 import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.anim.NavigationAnimator;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.presentation.NavigationOptionsListener;
 import com.reactnativenavigation.presentation.OverlayManager;
 import com.reactnativenavigation.react.JsDevReloadHandler;
+import com.reactnativenavigation.utils.CommandListener;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.CompatUtils;
+import com.reactnativenavigation.utils.NativeCommandListener;
 import com.reactnativenavigation.viewcontrollers.modal.ModalPresenter;
 import com.reactnativenavigation.viewcontrollers.modal.ModalStack;
 
@@ -24,12 +25,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class Navigator extends ParentController implements JsDevReloadHandler.ReloadListener {
-
-    public interface CommandListener {
-        void onSuccess(String childId);
-
-        void onError(String message);
-    }
 
     private final ModalStack modalStack;
     private ViewController root;
@@ -97,7 +92,7 @@ public class Navigator extends ParentController implements JsDevReloadHandler.Re
 
     }
 
-    public void setRoot(final ViewController viewController, Promise promise) {
+    public void setRoot(final ViewController viewController, CommandListener commandListener) {
         destroyRoot();
         root = viewController;
         contentLayout.addView(viewController.getView());
@@ -106,11 +101,11 @@ public class Navigator extends ParentController implements JsDevReloadHandler.Re
                     .animateStartApp(viewController.getView(), new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            promise.resolve(viewController.getId());
+                            commandListener.onSuccess(viewController.getId());
                         }
                     });
         } else {
-            promise.resolve(viewController.getId());
+            commandListener.onSuccess(viewController.getId());
         }
     }
 
@@ -196,12 +191,12 @@ public class Navigator extends ParentController implements JsDevReloadHandler.Re
         modalStack.dismissAllModals(listener, root);
     }
 
-    public void showOverlay(ViewController overlay) {
-        overlayManager.show(rootLayout, overlay);
+    public void showOverlay(ViewController overlay, NativeCommandListener listener) {
+        overlayManager.show(rootLayout, overlay, listener);
     }
 
-    public void dismissOverlay(final String componentId) {
-        overlayManager.dismiss(getView(), componentId);
+    public void dismissOverlay(final String componentId, CommandListener listener) {
+        overlayManager.dismiss(getView(), componentId, listener);
     }
 
     @Nullable
