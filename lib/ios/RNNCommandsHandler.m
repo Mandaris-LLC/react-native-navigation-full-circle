@@ -66,7 +66,9 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 		[CATransaction begin];
 		[CATransaction setCompletionBlock:completion];
 		
-		[rootVc.options applyOn:vc];
+		if (rootVc.isViewLoaded && rootVc.view.window) {
+			[rootVc.options applyOn:vc];
+		}
 		
 		[CATransaction commit];
 	}
