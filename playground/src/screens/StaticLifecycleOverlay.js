@@ -61,8 +61,8 @@ class StaticLifecycleOverlay extends Component {
     >
       <Text style={{ color: 'red', alignSelf: 'center' }}>X</Text>
     </TouchableOpacity>
-  )
-}
+  );
+  }
 }
 module.exports = StaticLifecycleOverlay;
 
