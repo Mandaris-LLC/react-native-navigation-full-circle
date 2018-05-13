@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.parse.params.Color;
 import com.reactnativenavigation.parse.params.NullColor;
+import com.reactnativenavigation.parse.params.NullNumber;
+import com.reactnativenavigation.parse.params.NullText;
 import com.reactnativenavigation.parse.parsers.ColorParser;
 import com.reactnativenavigation.utils.TypefaceLoader;
 
@@ -143,5 +145,10 @@ public class Options {
     public Options clearFabOptions() {
         fabOptions = new FabOptions();
         return this;
+    }
+
+    public void clearOneTimeOptions() {
+        bottomTabsOptions.currentTabId = new NullText();
+        bottomTabsOptions.currentTabIndex = new NullNumber();
     }
 }
