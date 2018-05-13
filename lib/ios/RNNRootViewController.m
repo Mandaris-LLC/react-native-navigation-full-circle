@@ -14,7 +14,7 @@
 @property (nonatomic) BOOL _statusBarHidden;
 @property (nonatomic) BOOL isExternalComponent;
 @property (nonatomic) BOOL _optionsApplied;
-@property (nonatomic, copy) void (^rotationBlock)(void);
+@property (nonatomic, weak) void (^rotationBlock)(void);
 @end
 
 @implementation RNNRootViewController
