@@ -190,10 +190,10 @@
 
 - (UIViewController<RNNRootViewProtocol> *)createOverlay:(NSDictionary*)layout {
 	UIViewController<RNNRootViewProtocol> *vc = [self fromTree:layout];
-	RCTRootView* rootView = (RCTRootView*)vc.view;
+	__block RCTRootView* rootView = (RCTRootView*)vc.view;
 	[vc performOnRotation:^{
 		CGSize availableSize = UIApplication.sharedApplication.delegate.window.bounds.size;
-		[_bridge.uiManager setSize:availableSize forView:vc.view];
+		[_bridge.uiManager setSize:availableSize forView:rootView];
 	}];
 	rootView.backgroundColor = [UIColor clearColor];
 	CGSize availableSize = UIApplication.sharedApplication.delegate.window.bounds.size;

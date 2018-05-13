@@ -68,7 +68,6 @@
 -(void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 	[self.eventEmitter sendComponentDidDisappear:self.componentId componentName:self.componentName];
-	_rotationBlock = nil;
 }
 
 - (void)viewDidLoad {
