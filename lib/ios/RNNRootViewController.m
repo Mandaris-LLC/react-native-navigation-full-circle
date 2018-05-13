@@ -14,7 +14,7 @@
 @property (nonatomic) BOOL _statusBarHidden;
 @property (nonatomic) BOOL isExternalComponent;
 @property (nonatomic) BOOL _optionsApplied;
-@property (nonatomic, weak) void (^rotationBlock)(void);
+@property (nonatomic, copy) void (^rotationBlock)(void);
 @end
 
 @implementation RNNRootViewController
@@ -68,6 +68,7 @@
 -(void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 	[self.eventEmitter sendComponentDidDisappear:self.componentId componentName:self.componentName];
+	_rotationBlock = nil;
 }
 
 - (void)viewDidLoad {
