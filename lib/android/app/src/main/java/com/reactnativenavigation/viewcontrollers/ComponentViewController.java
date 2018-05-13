@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.reactnativenavigation.parse.Options;
-import com.reactnativenavigation.presentation.NavigationOptionsListener;
 import com.reactnativenavigation.views.ComponentLayout;
 import com.reactnativenavigation.views.ReactComponent;
 
-public class ComponentViewController extends ViewController<ComponentLayout> implements NavigationOptionsListener {
+public class ComponentViewController extends ViewController<ComponentLayout> {
 
     private final String componentName;
 
@@ -43,6 +42,7 @@ public class ComponentViewController extends ViewController<ComponentLayout> imp
 
     @Override
     public void applyOptions(Options options) {
+        super.applyOptions(options);
         view.applyOptions(options);
     }
 
@@ -60,9 +60,8 @@ public class ComponentViewController extends ViewController<ComponentLayout> imp
 
     @Override
     public void mergeOptions(Options options) {
-        view.applyOptions(options);
         applyOnParentController(parentController -> parentController.mergeChildOptions(options, view));
-        this.options = this.options.mergeWith(options);
+        super.mergeOptions(options);
     }
 
     ReactComponent getComponent() {

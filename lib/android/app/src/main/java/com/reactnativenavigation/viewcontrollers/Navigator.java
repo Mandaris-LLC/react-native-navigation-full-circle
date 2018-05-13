@@ -11,7 +11,6 @@ import android.widget.FrameLayout;
 import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.anim.NavigationAnimator;
 import com.reactnativenavigation.parse.Options;
-import com.reactnativenavigation.presentation.NavigationOptionsListener;
 import com.reactnativenavigation.presentation.OverlayManager;
 import com.reactnativenavigation.react.JsDevReloadHandler;
 import com.reactnativenavigation.utils.CommandListener;
@@ -119,11 +118,8 @@ public class Navigator extends ParentController implements JsDevReloadHandler.Re
 
     public void mergeOptions(final String componentId, Options options) {
         ViewController target = findControllerById(componentId);
-        if (target instanceof NavigationOptionsListener) {
-            ((NavigationOptionsListener) target).mergeOptions(options);
-        }
-        if (root instanceof NavigationOptionsListener) {
-            ((NavigationOptionsListener) root).mergeOptions(options);
+        if (target != null) {
+            target.mergeOptions(options);
         }
     }
 

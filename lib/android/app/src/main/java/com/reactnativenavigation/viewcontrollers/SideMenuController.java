@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.reactnativenavigation.parse.Options;
-import com.reactnativenavigation.presentation.NavigationOptionsListener;
 import com.reactnativenavigation.presentation.SideMenuOptionsPresenter;
 import com.reactnativenavigation.views.Component;
 
@@ -17,7 +16,7 @@ import java.util.Collection;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
-public class SideMenuController extends ParentController<DrawerLayout> implements NavigationOptionsListener {
+public class SideMenuController extends ParentController<DrawerLayout> {
 
 	private ViewController centerController;
 	private ViewController leftController;
@@ -57,10 +56,18 @@ public class SideMenuController extends ParentController<DrawerLayout> implement
     }
 
     @Override
+    public void mergeChildOptions(Options options, Component child) {
+        super.mergeChildOptions(options, child);
+        new SideMenuOptionsPresenter(getView()).present(options.sideMenuRootOptions);
+        applyOnParentController(parentController ->
+                ((ParentController) parentController).mergeChildOptions(options.copy().clearSideMenuOptions(), child)
+        );
+    }
+
+    @Override
     public void mergeOptions(Options options) {
-        this.options = this.options.mergeWith(options);
+        super.mergeOptions(options);
         new SideMenuOptionsPresenter(getView()).present(this.options.sideMenuRootOptions);
-        this.options = this.options.copy().clearSideMenuOptions();
     }
 
     public void setCenterController(ViewController centerController) {

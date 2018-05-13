@@ -40,11 +40,6 @@ public class StackController extends ParentController<StackLayout> {
         this.animator = animator;
     }
 
-    public void applyOptions(Options options) {
-        super.applyOptions(options);
-        getView().applyChildOptions(options);
-    }
-
     @Override
     public void applyChildOptions(Options options, Component child) {
         super.applyChildOptions(options, child);

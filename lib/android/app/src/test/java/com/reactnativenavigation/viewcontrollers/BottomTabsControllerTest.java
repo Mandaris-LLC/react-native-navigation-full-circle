@@ -53,7 +53,6 @@ public class BottomTabsControllerTest extends BaseTest {
 
     @Override
     public void beforeEach() {
-        super.beforeEach();
         activity = newActivity();
         eventEmitter = Mockito.mock(EventEmitter.class);
         uut = spy(new BottomTabsController(activity, eventEmitter, imageLoaderMock, "uut", new Options()));
@@ -90,6 +89,7 @@ public class BottomTabsControllerTest extends BaseTest {
     public void setTabs_AddAllViews() {
         List<ViewController> tabs = createTabs();
         uut.setTabs(tabs);
+        uut.onViewAppeared();
         assertThat(uut.getView().getChildCount()).isEqualTo(2);
         assertThat(((ViewController) ((List) uut.getChildControllers()).get(0)).getView().getParent()).isNotNull();
     }
@@ -176,6 +176,21 @@ public class BottomTabsControllerTest extends BaseTest {
         uut.mergeOptions(options);
         verify(uut, times(1)).selectTab(1);
         verify(eventEmitter, times(0)).emitBottomTabSelected(any(Integer.class), any(Integer.class));
+    }
+
+    @Test
+    public void child_mergeOptions_currentTabIndex() {
+        List<ViewController> tabs = createTabs();
+        uut.setTabs(tabs);
+        uut.ensureViewIsCreated();
+
+        assertThat(uut.getSelectedIndex()).isZero();
+
+        Options options = new Options();
+        options.bottomTabsOptions.currentTabIndex = new Number(1);
+        child1.mergeOptions(options);
+
+        assertThat(uut.getSelectedIndex()).isOne();
     }
 
     @Test

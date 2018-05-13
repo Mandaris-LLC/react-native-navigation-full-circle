@@ -27,6 +27,7 @@ public class BottomTabsOptionsPresenter {
     }
 
     public void present(Options options, int tabIndex) {
+        applyBottomTabsOptions(options.bottomTabsOptions, options.animations);
         applyBottomTabOptions(options.bottomTabOptions, tabIndex);
     }
 
@@ -55,7 +56,7 @@ public class BottomTabsOptionsPresenter {
         }
         if (options.currentTabId.hasValue()) {
             int tabIndex = bottomTabFinder.findByControllerId(options.currentTabId.get());
-            if (tabIndex >= 0) bottomTabs.setCurrentItem(tabIndex);
+            if (tabIndex >= 0) tabSelector.selectTab(tabIndex);
         }
         if (options.visible.isTrueOrUndefined()) {
             if (options.animate.isTrueOrUndefined()) {

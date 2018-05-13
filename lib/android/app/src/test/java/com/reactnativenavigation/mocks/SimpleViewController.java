@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import com.reactnativenavigation.interfaces.ScrollEventListener;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.viewcontrollers.ViewController;
+import com.reactnativenavigation.views.Component;
 import com.reactnativenavigation.views.ReactComponent;
 import com.reactnativenavigation.views.topbar.TopBar;
 
@@ -37,15 +38,16 @@ public class SimpleViewController extends ViewController<FrameLayout> {
         return "SimpleViewController " + getId();
     }
 
-    public class SimpleView extends FrameLayout implements ReactComponent {
+    @Override
+    public void mergeOptions(Options options) {
+        applyOnParentController(parentController -> parentController.mergeChildOptions(options, (Component) view));
+        super.mergeOptions(options);
+    }
+
+    public static class SimpleView extends FrameLayout implements ReactComponent {
 
         public SimpleView(@NonNull Context context) {
             super(context);
-        }
-
-        @Override
-        public void applyOptions(Options options) {
-
         }
 
         @Override

@@ -72,24 +72,25 @@ public class LayoutFactory {
 	}
 
     private ViewController createSideMenuRoot(LayoutNode node) {
-        SideMenuController sideMenuLayout = new SideMenuController(activity, node.id, getOptions(node));
+        SideMenuController sideMenuController = new SideMenuController(activity, node.id, getOptions(node));
 		for (LayoutNode child : node.children) {
-			ViewController childLayout = create(child);
+			ViewController childController = create(child);
+            childController.setParentController(sideMenuController);
 			switch (child.type) {
 				case SideMenuCenter:
-					sideMenuLayout.setCenterController(childLayout);
+					sideMenuController.setCenterController(childController);
 					break;
 				case SideMenuLeft:
-					sideMenuLayout.setLeftController(childLayout);
+					sideMenuController.setLeftController(childController);
 					break;
 				case SideMenuRight:
-					sideMenuLayout.setRightController(childLayout);
+					sideMenuController.setRightController(childController);
 					break;
 				default:
 					throw new IllegalArgumentException("Invalid node type in sideMenu: " + node.type);
 			}
-		}
-		return sideMenuLayout;
+        }
+		return sideMenuController;
 	}
 
 	private ViewController createSideMenuContent(LayoutNode node) {

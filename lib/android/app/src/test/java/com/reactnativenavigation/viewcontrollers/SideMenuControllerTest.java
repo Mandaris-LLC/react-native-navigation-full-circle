@@ -23,7 +23,7 @@ public class SideMenuControllerTest extends BaseTest {
     }
 
     @Test
-    public void mergeOptions_openLeftSideMenu() throws Exception {
+    public void mergeOptions_openLeftSideMenu() {
         uut.setLeftController(new SimpleComponentViewController(activity, "left", new Options()));
 
         Options options = new Options();
@@ -34,7 +34,7 @@ public class SideMenuControllerTest extends BaseTest {
     }
 
     @Test
-    public void mergeOptions_openRightSideMenu() throws Exception {
+    public void mergeOptions_openRightSideMenu() {
         uut.setRightController(new SimpleComponentViewController(activity, "right", new Options()));
 
         Options options = new Options();
@@ -45,7 +45,7 @@ public class SideMenuControllerTest extends BaseTest {
     }
 
     @Test
-    public void mergeOptions_optionsAreClearedAfterMerge() throws Exception {
+    public void mergeOptions_optionsAreClearedAfterMerge() {
         Options initialOptions = uut.options;
         Options options = new Options();
         uut.mergeOptions(options);

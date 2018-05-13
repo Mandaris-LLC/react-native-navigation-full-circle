@@ -11,7 +11,6 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.reactnativenavigation.parse.BottomTabOptions;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.presentation.BottomTabsOptionsPresenter;
-import com.reactnativenavigation.presentation.NavigationOptionsListener;
 import com.reactnativenavigation.react.EventEmitter;
 import com.reactnativenavigation.utils.CommandListener;
 import com.reactnativenavigation.utils.ImageLoader;
@@ -28,7 +27,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 
-public class BottomTabsController extends ParentController implements AHBottomNavigation.OnTabSelectedListener, NavigationOptionsListener, TabSelector {
+public class BottomTabsController extends ParentController implements AHBottomNavigation.OnTabSelectedListener, TabSelector {
 
 	private BottomTabs bottomTabs;
 	private List<ViewController> tabs = new ArrayList<>();
@@ -146,12 +145,6 @@ public class BottomTabsController extends ParentController implements AHBottomNa
 	public Collection<ViewController> getChildControllers() {
 		return tabs;
 	}
-
-	@Override
-	public void mergeOptions(Options options) {
-        this.options = this.options.mergeWith(options);
-        presenter.present(this.options);
-    }
 
     @Override
     public void selectTab(final int newIndex) {
