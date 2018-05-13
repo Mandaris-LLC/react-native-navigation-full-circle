@@ -1,7 +1,7 @@
 const React = require('react');
 const { Component } = require('react');
 
-const { View, Text, Button, Platform } = require('react-native');
+const { View, Text, Button, Platform, StatusBar } = require('react-native');
 
 const { Navigation } = require('react-native-navigation');
 const testIDs = require('../testIDs');
@@ -16,6 +16,7 @@ const FAB = 'fab';
 class OptionsScreen extends Component {
   static get options() {
     return {
+      statusBarBackgroundColor: 'red',
       topBar: {
         title: {
           text: 'Static Title',
