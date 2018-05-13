@@ -36,6 +36,7 @@ public class Options {
         result.animations = AnimationsOptions.parse(json.optJSONObject("animations"));
         result.screenBackgroundColor = ColorParser.parse(json, "screenBackgroundColor");
         result.modal = ModalOptions.parse(json);
+        result.statusBar = StatusBarOptions.parse(json);
 
         return result.withDefaultOptions(defaultOptions);
     }
@@ -52,6 +53,7 @@ public class Options {
     @NonNull public SideMenuRootOptions sideMenuRootOptions = new SideMenuRootOptions();
     @NonNull public Color screenBackgroundColor = new NullColor();
     @NonNull public ModalOptions modal = new ModalOptions();
+    @NonNull public StatusBarOptions statusBar = new StatusBarOptions();
 
     void setTopTabIndex(int i) {
         topTabOptions.tabIndex = i;
@@ -72,6 +74,7 @@ public class Options {
         result.animations.mergeWith(animations);
         result.screenBackgroundColor = screenBackgroundColor;
         result.modal.mergeWith(modal);
+        result.statusBar.mergeWith(statusBar);
         return result;
     }
 
@@ -89,6 +92,7 @@ public class Options {
         result.sideMenuRootOptions.mergeWith(other.sideMenuRootOptions);
         if (other.screenBackgroundColor.hasValue()) result.screenBackgroundColor = other.screenBackgroundColor;
         result.modal.mergeWith(other.modal);
+        result.statusBar.mergeWith(other.statusBar);
         return result;
     }
 
@@ -104,6 +108,7 @@ public class Options {
         sideMenuRootOptions.mergeWithDefault(defaultOptions.sideMenuRootOptions);
         if (!screenBackgroundColor.hasValue()) screenBackgroundColor = defaultOptions.screenBackgroundColor;
         modal.mergeWithDefault(defaultOptions.modal);
+        statusBar.mergeWithDefault(defaultOptions.statusBar);
         return this;
     }
 
