@@ -72,7 +72,7 @@ public class LayoutFactory {
 	}
 
     private ViewController createSideMenuRoot(LayoutNode node) {
-        SideMenuController sideMenuController = new SideMenuController(activity, node.id, getOptions(node));
+        SideMenuController sideMenuController = new SideMenuController(activity, node.id, parseNodeOptions(node));
 		for (LayoutNode child : node.children) {
 			ViewController childController = create(child);
             childController.setParentController(sideMenuController);
@@ -112,7 +112,7 @@ public class LayoutFactory {
                 id,
                 name,
                 new ComponentViewCreator(reactInstanceManager),
-                getOptions(node)
+                parseNodeOptions(node)
         );
 	}
 
@@ -123,7 +123,7 @@ public class LayoutFactory {
                 externalComponent,
                 externalComponentCreators.get(externalComponent.name.get()),
                 reactInstanceManager,
-                getOptions(node)
+                parseNodeOptions(node)
         );
     }
 
@@ -134,7 +134,7 @@ public class LayoutFactory {
                 .setTopBarBackgroundViewController(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreator(reactInstanceManager)))
                 .setTopBarController(new TopBarController())
                 .setId(node.id)
-                .setInitialOptions(getOptions(node))
+                .setInitialOptions(parseNodeOptions(node))
                 .createStackController();
         addChildrenToStack(node.children, stackController);
         return stackController;
@@ -147,7 +147,7 @@ public class LayoutFactory {
     }
 
     private ViewController createBottomTabs(LayoutNode node) {
-        final BottomTabsController tabsComponent = new BottomTabsController(activity, eventEmitter, new ImageLoader(), node.id, getOptions(node));
+        final BottomTabsController tabsComponent = new BottomTabsController(activity, eventEmitter, new ImageLoader(), node.id, parseNodeOptions(node));
 		List<ViewController> tabs = new ArrayList<>();
 		for (int i = 0; i < node.children.size(); i++) {
             tabs.add(create(node.children.get(i)));
@@ -160,14 +160,14 @@ public class LayoutFactory {
         final List<ViewController> tabs = new ArrayList<>();
         for (int i = 0; i < node.children.size(); i++) {
             ViewController tabController = create(node.children.get(i));
-            Options options = getOptions(node.children.get(i));
+            Options options = parseNodeOptions(node.children.get(i));
             options.setTopTabIndex(i);
             tabs.add(tabController);
         }
-        return new TopTabsController(activity, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), getOptions(node));
+        return new TopTabsController(activity, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), parseNodeOptions(node));
     }
 
-    private Options getOptions(LayoutNode node) {
+    private Options parseNodeOptions(LayoutNode node) {
         return Options.parse(typefaceManager, node.getNavigationOptions(), defaultOptions);
     }
 }
