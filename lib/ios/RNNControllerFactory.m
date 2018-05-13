@@ -123,6 +123,7 @@
 
 - (UIViewController<RNNRootViewProtocol> *)createStack:(RNNLayoutNode*)node {
 	RNNNavigationController* vc = [[RNNNavigationController alloc] init];
+	[vc setComponentId:node.nodeId];
 	NSDictionary* options = node.data[@"options"];
 	NSMutableArray* controllers = [NSMutableArray new];
 	for (NSDictionary* child in node.children) {
