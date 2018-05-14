@@ -10,8 +10,8 @@ class CustomDialog extends PureComponent {
   static get options() {
     return {
       statusBarBackgroundColor: 'green'
-    }
-  };
+    };
+  }
 
   render() {
     return (
