@@ -31,8 +31,8 @@ public class StackController extends ParentController<StackLayout> {
     private TopBarBackgroundViewController topBarBackgroundViewController;
     private TopBarController topBarController;
 
-    public StackController(final Activity activity, ReactViewCreator topBarButtonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarController topBarController, NavigationAnimator animator, String id, Options initialOptions) {
-        super(activity, id, initialOptions);
+    public StackController(Activity activity, ChildControllersRegistry childRegistry, ReactViewCreator topBarButtonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarController topBarController, NavigationAnimator animator, String id, Options initialOptions) {
+        super(activity, childRegistry, id, initialOptions);
         this.topBarController = topBarController;
         this.topBarButtonCreator = topBarButtonCreator;
         this.titleBarReactViewCreator = titleBarReactViewCreator;

@@ -1,7 +1,6 @@
 package com.reactnativenavigation.parse;
 
 import com.reactnativenavigation.parse.params.Color;
-import com.reactnativenavigation.parse.params.NullColor;
 import com.reactnativenavigation.parse.parsers.ColorParser;
 
 import org.json.JSONObject;
@@ -16,7 +15,7 @@ public class StatusBarOptions {
         return result;
     }
 
-    public Color backgroundColor = new NullColor();
+    public Color backgroundColor = new Color(android.graphics.Color.BLACK);
 
     public void mergeWith(StatusBarOptions other) {
         if (other.backgroundColor.hasValue()) backgroundColor = other.backgroundColor;

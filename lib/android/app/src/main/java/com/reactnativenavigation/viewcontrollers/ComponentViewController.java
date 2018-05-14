@@ -7,18 +7,19 @@ import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.views.ComponentLayout;
 import com.reactnativenavigation.views.ReactComponent;
 
-public class ComponentViewController extends ViewController<ComponentLayout> {
+public class ComponentViewController extends ChildController<ComponentLayout> {
 
     private final String componentName;
 
     private final ReactViewCreator viewCreator;
 
     public ComponentViewController(final Activity activity,
+                                   final ChildControllersRegistry childRegistry,
                                    final String id,
                                    final String componentName,
                                    final ReactViewCreator viewCreator,
                                    final Options initialOptions) {
-        super(activity, id, initialOptions);
+        super(activity, childRegistry, id, initialOptions);
         this.componentName = componentName;
         this.viewCreator = viewCreator;
     }

@@ -14,6 +14,7 @@ import com.reactnativenavigation.presentation.BottomTabsOptionsPresenter;
 import com.reactnativenavigation.react.EventEmitter;
 import com.reactnativenavigation.utils.CommandListener;
 import com.reactnativenavigation.utils.ImageLoader;
+import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
 import com.reactnativenavigation.viewcontrollers.ParentController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.views.BottomTabs;
@@ -36,8 +37,8 @@ public class BottomTabsController extends ParentController implements AHBottomNa
     private BottomTabsOptionsPresenter presenter;
     private final BottomTabFinder bottomTabFinder = new BottomTabFinder();
 
-    public BottomTabsController(final Activity activity, EventEmitter eventEmitter, ImageLoader imageLoader, final String id, Options initialOptions) {
-		super(activity, id, initialOptions);
+    public BottomTabsController(Activity activity, ChildControllersRegistry childRegistry, EventEmitter eventEmitter, ImageLoader imageLoader, String id, Options initialOptions) {
+		super(activity, childRegistry, id, initialOptions);
         this.eventEmitter = eventEmitter;
         this.imageLoader = imageLoader;
     }

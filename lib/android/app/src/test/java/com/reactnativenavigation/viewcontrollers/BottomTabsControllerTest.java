@@ -50,17 +50,19 @@ public class BottomTabsControllerTest extends BaseTest {
     private Options tabOptions = OptionHelper.createBottomTabOptions();
     private ImageLoader imageLoaderMock = ImageLoaderMock.mock();
     private EventEmitter eventEmitter;
+    private ChildControllersRegistry childRegistry;
 
     @Override
     public void beforeEach() {
         activity = newActivity();
+        childRegistry = new ChildControllersRegistry();
         eventEmitter = Mockito.mock(EventEmitter.class);
-        uut = spy(new BottomTabsController(activity, eventEmitter, imageLoaderMock, "uut", new Options()));
-        child1 = spy(new SimpleViewController(activity, "child1", tabOptions));
-        child2 = spy(new SimpleViewController(activity, "child2", tabOptions));
-        child3 = spy(new SimpleViewController(activity, "child3", tabOptions));
-        child4 = spy(new SimpleViewController(activity, "child4", tabOptions));
-        child5 = spy(new SimpleViewController(activity, "child5", tabOptions));
+        uut = spy(new BottomTabsController(activity, childRegistry, eventEmitter, imageLoaderMock, "uut", new Options()));
+        child1 = spy(new SimpleViewController(activity, childRegistry, "child1", tabOptions));
+        child2 = spy(new SimpleViewController(activity, childRegistry, "child2", tabOptions));
+        child3 = spy(new SimpleViewController(activity, childRegistry, "child3", tabOptions));
+        child4 = spy(new SimpleViewController(activity, childRegistry, "child4", tabOptions));
+        child5 = spy(new SimpleViewController(activity, childRegistry, "child5", tabOptions));
     }
 
     @Test
@@ -72,7 +74,7 @@ public class BottomTabsControllerTest extends BaseTest {
     @Test(expected = RuntimeException.class)
     public void setTabs_ThrowWhenMoreThan5() {
         List<ViewController> tabs = createTabs();
-        tabs.add(new SimpleViewController(activity, "6", tabOptions));
+        tabs.add(new SimpleViewController(activity, childRegistry, "6", tabOptions));
         uut.setTabs(tabs);
     }
 

@@ -15,16 +15,18 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 public class SideMenuControllerTest extends BaseTest {
     private SideMenuController uut;
     private Activity activity;
+    private ChildControllersRegistry childRegistry;
 
     @Override
     public void beforeEach() {
         activity = newActivity();
-        uut = new SideMenuController(activity, "sideMenu", new Options());
+        childRegistry = new ChildControllersRegistry();
+        uut = new SideMenuController(activity, childRegistry, "sideMenu", new Options());
     }
 
     @Test
     public void mergeOptions_openLeftSideMenu() {
-        uut.setLeftController(new SimpleComponentViewController(activity, "left", new Options()));
+        uut.setLeftController(new SimpleComponentViewController(activity, childRegistry, "left", new Options()));
 
         Options options = new Options();
         options.sideMenuRootOptions.left.visible = new Bool(true);
@@ -35,7 +37,7 @@ public class SideMenuControllerTest extends BaseTest {
 
     @Test
     public void mergeOptions_openRightSideMenu() {
-        uut.setRightController(new SimpleComponentViewController(activity, "right", new Options()));
+        uut.setRightController(new SimpleComponentViewController(activity, childRegistry, "right", new Options()));
 
         Options options = new Options();
         options.sideMenuRootOptions.right.visible = new Bool(true);

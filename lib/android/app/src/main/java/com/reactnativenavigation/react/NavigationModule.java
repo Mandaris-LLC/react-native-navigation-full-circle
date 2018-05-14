@@ -139,6 +139,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 	@NonNull
 	private LayoutFactory newLayoutFactory() {
 		return new LayoutFactory(activity(),
+                navigator().getChildRegistry(),
                 reactInstanceManager,
                 eventEmitter,
                 externalComponentCreator(),

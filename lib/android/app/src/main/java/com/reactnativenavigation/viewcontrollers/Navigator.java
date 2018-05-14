@@ -32,8 +32,16 @@ public class Navigator extends ParentController implements JsDevReloadHandler.Re
     private final OverlayManager overlayManager;
     private Options defaultOptions = new Options();
 
-    public Navigator(final Activity activity, OverlayManager overlayManager) {
-        super(activity, "navigator" + CompatUtils.generateViewId(), new Options());
+    public void setDefaultOptions(Options defaultOptions) {
+        this.defaultOptions = defaultOptions;
+    }
+
+    public Options getDefaultOptions() {
+        return defaultOptions;
+    }
+
+    public Navigator(final Activity activity, ChildControllersRegistry childRegistry, OverlayManager overlayManager) {
+        super(activity, childRegistry,"navigator" + CompatUtils.generateViewId(), new Options());
         modalStack = new ModalStack(new ModalPresenter(new ModalAnimator(activity)));
         this.overlayManager = overlayManager;
     }
@@ -106,14 +114,6 @@ public class Navigator extends ParentController implements JsDevReloadHandler.Re
         } else {
             commandListener.onSuccess(viewController.getId());
         }
-    }
-
-    public void setDefaultOptions(Options defaultOptions) {
-        this.defaultOptions = defaultOptions;
-    }
-
-    public Options getDefaultOptions() {
-        return defaultOptions;
     }
 
     public void mergeOptions(final String componentId, Options options) {

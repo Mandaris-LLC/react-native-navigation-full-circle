@@ -39,6 +39,7 @@ import static org.mockito.Mockito.when;
 
 public class NavigatorTest extends BaseTest {
     private TestActivity activity;
+    private ChildControllersRegistry childRegistry;
     private Navigator uut;
     private StackController parentController;
     private SimpleViewController child1;
@@ -54,21 +55,22 @@ public class NavigatorTest extends BaseTest {
 
     @Override
     public void beforeEach() {
+        childRegistry = new ChildControllersRegistry();
         eventEmitter = Mockito.mock(EventEmitter.class);
         overlayManager = Mockito.mock(OverlayManager.class);
         imageLoaderMock = ImageLoaderMock.mock();
         activityController = newActivityController(TestActivity.class);
         activity = activityController.create().get();
-        uut = new Navigator(activity, overlayManager);
+        uut = new Navigator(activity, childRegistry, overlayManager);
         activity.setNavigator(uut);
 
         parentController = spy(newStack());
         parentController.ensureViewIsCreated();
-        child1 = new SimpleViewController(activity, "child1", tabOptions);
-        child2 = new SimpleViewController(activity, "child2", tabOptions);
-        child3 = new SimpleViewController(activity, "child3", tabOptions);
-        child4 = new SimpleViewController(activity, "child4", tabOptions);
-        child5 = new SimpleViewController(activity, "child5", tabOptions);
+        child1 = new SimpleViewController(activity, childRegistry, "child1", tabOptions);
+        child2 = new SimpleViewController(activity, childRegistry, "child2", tabOptions);
+        child3 = new SimpleViewController(activity, childRegistry, "child3", tabOptions);
+        child4 = new SimpleViewController(activity, childRegistry, "child4", tabOptions);
+        child5 = new SimpleViewController(activity, childRegistry, "child5", tabOptions);
         activity.setContentView(uut.getView());
 
         activityController.visible();
@@ -91,7 +93,7 @@ public class NavigatorTest extends BaseTest {
     @Test
     public void hasUniqueId() {
         assertThat(uut.getId()).startsWith("navigator");
-        assertThat(new Navigator(activity, overlayManager).getId()).isNotEqualTo(uut.getId());
+        assertThat(new Navigator(activity, childRegistry, overlayManager).getId()).isNotEqualTo(uut.getId());
     }
 
     @Test
@@ -126,7 +128,7 @@ public class NavigatorTest extends BaseTest {
         bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new CommandListenerAdapter());
 
-        SimpleViewController newChild = new SimpleViewController(activity, "new child", tabOptions);
+        SimpleViewController newChild = new SimpleViewController(activity, childRegistry, "new child", tabOptions);
         uut.push(child2.getId(), newChild, new CommandListenerAdapter());
 
         assertThat(stack1.getChildControllers()).doesNotContain(newChild);
@@ -257,7 +259,7 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void mergeOptions_CallsApplyNavigationOptions() {
-        ComponentViewController componentVc = new SimpleComponentViewController(activity, "theId", new Options());
+        ComponentViewController componentVc = new SimpleComponentViewController(activity, childRegistry, "theId", new Options());
         componentVc.setParentController(parentController);
         assertThat(componentVc.options.topBar.title.text.get("")).isEmpty();
         uut.setRoot(componentVc, new CommandListenerAdapter());
@@ -276,12 +278,13 @@ public class NavigatorTest extends BaseTest {
 
     @NonNull
     private BottomTabsController newTabs() {
-        return new BottomTabsController(activity, eventEmitter, imageLoaderMock, "tabsController", new Options());
+        return new BottomTabsController(activity, childRegistry, eventEmitter, imageLoaderMock, "tabsController", new Options());
     }
 
     @NonNull
     private StackController newStack() {
         return new StackControllerBuilder(activity)
+                .setChildRegistry(childRegistry)
                 .setTopBarButtonCreator(new TopBarButtonCreatorMock())
                 .setTitleBarReactViewCreator(new TitleBarReactViewCreatorMock())
                 .setTopBarBackgroundViewController(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()))

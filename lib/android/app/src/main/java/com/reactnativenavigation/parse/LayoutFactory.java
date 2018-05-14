@@ -7,6 +7,7 @@ import com.reactnativenavigation.react.EventEmitter;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.ImageLoader;
 import com.reactnativenavigation.utils.TypefaceLoader;
+import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
 import com.reactnativenavigation.viewcontrollers.ComponentViewController;
 import com.reactnativenavigation.viewcontrollers.SideMenuController;
 import com.reactnativenavigation.viewcontrollers.StackController;
@@ -31,15 +32,17 @@ import java.util.Map;
 public class LayoutFactory {
 
 	private final Activity activity;
+    private final ChildControllersRegistry childRegistry;
 	private final ReactInstanceManager reactInstanceManager;
     private EventEmitter eventEmitter;
     private Map<String, ExternalComponentCreator> externalComponentCreators;
     private Options defaultOptions;
     private final TypefaceLoader typefaceManager;
 
-    public LayoutFactory(Activity activity, final ReactInstanceManager reactInstanceManager, EventEmitter eventEmitter, Map<String, ExternalComponentCreator> externalComponentCreators, Options defaultOptions) {
+    public LayoutFactory(Activity activity, ChildControllersRegistry childRegistry, final ReactInstanceManager reactInstanceManager, EventEmitter eventEmitter, Map<String, ExternalComponentCreator> externalComponentCreators, Options defaultOptions) {
 		this.activity = activity;
-		this.reactInstanceManager = reactInstanceManager;
+        this.childRegistry = childRegistry;
+        this.reactInstanceManager = reactInstanceManager;
         this.eventEmitter = eventEmitter;
         this.externalComponentCreators = externalComponentCreators;
         this.defaultOptions = defaultOptions;
@@ -72,7 +75,7 @@ public class LayoutFactory {
 	}
 
     private ViewController createSideMenuRoot(LayoutNode node) {
-        SideMenuController sideMenuController = new SideMenuController(activity, node.id, parseNodeOptions(node));
+        SideMenuController sideMenuController = new SideMenuController(activity, childRegistry, node.id, parseNodeOptions(node));
 		for (LayoutNode child : node.children) {
 			ViewController childController = create(child);
             childController.setParentController(sideMenuController);
@@ -109,6 +112,7 @@ public class LayoutFactory {
 		String id = node.id;
 		String name = node.data.optString("name");
         return new ComponentViewController(activity,
+                childRegistry,
                 id,
                 name,
                 new ComponentViewCreator(reactInstanceManager),
@@ -129,6 +133,7 @@ public class LayoutFactory {
 
 	private ViewController createStack(LayoutNode node) {
         StackController stackController = new StackControllerBuilder(activity)
+                .setChildRegistry(childRegistry)
                 .setTopBarButtonCreator(new TitleBarButtonCreator(reactInstanceManager))
                 .setTitleBarReactViewCreator(new TitleBarReactViewCreator(reactInstanceManager))
                 .setTopBarBackgroundViewController(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreator(reactInstanceManager)))
@@ -147,7 +152,7 @@ public class LayoutFactory {
     }
 
     private ViewController createBottomTabs(LayoutNode node) {
-        final BottomTabsController tabsComponent = new BottomTabsController(activity, eventEmitter, new ImageLoader(), node.id, parseNodeOptions(node));
+        final BottomTabsController tabsComponent = new BottomTabsController(activity, childRegistry, eventEmitter, new ImageLoader(), node.id, parseNodeOptions(node));
 		List<ViewController> tabs = new ArrayList<>();
 		for (int i = 0; i < node.children.size(); i++) {
             tabs.add(create(node.children.get(i)));
@@ -164,7 +169,7 @@ public class LayoutFactory {
             options.setTopTabIndex(i);
             tabs.add(tabController);
         }
-        return new TopTabsController(activity, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), parseNodeOptions(node));
+        return new TopTabsController(activity, childRegistry, node.id, tabs, new TopTabsLayoutCreator(activity, tabs), parseNodeOptions(node));
     }
 
     private Options parseNodeOptions(LayoutNode node) {

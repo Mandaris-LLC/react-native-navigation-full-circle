@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.utils.Task;
+import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
 import com.reactnativenavigation.viewcontrollers.ParentController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.viewcontrollers.ViewVisibilityListenerAdapter;
@@ -21,8 +22,8 @@ public class TopTabsController extends ParentController<TopTabsViewPager> {
     private List<ViewController> tabs;
     private TopTabsLayoutCreator viewCreator;
 
-    public TopTabsController(Activity activity, String id, List<ViewController> tabs, TopTabsLayoutCreator viewCreator, Options options) {
-        super(activity, id, options);
+    public TopTabsController(Activity activity, ChildControllersRegistry childRegistry, String id, List<ViewController> tabs, TopTabsLayoutCreator viewCreator, Options options) {
+        super(activity, childRegistry, id, options);
         this.viewCreator = viewCreator;
         this.tabs = tabs;
         for (ViewController tab : tabs) {
@@ -51,7 +52,7 @@ public class TopTabsController extends ParentController<TopTabsViewPager> {
 
     @Override
     public void onViewAppeared() {
-        applyOptions(options);
+        super.onViewAppeared();
         applyOnParentController(parentController -> ((ParentController) parentController).setupTopTabsWithViewPager(getView()));
         performOnCurrentTab(ViewController::onViewAppeared);
     }
@@ -63,6 +64,7 @@ public class TopTabsController extends ParentController<TopTabsViewPager> {
 
     @Override
     public void onViewDisappear() {
+        super.onViewDisappear();
         performOnCurrentTab(ViewController::onViewDisappear);
         applyOnParentController(parentController -> ((ParentController) parentController).clearTopTabs());
     }
@@ -74,6 +76,7 @@ public class TopTabsController extends ParentController<TopTabsViewPager> {
 
     @Override
     public void applyOptions(Options options) {
+        super.applyOptions(options);
         getView().applyOptions(options);
     }
 

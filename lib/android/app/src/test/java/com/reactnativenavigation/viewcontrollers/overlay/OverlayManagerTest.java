@@ -9,6 +9,7 @@ import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.presentation.OverlayManager;
 import com.reactnativenavigation.utils.CommandListener;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
+import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
 
 import org.junit.Test;
 
@@ -20,8 +21,11 @@ import static org.mockito.Mockito.verify;
 
 public class OverlayManagerTest extends BaseTest {
     private static final String OVERLAY_ID_1 = "OVERLAY_1";
+    private static final String OVERLAY_ID_2 = "OVERLAY_2";
+
     private OverlayManager uut;
     private SimpleViewController overlay1;
+    private SimpleViewController overlay2;
     private FrameLayout root;
 
     @Override
@@ -31,7 +35,9 @@ public class OverlayManagerTest extends BaseTest {
         root.layout(0, 0, 1000, 1000);
         activity.setContentView(root);
 
-        overlay1 = spy(new SimpleViewController(activity, OVERLAY_ID_1, new Options()));
+        ChildControllersRegistry childRegistry = new ChildControllersRegistry();
+        overlay1 = spy(new SimpleViewController(activity, childRegistry, OVERLAY_ID_1, new Options()));
+        overlay2 = spy(new SimpleViewController(activity, childRegistry, OVERLAY_ID_2, new Options()));
         uut = new OverlayManager();
     }
 
@@ -59,5 +65,15 @@ public class OverlayManagerTest extends BaseTest {
         CommandListener listener = spy(new CommandListenerAdapter());
         uut.dismiss(overlay1.getId(), listener);
         verify(listener, times(1)).onError(any());
+    }
+
+    @Test
+    public void dismiss_onViewReturnedToFront() {
+        uut.show(root, overlay1, new CommandListenerAdapter());
+        uut.show(root, overlay2, new CommandListenerAdapter());
+        verify(overlay1, times(0)).onViewBroughtToFront();
+
+        uut.dismiss(OVERLAY_ID_2, new CommandListenerAdapter());
+        verify(overlay1, times(1)).onViewBroughtToFront();
     }
 }
