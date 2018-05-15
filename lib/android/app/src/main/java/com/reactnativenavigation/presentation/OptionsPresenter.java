@@ -1,6 +1,7 @@
 package com.reactnativenavigation.presentation;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 
@@ -39,7 +40,7 @@ public class OptionsPresenter {
 
     private void applyStatusBarOptions(StatusBarOptions statusBar) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.getWindow().setStatusBarColor(statusBar.backgroundColor.get());
+            activity.getWindow().setStatusBarColor(statusBar.backgroundColor.get(Color.BLACK));
         }
     }
 }
