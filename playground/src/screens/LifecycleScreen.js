@@ -37,7 +37,9 @@ class LifecycleScreen extends Component {
         <Text style={styles.h1}>{`Lifecycle Screen`}</Text>
         <Text style={styles.h1}>{this.state.text}</Text>
         <Button title='Push to test didDisappear' testID={testIDs.PUSH_TO_TEST_DID_DISAPPEAR_BUTTON} onPress={this.onClickPush} />
-        <Button title='Pop' testID={testIDs.POP_BUTTON} onPress={() => this.onClickPop()} />
+        {this.props.isModal ?
+          (<Button title='Dismiss' testID={testIDs.DISMISS_MODAL_BUTTON} onPress={() => this.onClickDismiss()} />)
+          : (<Button title='Pop' testID={testIDs.POP_BUTTON} onPress={() => this.onClickPop()} />)}
         <Text style={styles.footer}>{`this.props.componentId = ${this.props.componentId}`}</Text>
       </View>
     );
@@ -49,6 +51,10 @@ class LifecycleScreen extends Component {
 
   onClickPop() {
     Navigation.pop(this.props.componentId);
+  }
+
+  onClickDismiss() {
+    Navigation.dismissModal(this.props.componentId);
   }
 }
 module.exports = LifecycleScreen;
