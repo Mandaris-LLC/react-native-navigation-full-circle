@@ -2,6 +2,7 @@ package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.BaseTest;
@@ -11,8 +12,10 @@ import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarBackgroundViewCreatorMock;
 import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Color;
 import com.reactnativenavigation.parse.params.Number;
+import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.react.EventEmitter;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.ImageLoader;
@@ -51,18 +54,27 @@ public class BottomTabsControllerTest extends BaseTest {
     private ImageLoader imageLoaderMock = ImageLoaderMock.mock();
     private EventEmitter eventEmitter;
     private ChildControllersRegistry childRegistry;
+    private List<ViewController> tabs;
 
     @Override
     public void beforeEach() {
         activity = newActivity();
         childRegistry = new ChildControllersRegistry();
         eventEmitter = Mockito.mock(EventEmitter.class);
-        uut = spy(new BottomTabsController(activity, childRegistry, eventEmitter, imageLoaderMock, "uut", new Options()));
+        uut = spy(new BottomTabsController(activity, childRegistry, eventEmitter, imageLoaderMock, "uut", new Options()) {
+            @Override
+            public void ensureViewIsCreated() {
+                super.ensureViewIsCreated();
+                uut.getView().layout(0, 0, 1000, 1000);
+                uut.getBottomTabs().layout(0, 0, 1000, 100);
+            }
+        });
         child1 = spy(new SimpleViewController(activity, childRegistry, "child1", tabOptions));
         child2 = spy(new SimpleViewController(activity, childRegistry, "child2", tabOptions));
         child3 = spy(new SimpleViewController(activity, childRegistry, "child3", tabOptions));
         child4 = spy(new SimpleViewController(activity, childRegistry, "child4", tabOptions));
         child5 = spy(new SimpleViewController(activity, childRegistry, "child5", tabOptions));
+        tabs = createTabs();
     }
 
     @Test
@@ -169,7 +181,6 @@ public class BottomTabsControllerTest extends BaseTest {
 
     @Test
     public void mergeOptions_currentTabIndex() {
-        List<ViewController> tabs = createTabs();
         uut.setTabs(tabs);
         uut.ensureViewIsCreated();
 
@@ -178,6 +189,27 @@ public class BottomTabsControllerTest extends BaseTest {
         uut.mergeOptions(options);
         verify(uut, times(1)).selectTab(1);
         verify(eventEmitter, times(0)).emitBottomTabSelected(any(Integer.class), any(Integer.class));
+    }
+
+    @Test
+    public void mergeOptions_drawBehind() {
+        List<ViewController> tabs = createTabs();
+        uut.setTabs(tabs);
+        uut.ensureViewIsCreated();
+        child1.onViewAppeared();
+        uut.selectTab(0);
+
+        assertThat(childLayoutParams(0).bottomMargin).isEqualTo(uut.getBottomTabs().getHeight());
+
+        Options o1 = new Options();
+        o1.bottomTabsOptions.drawBehind = new Bool(true);
+        child1.mergeOptions(o1);
+        assertThat(childLayoutParams(0).bottomMargin).isEqualTo(0);
+
+        Options o2 = new Options();
+        o2.topBar.title.text = new Text("Some text");
+        child1.mergeOptions(o1);
+        assertThat(childLayoutParams(0).bottomMargin).isEqualTo(0);
     }
 
     @Test
@@ -219,5 +251,9 @@ public class BottomTabsControllerTest extends BaseTest {
                 .setId(id)
                 .setInitialOptions(tabOptions)
                 .createStackController();
+    }
+
+    private ViewGroup.MarginLayoutParams childLayoutParams(int index) {
+        return (ViewGroup.MarginLayoutParams) tabs.get(index).getView().getLayoutParams();
     }
 }

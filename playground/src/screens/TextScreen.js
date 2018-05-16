@@ -10,6 +10,7 @@ class TextScreen extends Component {
   static get options() {
     return {
       bottomTabs: {
+        drawBehind: true,
         testID: testIDs.BOTTOM_TABS_ELEMENT
       },
       topBar: {
@@ -62,6 +63,7 @@ class TextScreen extends Component {
       bottomTabs: {
         currentTabIndex: 1,
         visible: false,
+        drawBehind: true,
         animate: true,
         tabColor: 'blue',
         selectedTabColor: 'red'
@@ -81,6 +83,7 @@ class TextScreen extends Component {
     Navigation.mergeOptions(this.props.componentId, {
       bottomTabs: {
         visible,
+        drawBehind: true,
         animate: true
       }
     });
@@ -108,7 +111,7 @@ const styles = {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5fcff'
+    backgroundColor: '#E3DCC3'
   },
   h1: {
     fontSize: 24,

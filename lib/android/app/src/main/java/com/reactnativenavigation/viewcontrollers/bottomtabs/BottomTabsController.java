@@ -3,6 +3,7 @@ package com.reactnativenavigation.viewcontrollers.bottomtabs;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.RestrictTo;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -48,7 +49,7 @@ public class BottomTabsController extends ParentController implements AHBottomNa
 	protected ViewGroup createView() {
 		RelativeLayout root = new RelativeLayout(getActivity());
 		bottomTabs = new BottomTabs(getActivity());
-        presenter = new BottomTabsOptionsPresenter(bottomTabs, this, bottomTabFinder);
+        presenter = new BottomTabsOptionsPresenter(bottomTabs, tabs, this, bottomTabFinder);
         bottomTabs.setOnTabSelectedListener(this);
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
 		lp.addRule(ALIGN_PARENT_BOTTOM);
@@ -65,8 +66,7 @@ public class BottomTabsController extends ParentController implements AHBottomNa
     @Override
     public void applyChildOptions(Options options, Component child) {
         super.applyChildOptions(options, child);
-        final int tabIndex = bottomTabFinder.findByComponent(child);
-        if (tabIndex >= 0) presenter.present(this.options, tabIndex);
+        presenter.presentChildOptions(this.options, child);
         applyOnParentController(parentController ->
                 ((ParentController) parentController).applyChildOptions(this.options.copy().clearBottomTabsOptions().clearBottomTabOptions(), child)
         );
@@ -75,8 +75,7 @@ public class BottomTabsController extends ParentController implements AHBottomNa
     @Override
     public void mergeChildOptions(Options options, Component child) {
         super.mergeChildOptions(options, child);
-        final int tabIndex = bottomTabFinder.findByComponent(child);
-        presenter.present(options, tabIndex);
+        presenter.presentChildOptions(options, child);
         applyOnParentController(parentController ->
                 ((ParentController) parentController).mergeChildOptions(options.copy().clearBottomTabsOptions(), child)
         );
@@ -169,13 +168,16 @@ public class BottomTabsController extends ParentController implements AHBottomNa
     public void selectTab(final int newIndex) {
         getView().removeView(getCurrentView());
         bottomTabs.setCurrentItem(newIndex, false);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        params.bottomMargin = bottomTabs.getHeight();
-        getView().addView(getCurrentView(), params);
+        getView().addView(getCurrentView());
     }
 
     @NonNull
     private ViewGroup getCurrentView() {
         return tabs.get(bottomTabs.getCurrentItem()).getView();
+    }
+
+    @RestrictTo(RestrictTo.Scope.TESTS)
+    public BottomTabs getBottomTabs() {
+        return bottomTabs;
     }
 }

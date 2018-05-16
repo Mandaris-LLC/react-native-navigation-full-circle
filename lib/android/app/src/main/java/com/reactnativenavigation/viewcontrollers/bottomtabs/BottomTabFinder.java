@@ -11,7 +11,7 @@ public class BottomTabFinder {
     private List<ViewController> tabs;
 
     @IntRange(from = -1)
-    int findByComponent(Component component) {
+    public int findByComponent(Component component) {
         for (int i = 0; i < tabs.size(); i++) {
             if (tabs.get(i).containsComponent(component)) {
                 return i;

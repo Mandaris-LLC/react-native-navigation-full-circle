@@ -1,22 +1,30 @@
 package com.reactnativenavigation.presentation;
 
+import android.view.ViewGroup.MarginLayoutParams;
+
 import com.reactnativenavigation.anim.BottomTabsAnimator;
 import com.reactnativenavigation.parse.AnimationsOptions;
 import com.reactnativenavigation.parse.BottomTabOptions;
 import com.reactnativenavigation.parse.BottomTabsOptions;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.viewcontrollers.bottomtabs.BottomTabFinder;
 import com.reactnativenavigation.viewcontrollers.bottomtabs.TabSelector;
 import com.reactnativenavigation.views.BottomTabs;
+import com.reactnativenavigation.views.Component;
+
+import java.util.List;
 
 public class BottomTabsOptionsPresenter {
-    private BottomTabs bottomTabs;
-    private TabSelector tabSelector;
-    private BottomTabFinder bottomTabFinder;
-    private BottomTabsAnimator animator;
+    private final BottomTabs bottomTabs;
+    private final TabSelector tabSelector;
+    private final BottomTabFinder bottomTabFinder;
+    private final BottomTabsAnimator animator;
+    private final List<ViewController> tabs;
 
-    public BottomTabsOptionsPresenter(BottomTabs bottomTabs, TabSelector tabSelector, BottomTabFinder bottomTabFinder) {
+    public BottomTabsOptionsPresenter(BottomTabs bottomTabs, List<ViewController> tabs, TabSelector tabSelector, BottomTabFinder bottomTabFinder) {
         this.bottomTabs = bottomTabs;
+        this.tabs = tabs;
         this.tabSelector = tabSelector;
         this.bottomTabFinder = bottomTabFinder;
         animator = new BottomTabsAnimator(bottomTabs);
@@ -26,15 +34,28 @@ public class BottomTabsOptionsPresenter {
         applyBottomTabsOptions(options.bottomTabsOptions, options.animations);
     }
 
-    public void present(Options options, int tabIndex) {
+    public void presentChildOptions(Options options, Component child) {
         applyBottomTabsOptions(options.bottomTabsOptions, options.animations);
+        int tabIndex = bottomTabFinder.findByComponent(child);
         applyBottomTabOptions(options.bottomTabOptions, tabIndex);
+        applyDrawBehind(options.bottomTabsOptions, tabIndex);
     }
 
     private void applyBottomTabOptions(BottomTabOptions options, int tabIndex) {
         if (options.badge.hasValue()) {
             bottomTabs.setBadge(tabIndex, options.badge);
         }
+    }
+
+    private void applyDrawBehind(BottomTabsOptions options, int tabIndex) {
+        MarginLayoutParams lp = (MarginLayoutParams) tabs.get(tabIndex).getView().getLayoutParams();
+        if (options.drawBehind.isTrue()) {
+            lp.bottomMargin = 0;
+        }
+        if (options.drawBehind.isFalseOrUndefined()) {
+            lp.bottomMargin = bottomTabs.getHeight();
+        }
+
     }
 
     private void applyBottomTabsOptions(BottomTabsOptions options, AnimationsOptions animationsOptions) {
@@ -73,5 +94,4 @@ public class BottomTabsOptionsPresenter {
             }
         }
     }
-
 }

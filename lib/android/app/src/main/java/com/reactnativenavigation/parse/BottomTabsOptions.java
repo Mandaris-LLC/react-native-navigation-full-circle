@@ -27,6 +27,7 @@ public class BottomTabsOptions {
         options.currentTabId = TextParser.parse(json, "currentTabId");
 		options.currentTabIndex = NumberParser.parse(json,"currentTabIndex");
 		options.visible = BoolParser.parse(json,"visible");
+        options.drawBehind = BoolParser.parse(json, "drawBehind");
 		options.animate = BoolParser.parse(json,"animate");
         options.testId = TextParser.parse(json, "testID");
 
@@ -37,6 +38,7 @@ public class BottomTabsOptions {
     public Color tabColor = new NullColor();
     public Color selectedTabColor = new NullColor();
 	public Bool visible = new NullBool();
+    public Bool drawBehind = new NullBool();
 	public Bool animate = new NullBool();
 	public Number currentTabIndex = new NullNumber();
 	public Text currentTabId = new NullText();
@@ -52,6 +54,9 @@ public class BottomTabsOptions {
 		if (other.visible.hasValue()) {
 			visible = other.visible;
 		}
+        if (other.drawBehind.hasValue()) {
+            drawBehind = other.drawBehind;
+        }
 		if (other.animate.hasValue()) {
 			animate = other.animate;
 		}
@@ -78,6 +83,9 @@ public class BottomTabsOptions {
         }
         if (!visible.hasValue()) {
             visible = defaultOptions.visible;
+        }
+        if (!drawBehind.hasValue()) {
+            drawBehind = defaultOptions.drawBehind;
         }
         if (!animate.hasValue()) {
             animate = defaultOptions.animate;
