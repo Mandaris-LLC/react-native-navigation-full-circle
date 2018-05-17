@@ -31,7 +31,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -61,20 +60,23 @@ public class BottomTabsControllerTest extends BaseTest {
         activity = newActivity();
         childRegistry = new ChildControllersRegistry();
         eventEmitter = Mockito.mock(EventEmitter.class);
-        uut = spy(new BottomTabsController(activity, childRegistry, eventEmitter, imageLoaderMock, "uut", new Options()) {
+
+        child1 = spy(new SimpleViewController(activity, childRegistry, "child1", tabOptions));
+        child2 = spy(new SimpleViewController(activity, childRegistry, "child2", tabOptions));
+        child3 = spy(new SimpleViewController(activity, childRegistry, "child3", tabOptions));
+        child4 = spy(new SimpleViewController(activity, childRegistry, "child4", tabOptions));
+        child5 = spy(new SimpleViewController(activity, childRegistry, "child5", tabOptions));
+        when(child5.handleBack(any())).thenReturn(true);
+        tabs = createTabs();
+
+        uut = new BottomTabsController(activity, tabs, childRegistry, eventEmitter, imageLoaderMock, "uut", new Options()) {
             @Override
             public void ensureViewIsCreated() {
                 super.ensureViewIsCreated();
                 uut.getView().layout(0, 0, 1000, 1000);
                 uut.getBottomTabs().layout(0, 0, 1000, 100);
             }
-        });
-        child1 = spy(new SimpleViewController(activity, childRegistry, "child1", tabOptions));
-        child2 = spy(new SimpleViewController(activity, childRegistry, "child2", tabOptions));
-        child3 = spy(new SimpleViewController(activity, childRegistry, "child3", tabOptions));
-        child4 = spy(new SimpleViewController(activity, childRegistry, "child4", tabOptions));
-        child5 = spy(new SimpleViewController(activity, childRegistry, "child5", tabOptions));
-        tabs = createTabs();
+        };
     }
 
     @Test
@@ -85,15 +87,19 @@ public class BottomTabsControllerTest extends BaseTest {
 
     @Test(expected = RuntimeException.class)
     public void setTabs_ThrowWhenMoreThan5() {
-        List<ViewController> tabs = createTabs();
         tabs.add(new SimpleViewController(activity, childRegistry, "6", tabOptions));
-        uut.setTabs(tabs);
+        new BottomTabsController(activity, tabs, childRegistry, eventEmitter, imageLoaderMock, "uut", new Options()) {
+            @Override
+            public void ensureViewIsCreated() {
+                super.ensureViewIsCreated();
+                uut.getView().layout(0, 0, 1000, 1000);
+                uut.getBottomTabs().layout(0, 0, 1000, 100);
+            }
+        };
     }
 
     @Test
     public void setTab_controllerIsSetAsParent() {
-        List<ViewController> tabs = createTabs();
-        uut.setTabs(tabs);
         for (ViewController tab : tabs) {
             assertThat(tab.getParentController()).isEqualTo(uut);
         }
@@ -101,8 +107,6 @@ public class BottomTabsControllerTest extends BaseTest {
 
     @Test
     public void setTabs_AddAllViews() {
-        List<ViewController> tabs = createTabs();
-        uut.setTabs(tabs);
         uut.onViewAppeared();
         assertThat(uut.getView().getChildCount()).isEqualTo(2);
         assertThat(((ViewController) ((List) uut.getChildControllers()).get(0)).getView().getParent()).isNotNull();
@@ -110,7 +114,6 @@ public class BottomTabsControllerTest extends BaseTest {
 
     @Test
     public void onTabSelected() {
-        uut.setTabs(createTabs());
         assertThat(uut.getSelectedIndex()).isZero();
 
         uut.onTabSelected(3, false);
@@ -122,7 +125,6 @@ public class BottomTabsControllerTest extends BaseTest {
 
     @Test
     public void onTabReSelected() {
-        uut.setTabs(createTabs());
         assertThat(uut.getSelectedIndex()).isZero();
 
         uut.onTabSelected(0, false);
@@ -133,38 +135,18 @@ public class BottomTabsControllerTest extends BaseTest {
     }
 
     @Test
-    public void findControllerById_ReturnsSelfOrChildren() {
-        assertThat(uut.findControllerById("123")).isNull();
-        assertThat(uut.findControllerById(uut.getId())).isEqualTo(uut);
-        StackController inner = createStack("inner");
-        inner.push(child1, new CommandListenerAdapter());
-        assertThat(uut.findControllerById(child1.getId())).isNull();
-        uut.setTabs(Collections.singletonList(inner));
-        assertThat(uut.findControllerById(child1.getId())).isEqualTo(child1);
-    }
-
-    @Test
     public void handleBack_DelegatesToSelectedChild() {
         assertThat(uut.handleBack(new CommandListenerAdapter())).isFalse();
-
-        List<ViewController> tabs = createTabs();
-        ViewController spy = spy(tabs.get(2));
-        tabs.set(2, spy);
-        when(spy.handleBack(any())).thenReturn(true);
-        uut.setTabs(tabs);
-
-        assertThat(uut.handleBack(new CommandListenerAdapter())).isFalse();
-        uut.selectTab(2);
+        uut.selectTab(4);
         assertThat(uut.handleBack(new CommandListenerAdapter())).isTrue();
-
-        verify(spy, times(1)).handleBack(any());
+        verify(child5, times(1)).handleBack(any());
     }
 
     @Test
     public void applyOptions_bottomTabsOptionsAreClearedAfterApply() {
-        List<ViewController> tabs = createTabs();
-        child1.options.bottomTabsOptions.tabColor = new Color(android.graphics.Color.RED);
-        uut.setTabs(tabs);
+        Options options = new Options();
+        options.bottomTabsOptions.tabColor = new Color(android.graphics.Color.RED);
+        child1.mergeOptions(options);
         uut.ensureViewIsCreated();
 
         StackController stack = spy(createStack("stack"));
@@ -181,20 +163,18 @@ public class BottomTabsControllerTest extends BaseTest {
 
     @Test
     public void mergeOptions_currentTabIndex() {
-        uut.setTabs(tabs);
         uut.ensureViewIsCreated();
+        assertThat(uut.getSelectedIndex()).isZero();
 
         Options options = new Options();
         options.bottomTabsOptions.currentTabIndex = new Number(1);
         uut.mergeOptions(options);
-        verify(uut, times(1)).selectTab(1);
+        assertThat(uut.getSelectedIndex()).isOne();
         verify(eventEmitter, times(0)).emitBottomTabSelected(any(Integer.class), any(Integer.class));
     }
 
     @Test
     public void mergeOptions_drawBehind() {
-        List<ViewController> tabs = createTabs();
-        uut.setTabs(tabs);
         uut.ensureViewIsCreated();
         child1.onViewAppeared();
         uut.selectTab(0);
@@ -214,8 +194,6 @@ public class BottomTabsControllerTest extends BaseTest {
 
     @Test
     public void child_mergeOptions_currentTabIndex() {
-        List<ViewController> tabs = createTabs();
-        uut.setTabs(tabs);
         uut.ensureViewIsCreated();
 
         assertThat(uut.getSelectedIndex()).isZero();
@@ -229,12 +207,11 @@ public class BottomTabsControllerTest extends BaseTest {
 
     @Test
     public void buttonPressInvokedOnCurrentTab() {
-        uut.setTabs(createTabs());
         uut.ensureViewIsCreated();
-        uut.selectTab(1);
+        uut.selectTab(4);
 
         uut.sendOnNavigationButtonPressed("btn1");
-        verify(child2, times(1)).sendOnNavigationButtonPressed("btn1");
+        verify(child5, times(1)).sendOnNavigationButtonPressed("btn1");
     }
 
     @NonNull

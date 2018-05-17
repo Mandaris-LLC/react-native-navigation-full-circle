@@ -32,16 +32,18 @@ import static android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM;
 public class BottomTabsController extends ParentController implements AHBottomNavigation.OnTabSelectedListener, TabSelector {
 
 	private BottomTabs bottomTabs;
-	private List<ViewController> tabs = new ArrayList<>();
+	private List<ViewController> tabs;
     private EventEmitter eventEmitter;
     private ImageLoader imageLoader;
     private BottomTabsOptionsPresenter presenter;
     private final BottomTabFinder bottomTabFinder = new BottomTabFinder();
 
-    public BottomTabsController(Activity activity, ChildControllersRegistry childRegistry, EventEmitter eventEmitter, ImageLoader imageLoader, String id, Options initialOptions) {
+    public BottomTabsController(Activity activity, List<ViewController> tabs, ChildControllersRegistry childRegistry, EventEmitter eventEmitter, ImageLoader imageLoader, String id, Options initialOptions) {
 		super(activity, childRegistry, id, initialOptions);
+        this.tabs = tabs;
         this.eventEmitter = eventEmitter;
         this.imageLoader = imageLoader;
+        createTabs(tabs);
     }
 
 	@NonNull
@@ -102,8 +104,8 @@ public class BottomTabsController extends ParentController implements AHBottomNa
         selectTab(index);
         return true;
 	}
-	
-	public void setTabs(final List<ViewController> tabs) {
+
+	private void createTabs(final List<ViewController> tabs) {
 		if (tabs.size() > 5) {
 			throw new RuntimeException("Too many tabs!");
 		}
@@ -128,9 +130,7 @@ public class BottomTabsController extends ParentController implements AHBottomNa
             public void onComplete(@NonNull List<Drawable> drawables) {
                 List<AHBottomNavigationItem> tabs = new ArrayList<>();
                 for (int i = 0; i < drawables.size(); i++) {
-                    AHBottomNavigationItem tab = createTab(bottomTabOptionsList.get(i), drawables.get(i));
-                    tabs.add(tab);
-
+                    tabs.add(new AHBottomNavigationItem(bottomTabOptionsList.get(i).title.get(""), drawables.get(i)));
                 }
                 bottomTabs.addItems(tabs);
                 bottomTabs.post(() -> {
@@ -146,11 +146,6 @@ public class BottomTabsController extends ParentController implements AHBottomNa
                 error.printStackTrace();
             }
         });
-
-	}
-
-	private AHBottomNavigationItem createTab(final BottomTabOptions tabOptions, Drawable drawable) {
-        return  new AHBottomNavigationItem(tabOptions.title.get(""), drawable);
 
 	}
 

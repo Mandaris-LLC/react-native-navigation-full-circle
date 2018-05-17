@@ -29,6 +29,7 @@ import org.mockito.Mockito;
 import org.robolectric.android.controller.ActivityController;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -120,12 +121,11 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void push_OnCorrectStackByFindingChildId() {
-        BottomTabsController bottomTabsController = newTabs();
         StackController stack1 = newStack();
         StackController stack2 = newStack();
         stack1.push(child1, new CommandListenerAdapter());
         stack2.push(child2, new CommandListenerAdapter());
-        bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
+        BottomTabsController bottomTabsController = newTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new CommandListenerAdapter());
 
         SimpleViewController newChild = new SimpleViewController(activity, childRegistry, "new child", tabOptions);
@@ -145,10 +145,9 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void pop_FromCorrectStackByFindingChildId() {
-        BottomTabsController bottomTabsController = newTabs();
         StackController stack1 = newStack();
         StackController stack2 = newStack();
-        bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
+        BottomTabsController bottomTabsController = newTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new CommandListenerAdapter());
         stack1.push(child1, new CommandListenerAdapter());
         stack2.push(child2, new CommandListenerAdapter());
@@ -169,14 +168,13 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void popSpecific() {
-        BottomTabsController bottomTabsController = newTabs();
         StackController stack1 = newStack();
         StackController stack2 = newStack();
         stack1.push(child1, new CommandListenerAdapter());
         stack2.push(child2, new CommandListenerAdapter());
         stack2.push(child3, new CommandListenerAdapter());
         stack2.push(child4, new CommandListenerAdapter());
-        bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
+        BottomTabsController bottomTabsController = newTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new CommandListenerAdapter());
 
         uut.popSpecific(child2.getId(), new CommandListenerAdapter());
@@ -186,10 +184,9 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void popTo_FromCorrectStackUpToChild() {
-        BottomTabsController bottomTabsController = newTabs();
         StackController stack1 = newStack();
         StackController stack2 = newStack();
-        bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
+        BottomTabsController bottomTabsController = newTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new CommandListenerAdapter());
 
         stack1.push(child1, new CommandListenerAdapter());
@@ -207,10 +204,9 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void popToRoot() {
-        BottomTabsController bottomTabsController = newTabs();
         StackController stack1 = newStack();
         StackController stack2 = newStack();
-        bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
+        BottomTabsController bottomTabsController = newTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new CommandListenerAdapter());
 
         stack1.push(child1, new CommandListenerAdapter());
@@ -277,8 +273,8 @@ public class NavigatorTest extends BaseTest {
     }
 
     @NonNull
-    private BottomTabsController newTabs() {
-        return new BottomTabsController(activity, childRegistry, eventEmitter, imageLoaderMock, "tabsController", new Options());
+    private BottomTabsController newTabs(List<ViewController> tabs) {
+        return new BottomTabsController(activity, tabs, childRegistry, eventEmitter, imageLoaderMock, "tabsController", new Options());
     }
 
     @NonNull
@@ -338,10 +334,9 @@ public class NavigatorTest extends BaseTest {
 
     @Test
     public void pop_FromCorrectStackByFindingChildId_Promise() {
-        BottomTabsController bottomTabsController = newTabs();
         StackController stack1 = newStack();
         final StackController stack2 = newStack();
-        bottomTabsController.setTabs(Arrays.asList(stack1, stack2));
+        BottomTabsController bottomTabsController = newTabs(Arrays.asList(stack1, stack2));
         uut.setRoot(bottomTabsController, new CommandListenerAdapter());
 
         stack1.push(child1, new CommandListenerAdapter());

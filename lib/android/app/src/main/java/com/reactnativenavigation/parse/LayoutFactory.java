@@ -152,13 +152,11 @@ public class LayoutFactory {
     }
 
     private ViewController createBottomTabs(LayoutNode node) {
-        final BottomTabsController tabsComponent = new BottomTabsController(activity, childRegistry, eventEmitter, new ImageLoader(), node.id, parseNodeOptions(node));
-		List<ViewController> tabs = new ArrayList<>();
-		for (int i = 0; i < node.children.size(); i++) {
+        List<ViewController> tabs = new ArrayList<>();
+        for (int i = 0; i < node.children.size(); i++) {
             tabs.add(create(node.children.get(i)));
-		}
-		tabsComponent.setTabs(tabs);
-		return tabsComponent;
+        }
+        return new BottomTabsController(activity, tabs, childRegistry, eventEmitter, new ImageLoader(), node.id, parseNodeOptions(node));
 	}
 
     private ViewController createTopTabs(LayoutNode node) {
