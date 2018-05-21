@@ -30,6 +30,7 @@
 			_completionBlock();
 			_completionBlock = nil;
 		}
+		self.toVC = nil;
 	}];
 }
 
