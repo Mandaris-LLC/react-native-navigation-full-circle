@@ -9,6 +9,7 @@ import com.reactnativenavigation.anim.FabAnimator;
 import com.reactnativenavigation.anim.FabCollapseBehaviour;
 import com.reactnativenavigation.interfaces.ScrollEventListener;
 import com.reactnativenavigation.utils.ImageLoader;
+import com.reactnativenavigation.utils.ImageLoadingListenerAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Fab extends FloatingActionButton implements FabAnimator {
     }
 
     public void applyIcon(String icon) {
-        new ImageLoader().loadIcons(getContext(), Collections.singletonList(icon), new ImageLoader.ImagesLoadingListener() {
+        new ImageLoader().loadIcons(getContext(), Collections.singletonList(icon), new ImageLoadingListenerAdapter() {
             @Override
             public void onComplete(@NonNull List<Drawable> drawables) {
                 setImageDrawable(drawables.get(0));

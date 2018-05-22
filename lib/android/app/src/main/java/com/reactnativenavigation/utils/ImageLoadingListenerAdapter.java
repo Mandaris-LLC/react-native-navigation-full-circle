@@ -12,6 +12,11 @@ public class ImageLoadingListenerAdapter implements ImageLoader.ImagesLoadingLis
     }
 
     @Override
+    public void onComplete(@NonNull Drawable drawable) {
+
+    }
+
+    @Override
     public void onError(Throwable error) {
         error.printStackTrace();
     }

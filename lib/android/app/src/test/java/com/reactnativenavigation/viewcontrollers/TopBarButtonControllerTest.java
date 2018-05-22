@@ -18,6 +18,7 @@ import com.reactnativenavigation.parse.params.NullText;
 import com.reactnativenavigation.parse.params.Number;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.ButtonOptionsPresenter;
+import com.reactnativenavigation.viewcontrollers.button.NavigationIconResolver;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 
@@ -58,7 +59,7 @@ public class TopBarButtonControllerTest extends BaseTest {
         getTitleBar().layout(0, 0, 1080, 200);
 
         optionsPresenter = spy(new ButtonOptionsPresenter(getTitleBar(), button));
-        uut = new TopBarButtonController(activity, ImageLoaderMock.mock(), optionsPresenter, button, buttonCreatorMock, (buttonId) -> {});
+        uut = new TopBarButtonController(activity, new NavigationIconResolver(activity, ImageLoaderMock.mock()), ImageLoaderMock.mock(), optionsPresenter, button, buttonCreatorMock, (buttonId) -> {});
 
         stackController.ensureViewIsCreated();
     }

@@ -7,6 +7,8 @@ import android.support.v4.view.ViewPager;
 
 import com.reactnativenavigation.anim.NavigationAnimator;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.parse.params.Button;
+import com.reactnativenavigation.react.Constants;
 import com.reactnativenavigation.utils.CommandListener;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
@@ -17,7 +19,9 @@ import com.reactnativenavigation.views.StackLayout;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
 import com.reactnativenavigation.views.topbar.TopBar;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -88,6 +92,7 @@ public class StackController extends ParentController<StackLayout> {
         final ViewController toRemove = stack.peek();
         child.setParentController(this);
         stack.push(child.getId(), child);
+        addBackButton(child);
         getView().addView(child.getView(), MATCH_PARENT, MATCH_PARENT);
 
         if (toRemove != null) {
@@ -103,6 +108,15 @@ public class StackController extends ParentController<StackLayout> {
         } else {
             listener.onSuccess(child.getId());
         }
+    }
+
+    private void addBackButton(ViewController child) {
+        if (size() <= 1 || child.options.topBar.leftButtons != null) return;
+        Options options = new Options();
+        Button back = new Button();
+        back.id = Constants.BACK_BUTTON_ID;
+        options.topBar.leftButtons = new ArrayList<>(Collections.singleton(back));
+        child.mergeOptions(options);
     }
 
     public void setRoot(ViewController child, CommandListener listener) {
@@ -227,15 +241,30 @@ public class StackController extends ParentController<StackLayout> {
         return stack.size() > 1;
     }
 
-    @Override
-    public void sendOnNavigationButtonPressed(String buttonId) {
-        peek().sendOnNavigationButtonPressed(buttonId);
-    }
-
     @NonNull
     @Override
     protected StackLayout createView() {
-        return new StackLayout(getActivity(), topBarButtonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarController, this::sendOnNavigationButtonPressed, getId());
+        return new StackLayout(getActivity(),
+                topBarButtonCreator,
+                titleBarReactViewCreator,
+                topBarBackgroundViewController,
+                topBarController,
+                this::onNavigationButtonPressed,
+                getId()
+        );
+    }
+
+    private void onNavigationButtonPressed(String buttonId) {
+        if (Constants.BACK_BUTTON_ID.equals(buttonId)) {
+            pop(new CommandListenerAdapter());
+        } else {
+            sendOnNavigationButtonPressed(buttonId);
+        }
+    }
+
+    @Override
+    public void sendOnNavigationButtonPressed(String buttonId) {
+        peek().sendOnNavigationButtonPressed(buttonId);
     }
 
     @NonNull

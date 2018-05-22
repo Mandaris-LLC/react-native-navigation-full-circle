@@ -20,6 +20,7 @@ import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.viewcontrollers.ReactViewCreator;
 import com.reactnativenavigation.viewcontrollers.TitleBarReactViewController;
 import com.reactnativenavigation.viewcontrollers.TopBarButtonController;
+import com.reactnativenavigation.viewcontrollers.button.NavigationIconResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -194,7 +195,15 @@ public class TitleBar extends Toolbar {
     }
 
     public TopBarButtonController createButtonController(Button button) {
-        return new TopBarButtonController((Activity) getContext(), new ImageLoader(), new ButtonOptionsPresenter(this, button), button, buttonCreator, onClickListener);
+        ImageLoader imageLoader = new ImageLoader();
+        return new TopBarButtonController((Activity) getContext(),
+                new NavigationIconResolver(getContext(), imageLoader),
+                imageLoader,
+                new ButtonOptionsPresenter(this, button),
+                button,
+                buttonCreator,
+                onClickListener
+        );
     }
 
     public Toolbar.LayoutParams getComponentLayoutParams(Component component) {

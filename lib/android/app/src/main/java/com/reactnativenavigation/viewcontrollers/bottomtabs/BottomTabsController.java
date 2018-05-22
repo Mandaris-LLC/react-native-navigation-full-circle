@@ -15,6 +15,7 @@ import com.reactnativenavigation.presentation.BottomTabsOptionsPresenter;
 import com.reactnativenavigation.react.EventEmitter;
 import com.reactnativenavigation.utils.CommandListener;
 import com.reactnativenavigation.utils.ImageLoader;
+import com.reactnativenavigation.utils.ImageLoadingListenerAdapter;
 import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
 import com.reactnativenavigation.viewcontrollers.ParentController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
@@ -124,7 +125,7 @@ public class BottomTabsController extends ParentController implements AHBottomNa
             icons.add(tabOptions.icon.get());
         }
 
-        imageLoader.loadIcons(getActivity(), icons, new ImageLoader.ImagesLoadingListener() {
+        imageLoader.loadIcons(getActivity(), icons, new ImageLoadingListenerAdapter() {
 
             @Override
             public void onComplete(@NonNull List<Drawable> drawables) {

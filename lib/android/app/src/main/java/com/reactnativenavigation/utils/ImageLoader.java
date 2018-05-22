@@ -26,11 +26,20 @@ public class ImageLoader {
     public interface ImagesLoadingListener {
         void onComplete(@NonNull List<Drawable> drawable);
 
+        void onComplete(@NonNull Drawable drawable);
+
         void onError(Throwable error);
     }
 
     private static final String FILE_SCHEME = "file";
 
+    public void loadIcon(Context context, String uri, ImagesLoadingListener listener) {
+        try {
+            listener.onComplete(getDrawable(context, uri));
+        } catch (IOException e) {
+            listener.onError(e);
+        }
+    }
 
     public void loadIcons(final Context context, List<String> uris, ImagesLoadingListener listener) {
         try {

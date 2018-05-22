@@ -13,6 +13,7 @@ import com.reactnativenavigation.mocks.TopBarButtonCreatorMock;
 import com.reactnativenavigation.parse.NestedAnimationsOptions;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Bool;
+import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.ViewHelper;
@@ -29,6 +30,9 @@ import org.json.JSONObject;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -88,6 +92,36 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
+    public void push_backButtonIsAddedIfStackContainsMoreThenOneScreen() {
+        uut.push(child1, new CommandListenerAdapter());
+        verify(child1, times(0)).mergeOptions(any());
+
+        uut.push(child2, new CommandListenerAdapter());
+        ArgumentCaptor<Options> captor = ArgumentCaptor.forClass(Options.class);
+        verify(child2, times(1)).mergeOptions(captor.capture());
+        assertThat(captor.getValue().topBar.leftButtons).isNotNull();
+        assertThat(captor.getValue().topBar.leftButtons.get(0).id).isEqualTo("RNN.back");
+    }
+
+    @Test
+    public void push_backButtonIsNotAddedIfScreenContainsLeftButtons() {
+        uut.push(child1, new CommandListenerAdapter());
+
+        Button leftButton = new Button();
+        leftButton.id = "someButton";
+        child2.options.topBar.leftButtons = new ArrayList<>(Collections.singleton(leftButton));
+        uut.push(child2, new CommandListenerAdapter());
+        verify(child2, times(0)).mergeOptions(any());
+    }
+
+    @Test
+    public void push_backButtonIsNotAddedIfScreenClearsLeftButton() {
+        child1.options.topBar.leftButtons = new ArrayList<>();
+        uut.push(child1, new CommandListenerAdapter());
+        verify(child1, times(0)).mergeOptions(any());
+    }
+
+    @Test
     public void animateSetRoot() {
         assertThat(uut.isEmpty()).isTrue();
         uut.push(child1, new CommandListenerAdapter());
@@ -105,10 +139,12 @@ public class StackControllerTest extends BaseTest {
         assertThat(uut.isEmpty()).isTrue();
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
+        assertThat(uut.getTopBar().getTitleBar().getNavigationIcon()).isNotNull();
         uut.setRoot(child3, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
                 assertContainsOnlyId(child3.getId());
+                assertThat(uut.getTopBar().getTitleBar().getNavigationIcon()).isNull();
             }
         });
     }
@@ -141,8 +177,7 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void pop_layoutHandlesChildWillDisappear() {
         final StackLayout[] stackLayout = new StackLayout[1];
-        uut =
-                new StackControllerBuilder(activity)
+        uut = new StackControllerBuilder(activity)
                         .setTopBarButtonCreator(new TopBarButtonCreatorMock())
                         .setTitleBarReactViewCreator(new TitleBarReactViewCreatorMock())
                         .setTopBarBackgroundViewController(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()))
@@ -722,13 +757,7 @@ public class StackControllerTest extends BaseTest {
     }
 
     private StackController createStackController(String id) {
-        topBarController = spy(new TopBarController() {
-            @Override
-            protected TopBar createTopBar(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
-                TopBar topBar = spy(super.createTopBar(context, buttonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarButtonClickListener, stackLayout));
-                return topBar;
-            }
-        });
+        createTopBarController();
         return new StackControllerBuilder(activity)
                 .setChildRegistry(childRegistry)
                 .setTopBarButtonCreator(new TopBarButtonCreatorMock())
@@ -739,5 +768,14 @@ public class StackControllerTest extends BaseTest {
                 .setId(id)
                 .setInitialOptions(new Options())
                 .createStackController();
+    }
+
+    private void createTopBarController() {
+        topBarController = spy(new TopBarController() {
+            @Override
+            protected TopBar createTopBar(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
+                return spy(super.createTopBar(context, buttonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarButtonClickListener, stackLayout));
+            }
+        });
     }
 }

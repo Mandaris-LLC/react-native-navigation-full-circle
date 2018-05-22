@@ -1,12 +1,12 @@
 package com.reactnativenavigation.viewcontrollers;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,6 +20,7 @@ import com.reactnativenavigation.utils.ImageLoader;
 import com.reactnativenavigation.utils.ImageLoadingListenerAdapter;
 import com.reactnativenavigation.utils.UiUtils;
 import com.reactnativenavigation.utils.ViewUtils;
+import com.reactnativenavigation.viewcontrollers.button.NavigationIconResolver;
 import com.reactnativenavigation.views.titlebar.TitleBarReactButtonView;
 
 import java.util.Collections;
@@ -30,6 +31,7 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
         void onPress(String buttonId);
     }
 
+    private final NavigationIconResolver navigationIconResolver;
     private final ImageLoader imageLoader;
     private ButtonOptionsPresenter optionsPresenter;
     private final Button button;
@@ -37,8 +39,9 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
     private TopBarButtonController.OnClickListener onPressListener;
     private Drawable icon;
 
-    public TopBarButtonController(Activity activity, ImageLoader imageLoader, ButtonOptionsPresenter optionsPresenter, Button button, ReactViewCreator viewCreator, OnClickListener onClickListener) {
+    public TopBarButtonController(Activity activity, NavigationIconResolver navigationIconResolver, ImageLoader imageLoader, ButtonOptionsPresenter optionsPresenter, Button button, ReactViewCreator viewCreator, OnClickListener onClickListener) {
         super(activity, button.id, new Options());
+        this.navigationIconResolver = navigationIconResolver;
         this.imageLoader = imageLoader;
         this.optionsPresenter = optionsPresenter;
         this.button = button;
@@ -46,11 +49,13 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
         this.onPressListener = onClickListener;
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onViewAppeared() {
         view.sendComponentStart();
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onViewDisappear() {
         view.sendComponentStop();
@@ -75,25 +80,11 @@ public class TopBarButtonController extends ViewController<TitleBarReactButtonVi
     }
 
     public void applyNavigationIcon(Toolbar toolbar) {
-        if (!button.hasIcon()) {
-            Log.w("RNN", "Left button needs to have an icon");
-            return;
-        }
-
-        imageLoader.loadIcons(toolbar.getContext(), Collections.singletonList(button.icon.get()), new ImageLoader.ImagesLoadingListener() {
-            @Override
-            public void onComplete(@NonNull List<Drawable> drawables) {
-                icon = drawables.get(0);
-                setIconColor(icon);
-                toolbar.setNavigationOnClickListener(view -> onPressListener.onPress(button.id));
-                toolbar.setNavigationIcon(icon);
-                setLeftButtonTestId(toolbar);
-            }
-
-            @Override
-            public void onError(Throwable error) {
-                error.printStackTrace();
-            }
+        navigationIconResolver.resolve(button, icon -> {
+            setIconColor(icon);
+            toolbar.setNavigationOnClickListener(view -> onPressListener.onPress(button.id));
+            toolbar.setNavigationIcon(icon);
+            setLeftButtonTestId(toolbar);
         });
     }
 

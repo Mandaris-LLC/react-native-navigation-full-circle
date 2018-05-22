@@ -12,6 +12,7 @@ import com.reactnativenavigation.parse.Alignment;
 import com.reactnativenavigation.parse.Component;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.react.Constants;
 import com.reactnativenavigation.react.ReactView;
 import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.views.titlebar.TitleBar;
@@ -60,8 +61,7 @@ public class TitleBarTest extends BaseTest {
 
     private void createButtons() {
         leftButton = new Button();
-        leftButton.id = "back";
-        leftButton.title = new Text("abc");
+        leftButton.id = Constants.BACK_BUTTON_ID;
 
         textButton = new Button();
         textButton.id = "textButton";
@@ -100,7 +100,6 @@ public class TitleBarTest extends BaseTest {
 
     @Test
     public void setRightButtons_destroysRightButtons() {
-        uut.setLeftButtons(leftButton(leftButton));
         uut.setRightButtons(rightButtons(customButton));
         uut.setLeftButtons(leftButton(leftButton));
         uut.setRightButtons(rightButtons(textButton));
