@@ -11,9 +11,14 @@ import { ComponentProvider } from 'react-native';
 import { Element } from './adapters/Element';
 import { ComponentEventsObserver } from './events/ComponentEventsObserver';
 import { CommandsObserver } from './events/CommandsObserver';
+import { Constants } from './constants/Constants';
+import { NativeModules } from 'react-native';
+
+const NavigationModule = NativeModules.RNNBridgeModule;
 
 export class Navigation {
   public readonly Element: React.ComponentType<{ elementId: any; resizeMode: any; }>;
+  public readonly constants = new Constants(NavigationModule);
 
   private readonly store;
   private readonly nativeEventsReceiver;

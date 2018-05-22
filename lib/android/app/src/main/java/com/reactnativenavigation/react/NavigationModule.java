@@ -24,6 +24,7 @@ import com.reactnativenavigation.viewcontrollers.externalcomponent.ExternalCompo
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class NavigationModule extends ReactContextBaseJavaModule {
@@ -44,6 +45,13 @@ public class NavigationModule extends ReactContextBaseJavaModule {
 	public String getName() {
 		return NAME;
 	}
+
+	@Override
+    public Map<String, Object> getConstants() {
+        final Map<String, Object> constants = new HashMap<>();
+        constants.put(Constants.BACK_BUTTON_JS_KEY, Constants.BACK_BUTTON_ID);
+        return constants;
+    }
 
 	@ReactMethod
 	public void setRoot(String commandId, ReadableMap rawLayoutTree, Promise promise) {
