@@ -29,6 +29,8 @@ describe('modal', () => {
     await elementById(testIDs.DISMISS_MODAL_BUTTON).tap();
     await expect(elementByLabel('componentWillUnmount')).toBeVisible();
     await elementByLabel('OK').atIndex(0).tap();
+    await expect(elementByLabel('didDisappear')).toBeVisible();
+    await elementByLabel('OK').atIndex(0).tap();
   });
 
   it('show multiple modals', async () => {
