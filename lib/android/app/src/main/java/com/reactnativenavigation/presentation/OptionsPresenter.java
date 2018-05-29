@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewGroup.MarginLayoutParams;
 
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.OrientationOptions;
@@ -39,6 +39,9 @@ public class OptionsPresenter {
     private void applyViewOptions(View view, Options options) {
         if (options.layout.backgroundColor.hasValue()) {
             view.setBackgroundColor(options.layout.backgroundColor.get());
+        }
+        if (options.layout.topMargin.hasValue()) {
+            ((MarginLayoutParams) view.getLayoutParams()).topMargin = options.layout.topMargin.get();
         }
     }
 
@@ -86,7 +89,7 @@ public class OptionsPresenter {
     }
 
     private void setDrawBehindStatusBar(View view, StatusBarOptions statusBar) {
-        ((ViewGroup.MarginLayoutParams) view.getLayoutParams()).topMargin = statusBar.drawBehind.isFalseOrUndefined() ?
+        ((MarginLayoutParams) view.getLayoutParams()).topMargin = statusBar.drawBehind.isFalseOrUndefined() ?
                 UiUtils.getStatusBarHeight(activity) :
                 0;
     }

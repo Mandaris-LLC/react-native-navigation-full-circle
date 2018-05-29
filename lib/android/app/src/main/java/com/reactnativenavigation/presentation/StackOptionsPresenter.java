@@ -79,7 +79,7 @@ public class StackOptionsPresenter {
                 topBar.show();
             }
         }
-        if (options.drawBehind.isTrue()) {
+        if (options.drawBehind.isTrue() && !componentOptions.layout.topMargin.hasValue()) {
             component.drawBehindTopBar();
         } else if (options.drawBehind.isFalseOrUndefined()) {
             component.drawBelowTopBar(topBar);
