@@ -74,6 +74,7 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
     }
 
     public void setHeight(int height) {
+        if (height == getLayoutParams().height) return;
         ViewGroup.LayoutParams lp = getLayoutParams();
         lp.height = (int) UiUtils.dpToPx(getContext(), height);
         setLayoutParams(lp);
