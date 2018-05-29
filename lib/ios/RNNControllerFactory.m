@@ -2,6 +2,8 @@
 #import "RNNControllerFactory.h"
 #import "RNNLayoutNode.h"
 #import "RNNRootViewController.h"
+#import "RNNSplitViewController.h"
+#import "RNNSplitViewOptions.h"
 #import "RNNSideMenuController.h"
 #import "RNNSideMenuChildVC.h"
 #import "RNNNavigationOptions.h"
@@ -77,6 +79,10 @@
 	
 	else if (node.isExternalComponent) {
 		result = [self createExternalComponent:node];
+	}
+	
+	else if (node.isSplitView) {
+		result = [self createSplitView:node];
 	}
 	
 	if (!result) {
@@ -202,6 +208,30 @@
 	[_bridge.uiManager setAvailableSize:availableSize forRootView:vc.view];
 	
 	return vc;
+}
+
+- (UIViewController<RNNRootViewProtocol> *)createSplitView:(RNNLayoutNode*)node {
+
+	NSString* componentId = node.nodeId;
+	
+	RNNSplitViewOptions* options = [[RNNSplitViewOptions alloc] initWithDict:_defaultOptionsDict];
+	[options mergeWith:node.data[@"options"]];
+
+	RNNSplitViewController* svc = [[RNNSplitViewController alloc] initWithOptions:options withComponentId:componentId rootViewCreator:_creator eventEmitter:_eventEmitter];
+
+	// We need two children of the node for successful Master / Detail
+	NSDictionary *master = node.children[0];
+	NSDictionary *detail = node.children[1];
+
+	// Create view controllers
+	RNNRootViewController* masterVc = (RNNRootViewController*)[self fromTree:master];
+	RNNRootViewController* detailVc = (RNNRootViewController*)[self fromTree:detail];
+
+	// Set the controllers and delegate to masterVC
+	svc.viewControllers = [NSArray arrayWithObjects:masterVc, detailVc, nil];
+	svc.delegate = masterVc;
+
+	return svc;
 }
 
 @end
