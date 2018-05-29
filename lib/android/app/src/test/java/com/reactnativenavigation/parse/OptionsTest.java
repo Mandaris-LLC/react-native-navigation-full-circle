@@ -67,11 +67,13 @@ public class OptionsTest extends BaseTest {
 
     @Test
     public void parsesJson() throws Exception {
+        JSONObject layout = new JSONObject()
+                .put("backgroundColor", SCREEN_BACKGROUND_COLOR);
         JSONObject json = new JSONObject()
                 .put("topBar", createTopBar(TOP_BAR_VISIBLE.get()))
                 .put("fab", createFab())
                 .put("bottomTabs", createBottomTabs())
-                .put("screenBackgroundColor",SCREEN_BACKGROUND_COLOR);
+                .put("layout", layout);
         Options result = Options.parse(mockLoader, json);
         assertResult(result);
     }
@@ -99,7 +101,7 @@ public class OptionsTest extends BaseTest {
         assertThat(result.fabOptions.hideOnScroll.get()).isEqualTo(FAB_HIDE_ON_SCROLL);
         assertThat(result.fabOptions.alignVertically.get()).isEqualTo(FAB_ALIGN_VERTICALLY);
         assertThat(result.fabOptions.alignHorizontally.get()).isEqualTo(FAB_ALIGN_HORIZONTALLY);
-        assertThat(result.screenBackgroundColor.get()).isEqualTo(SCREEN_BACKGROUND_COLOR);
+        assertThat(result.layout.backgroundColor.get()).isEqualTo(SCREEN_BACKGROUND_COLOR);
     }
 
     @NonNull
@@ -209,11 +211,13 @@ public class OptionsTest extends BaseTest {
 
     @Test
     public void mergeDefaultOptions() throws Exception {
+        JSONObject layout = new JSONObject()
+                .put("backgroundColor", SCREEN_BACKGROUND_COLOR);
         JSONObject json = new JSONObject()
                 .put("topBar", createTopBar(TOP_BAR_VISIBLE.get()))
                 .put("fab", createFab())
                 .put("bottomTabs", createBottomTabs())
-                .put("screenBackgroundColor",SCREEN_BACKGROUND_COLOR);
+                .put("layout", layout);
         Options defaultOptions = Options.parse(mockLoader, json);
         Options options = new Options();
 
@@ -222,11 +226,13 @@ public class OptionsTest extends BaseTest {
 
     @Test
     public void mergedDefaultOptionsDontOverrideGivenOptions() throws Exception {
+        JSONObject layout = new JSONObject()
+                .put("backgroundColor", SCREEN_BACKGROUND_COLOR);
         JSONObject defaultJson = new JSONObject()
                 .put("topBar", createOtherTopBar())
                 .put("fab", createOtherFab())
                 .put("bottomTabs", createOtherBottomTabs())
-                .put("screenBackgroundColor",SCREEN_BACKGROUND_COLOR);
+                .put("layout", layout);
         Options defaultOptions = Options.parse(mockLoader, defaultJson);
 
         JSONObject json = new JSONObject()
@@ -241,7 +247,7 @@ public class OptionsTest extends BaseTest {
     public void defaultEmptyOptions() {
         Options uut = new Options();
         assertThat(uut.topBar.title.text.get("")).isEmpty();
-        assertThat(uut.screenBackgroundColor.hasValue()).isFalse();
+        assertThat(uut.layout.backgroundColor.hasValue()).isFalse();
 
     }
 

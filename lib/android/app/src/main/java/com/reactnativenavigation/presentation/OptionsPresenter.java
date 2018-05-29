@@ -37,8 +37,8 @@ public class OptionsPresenter {
     }
 
     private void applyViewOptions(View view, Options options) {
-        if (options.screenBackgroundColor.hasValue()) {
-            view.setBackgroundColor(options.screenBackgroundColor.get());
+        if (options.layout.backgroundColor.hasValue()) {
+            view.setBackgroundColor(options.layout.backgroundColor.get());
         }
     }
 
