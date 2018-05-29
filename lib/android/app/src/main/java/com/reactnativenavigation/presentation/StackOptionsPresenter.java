@@ -33,7 +33,7 @@ public class StackOptionsPresenter {
     }
 
     public void applyChildOptions(Options options, Component child) {
-        applyOrientation(options.orientationOptions);
+        applyOrientation(options.layout.orientation);
         applyButtons(options.topBar.leftButtons, options.topBar.rightButtons);
         applyTopBarOptions(options.topBar, options.animations, child, options);
         applyTopTabsOptions(options.topTabsOptions);
@@ -119,7 +119,7 @@ public class StackOptionsPresenter {
     }
 
     public void mergeChildOptions(Options options, Component child) {
-        mergeOrientation(options.orientationOptions);
+        mergeOrientation(options.layout.orientation);
         mergeButtons(options.topBar.leftButtons, options.topBar.rightButtons);
         mergeTopBarOptions(options.topBar, options.animations, child);
         mergeTopTabsOptions(options.topTabsOptions);

@@ -48,16 +48,8 @@ public class OrientationOptions {
         }
     }
 
-    public void mergeWith(OrientationOptions other) {
-        if (other.hasValue()) orientations = other.orientations;
-    }
-
     public boolean hasValue() {
         return !orientations.isEmpty();
-    }
-
-    public void mergeWithDefault(OrientationOptions defaultOptions) {
-        if (!hasValue()) orientations = defaultOptions.orientations;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class OptionsPresenter {
     }
 
     public void present(View view, Options options) {
-        applyOrientation(options.orientationOptions);
+        applyOrientation(options.layout.orientation);
         applyViewOptions(view, options);
         applyStatusBarOptions(view, options.statusBar);
     }

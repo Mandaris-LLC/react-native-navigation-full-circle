@@ -16,7 +16,9 @@ class ModalScreen extends Component {
         drawBehind: true,
         backgroundColor: 'transparent'
       },
-      orientation: ['portrait']
+      layout: {
+        orientation: ['portrait']
+      }
     };
   }
 

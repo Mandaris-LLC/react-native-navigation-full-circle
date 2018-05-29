@@ -24,7 +24,6 @@ public class Options {
         Options result = new Options();
         if (json == null) return result.withDefaultOptions(defaultOptions);
 
-        result.orientationOptions = OrientationOptions.parse(json);
         result.topBar = TopBarOptions.parse(typefaceManager, json.optJSONObject("topBar"));
         result.topTabsOptions = TopTabsOptions.parse(json.optJSONObject("topTabs"));
         result.topTabOptions = TopTabOptions.parse(typefaceManager, json.optJSONObject("topTab"));
@@ -37,11 +36,11 @@ public class Options {
         result.screenBackgroundColor = ColorParser.parse(json, "screenBackgroundColor");
         result.modal = ModalOptions.parse(json);
         result.statusBar = StatusBarOptions.parse(json.optJSONObject("statusBar"));
+        result.layout = LayoutOptions.parse(json.optJSONObject("layout"));
 
         return result.withDefaultOptions(defaultOptions);
     }
 
-    @NonNull public OrientationOptions orientationOptions = new OrientationOptions();
     @NonNull public TopBarOptions topBar = new TopBarOptions();
     @NonNull public TopTabsOptions topTabsOptions = new TopTabsOptions();
     @NonNull public TopTabOptions topTabOptions = new TopTabOptions();
@@ -54,6 +53,7 @@ public class Options {
     @NonNull public Color screenBackgroundColor = new NullColor();
     @NonNull public ModalOptions modal = new ModalOptions();
     @NonNull public StatusBarOptions statusBar = new StatusBarOptions();
+    @NonNull public LayoutOptions layout = new LayoutOptions();
 
     void setTopTabIndex(int i) {
         topTabOptions.tabIndex = i;
@@ -62,7 +62,6 @@ public class Options {
     @CheckResult
     public Options copy() {
         Options result = new Options();
-        result.orientationOptions.mergeWith(orientationOptions);
         result.topBar.mergeWith(topBar);
         result.topTabsOptions.mergeWith(topTabsOptions);
         result.topTabOptions.mergeWith(topTabOptions);
@@ -75,13 +74,13 @@ public class Options {
         result.screenBackgroundColor = screenBackgroundColor;
         result.modal.mergeWith(modal);
         result.statusBar.mergeWith(statusBar);
+        result.layout.mergeWith(layout);
         return result;
     }
 
     @CheckResult
 	public Options mergeWith(final Options other) {
         Options result = copy();
-        result.orientationOptions.mergeWith(other.orientationOptions);
         result.topBar.mergeWith(other.topBar);
         result.topTabsOptions.mergeWith(other.topTabsOptions);
         result.topTabOptions.mergeWith(other.topTabOptions);
@@ -93,11 +92,11 @@ public class Options {
         if (other.screenBackgroundColor.hasValue()) result.screenBackgroundColor = other.screenBackgroundColor;
         result.modal.mergeWith(other.modal);
         result.statusBar.mergeWith(other.statusBar);
+        result.layout.mergeWith(other.layout);
         return result;
     }
 
     Options withDefaultOptions(final Options defaultOptions) {
-        orientationOptions.mergeWithDefault(defaultOptions.orientationOptions);
         topBar.mergeWithDefault(defaultOptions.topBar);
         topTabOptions.mergeWithDefault(defaultOptions.topTabOptions);
         topTabsOptions.mergeWithDefault(defaultOptions.topTabsOptions);
@@ -109,6 +108,7 @@ public class Options {
         if (!screenBackgroundColor.hasValue()) screenBackgroundColor = defaultOptions.screenBackgroundColor;
         modal.mergeWithDefault(defaultOptions.modal);
         statusBar.mergeWithDefault(defaultOptions.statusBar);
+        layout.mergeWithDefault(defaultOptions.layout);
         return this;
     }
 

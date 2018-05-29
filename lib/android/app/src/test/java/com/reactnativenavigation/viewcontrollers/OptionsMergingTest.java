@@ -55,9 +55,9 @@ public class OptionsMergingTest extends BaseTest {
         verify(uut, times(0)).applyOrientation(any());
 
         JSONObject orientation = new JSONObject().put("orientation", "landscape");
-        options.orientationOptions = OrientationOptions.parse(orientation);
+        options.layout.orientation = OrientationOptions.parse(orientation);
         uut.mergeChildOptions(options, child);
-        verify(uut, times(1)).applyOrientation(options.orientationOptions);
+        verify(uut, times(1)).applyOrientation(options.layout.orientation);
     }
 
     @Test

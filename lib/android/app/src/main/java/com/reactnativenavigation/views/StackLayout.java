@@ -34,7 +34,7 @@ public class StackLayout extends RelativeLayout {
     }
 
     public void applyChildOptions(Options options) {
-        optionsPresenter.applyOrientation(options.orientationOptions);
+        optionsPresenter.applyOrientation(options.layout.orientation);
     }
 
     public void applyChildOptions(Options options, Component child) {
