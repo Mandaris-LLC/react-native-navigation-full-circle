@@ -30,8 +30,8 @@ Navigation.events().registerComponentDidAppearListener((componentId, componentNa
 ```
 |       Parameter         | Description |
 |:--------------------:|:-----|
-**componentId**| Id of the appearing component|
-**componentName**|Registered name used when registering the component with `Navigation.registerComponent()`|
+|**componentId**| Id of the appearing component|
+|**componentName**|Registered name used when registering the component with `Navigation.registerComponent()`|
 
 ## componentDidDisappear
 Called each time this component disappears from screen (detached from the view heirarchy)
@@ -53,8 +53,8 @@ Navigation.events().registerComponentDidDisappearListener((componentId, componen
 ```
 |       Parameter         | Description |
 |:--------------------:|:-----|
-**componentId**| Id of the disappearing component|
-**componentName**|Registered name used when registering the component with `Navigation.registerComponent()`|
+|**componentId**| Id of the disappearing component|
+|**componentName**|Registered name used when registering the component with `Navigation.registerComponent()`|
 
 ## registerCommandListener
 The `commandListener` is called whenever a *Navigation command* (i.e push, pop, showModal etc) is invoked.
