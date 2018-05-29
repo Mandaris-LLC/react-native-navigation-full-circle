@@ -3,11 +3,8 @@ package com.reactnativenavigation.parse;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
-import com.reactnativenavigation.parse.params.Color;
-import com.reactnativenavigation.parse.params.NullColor;
 import com.reactnativenavigation.parse.params.NullNumber;
 import com.reactnativenavigation.parse.params.NullText;
-import com.reactnativenavigation.parse.parsers.ColorParser;
 import com.reactnativenavigation.utils.TypefaceLoader;
 
 import org.json.JSONObject;
@@ -33,7 +30,6 @@ public class Options {
         result.fabOptions = FabOptions.parse(json.optJSONObject("fab"));
         result.sideMenuRootOptions = SideMenuRootOptions.parse(json.optJSONObject("sideMenu"));
         result.animations = AnimationsOptions.parse(json.optJSONObject("animations"));
-        result.screenBackgroundColor = ColorParser.parse(json, "screenBackgroundColor");
         result.modal = ModalOptions.parse(json);
         result.statusBar = StatusBarOptions.parse(json.optJSONObject("statusBar"));
         result.layout = LayoutOptions.parse(json.optJSONObject("layout"));
@@ -50,7 +46,6 @@ public class Options {
     @NonNull public FabOptions fabOptions = new FabOptions();
     @NonNull public AnimationsOptions animations = new AnimationsOptions();
     @NonNull public SideMenuRootOptions sideMenuRootOptions = new SideMenuRootOptions();
-    @NonNull public Color screenBackgroundColor = new NullColor();
     @NonNull public ModalOptions modal = new ModalOptions();
     @NonNull public StatusBarOptions statusBar = new StatusBarOptions();
     @NonNull public LayoutOptions layout = new LayoutOptions();
@@ -71,7 +66,6 @@ public class Options {
         result.fabOptions.mergeWith(fabOptions);
         result.sideMenuRootOptions.mergeWith(sideMenuRootOptions);
         result.animations.mergeWith(animations);
-        result.screenBackgroundColor = screenBackgroundColor;
         result.modal.mergeWith(modal);
         result.statusBar.mergeWith(statusBar);
         result.layout.mergeWith(layout);
@@ -89,7 +83,6 @@ public class Options {
         result.fabOptions.mergeWith(other.fabOptions);
         result.animations.mergeWith(other.animations);
         result.sideMenuRootOptions.mergeWith(other.sideMenuRootOptions);
-        if (other.screenBackgroundColor.hasValue()) result.screenBackgroundColor = other.screenBackgroundColor;
         result.modal.mergeWith(other.modal);
         result.statusBar.mergeWith(other.statusBar);
         result.layout.mergeWith(other.layout);
@@ -105,7 +98,6 @@ public class Options {
         fabOptions.mergeWithDefault(defaultOptions.fabOptions);
         animations.mergeWithDefault(defaultOptions.animations);
         sideMenuRootOptions.mergeWithDefault(defaultOptions.sideMenuRootOptions);
-        if (!screenBackgroundColor.hasValue()) screenBackgroundColor = defaultOptions.screenBackgroundColor;
         modal.mergeWithDefault(defaultOptions.modal);
         statusBar.mergeWithDefault(defaultOptions.statusBar);
         layout.mergeWithDefault(defaultOptions.layout);
