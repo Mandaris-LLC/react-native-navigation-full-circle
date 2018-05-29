@@ -1,7 +1,8 @@
 import { Constants } from './Constants';
 
 const NavigationModule = {
-  backButton: 'backButton'
+  backButton: 'RNN.back',
+  statusBarHeight: 63
 };
 
 describe('Constants', () => {
@@ -13,5 +14,9 @@ describe('Constants', () => {
 
   it('backButton', () => {
     expect(uut.backButton).toEqual(NavigationModule.backButton);
+  });
+
+  it('statusBarHeight', () => {
+    expect(uut.statusBarHeight).toEqual(NavigationModule.statusBarHeight);
   });
 });

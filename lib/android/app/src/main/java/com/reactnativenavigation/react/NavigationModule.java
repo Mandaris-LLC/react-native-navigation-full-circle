@@ -18,6 +18,7 @@ import com.reactnativenavigation.utils.NativeCommandListener;
 import com.reactnativenavigation.utils.Now;
 import com.reactnativenavigation.utils.TypefaceLoader;
 import com.reactnativenavigation.utils.UiThread;
+import com.reactnativenavigation.utils.UiUtils;
 import com.reactnativenavigation.viewcontrollers.Navigator;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.viewcontrollers.externalcomponent.ExternalComponentCreator;
@@ -50,6 +51,7 @@ public class NavigationModule extends ReactContextBaseJavaModule {
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
         constants.put(Constants.BACK_BUTTON_JS_KEY, Constants.BACK_BUTTON_ID);
+        constants.put(Constants.STATUS_BAR_HEIGHT_KEY, UiUtils.getStatusBarHeight(getReactApplicationContext()));
         return constants;
     }
 
