@@ -79,7 +79,7 @@ Navigation.mergeOptions(this.props.componentId, {
 ```
 
 ## Removing buttons
-Buttons can be removed by setting zero buttons as shown in the snippet below.
+Buttons can be removed by setting zero buttons, as shown in the snippet below.
 
 ```js
 Navigation.mergeOptions(this.props.componentId, {
