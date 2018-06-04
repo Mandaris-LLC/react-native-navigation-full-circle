@@ -1,8 +1,9 @@
 const React = require('react');
 const { Component } = require('react');
-const { View, Text, Button, Platform } = require('react-native');
+const { View, Text, Platform, TouchableHighlight } = require('react-native');
 
 const testIDs = require('../testIDs');
+const Button = require('./Button');
 
 const { Navigation } = require('react-native-navigation');
 
@@ -38,6 +39,11 @@ class WelcomeScreen extends Component {
           <Button title='Push Lifecycle Screen' testID={testIDs.PUSH_LIFECYCLE_BUTTON} onPress={this.onClickLifecycleScreen} />
           <Button title='Static Lifecycle Events' testID={testIDs.PUSH_STATIC_LIFECYCLE_BUTTON} onPress={this.onClickShowStaticLifecycleOverlay} />
           <Button title='Push' testID={testIDs.PUSH_BUTTON} onPress={this.onClickPush} />
+          {Platform.OS === 'ios' && (
+            <Navigation.Element elementId='PreviewElement'>
+              <Button testID={testIDs.SHOW_PREVIEW_BUTTON} onPressIn={this.onClickShowPreview} title='Push Preview' />
+            </Navigation.Element>
+          )}
           <Button title='Push Options Screen' testID={testIDs.PUSH_OPTIONS_BUTTON} onPress={this.onClickPushOptionsScreen} />
           <Button title='Push External Component' testID={testIDs.PUSH_EXTERNAL_COMPONENT_BUTTON} onPress={this.onClickPushExternalComponent} />
           {Platform.OS === 'android' && <Button title='Push Top Tabs screen' testID={testIDs.PUSH_TOP_TABS_BUTTON} onPress={this.onClickPushTopTabsScreen} />}
@@ -310,6 +316,38 @@ class WelcomeScreen extends Component {
 
   onClickShowRedbox = () => {
     undefined();
+  }
+
+  onClickShowPreview = async () => {
+    await Navigation.push(this.props.componentId, {
+      component: {
+        name: 'navigation.playground.PushedScreen',
+        options: {
+          animations: {
+            push: {
+              enable: false
+            }
+          },
+          preview: {
+            elementId: 'PreviewElement',
+            height: 300,
+            commit: true,
+            actions: [{
+              id: 'action-cancel',
+              title: 'Cancel'
+            }, {
+              id: 'action-delete',
+              title: 'Delete',
+              actions: [{
+                id: 'action-delete-sure',
+                title: 'Are you sure?',
+                style: 'destructive'
+              }]
+            }]
+          }
+        }
+      }
+    });
   }
 
   onClickPushOptionsScreen = () => {

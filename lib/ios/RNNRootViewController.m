@@ -238,6 +238,70 @@
 	}
 }
 
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location{
+	if (self.previewController) {
+		RNNRootViewController * vc = (RNNRootViewController*) self.previewController;
+		[_eventEmitter sendOnNavigationEvent:@"previewContext" params:@{
+																   @"previewComponentId": vc.componentId,
+																   @"componentId": self.componentId
+																   }];
+	}
+	return self.previewController;
+}
+
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+	RNNRootViewController * vc = (RNNRootViewController*) self.previewController;
+	NSDictionary * params = @{
+						  @"previewComponentId": vc.componentId,
+						  @"componentId": self.componentId
+						  };
+	if (vc.options.preview.commit) {
+		[_eventEmitter sendOnNavigationEvent:@"previewCommit" params:params];
+		[self.navigationController pushViewController:vc animated:false];
+	} else {
+		[_eventEmitter sendOnNavigationEvent:@"previewDismissed" params:params];
+	}
+}
+
+- (void)onActionPress:(NSString *)id {
+	[_eventEmitter sendOnNavigationButtonPressed:self.componentId buttonId:id];
+}
+
+- (UIPreviewAction *) convertAction:(NSDictionary *)action {
+	NSString *actionId = action[@"id"];
+	NSString *actionTitle = action[@"title"];
+	UIPreviewActionStyle actionStyle = UIPreviewActionStyleDefault;
+	if ([action[@"style"] isEqualToString:@"selected"]) {
+	   	actionStyle = UIPreviewActionStyleSelected;
+	} else if ([action[@"style"] isEqualToString:@"destructive"]) {
+		actionStyle = UIPreviewActionStyleDestructive;
+	}
+	
+	return [UIPreviewAction actionWithTitle:actionTitle style:actionStyle handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+		[self onActionPress:actionId];
+	}];
+}
+
+- (NSArray<id<UIPreviewActionItem>> *)previewActionItems {
+	NSMutableArray *actions = [[NSMutableArray alloc] init];
+	for (NSDictionary *previewAction in self.options.preview.actions) {
+		UIPreviewAction *action = [self convertAction:previewAction];
+		NSDictionary *actionActions = previewAction[@"actions"];
+	    if (actionActions.count > 0) {
+			NSMutableArray *group = [[NSMutableArray alloc] init];
+	     	for (NSDictionary *previewGroupAction in actionActions) {
+	        	[group addObject:[self convertAction:previewGroupAction]];
+	      	}
+	      	UIPreviewActionGroup *actionGroup = [UIPreviewActionGroup actionGroupWithTitle:action.title style:UIPreviewActionStyleDefault actions:group];
+	      	[actions addObject:actionGroup];
+		} else {
+	    	[actions addObject:action];
+	    }
+	}
+	return actions;
+}
+
 /**
  *	fix for #877, #878
  */
