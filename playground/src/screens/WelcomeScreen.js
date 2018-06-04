@@ -378,9 +378,7 @@ class WelcomeScreen extends Component {
               },
               options: {
                 topTab: {
-                  title: {
-                    text: 'Tab 1'
-                  }
+                  title: 'Tab 1'
                 },
                 topBar: {
                   title: {
@@ -434,6 +432,7 @@ class WelcomeScreen extends Component {
           topTabs: {
             selectedTabColor: '#12766b',
             unselectedTabColor: 'red',
+            height: 220,
             fontSize: 6
           }
         }
