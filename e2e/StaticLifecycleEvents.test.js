@@ -2,7 +2,7 @@ const Utils = require('./Utils');
 const testIDs = require('../playground/src/testIDs');
 const { elementByLabel, elementById } = Utils;
 
-describe.only('static lifecycle events', () => {
+describe('static lifecycle events', () => {
   beforeEach(async () => {
     await device.relaunchApp();
   });
