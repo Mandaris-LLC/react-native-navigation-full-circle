@@ -432,7 +432,6 @@ class WelcomeScreen extends Component {
           topTabs: {
             selectedTabColor: '#12766b',
             unselectedTabColor: 'red',
-            height: 220,
             fontSize: 6
           }
         }

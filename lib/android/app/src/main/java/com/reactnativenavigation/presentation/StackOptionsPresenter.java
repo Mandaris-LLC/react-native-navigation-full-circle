@@ -37,7 +37,7 @@ public class StackOptionsPresenter {
         applyOrientation(options.layout.orientation);
         applyButtons(options.topBar.leftButtons, options.topBar.rightButtons);
         applyTopBarOptions(options.topBar, options.animations, child, options);
-        applyTopTabsOptions(options.topTabsOptions);
+        applyTopTabsOptions(options.topTabs);
         applyTopTabOptions(options.topTabOptions);
     }
 
@@ -106,6 +106,7 @@ public class StackOptionsPresenter {
         topBar.applyTopTabsColors(options.selectedTabColor, options.unselectedTabColor);
         topBar.applyTopTabsFontSize(options.fontSize);
         topBar.setTopTabsVisible(options.visible.isTrueOrUndefined());
+        topBar.setTopTabsHeight(options.height.get(LayoutParams.WRAP_CONTENT));
     }
 
     private void applyTopTabOptions(TopTabOptions topTabOptions) {
@@ -126,7 +127,7 @@ public class StackOptionsPresenter {
         mergeOrientation(options.layout.orientation);
         mergeButtons(options.topBar.leftButtons, options.topBar.rightButtons);
         mergeTopBarOptions(options.topBar, options.animations, child);
-        mergeTopTabsOptions(options.topTabsOptions);
+        mergeTopTabsOptions(options.topTabs);
         mergeTopTabOptions(options.topTabOptions);
     }
 
@@ -187,6 +188,7 @@ public class StackOptionsPresenter {
         if (options.selectedTabColor.hasValue() && options.unselectedTabColor.hasValue()) topBar.applyTopTabsColors(options.selectedTabColor, options.unselectedTabColor);
         if (options.fontSize.hasValue()) topBar.applyTopTabsFontSize(options.fontSize);
         if (options.visible.hasValue()) topBar.setTopTabsVisible(options.visible.isTrue());
+        if (options.height.hasValue()) topBar.setTopTabsHeight(options.height.get(LayoutParams.WRAP_CONTENT));
     }
 
     private void mergeTopTabOptions(TopTabOptions topTabOptions) {
