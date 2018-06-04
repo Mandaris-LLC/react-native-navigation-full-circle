@@ -2,7 +2,7 @@ const Utils = require('./Utils');
 const testIDs = require('../playground/src/testIDs');
 const { elementByLabel, elementById } = Utils;
 
-describe('static lifecycle events', () => {
+describe.only('static lifecycle events', () => {
   beforeEach(async () => {
     await device.relaunchApp();
   });
@@ -16,7 +16,7 @@ describe('static lifecycle events', () => {
     await expect(elementByLabel('componentDidDisappear | navigation.playground.WelcomeScreen')).toBeVisible();
   });
 
-  xit('unmounts when dismissed', async () => {
+  it('unmounts when dismissed', async () => {
     await elementById(testIDs.PUSH_STATIC_LIFECYCLE_BUTTON).tap();
     await expect(elementByLabel('Static Lifecycle Events Overlay')).toBeVisible();
     await elementById(testIDs.DISMISS_BUTTON).tap();
