@@ -429,13 +429,13 @@ class WelcomeScreen extends Component {
               }
             }
           }
-        ]
-      },
-      options: {
-        topTabs: {
-          selectedTabColor: '#12766b',
-          unselectedTabColor: 'red',
-          fontSize: 6
+        ],
+        options: {
+          topTabs: {
+            selectedTabColor: '#12766b',
+            unselectedTabColor: 'red',
+            fontSize: 6
+          }
         }
       }
     });
