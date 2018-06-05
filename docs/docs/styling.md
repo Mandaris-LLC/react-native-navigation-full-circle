@@ -187,11 +187,12 @@ Navigation.mergeOptions(this.props.componentId, {
     backgroundColor: 'red'
   },
   topBar: {
-    height: 70, // TopBar height in dp.
+    height: 70, // TopBar height in dp
     borderColor: 'red',
     borderHeight: 1.3,
+    elevation: 1.5, // TopBar elevation in dp
     title: {
-      height: 70 // TitleBar height in dp.
+      height: 70 // TitleBar height in dp
     }
   },
   bottomTabs: {
