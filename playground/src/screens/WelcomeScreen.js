@@ -124,6 +124,7 @@ class WelcomeScreen extends Component {
           options: {
             bottomTabs: {
               tabColor: 'red',
+              titleDisplayMode: 'alwaysShow',
               selectedTabColor: 'blue',
               fontFamily: 'HelveticaNeue-Italic',
               fontSize: 13,

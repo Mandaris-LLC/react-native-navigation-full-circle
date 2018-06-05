@@ -193,6 +193,9 @@ Navigation.mergeOptions(this.props.componentId, {
     title: {
       height: 70 // TitleBar height in dp.
     }
+  },
+  bottomTabs: {
+    titleDisplayMode: 'alwaysShow' | 'showWhenActive' | 'alwaysHide' // Sets the title state for each tab.
   }
 }
 ```
