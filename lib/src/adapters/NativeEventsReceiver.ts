@@ -5,9 +5,9 @@ import { EventSubscription } from '../interfaces/EventSubscription';
 export class NativeEventsReceiver {
   private emitter;
   constructor() {
-    if (NativeModules.RNNEventEmitter) {
+    try {
       this.emitter = new NativeEventEmitter(NativeModules.RNNEventEmitter);
-    } else {
+    } catch (e) {
       console.log('Using mock NativeEventEmitter module');
       this.emitter = {
         addListener: () => {
