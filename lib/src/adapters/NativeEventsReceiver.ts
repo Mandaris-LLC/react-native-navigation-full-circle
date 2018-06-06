@@ -1,10 +1,22 @@
+// tslint:disable:no-console
 import { NativeModules, NativeEventEmitter } from 'react-native';
 import { EventSubscription } from '../interfaces/EventSubscription';
 
 export class NativeEventsReceiver {
-  private emitter: NativeEventEmitter;
+  private emitter;
   constructor() {
-    this.emitter = new NativeEventEmitter(NativeModules.RNNEventEmitter);
+    if (NativeModules.RNNEventEmitter) {
+      this.emitter = new NativeEventEmitter(NativeModules.RNNEventEmitter);
+    } else {
+      console.log('Using mock NativeEventEmitter module');
+      this.emitter = {
+        addListener: () => {
+          return {
+            remove: () => undefined
+          };
+        }
+      };
+    }
   }
 
   public registerAppLaunchedListener(callback: () => void): EventSubscription {
