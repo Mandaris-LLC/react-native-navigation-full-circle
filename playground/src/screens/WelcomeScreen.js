@@ -153,6 +153,7 @@ class WelcomeScreen extends Component {
               children: [
                 {
                   stack: {
+                    id: 'tab1Stack',
                     children: [
                       {
                         component: {
