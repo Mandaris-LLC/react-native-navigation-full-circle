@@ -99,7 +99,7 @@ describe('screen stack', () => {
     await expect(elementByLabel('Stack Position: 2')).toBeVisible();
   });
 
-  it(':android: push to stack with static id from SideMenu', async () => {
+  it('push to stack with static id from SideMenu', async () => {
     await elementById(testIDs.TAB_BASED_APP_SIDE_BUTTON).tap();
     await elementById(testIDs.SHOW_LEFT_SIDE_MENU_BUTTON).tap();
     await elementById(testIDs.LEFT_SIDE_MENU_PUSH_BUTTON).tap();
