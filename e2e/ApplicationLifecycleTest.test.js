@@ -13,7 +13,7 @@ describe('application lifecycle test', () => {
     await device.relaunchApp();
   });
 
-  xit('push a screen to ensure its not there after reload', async () => {
+  it('push a screen to ensure its not there after reload', async () => {
     await elementById(testIDs.PUSH_BUTTON).tap();
     await expect(elementByLabel('Pushed Screen')).toBeVisible();
     await device.reloadReactNative();
