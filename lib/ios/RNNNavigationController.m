@@ -20,6 +20,10 @@
 	[((UIViewController<RNNRootViewProtocol>*)self.topViewController) mergeOptions:options];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+	return ((UIViewController<RNNRootViewProtocol>*)self.topViewController).preferredStatusBarStyle;
+}
+
 - (NSString *)componentId {
 	return _componentId ? _componentId : ((UIViewController<RNNRootViewProtocol>*)self.topViewController).componentId;
 }
