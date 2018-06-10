@@ -16,7 +16,7 @@ describe('static lifecycle events', () => {
     await expect(elementByLabel('componentDidDisappear | navigation.playground.WelcomeScreen')).toBeVisible();
   });
 
-  it('pushing and poping screen dispatch static event', async () => {
+  it(':ios: pushing and popping screen dispatch static event', async () => {
     await elementById(testIDs.PUSH_STATIC_LIFECYCLE_BUTTON).tap();
     await expect(elementByLabel('Static Lifecycle Events Overlay')).toBeVisible();
     await expect(elementByLabel('componentDidAppear | navigation.playground.StaticLifecycleOverlay')).toBeVisible();
@@ -26,7 +26,7 @@ describe('static lifecycle events', () => {
     await expect(elementByLabel('pop')).toBeVisible();
   });
 
-  it('showModal and dismissModal dispatch static event', async () => {
+  it(':ios: showModal and dismissModal dispatch static event', async () => {
     await elementById(testIDs.PUSH_STATIC_LIFECYCLE_BUTTON).tap();
     await expect(elementByLabel('Static Lifecycle Events Overlay')).toBeVisible();
     await expect(elementByLabel('componentDidAppear | navigation.playground.StaticLifecycleOverlay')).toBeVisible();
