@@ -45,9 +45,7 @@ static NSString* const navigationEvent	= @"RNN.nativeEvent";
 }
 
 -(void)sendOnNavigationCommandCompletion:(NSString *)commandName params:(NSDictionary*)params {
-	NSMutableDictionary* mutableParams = [NSMutableDictionary dictionaryWithDictionary:params];
-	[mutableParams setObject:[RNNUtils getCurrentTimestamp] forKey:@"timestamp"];
-	[self send:commandComplete body:@{@"name":commandName , @"params": mutableParams}];
+	[self send:commandComplete body:@{@"commandId":commandName , @"params": params, @"completionTime": [RNNUtils getCurrentTimestamp] }];
 }
 
 -(void)sendOnNavigationEvent:(NSString *)commandName params:(NSDictionary*)params {
