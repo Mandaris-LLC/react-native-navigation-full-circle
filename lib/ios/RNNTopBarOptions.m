@@ -168,13 +168,6 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 	}
 	
 	viewController.navigationItem.hidesBackButton = [self.backButtonHidden boolValue];
-	
-	[self resetOptions];
-}
-
-- (void)resetOptions {
-	self.leftButtons = nil;
-	self.rightButtons = nil;
 }
 
 -(void)storeOriginalTopBarImages:(UIViewController*)viewController {
