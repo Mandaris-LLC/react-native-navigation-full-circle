@@ -45,6 +45,10 @@
 	[((UIViewController<RNNRootViewProtocol>*)self.selectedViewController) mergeOptions:options];
 }
 
+- (RNNNavigationOptions *)options {
+	return [((UIViewController<RNNRootViewProtocol>*)self.selectedViewController) options];
+}
+
 - (NSString *)componentId {
 	return ((UIViewController<RNNRootViewProtocol>*)self.selectedViewController).componentId;
 }
