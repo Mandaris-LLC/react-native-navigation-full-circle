@@ -30,6 +30,7 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 	[self.title applyOn:viewController];
 	[self.largeTitle applyOn:viewController];
 	[self.background applyOn:viewController];
+	[self.backButton applyOn:viewController];
 	
 	if (@available(iOS 11.0, *)) {
 		if ([self.searchBar boolValue] && !viewController.navigationItem.searchController) {
@@ -149,17 +150,17 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 		_navigationButtons = [[RNNNavigationButtons alloc] initWithViewController:(RNNRootViewController*)viewController];
 		[_navigationButtons applyLeftButtons:self.leftButtons rightButtons:self.rightButtons];
 	}
-	
-	UIImage *image = self.backButtonImage ? [RCTConvert UIImage:self.backButtonImage] : nil;
+
+	UIImage *image = self.backButton.image ? [RCTConvert UIImage:self.backButton.image] : nil;
 	[viewController.navigationController.navigationBar setBackIndicatorImage:image];
 	[viewController.navigationController.navigationBar setBackIndicatorTransitionMaskImage:image];
 	
-	if (self.hideBackButtonTitle) {
-		self.backButtonTitle = @"";
+	if (![self.backButton.visible boolValue]) {
+		self.backButton.title = @"";
 	}
 	
-	if (self.backButtonTitle) {
-		UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:self.backButtonTitle
+	if (self.backButton.title) {
+		UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:self.backButton.title
 																	 style:UIBarButtonItemStylePlain
 																	target:nil
 																	action:nil];
@@ -167,7 +168,7 @@ extern const NSInteger BLUR_TOPBAR_TAG;
 		viewController.navigationItem.backBarButtonItem = backItem;
 	}
 	
-	viewController.navigationItem.hidesBackButton = [self.backButtonHidden boolValue];
+	viewController.navigationItem.hidesBackButton = ![self.backButton.visible boolValue];
 }
 
 -(void)storeOriginalTopBarImages:(UIViewController*)viewController {

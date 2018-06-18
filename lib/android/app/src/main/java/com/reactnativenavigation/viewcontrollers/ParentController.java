@@ -79,7 +79,7 @@ public abstract class ParentController<T extends ViewGroup> extends ChildControl
 	}
 
 	@CallSuper
-    void clearOptions() {
+    protected void clearOptions() {
 	    applyOnParentController(parent -> ((ParentController) parent).clearOptions());
         options = initialOptions.copy();
     }

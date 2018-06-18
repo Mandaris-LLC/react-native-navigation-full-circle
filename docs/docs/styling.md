@@ -172,10 +172,12 @@ Navigation.mergeOptions(this.props.componentId, {
     transparent: false,
     noBorder: false,
     blur: false,
-    backButtonImage: require('icon.png'),
-    backButtonHidden: false,
-    backButtonTitle: 'Back',
-    hideBackButtonTitle: false,
+    backButton: {
+      image: require('icon.png'),
+      visible: true,
+      title: 'Back',
+      hideTitle: false,
+    },
     largeTitle: {
       visible: true,
       fontSize: 30,

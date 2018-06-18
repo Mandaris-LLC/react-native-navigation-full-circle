@@ -20,6 +20,7 @@ import com.reactnativenavigation.utils.CompatUtils;
 import com.reactnativenavigation.utils.NativeCommandListener;
 import com.reactnativenavigation.viewcontrollers.modal.ModalPresenter;
 import com.reactnativenavigation.viewcontrollers.modal.ModalStack;
+import com.reactnativenavigation.viewcontrollers.stack.StackController;
 
 import java.util.Collection;
 import java.util.Collections;

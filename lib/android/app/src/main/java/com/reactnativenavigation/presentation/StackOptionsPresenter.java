@@ -7,16 +7,14 @@ import android.view.ViewGroup.LayoutParams;
 import com.reactnativenavigation.parse.AnimationsOptions;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.OrientationOptions;
+import com.reactnativenavigation.parse.TopBarButtons;
 import com.reactnativenavigation.parse.TopBarOptions;
 import com.reactnativenavigation.parse.TopTabOptions;
 import com.reactnativenavigation.parse.TopTabsOptions;
-import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.utils.UiUtils;
 import com.reactnativenavigation.viewcontrollers.IReactView;
 import com.reactnativenavigation.views.Component;
 import com.reactnativenavigation.views.topbar.TopBar;
-
-import java.util.ArrayList;
 
 public class StackOptionsPresenter {
     private static final int DEFAULT_TITLE_COLOR = Color.BLACK;
@@ -35,7 +33,7 @@ public class StackOptionsPresenter {
 
     public void applyChildOptions(Options options, Component child) {
         applyOrientation(options.layout.orientation);
-        applyButtons(options.topBar.leftButtons, options.topBar.rightButtons);
+        applyButtons(options.topBar.buttons);
         applyTopBarOptions(options.topBar, options.animations, child, options);
         applyTopTabsOptions(options.topTabs);
         applyTopTabOptions(options.topTabOptions);
@@ -98,9 +96,10 @@ public class StackOptionsPresenter {
         }
     }
 
-    private void applyButtons(ArrayList<Button> leftButtons, ArrayList<Button> rightButtons) {
-        topBar.setLeftButtons(leftButtons);
-        topBar.setRightButtons(rightButtons);
+    private void applyButtons(TopBarButtons buttons) {
+        topBar.setLeftButtons(buttons.left);
+        topBar.setRightButtons(buttons.right);
+        if (buttons.back.visible.isTrue()) topBar.setBackButton(buttons.back);
     }
 
     private void applyTopTabsOptions(TopTabsOptions options) {
@@ -126,7 +125,7 @@ public class StackOptionsPresenter {
 
     public void mergeChildOptions(Options options, Component child) {
         mergeOrientation(options.layout.orientation);
-        mergeButtons(options.topBar.leftButtons, options.topBar.rightButtons);
+        mergeButtons(options.topBar.buttons);
         mergeTopBarOptions(options.topBar, options.animations, child);
         mergeTopTabsOptions(options.topTabs);
         mergeTopTabOptions(options.topTabOptions);
@@ -136,9 +135,10 @@ public class StackOptionsPresenter {
         if (orientationOptions.hasValue()) applyOrientation(orientationOptions);
     }
 
-    private void mergeButtons(ArrayList<Button> leftButtons, ArrayList<Button> rightButtons) {
-        if (leftButtons != null) topBar.setLeftButtons(leftButtons);
-        if (rightButtons != null) topBar.setRightButtons(rightButtons);
+    private void mergeButtons(TopBarButtons buttons) {
+        if (buttons.left != null) topBar.setLeftButtons(buttons.left);
+        if (buttons.right != null) topBar.setRightButtons(buttons.right);
+        if (buttons.back != null) topBar.setBackButton(buttons.back);
     }
 
     private void mergeTopBarOptions(TopBarOptions options, AnimationsOptions animationsOptions, Component component) {

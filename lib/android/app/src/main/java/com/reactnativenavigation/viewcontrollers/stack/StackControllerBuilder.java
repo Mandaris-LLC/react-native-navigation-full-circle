@@ -1,9 +1,11 @@
-package com.reactnativenavigation.viewcontrollers;
+package com.reactnativenavigation.viewcontrollers.stack;
 
 import android.app.Activity;
 
 import com.reactnativenavigation.anim.NavigationAnimator;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
+import com.reactnativenavigation.viewcontrollers.ReactViewCreator;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
@@ -18,6 +20,7 @@ public class StackControllerBuilder {
     private String id;
     private Options initialOptions = new Options();
     private NavigationAnimator animator;
+    private BackButtonHelper backButtonHelper = new BackButtonHelper();
 
     public StackControllerBuilder(Activity activity) {
         this.activity = activity;
@@ -64,7 +67,12 @@ public class StackControllerBuilder {
         return this;
     }
 
-    public StackController createStackController() {
-        return new StackController(activity, childRegistry, topBarButtonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarController, animator, id, initialOptions);
+    public StackControllerBuilder setBackButtonHelper(BackButtonHelper backButtonHelper) {
+        this.backButtonHelper = backButtonHelper;
+        return this;
+    }
+
+    public StackController build() {
+        return new StackController(activity, childRegistry, topBarButtonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarController, animator, id, initialOptions, backButtonHelper);
     }
 }

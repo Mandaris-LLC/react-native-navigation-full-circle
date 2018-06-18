@@ -10,8 +10,8 @@ import com.reactnativenavigation.utils.TypefaceLoader;
 import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
 import com.reactnativenavigation.viewcontrollers.ComponentViewController;
 import com.reactnativenavigation.viewcontrollers.SideMenuController;
-import com.reactnativenavigation.viewcontrollers.StackController;
-import com.reactnativenavigation.viewcontrollers.StackControllerBuilder;
+import com.reactnativenavigation.viewcontrollers.stack.StackController;
+import com.reactnativenavigation.viewcontrollers.stack.StackControllerBuilder;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.viewcontrollers.bottomtabs.BottomTabsController;
 import com.reactnativenavigation.viewcontrollers.externalcomponent.ExternalComponentCreator;
@@ -161,7 +161,7 @@ public class LayoutFactory {
                 .setTopBarController(new TopBarController())
                 .setId(node.id)
                 .setInitialOptions(parseNodeOptions(node))
-                .createStackController();
+                .build();
         addChildrenToStack(node.children, stackController);
         return stackController;
 	}

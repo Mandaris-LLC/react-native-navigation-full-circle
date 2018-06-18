@@ -68,6 +68,8 @@
 		50175CD1207A2AA1004FE91B /* RNNComponentOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 50175CCF207A2AA1004FE91B /* RNNComponentOptions.h */; };
 		50175CD2207A2AA1004FE91B /* RNNComponentOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50175CD0207A2AA1004FE91B /* RNNComponentOptions.m */; };
 		502CB43A20CBCA180019B2FE /* RNNBridgeManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 502CB43920CBCA140019B2FE /* RNNBridgeManagerDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		502CB46E20CD1DDA0019B2FE /* RNNBackButtonOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 502CB46C20CD1DDA0019B2FE /* RNNBackButtonOptions.h */; };
+		502CB46F20CD1DDA0019B2FE /* RNNBackButtonOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 502CB46D20CD1DDA0019B2FE /* RNNBackButtonOptions.m */; };
 		50415CBA20553B8E00BB682E /* RNNScreenTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 50415CB820553B8E00BB682E /* RNNScreenTransition.h */; };
 		50415CBB20553B8E00BB682E /* RNNScreenTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 50415CB920553B8E00BB682E /* RNNScreenTransition.m */; };
 		50451D052042DAEB00695F00 /* RNNPushAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 50451D032042DAEB00695F00 /* RNNPushAnimation.h */; };
@@ -279,6 +281,8 @@
 		50175CCF207A2AA1004FE91B /* RNNComponentOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNNComponentOptions.h; sourceTree = "<group>"; };
 		50175CD0207A2AA1004FE91B /* RNNComponentOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNNComponentOptions.m; sourceTree = "<group>"; };
 		502CB43920CBCA140019B2FE /* RNNBridgeManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNNBridgeManagerDelegate.h; sourceTree = "<group>"; };
+		502CB46C20CD1DDA0019B2FE /* RNNBackButtonOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNNBackButtonOptions.h; sourceTree = "<group>"; };
+		502CB46D20CD1DDA0019B2FE /* RNNBackButtonOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNNBackButtonOptions.m; sourceTree = "<group>"; };
 		50415CB820553B8E00BB682E /* RNNScreenTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNNScreenTransition.h; sourceTree = "<group>"; };
 		50415CB920553B8E00BB682E /* RNNScreenTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNNScreenTransition.m; sourceTree = "<group>"; };
 		50451D032042DAEB00695F00 /* RNNPushAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNNPushAnimation.h; sourceTree = "<group>"; };
@@ -538,6 +542,8 @@
 				50175CD0207A2AA1004FE91B /* RNNComponentOptions.m */,
 				A7626BFE1FC2FB6700492FB8 /* RNNTopBarOptions.h */,
 				A7626BFC1FC2FB2C00492FB8 /* RNNTopBarOptions.m */,
+				502CB46C20CD1DDA0019B2FE /* RNNBackButtonOptions.h */,
+				502CB46D20CD1DDA0019B2FE /* RNNBackButtonOptions.m */,
 				50570B242061473D006A1B5C /* RNNTitleOptions.h */,
 				50570B252061473D006A1B5C /* RNNTitleOptions.m */,
 				50C4A494206BDDBB00DB292E /* RNNSubtitleOptions.h */,
@@ -807,6 +813,7 @@
 				50451D052042DAEB00695F00 /* RNNPushAnimation.h in Headers */,
 				507F43C51FF4F17C00D9425B /* RNNTopTabsViewController.h in Headers */,
 				263905C61E4C6F440023D7D3 /* SidebarFeedlyAnimation.h in Headers */,
+				502CB46E20CD1DDA0019B2FE /* RNNBackButtonOptions.h in Headers */,
 				7B1126A31E2D2B6C00F9B03B /* RNNSplashScreen.h in Headers */,
 				261F0E641E6EC94900989DE2 /* RNNModalManager.h in Headers */,
 				263905C01E4C6F440023D7D3 /* SidebarAirbnbAnimation.h in Headers */,
@@ -968,6 +975,7 @@
 				263905C71E4C6F440023D7D3 /* SidebarFeedlyAnimation.m in Sources */,
 				50C4A497206BDDBB00DB292E /* RNNSubtitleOptions.m in Sources */,
 				263905B41E4C6F440023D7D3 /* MMDrawerVisualState.m in Sources */,
+				502CB46F20CD1DDA0019B2FE /* RNNBackButtonOptions.m in Sources */,
 				263905C51E4C6F440023D7D3 /* SidebarFacebookAnimation.m in Sources */,
 				50451D0E2042F70900695F00 /* RNNTransition.m in Sources */,
 				5048862E20BE976D000908DE /* RNNLayoutOptions.m in Sources */,

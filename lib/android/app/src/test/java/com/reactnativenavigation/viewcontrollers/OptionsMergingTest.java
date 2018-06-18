@@ -67,11 +67,11 @@ public class OptionsMergingTest extends BaseTest {
         verify(topBar, times(0)).setRightButtons(any());
         verify(topBar, times(0)).setLeftButtons(any());
 
-        options.topBar.rightButtons = new ArrayList<>();
+        options.topBar.buttons.right = new ArrayList<>();
         uut.mergeChildOptions(options, child);
         verify(topBar, times(1)).setRightButtons(any());
 
-        options.topBar.leftButtons = new ArrayList<>();
+        options.topBar.buttons.left = new ArrayList<>();
         uut.mergeChildOptions(options, child);
         verify(topBar, times(1)).setLeftButtons(any());
     }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.reactnativenavigation.BaseTest;
+import com.reactnativenavigation.TestUtils;
 import com.reactnativenavigation.mocks.TestComponentLayout;
 import com.reactnativenavigation.mocks.TestReactView;
 import com.reactnativenavigation.mocks.TitleBarReactViewCreatorMock;
@@ -21,6 +22,9 @@ import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Fraction;
 import com.reactnativenavigation.parse.params.Text;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
+import com.reactnativenavigation.utils.ImageLoader;
+import com.reactnativenavigation.viewcontrollers.stack.StackController;
+import com.reactnativenavigation.viewcontrollers.stack.StackControllerBuilder;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.StackLayout;
@@ -44,7 +48,6 @@ public class OptionsApplyingTest extends BaseTest {
     private ComponentViewController uut;
     private IReactView view;
     private Options initialNavigationOptions;
-    private TopBarController topBarController;
     private TopBar topBar;
 
     @Override
@@ -61,27 +64,24 @@ public class OptionsApplyingTest extends BaseTest {
                 (activity1, componentId, componentName) -> view,
                 initialNavigationOptions
         );
-        topBarController = new TopBarController() {
+        TopBarController topBarController = new TopBarController() {
             @Override
-            protected TopBar createTopBar(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout) {
-                topBar = spy(super.createTopBar(context, buttonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarButtonClickListener, stackLayout));
+            protected TopBar createTopBar(Context context, ReactViewCreator buttonCreator, TitleBarReactViewCreator titleBarReactViewCreator, TopBarBackgroundViewController topBarBackgroundViewController, TopBarButtonController.OnClickListener topBarButtonClickListener, StackLayout stackLayout, ImageLoader imageLoader) {
+                topBar =
+                        spy(super.createTopBar(context, buttonCreator, titleBarReactViewCreator, topBarBackgroundViewController, topBarButtonClickListener, stackLayout, imageLoader));
                 return topBar;
             }
         };
-        stackController = new StackControllerBuilder(activity)
-                .setTopBarButtonCreator(new TopBarButtonCreatorMock())
-                .setTitleBarReactViewCreator(new TitleBarReactViewCreatorMock())
-                .setTopBarBackgroundViewController(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()))
+        stackController = TestUtils.newStackController(activity)
                 .setTopBarController(topBarController)
-                .setId("stack")
-                .setInitialOptions(new Options())
-                .createStackController();
+                .build();
         stackController.ensureViewIsCreated();
         stackController.getView().layout(0, 0, 1000, 1000);
         stackController.getTopBar().layout(0, 0, 1000, 100);
         uut.setParentController(stackController);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void applyNavigationOptionsHandlesNoParentStack() {
         uut.setParentController(null);
@@ -102,7 +102,7 @@ public class OptionsApplyingTest extends BaseTest {
                         .setTopBarController(new TopBarController())
                         .setId("stackId")
                         .setInitialOptions(new Options())
-                        .createStackController();
+                        .build();
         stackController.push(uut, new CommandListenerAdapter());
         assertThat(stackController.getTopBar().getTitle()).isEmpty();
 
