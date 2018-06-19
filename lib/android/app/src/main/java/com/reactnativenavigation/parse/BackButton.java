@@ -15,6 +15,7 @@ public class BackButton extends Button {
         BackButton result = new BackButton();
         if (json == null) return result;
 
+        result.hasValue = true;
         result.visible = BoolParser.parse(json, "visible");
         if (json.has("icon")) result.icon = TextParser.parse(json.optJSONObject("icon"), "uri");
         result.id = json.optString("id", Constants.BACK_BUTTON_ID);
@@ -27,11 +28,16 @@ public class BackButton extends Button {
         return result;
     }
 
-    public BackButton() {
+    BackButton() {
         id = Constants.BACK_BUTTON_ID;
     }
 
     public Bool visible = new NullBool();
+    private boolean hasValue;
+
+    public boolean hasValue() {
+        return hasValue;
+    }
 
     public void mergeWith(BackButton other) {
         if (other.icon.hasValue()) icon = other.icon;

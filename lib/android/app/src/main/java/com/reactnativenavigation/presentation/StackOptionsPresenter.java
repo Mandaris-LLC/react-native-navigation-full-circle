@@ -138,7 +138,7 @@ public class StackOptionsPresenter {
     private void mergeButtons(TopBarButtons buttons) {
         if (buttons.left != null) topBar.setLeftButtons(buttons.left);
         if (buttons.right != null) topBar.setRightButtons(buttons.right);
-        if (buttons.back != null) topBar.setBackButton(buttons.back);
+        if (buttons.back.hasValue()) topBar.setBackButton(buttons.back);
     }
 
     private void mergeTopBarOptions(TopBarOptions options, AnimationsOptions animationsOptions, Component component) {
