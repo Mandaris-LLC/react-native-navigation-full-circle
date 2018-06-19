@@ -2,6 +2,7 @@ package com.reactnativenavigation.viewcontrollers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -103,20 +104,32 @@ public class BottomTabsControllerTest extends BaseTest {
     }
 
     @Test
-    public void setTabs_AddAllViews() {
+    public void setTabs_allChildViewsAreAttachedToHierarchy() {
         uut.onViewAppeared();
-        assertThat(uut.getView().getChildCount()).isEqualTo(2);
-        assertThat(((ViewController) ((List) uut.getChildControllers()).get(0)).getView().getParent()).isNotNull();
+        assertThat(uut.getView().getChildCount()).isEqualTo(6);
+        for (ViewController child : uut.getChildControllers()) {
+            assertThat(child.getView().getParent()).isNotNull();
+        }
+    }
+
+    @Test
+    public void setTabs_firstChildIsVisibleOtherAreGone() {
+        uut.onViewAppeared();
+        for (int i = 0; i < uut.getChildControllers().size(); i++) {
+            assertThat(uut.getView().getChildAt(i).getVisibility()).isEqualTo(i == 0 ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Test
     public void onTabSelected() {
         assertThat(uut.getSelectedIndex()).isZero();
+        assertThat(((ViewController) ((List) uut.getChildControllers()).get(0)).getView().getVisibility()).isEqualTo(View.VISIBLE);
 
         uut.onTabSelected(3, false);
 
         assertThat(uut.getSelectedIndex()).isEqualTo(3);
-        assertThat(((ViewController) ((List) uut.getChildControllers()).get(0)).getView().getParent()).isNull();
+        assertThat(((ViewController) ((List) uut.getChildControllers()).get(0)).getView().getVisibility()).isEqualTo(View.GONE);
+        assertThat(((ViewController) ((List) uut.getChildControllers()).get(3)).getView().getVisibility()).isEqualTo(View.VISIBLE);
         verify(eventEmitter, times(1)).emitBottomTabSelected(0, 3);
     }
 
