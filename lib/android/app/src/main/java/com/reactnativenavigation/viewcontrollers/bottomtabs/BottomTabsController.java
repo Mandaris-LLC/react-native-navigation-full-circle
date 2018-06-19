@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -140,7 +141,7 @@ public class BottomTabsController extends ParentController implements AHBottomNa
                         bottomTabs.setTabTestId(i, bottomTabOptionsList.get(i).testId);
                     }
                 });
-                selectTab(0);
+                attachTabs();
             }
 
             @Override
@@ -150,6 +151,14 @@ public class BottomTabsController extends ParentController implements AHBottomNa
         });
 
 	}
+
+    private void attachTabs() {
+        for (int i = (tabs.size() - 1); i >= 0; i--) {
+            ViewGroup tab = tabs.get(i).getView();
+            if (i != 0) tab.setVisibility(View.GONE);
+            getView().addView(tab);
+        }
+    }
 
     public int getSelectedIndex() {
 		return bottomTabs.getCurrentItem();
@@ -163,9 +172,9 @@ public class BottomTabsController extends ParentController implements AHBottomNa
 
     @Override
     public void selectTab(final int newIndex) {
-        getView().removeView(getCurrentView());
+        getCurrentView().setVisibility(View.GONE);
         bottomTabs.setCurrentItem(newIndex, false);
-        getView().addView(getCurrentView());
+        getCurrentView().setVisibility(View.VISIBLE);
     }
 
     @NonNull
