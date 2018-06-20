@@ -41,9 +41,9 @@ describe('redux support', () => {
         );
       }
     };
-    Navigation.registerComponent('ComponentName', () => HOC);
+    const CompFromNavigation = Navigation.registerComponent('ComponentName', () => HOC);
 
-    const tree = renderer.create(<HOC renderCountIncrement={renderCountIncrement}/>);
+    const tree = renderer.create(<CompFromNavigation componentId='componentId' renderCountIncrement={renderCountIncrement}/>);
     expect(tree.toJSON().children).toEqual(['no name']);
     expect(renderCountIncrement).toHaveBeenCalledTimes(1);
   });
