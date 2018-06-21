@@ -194,8 +194,8 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
-	if ([self.options.statusBar.hidden boolValue]) {
-		return YES;
+	if (self.options.statusBar.visible) {
+		return ![self.options.statusBar.visible boolValue];
 	} else if ([self.options.statusBar.hideWithTopBar boolValue]) {
 		return self.navigationController.isNavigationBarHidden;
 	}
