@@ -96,5 +96,10 @@ RCT_EXPORT_METHOD(dismissOverlay:(NSString*)commandId componentId:(NSString*)com
 	}];
 }
 
+RCT_EXPORT_METHOD(getLaunchArgs:(NSString*)commandId :(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+	NSArray* args = [[NSProcessInfo processInfo] arguments];
+	resolve(args);
+}
+
 @end
 
