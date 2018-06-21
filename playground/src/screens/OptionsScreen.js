@@ -68,7 +68,7 @@ class OptionsScreen extends Component {
             component: {
               name: 'CustomRoundedButton',
               passProps: {
-                title: "Two"
+                title: 'Two'
               }
             }
           },
