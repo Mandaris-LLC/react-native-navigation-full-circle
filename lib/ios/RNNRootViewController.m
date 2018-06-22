@@ -124,8 +124,8 @@
 	[self.options applyModalOptions:self];
 }
 
-- (void)mergeOptions:(NSDictionary *)options {
-	[self.options mergeIfEmptyWith:options];
+- (void)mergeOptions:(RNNOptions *)options {
+	[self.options mergeOptions:options overrideOptions:NO];
 }
 
 - (void)setCustomNavigationTitleView {

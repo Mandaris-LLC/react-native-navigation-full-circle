@@ -89,6 +89,10 @@
 	}
 }
 
+- (void)mergeOptions:(RNNOptions *)options {
+	[self.center mergeOptions:options];
+}
+
 - (NSString *)componentId {
 	return _center.componentId;
 }
