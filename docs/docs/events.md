@@ -87,22 +87,25 @@ Navigation.events().registerCommandCompletedListener((commandId, completionTime,
 
 The nativeEvent listener is used to track various events that originate in the native aspect of the app, primarily UI events.
 
-### `bottomTabSelected` event
+### bottomTabSelected event
 This event is emitted whenever a BottomTab is selected by the user
+
 |Parameter|Description|
-|:-:|:-|
+|:-:|:--|
 |**name**|`bottomTabSelected`|
 |**params**|`unselectedTabIndex`: The index of the previously selected tab<br>`selectedTabIndex`: The index of the newly selected tab|
 
-### `buttonPressed` event
+### buttonPressed event
 This event is emitted whenever a TopBat button is pressed by the user
+
 |Parameter|Description|
-|:-:|:-|
+|:-:|:--|
 |**name**|`buttonPressed`|
 |**params**|`componentId`: `componentId` of the layout element the pressed button is bound to<br>`buttonId`: `id` of the pressed button|
 
 ## onNavigationButtonPressed
 Called when a TopBar button is pressed.
+
 ```js
 class MyComponent extends Component {
   onNavigationButtonPressed(buttonId) {
@@ -113,6 +116,7 @@ class MyComponent extends Component {
 
 ## onSearchBarUpdated (iOS 11+ only)
 Called when a SearchBar from NavigationBar gets updated.
+
 ```js
 class MyComponent extends Component {
   onSearchBarUpdated(query, isFocused) {
@@ -123,6 +127,7 @@ class MyComponent extends Component {
 
 ## onSearchBarCancelPressed (iOS 11+ only)
 Called when the cancel button on the SearchBar from NavigationBar gets pressed.
+
 ```js
 class MyComponent extends Component {
   onSearchBarCancelPressed() {
