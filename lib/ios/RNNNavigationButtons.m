@@ -64,7 +64,7 @@
 
 -(RNNUIBarButtonItem*)buildButton: (NSDictionary*)dictionary {
 	NSString* buttonId = dictionary[@"id"];
-	NSString* title = dictionary[@"title"];
+	NSString* title = dictionary[@"text"];
 	NSDictionary* component = dictionary[@"component"];
 	
 	if (!buttonId) {
