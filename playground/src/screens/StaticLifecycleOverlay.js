@@ -24,9 +24,14 @@ class StaticLifecycleOverlay extends Component {
         events: [...this.state.events, { ...event }]
       });
     }));
-    this.listeners.push(Navigation.events().registerCommandCompletedListener(({commandId}) => {
+    this.listeners.push(Navigation.events().registerCommandCompletedListener(({ commandId }) => {
       this.setState({
         events: [...this.state.events, { event: 'commandCompleted', commandId }]
+      });
+    }));
+    this.listeners.push(Navigation.events().registerNavigationButtonPressedListener(({ componentId, buttonId }) => {
+      this.setState({
+        events: [...this.state.events, { event: 'navigationButtonPressed', buttonId, componentId }]
       });
     }));
   }
@@ -40,8 +45,10 @@ class StaticLifecycleOverlay extends Component {
   renderEvent(event) {
     if (event.commandId) {
       return <Text style={styles.h2}>{`${event.commandId}`}</Text>;
-    } else {
+    } else if (event.componentName) {
       return <Text style={styles.h2}>{`${event.event} | ${event.componentName}`}</Text>;
+    } else {
+      return <Text style={styles.h2}>{`${event.event} | ${event.buttonId}`}</Text>;
     }
   }
 

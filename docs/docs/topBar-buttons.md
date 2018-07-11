@@ -61,6 +61,32 @@ Navigation.push(this.props.componentId, {
 }
 ```
 
+# Handling button press events
+
+```js
+class MyScreen extends Component {
+  static get options() {
+    return {
+      topBar: {
+        rightButtons: {
+          id: 'buttonOne',
+          icon: require('icon.png')
+        }
+      }
+    };
+  }
+
+  constructor(props) {
+    super(props);
+    Navigation.events().bindComponent(this); // bindComponent(this) has to be called if you want the component to handle navigation events, such as navigationButtonPressed
+  }
+
+  navigationButtonPressed({ buttonId }) {
+
+  }
+}
+```
+
 # Modifying buttons at runtime
 
 As buttons are part of a screen's options, they can be modified like any other styling option using the `mergeOptions` command.
