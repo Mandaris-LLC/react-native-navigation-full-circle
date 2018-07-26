@@ -51,4 +51,11 @@
 	XCTAssertFalse([_overlayManager.overlayWindows containsObject:window]);
 }
 
+- (void)testDismissOverlayShouldNotRemoveWrongVC {
+	[_overlayManager showOverlay:_overlayVC];
+	UIWindow* window = _overlayManager.overlayWindows.lastObject;
+	[_overlayManager dismissOverlay:[UIViewController new]];
+	XCTAssertTrue([_overlayManager.overlayWindows containsObject:window]);
+}
+
 @end
