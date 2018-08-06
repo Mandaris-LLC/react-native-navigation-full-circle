@@ -126,7 +126,7 @@ export interface OptionsTopBarTitle {
    * Top Bar title height in densitiy pixels
    * #### (Android specific)
    */
-  height: number;
+  height?: number;
 }
 
 export interface OptionsTopBarSubtitle {
