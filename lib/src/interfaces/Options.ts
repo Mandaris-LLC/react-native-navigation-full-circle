@@ -42,12 +42,12 @@ export interface OptionsStatusBar {
    * Set the background color of the status bar
    * #### (Android specific)
    */
-  backgroundColor: Color;
+  backgroundColor?: Color;
   /**
    * Draw screen behind the status bar
    * #### (Android specific)
    */
-  drawBehind: boolean;
+  drawBehind?: boolean;
 }
 
 export interface OptionsLayout {
@@ -63,7 +63,7 @@ export interface OptionsLayout {
    * Layout top margin
    * #### (Android specific)
    */
-  topMargin: number;
+  topMargin?: number;
 }
 
 export enum OptionsModalPresentationStyle {
@@ -161,17 +161,17 @@ export interface OptionsTopBarBackButton {
    * Weither the back button is visible or not
    * @default true
    */
-  visible: boolean;
+  visible?: boolean;
   /**
    * Set the back button title
    * #### (iOS specific)
    */
-  title: string;
+  title?: string;
   /**
    * Show title or just the icon
    * #### (iOS specific)
    */
-  showTitle: boolean;
+  showTitle?: boolean;
   /**
    * Back button icon or text color
    * #### (Android specific)
@@ -289,29 +289,29 @@ export interface OptionsTopBar {
    * @requires translucent: true
    * @default 'default'
    */
-  barStyle: 'default' | 'black';
+  barStyle?: 'default' | 'black';
   /**
    * Allows the NavBar to be translucent (blurred)
    * #### (iOS specific)
    * @requires transparent: false
    */
-  translucent: boolean;
+  translucent?: boolean;
   /**
    * Allows the NavBar to be transparent
    * #### (iOS specific)
    */
-  transparent: boolean;
+  transparent?: boolean;
   /**
    * Disable the border on bottom of the navbar
    * #### (iOS specific)
    * @default false
    */
-  noBorder: boolean;
+  noBorder?: boolean;
   /**
    * Enable background blur
    * #### (iOS specific)
    */
-  blur: boolean;
+  blur?: boolean;
   /**
    * Show a UISearchBar in the Top Bar
    * #### (iOS 11+ specific)
