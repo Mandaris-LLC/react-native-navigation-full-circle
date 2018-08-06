@@ -54,7 +54,44 @@ export class LayoutTreeCrawler {
     const clazz = this.store.getOriginalComponentClassForName(node.data.name) || {};
     const staticOptions = _.cloneDeep(clazz.options) || {};
     const passedOptions = node.data.options || {};
+    this._mergeButtonsStyles(passedOptions, staticOptions);
     node.data.options = _.merge({}, staticOptions, passedOptions);
+  }
+
+  _mergeButtonsStyles(passedOptions, staticOptions) {
+    if (passedOptions.topBar) {
+      const leftButtons = passedOptions.topBar.leftButtons;
+      if (leftButtons) {
+        const leftButtonsStyle = this._extractButtonsStyle(leftButtons);
+        this._applyButtonsStyle(staticOptions.topBar.leftButtons, leftButtonsStyle);
+        this._applyButtonsStyle(passedOptions.topBar.leftButtons, leftButtonsStyle);
+      }
+
+      const rightButtons = passedOptions.topBar.rightButtons;
+      if (rightButtons) {
+        const rightButtonsStyle = this._extractButtonsStyle(rightButtons);
+        this._applyButtonsStyle(staticOptions.topBar.rightButtons, rightButtonsStyle);
+        this._applyButtonsStyle(passedOptions.topBar.rightButtons, rightButtonsStyle);
+      }
+    }
+  }
+
+  _extractButtonsStyle(buttons) {
+    return buttons.find((button) => {
+      if (button.id === undefined) {
+        const index = buttons.indexOf(button);
+        buttons.splice(index, 1);
+        return button;
+      } else {
+        return undefined;
+      }
+    });
+  }
+
+  _applyButtonsStyle(buttons, style) {
+    buttons.forEach((button) => {
+      _.merge(button, style);
+    });
   }
 
   _assertKnownLayoutType(type) {

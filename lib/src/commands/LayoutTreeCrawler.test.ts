@@ -104,6 +104,128 @@ describe('LayoutTreeCrawler', () => {
     });
   });
 
+  it('Components: extract button style from passedOptions buttons array and merge it to all buttons', () => {
+    const MyComponent = class {
+      static get options() {
+        return {
+          topBar: {
+            leftButtons: [{
+              id: 'id'
+            }],
+            rightButtons: [{
+              id: 'id2'
+            }]
+          }
+        };
+      }
+    };
+
+    const passedOptions = {
+      topBar: {
+        leftButtons: [{
+          font: 'Helvetica'
+        }],
+        rightButtons: []
+      }
+    };
+
+    const node = { type: LayoutType.Component, data: { name: 'theComponentName', options: passedOptions } };
+    store.setOriginalComponentClassForName('theComponentName', MyComponent);
+
+    uut.crawl(node);
+
+    expect(node.data.options).toEqual({
+      topBar: {
+        leftButtons: [{
+          id: 'id',
+          font: 'Helvetica'
+        }],
+        rightButtons: [{
+          id: 'id2'
+        }]
+      }
+    });
+  });
+
+  it('Components: empty buttons array should not affect static buttons', () => {
+    const MyComponent = class {
+      static get options() {
+        return {
+          topBar: {
+            leftButtons: [{
+              id: 'id'
+            }],
+            rightButtons: [{
+              id: 'id2'
+            }]
+          }
+        };
+      }
+    };
+
+    const passedOptions = {
+      topBar: {
+        leftButtons: [{
+          id: 'id'
+        }],
+        rightButtons: []
+      }
+    };
+
+    const node = { type: LayoutType.Component, data: { name: 'theComponentName', options: passedOptions } };
+    store.setOriginalComponentClassForName('theComponentName', MyComponent);
+
+    uut.crawl(node);
+
+    expect(node.data.options).toEqual({
+      topBar: {
+        leftButtons: [{
+          id: 'id'
+        }],
+        rightButtons: [{
+          id: 'id2'
+        }]
+      }
+    });
+  });
+
+  it('Components: undefined passed buttons should not affect static buttons', () => {
+    const MyComponent = class {
+      static get options() {
+        return {
+          topBar: {
+            leftButtons: [{
+              id: 'id'
+            }],
+            rightButtons: [{
+              id: 'id2'
+            }]
+          }
+        };
+      }
+    };
+
+    const passedOptions = {
+      topBar: {}
+    };
+
+    const node = { type: LayoutType.Component, data: { name: 'theComponentName', options: passedOptions } };
+    store.setOriginalComponentClassForName('theComponentName', MyComponent);
+
+    uut.crawl(node);
+
+    expect(node.data.options).toEqual({
+      topBar: {
+        leftButtons: [{
+          id: 'id'
+        }],
+        rightButtons: [{
+          id: 'id2'
+        }]
+      }
+    });
+  });
+
   it('Component: deepClones options', () => {
     const theStyle = {};
     const MyComponent = class {
