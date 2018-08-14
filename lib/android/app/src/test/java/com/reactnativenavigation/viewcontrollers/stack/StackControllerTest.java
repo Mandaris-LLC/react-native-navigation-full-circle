@@ -38,6 +38,7 @@ import org.assertj.core.api.iterable.Extractor;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ import java.util.List;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -65,11 +67,13 @@ public class StackControllerTest extends BaseTest {
     private NavigationAnimator animator;
     private TopBarController topBarController;
     private StackOptionsPresenter presenter;
+    private BackButtonHelper backButtonHelper;
 
     @Override
     public void beforeEach() {
         super.beforeEach();
         animator = Mockito.mock(NavigationAnimator.class);
+        backButtonHelper = spy(new BackButtonHelper());
         activity = newActivity();
         childRegistry = new ChildControllersRegistry();
         presenter = spy(new StackOptionsPresenter(activity, new TitleBarReactViewCreatorMock(), new Options()));
@@ -122,18 +126,6 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
-    public void push_backButtonIsAddedIfStackContainsMoreThenOneScreen() {
-        uut.push(child1, new CommandListenerAdapter());
-        verify(child1, times(0)).mergeOptions(any());
-        assertThat(child1.options.topBar.buttons.back.visible.isFalseOrUndefined()).isTrue();
-
-        uut.push(child2, new CommandListenerAdapter());
-        ArgumentCaptor<Options> captor = ArgumentCaptor.forClass(Options.class);
-        verify(child2, times(1)).mergeOptions(captor.capture());
-        assertThat(captor.getValue().topBar.buttons.back.visible.get()).isTrue();
-    }
-
-    @Test
     public void push_backButtonIsNotAddedIfScreenContainsLeftButton() {
         disablePushAnimation(child1, child2);
         uut.push(child1, new CommandListenerAdapter());
@@ -155,6 +147,18 @@ public class StackControllerTest extends BaseTest {
         child1.options.topBar.buttons.left = new ArrayList<>();
         uut.push(child1, new CommandListenerAdapter());
         verify(child1, times(0)).mergeOptions(any());
+    }
+
+    @Test
+    public void push_backButtonAddedBeforeChildViewIsCreated() {
+        disablePopAnimation(child1, child2);
+        uut.push(child1, new CommandListenerAdapter());
+        uut.push(child2, new CommandListenerAdapter());
+
+        InOrder inOrder = inOrder(backButtonHelper, child2);
+        inOrder.verify(backButtonHelper).addToPushedChild(child2);
+        inOrder.verify(child2).setParentController(uut);
+        inOrder.verify(child2).getView(); // creates view
     }
 
     @Test
@@ -845,6 +849,7 @@ public class StackControllerTest extends BaseTest {
                 .setChildRegistry(childRegistry)
                 .setAnimator(animator)
                 .setStackPresenter(presenter)
+                .setBackButtonHelper(backButtonHelper)
                 .build();
     }
 

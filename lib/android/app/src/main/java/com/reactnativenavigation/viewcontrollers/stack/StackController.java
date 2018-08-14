@@ -129,9 +129,9 @@ public class StackController extends ParentController<StackLayout> {
 
     public void push(ViewController child, CommandListener listener) {
         final ViewController toRemove = stack.peek();
+        backButtonHelper.addToPushedChild(child);
         child.setParentController(this);
         stack.push(child.getId(), child);
-        backButtonHelper.addToPushedChild(this, child);
         Options resolvedOptions = resolveCurrentOptions(presenter.getDefaultOptions());
         addChildToStack(child, child.getView(), resolvedOptions);
 

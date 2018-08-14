@@ -101,7 +101,7 @@ public abstract class ViewController<T extends ViewGroup> implements ViewTreeObs
     @CallSuper
     public void mergeOptions(Options options) {
         this.options = this.options.mergeWith(options);
-        applyOptions(this.options);
+        if (view != null) applyOptions(this.options);
         this.options.clearOneTimeOptions();
     }
 
