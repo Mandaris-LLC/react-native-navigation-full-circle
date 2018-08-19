@@ -205,13 +205,13 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 	[CATransaction commit];
 }
 
-- (void)showModal:(NSDictionary*)layout completion:(RNNTransitionWithComponentIdCompletionBlock)completion {
+- (void)showModal:(NSDictionary*)layout completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 
 	UIViewController<RNNRootViewProtocol> *newVc = [_controllerFactory createLayoutAndSaveToStore:layout];
-	[_modalManager showModal:newVc animated:newVc.getLeafViewController.options.animations.showModal.enable completion:^(NSString *componentId) {
+	[_modalManager showModal:newVc animated:newVc.getLeafViewController.options.animations.showModal.enable completion:^{
 		[_eventEmitter sendOnNavigationCommandCompletion:showModal params:@{@"layout": layout}];
-		completion(componentId);
+		completion();
 	}];
 }
 
