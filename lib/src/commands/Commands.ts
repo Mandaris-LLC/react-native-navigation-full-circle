@@ -59,7 +59,9 @@ export class Commands {
     const commandId = this.uniqueIdProvider.generate('showModal');
     const result = this.nativeCommandsSender.showModal(commandId, layout);
     this.commandsObserver.notify('showModal', { commandId, layout });
-    return result;
+    return result.then(() => {
+      return {commandId, layout};
+    });
   }
 
   public dismissModal(componentId) {
