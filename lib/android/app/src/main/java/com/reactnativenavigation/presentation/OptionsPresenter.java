@@ -62,7 +62,7 @@ public class OptionsPresenter {
     }
 
     private void applyTopMargin(View view, Options options) {
-        if (view.getLayoutParams() instanceof MarginLayoutParams) {
+        if (view.getLayoutParams() instanceof MarginLayoutParams && options.layout.topMargin.hasValue()) {
             ((MarginLayoutParams) view.getLayoutParams()).topMargin = options.layout.topMargin.get(0);
         }
     }
