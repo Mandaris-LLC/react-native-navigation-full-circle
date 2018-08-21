@@ -139,7 +139,7 @@
 	if (!_customTitleView) {
 		if (self.options.topBar.title.component.name) {
 			_customTitleView = (RNNReactRootView*)[_creator createRootViewFromComponentOptions:self.options.topBar.title.component];
-			_customTitleView.backgroundColor = UIColor.redColor;
+			_customTitleView.backgroundColor = UIColor.clearColor;
 			[_customTitleView setAlignment:self.options.topBar.title.component.alignment];
 			BOOL isCenter = [self.options.topBar.title.component.alignment isEqualToString:@"center"];
 			__weak RNNReactRootView *weakTitleView = _customTitleView;
