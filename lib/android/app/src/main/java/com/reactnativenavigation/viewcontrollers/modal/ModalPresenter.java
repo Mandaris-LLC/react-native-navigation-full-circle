@@ -40,7 +40,11 @@ public class ModalPresenter {
                 animateShow(toAdd, toRemove, listener, options);
             }
         } else {
-            onShowModalEnd(toAdd, toRemove, listener);
+            if (options.animations.showModal.waitForRender.isTrue()) {
+                toAdd.setOnAppearedListener(() -> onShowModalEnd(toAdd, toRemove, listener));
+            } else {
+                onShowModalEnd(toAdd, toRemove, listener);
+            }
         }
     }
 
