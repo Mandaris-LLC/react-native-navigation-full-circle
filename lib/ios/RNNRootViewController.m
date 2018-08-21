@@ -139,16 +139,20 @@
 	if (!_customTitleView) {
 		if (self.options.topBar.title.component.name) {
 			_customTitleView = (RNNReactRootView*)[_creator createRootViewFromComponentOptions:self.options.topBar.title.component];
-			_customTitleView.backgroundColor = UIColor.clearColor;
+			_customTitleView.backgroundColor = UIColor.redColor;
 			[_customTitleView setAlignment:self.options.topBar.title.component.alignment];
 			BOOL isCenter = [self.options.topBar.title.component.alignment isEqualToString:@"center"];
 			__weak RNNReactRootView *weakTitleView = _customTitleView;
+			CGRect frame = self.navigationController.navigationBar.frame;
+			[_customTitleView setFrame:frame];
 			[_customTitleView setRootViewDidChangeIntrinsicSize:^(CGSize intrinsicContentSize) {
 				if (isCenter) {
 					[weakTitleView setFrame:CGRectMake(0, 0, intrinsicContentSize.width, intrinsicContentSize.height)];
+				} else {
+					[weakTitleView setFrame:frame];
 				}
 			}];
-			[_customTitleView setFrame:self.navigationController.navigationBar.frame];
+			
 			self.navigationItem.titleView = _customTitleView;
 		}
 	} else if (_customTitleView && _customTitleView.superview == nil) {

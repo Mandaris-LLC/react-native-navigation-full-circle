@@ -15,9 +15,9 @@
 
 - (void)setAlignment:(NSString *)alignment {
 	if ([alignment isEqualToString:@"fill"]) {
-		self.sizeFlexibility = RCTRootViewSizeFlexibilityWidthAndHeight;
-	} else {
 		self.sizeFlexibility = RCTRootViewSizeFlexibilityNone;
+	} else {
+		self.sizeFlexibility = RCTRootViewSizeFlexibilityWidthAndHeight;
 	}
 }
 
