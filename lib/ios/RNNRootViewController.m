@@ -10,6 +10,7 @@
 	RNNReactRootView* _customTitleView;
 	UIView* _customTopBar;
 	UIView* _customTopBarBackground;
+	BOOL _isBeingPresented;
 }
 
 @property (nonatomic, strong) NSString* componentName;
@@ -60,6 +61,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
 	[super viewWillAppear:animated];
+	_isBeingPresented = YES;
 	[self.options applyOn:self];
 }
 
@@ -70,6 +72,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
+	_isBeingPresented = NO;
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
@@ -136,14 +139,14 @@
 }
 
 - (void)setCustomNavigationTitleView {
-	if (!_customTitleView) {
+	if (!_customTitleView && _isBeingPresented) {
 		if (self.options.topBar.title.component.name) {
 			_customTitleView = (RNNReactRootView*)[_creator createRootViewFromComponentOptions:self.options.topBar.title.component];
 			_customTitleView.backgroundColor = UIColor.clearColor;
 			[_customTitleView setAlignment:self.options.topBar.title.component.alignment];
 			BOOL isCenter = [self.options.topBar.title.component.alignment isEqualToString:@"center"];
 			__weak RNNReactRootView *weakTitleView = _customTitleView;
-			CGRect frame = self.navigationController.navigationBar.frame;
+			CGRect frame = self.navigationController.navigationBar.bounds;
 			[_customTitleView setFrame:frame];
 			[_customTitleView setRootViewDidChangeIntrinsicSize:^(CGSize intrinsicContentSize) {
 				if (isCenter) {
