@@ -153,7 +153,7 @@ describe('screen style', () => {
     await expect(elementByLabel('Press Me')).toBeVisible();
   });
 
-  test(':ios: set searchBar and handle onSearchUpdated event', async () => {
+  xit(':ios: set searchBar and handle onSearchUpdated event', async () => {
     await elementById(testIDs.SHOW_TOPBAR_SEARCHBAR).tap();
     await expect(elementByLabel('Start Typing')).toBeVisible();
     await elementByLabel('Start Typing').tap();
