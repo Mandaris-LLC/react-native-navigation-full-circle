@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.reactnativenavigation.anim.ModalAnimator;
 import com.reactnativenavigation.parse.ModalPresentationStyle;
 import com.reactnativenavigation.parse.Options;
+import com.reactnativenavigation.react.EventEmitter;
 import com.reactnativenavigation.utils.CommandListener;
 import com.reactnativenavigation.viewcontrollers.ViewController;
 
@@ -16,6 +17,7 @@ public class ModalPresenter {
     private ViewGroup content;
     private ModalAnimator animator;
     private Options defaultOptions = new Options();
+    private EventEmitter eventEmitter;
 
     ModalPresenter(ModalAnimator animator) {
         this.animator = animator;
@@ -84,6 +86,11 @@ public class ModalPresenter {
 
     private void onDismissEnd(ViewController toDismiss, CommandListener listener) {
         toDismiss.destroy();
+        eventEmitter.emitModalDismissed(toDismiss.getId());
         listener.onSuccess(toDismiss.getId());
+    }
+
+    public void setEventEmitter(EventEmitter eventEmitter) {
+        this.eventEmitter = eventEmitter;
     }
 }
