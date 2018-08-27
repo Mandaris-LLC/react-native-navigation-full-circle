@@ -91,11 +91,13 @@ public class StackController extends ParentController<StackLayout> {
     }
 
     @Override
-    public void mergeChildOptions(Options options, Component child) {
-        super.mergeChildOptions(options, child);
-        presenter.mergeChildOptions(options, resolveCurrentOptions(), child);
-        if (options.fabOptions.hasValue() && child instanceof ReactComponent) {
-            fabOptionsPresenter.mergeOptions(options.fabOptions, (ReactComponent) child, getView());
+    public void mergeChildOptions(Options options, ViewController childController, Component child) {
+        super.mergeChildOptions(options, childController, child);
+        if (childController.isViewShown()) {
+            presenter.mergeChildOptions(options, resolveCurrentOptions(), child);
+            if (options.fabOptions.hasValue() && child instanceof ReactComponent) {
+                fabOptionsPresenter.mergeOptions(options.fabOptions, (ReactComponent) child, getView());
+            }
         }
         performOnParentController(parentController ->
                 ((ParentController) parentController).mergeChildOptions(
@@ -105,6 +107,7 @@ public class StackController extends ParentController<StackLayout> {
                                 .clearFabOptions()
                                 .clearTopTabOptions()
                                 .clearTopTabsOptions(),
+                        childController,
                         child
                 )
         );

@@ -52,6 +52,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class StackControllerTest extends BaseTest {
 
@@ -762,8 +763,9 @@ public class StackControllerTest extends BaseTest {
                         .build());
         Options optionsToMerge = new Options();
         Component component = mock(Component.class);
-        uut.mergeChildOptions(optionsToMerge, component);
-        verify(uut, times(1)).mergeChildOptions(optionsToMerge, component);
+        ViewController vc = mock(ViewController.class);
+        uut.mergeChildOptions(optionsToMerge, vc, component);
+        verify(uut, times(1)).mergeChildOptions(optionsToMerge, vc, component);
     }
 
     @Test
@@ -783,10 +785,11 @@ public class StackControllerTest extends BaseTest {
         optionsToMerge.topBar.testId = new Text("topBarID");
         optionsToMerge.bottomTabsOptions.testId = new Text("bottomTabsID");
         Component component = mock(Component.class);
-        uut.mergeChildOptions(optionsToMerge, component);
+        ViewController vc = mock(ViewController.class);
+        uut.mergeChildOptions(optionsToMerge, vc, component);
 
         ArgumentCaptor<Options> captor = ArgumentCaptor.forClass(Options.class);
-        verify(parentController, times(1)).mergeChildOptions(captor.capture(), eq(component));
+        verify(parentController, times(1)).mergeChildOptions(captor.capture(), eq(vc), eq(component));
         assertThat(captor.getValue().topBar.testId.hasValue()).isFalse();
         assertThat(captor.getValue().bottomTabsOptions.testId.get()).isEqualTo(optionsToMerge.bottomTabsOptions.testId.get());
     }
@@ -801,14 +804,24 @@ public class StackControllerTest extends BaseTest {
         options.topBar.testId = new Text("id");
         options.fabOptions.id = new Text("fabId");
         Component component = mock(Component.class);
+        ViewController vc = mock(ViewController.class);
 
         assertThat(options.fabOptions.hasValue()).isTrue();
-        uut.mergeChildOptions(options, component);
+        uut.mergeChildOptions(options, vc, component);
         ArgumentCaptor<Options> captor = ArgumentCaptor.forClass(Options.class);
-        verify(parentController, times(1)).mergeChildOptions(captor.capture(), eq(component));
+        verify(parentController, times(1)).mergeChildOptions(captor.capture(), eq(vc), eq(component));
         assertThat(captor.getValue().animations.push.hasValue()).isFalse();
         assertThat(captor.getValue().topBar.testId.hasValue()).isFalse();
         assertThat(captor.getValue().fabOptions.hasValue()).isFalse();
+    }
+
+    @Test
+    public void mergeChildOptions_presenterDoesNotApplyOptionsIfViewIsNotShown() {
+        ViewController vc = mock(ViewController.class);
+        when(vc.isViewShown()).thenReturn(false);
+        Component child = mock(Component.class);
+        uut.mergeChildOptions(new Options(), vc, child);
+        verify(presenter, times(0)).mergeChildOptions(any(), any(), any());
     }
 
     @Test
