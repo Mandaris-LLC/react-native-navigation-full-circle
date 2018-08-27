@@ -66,7 +66,12 @@ public class OptionsApplyingTest extends BaseTest {
                 (activity1, componentId, componentName) -> view,
                 initialNavigationOptions,
                 new OptionsPresenter(activity, new Options())
-        );
+        ) {
+            @Override
+            public boolean isViewShown() {
+                return true;
+            }
+        };
         TopBarController topBarController = new TopBarController() {
             @Override
             protected TopBar createTopBar(Context context, TopBarBackgroundViewController topBarBackgroundViewController, StackLayout stackLayout) {
