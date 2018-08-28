@@ -181,6 +181,6 @@ describe('screen style', () => {
     await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
     await elementById(testIDs.SHOW_YELLOW_BOX).tap();
     Android.pressBack();
-    await expect(elementByLabel('React Native Navigation!')).toBeVisible();    
+    await expect(elementByLabel('React Native Navigation!')).toBeVisible();
   });
 });
