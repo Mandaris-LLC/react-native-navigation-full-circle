@@ -8,6 +8,7 @@
 
 - (instancetype)initWithBridge:(RCTBridge *)bridge moduleName:(NSString *)moduleName initialProperties:(NSDictionary *)initialProperties {
 	self = [super initWithBridge:bridge moduleName:moduleName initialProperties:initialProperties];
+	_bridge = bridge;
 	
 #ifdef DEBUG
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentDidAppear:) name:RCTContentDidAppearNotification object:nil];
