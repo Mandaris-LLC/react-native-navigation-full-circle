@@ -16,7 +16,9 @@ We are currently in late stages of development of [v2](https://github.com/wix/re
 * [v2 Documentation](https://wix.github.io/react-native-navigation/v2/#/)
 <br><br>Have any questions regarding v2? Join us in [Discord](https://discord.gg/DhkZjq2) #v2 channel.
 
-<br><br>Latest stable version is `1.1.x` and is published to npm under tag `latest`. It supports react-native >= 0.48.
+<br><br>Latest stable version is `1.1.x` and is published to npm under tag `latest`.
+Version 1.1.483 supports react-native >= 0.48 up to react-native 0.56
+Version 1.1.484 supports react-native >= 0.57 
 >⚠️Since we're focusing our efforts on v2, we are not accepting pull requests for v1 and are not addresing issues for v1.
 
 ### tl;dr
