@@ -7,5 +7,5 @@ Utility helper function like registerComponent,
 wraps the provided component with a react-redux Provider with the passed redux store
 
 ```js
-Navigation.registerComponentWithRedux(`navigation.playground.WelcomeScreen`, () => WelcomeScreen, store, provider);
+Navigation.registerComponentWithRedux('navigation.playground.WelcomeScreen', () => WelcomeScreen, store, provider);
 ```
