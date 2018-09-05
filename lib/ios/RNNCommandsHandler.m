@@ -230,6 +230,8 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 		[_eventEmitter sendOnNavigationCommandCompletion:dismissModal params:@{@"componentId": componentId}];
 	}];
 	UIViewController<RNNRootViewProtocol> *modalToDismiss = (UIViewController<RNNRootViewProtocol>*)[_store findComponentForId:componentId];
+	[self removePopedViewControllers:modalToDismiss.navigationController.viewControllers];
+	
 	[_modalManager dismissModal:modalToDismiss completion:completion];
 	
 	[CATransaction commit];
