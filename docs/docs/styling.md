@@ -223,7 +223,8 @@ Navigation.mergeOptions(this.props.componentId, {
     visible: false
   },
   layout: {
-    topMargin: Navigation.constants().statusBarHeight // Set the layout's top margin
+    topMargin: Navigation.constants().statusBarHeight, // Set the layout's top margin
+    orientation: ['portrait', 'landscape'] | ['sensorLandscape'] // An array of supported orientations
   },
   topBar: {
     height: 70, // TopBar height in dp
