@@ -221,13 +221,11 @@ public class StackController extends ParentController<StackLayout> {
         listener.onSuccess(disappearing.getId());
     }
 
-    public void popTo(ViewController viewController, Options mergeOptions, CommandListener listener) {
-        if (!stack.containsId(viewController.getId()) || peek().equals(viewController)) {
+    public void popTo(final ViewController viewController, CommandListener listener) {
+        if (!stack.containsId(viewController.getId())) {
             listener.onError("Nothing to pop");
             return;
         }
-
-        peek().mergeOptions(mergeOptions);
 
         Iterator<String> iterator = stack.iterator();
         String currentControlId = iterator.next();
@@ -243,13 +241,12 @@ public class StackController extends ParentController<StackLayout> {
         pop(listener);
     }
 
-    public void popToRoot(Options mergeOptions, CommandListener listener) {
+    public void popToRoot(CommandListener listener) {
         if (!canPop()) {
             listener.onError("Nothing to pop");
             return;
         }
 
-        peek().mergeOptions(mergeOptions);
         Iterator<String> iterator = stack.iterator();
         while (stack.size() > 2) {
             ViewController controller = stack.get(iterator.next());

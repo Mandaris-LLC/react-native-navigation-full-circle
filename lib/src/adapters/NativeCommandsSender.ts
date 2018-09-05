@@ -26,12 +26,12 @@ export class NativeCommandsSender {
     return this.nativeCommandsModule.pop(commandId, componentId, options);
   }
 
-  popTo(commandId: string, componentId: string, options: object) {
-    return this.nativeCommandsModule.popTo(commandId, componentId, options);
+  popTo(commandId: string, componentId: string) {
+    return this.nativeCommandsModule.popTo(commandId, componentId);
   }
 
-  popToRoot(commandId: string, componentId: string, options: object) {
-    return this.nativeCommandsModule.popToRoot(commandId, componentId, options);
+  popToRoot(commandId: string, componentId: string) {
+    return this.nativeCommandsModule.popToRoot(commandId, componentId);
   }
 
   setStackRoot(commandId: string, onComponentId: string, layout: object) {
@@ -42,12 +42,12 @@ export class NativeCommandsSender {
     return this.nativeCommandsModule.showModal(commandId, layout);
   }
 
-  dismissModal(commandId: string, componentId: string, options: object) {
-    return this.nativeCommandsModule.dismissModal(commandId, componentId, options);
+  dismissModal(commandId: string, componentId: string) {
+    return this.nativeCommandsModule.dismissModal(commandId, componentId);
   }
 
-  dismissAllModals(commandId: string, options: object) {
-    return this.nativeCommandsModule.dismissAllModals(commandId, options);
+  dismissAllModals(commandId: string) {
+    return this.nativeCommandsModule.dismissAllModals(commandId);
   }
 
   showOverlay(commandId: string, layout: object) {
