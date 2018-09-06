@@ -86,6 +86,10 @@ public class UiUtils {
         return (int) (dp * scale + 0.5f);
     }
 
+    public static float pxToDp(Context context, float px) {
+        return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
     public static float dpToSp(Context context, float dp) {
         return dpToPx(context, dp) / context.getResources().getDisplayMetrics().density;
     }
