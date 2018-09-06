@@ -67,29 +67,14 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 - (void)mergeOptions:(NSString*)componentId options:(NSDictionary*)options completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	
-	UIViewController* vc = [_store findComponentForId:componentId];
-	if([vc isKindOfClass:[RNNRootViewController class]]) {
-		RNNRootViewController* rootVc = (RNNRootViewController*)vc;
-		[rootVc.options mergeWith:options];
+	UIViewController<RNNRootViewProtocol>* vc = (UIViewController<RNNRootViewProtocol>*)[_store findComponentForId:componentId];
+	if ([vc conformsToProtocol:@protocol(RNNRootViewProtocol)] || [vc isKindOfClass:[RNNRootViewController class]]) {
+		[vc.getLeafViewController.options mergeWith:options];
 		[CATransaction begin];
 		[CATransaction setCompletionBlock:completion];
-		
-		[rootVc.options applyOn:vc];
-		
+		[vc.getLeafViewController.options applyOn:vc.getLeafViewController];
 		[CATransaction commit];
 	}
-	
-	if ([vc isKindOfClass:[RNNSplitViewController class]]) {
-		RNNSplitViewController* splitVc = (RNNSplitViewController*)vc;
-		[splitVc.options mergeWith:options];
-		[CATransaction begin];
-		[CATransaction setCompletionBlock:completion];
-		
-		[splitVc.options applyOn:vc];
-		
-		[CATransaction commit];
-	}
-	
 }
 
 - (void)setDefaultOptions:(NSDictionary*)optionsDict completion:(RNNTransitionCompletionBlock)completion {
