@@ -137,7 +137,7 @@ public abstract class ViewController<T extends ViewGroup> implements ViewTreeObs
         this.parentController = parentController;
     }
 
-    void performOnParentStack(Task<StackController> task) {
+    public void performOnParentStack(Task<StackController> task) {
         if (parentController instanceof StackController) {
             task.run((StackController) parentController);
         } else if (this instanceof StackController) {
