@@ -124,9 +124,10 @@ public class Navigator extends ParentController {
         }
         root = viewController;
         rootLayout.addView(viewController.getView());
-        if (viewController.options.animations.startApp.hasAnimation()) {
+        Options options = viewController.resolveCurrentOptions().withDefaultOptions(defaultOptions);
+        if (options.animations.setRoot.hasAnimation()) {
             new NavigationAnimator(viewController.getActivity(), new ElementTransitionManager())
-                    .animateStartApp(viewController.getView(), viewController.options.animations.startApp, new AnimatorListenerAdapter() {
+                    .animateStartApp(viewController.getView(), options.animations.setRoot, new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             commandListener.onSuccess(viewController.getId());

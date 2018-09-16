@@ -555,7 +555,7 @@ public class NavigatorTest extends BaseTest {
         disablePushAnimation(child1);
 
         StackController spy = spy(parentController);
-        spy.options.animations.startApp.enable = new Bool(false);
+        spy.options.animations.setRoot.enable = new Bool(false);
         uut.setRoot(spy, new CommandListenerAdapter());
         spy.push(child1, new CommandListenerAdapter());
         activityController.destroy();
