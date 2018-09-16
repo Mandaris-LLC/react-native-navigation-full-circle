@@ -1,4 +1,4 @@
-package com.reactnativenavigation.viewcontrollers;
+package com.reactnativenavigation.viewcontrollers.sidemenu;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -13,6 +13,10 @@ import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.SideMenuOptions;
 import com.reactnativenavigation.presentation.OptionsPresenter;
 import com.reactnativenavigation.presentation.SideMenuOptionsPresenter;
+import com.reactnativenavigation.utils.CommandListener;
+import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
+import com.reactnativenavigation.viewcontrollers.ParentController;
+import com.reactnativenavigation.viewcontrollers.ViewController;
 import com.reactnativenavigation.views.Component;
 
 import java.util.ArrayList;
@@ -25,10 +29,12 @@ public class SideMenuController extends ParentController<DrawerLayout> {
 	private ViewController centerController;
 	private ViewController leftController;
 	private ViewController rightController;
+    private SideMenuOptionsPresenter presenter;
 
-	public SideMenuController(Activity activity, ChildControllersRegistry childRegistry, String id, Options initialOptions, OptionsPresenter presenter) {
+    public SideMenuController(Activity activity, ChildControllersRegistry childRegistry, String id, Options initialOptions, SideMenuOptionsPresenter sideMenuOptionsPresenter, OptionsPresenter presenter) {
 		super(activity, childRegistry, id, presenter, initialOptions);
-	}
+        this.presenter = sideMenuOptionsPresenter;
+    }
 
     @Override
     protected ViewController getCurrentChild() {
@@ -43,7 +49,9 @@ public class SideMenuController extends ParentController<DrawerLayout> {
     @NonNull
 	@Override
 	protected DrawerLayout createView() {
-        return new DrawerLayout(getActivity());
+        DrawerLayout sideMenu = new DrawerLayout(getActivity());
+        presenter.bindView(sideMenu);
+        return sideMenu;
 	}
 
     @Override
@@ -72,7 +80,7 @@ public class SideMenuController extends ParentController<DrawerLayout> {
     @Override
     public void mergeChildOptions(Options options, ViewController childController, Component child) {
         super.mergeChildOptions(options, childController, child);
-        new SideMenuOptionsPresenter(getView()).present(options.sideMenuRootOptions);
+        presenter.present(options.sideMenuRootOptions);
         performOnParentController(parentController ->
                 ((ParentController) parentController).mergeChildOptions(options.copy().clearSideMenuOptions(), childController, child)
         );
@@ -81,7 +89,12 @@ public class SideMenuController extends ParentController<DrawerLayout> {
     @Override
     public void mergeOptions(Options options) {
         super.mergeOptions(options);
-        new SideMenuOptionsPresenter(getView()).present(this.options.sideMenuRootOptions);
+        presenter.present(this.options.sideMenuRootOptions);
+    }
+
+    @Override
+    public boolean handleBack(CommandListener listener) {
+        return presenter.handleBack() || super.handleBack(listener);
     }
 
     public void setCenterController(ViewController centerController) {
@@ -104,7 +117,7 @@ public class SideMenuController extends ParentController<DrawerLayout> {
         getView().addView(controller.getView(), new LayoutParams(width, height, Gravity.RIGHT));
     }
 
-    protected int getWidth(SideMenuOptions sideMenuOptions) {
+    private int getWidth(SideMenuOptions sideMenuOptions) {
         int width = MATCH_PARENT;
         if (sideMenuOptions.width.hasValue()) {
             width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sideMenuOptions.width.get(), Resources.getSystem().getDisplayMetrics());
@@ -112,7 +125,7 @@ public class SideMenuController extends ParentController<DrawerLayout> {
         return width;
     }
 
-    protected int getHeight(SideMenuOptions sideMenuOptions) {
+    private int getHeight(SideMenuOptions sideMenuOptions) {
         int height = MATCH_PARENT;
         if (sideMenuOptions.height.hasValue()) {
             height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sideMenuOptions.height.get(), Resources.getSystem().getDisplayMetrics());

@@ -1,4 +1,4 @@
-package com.reactnativenavigation.viewcontrollers;
+package com.reactnativenavigation.viewcontrollers.sidemenu;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -13,24 +13,36 @@ import com.reactnativenavigation.parse.SideMenuOptions;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Number;
 import com.reactnativenavigation.presentation.OptionsPresenter;
+import com.reactnativenavigation.presentation.SideMenuOptionsPresenter;
+import com.reactnativenavigation.utils.CommandListenerAdapter;
+import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
+@SuppressWarnings("MagicNumber")
 public class SideMenuControllerTest extends BaseTest {
     private SideMenuController uut;
     private Activity activity;
     private ChildControllersRegistry childRegistry;
+    private SideMenuOptionsPresenter presenter;
 
     @Override
     public void beforeEach() {
         activity = newActivity();
         childRegistry = new ChildControllersRegistry();
-        OptionsPresenter presenter = new OptionsPresenter(activity, new Options());
-        uut = new SideMenuController(activity, childRegistry, "sideMenu", new Options(), presenter);
+        presenter = spy(new SideMenuOptionsPresenter());
+        uut = new SideMenuController(activity, childRegistry, "sideMenu", new Options(), presenter, new OptionsPresenter(activity, new Options()));
+    }
+
+    @Test
+    public void createView_bindView() {
+        uut.ensureViewIsCreated();
+        verify(presenter).bindView(uut.getView());
     }
 
     @Test
@@ -124,5 +136,23 @@ public class SideMenuControllerTest extends BaseTest {
         LayoutParams params = componentViewController.getView().getLayoutParams();
         assertThat(params.width).isEqualTo(widthInDp);
         assertThat(params.height).isEqualTo(heightInDp);
+    }
+
+    @Test
+    public void handleBack_closesLeftMenu() {
+        uut.setLeftController(new SimpleComponentViewController(activity, childRegistry, "left", new Options()));
+        assertThat(uut.handleBack(new CommandListenerAdapter())).isFalse();
+
+        uut.mergeOptions(SideMenuTestHelper.LEFT_OPEN);
+        assertThat(uut.handleBack(new CommandListenerAdapter())).isTrue();
+    }
+
+    @Test
+    public void handleBack_closesRightMenu() {
+        uut.setRightController(new SimpleComponentViewController(activity, childRegistry, "right", new Options()));
+        assertThat(uut.handleBack(new CommandListenerAdapter())).isFalse();
+
+        uut.mergeOptions(SideMenuTestHelper.RIGHT_OPEN);
+        assertThat(uut.handleBack(new CommandListenerAdapter())).isTrue();
     }
 }
