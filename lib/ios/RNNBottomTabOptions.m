@@ -13,9 +13,8 @@
 }
 
 - (void)applyOn:(UIViewController *)viewController {
-	UIViewController* topViewController = [self getTabControllerFirstChild:viewController];
 	if (self.text || self.icon || self.selectedIcon) {
-		UITabBarItem* tabItem = topViewController.tabBarItem;
+		UITabBarItem* tabItem = viewController.tabBarItem;
 		
 		tabItem.selectedImage = [self getSelectedIconImage];
 		tabItem.image = [self getIconImage];
@@ -39,7 +38,7 @@
 		
 		[self appendTitleAttributes:tabItem];
 		
-		[topViewController setTabBarItem:tabItem];
+		[viewController setTabBarItem:tabItem];
 	}
 	
 	if (self.badge) {
@@ -47,7 +46,10 @@
 		if (self.badge != nil && ![self.badge isEqual:[NSNull null]]) {
 			badge = [RCTConvert NSString:self.badge];
 		}
-		UITabBarItem *tabBarItem = topViewController.tabBarItem;
+		UITabBarItem *tabBarItem = viewController.tabBarItem;
+		if (viewController.navigationController) {
+			tabBarItem = viewController.navigationController.tabBarItem;
+		}
 		tabBarItem.badgeValue = badge;
 		if (self.badgeColor) {
 			tabBarItem.badgeColor = [RCTConvert UIColor:self.badgeColor];
@@ -59,7 +61,7 @@
 	}
 	
 	if (self.visible) {
-		[topViewController.tabBarController setSelectedIndex:[viewController.tabBarController.viewControllers indexOfObject:viewController]];
+		[viewController.tabBarController setSelectedIndex:[viewController.tabBarController.viewControllers indexOfObject:viewController]];
 	}
 	
 	[self resetOptions];
@@ -133,18 +135,6 @@
 
 -(CGFloat)tabBarTextFontSizeValue {
 	return self.fontSize ? [self.fontSize floatValue] : 10;
-}
-
-- (UIViewController *)getTabControllerFirstChild:(UIViewController *)viewController {
-	while (viewController != nil) {
-		if ([viewController.parentViewController isKindOfClass:[UITabBarController class]] || !viewController.parentViewController) {
-			return viewController;
-		}
-		
-		viewController = viewController.parentViewController;
-	}
-	
-	return nil;
 }
 
 -(void)resetOptions {

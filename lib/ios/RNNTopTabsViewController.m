@@ -56,7 +56,7 @@
 	_viewControllers = viewControllers;
 	for (RNNRootViewController* childVc in viewControllers) {
 		[childVc.view setFrame:_contentView.bounds];
-		[childVc.layoutInfo.options.topTab applyOn:childVc];
+		[childVc applyTopTabsOptions];
 	}
 	
 	[self setSelectedViewControllerIndex:0];

@@ -6,7 +6,6 @@
 @interface RNNTopTabsViewController : UIViewController <RNNRootViewProtocol>
 
 @property (nonatomic, retain) UIView* contentView;
-@property (nonatomic, retain) RNNLayoutInfo* layoutInfo;
 
 - (void)setViewControllers:(NSArray*)viewControllers;
 - (void)viewController:(UIViewController*)vc changedTitle:(NSString*)title;

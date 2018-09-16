@@ -21,9 +21,9 @@
 
 - (void)setSelectedIndexByComponentID:(NSString *)componentID {
 	for (id child in self.childViewControllers) {
-		UIViewController<RNNRootViewProtocol>* vc = child;
+		RNNRootViewController* vc = child;
 
-		if ([vc.layoutInfo.componentId isEqualToString:componentID]) {
+		if ([vc.componentId isEqualToString:componentID]) {
 			[self setSelectedIndex:[self.childViewControllers indexOfObject:child]];
 		}
 	}
@@ -32,6 +32,10 @@
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {
 	_currentTabIndex = selectedIndex;
 	[super setSelectedIndex:selectedIndex];
+}
+
+- (void)mergeOptions:(RNNOptions *)options {
+	[self.getLeafViewController mergeOptions:options];
 }
 
 - (UIViewController *)getLeafViewController {

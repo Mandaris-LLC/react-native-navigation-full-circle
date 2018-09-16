@@ -3,9 +3,9 @@
 
 @interface RNNNavigationController : UINavigationController <RNNRootViewProtocol>
 
-- (instancetype)initWithLayoutInfo:(RNNLayoutInfo *)layoutInfo;
+- (instancetype)initWithOptions:(RNNNavigationOptions *)options;
 
-@property (nonatomic, retain) RNNLayoutInfo* layoutInfo;
-
+@property (nonatomic, strong) NSString* componentId;
+@property (nonatomic, strong) RNNNavigationOptions* options;
 
 @end

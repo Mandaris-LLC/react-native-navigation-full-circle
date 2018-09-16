@@ -9,6 +9,4 @@
 
 - (void)setSelectedIndexByComponentID:(NSString *)componentID;
 
-@property (nonatomic, retain) RNNLayoutInfo* layoutInfo;
-
 @end

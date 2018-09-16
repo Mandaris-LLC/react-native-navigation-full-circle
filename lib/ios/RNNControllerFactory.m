@@ -1,14 +1,14 @@
+
 #import "RNNControllerFactory.h"
 #import "RNNLayoutNode.h"
 #import "RNNSplitViewController.h"
 #import "RNNSplitViewOptions.h"
 #import "RNNSideMenuController.h"
 #import "RNNSideMenuChildVC.h"
+#import "RNNNavigationOptions.h"
 #import "RNNNavigationController.h"
 #import "RNNTabBarController.h"
 #import "RNNTopTabsViewController.h"
-#import "RNNLayoutInfo.h"
-#import "RNNOptionsManager.h"
 
 @implementation RNNControllerFactory {
 	id<RNNRootViewCreator> _creator;
@@ -25,12 +25,10 @@
 							  andBridge:(RCTBridge *)bridge {
 	
 	self = [super init];
-	
 	_creator = creator;
 	_store = store;
 	_eventEmitter = eventEmitter;
 	_bridge = bridge;
-	_optionsManager = [RNNOptionsManager new];
 	
 	return self;
 }
@@ -96,10 +94,11 @@
 }
 
 - (UIViewController<RNNRootViewProtocol> *)createComponent:(RNNLayoutNode*)node {
-	RNNLayoutInfo* layoutInfo = [[RNNLayoutInfo alloc] initWithNode:node optionsManager:_optionsManager];
+	NSString* name = node.data[@"name"];
+	RNNNavigationOptions* options = [self createOptions:node.data[@"options"]];
 
-	RNNRootViewController* component = [[RNNRootViewController alloc] initWithLayoutInfo:layoutInfo rootViewCreator:_creator eventEmitter:_eventEmitter isExternalComponent:NO];
-
+	NSString* componentId = node.nodeId;
+	RNNRootViewController* component = [[RNNRootViewController alloc] initWithName:name withOptions:options withComponentId:componentId rootViewCreator:_creator eventEmitter:_eventEmitter isExternalComponent:NO];
 	if (!component.isCustomViewController) {
 		CGSize availableSize = UIApplication.sharedApplication.delegate.window.bounds.size;
 		[_bridge.uiManager setAvailableSize:availableSize forRootView:component.view];
@@ -108,11 +107,14 @@
 }
 
 - (UIViewController<RNNRootViewProtocol> *)createExternalComponent:(RNNLayoutNode*)node {
-	RNNLayoutInfo* layoutInfo = [[RNNLayoutInfo alloc] initWithNode:node optionsManager:_optionsManager];
-
-	UIViewController* externalVC = [_store getExternalComponent:layoutInfo bridge:_bridge];
+	NSString* name = node.data[@"name"];
+	NSDictionary* props = node.data[@"passProps"];
 	
-	RNNRootViewController* component = [[RNNRootViewController alloc] initWithLayoutInfo:layoutInfo rootViewCreator:_creator eventEmitter:_eventEmitter isExternalComponent:YES];
+	UIViewController* externalVC = [_store getExternalComponent:name props:props bridge:_bridge];
+	RNNNavigationOptions* options = [self createOptions:node.data[@"options"]];
+	
+	NSString* componentId = node.nodeId;
+	RNNRootViewController* component = [[RNNRootViewController alloc] initWithName:name withOptions:options withComponentId:componentId rootViewCreator:_creator eventEmitter:_eventEmitter isExternalComponent:YES];
 	
 	[component addChildViewController:externalVC];
 	[component.view addSubview:externalVC.view];
@@ -123,44 +125,43 @@
 
 
 - (UIViewController<RNNRootViewProtocol> *)createStack:(RNNLayoutNode*)node {
-	RNNLayoutInfo* layoutInfo = [[RNNLayoutInfo alloc] initWithNode:node optionsManager:_optionsManager];
-	
-	RNNNavigationController* vc = [[RNNNavigationController alloc] initWithLayoutInfo:layoutInfo];
-
+	RNNNavigationOptions* options = [self createOptions:node.data[@"options"]];
+	RNNNavigationController* vc = [[RNNNavigationController alloc] initWithOptions:options];
+	[vc setComponentId:node.nodeId];
 	NSMutableArray* controllers = [NSMutableArray new];
 	for (NSDictionary* child in node.children) {
 		[controllers addObject:[self fromTree:child]];
 	}
-	
 	[vc setViewControllers:controllers];
+	[vc.getLeafViewController mergeOptions:options];
 	
 	return vc;
 }
 
 -(UIViewController<RNNRootViewProtocol> *)createTabs:(RNNLayoutNode*)node {
 	RNNTabBarController* vc = [[RNNTabBarController alloc] initWithEventEmitter:_eventEmitter];
-	vc.layoutInfo = [[RNNLayoutInfo alloc] initWithNode:node optionsManager:_optionsManager];
-	
+	RNNNavigationOptions* options = [self createOptions:node.data[@"options"]];
+
 	NSMutableArray* controllers = [NSMutableArray new];
 	for (NSDictionary *child in node.children) {
 		UIViewController<RNNRootViewProtocol>* childVc = [self fromTree:child];
-		[childVc.layoutInfo.options applyOn:childVc];
-		[childVc.getLeafViewController.layoutInfo.options applyOn:childVc.getLeafViewController];
+		[childVc applyTabBarItem];
 		
 		[controllers addObject:childVc];
 	}
 	[vc setViewControllers:controllers];
+	[vc.getLeafViewController mergeOptions:options];
 	
 	return vc;
 }
 
 - (UIViewController<RNNRootViewProtocol> *)createTopTabs:(RNNLayoutNode*)node {
 	RNNTopTabsViewController* vc = [[RNNTopTabsViewController alloc] init];
-	vc.layoutInfo = [[RNNLayoutInfo alloc] initWithNode:node optionsManager:_optionsManager];
 	
 	NSMutableArray* controllers = [NSMutableArray new];
 	for (NSDictionary *child in node.children) {
 		RNNRootViewController* childVc = (RNNRootViewController*)[self fromTree:child];
+//		childVc.topTabsViewController = vc;
 		[controllers addObject:childVc];
 		[_bridge.uiManager setAvailableSize:vc.contentView.bounds.size forRootView:childVc.view];
 	}
@@ -171,8 +172,6 @@
 }
 
 - (UIViewController<RNNRootViewProtocol> *)createSideMenu:(RNNLayoutNode*)node {
-	RNNLayoutInfo* layoutInfo = [[RNNLayoutInfo alloc] initWithNode:node optionsManager:_optionsManager];
-
 	NSMutableArray* childrenVCs = [NSMutableArray new];
 	
 	for (NSDictionary *child in node.children) {
@@ -180,8 +179,7 @@
 		[childrenVCs addObject:vc];
 	}
 	RNNSideMenuController *sideMenu = [[RNNSideMenuController alloc] initWithControllers:childrenVCs];
-	sideMenu.layoutInfo = layoutInfo;
-	
+	[sideMenu.getLeafViewController mergeOptions:[self createOptions:node.data[@"options"]]];
 	return sideMenu;
 }
 
@@ -193,11 +191,26 @@
 	return sideMenuChild;
 }
 
+- (UIViewController<RNNRootViewProtocol> *)createOverlay:(NSDictionary*)layout {
+	UIViewController<RNNRootViewProtocol> *vc = [self fromTree:layout];
+	__block RCTRootView* rootView = (RCTRootView*)vc.view;
+	[vc performOnRotation:^{
+		CGSize availableSize = UIApplication.sharedApplication.delegate.window.bounds.size;
+		[_bridge.uiManager setSize:availableSize forView:rootView];
+	}];
+	rootView.backgroundColor = [UIColor clearColor];
+	CGSize availableSize = UIApplication.sharedApplication.delegate.window.bounds.size;
+	rootView.frame = CGRectMake(0, 0, availableSize.width, availableSize.height);
+	[_bridge.uiManager setAvailableSize:availableSize forRootView:vc.view];
+	
+	return vc;
+}
+
 - (UIViewController<RNNRootViewProtocol> *)createSplitView:(RNNLayoutNode*)node {
 
 	NSString* componentId = node.nodeId;
 	
-	RNNSplitViewOptions* options = [[RNNSplitViewOptions alloc] initWithDict:_optionsManager.defaultOptionsDict];
+	RNNSplitViewOptions* options = [[RNNSplitViewOptions alloc] initWithDict:_defaultOptionsDict];
 	[options mergeWith:node.data[@"options"]];
 
 	RNNSplitViewController* svc = [[RNNSplitViewController alloc] initWithOptions:options withComponentId:componentId rootViewCreator:_creator eventEmitter:_eventEmitter];
@@ -215,6 +228,13 @@
 	svc.delegate = masterVc;
 
 	return svc;
+}
+
+- (RNNNavigationOptions *)createOptions:(NSDictionary *)optionsDict {
+	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:optionsDict];
+	options.defaultOptions = [[RNNNavigationOptions alloc] initWithDict:_defaultOptionsDict];
+	
+	return options;
 }
 
 @end

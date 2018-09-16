@@ -14,7 +14,6 @@
 - (void)showOverlay:(UIViewController *)viewController {
 	UIWindow* overlayWindow = [[RNNOverlayWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	[_overlayWindows addObject:overlayWindow];
-	viewController.view.backgroundColor = [UIColor clearColor];
 	[overlayWindow setWindowLevel:UIWindowLevelNormal];
 	[overlayWindow setRootViewController:viewController];
 	[overlayWindow makeKeyAndVisible];
