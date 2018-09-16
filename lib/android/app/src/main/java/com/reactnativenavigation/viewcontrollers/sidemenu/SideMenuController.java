@@ -26,9 +26,9 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 public class SideMenuController extends ParentController<DrawerLayout> {
 
-	private ViewController centerController;
-	private ViewController leftController;
-	private ViewController rightController;
+	private ViewController center;
+	private ViewController left;
+	private ViewController right;
     private SideMenuOptionsPresenter presenter;
 
     public SideMenuController(Activity activity, ChildControllersRegistry childRegistry, String id, Options initialOptions, SideMenuOptionsPresenter sideMenuOptionsPresenter, OptionsPresenter presenter) {
@@ -39,11 +39,11 @@ public class SideMenuController extends ParentController<DrawerLayout> {
     @Override
     protected ViewController getCurrentChild() {
 	    if (getView().isDrawerOpen(Gravity.LEFT)) {
-            return leftController;
+            return left;
         } else if (getView().isDrawerOpen(Gravity.RIGHT)) {
-            return rightController;
+            return right;
         }
-        return centerController;
+        return center;
     }
 
     @NonNull
@@ -56,16 +56,16 @@ public class SideMenuController extends ParentController<DrawerLayout> {
 
     @Override
     public void sendOnNavigationButtonPressed(String buttonId) {
-        centerController.sendOnNavigationButtonPressed(buttonId);
+        center.sendOnNavigationButtonPressed(buttonId);
     }
 
     @NonNull
 	@Override
 	public Collection<ViewController> getChildControllers() {
 		ArrayList<ViewController> children = new ArrayList<>();
-		if (centerController != null) children.add(centerController);
-		if (leftController != null) children.add(leftController);
-		if (rightController != null) children.add(rightController);
+		if (center != null) children.add(center);
+		if (left != null) children.add(left);
+		if (right != null) children.add(right);
 		return children;
 	}
 
@@ -94,24 +94,24 @@ public class SideMenuController extends ParentController<DrawerLayout> {
 
     @Override
     public boolean handleBack(CommandListener listener) {
-        return presenter.handleBack() || super.handleBack(listener);
+        return presenter.handleBack() || center.handleBack(listener) || super.handleBack(listener);
     }
 
     public void setCenterController(ViewController centerController) {
-		this.centerController = centerController;
+		this.center = centerController;
 		View childView = centerController.getView();
 		getView().addView(childView);
 	}
 
     public void setLeftController(ViewController controller) {
-        this.leftController = controller;
+        this.left = controller;
         int height = this.getHeight(options.sideMenuRootOptions.left);
         int width = this.getWidth(options.sideMenuRootOptions.left);
         getView().addView(controller.getView(), new LayoutParams(width, height, Gravity.LEFT));
     }
 
     public void setRightController(ViewController controller) {
-        this.rightController = controller;
+        this.right = controller;
         int height = this.getHeight(options.sideMenuRootOptions.right);
         int width = this.getWidth(options.sideMenuRootOptions.right);
         getView().addView(controller.getView(), new LayoutParams(width, height, Gravity.RIGHT));
