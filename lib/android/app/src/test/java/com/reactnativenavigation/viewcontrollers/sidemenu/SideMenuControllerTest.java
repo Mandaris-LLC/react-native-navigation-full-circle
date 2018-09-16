@@ -2,9 +2,9 @@ package com.reactnativenavigation.viewcontrollers.sidemenu;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.view.ViewGroup.LayoutParams;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.ViewGroup.LayoutParams;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.mocks.SimpleComponentViewController;
@@ -21,7 +21,9 @@ import org.junit.Test;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("MagicNumber")
@@ -30,13 +32,20 @@ public class SideMenuControllerTest extends BaseTest {
     private Activity activity;
     private ChildControllersRegistry childRegistry;
     private SideMenuOptionsPresenter presenter;
+    private SimpleComponentViewController left;
+    private SimpleComponentViewController right;
+    private SimpleComponentViewController center;
 
     @Override
     public void beforeEach() {
         activity = newActivity();
         childRegistry = new ChildControllersRegistry();
         presenter = spy(new SideMenuOptionsPresenter());
+        left = new SimpleComponentViewController(activity, childRegistry, "left", new Options());
+        right = new SimpleComponentViewController(activity, childRegistry, "right", new Options());
+        center = spy(new SimpleComponentViewController(activity, childRegistry, "center", new Options()));
         uut = new SideMenuController(activity, childRegistry, "sideMenu", new Options(), presenter, new OptionsPresenter(activity, new Options()));
+        uut.setCenterController(center);
     }
 
     @Test
@@ -140,19 +149,23 @@ public class SideMenuControllerTest extends BaseTest {
 
     @Test
     public void handleBack_closesLeftMenu() {
-        uut.setLeftController(new SimpleComponentViewController(activity, childRegistry, "left", new Options()));
+        uut.setLeftController(left);
         assertThat(uut.handleBack(new CommandListenerAdapter())).isFalse();
+        verify(center, times(1)).handleBack(any());
 
         uut.mergeOptions(SideMenuTestHelper.LEFT_OPEN);
         assertThat(uut.handleBack(new CommandListenerAdapter())).isTrue();
+        verify(center, times(1)).handleBack(any());
     }
 
     @Test
     public void handleBack_closesRightMenu() {
-        uut.setRightController(new SimpleComponentViewController(activity, childRegistry, "right", new Options()));
+        uut.setRightController(right);
         assertThat(uut.handleBack(new CommandListenerAdapter())).isFalse();
+        verify(center, times(1)).handleBack(any());
 
         uut.mergeOptions(SideMenuTestHelper.RIGHT_OPEN);
         assertThat(uut.handleBack(new CommandListenerAdapter())).isTrue();
+        verify(center, times(1)).handleBack(any());
     }
 }
