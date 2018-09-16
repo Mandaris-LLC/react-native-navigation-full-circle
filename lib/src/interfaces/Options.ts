@@ -640,9 +640,9 @@ export interface OptionsAnimationSeparate {
 
 export interface OptionsAnimations {
   /**
-   * Configure the start app animation
+   * Configure the setRoot animation
    */
-  startApp?: OptionsAnimationProperties;
+  setRoot?: OptionsAnimationProperties;
   /**
    * Configure what animates when a screen is pushed
    */
@@ -703,7 +703,7 @@ export interface Options {
    *
    * Example:
 ```js
-startApp: {
+setRoot: {
   y: {
     from: 1000,
     to: 0,
