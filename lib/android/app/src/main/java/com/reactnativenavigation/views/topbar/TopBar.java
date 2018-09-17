@@ -265,6 +265,7 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
     }
 
     public void hideAnimate(AnimationOptions options, Runnable onAnimationEnd) {
+        if (!visible()) return;
         animator.hide(options, onAnimationEnd);
     }
 
@@ -275,7 +276,7 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
     }
 
     public void clearTopTabs() {
-        topTabs.clear(this);
+        topTabs.clear();
     }
 
     @VisibleForTesting

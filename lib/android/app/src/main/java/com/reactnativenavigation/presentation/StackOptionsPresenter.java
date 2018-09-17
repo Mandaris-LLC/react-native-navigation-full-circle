@@ -113,7 +113,11 @@ public class StackOptionsPresenter {
                 ((Component) view).drawBelowTopBar(topBar);
             }
         }
-        applyTopBarVisibility(withDefault.topBar, withDefault.animations, options);
+    }
+
+    public void applyInitialChildLayoutOptions(Options options) {
+        Options withDefault = options.copy().withDefaultOptions(defaultOptions);
+        setInitialTopBarVisibility(withDefault.topBar);
     }
 
     public void applyChildOptions(Options options, Component child) {
@@ -200,6 +204,15 @@ public class StackOptionsPresenter {
             }
         } else if (options.hideOnScroll.isFalseOrUndefined()) {
             topBar.disableCollapse();
+        }
+    }
+
+    private void setInitialTopBarVisibility(TopBarOptions options) {
+        if (options.visible.isFalse()) {
+            topBar.hide();
+        }
+        if (options.visible.isTrueOrUndefined()) {
+            topBar.show();
         }
     }
 

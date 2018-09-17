@@ -30,6 +30,22 @@ public class UiUtils {
         });
     }
 
+    public static void runOnMeasured(View view, Runnable task) {
+        if (view.getHeight() > 0 && view.getWidth() > 0) {
+            task.run();
+        } else {
+            view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (view.getHeight() > 0 && view.getWidth() > 0) {
+                        view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        task.run();
+                    }
+                }
+            });
+        }
+    }
+
 	public static void runOnMainThread(Runnable runnable) {
 		new Handler(Looper.getMainLooper()).post(runnable);
 	}

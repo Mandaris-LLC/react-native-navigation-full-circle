@@ -38,7 +38,7 @@ function start() {
         }
       },
       _animations: {
-        startApp: {
+        setRoot: {
           y: {
             from: 1000,
             to: 0,

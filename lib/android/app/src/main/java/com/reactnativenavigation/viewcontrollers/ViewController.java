@@ -45,7 +45,7 @@ public abstract class ViewController<T extends ViewGroup> implements ViewTreeObs
         boolean onViewDisappear(View view);
     }
 
-    Options initialOptions;
+    protected Options initialOptions;
     public Options options;
 
     private final Activity activity;
@@ -106,9 +106,11 @@ public abstract class ViewController<T extends ViewGroup> implements ViewTreeObs
 
     @CallSuper
     public void mergeOptions(Options options) {
+        this.initialOptions = this.initialOptions.mergeWith(options);
         this.options = this.options.mergeWith(options);
         if (view != null) applyOptions(this.options);
         this.options.clearOneTimeOptions();
+        initialOptions.clearOneTimeOptions();
     }
 
     @CallSuper

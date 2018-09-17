@@ -131,7 +131,7 @@ public class StackController extends ParentController<StackLayout> {
 
     public void push(ViewController child, CommandListener listener) {
         final ViewController toRemove = stack.peek();
-        backButtonHelper.addToPushedChild(child);
+        if (size() > 0) backButtonHelper.addToPushedChild(child);
         child.setParentController(this);
         stack.push(child.getId(), child);
         Options resolvedOptions = resolveCurrentOptions(presenter.getDefaultOptions());
@@ -166,6 +166,7 @@ public class StackController extends ParentController<StackLayout> {
         view.setLayoutParams(new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         child.setWaitForRender(resolvedOptions.animations.push.waitForRender);
         presenter.applyLayoutParamsOptions(resolvedOptions, view);
+        if (size() == 1) presenter.applyInitialChildLayoutOptions(resolvedOptions);
         getView().addView(view, getView().getChildCount() - 1);
     }
 
@@ -310,6 +311,7 @@ public class StackController extends ParentController<StackLayout> {
         child.setLayoutParams(new RelativeLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         Options options = resolveCurrentOptions();
         presenter.applyLayoutParamsOptions(options, child);
+        presenter.applyInitialChildLayoutOptions(options);
         stackLayout.addView(child, 0);
     }
 
