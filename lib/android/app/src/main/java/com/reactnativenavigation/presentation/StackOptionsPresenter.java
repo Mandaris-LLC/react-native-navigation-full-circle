@@ -162,13 +162,13 @@ public class StackOptionsPresenter {
     }
 
     private void applyTopBarOptions(TopBarOptions options, AnimationsOptions animationOptions, Component component, Options componentOptions) {
-        topBar.setHeight(options.height.get(LayoutParams.WRAP_CONTENT));
+        topBar.setHeight(options.height.get(UiUtils.getTopBarHeightDp(activity)));
         topBar.setElevation(options.elevation.get(DEFAULT_ELEVATION));
         if (topBar.getLayoutParams() instanceof MarginLayoutParams) {
             ((MarginLayoutParams) topBar.getLayoutParams()).topMargin = UiUtils.dpToPx(activity, options.topMargin.get(0));
         }
 
-        topBar.setTitleHeight(options.title.height.get(LayoutParams.WRAP_CONTENT));
+        topBar.setTitleHeight(options.title.height.get(UiUtils.getTopBarHeightDp(activity)));
         topBar.setTitle(options.title.text.get(""));
 
         if (options.title.component.hasValue()) {
