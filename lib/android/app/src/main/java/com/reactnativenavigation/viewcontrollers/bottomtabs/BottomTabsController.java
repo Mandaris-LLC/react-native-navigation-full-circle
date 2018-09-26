@@ -78,6 +78,8 @@ public class BottomTabsController extends ParentController implements AHBottomNa
         super.applyOptions(options);
         presenter.present(options);
         tabPresenter.present();
+        this.options.bottomTabsOptions.clearOneTimeOptions();
+        this.initialOptions.bottomTabsOptions.clearOneTimeOptions();
     }
 
     @Override
