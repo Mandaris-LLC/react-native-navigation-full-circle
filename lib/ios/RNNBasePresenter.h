@@ -20,8 +20,6 @@
 
 - (void)presentOn:(UIViewController *)viewController;
 
-- (void)presentOnLoad:(UIViewController *)viewController;
-
 - (void)overrideOptions:(RNNNavigationOptions *)options;
 
 @end

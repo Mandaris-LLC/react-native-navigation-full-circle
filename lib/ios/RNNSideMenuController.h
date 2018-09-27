@@ -21,7 +21,7 @@
 @property (nonatomic, retain) RNNLayoutInfo* layoutInfo;
 @property (nonatomic, retain) RNNBasePresenter* presenter;
 
--(instancetype)initWithControllers:(NSArray*)controllers;
+-(instancetype)initWithControllers:(NSArray*)controllers presenter:(RNNBasePresenter *)presenter;
 
 -(void)showSideMenu:(MMDrawerSide)side animated:(BOOL)animated;
 -(void)hideSideMenu:(MMDrawerSide)side animated:(BOOL)animated;

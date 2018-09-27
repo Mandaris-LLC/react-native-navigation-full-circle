@@ -15,7 +15,7 @@
 }
 
 - (void)present:(RNNNavigationOptions *)options on:(UIViewController *)viewController {
-	
+	[options applyOn:viewController];
 }
 
 - (RNNNavigationOptions *)presentWithChildOptions:(RNNNavigationOptions *)childOptions on:(UIViewController *)viewController {
@@ -23,10 +23,6 @@
 	[self present:options on:viewController];
 	
 	return options;
-}
-
-- (void)presentOnLoad:(UIViewController *)viewController {
-	
 }
 
 - (void)overrideOptions:(RNNNavigationOptions *)options {

@@ -181,14 +181,16 @@
 
 - (UIViewController<RNNParentProtocol> *)createSideMenu:(RNNLayoutNode*)node {
 	RNNLayoutInfo* layoutInfo = [[RNNLayoutInfo alloc] initWithNode:node];
-
+	RNNNavigationOptions* options = [_optionsManager createOptions:node.data[@"options"]];
+	RNNBasePresenter* presenter = [[RNNBasePresenter alloc] initWithOptions:options];
+	
 	NSMutableArray* childrenVCs = [NSMutableArray new];
 	
 	for (NSDictionary *child in node.children) {
 		UIViewController *vc = [self fromTree:child];
 		[childrenVCs addObject:vc];
 	}
-	RNNSideMenuController *sideMenu = [[RNNSideMenuController alloc] initWithControllers:childrenVCs];
+	RNNSideMenuController *sideMenu = [[RNNSideMenuController alloc] initWithControllers:childrenVCs presenter:presenter];
 	sideMenu.layoutInfo = layoutInfo;
 	
 	return sideMenu;
@@ -197,7 +199,9 @@
 
 - (UIViewController<RNNParentProtocol> *)createSideMenuChild:(RNNLayoutNode*)node type:(RNNSideMenuChildType)type {
 	UIViewController<RNNParentProtocol>* child = [self fromTree:node.children[0]];
+	RNNNavigationOptions* options = [_optionsManager createOptions:node.data[@"options"]];
 	RNNSideMenuChildVC *sideMenuChild = [[RNNSideMenuChildVC alloc] initWithChild: child type:type];
+	sideMenuChild.presenter = [[RNNBasePresenter alloc] initWithOptions:options];
 	
 	return sideMenuChild;
 }

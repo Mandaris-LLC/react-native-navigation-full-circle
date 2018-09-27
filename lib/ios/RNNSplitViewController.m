@@ -26,4 +26,18 @@
 	return self;
 }
 
+- (void)performOnChildLoad:(RNNNavigationOptions *)childOptions {
+	RNNNavigationOptions* combinedOptions = [_presenter presentWithChildOptions:childOptions on:self];
+	if ([self.parentViewController respondsToSelector:@selector(performOnChildLoad:)]) {
+		[self.parentViewController performSelector:@selector(performOnChildLoad:) withObject:combinedOptions];
+	}
+}
+
+- (void)performOnChildWillAppear:(RNNNavigationOptions *)childOptions {
+	RNNNavigationOptions* combinedOptions = [_presenter presentWithChildOptions:childOptions on:self];
+	if ([self.parentViewController respondsToSelector:@selector(performOnChildWillAppear:)]) {
+		[self.parentViewController performSelector:@selector(performOnChildWillAppear:) withObject:combinedOptions];
+	}
+}
+
 @end

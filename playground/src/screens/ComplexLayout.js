@@ -109,7 +109,7 @@ class ComplexLayout extends Component {
            ]
         }
       }
-    })
+    });
   }
 }
 
