@@ -28,11 +28,11 @@ class CustomDialog extends PureComponent {
       Alert.alert('Overlay disappeared');
     }
   }
-  
+
   onCLickOk() {
     Navigation.dismissOverlay(this.props.componentId);
   }
-  
+
   onCLickSetRoot() {
     Navigation.setRoot({
       root: {
