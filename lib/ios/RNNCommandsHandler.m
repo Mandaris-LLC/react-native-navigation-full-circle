@@ -55,12 +55,11 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 	[self assertReady];
 	
 	[_modalManager dismissAllModalsAnimated:NO];
-	[_store removeAllComponents];
 	
 	UIViewController *vc = [_controllerFactory createLayoutAndSaveToStore:layout[@"root"]];
 	
 	UIApplication.sharedApplication.delegate.window.rootViewController = vc;
-	[UIApplication.sharedApplication.delegate.window makeKeyAndVisible];
+	[UIApplication.sharedApplication.delegate.window makeKeyWindow];
 	[_eventEmitter sendOnNavigationCommandCompletion:setRoot params:@{@"layout": layout}];
 	completion();
 }
