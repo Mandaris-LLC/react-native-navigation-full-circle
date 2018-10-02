@@ -67,19 +67,15 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 - (void)mergeOptions:(NSString*)componentId options:(NSDictionary*)mergeOptions completion:(RNNTransitionCompletionBlock)completion {
 	[self assertReady];
 	
-	UIViewController<RNNLayoutProtocol>* vc = (UIViewController<RNNLayoutProtocol>*)[_store findComponentForId:componentId];
+	UIViewController* vc = [_store findComponentForId:componentId];
 	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:mergeOptions];
-	[CATransaction begin];
-	[CATransaction setCompletionBlock:completion];
 	
 	while (vc != nil) {
 		if ([vc conformsToProtocol:@protocol(RNNLayoutProtocol)]) {
-			[vc mergeOptions:options];
+			[(UIViewController<RNNLayoutProtocol>*)vc mergeOptions:options];
 		}
-		vc = (UIViewController<RNNLayoutProtocol>*)vc.parentViewController;
+		vc = vc.parentViewController;
 	}
-
-	[CATransaction commit];
 }
 
 - (void)setDefaultOptions:(NSDictionary*)optionsDict completion:(RNNTransitionCompletionBlock)completion {
