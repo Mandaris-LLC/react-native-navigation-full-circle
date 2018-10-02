@@ -50,7 +50,8 @@
 }
 
 - (void)mergeOptions:(RNNNavigationOptions *)options {
-	[self.presenter present:options onViewControllerWillAppear:self];
+	[self.options mergeOptions:options overrideOptions:YES];
+	[self.presenter present:self.options onViewControllerWillAppear:self];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
