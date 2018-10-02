@@ -31,6 +31,10 @@
 	
 	[self bindChildViewControllers:childViewControllers];
 	
+	// Fixes #3697
+	[self setExtendedLayoutIncludesOpaqueBars:YES];
+	self.edgesForExtendedLayout |= UIRectEdgeBottom;
+	
 	return self;
 }
 
