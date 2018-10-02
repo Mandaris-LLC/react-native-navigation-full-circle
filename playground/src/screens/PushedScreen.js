@@ -20,11 +20,14 @@ class PushedScreen extends Component {
           text: 'single',
           testID: testIDs.TOP_BAR_BUTTON
         },
+        background: {
+          color: 'blue'
+        },
         rightButtonColor: 'red',
       },
-      layout: {
-        backgroundColor: '#f5fcff'
-      },
+      // layout: {
+      //   backgroundColor: '#f5fcff'
+      // },
       bottomTabs: {
         visible: false
       }

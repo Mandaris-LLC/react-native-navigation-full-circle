@@ -179,7 +179,7 @@
 
 -(void)testTopBarTranslucent {
 	NSNumber* topBarTranslucentInput = @(0);
-	self.options.topBar.translucent = topBarTranslucentInput;
+	self.options.topBar.background.translucent = topBarTranslucentInput;
 	__unused RNNNavigationController* nav = [self createNavigationController];
 	[self.uut viewWillAppear:false];
 	XCTAssertFalse(self.uut.navigationController.navigationBar.translucent);
@@ -200,8 +200,8 @@
 }
 
 -(void)testTopBarTransparent_BOOL_True {
-	NSNumber* topBarTransparentInput = @(1);
-	self.options.topBar.transparent = topBarTransparentInput;
+	NSNumber* transparentColor = @(0x00000000);
+	self.options.topBar.background.color = transparentColor;
 	__unused RNNNavigationController* nav = [self createNavigationController];
 	[self.uut viewWillAppear:false];
 	UIView* transparentView = [self.uut.navigationController.navigationBar viewWithTag:TOP_BAR_TRANSPARENT_TAG];
@@ -210,19 +210,13 @@
 }
 
 -(void)testTopBarTransparent_BOOL_false {
-	NSNumber* topBarTransparentInput = @(0);
+	NSNumber* inputColor = @(0xFFFF0000);
 	__unused RNNNavigationController* nav = [self createNavigationController];
-	self.options.topBar.transparent = topBarTransparentInput;
+	self.options.topBar.background.color = inputColor;
 	[self.uut viewWillAppear:false];
 	UIView* transparentView = [self.uut.navigationController.navigationBar viewWithTag:TOP_BAR_TRANSPARENT_TAG];
 	XCTAssertFalse(transparentView);
 }
-
-
--(void)testStoreOriginalTopBarImages {
-
-}
-
 
 -(void)testTopBarLargeTitle_default {
 	__unused RNNNavigationController* nav = [self createNavigationController];
@@ -564,7 +558,7 @@
 
 -(void)testTopBarBlur_false {
 	NSNumber* topBarBlurInput = @(0);
-	self.options.topBar.blur = topBarBlurInput;
+	self.options.topBar.background.blur = topBarBlurInput;
 	__unused RNNNavigationController* nav = [self createNavigationController];
 	[self.uut viewWillAppear:false];
 	XCTAssertNil([self.uut.navigationController.navigationBar viewWithTag:BLUR_TOPBAR_TAG]);
@@ -572,7 +566,7 @@
 
 -(void)testTopBarBlur_true {
 	NSNumber* topBarBlurInput = @(1);
-	self.options.topBar.blur = topBarBlurInput;
+	self.options.topBar.background.blur = topBarBlurInput;
 	__unused RNNNavigationController* nav = [self createNavigationController];
 	[self.uut viewWillAppear:false];
 	XCTAssertNotNil([self.uut.navigationController.navigationBar viewWithTag:BLUR_TOPBAR_TAG]);
