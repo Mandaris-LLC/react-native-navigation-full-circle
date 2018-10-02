@@ -49,7 +49,7 @@ const styles = {
     backgroundColor: 'green',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 100,
+    height: 140,
     bottom: 0,
     position: 'absolute',
     left: 0,
