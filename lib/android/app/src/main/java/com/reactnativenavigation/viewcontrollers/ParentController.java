@@ -45,7 +45,8 @@ public abstract class ParentController<T extends ViewGroup> extends ChildControl
 	    if (CollectionUtils.isNullOrEmpty(getChildControllers())) return initialOptions;
         return getCurrentChild()
                 .resolveCurrentOptions()
-                .mergeWith(initialOptions);
+                .copy()
+                .withDefaultOptions(initialOptions);
     }
 
     @Override
