@@ -184,7 +184,7 @@ describe('screen style', () => {
     await expect(elementById(testIDs.TOP_BAR_BUTTON)).toBeVisible();
   });
 
-  test('Popping screen with yellow box in button, title and background components should not crash', async () => {
+  test(':android: Popping screen with yellow box in button, title and background components should not crash', async () => {
     await elementById(testIDs.PUSH_OPTIONS_BUTTON).tap();
     await elementById(testIDs.SHOW_YELLOW_BOX).tap();
     Android.pressBack();
