@@ -10,7 +10,6 @@
 #import "RNNStatusBarOptions.h"
 #import "RNNPreviewOptions.h"
 #import "RNNLayoutOptions.h"
-#import "RCTConvert+Modal.h"
 
 extern const NSInteger BLUR_TOPBAR_TAG;
 extern const NSInteger TOP_BAR_TRANSPARENT_TAG;

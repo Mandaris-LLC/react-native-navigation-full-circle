@@ -64,7 +64,7 @@
 
 -(void)testTopBarBackgroundColorWithoutNavigationController{
 	NSNumber* inputColor = @(0xFFFF0000);
-	self.options.topBar.background.color = [[Color alloc] initWithValue:inputColor];
+	self.options.topBar.background.color = [[Color alloc] initWithValue:[RCTConvert UIColor:inputColor]];
 
 	XCTAssertNoThrow([self.uut viewWillAppear:false]);
 }
@@ -319,7 +319,7 @@
 -(void)testTopBarTextFontFamily_invalidFont{
 	NSString* inputFont = @"HelveticaNeueeeee";
 	__unused RNNNavigationController* nav = [self createNavigationController];
-	self.options.topBar.title.fontFamily = inputFont;
+	self.options.topBar.title.fontFamily = [[Text alloc] initWithValue:inputFont];
 	//	XCTAssertThrows([self.uut viewWillAppear:false]);
 }
 

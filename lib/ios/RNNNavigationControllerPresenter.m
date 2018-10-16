@@ -1,6 +1,7 @@
 #import "RNNNavigationControllerPresenter.h"
 #import "UINavigationController+RNNOptions.h"
 #import "RNNNavigationController.h"
+#import <React/RCTConvert.h>
 
 @implementation RNNNavigationControllerPresenter
 
@@ -83,7 +84,7 @@
 	}
 	
 	if (options.topBar.backButton.icon.hasValue) {
-		[navigationController rnn_setBackButtonIcon:[withDefault.topBar.backButton.icon getWithDefaultValue:nil] withColor:[withDefault.topBar.backButton.color getWithDefaultValue:nil] title:[withDefault.topBar.backButton.showTitle getWithDefaultValue:nil] ? withDefault.topBar.backButton.title.get : @""];
+		[navigationController rnn_setBackButtonIcon:[withDefault.topBar.backButton.icon getWithDefaultValue:nil] withColor:[withDefault.topBar.backButton.color getWithDefaultValue:nil] title:[withDefault.topBar.backButton.showTitle getWithDefaultValue:YES] ? [withDefault.topBar.backButton.title getWithDefaultValue:nil] : @""];
 
 	}
 	

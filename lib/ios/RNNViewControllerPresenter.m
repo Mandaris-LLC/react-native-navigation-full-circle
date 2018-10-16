@@ -2,6 +2,7 @@
 #import "UIViewController+RNNOptions.h"
 #import "UITabBarController+RNNOptions.h"
 #import "RNNNavigationButtons.h"
+#import "RCTConvert+Modal.h"
 
 @interface RNNViewControllerPresenter()
 @property (nonatomic, strong) RNNNavigationButtons* navigationButtons;
