@@ -43,7 +43,7 @@ import static com.reactnativenavigation.utils.CollectionUtils.forEach;
 import static com.reactnativenavigation.utils.CollectionUtils.keyBy;
 import static com.reactnativenavigation.utils.CollectionUtils.merge;
 
-public class StackOptionsPresenter {
+public class StackPresenter {
     private static final int DEFAULT_TITLE_COLOR = Color.BLACK;
     private static final int DEFAULT_SUBTITLE_COLOR = Color.GRAY;
     private static final int DEFAULT_BORDER_COLOR = Color.BLACK;
@@ -62,7 +62,7 @@ public class StackOptionsPresenter {
     private Map<Component, Map<String, TitleBarButtonController>> componentRightButtons = new HashMap<>();
     private Map<Component, Map<String, TitleBarButtonController>> componentLeftButtons = new HashMap<>();
 
-    public StackOptionsPresenter(Activity activity, TitleBarReactViewCreator titleViewCreator, ReactViewCreator buttonCreator, ImageLoader imageLoader, Options defaultOptions) {
+    public StackPresenter(Activity activity, TitleBarReactViewCreator titleViewCreator, ReactViewCreator buttonCreator, ImageLoader imageLoader, Options defaultOptions) {
         this.activity = activity;
         this.titleViewCreator = titleViewCreator;
         this.buttonCreator = buttonCreator;
