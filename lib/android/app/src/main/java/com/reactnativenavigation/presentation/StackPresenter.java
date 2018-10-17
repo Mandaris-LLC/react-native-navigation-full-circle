@@ -264,6 +264,8 @@ public class StackPresenter {
         if (options.buttons.back.visible.isTrue() && !options.buttons.hasLeftButtons()) {
             topBar.setBackButton(createButtonController(options.buttons.back));
         }
+
+        topBar.setOverflowButtonColor(options.rightButtonColor.get(Color.BLACK));
     }
 
     private List<TitleBarButtonController> getOrCreateButtonControllers(@Nullable Map<String, TitleBarButtonController> currentButtons, @Nullable List<Button> buttons) {
@@ -339,6 +341,8 @@ public class StackPresenter {
         if (buttons.right != null) topBar.setRightButtons(rightButtonControllers);
         if (buttons.left != null) topBar.setLeftButtons(leftButtonControllers);
         if (buttons.back.hasValue()) topBar.setBackButton(createButtonController(buttons.back));
+
+        if (options.rightButtonColor.hasValue()) topBar.setOverflowButtonColor(options.rightButtonColor.get());
     }
 
     @Nullable
