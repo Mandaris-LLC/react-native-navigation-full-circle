@@ -203,11 +203,15 @@ public class StackController extends ParentController<StackLayout> {
             return;
         }
 
+        peek().mergeOptions(mergeOptions);
+        Options disappearingOptions = resolveCurrentOptions();
+
         final ViewController disappearing = stack.pop();
         final ViewController appearing = stack.peek();
-        disappearing.mergeOptions(mergeOptions);
+
         disappearing.onViewWillDisappear();
         appearing.onViewWillAppear();
+
         Options resolvedOptions = resolveCurrentOptions();
         ViewGroup appearingView = appearing.getView();
         if (appearingView.getLayoutParams() == null) {
@@ -218,8 +222,8 @@ public class StackController extends ParentController<StackLayout> {
             getView().addView(appearingView, 0);
         }
         presenter.onChildWillAppear(appearing.options, disappearing.options);
-        if (disappearing.options.animations.pop.enabled.isTrueOrUndefined()) {
-            animator.pop(disappearing.getView(), resolvedOptions.animations.pop, () -> finishPopping(disappearing, listener));
+        if (disappearingOptions.animations.pop.enabled.isTrueOrUndefined()) {
+            animator.pop(disappearing.getView(), disappearingOptions.animations.pop, () -> finishPopping(disappearing, listener));
         } else {
             finishPopping(disappearing, listener);
         }
