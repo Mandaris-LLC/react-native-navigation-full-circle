@@ -62,7 +62,7 @@
 }
 
 - (void)mergeOptions:(RNNNavigationOptions *)options {
-	[_presenter mergeOptions:options];
+	[_presenter mergeOptions:options resolvedOptions:self.resolveOptions];
 	[((UIViewController<RNNLayoutProtocol> *)self.parentViewController) mergeOptions:options];
 }
 
