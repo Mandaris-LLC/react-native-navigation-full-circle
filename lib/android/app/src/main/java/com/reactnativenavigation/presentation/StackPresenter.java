@@ -20,7 +20,7 @@ import com.reactnativenavigation.parse.TopTabOptions;
 import com.reactnativenavigation.parse.TopTabsOptions;
 import com.reactnativenavigation.parse.params.Button;
 import com.reactnativenavigation.parse.params.Colour;
-import com.reactnativenavigation.utils.ButtonOptionsPresenter;
+import com.reactnativenavigation.utils.ButtonPresenter;
 import com.reactnativenavigation.utils.ImageLoader;
 import com.reactnativenavigation.utils.UiUtils;
 import com.reactnativenavigation.viewcontrollers.IReactView;
@@ -281,7 +281,7 @@ public class StackPresenter {
         return new TitleBarButtonController(activity,
                 new NavigationIconResolver(activity, imageLoader),
                 imageLoader,
-                new ButtonOptionsPresenter(topBar.getTitleBar(), button),
+                new ButtonPresenter(topBar.getTitleBar(), button),
                 button,
                 buttonCreator,
                 onClickListener
