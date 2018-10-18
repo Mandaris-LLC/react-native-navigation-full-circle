@@ -195,7 +195,7 @@ public class LayoutFactory {
                 parse(typefaceManager, node.getOptions()),
                 new Presenter(activity, defaultOptions),
                 new BottomTabsPresenter(tabs, defaultOptions),
-                new BottomTabPresenter(activity, tabs, defaultOptions));
+                new BottomTabPresenter(activity, tabs, new ImageLoader(), defaultOptions));
 	}
 
     private ViewController createTopTabs(LayoutNode node) {
