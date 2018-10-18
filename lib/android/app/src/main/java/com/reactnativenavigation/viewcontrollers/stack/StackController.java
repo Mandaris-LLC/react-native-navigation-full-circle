@@ -144,7 +144,7 @@ public class StackController extends ParentController<StackLayout> {
         addChildToStack(child, child.getView(), resolvedOptions);
 
         if (toRemove != null) {
-            if (resolvedOptions.animations.push.enable.isTrueOrUndefined()) {
+            if (resolvedOptions.animations.push.enabled.isTrueOrUndefined()) {
                 if (resolvedOptions.animations.push.waitForRender.isTrue()) {
                     child.getView().setAlpha(0);
                     child.setOnAppearedListener(() -> animator.push(child.getView(), resolvedOptions.animations.push, resolvedOptions.transitions, toRemove.getElements(), child.getElements(), () -> {
@@ -218,7 +218,7 @@ public class StackController extends ParentController<StackLayout> {
             getView().addView(appearingView, 0);
         }
         presenter.onChildWillAppear(appearing.options, disappearing.options);
-        if (disappearing.options.animations.pop.enable.isTrueOrUndefined()) {
+        if (disappearing.options.animations.pop.enabled.isTrueOrUndefined()) {
             animator.pop(disappearing.getView(), resolvedOptions.animations.pop, () -> finishPopping(disappearing, listener));
         } else {
             finishPopping(disappearing, listener);

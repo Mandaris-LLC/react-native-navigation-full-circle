@@ -402,7 +402,7 @@ public class StackControllerTest extends BaseTest {
 
         child1.options.topBar.visible = new Bool(false);
         child1.options.topBar.animate = new Bool(false);
-        child1.options.animations.push.enable = new Bool(false);
+        child1.options.animations.push.enabled = new Bool(false);
 
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter() {
@@ -433,7 +433,7 @@ public class StackControllerTest extends BaseTest {
 
     @Test
     public void pop_appearingChildHasCorrectLayoutParams() {
-        child2.options.animations.pop.enable = new Bool(false);
+        child2.options.animations.pop.enabled = new Bool(false);
         child1.options.topBar.drawBehind = new Bool(false);
 
         StackController uut = createStack(Arrays.asList(child1, child2));
@@ -514,8 +514,8 @@ public class StackControllerTest extends BaseTest {
 
     @Test
     public void popToRoot_PopsEverythingAboveFirstController() {
-        child1.options.animations.push.enable = new Bool(false);
-        child2.options.animations.push.enable = new Bool(false);
+        child1.options.animations.push.enabled = new Bool(false);
+        child2.options.animations.push.enabled = new Bool(false);
 
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
@@ -538,8 +538,8 @@ public class StackControllerTest extends BaseTest {
 
     @Test
     public void popToRoot_onlyTopChildIsAnimated() {
-        child1.options.animations.push.enable = new Bool(false);
-        child2.options.animations.push.enable = new Bool(false);
+        child1.options.animations.push.enabled = new Bool(false);
+        child2.options.animations.push.enabled = new Bool(false);
 
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
@@ -558,9 +558,9 @@ public class StackControllerTest extends BaseTest {
 
     @Test
     public void popToRoot_topChildrenAreDestroyed() {
-        child1.options.animations.push.enable = new Bool(false);
-        child2.options.animations.push.enable = new Bool(false);
-        child3.options.animations.push.enable = new Bool(false);
+        child1.options.animations.push.enabled = new Bool(false);
+        child2.options.animations.push.enabled = new Bool(false);
+        child3.options.animations.push.enabled = new Bool(false);
 
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
@@ -633,8 +633,8 @@ public class StackControllerTest extends BaseTest {
 
     @Test
     public void pop_callWillAppearWillDisappear() {
-        child1.options.animations.push.enable = new Bool(false);
-        child2.options.animations.push.enable = new Bool(false);
+        child1.options.animations.push.enabled = new Bool(false);
+        child2.options.animations.push.enabled = new Bool(false);
         child1 = spy(child1);
         child2 = spy(child2);
         uut.push(child1, new CommandListenerAdapter());
@@ -649,8 +649,8 @@ public class StackControllerTest extends BaseTest {
         uut.ensureViewIsCreated();
 
         child1.options.topBar.visible = new Bool(false);
-        child1.options.animations.push.enable = new Bool(false);
-        child2.options.animations.push.enable = new Bool(true);
+        child1.options.animations.push.enabled = new Bool(false);
+        child2.options.animations.push.enabled = new Bool(true);
         uut.push(child1, new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
@@ -678,7 +678,7 @@ public class StackControllerTest extends BaseTest {
 
         child1.options.topBar.visible = new Bool(false);
         child1.options.topBar.animate = new Bool(false);
-        child2.options.animations.push.enable = new Bool(false);
+        child2.options.animations.push.enabled = new Bool(false);
         child2.options.topBar.animate = new Bool(false);
 
         child1.ensureViewIsCreated();
