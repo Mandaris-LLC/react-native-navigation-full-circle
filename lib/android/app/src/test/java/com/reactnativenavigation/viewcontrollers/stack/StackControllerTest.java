@@ -629,10 +629,10 @@ public class StackControllerTest extends BaseTest {
 
     @Test
     public void findControllerById_ReturnsSelfOrChildrenById() {
-        assertThat(uut.findControllerById("123")).isNull();
-        assertThat(uut.findControllerById(uut.getId())).isEqualTo(uut);
+        assertThat(uut.findController("123")).isNull();
+        assertThat(uut.findController(uut.getId())).isEqualTo(uut);
         uut.push(child1, new CommandListenerAdapter());
-        assertThat(uut.findControllerById(child1.getId())).isEqualTo(child1);
+        assertThat(uut.findController(child1.getId())).isEqualTo(child1);
     }
 
     @Test
@@ -641,7 +641,7 @@ public class StackControllerTest extends BaseTest {
         stack.ensureViewIsCreated();
         stack.push(child2, new CommandListenerAdapter());
         uut.push(stack, new CommandListenerAdapter());
-        assertThat(uut.findControllerById(child2.getId())).isEqualTo(child2);
+        assertThat(uut.findController(child2.getId())).isEqualTo(child2);
     }
 
     @Test
