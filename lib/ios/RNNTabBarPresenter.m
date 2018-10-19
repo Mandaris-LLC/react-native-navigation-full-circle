@@ -15,6 +15,7 @@
 	[tabBarController rnn_setTabBarTranslucent:[options.bottomTabs.translucent getWithDefaultValue:YES]];
 	[tabBarController rnn_setTabBarHideShadow:[options.bottomTabs.hideShadow getWithDefaultValue:NO]];
 	[tabBarController rnn_setTabBarStyle:[RCTConvert UIBarStyle:[options.bottomTabs.barStyle getWithDefaultValue:@"default"]]];
+	[tabBarController rnn_setTabBarVisible:[options.bottomTabs.visible getWithDefaultValue:YES]];
 }
 
 - (void)mergeOptions:(RNNNavigationOptions *)options resolvedOptions:(RNNNavigationOptions *)resolvedOptions {
@@ -50,6 +51,10 @@
 	
 	if (options.bottomTabs.hideShadow.hasValue) {
 		[tabBarController rnn_setTabBarHideShadow:options.bottomTabs.hideShadow.get];
+	}
+	
+	if (options.bottomTabs.visible.hasValue) {
+		[tabBarController rnn_setTabBarVisible:options.bottomTabs.visible.get];
 	}
 }
 

@@ -28,6 +28,7 @@
 	[[self.bindedViewController expect] rnn_setTabBarTranslucent:YES];
 	[[self.bindedViewController expect] rnn_setTabBarHideShadow:NO];
     [[self.bindedViewController expect] rnn_setTabBarStyle:UIBarStyleDefault];
+	[[self.bindedViewController expect] rnn_setTabBarVisible:YES];
 	[self.uut applyOptions:emptyOptions];
 	[self.bindedViewController verify];
 }
@@ -38,6 +39,7 @@
 	initialOptions.bottomTabs.backgroundColor = [[Color alloc] initWithValue:[UIColor redColor]];
 	initialOptions.bottomTabs.translucent = [[Bool alloc] initWithValue:@(0)];
 	initialOptions.bottomTabs.hideShadow = [[Bool alloc] initWithValue:@(1)];
+	initialOptions.bottomTabs.visible = [[Bool alloc] initWithValue:@(0)];
 	initialOptions.bottomTabs.barStyle = [[Text alloc] initWithValue:@"black"];
 	
 	[[self.bindedViewController expect] rnn_setTabBarTestID:@"testID"];
@@ -45,6 +47,7 @@
 	[[self.bindedViewController expect] rnn_setTabBarTranslucent:NO];
 	[[self.bindedViewController expect] rnn_setTabBarHideShadow:YES];
 	[[self.bindedViewController expect] rnn_setTabBarStyle:UIBarStyleBlack];
+	[[self.bindedViewController expect] rnn_setTabBarVisible:NO];
 	
 	[self.uut applyOptions:initialOptions];
 	[self.bindedViewController verify];
