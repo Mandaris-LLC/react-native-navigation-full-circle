@@ -58,6 +58,12 @@ describe('screen style', () => {
     await expect(element(by.text('TeSt'))).toBeVisible();
   });
 
+  test('set Tab Bar badge on a current Tab appear once', async () => {
+    await elementById(testIDs.TAB_BASED_APP_SIDE_BUTTON).tap();
+    await elementById(testIDs.SET_TAB_BADGE_BUTTON).tap();
+    await expect(element(by.text('TeSt'))).toBeVisible();
+  });
+
   test(':android: hide Tab Bar', async () => {
     await elementById(testIDs.TAB_BASED_APP_BUTTON).tap();
     await expect(elementById(testIDs.BOTTOM_TABS_ELEMENT)).toBeVisible();
