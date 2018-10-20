@@ -357,6 +357,34 @@ public class StackControllerTest extends BaseTest {
         assertThat(animator.getDuration()).isEqualTo(300);
     }
 
+    @SuppressWarnings("MagicNumber")
+    @Test
+    public void pop_animationOptionsAreMergedCorrectlyToDisappearingChildWithDefaultOptions() throws JSONException {
+        disablePushAnimation(child1, child2);
+
+        uut.push(child1, new CommandListenerAdapter());
+        uut.push(child2, new CommandListenerAdapter());
+
+        Options defaultOptions = new Options();
+        JSONObject content = new JSONObject();
+        JSONObject x = new JSONObject();
+        x.put("duration", 300);
+        x.put("from", 0);
+        x.put("to", 1000);
+        content.put("x", x);
+        defaultOptions.animations.pop.content = AnimationOptions.parse(content);
+        uut.setDefaultOptions(defaultOptions);
+
+        uut.pop(Options.EMPTY, new CommandListenerAdapter());
+        ArgumentCaptor<NestedAnimationsOptions> captor = ArgumentCaptor.forClass(NestedAnimationsOptions.class);
+        verify(animator, times(1)).pop(any(), captor.capture(), any());
+        Animator animator = captor.getValue().content
+                .getAnimation(mock(View.class))
+                .getChildAnimations()
+                .get(0);
+        assertThat(animator.getDuration()).isEqualTo(300);
+    }
+
     @Test
     public void canPopWhenSizeIsMoreThanOne() {
         assertThat(uut.isEmpty()).isTrue();
