@@ -64,7 +64,7 @@ describe('screen style', () => {
     await expect(element(by.text('TeSt'))).toBeVisible();
   });
 
-  test('set Tab Bar badge null on a current Tab should reset badge', async () => {
+  test(':ios: set Tab Bar badge null on a current Tab should reset badge', async () => {
     await elementById(testIDs.TAB_BASED_APP_BUTTON).tap();
     await elementById(testIDs.SET_TAB_BADGE_BUTTON).tap();
     await expect(element(by.text('TeSt'))).toBeVisible();
