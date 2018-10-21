@@ -69,6 +69,13 @@ public class StackController extends ParentController<StackLayout> {
     }
 
     @Override
+    public void onAttachToParent() {
+        if (!isViewShown() && !isEmpty()) {
+            presenter.applyChildOptions(resolveCurrentOptions(), (Component) getCurrentChild().getView());
+        }
+    }
+
+    @Override
     public void mergeOptions(Options options) {
         presenter.mergeOptions(options, (Component) getCurrentChild().getView());
         super.mergeOptions(options);
@@ -276,7 +283,7 @@ public class StackController extends ParentController<StackLayout> {
         controller.destroy();
     }
 
-    public ViewController peek() {
+    ViewController peek() {
         return stack.peek();
     }
 
@@ -298,7 +305,7 @@ public class StackController extends ParentController<StackLayout> {
     }
 
     @VisibleForTesting()
-    public boolean canPop() {
+    boolean canPop() {
         return stack.size() > 1;
     }
 

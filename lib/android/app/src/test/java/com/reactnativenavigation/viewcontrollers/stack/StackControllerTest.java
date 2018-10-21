@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.reactnativenavigation.BaseTest;
 import com.reactnativenavigation.TestUtils;
@@ -913,6 +914,21 @@ public class StackControllerTest extends BaseTest {
         Component child = mock(Component.class);
         uut.mergeChildOptions(new Options(), vc, child);
         verify(presenter, times(0)).mergeChildOptions(any(), any(), any());
+    }
+
+    @Test
+    public void resolvedOptionsAreAppliedWhenStackIsAttachedToParentAndNotVisible() {
+        FrameLayout parent = new FrameLayout(activity);
+        activity.setContentView(parent);
+
+        ViewController child = new SimpleViewController(activity, childRegistry, "child1", new Options());
+        StackController stack = createStack(Collections.singletonList(child));
+        stack.getView().setVisibility(View.INVISIBLE);
+
+        parent.addView(stack.getView());
+
+        Component component = (Component) child.getView();
+        verify(presenter).applyChildOptions(any(), eq(component));
     }
 
     @Test
