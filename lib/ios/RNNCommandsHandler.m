@@ -99,7 +99,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 	UIViewController<RNNLayoutProtocol> *newVc = [_controllerFactory createLayout:layout saveToStore:_store];
 	UIViewController *fromVC = [_store findComponentForId:componentId];
 	
-	if ([newVc.options.preview.reactTag floatValue] > 0) {
+	if ([[newVc.options.preview.reactTag getWithDefaultValue:@(0)] floatValue] > 0) {
 		UIViewController* vc = [_store findComponentForId:componentId];
 		
 		if([vc isKindOfClass:[RNNRootViewController class]]) {
@@ -109,7 +109,7 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
       		rootVc.previewCallback = ^(UIViewController *vcc) {
 				RNNRootViewController* rvc  = (RNNRootViewController*)vcc;
 				[self->_eventEmitter sendOnPreviewCompleted:componentId previewComponentId:newVc.layoutInfo.componentId];
-				if ([newVc.options.preview.commit floatValue] > 0) {
+				if ([newVc.options.preview.commit getWithDefaultValue:NO]) {
 					[CATransaction begin];
 					[CATransaction setCompletionBlock:^{
 						[self->_eventEmitter sendOnNavigationCommandCompletion:push params:@{@"componentId": componentId}];
@@ -122,20 +122,20 @@ static NSString* const setDefaultOptions	= @"setDefaultOptions";
 			
 			CGSize size = CGSizeMake(rootVc.view.frame.size.width, rootVc.view.frame.size.height);
 			
-			if (newVc.options.preview.width) {
-				size.width = [newVc.options.preview.width floatValue];
+			if (newVc.options.preview.width.hasValue) {
+				size.width = [newVc.options.preview.width.get floatValue];
 			}
 			
-			if (newVc.options.preview.height) {
-				size.height = [newVc.options.preview.height floatValue];
+			if (newVc.options.preview.height.hasValue) {
+				size.height = [newVc.options.preview.height.get floatValue];
 			}
 			
-			if (newVc.options.preview.width || newVc.options.preview.height) {
+			if (newVc.options.preview.width.hasValue || newVc.options.preview.height.hasValue) {
 				newVc.preferredContentSize = size;
 			}
       
 			RCTExecuteOnMainQueue(^{
-				UIView *view = [[ReactNativeNavigation getBridge].uiManager viewForReactTag:newVc.options.preview.reactTag];
+				UIView *view = [[ReactNativeNavigation getBridge].uiManager viewForReactTag:newVc.options.preview.reactTag.get];
 				[rootVc registerForPreviewingWithDelegate:(id)rootVc sourceView:view];
 			});
 		}
