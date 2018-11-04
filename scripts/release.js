@@ -58,6 +58,8 @@ function versionTagAndPublish() {
   console.log(`current published version: ${currentPublished}`);
 
   const version = process.env.RELEASE_BUILD ? process.env.VERSION : `${currentPublished}-snapshot.${process.env.BUILD_ID}`;
+  console.log(`Publishing version: ${version}`);
+
   tryPublishAndTag(version);
 }
 
