@@ -4,12 +4,12 @@ const semver = require('semver');
 const fs = require('fs');
 const _ = require('lodash');
 
-const ONLY_ON_BRANCH = 'origin/master';
-const VERSION_TAG = process.env.RELEASE_BUILD ? 'latest' : 'snapshot';
-const VERSION_INC = 'patch';
-
 // Workaround JS
 const release = !!!process.env.RELEASE_BUILD;
+
+const ONLY_ON_BRANCH = 'origin/master';
+const VERSION_TAG = release ? 'latest' : 'snapshot';
+const VERSION_INC = 'patch';
 
 function run() {
   if (!validateEnv()) {
@@ -44,7 +44,7 @@ function setupGit() {
   exec.execSyncSilent(`git config --global user.name "${process.env.GIT_USER}"`);
   const remoteUrl = new RegExp(`https?://(\\S+)`).exec(exec.execSyncRead(`git remote -v`))[1];
   exec.execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
-  exec.execSync(`git checkout ${ONLY_ON_BRANCH}`);
+  // exec.execSync(`git checkout ${ONLY_ON_BRANCH}`);
 }
 
 function createNpmRc() {
