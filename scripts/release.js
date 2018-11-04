@@ -4,8 +4,8 @@ const semver = require('semver');
 const fs = require('fs');
 const _ = require('lodash');
 
-const ONLY_ON_BRANCH = 'origin/v2';
-const VERSION_TAG = 'alpha';
+const ONLY_ON_BRANCH = 'origin/master';
+const VERSION_TAG = process.env.RELEASE_BUILD ? 'latest' : 'snapshot';
 const VERSION_INC = 'patch';
 
 function run() {
@@ -54,18 +54,15 @@ email=\${NPM_EMAIL}
 }
 
 function versionTagAndPublish() {
-  const packageVersion = semver.clean(process.env.npm_package_version);
-  console.log(`package version: ${packageVersion}`);
-
   const currentPublished = findCurrentPublishedVersion();
   console.log(`current published version: ${currentPublished}`);
 
-  const version = semver.gt(packageVersion, currentPublished) ? packageVersion : semver.inc(currentPublished, VERSION_INC);
+  const version = process.env.RELEASE_BUILD ? process.env.VERSION : `${currentPublished}-snapshot.${process.env.BUILD_ID}`;
   tryPublishAndTag(version);
 }
 
 function findCurrentPublishedVersion() {
-  return exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.${VERSION_TAG}`);
+  return exec.execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.latest`);
 }
 
 function tryPublishAndTag(version) {
