@@ -59,10 +59,6 @@ email=\${NPM_EMAIL}
 function versionTagAndPublish() {
   const currentPublished = findCurrentPublishedVersion();
   console.log(`current published version: ${currentPublished}`);
-  console.log(`Release ?`, process.env.RELEASE_BUILD);
-  console.log(`!Release ?`, !process.env.RELEASE_BUILD);
-  console.log(`!!Release ?`, !!process.env.RELEASE_BUILD);
-  console.log(`!!!Release ?`, !!!process.env.RELEASE_BUILD);
 
   const version = release ? process.env.VERSION : `${currentPublished}-snapshot.${process.env.BUILD_ID}`;
   console.log(`Publishing version: ${version}`);
@@ -95,7 +91,7 @@ function tryPublishAndTag(version) {
 function tagAndPublish(newVersion) {
   console.log(`trying to publish ${newVersion}...`);
   exec.execSync(`npm --no-git-tag-version version ${newVersion}`);
-  exec.execSyncRead(`npm publish --tag ${VERSION_TAG}`);
+  exec.execSync(`npm publish --tag ${VERSION_TAG}`);
   exec.execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   exec.execSyncSilent(`git push deploy ${newVersion} || true`);
 }
