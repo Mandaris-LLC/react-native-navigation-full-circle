@@ -8,6 +8,9 @@ const ONLY_ON_BRANCH = 'origin/master';
 const VERSION_TAG = process.env.RELEASE_BUILD ? 'latest' : 'snapshot';
 const VERSION_INC = 'patch';
 
+// Workaround JS
+const release = !!!process.env.RELEASE_BUILD;
+
 function run() {
   if (!validateEnv()) {
     return;
@@ -61,7 +64,7 @@ function versionTagAndPublish() {
   console.log(`!!Release ?`, !!process.env.RELEASE_BUILD);
   console.log(`!!!Release ?`, !!!process.env.RELEASE_BUILD);
 
-  const version = process.env.RELEASE_BUILD ? process.env.VERSION : `${currentPublished}-snapshot.${process.env.BUILD_ID}`;
+  const version = release ? process.env.VERSION : `${currentPublished}-snapshot.${process.env.BUILD_ID}`;
   console.log(`Publishing version: ${version}`);
 
   tryPublishAndTag(version);
