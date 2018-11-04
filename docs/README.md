@@ -1,5 +1,5 @@
 ![npm](https://img.shields.io/npm/dw/react-native-navigation.svg)
-[![npm (tag)](https://img.shields.io/npm/v/react-native-navigation/latest.svg)](https://github.com/wix/react-native-navigation/tree/v2#react-native-navigation-v2-wip)
+[![npm (tag)](https://img.shields.io/npm/v/react-native-navigation/latest.svg)](https://github.com/wix/react-native-navigation/tree/master)
 [![Build Status](https://img.shields.io/jenkins/s/http/jenkins-oss.wixpress.com:8080/job/react-native-navigation-master.svg)](https://jenkins-oss.wixpress.com/job/react-native-navigation-master/)
 [![Join us on Discord](https://img.shields.io/badge/discord-react--native--navigation-738bd7.svg?style=flat)](https://discord.gg/DhkZjq2)
 [![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/react-native-navigation.svg)](https://stackoverflow.com/questions/tagged/react-native-navigation)
@@ -16,5 +16,8 @@ React Native Navigation provides 100% native platform navigation on both iOS and
 - [Stack Overflow](http://stackoverflow.com/questions/tagged/react-native-navigation)
 - [Chat with us](https://discord.gg/DhkZjq2)
 - [Contributing](/docs/docs/WorkingLocally.md)
+
+# Installation
+As `react-native-navigation` is a native navigation library - integrating it into your app will require editing native files. Follow the installation guides in the [documentation](https://wix.github.io/react-native-navigation/v2/#/).
 
 
