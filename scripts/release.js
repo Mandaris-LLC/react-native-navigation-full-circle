@@ -56,6 +56,9 @@ email=\${NPM_EMAIL}
 function versionTagAndPublish() {
   const currentPublished = findCurrentPublishedVersion();
   console.log(`current published version: ${currentPublished}`);
+  console.log(`Release ?`, process.env.RELEASE_BUILD);
+  console.log(`!Release ?`, !process.env.RELEASE_BUILD);
+  console.log(`!!Release ?`, !!process.env.RELEASE_BUILD);
 
   const version = process.env.RELEASE_BUILD ? process.env.VERSION : `${currentPublished}-snapshot.${process.env.BUILD_ID}`;
   console.log(`Publishing version: ${version}`);
