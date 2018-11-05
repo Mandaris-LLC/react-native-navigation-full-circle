@@ -6,7 +6,7 @@
 [![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/react-native-navigation.svg)](https://stackoverflow.com/questions/tagged/react-native-navigation)
 
 <h1 align="center">
-  <img src=".logo.png"/><br>
+  <img src="../.logo.png"/><br>
   React Native Navigation
 </h1>
 
