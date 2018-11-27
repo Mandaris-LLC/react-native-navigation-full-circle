@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://github.com/wix/react-native-navigation/blob/master/.logo.png"/><br>
+  <img src="https://raw.githubusercontent.com/wix/react-native-navigation/master/.logo.png"/><br>
   React Native Navigation
 </h1>
 
