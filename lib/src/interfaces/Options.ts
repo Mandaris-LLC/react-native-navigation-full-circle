@@ -521,6 +521,12 @@ export interface OptionsSideMenu {
    * Configure the right side menu
    */
   right?: SideMenuSide;
+  /**
+   * Configure how a user is allowed to open a drawer using gestures
+   * #### (iOS specific)
+   * @default 'entireScreen'
+   */
+  openGestureMode?: 'entireScreen' | 'bezel';
 }
 
 export interface OptionsOverlay {

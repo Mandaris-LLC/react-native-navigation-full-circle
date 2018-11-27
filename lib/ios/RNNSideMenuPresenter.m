@@ -31,6 +31,8 @@
 	if (initialOptions.sideMenu.right.width.hasValue) {
 		[sideMenuController side:MMDrawerSideRight width:initialOptions.sideMenu.right.width.get];
 	}
+	
+	[sideMenuController setOpenDrawerGestureModeMask:[initialOptions.sideMenu.openGestureMode getWithDefaultValue:MMOpenDrawerGestureModeAll]];
 }
 
 - (void)mergeOptions:(RNNNavigationOptions *)newOptions currentOptions:(RNNNavigationOptions *)currentOptions defaultOptions:(RNNNavigationOptions *)defaultOptions {
