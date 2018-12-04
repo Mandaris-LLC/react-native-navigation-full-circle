@@ -8,6 +8,20 @@
 #import "RNNErrorHandler.h"
 #import <OCMock/OCMock.h>
 
+@interface MockUIApplication : NSObject
+
+-(UIWindow *)keyWindow;
+
+@end
+
+@implementation MockUIApplication
+
+- (UIWindow *)keyWindow {
+	return [UIWindow new];
+}
+
+@end
+
 @interface MockUINavigationController : RNNNavigationController
 @property (nonatomic, strong) NSArray* willReturnVCs;
 @end
@@ -33,6 +47,7 @@
 @property (nonatomic, strong) RNNRootViewController* vc3;
 @property (nonatomic, strong) MockUINavigationController* nvc;
 @property (nonatomic, strong) id mainWindow;
+@property (nonatomic, strong) id sharedApplication;
 @property (nonatomic, strong) id controllerFactory;
 @property (nonatomic, strong) id overlayManager;
 @property (nonatomic, strong) id eventEmmiter;
@@ -43,12 +58,13 @@
 
 - (void)setUp {
 	[super setUp];
+	self.sharedApplication = [OCMockObject mockForClass:[UIApplication class]];
 	self.mainWindow = [OCMockObject partialMockForObject:[UIWindow new]];
 	self.store = [OCMockObject partialMockForObject:[[RNNStore alloc] init]];
 	self.eventEmmiter = [OCMockObject partialMockForObject:[RNNEventEmitter new]];
 	self.overlayManager = [OCMockObject partialMockForObject:[RNNOverlayManager new]];
 	self.controllerFactory = [OCMockObject partialMockForObject:[[RNNControllerFactory alloc] initWithRootViewCreator:nil eventEmitter:self.eventEmmiter andBridge:nil]];
-	self.uut = [[RNNCommandsHandler alloc] initWithStore:self.store controllerFactory:self.controllerFactory eventEmitter:self.eventEmmiter stackManager:[RNNNavigationStackManager new] modalManager:[RNNModalManager new] overlayManager:self.overlayManager mainWindow:self.mainWindow];
+	self.uut = [[RNNCommandsHandler alloc] initWithStore:self.store controllerFactory:self.controllerFactory eventEmitter:self.eventEmmiter stackManager:[RNNNavigationStackManager new] modalManager:[RNNModalManager new] overlayManager:self.overlayManager sharedApplication:_sharedApplication];
 	self.vc1 = [RNNRootViewController new];
 	self.vc2 = [RNNRootViewController new];
 	self.vc3 = [RNNRootViewController new];
@@ -57,6 +73,7 @@
 	[self.store setComponent:self.vc1 componentId:@"vc1"];
 	[self.store setComponent:self.vc2 componentId:@"vc2"];
 	[self.store setComponent:self.vc3 componentId:@"vc3"];
+	OCMStub([self.sharedApplication keyWindow]).andReturn(self.mainWindow);
 }
 
 
@@ -75,7 +92,7 @@
 -(NSArray*) getPublicMethodNamesForObject:(NSObject*)obj{
 	NSMutableArray* skipMethods = [NSMutableArray new];
 	
-	[skipMethods addObject:@"initWithStore:controllerFactory:eventEmitter:stackManager:modalManager:overlayManager:mainWindow:"];
+	[skipMethods addObject:@"initWithStore:controllerFactory:eventEmitter:stackManager:modalManager:overlayManager:sharedApplication:"];
 	[skipMethods addObject:@"assertReady"];
 	[skipMethods addObject:@"removePopedViewControllers:"];
 	[skipMethods addObject:@".cxx_destruct"];
