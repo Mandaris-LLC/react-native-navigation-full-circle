@@ -1,6 +1,7 @@
-import * as _ from 'lodash';
+import * as _ from "lodash";
 
 export class Store {
+  public globalProps = {};
   private componentsByName = {};
   private propsById = {};
 
@@ -9,7 +10,11 @@ export class Store {
   }
 
   getPropsForId(componentId: string) {
-    return _.get(this.propsById, componentId, {});
+    return Object.assign(
+      {},
+      _.get(this.propsById, componentId, {}),
+      this.globalProps
+    );
   }
 
   setComponentClassForName(componentName: string, ComponentClass) {
@@ -19,7 +24,7 @@ export class Store {
   getComponentClassForName(componentName: string) {
     return _.get(this.componentsByName, componentName);
   }
-  
+
   cleanId(id: string) {
     _.unset(this.propsById, id);
   }
