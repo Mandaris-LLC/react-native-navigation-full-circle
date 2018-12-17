@@ -15,7 +15,7 @@
 				titleTextAttributes[NSFontAttributeName] = [UIFont fontWithName:fontFamily size:17];
 			}
 		} else if (fontSize) {
-			titleTextAttributes[NSFontAttributeName] = [UIFont systemFontOfSize:[fontSize floatValue] weight:UIFontWeightMedium];
+			titleTextAttributes[NSFontAttributeName] = [UIFont systemFontOfSize:[fontSize floatValue] weight:UIFontWeightSemibold];
 		}
 	}
 	

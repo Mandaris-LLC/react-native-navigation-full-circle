@@ -198,6 +198,8 @@
 			self.navigationItem.title = nil;
 		}
 		self.navigationItem.titleView = _customTitleView;
+	} else if(_customTitleView) {
+		[(RNNReactView*)_customTitleView setAppProperties: [self.resolveOptions.topBar.title.component props]];
 	}
 }
 
