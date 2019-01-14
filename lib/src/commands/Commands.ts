@@ -88,8 +88,6 @@ export class Commands {
 
     const commandId = this.uniqueIdProvider.generate('push');
     const result = this.nativeCommandsSender.push(commandId, componentId, layout);
-    // tslint:disable-next-line:no-console
-    console.log(commandId, componentId, layout);
     this.commandsObserver.notify('push', { commandId, componentId, layout });
     return result;
   }
