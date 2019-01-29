@@ -52,7 +52,9 @@ public class BottomTabs extends AHBottomNavigation {
     public void setText(int index, String text) {
         AHBottomNavigationItem item = getItem(index);
         if (!item.getTitle(getContext()).equals(text)) {
-            item.setTitle(text);
+            if(!text.isEmpty()) {
+                item.setTitle(text);
+            }
             refresh();
         }
     }
