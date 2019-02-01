@@ -2,6 +2,6 @@ import { ImageRequireSource, Image } from 'react-native';
 
 export class AssetService {
   resolveFromRequire(value: ImageRequireSource) {
-    return Image.resolveAssetSource(value);
+    return (Image as any).resolveAssetSource(value);
   }
 }

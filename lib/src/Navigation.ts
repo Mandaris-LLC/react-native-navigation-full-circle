@@ -25,8 +25,7 @@ import { AppRegistryService } from './adapters/AppRegistryService';
 export class NavigationRoot {
   public readonly Element = SharedElement;
   public readonly TouchablePreview = TouchablePreview;
-
-  private readonly store: Store;
+  public readonly store: Store;
   private readonly nativeEventsReceiver: NativeEventsReceiver;
   private readonly uniqueIdProvider: UniqueIdProvider;
   private readonly componentRegistry: ComponentRegistry;

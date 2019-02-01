@@ -18,7 +18,7 @@ export class SharedElement extends React.Component<SharedElementProps> {
   };
 
   render() {
-    return <RnnSharedElement {...this.props} />;
+    return <RnnSharedElement {...this.props as any} />;
   }
 }
 
