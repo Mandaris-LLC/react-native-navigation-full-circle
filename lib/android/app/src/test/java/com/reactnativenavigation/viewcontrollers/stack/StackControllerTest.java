@@ -20,6 +20,7 @@ import com.reactnativenavigation.parse.NestedAnimationsOptions;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.params.Bool;
 import com.reactnativenavigation.parse.params.Text;
+import com.reactnativenavigation.presentation.RenderChecker;
 import com.reactnativenavigation.presentation.StackPresenter;
 import com.reactnativenavigation.utils.CommandListenerAdapter;
 import com.reactnativenavigation.utils.ImageLoader;
@@ -30,7 +31,6 @@ import com.reactnativenavigation.utils.ViewUtils;
 import com.reactnativenavigation.viewcontrollers.ChildControllersRegistry;
 import com.reactnativenavigation.viewcontrollers.ParentController;
 import com.reactnativenavigation.viewcontrollers.ViewController;
-import com.reactnativenavigation.viewcontrollers.topbar.TopBarBackgroundViewController;
 import com.reactnativenavigation.viewcontrollers.topbar.TopBarController;
 import com.reactnativenavigation.views.Component;
 import com.reactnativenavigation.views.ReactComponent;
@@ -74,6 +74,7 @@ public class StackControllerTest extends BaseTest {
     private TopBarController topBarController;
     private StackPresenter presenter;
     private BackButtonHelper backButtonHelper;
+    private RenderChecker renderChecker;
 
     @Override
     public void beforeEach() {
@@ -82,7 +83,8 @@ public class StackControllerTest extends BaseTest {
         activity = newActivity();
         animator = spy(new NavigationAnimator(activity, Mockito.mock(ElementTransitionManager.class)));
         childRegistry = new ChildControllersRegistry();
-        presenter = spy(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarButtonCreatorMock(), ImageLoaderMock.mock(), new Options()));
+        renderChecker = spy(new RenderChecker());
+        presenter = spy(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarButtonCreatorMock(), ImageLoaderMock.mock(), renderChecker, new Options()));
         child1 = spy(new SimpleViewController(activity, childRegistry, "child1", new Options()));
         child2 = spy(new SimpleViewController(activity, childRegistry, "child2", new Options()));
         child3 = spy(new SimpleViewController(activity, childRegistry, "child3", new Options()));
@@ -100,7 +102,7 @@ public class StackControllerTest extends BaseTest {
     public void childrenAreAssignedParent() {
         StackController uut = createStack(Arrays.asList(child1, child2));
         for (ViewController child : uut.getChildControllers()) {
-            assertThat(child.getParentController().equals(uut));
+            assertThat(child.getParentController().equals(uut)).isTrue();
         }
     }
 
@@ -127,6 +129,31 @@ public class StackControllerTest extends BaseTest {
         uut.push(child3, new CommandListenerAdapter());
         assertThat(uut.peek()).isEqualTo(child3);
         assertContainsOnlyId(child1.getId(), child2.getId(), child3.getId());
+    }
+
+    @Test
+    public void isRendered_falseIfStackIsEmpty() {
+        assertThat(uut.size()).isZero();
+        assertThat(uut.isRendered()).isFalse();
+    }
+
+    @Test
+    public void isRendered() {
+        disablePushAnimation(child1);
+
+        uut.push(child1, new CommandListenerAdapter());
+        verify(presenter).isRendered((Component) child1.getView());
+        verify(renderChecker).areRendered(any());
+        assertThat(uut.isRendered()).isTrue();
+
+        child1.setWaitForRender(new Bool(true));
+        assertThat(uut.isRendered()).isFalse();
+
+        child1.getView().addView(new View(activity));
+        assertThat(uut.isRendered()).isTrue();
+
+        Mockito.when(presenter.isRendered((Component) child1.getView())).then(ignored -> false);
+        assertThat(uut.isRendered()).isFalse();
     }
 
     @Test
@@ -176,7 +203,7 @@ public class StackControllerTest extends BaseTest {
 
         child2.options.animations.push.waitForRender = new Bool(true);
         uut.push(child2, new CommandListenerAdapter());
-        verify(child2).setOnAppearedListener(any());
+        verify(child2).addOnAppearedListener(any());
         verify(animator, times(0)).push(eq(child1.getView()), eq(child1.options.animations.push), any());
     }
 
@@ -204,7 +231,7 @@ public class StackControllerTest extends BaseTest {
         assertThat(uut.isEmpty()).isTrue();
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
-        uut.setRoot(child3, new CommandListenerAdapter() {
+        uut.setRoot(Collections.singletonList(child3), new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
                 assertContainsOnlyId(child3.getId());
@@ -213,7 +240,7 @@ public class StackControllerTest extends BaseTest {
     }
 
     @Test
-    public void setRoot() {
+    public void setRoot_singleChild() {
         activity.setContentView(uut.getView());
         disablePushAnimation(child1, child2, child3);
 
@@ -221,11 +248,37 @@ public class StackControllerTest extends BaseTest {
         uut.push(child1, new CommandListenerAdapter());
         uut.push(child2, new CommandListenerAdapter());
         assertThat(uut.getTopBar().getTitleBar().getNavigationIcon()).isNotNull();
-        uut.setRoot(child3, new CommandListenerAdapter() {
+        uut.setRoot(Collections.singletonList(child3), new CommandListenerAdapter() {
             @Override
             public void onSuccess(String childId) {
                 assertContainsOnlyId(child3.getId());
                 assertThat(uut.getTopBar().getTitleBar().getNavigationIcon()).isNull();
+            }
+        });
+    }
+
+    @Test
+    public void setRoot_multipleChildren() {
+        activity.setContentView(uut.getView());
+        disablePushAnimation(child1, child2, child3, child4);
+        disablePopAnimation(child4);
+
+        assertThat(uut.isEmpty()).isTrue();
+        uut.push(child1, new CommandListenerAdapter());
+        uut.push(child2, new CommandListenerAdapter());
+        assertThat(uut.getTopBar().getTitleBar().getNavigationIcon()).isNotNull();
+        uut.setRoot(Arrays.asList(child3, child4), new CommandListenerAdapter() {
+            @Override
+            public void onSuccess(String childId) {
+                assertContainsOnlyId(child3.getId(), child4.getId());
+                assertThat(uut.getTopBar().getTitleBar().getNavigationIcon()).isNotNull();
+                assertThat(child4.isViewShown()).isTrue();
+                assertThat(child3.isViewShown()).isFalse();
+
+                assertThat(uut.getCurrentChild()).isEqualTo(child4);
+                uut.pop(Options.EMPTY, new CommandListenerAdapter());
+                assertThat(uut.getTopBar().getTitleBar().getNavigationIcon()).isNull();
+                assertThat(uut.getCurrentChild()).isEqualTo(child3);
             }
         });
     }
@@ -259,12 +312,10 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void pop_layoutHandlesChildWillDisappear() {
         uut = new StackControllerBuilder(activity)
-                        .setTopBarButtonCreator(new TopBarButtonCreatorMock())
-                        .setTopBarBackgroundViewController(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()))
                         .setTopBarController(new TopBarController())
                         .setId("uut")
                         .setInitialOptions(new Options())
-                        .setStackPresenter(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarButtonCreatorMock(), new ImageLoader(), new Options()))
+                        .setStackPresenter(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TopBarButtonCreatorMock(), new ImageLoader(), new RenderChecker(), new Options()))
                         .build();
         uut.ensureViewIsCreated();
         uut.push(child1, new CommandListenerAdapter());
@@ -828,12 +879,10 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void mergeChildOptions_updatesViewWithNewOptions() {
         StackController uut = spy(new StackControllerBuilder(activity)
-                        .setTopBarButtonCreator(new TopBarButtonCreatorMock())
-                        .setTopBarBackgroundViewController(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()))
                         .setTopBarController(new TopBarController())
                         .setId("stack")
                         .setInitialOptions(new Options())
-                        .setStackPresenter(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarButtonCreatorMock(), new ImageLoader(), new Options()))
+                        .setStackPresenter(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TitleBarReactViewCreatorMock(), ImageLoaderMock.mock(), new RenderChecker(), Options.EMPTY))
                         .build());
         Options optionsToMerge = new Options();
         Component component = mock(Component.class);
@@ -845,12 +894,10 @@ public class StackControllerTest extends BaseTest {
     @Test
     public void mergeChildOptions_updatesParentControllerWithNewOptions() {
         StackController uut = new StackControllerBuilder(activity)
-                        .setTopBarButtonCreator(new TopBarButtonCreatorMock())
-                        .setTopBarBackgroundViewController(new TopBarBackgroundViewController(activity, new TopBarBackgroundViewCreatorMock()))
                         .setTopBarController(new TopBarController())
                         .setId("stack")
                         .setInitialOptions(new Options())
-                        .setStackPresenter(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarButtonCreatorMock(), new ImageLoader(), new Options()))
+                        .setStackPresenter(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarBackgroundViewCreatorMock(), new TitleBarReactViewCreatorMock(), ImageLoaderMock.mock(), new RenderChecker(), Options.EMPTY))
                         .build();
         ParentController parentController = Mockito.mock(ParentController.class);
         uut.setParentController(parentController);
@@ -942,7 +989,6 @@ public class StackControllerTest extends BaseTest {
 
     @Test
     public void destroy() {
-        uut.ensureViewIsCreated();
         uut.destroy();
         verify(topBarController, times(1)).clear();
     }
@@ -980,8 +1026,8 @@ public class StackControllerTest extends BaseTest {
     private void createTopBarController() {
         topBarController = spy(new TopBarController() {
             @Override
-            protected TopBar createTopBar(Context context, TopBarBackgroundViewController topBarBackgroundViewController, StackLayout stackLayout) {
-                TopBar spy = spy(super.createTopBar(context, topBarBackgroundViewController, stackLayout));
+            protected TopBar createTopBar(Context context, StackLayout stackLayout) {
+                TopBar spy = spy(super.createTopBar(context, stackLayout));
                 spy.layout(0, 0, 1000, UiUtils.getTopBarHeight(activity));
                 return spy;
             }
