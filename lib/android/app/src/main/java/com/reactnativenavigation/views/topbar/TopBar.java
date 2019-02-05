@@ -70,7 +70,7 @@ public class TopBar extends AppBarLayout implements ScrollEventListener.ScrollAw
 
         root = new FrameLayout(getContext());
         root.setId(CompatUtils.generateViewId());
-        content.addView(titleBar, MATCH_PARENT, UiUtils.getTopBarHeight(getContext()));
+        content.addView(titleBar, MATCH_PARENT, WRAP_CONTENT);
         content.addView(topTabs);
         root.addView(content);
         root.addView(border);
