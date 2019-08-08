@@ -35,4 +35,31 @@ public class NoOpPromise implements Promise {
     public void reject(Throwable reason) {
 
     }
+
+    /*Extra Methods*/
+
+    @Override
+    public void reject(String code, String message, Throwable e, WritableMap a) {
+
+    }
+
+   @Override
+    public void reject(Throwable e, WritableMap a) {
+
+    }
+
+   @Override
+    public void reject(String code, String message, WritableMap a) {
+
+    }
+
+   @Override
+    public void reject(String code, Throwable e, WritableMap a) {
+
+    }
+
+   @Override
+    public void reject(String code, WritableMap a) {
+
+    }
 }
